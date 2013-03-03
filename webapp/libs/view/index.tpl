@@ -89,7 +89,7 @@
             <a href="/"  class="btn" type="button">Go home</a>
             {else}
             <input type="text" class="input-block-level" placeholder="Email address" name="email">
-            <button class="btn btn-large btn-primary btn-info" type="submit">Apply for an invite</button>
+            <button class="btn btn-large btn-primary btn-info" type="submit">Get on the waiting list</button>
             {/if}
           </form>
         </div>

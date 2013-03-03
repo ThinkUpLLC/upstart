@@ -63,7 +63,8 @@ class RouteUserController extends Controller {
                     $dao->update($_GET['u'], $authed_twitter_user['user_name'], $authed_twitter_user['user_id'],
                     $tok['oauth_token'], $tok['oauth_token_secret'], $authed_twitter_user['is_verified'],
                     $authed_twitter_user['follower_count']);
-                    $this->addSuccessMessage("Thanks, @".$authed_twitter_user['user_name']."! You're on the list." );
+                    $this->addSuccessMessage("Thanks, @".$authed_twitter_user['user_name'].
+                    "! You're on ThinkUp's waiting list. We'll send you an email when your spot opens up." );
                 }
             } else {
                 $this->addErrorMessage("Oops! Something went wrong. ".Utils::varDumpToString($tok) );
