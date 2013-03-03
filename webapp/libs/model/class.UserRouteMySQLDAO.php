@@ -50,13 +50,19 @@ class UserRouteMySQLDAO extends PDODAO {
         return $result['id'];
     }
 
-    public function delete($id) {
-        $q  = "DELETE from #prefix#callbacks WHERE id=:id;";
+    public function getUserList($page_number=1, $count=50) {
+        $start_on_record = ($page_number - 1) * $count;
+        $q  = "SELECT * FROM user_routes ";
+        $q .= "ORDER BY follower_count, is_verified DESC ";
+        $q .= "LIMIT :start_on_record, :limit;";
+
         $vars = array(
-            ':id'=>$id
+            ':start_on_record'=>$start_on_record,
+            ':limit'=>$count
         );
+        //echo self::mergeSQLVars($q, $vars);
         $ps = $this->execute($q, $vars);
-        return $this->getDeleteCount($ps);
+        return $this->getDataRowsAsArrays($ps);
     }
 
     private static function mergeSQLVars($sql, $vars) {
