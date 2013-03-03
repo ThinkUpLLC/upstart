@@ -1,35 +1,17 @@
 <?php
-/**
- *
- * ThinkUp/webapp/init.php
- *
- * Copyright (c) 2013 Gina Trapani
- *
- * LICENSE:
- *
- * This file is part of ThinkUp (http://thinkupapp.com).
- *
- * ThinkUp is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any
- * later version.
- *
- * ThinkUp is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with ThinkUp.  If not, see
- * <http://www.gnu.org/licenses/>.
- *
- *
- * @author Gina Trapani <ginatrapani[at]gmail[dot]com>
- * @license http://www.gnu.org/licenses/gpl.html
- * @copyright 2013 Gina Trapani
- *
- */
+ini_set('error_reporting', E_ALL || E_STRICT);
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);
+
 if ( version_compare(PHP_VERSION, '5.2', '<') ) {
     exit("ERROR: ThinkUp requires PHP 5.2 or greater. The current version of PHP is ".PHP_VERSION.".");
 }
 
 //Register our lazy class loader
 require_once 'extlibs/isosceles/libs/model/class.Loader.php';
-Loader::register(array(dirname(__FILE__).'/libs/model/', dirname(__FILE__).'/libs/controller/'));
+Loader::register(array(
+    dirname(__FILE__).'/libs/',
+    dirname(__FILE__).'/libs/model/',
+    dirname(__FILE__).'/libs/controller/',
+    dirname(__FILE__).'/extlibs/twitteroauth/'
+));
