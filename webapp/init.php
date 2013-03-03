@@ -15,3 +15,5 @@ Loader::register(array(
     dirname(__FILE__).'/libs/controller/',
     dirname(__FILE__).'/extlibs/twitteroauth/'
 ));
+require_once 'extlibs/twitteroauth/twitteroauth.php';
+
