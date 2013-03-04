@@ -53,7 +53,7 @@ class UserRouteMySQLDAO extends PDODAO {
     public function getUserList($page_number=1, $count=50) {
         $start_on_record = ($page_number - 1) * $count;
         $q  = "SELECT * FROM user_routes ";
-        $q .= "ORDER BY follower_count, is_verified DESC ";
+        $q .= "ORDER BY follower_count DESC, is_verified DESC ";
         $q .= "LIMIT :start_on_record, :limit;";
 
         $vars = array(
