@@ -1,32 +1,14 @@
 <?php
 class UserRouteMySQLDAO extends PDODAO {
-    public function insert($email, $pwd) {
-        $q  = "INSERT INTO user_routes ";
-        $q .= "(email) ";
-        $q .= "VALUES ( :email) ";
+
+    public function insert($email, $twitter_username, $twitter_user_id, $oauth_access_token, $oauth_access_token_secret,
+    $is_verified, $follower_count) {
+        $q  = "INSERT INTO user_routes (email, twitter_username, twitter_user_id, oauth_access_token, ";
+        $q .= "oauth_access_token_secret, is_verified, follower_count) VALUES (:email, ";
+        $q .= ":twitter_username, :twitter_user_id, :oauth_access_token, :oauth_access_token_secret, ";
+        $q .= ":is_verified, :follower_count); ";
         $vars = array(
             ':email'=>$email,
-        );
-        try {
-            $ps = $this->execute($q, $vars);
-        } catch (PDOException $e) {
-            $exception = $e->getMessage();
-            if ((preg_match('/Duplicate entry/', $exception)>0) && (preg_match('/for key \'email\'/', $exception)>0)) {
-                return $this->get($email);
-            }
-        }
-        return $this->getInsertId($ps);
-    }
-
-    public function update($id, $twitter_username, $twitter_user_id, $oauth_access_token, $oauth_access_token_secret,
-    $is_verified, $follower_count) {
-        $q  = "UPDATE user_routes SET ";
-        $q .= "twitter_username = :twitter_username, twitter_user_id = :twitter_user_id, ";
-        $q .= "oauth_access_token = :oauth_access_token, oauth_access_token_secret = :oauth_access_token_secret, ";
-        $q .= "is_verified = :is_verified, follower_count = :follower_count ";
-        $q .= "WHERE id = :id ";
-        $vars = array(
-            ':id'=>$id,
             ':twitter_username'=>$twitter_username,
             ':twitter_user_id'=>$twitter_user_id,
             ':oauth_access_token'=>$oauth_access_token,
@@ -35,15 +17,23 @@ class UserRouteMySQLDAO extends PDODAO {
             ':follower_count'=>(integer) $follower_count
         );
         //echo self::mergeSQLVars($q, $vars);
-        $ps = $this->execute($q, $vars);
+        try {
+            $ps = $this->execute($q, $vars);
+        } catch (PDOException $e) {
+            $exception = $e->getMessage();
+            if ((preg_match('/Duplicate entry/', $exception)>0) && (preg_match('/for key \'email\'/', $exception)>0)) {
+                return 1;
+            }
+        }
         return $this->getUpdateCount($ps);
     }
 
-    public function get($email) {
+    public function get($email, $twitter_user_id) {
         $q  = "SELECT id FROM user_routes ";
-        $q .= "WHERE email = :email ";
+        $q .= "WHERE email = :email AND twitter_user_id = :twitter_user_id ";
         $vars = array(
-            ':email'=>$email
+            ':email'=>$email,
+            ':twitter_user_id'=>$twitter_user_id
         );
         $ps = $this->execute($q, $vars);
         $result = $this->getDataRowAsArray($ps);

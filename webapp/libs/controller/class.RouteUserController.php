@@ -23,13 +23,12 @@ class RouteUserController extends Controller {
         $this->oauth_consumer_secret = $cfg->getValue('oauth_consumer_secret');
 
         if (self::isFormInputValid()) {
-            //Store email address and password and get back unique ID
-            $dao = new UserRouteMySQLDAO();
-            $waitlisted_user_id = $dao->insert($_POST['email'], $_POST['pwd']);
+            //Store email address in Session Cache
+            SessionCache::put('waitlisted_email', $_POST['email']);
 
             $to = new TwitterOAuth($this->oauth_consumer_key, $this->oauth_consumer_secret);
             //Add unique waitlisted user ID from previous DB operation to callback
-            $tok = $to->getRequestToken(self::getApplicationURL(). "?u=".$waitlisted_user_id);
+            $tok = $to->getRequestToken(self::getApplicationURL());
 
             if (isset($tok['oauth_token'])) {
                 $token = $tok['oauth_token'];
@@ -54,17 +53,24 @@ class RouteUserController extends Controller {
                 $this->oauth_consumer_key, $this->oauth_consumer_secret, 5,  false);
 
                 $authed_twitter_user = $api->verifyCredentials();
+
                 if (isset($authed_twitter_user['user_name'])) {
                     //                    echo "<pre>";
                     //                    print_r($authed_twitter_user);
                     //                    echo "</pre>";
                     //Update waitlisted user with user name, user id, tokens, is_verified, follower_count
+                    $waitlisted_email = SessionCache::get('waitlisted_email');
                     $dao = new UserRouteMySQLDAO();
-                    $dao->update($_GET['u'], $authed_twitter_user['user_name'], $authed_twitter_user['user_id'],
-                    $tok['oauth_token'], $tok['oauth_token_secret'], $authed_twitter_user['is_verified'],
-                    $authed_twitter_user['follower_count']);
-                    $this->addSuccessMessage("Thanks, @".$authed_twitter_user['user_name'].
-                    "! You're on ThinkUp's waiting list. We'll send you an email when your spot opens up." );
+                    $result = $dao->insert($waitlisted_email, $authed_twitter_user['user_name'],
+                    $authed_twitter_user['user_id'], $tok['oauth_token'], $tok['oauth_token_secret'],
+                    $authed_twitter_user['is_verified'], $authed_twitter_user['follower_count']);
+                    if ($result > 0) {
+                        $this->addSuccessMessage("Thanks, @".$authed_twitter_user['user_name'].
+                        "! You're on ThinkUp's waiting list. We'll send you an email when your spot opens up." );
+                    } else {
+                        $this->addErrorMessage("Something went wrong. Couldnt' add  @".
+                        $authed_twitter_user['user_name']." to the list." );
+                    }
                 }
             } else {
                 $this->addErrorMessage("Oops! Something went wrong. ".Utils::varDumpToString($tok) );
@@ -94,7 +100,7 @@ class RouteUserController extends Controller {
      * @return bool
      */
     private function hasReturnedFromTwitterAuth() {
-        return (isset($_GET['oauth_token']) && isset($_GET["u"]));
+        return (isset($_GET['oauth_token']));
     }
     /**
      * Get application URL
