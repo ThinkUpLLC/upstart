@@ -67,10 +67,20 @@ class RouteUserController extends Controller {
                     if ($result > 0) {
                         $this->addSuccessMessage("Thanks, @".$authed_twitter_user['user_name'].
                         "! You're on ThinkUp's waiting list. We'll send you an email when your spot opens up." );
+
+                        $email_view_mgr = new ViewManager();
+                        $email_view_mgr->caching=false;
+                        $email_view_mgr->assign('twitter_user', $authed_twitter_user);
+                        $email_view_mgr->assign('waitlisted_email', $waitlisted_email);
+                        $message = $email_view_mgr->fetch('_email.notifyadmin.tpl');
+                        Mailer::mail('upstart@thinkup.com', '[Upstart] @'.$authed_twitter_user['user_name']." is on ".
+                        "the waiting list", $message);
                     } else {
                         $this->addErrorMessage("Something went wrong. Couldnt' add  @".
                         $authed_twitter_user['user_name']." to the list." );
                     }
+                } else {
+                    $this->addErrorMessage("Oops! Something went wrong. Twitter didn't return a valid user.");
                 }
             } else {
                 $this->addErrorMessage("Oops! Something went wrong. ".Utils::varDumpToString($tok) );
