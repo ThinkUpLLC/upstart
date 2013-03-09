@@ -65,16 +65,11 @@ class RouteUserController extends Controller {
                     $authed_twitter_user['user_id'], $tok['oauth_token'], $tok['oauth_token_secret'],
                     $authed_twitter_user['is_verified'], $authed_twitter_user['follower_count']);
                     if ($result > 0) {
-                        $this->addSuccessMessage("Thanks, @".$authed_twitter_user['user_name'].
-                        "! You're on ThinkUp's waiting list. We'll send you an email when your spot opens up." );
-
-                        $email_view_mgr = new ViewManager();
-                        $email_view_mgr->caching=false;
-                        $email_view_mgr->assign('twitter_user', $authed_twitter_user);
-                        $email_view_mgr->assign('waitlisted_email', $waitlisted_email);
-                        $message = $email_view_mgr->fetch('_email.notifyadmin.tpl');
-                        Mailer::mail('upstart@thinkup.com', '[Upstart] @'.$authed_twitter_user['user_name']." is on ".
-                        "the waiting list", $message);
+                        if (self::subscribeUserViaMailChimp($waitlisted_email)) {
+                            $this->addSuccessMessage("Thanks, @".$authed_twitter_user['user_name'].
+                            "! You're on ThinkUp's waiting list. We'll let you know when your spot opens up." );
+                            self::notifyAdmins($authed_twitter_user, $waitlisted_email);
+                        }
                     } else {
                         $this->addErrorMessage("Something went wrong. Couldnt' add  @".
                         $authed_twitter_user['user_name']." to the list." );
@@ -87,6 +82,50 @@ class RouteUserController extends Controller {
             }
         }
         return $this->generateView();
+    }
+    /**
+     * Subscribe new user to MailChimp list.
+     */
+    protected function subscribeUserViaMailChimp($waitlisted_email) {
+        $cfg = Config::getInstance();
+
+        $api_key = $cfg->getValue('mailchimp_api');
+        $list_id = $cfg->getValue('mailchimp_list_id');
+
+        $api = new MCAPI($api_key);
+        $api->useSecure(true);
+
+        $merge_vars = array('FNAME'=>'', 'LNAME'=>'', 'GROUPINGS'=>array());
+
+        // By default this sends a confirmation email - you will not see new members in MailChimp
+        // until the link contained in it is clicked!
+        $retval = $api->listSubscribe( $list_id, $waitlisted_email, $merge_vars );
+
+        if ($api->errorCode){
+            if ($api->errorCode != '214') { //Error other than 'already subscribed'
+                $this->addErrorMessage('MailChimp error '.$api->errorCode.': '.$api->errorMessage);
+                return false;
+            } else {
+                // Email address is already subscribed; that's okay.
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+    /**
+     * Email admin notification of new user.
+     * @param unknown_type $authed_twitter_user
+     * @param unknown_type $waitlisted_email
+     */
+    protected function notifyAdmins($authed_twitter_user, $waitlisted_email ) {
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $email_view_mgr->assign('twitter_user', $authed_twitter_user);
+        $email_view_mgr->assign('waitlisted_email', $waitlisted_email);
+        $message = $email_view_mgr->fetch('_email.notifyadmin.tpl');
+        Mailer::mail('upstart@thinkup.com', '[Upstart] @'.$authed_twitter_user['user_name']." is on the waitlist",
+        $message);
     }
     /**
      * Verify form input and add appropriate error message if not
