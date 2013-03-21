@@ -80,7 +80,10 @@ class RouteUserController extends Controller {
             } else {
                 $this->addErrorMessage("Oops! Something went wrong. ".Utils::varDumpToString($tok) );
             }
+        } elseif (isset($_GET['e']) && self::validateEmail($_GET['e'])) {
+            $this->addToView('prefill_email', $_GET['e']);
         }
+
         return $this->generateView();
     }
     /**

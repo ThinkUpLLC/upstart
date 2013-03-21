@@ -42,7 +42,6 @@
         padding: 7px 9px;
       }
 
-
       /* Logo */
         div#logo {
         }
@@ -55,7 +54,7 @@
             line-height: 72px;
             letter-spacing: -2px;
         }
-        
+
         div#logo h1 span {
             color: #404040;
             font-weight: normal;
@@ -71,9 +70,9 @@
     <!-- Fav and touch icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="assets/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
   </head>
 
   <body>
@@ -88,7 +87,7 @@
             <div class="alert alert-success">{$success_msg}</div>
             <a href="/"  class="btn" type="button">Go home</a>
             {else}
-            <input type="text" class="input-block-level" placeholder="Email address" name="email">
+            <input type="text" class="input-block-level" placeholder="Email address" name="email" value="{>
             <button class="btn btn-large btn-primary btn-info" type="submit">Get on the waiting list</button>
             {/if}
           </form>
