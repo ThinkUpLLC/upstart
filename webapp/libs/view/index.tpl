@@ -87,7 +87,7 @@
             <div class="alert alert-success">{$success_msg}</div>
             <a href="/"  class="btn" type="button">Go home</a>
             {else}
-            <input type="text" class="input-block-level" placeholder="Email address" name="email" value="{>
+            <input type="text" class="input-block-level" placeholder="Email address" name="email" value="{$prefill_email}">
             <button class="btn btn-large btn-primary btn-info" type="submit">Get on the waiting list</button>
             {/if}
           </form>
