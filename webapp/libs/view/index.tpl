@@ -131,7 +131,10 @@
             {if $error_msg}<div class="alert alert-error">{$error_msg}</div>{/if}
             {if $success_msg}
             <div class="alert alert-success">{$success_msg}</div>
-            <a href="/"  class="btn" type="button">Go home</a>
+            <a href="https://twitter.com/thinkup" class="twitter-follow-button" data-show-count="true" data-size="large" data-lang="en">Follow @thinkup</a>
+            {literal}
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+{/literal}
             {else}
             <input type="text" class="input-block-level" placeholder="Email address" name="email" value="{$prefill_email}">
             <button class="btn btn-large btn-primary btn-info big-btn" type="submit">Get on the waiting list</button>
