@@ -59,6 +59,52 @@
             color: #404040;
             font-weight: normal;
         }
+        .big-btn {
+            display: inline-block;
+            font: 400 24px/39px;    
+            padding: 12px 36px;
+            margin: 8px 0px;
+            
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+           
+            color:#fff; 
+            text-shadow: #3799ca 0 -1px 0;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.2) ;
+            
+            background-color: #00AEEF;
+            background-image: -moz-linear-gradient(top, #00AEEF, #0072EF);
+            background-image: -ms-linear-gradient(top, #00AEEF, #0072EF);
+            background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#00AEEF), to(#0072EF));
+            background-image: -webkit-linear-gradient(top, #00AEEF, #0072EF);
+            background-image: -o-linear-gradient(top, #00AEEF, #0072EF);
+            background-image: linear-gradient(top, #00AEEF, #0072EF);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00AEEF', endColorstr='#0072EF', GradientType=0);
+        }
+        
+        .big-btn:link, 
+        .big-btn:visited {
+            color:#ffffff;
+        }
+        
+        .big-btn:hover {    
+            color: #ffffff; 
+            text-decoration: none;  
+            
+            background-color: #4d90fe;  
+            background-image: -moz-linear-gradient(top, #4d90fe, #4787ed);
+            background-image: -ms-linear-gradient(top, #4d90fe, #4787ed);
+            background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#4d90fe), to(#4787ed));
+            background-image: -webkit-linear-gradient(top, #4d90fe, #4787ed);
+            background-image: -o-linear-gradient(top, #4d90fe, #4787ed);
+            background-image: linear-gradient(top, #4d90fe, #4787ed);
+            
+            background-repeat: repeat-x;
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4d90fe', endColorstr='#4787ed', GradientType=0);
+            
+            
+        }
     </style>
     <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -88,7 +134,7 @@
             <a href="/"  class="btn" type="button">Go home</a>
             {else}
             <input type="text" class="input-block-level" placeholder="Email address" name="email" value="{$prefill_email}">
-            <button class="btn btn-large btn-primary btn-info" type="submit">Get on the waiting list</button>
+            <button class="btn btn-large btn-primary btn-info big-btn" type="submit">Get on the waiting list</button>
             {/if}
           </form>
         </div>
