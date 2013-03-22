@@ -135,6 +135,9 @@
             {literal}
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 {/literal}
+<br /><br />
+<div class="fb-like" data-href="https://www.facebook.com/thinkupapp" data-send="true" data-width="300" data-show-faces="false"></div>
+
             {else}
             <input type="text" class="input-block-level" placeholder="Email address" name="email" value="{$prefill_email}">
             <button class="btn btn-large btn-primary btn-info big-btn" type="submit">Get on the waiting list</button>
@@ -143,5 +146,14 @@
         </div>
     </div> <!-- /container -->
 
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=367562030029149";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
   </body>
 </html>

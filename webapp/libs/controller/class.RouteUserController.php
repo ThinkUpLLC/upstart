@@ -67,7 +67,7 @@ class RouteUserController extends Controller {
                     if ($result > 0) {
                         if (self::subscribeUserViaMailChimp($waitlisted_email)) {
                             $this->addSuccessMessage("Thanks, @".$authed_twitter_user['user_name'].
-                            "! You're on ThinkUp's waiting list. We'll let you know when your spot opens up." );
+                            "!<br><br>You're on ThinkUp's waiting list. We'll let you know when your spot opens up." );
                             self::notifyAdmins($authed_twitter_user, $waitlisted_email);
                         }
                     } else {
