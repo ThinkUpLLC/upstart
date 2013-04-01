@@ -12,9 +12,17 @@ class ListUserController extends Controller {
             $page =1;
         }
         $dao = new UserRouteMySQLDAO();
-        $users = $dao->getUserList($page);
+        $users = $dao->getUserList($page, 51);
         $this->addToView('users', $users);
         $this->addToView('page', $page);
+        if (sizeof($users) == 51) {
+            array_pop($users);
+            $this->addToView('next_page', $page+1);
+        }
+        if ($page > 1) {
+            $this->addToView('prev_page', $page-1);
+        }
+
         return $this->generateView();
     }
 }

@@ -78,9 +78,10 @@
     </table>
 
 <div class="span4"></div>
-</div>
-</div>
 
+{if $prev_page}<a href="?p={$prev_page}">&larr; previous</a>{/if} {if $next_page and $prev_page}|{/if} {if $next_page}<a href="?p={$next_page}">next &rarr;</a>{/if}
+</div>
+</div>
     </div> <!-- /container -->
 
 
