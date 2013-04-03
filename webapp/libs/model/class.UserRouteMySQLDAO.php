@@ -40,6 +40,13 @@ class UserRouteMySQLDAO extends PDODAO {
         return $result['id'];
     }
 
+    public function getListTotal() {
+        $q  = "SELECT count(*) as total FROM user_routes;";
+        $ps = $this->execute($q);
+        $result = $this->getDataRowAsArray($ps);
+        return $result['total'];
+    }
+
     public function getById($id) {
         $q  = "SELECT * FROM user_routes ";
         $q .= "WHERE id = :id ";

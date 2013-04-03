@@ -14,6 +14,8 @@ class ListUserController extends Controller {
         $dao = new UserRouteMySQLDAO();
         $users = $dao->getUserList($page, 51);
         $this->addToView('users', $users);
+        $total = $dao->getListTotal();
+        $this->addToView('total', $total);
         $this->addToView('page', $page);
         if (sizeof($users) == 51) {
             array_pop($users);

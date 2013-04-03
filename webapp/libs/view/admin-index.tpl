@@ -58,8 +58,9 @@
 <div class="row-fluid">
   <div class="span4"></div>
   <div class="span4">
-    <div id="logo"><h1>Think<span>Up</span></h1></div>
+    <div id="logo"><a href="?p=1"><h1>Think<span>Up</span></h1></a></div>
 
+<h2>{$total|number_format} on waitlist</h2>
     <table class="table table-condensed table-hover">
       <tr>
           <th></th>
