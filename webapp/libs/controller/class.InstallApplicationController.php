@@ -77,12 +77,12 @@ class InstallApplicationController extends Controller {
                     list($admin_id, $admin_api_key, $owner_id, $owner_api_key) = self::createUsers($route['email']);
                     self::setUpServiceUser($owner_id, $route);
 
-                    $url = $this->url_base.$code."/";
+                    $url = $this->url_base.strtolower($code)."/";
 
                     $dao->updateRoute($_GET['id'], $url);
                     self::output("Updated waitlist with link");
 
-                    $crawler_url = $url.'/crawler/rss.php?un='.urlencode($this->admin_email).'&as='
+                    $crawler_url = $url.'crawler/rss.php?un='.urlencode($this->admin_email).'&as='
                     .urlencode($admin_api_key);
                     self::output("Ran crawler, make sure insights are generated ($crawler_url).");
                     self::output(self::getURLContents($crawler_url));
