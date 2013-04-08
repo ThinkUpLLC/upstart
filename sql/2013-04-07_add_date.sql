@@ -1,0 +1,2 @@
+ALTER TABLE  user_routes ADD  date_waitlisted TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT  'Timestamp when user was inserted onto list.';
+UPDATE user_routes SET date_waitlisted = CURRENT_TIMESTAMP;
