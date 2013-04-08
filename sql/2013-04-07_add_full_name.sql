@@ -1,0 +1,1 @@
+ALTER TABLE  user_routes ADD  full_name VARCHAR( 255 ) NOT NULL AFTER  twitter_user_id;

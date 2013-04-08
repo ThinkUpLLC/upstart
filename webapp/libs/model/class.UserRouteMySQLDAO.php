@@ -2,11 +2,11 @@
 class UserRouteMySQLDAO extends PDODAO {
 
     public function insert($email, $twitter_username, $twitter_user_id, $oauth_access_token, $oauth_access_token_secret,
-    $is_verified, $follower_count) {
+    $is_verified, $follower_count, $full_name) {
         $q  = "INSERT INTO user_routes (email, twitter_username, twitter_user_id, oauth_access_token, ";
-        $q .= "oauth_access_token_secret, is_verified, follower_count) VALUES (:email, ";
+        $q .= "oauth_access_token_secret, is_verified, follower_count, full_name) VALUES (:email, ";
         $q .= ":twitter_username, :twitter_user_id, :oauth_access_token, :oauth_access_token_secret, ";
-        $q .= ":is_verified, :follower_count); ";
+        $q .= ":is_verified, :follower_count, :full_name); ";
         $vars = array(
             ':email'=>$email,
             ':twitter_username'=>$twitter_username,
@@ -14,7 +14,8 @@ class UserRouteMySQLDAO extends PDODAO {
             ':oauth_access_token'=>$oauth_access_token,
             ':oauth_access_token_secret'=>$oauth_access_token_secret,
             ':is_verified'=>(integer) $is_verified,
-            ':follower_count'=>(integer) $follower_count
+            ':follower_count'=>(integer) $follower_count,
+            ':full_name'=>$full_name
         );
         //echo self::mergeSQLVars($q, $vars);
         try {

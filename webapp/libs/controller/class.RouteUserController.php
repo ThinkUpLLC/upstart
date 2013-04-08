@@ -67,7 +67,8 @@ class RouteUserController extends Controller {
                     $dao = new UserRouteMySQLDAO();
                     $result = $dao->insert($waitlisted_email, $authed_twitter_user['user_name'],
                     $authed_twitter_user['user_id'], $tok['oauth_token'], $tok['oauth_token_secret'],
-                    $authed_twitter_user['is_verified'], $authed_twitter_user['follower_count']);
+                    $authed_twitter_user['is_verified'], $authed_twitter_user['follower_count'],
+                    $authed_twitter_user['full_name']);
                     if ($result > 0) {
                         if (self::subscribeUserViaMailChimp($waitlisted_email)) {
                             $this->addSuccessMessage("Thanks, @".$authed_twitter_user['user_name'].
