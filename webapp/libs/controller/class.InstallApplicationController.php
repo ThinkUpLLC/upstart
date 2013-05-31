@@ -71,23 +71,27 @@ class InstallApplicationController extends Controller {
                 }
             } else {
                 if ($route['route'] == '') {
-                    session_write_close();
-                    $code = self::setUpAppFiles($route['twitter_username']);
-                    self::createDatabase($code);
-                    list($admin_id, $admin_api_key, $owner_id, $owner_api_key) = self::createUsers($route['email']);
-                    self::setUpServiceUser($owner_id, $route);
+                    try {
+                        session_write_close();
+                        $code = self::setUpAppFiles($route['twitter_username']);
+                        self::createDatabase($code);
+                        list($admin_id, $admin_api_key, $owner_id, $owner_api_key) = self::createUsers($route['email']);
+                        self::setUpServiceUser($owner_id, $route);
 
-                    $url = $this->url_base.strtolower($code)."/";
+                        $url = $this->url_base.strtolower($code)."/";
 
-                    $dao->updateRoute($_GET['id'], $url);
-                    self::output("Updated waitlist with link");
+                        $dao->updateRoute($_GET['id'], $url);
+                        self::output("Updated waitlist with link");
 
-                    $crawler_url = $url.'crawler/rss.php?un='.urlencode($this->admin_email).'&as='
-                    .urlencode($admin_api_key);
-                    self::output("Ran crawler, make sure insights are generated ($crawler_url).");
-                    self::output(self::getURLContents($crawler_url));
+                        $crawler_url = $url.'crawler/rss.php?un='.urlencode($this->admin_email).'&as='
+                        .urlencode($admin_api_key);
+                        self::output("Ran crawler, make sure insights are generated ($crawler_url).");
+                        self::output(self::getURLContents($crawler_url));
 
-                    self::output("Complete. Log in at <a href=\"$url\" target=\"new\">".$url."</a>.");
+                        self::output("Complete. Log in at <a href=\"$url\" target=\"new\">".$url."</a>.");
+                    } catch (Exception $e) {
+                        self::output($e->getMessage());
+                    }
                 } else {
                     self::output('Installation exists at <a href="'.$route['route'].' target="new">'.$route['route'].
                 "</a>.");
@@ -109,19 +113,25 @@ class InstallApplicationController extends Controller {
             $unique = uniqid();
             $path .= substr($unique, strlen($unique)-4, strlen($unique));
         }
+        if (!is_dir($this->master_app_source_path)) {
+            throw new Exception($this->master_app_source_path . " is not a directory.");
+        }
         $cmd = 'ln -s '.$this->master_app_source_path.' '.$this->app_source_path.$path;
-        exec($cmd);
+        $cmd_result = exec($cmd, $output, $return_var);
         if (is_link($this->app_source_path.$path )) {
             self::output("Symlinked new ThinkUp installation at $path");
         } else {
-            self::output("Could not create symlink");
+            $result = Utils::varDumpToString($output);
+            throw new Exception("Could not create symlink from ".$this->master_app_source_path." to ".
+            $this->app_source_path.$path. "<br>Command: ".$cmd. "<br> Command output: ".$result . "<br>Return var ".
+            $return_var. "<br>Command result ".$cmd_result);
         }
         $cmd = 'mkdir '. $this->data_path . $path;
         exec($cmd);
         if (is_dir($this->data_path . $path )) {
             self::output("Created new data directory " . $this->data_path . $path);
         } else {
-            self::output("Could not create data symlink");
+            throw new Exception("Could not create new data directory");
         }
         return $path;
     }
