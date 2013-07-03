@@ -1,3 +1,7 @@
-	</ul>
-</body>
+</div>
+</div>
+    </div> <!-- /container -->
+
+
+  </body>
 </html>
