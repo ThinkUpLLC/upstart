@@ -74,14 +74,14 @@ class InstallApplicationController extends Controller {
                     try {
                         session_write_close();
                         $code = self::setUpAppFiles($route['twitter_username']);
-                        self::createDatabase($code);
+                        $database_name = self::createDatabase($code);
                         list($admin_id, $admin_api_key, $owner_id, $owner_api_key) = self::createUsers($route['email']);
                         self::setUpServiceUser($owner_id, $route);
 
                         $url = $this->url_base.strtolower($code)."/";
 
-                        $dao->updateRoute($_GET['id'], $url);
-                        self::output("Updated waitlist with link");
+                        $dao->updateRoute($_GET['id'], $url, $database_name, $is_active=1);
+                        self::output("Updated waitlist with link and db name");
 
                         $crawler_url = $url.'crawler/rss.php?un='.urlencode($this->admin_email).'&as='
                         .urlencode($admin_api_key);
@@ -145,6 +145,7 @@ class InstallApplicationController extends Controller {
         PDODAO::$PDO->exec($q);
 
         self::output("Created new database thinkupstart_$code");
+        return "thinkupstart_$code";
     }
 
     protected function createUsers($email) {

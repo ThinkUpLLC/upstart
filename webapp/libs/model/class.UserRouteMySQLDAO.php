@@ -58,14 +58,16 @@ class UserRouteMySQLDAO extends PDODAO {
         return $this->getDataRowAsArray($ps);
     }
 
-    public function updateRoute($id, $route) {
+    public function updateRoute($id, $route, $database_name, $is_active=1) {
         $cfg = Config::getInstance();
         $db_name = $cfg->getValue('db_name');
-        $q  = "USE ".$db_name."; UPDATE user_routes SET route = :route ";
-        $q .= "WHERE id = :id ";
+        $q  = "USE ".$db_name."; UPDATE user_routes SET route = :route, database_name = :database_name, ";
+        $q .= "is_active = :is_active WHERE id = :id ";
         $vars = array(
             ':id'=>$id,
-            ':route'=>$route
+            ':route'=>$route,
+            ':database_name'=>$database_name,
+            ':is_active'=>$is_active
         );
         $ps = $this->execute($q, $vars);
     }

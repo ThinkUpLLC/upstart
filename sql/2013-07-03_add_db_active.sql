@@ -1,0 +1,2 @@
+ALTER TABLE  user_routes ADD  database_name VARCHAR( 70 ) NOT NULL COMMENT  'Name of the database associated with this route.',
+ADD  is_active TINYINT( 1 ) NOT NULL COMMENT  'Whether or not the route is active.';

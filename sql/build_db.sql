@@ -10,6 +10,8 @@ CREATE TABLE user_routes (
   is_verified tinyint(1) NOT NULL,
   follower_count int(11) NOT NULL,
   date_waitlisted timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Timestamp when user was inserted onto list.',
+  database_name varchar(70) NOT NULL COMMENT 'Name of the database associated with this route.',
+  is_active tinyint(1) NOT NULL COMMENT 'Whether or not the route is active.',
   PRIMARY KEY (id),
   UNIQUE KEY email (email,twitter_user_id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Route users to their installation.';
