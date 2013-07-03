@@ -2,3 +2,4 @@
 webapp/config.inc.php
 tests/config.tests.inc.php
 data/*
+webapp/sandbox/*
