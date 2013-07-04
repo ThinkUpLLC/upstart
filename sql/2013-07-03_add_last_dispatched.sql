@@ -1,0 +1,1 @@
+ALTER TABLE  user_routes ADD  last_dispatched TIMESTAMP NOT NULL COMMENT  'Last time this user route was dispatched for crawl.';

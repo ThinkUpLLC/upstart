@@ -12,6 +12,7 @@ CREATE TABLE user_routes (
   date_waitlisted timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Timestamp when user was inserted onto list.',
   database_name varchar(70) NOT NULL COMMENT 'Name of the database associated with this route.',
   is_active tinyint(1) NOT NULL COMMENT 'Whether or not the route is active.',
+  last_dispatched timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Last time this user route was dispatched for crawl.',
   PRIMARY KEY (id),
   UNIQUE KEY email (email,twitter_user_id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Route users to their installation.';

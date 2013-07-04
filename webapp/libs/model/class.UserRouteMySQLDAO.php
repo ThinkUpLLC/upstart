@@ -87,6 +87,31 @@ class UserRouteMySQLDAO extends PDODAO {
         return $this->getDataRowsAsArrays($ps);
     }
 
+    public function getStaleRoutes($count=50) {
+        $q  = "SELECT * FROM user_routes WHERE is_active = 1 ";
+        $q .= "ORDER BY last_dispatched ASC ";
+        $q .= "LIMIT :limit;";
+
+        $vars = array(
+            ':limit'=>$count
+        );
+        //echo self::mergeSQLVars($q, $vars);
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowsAsArrays($ps);
+    }
+
+    public function updateLastDispatchedTime($id) {
+        $q  = "UPDATE user_routes SET last_dispatched = CURRENT_TIMESTAMP() ";
+        $q .= "WHERE id = :id ";
+
+        $vars = array(
+            ':id'=>(int) $id
+        );
+        //echo self::mergeSQLVars($q, $vars)."\n";
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
     private static function mergeSQLVars($sql, $vars) {
         foreach ($vars as $k => $v) {
             $sql = str_replace($k, (is_int($v))?$v:"'".$v."'", $sql);
