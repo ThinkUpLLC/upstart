@@ -24,7 +24,7 @@ class DispatchCrawlJobsController extends Controller {
             $result = self::getURLContents($api_call, $cfg->getValue('dispatch_http_username'),
             $cfg->getValue('dispatch_http_passwd'));
             $result_decoded = JSONDecoder::decode($result);
-            if (!isset($result_decoded->sucess)) {
+            if (!isset($result_decoded->success)) {
                 echo $api_call . '\n';
                 echo $result;
             }
