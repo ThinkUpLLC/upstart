@@ -22,6 +22,7 @@ class DispatchCrawlJobsController extends Controller {
         $api_call = self::buildAPICallURL($jobs_array);
         $result = self::getURLContents($api_call, $cfg->getValue('dispatch_http_username'),
         $cfg->getValue('dispatch_http_passwd'));
+        echo $api_call . '\n';
         echo $result;
 
         // update last_dispatched_date on stale user routes

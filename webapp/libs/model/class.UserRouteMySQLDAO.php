@@ -89,7 +89,7 @@ class UserRouteMySQLDAO extends PDODAO {
 
     public function getStaleRoutes($count=25) {
         $q  = "SELECT * FROM user_routes WHERE is_active = 1 ";
-        $q .= "ORDER BY last_dispatched ASC ";
+        $q .= "AND last_dispatched < TIME(DATE_SUB(NOW(), INTERVAL 1 HOUR)) ORDER BY last_dispatched ASC ";
         $q .= "LIMIT :limit;";
 
         $vars = array(
