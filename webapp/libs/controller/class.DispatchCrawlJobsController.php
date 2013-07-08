@@ -5,7 +5,7 @@ class DispatchCrawlJobsController extends Controller {
         $dao = new UserRouteMySQLDAO();
         $stale_routes = $dao->getStaleRoutes();
 
-        if (size($stale_routes) > 0 ) {
+        if (count($stale_routes) > 0 ) {
             $cfg = Config::getInstance();
             $jobs_array = array();
             // json_encode them
