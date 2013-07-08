@@ -16,4 +16,5 @@ Loader::register(array(
     dirname(__FILE__).'/extlibs/twitteroauth/'
 ));
 require_once 'extlibs/twitteroauth/twitteroauth.php';
+require_once 'extlibs/twitteroauth/OAuth.php';
 
