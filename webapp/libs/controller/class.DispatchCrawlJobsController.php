@@ -11,12 +11,12 @@ class DispatchCrawlJobsController extends Controller {
             // json_encode them
             foreach ($stale_routes as $route) {
                 $jobs_array[] = array(
-            'installation_name'=>$route['twitter_username'],
-            'timezone'=>$cfg->getValue('dispatch_timezone'),
-            'db_host'=>$cfg->getValue('db_host'),
-            'db_name'=>$route['database_name'],
-            'db_socket'=>$cfg->getValue('dispatch_socket'),
-            'db_port'=>$cfg->getValue('db_port')
+                    'installation_name'=>$route['twitter_username'],
+                    'timezone'=>$cfg->getValue('dispatch_timezone'),
+                    'db_host'=>$cfg->getValue('db_host'),
+                    'db_name'=>$route['database_name'],
+                    'db_socket'=>$cfg->getValue('dispatch_socket'),
+                    'db_port'=>$cfg->getValue('db_port')
                 );
             }
             // call Dispatch endpoint

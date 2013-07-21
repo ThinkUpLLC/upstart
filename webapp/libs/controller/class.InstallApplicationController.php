@@ -75,6 +75,7 @@ class InstallApplicationController extends Controller {
                         session_write_close();
                         $code = self::setUpAppFiles($route['twitter_username']);
                         $database_name = self::createDatabase($code);
+                        self::setUpDatabaseOptions($code);
                         list($admin_id, $admin_api_key, $owner_id, $owner_api_key) = self::createUsers($route['email']);
                         self::setUpServiceUser($owner_id, $route);
 
@@ -82,11 +83,6 @@ class InstallApplicationController extends Controller {
 
                         $dao->updateRoute($_GET['id'], $url, $database_name, $is_active=1);
                         self::output("Updated waitlist with link and db name");
-
-                        $crawler_url = $url.'crawler/rss.php?un='.urlencode($this->admin_email).'&as='
-                        .urlencode($admin_api_key);
-                        self::output("Ran crawler, make sure insights are generated ($crawler_url).");
-                        self::output(self::getURLContents($crawler_url));
 
                         self::output("Complete. Log in at <a href=\"$url\" target=\"new\">".$url."</a>.");
                     } catch (Exception $e) {
@@ -146,6 +142,15 @@ class InstallApplicationController extends Controller {
 
         self::output("Created new database thinkupstart_$code");
         return "thinkupstart_$code";
+    }
+
+    protected function setUpDatabaseOptions($code) {
+        $q = "INSERT INTO   thinkupstart_".$code.".tu_options (namespace, option_name, option_value, last_updated,
+        created)
+        VALUES ( 'application_options',  'server_name',  'www.thinkup.com', NOW(), NOW())";
+        PDODAO::$PDO->exec($q);
+
+        self::output("Added database options");
     }
 
     protected function createUsers($email) {

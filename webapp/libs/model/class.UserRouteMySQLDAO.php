@@ -211,8 +211,8 @@ class UserRouteMySQLDAO extends PDODAO {
     }
 
     public function insertOptionValue($namespace, $option_name, $option_value) {
-        $q = "INSERT INTO tu_options (namespace, option_name, option_value)
-        VALUES (:namespace, :option_name, :option_value)";
+        $q = "INSERT INTO tu_options (namespace, option_name, option_value, last_updated, created)
+        VALUES (:namespace, :option_name, :option_value, NOW(), NOW())";
 
         $vars = array(
           ':namespace' => $namespace,
