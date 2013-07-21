@@ -83,6 +83,7 @@ class InstallApplicationController extends Controller {
 
                         $dao->updateRoute($_GET['id'], $url, $database_name, $is_active=1);
                         self::output("Updated waitlist with link and db name");
+                        self::dispatchCrawlJob($code);
 
                         self::output("Complete. Log in at <a href=\"$url\" target=\"new\">".$url."</a>.");
                     } catch (Exception $e) {
@@ -146,8 +147,7 @@ class InstallApplicationController extends Controller {
 
     protected function setUpDatabaseOptions($code) {
         $q = "INSERT INTO   thinkupstart_".$code.".tu_options (namespace, option_name, option_value, last_updated,
-        created)
-        VALUES ( 'application_options',  'server_name',  'www.thinkup.com', NOW(), NOW())";
+        created) VALUES ( 'application_options',  'server_name',  'www.thinkup.com', NOW(), NOW())";
         PDODAO::$PDO->exec($q);
 
         self::output("Added database options");
@@ -187,27 +187,19 @@ class InstallApplicationController extends Controller {
         $dao->insertOptionValue('plugin_options-1', 'oauth_consumer_secret', $oauth_consumer_secret);
     }
 
-    /**
-     * Get the contents of a URL via GET
-     * @param str $URL
-     * @return str contents
-     */
-    public static function getURLContents($URL) {
-        $c = curl_init();
-        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($c, CURLOPT_URL, $URL);
-        $contents = curl_exec($c);
-        $status = curl_getinfo($c, CURLINFO_HTTP_CODE);
-        curl_close($c);
-
-        //echo "URL: ".$URL."\n";
-        //echo $contents;
-        //echo "STATUS: ".$status."\n";
-        if (isset($contents)) {
-            return $contents;
-        } else {
-            return null;
-        }
+    protected function dispatchCrawlJob($installation_name) {
+        $cfg = Config::getInstance();
+        $jobs_array = array();
+        $jobs_array[] = array(
+        'installation_name'=>$installation_name,
+        'timezone'=>$cfg->getValue('dispatch_timezone'),
+        'db_host'=>$cfg->getValue('db_host'),
+        'db_name'=>'thinkupstart_'.$installation_name,
+        'db_socket'=>$cfg->getValue('dispatch_socket'),
+        'db_port'=>$cfg->getValue('db_port'),
+        'high_priority'=>'true'
+        );
+        $result = Dispatcher::dispatch($jobs_array);
+        self::output("Dispatched crawl job");
     }
-
 }
