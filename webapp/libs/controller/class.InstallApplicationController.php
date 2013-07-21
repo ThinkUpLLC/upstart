@@ -79,7 +79,7 @@ class InstallApplicationController extends Controller {
                         list($admin_id, $admin_api_key, $owner_id, $owner_api_key) = self::createUsers($route['email']);
                         self::setUpServiceUser($owner_id, $route);
 
-                        $url = $this->url_base.strtolower($code)."/";
+                        $url = $this->url_base.$code."/";
 
                         $dao->updateRoute($_GET['id'], $url, $database_name, $is_active=1);
                         self::output("Updated waitlist with link and db name");

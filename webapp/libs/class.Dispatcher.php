@@ -3,7 +3,7 @@ class Dispatcher {
     public function dispatch($jobs) {
         $cfg = Config::getInstance();
         $api_call = self::buildAPICallURL($jobs);
-        echo $api_call;
+        //echo $api_call;
         $result = self::getURLContents($api_call, $cfg->getValue('dispatch_http_username'),
         $cfg->getValue('dispatch_http_passwd'));
         //print_r($result);
