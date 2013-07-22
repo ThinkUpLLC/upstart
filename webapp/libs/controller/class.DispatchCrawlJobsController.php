@@ -3,14 +3,15 @@ class DispatchCrawlJobsController extends Controller {
     public function control() {
         // get stalest active user routes
         $dao = new UserRouteMySQLDAO();
-        $stale_routes = $dao->getStaleRoutes();
 
         $cfg = Config::getInstance();
         $jobs_to_dispatch = $cfg->getValue('jobs_to_dispatch');
         $number_of_calls = $jobs_to_dispatch / 25;
         while ($number_of_calls > 0) {
+
+            $stale_routes = $dao->getStaleRoutes();
+
             if (count($stale_routes) > 0 ) {
-                $cfg = Config::getInstance();
                 $jobs_array = array();
                 // json_encode them
                 foreach ($stale_routes as $route) {
