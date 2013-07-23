@@ -60,7 +60,9 @@
   <div class="span4">
     <div id="logo"><a href="?p=1"><h1>Think<span>Up</span></h1></a></div>
 
-<h2>{$total|number_format} on waitlist</h2>
+<h2>{$total|number_format} waitlisted</h2>
+<h2>{$total_active_routes|number_format} installed</h2>
+<p>Stalest dispatched {$stalest_dispatch_time|relative_datetime} ago</p>
     <table class="table table-condensed table-hover">
       <tr>
           <th></th>

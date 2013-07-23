@@ -100,6 +100,22 @@ class UserRouteMySQLDAO extends PDODAO {
         return $this->getDataRowsAsArrays($ps);
     }
 
+    public function getStalestRouteLastDispatchTime() {
+        $q  = "SELECT last_dispatched FROM user_routes WHERE is_active=1 ORDER BY last_dispatched ASC LIMIT 1";
+        //echo self::mergeSQLVars($q, $vars);
+        $ps = $this->execute($q);
+        $result = $this->getDataRowAsArray($ps);
+        return $result['last_dispatched'];
+    }
+
+    public function getTotalActiveRoutes() {
+        $q  = "SELECT count(*) AS total FROM user_routes WHERE is_active = 1;";
+        //echo self::mergeSQLVars($q, $vars);
+        $ps = $this->execute($q);
+        $result = $this->getDataRowAsArray($ps);
+        return $result['total'];
+    }
+
     public function updateLastDispatchedTime($id) {
         $q  = "UPDATE user_routes SET last_dispatched = CURRENT_TIMESTAMP() ";
         $q .= "WHERE id = :id ";

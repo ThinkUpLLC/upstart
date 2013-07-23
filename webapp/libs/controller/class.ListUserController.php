@@ -16,6 +16,10 @@ class ListUserController extends Controller {
         $this->addToView('users', $users);
         $total = $dao->getListTotal();
         $this->addToView('total', $total);
+        $active_total = $dao->getTotalActiveRoutes();
+        $this->addToView('total_active_routes', $active_total);
+        $stalest_dispatch_time = $dao->getStalestRouteLastDispatchTime();
+        $this->addToView('stalest_dispatch_time', $stalest_dispatch_time);
         $this->addToView('page', $page);
         if (sizeof($users) == 51) {
             array_pop($users);
