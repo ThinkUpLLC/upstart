@@ -27,7 +27,7 @@ class Dispatcher {
         $result_decoded = JSONDecoder::decode($result);
         //print_r($result_decoded);
         if (isset($result_decoded->gearman_status->operations->crawl->total)) {
-            return $result_decoded->gearman_status->operations->crawl->total;
+            return (int) $result_decoded->gearman_status->operations->crawl->total;
         } else {
             return false;
         }
