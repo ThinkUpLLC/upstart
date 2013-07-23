@@ -12,6 +12,27 @@ class Dispatcher {
         return $result_decoded;
     }
 
+    public function getQueueSize() {
+        $cfg = Config::getInstance();
+        $base_url = $cfg->getValue('dispatch_endpoint');
+        $auth_token = $cfg->getValue('dispatch_auth_token');
+        $params = array('auth_token'=>$auth_token);
+        $query = http_build_query($params);
+        $api_call = $base_url.'monitor.php?'.$query;
+
+        //echo $api_call;
+        $result = self::getURLContents($api_call, $cfg->getValue('dispatch_http_username'),
+        $cfg->getValue('dispatch_http_passwd'));
+        //print_r($result);
+        $result_decoded = JSONDecoder::decode($result);
+        //print_r($result_decoded);
+        if (isset($result_decoded->gearman_status->operations->crawl->total)) {
+            return $result_decoded->gearman_status->operations->crawl->total;
+        } else {
+            return false;
+        }
+    }
+
     private function buildAPICallURL($jobs_array) {
         $cfg = Config::getInstance();
         $base_url = $cfg->getValue('dispatch_endpoint');
