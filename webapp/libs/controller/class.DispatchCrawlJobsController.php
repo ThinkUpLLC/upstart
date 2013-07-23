@@ -45,7 +45,7 @@ class DispatchCrawlJobsController extends Controller {
             if ($queue_size === false) {
                 echo "Problem with Dispatch; Upstart didn't dispatch jobs.";
             } else {
-                echo "Dispatch queue (".$queue_size.") exceeds threshold (".$queue_size.")";
+                //echo "Dispatch queue (".$queue_size.") exceeds threshold (".$jobs_to_dispatch.")";
             }
         }
     }
