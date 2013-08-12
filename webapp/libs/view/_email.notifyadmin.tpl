@@ -4,4 +4,9 @@
 
 Email address: {$waitlisted_email}
 
+{if $message}
+MESSAGE:
+{$message}
+{/if}
+
 <Upstart loves you>

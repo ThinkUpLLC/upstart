@@ -23,10 +23,10 @@ class UserRouteMySQLDAO extends PDODAO {
         } catch (PDOException $e) {
             $exception = $e->getMessage();
             if ((preg_match('/Duplicate entry/', $exception)>0) && (preg_match('/for key \'email\'/', $exception)>0)) {
-                return 1;
+                return false;
             }
         }
-        return $this->getUpdateCount($ps);
+        return $this->getInsertId($ps);
     }
 
     public function get($email, $twitter_user_id) {

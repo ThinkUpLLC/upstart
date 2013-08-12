@@ -65,18 +65,27 @@ class RouteUserController extends Controller {
                     //Update waitlisted user with user name, user id, tokens, is_verified, follower_count
                     $waitlisted_email = SessionCache::get('waitlisted_email');
                     $dao = new UserRouteMySQLDAO();
-                    $result = $dao->insert($waitlisted_email, $authed_twitter_user['user_name'],
+                    $route_id = $dao->insert($waitlisted_email, $authed_twitter_user['user_name'],
                     $authed_twitter_user['user_id'], $tok['oauth_token'], $tok['oauth_token_secret'],
                     $authed_twitter_user['is_verified'], $authed_twitter_user['follower_count'],
                     $authed_twitter_user['full_name']);
-                    if ($result > 0) {
+                    if ($route_id !== false) {
                         if (self::subscribeUserViaMailChimp($waitlisted_email)) {
                             $this->addSuccessMessage("Thanks, @".$authed_twitter_user['user_name'].
                             "!<br><br>You're on ThinkUp's waiting list. We'll let you know when your spot opens up." );
-                            self::notifyAdmins($authed_twitter_user, $waitlisted_email);
+                            //Let up on the email for now
+                            //self::notifyAdmins($authed_twitter_user, $waitlisted_email);
                         }
+                        //Install application
+                        try {
+                            $installer = new AppInstaller();
+                            $installer->install($route_id);
+                        } catch (Exception $e) {
+                            self::notifyAdmins($authed_twitter_user, $waitlisted_email, $e->getMessage());
+                        }
+
                     } else {
-                        $this->addErrorMessage("Something went wrong. Couldnt' add  @".
+                        $this->addErrorMessage("Something went wrong. Couldn't add  @".
                         $authed_twitter_user['user_name']." to the list." );
                     }
                 } else {
@@ -126,11 +135,12 @@ class RouteUserController extends Controller {
      * @param unknown_type $authed_twitter_user
      * @param unknown_type $waitlisted_email
      */
-    protected function notifyAdmins($authed_twitter_user, $waitlisted_email ) {
+    protected function notifyAdmins($authed_twitter_user, $waitlisted_email, $message ) {
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('twitter_user', $authed_twitter_user);
         $email_view_mgr->assign('waitlisted_email', $waitlisted_email);
+        $email_view_mgr->assign('message', $message);
         $message = $email_view_mgr->fetch('_email.notifyadmin.tpl');
         Mailer::mail('upstart@thinkup.com', '[Upstart] @'.$authed_twitter_user['user_name']." is on the waitlist",
         $message);
