@@ -11,6 +11,11 @@ class AppInstaller {
      */
     var $master_app_source_path;
     /**
+     * Chameleon copy of ThinkUp application files which run crawler.
+     * @var str
+     */
+    var $chameleon_app_source_path;
+    /**
      * Parent folder where the application data files for each installation will go.
      * @var str
      */
@@ -45,6 +50,7 @@ class AppInstaller {
         $cfg = Config::getInstance();
         $this->app_source_path = $cfg->getValue('app_source_path');
         $this->master_app_source_path = $cfg->getValue('master_app_source_path');
+        $this->chameleon_app_source_path = $cfg->getValue('chameleon_app_source_path');
         $this->data_path = $cfg->getValue('data_path');
         $this->admin_email = $cfg->getValue('admin_email');
         $this->admin_password = $cfg->getValue('admin_password');
@@ -285,6 +291,15 @@ class AppInstaller {
     public function getMasterInstallCommitHash() {
         $cur_dir = getcwd();
         chdir($this->master_app_source_path);
+        exec('git rev-parse --verify HEAD 2> /dev/null', $output);
+        $commit_hash = $output[0];
+        chdir($cur_dir);
+        return $commit_hash;
+    }
+
+    public function getChameleonInstallCommitHash() {
+        $cur_dir = getcwd();
+        chdir($this->chameleon_app_source_path);
         exec('git rev-parse --verify HEAD 2> /dev/null', $output);
         $commit_hash = $output[0];
         chdir($cur_dir);

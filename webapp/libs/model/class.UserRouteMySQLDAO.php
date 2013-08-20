@@ -100,6 +100,19 @@ class UserRouteMySQLDAO extends PDODAO {
         return $this->getDataRowsAsArrays($ps);
     }
 
+    public function getTotalInstallsToUpgrade($commit_hash) {
+        $q  = "SELECT count(*) as total FROM user_routes WHERE is_active = 1 ";
+        $q .= "AND commit_hash != :commit_hash;";
+
+        $vars = array(
+            ':commit_hash'=>$commit_hash
+        );
+        //echo self::mergeSQLVars($q, $vars);
+        $ps = $this->execute($q, $vars);
+        $result = $this->getDataRowAsArray($ps);
+        return $result['total'];
+    }
+
     public function getStaleRoutes($count=25) {
         $q  = "SELECT * FROM user_routes WHERE is_active = 1 ";
         $q .= "AND last_dispatched < DATE_SUB(NOW(), INTERVAL 1 HOUR) ORDER BY last_dispatched ASC ";

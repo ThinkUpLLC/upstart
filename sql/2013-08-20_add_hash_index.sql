@@ -1,0 +1,1 @@
+ALTER TABLE  user_routes ADD INDEX (  commit_hash );

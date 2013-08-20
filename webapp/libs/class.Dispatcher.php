@@ -12,6 +12,22 @@ class Dispatcher {
         return $result_decoded;
     }
 
+    public function getNagiosCheckStatus() {
+        $cfg = Config::getInstance();
+        $base_url = $cfg->getValue('dispatch_endpoint')."monitor.php";
+        $auth_token = $cfg->getValue('dispatch_auth_token');
+        $params = array('auth_token'=>$auth_token, 'nagios_check'=>1);
+        $query = http_build_query($params);
+        $api_call = $base_url.'?'.$query;
+        //echo $api_call;
+        $result = self::getURLContents($api_call, $cfg->getValue('dispatch_http_username'),
+        $cfg->getValue('dispatch_http_passwd'));
+        //print_r($result);
+        $result_decoded = JSONDecoder::decode($result);
+        //print_r($result_decoded);
+        return $result_decoded->status;
+    }
+
     public function getQueueSize() {
         $cfg = Config::getInstance();
         $base_url = $cfg->getValue('dispatch_endpoint');
