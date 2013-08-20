@@ -41,7 +41,7 @@ class AppInstaller {
      */
     var $echo_output;
 
-    public function install($route_id, $echo_output=false) {
+    public function __construct() {
         $cfg = Config::getInstance();
         $this->app_source_path = $cfg->getValue('app_source_path');
         $this->master_app_source_path = $cfg->getValue('master_app_source_path');
@@ -50,7 +50,12 @@ class AppInstaller {
         $this->admin_password = $cfg->getValue('admin_password');
         $this->user_password = $cfg->getValue('user_password');
         $this->url_base = $cfg->getValue('url_base');
+    }
+
+    public function install($route_id, $echo_output=false) {
         $this->echo_output = $echo_output;
+
+        $commit_hash = self::getMasterInstallCommitHash();
 
         if (isset($this->app_source_path)
         && isset($this->master_app_source_path)
@@ -77,16 +82,72 @@ class AppInstaller {
                         session_write_close();
                         $code = self::setUpAppFiles($route['twitter_username']);
                         $database_name = self::createDatabase($code);
+
+                        // Run upgrade.php --with-new-sql
+                        // Get in the right directory to exec the upgrade
+                        $cfg = Config::getInstance();
+                        $master_app_source_path = $cfg->getValue('master_app_source_path');
+                        if (!chdir($master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader') ) {
+                            throw new Exception("Could not chdir to ".
+                            $master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader');
+                        }
+
+                        // Initialize upgrade call parameters that are the same for every installation
+                        /*
+                        * {"installation_name":"steveklabnik", "timezone":"America/Los_Angeles", "db_host":"localhost",
+                        * "db_name":"thinkupstart_steveklabnik", "db_socket":"/tmp/mysql.sock",  "db_port":""}
+                        */
+                        $upgrade_params_array = array(
+                        'installation_name'=>$code,
+                        'timezone'=>$cfg->getValue('dispatch_timezone'),
+                        'db_host'=>$cfg->getValue('db_host'),
+                        'db_name'=>'thinkupstart_'.$code,
+                        'db_socket'=>$cfg->getValue('dispatch_socket'),
+                        'db_port'=>$cfg->getValue('db_port')
+                        );
+                        $upgrade_params_json = json_encode($upgrade_params_array);
+
+                        // Capture returned JSON
+                        if (!exec("php upgrade.php '".$upgrade_params_json."'", $upgrade_status_json) ) {
+                            throw new Exception('Unable to exec php upgrade.php '.$upgrade_params_json);
+                        }
+
+                        // print_r($upgrade_status_json);
+                        $upgrade_status_array = JSONDecoder::decode($upgrade_status_json[0], true);
+
+                        // DEBUG start
+                        //                        echo "php upgrade.php '".$upgrade_params_json."'";
+                        //                        print_r($upgrade_status_array);
+                        // DEBUG end
+
+                        self::switchToUpstartDatabase();
+
+                        if ($upgrade_status_array['migration_success'] === true) {
+                            $dao->insertLogEntry($route_id, $commit_hash, 1,
+                            $upgrade_status_array['migration_message']);
+                        } else {
+                            // If error, set inactive, and store message, status, commit in install_log
+                            $dao->setActive($route_id, 0);
+                            $dao->insertLogEntry($route_id, $commit_hash, 0,
+                            $upgrade_status_array['migration_message']);
+                        }
+                        // END Run upgrade.php --with-new-sql
+
+                        self::switchToInstallationDatabase($code);
                         self::setUpDatabaseOptions($code);
+
                         list($admin_id, $admin_api_key, $owner_id, $owner_api_key) = self::createUsers($route['email']);
                         self::setUpServiceUser($owner_id, $route);
 
                         $url = $this->url_base.$code."/";
 
-                        $dao->updateRoute($route_id, $url, $database_name, $is_active=1);
+                        self::switchToUpstartDatabase();
+
+                        $dao->updateRoute($route_id, $url, $database_name, $commit_hash, $is_active=1);
                         self::output("Updated waitlist with link and db name");
                         self::dispatchCrawlJob($code);
                         $dao->updateLastDispatchedTime($route_id);
+                        $dao->insertLogEntry($route_id, $commit_hash, 1, "Installed");
 
                         self::output("Complete. Log in at <a href=\"$url\" target=\"new\">".$url."</a>.");
                     } catch (Exception $e) {
@@ -106,6 +167,17 @@ class AppInstaller {
         if ($this->echo_output) {
             echo "<li>".$message."</li>";
         }
+    }
+
+    private static function switchToUpstartDatabase() {
+        $cfg = Config::getInstance();
+        $q = "USE ". $cfg->getValue('db_name');
+        PDODAO::$PDO->exec($q);
+    }
+
+    private static function switchToInstallationDatabase($code) {
+        $q = "USE ". 'thinkupstart_'.$code;
+        PDODAO::$PDO->exec($q);
     }
 
     protected function setUpAppFiles($path) {
@@ -208,5 +280,14 @@ class AppInstaller {
             self::output($api_call . '\n'. $result_decoded);
         }
         self::output("Dispatched crawl job");
+    }
+
+    public function getMasterInstallCommitHash() {
+        $cur_dir = getcwd();
+        chdir($this->master_app_source_path);
+        exec('git rev-parse --verify HEAD 2> /dev/null', $output);
+        $commit_hash = $output[0];
+        chdir($cur_dir);
+        return $commit_hash;
     }
 }

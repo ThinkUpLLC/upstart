@@ -75,7 +75,7 @@
         <td> {if $user.is_verified}<img src="../assets/img/twitter_verified_icon.png" />{/if}</td>
         <td><a href="https://twitter.com/intent/user?user_id={$user.twitter_user_id}" title="{$user.email}">@{$user.twitter_username}</a></td>
         <td>{$user.follower_count|number_format}</td>
-        <td>{if $user.route}<a href="{$user.route}" target="_new">Installed</a>{else}<a href="install.php?id={$user.id}" class="btn btn-success btn-mini">Install app</a>{/if}</td>
+        <td>{if $user.route}{if $user.is_active eq 0}<a href="install.php?id={$user.id}" class="btn btn-success btn-mini">Install app</a> <cite style="color:red" title="{$user.id} is inactive"}>x</cite>{else}<a href="{$user.route}" target="_new">Installed</a>{/if}{else}<a href="install.php?id={$user.id}" class="btn btn-success btn-mini">Install app</a>{/if}</td>
       </tr>
       {/foreach}
     </table>

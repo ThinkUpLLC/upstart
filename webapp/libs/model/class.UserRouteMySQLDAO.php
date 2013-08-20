@@ -58,15 +58,16 @@ class UserRouteMySQLDAO extends PDODAO {
         return $this->getDataRowAsArray($ps);
     }
 
-    public function updateRoute($id, $route, $database_name, $is_active=1) {
+    public function updateRoute($id, $route, $database_name, $commit_hash, $is_active=1) {
         $cfg = Config::getInstance();
         $db_name = $cfg->getValue('db_name');
         $q  = "USE ".$db_name."; UPDATE user_routes SET route = :route, database_name = :database_name, ";
-        $q .= "is_active = :is_active WHERE id = :id ";
+        $q .= "commit_hash = :commit_hash, is_active = :is_active WHERE id = :id ";
         $vars = array(
             ':id'=>$id,
             ':route'=>$route,
             ':database_name'=>$database_name,
+            ':commit_hash'=>$commit_hash,
             ':is_active'=>$is_active
         );
         $ps = $this->execute($q, $vars);
@@ -81,6 +82,18 @@ class UserRouteMySQLDAO extends PDODAO {
         $vars = array(
             ':start_on_record'=>$start_on_record,
             ':limit'=>$count
+        );
+        //echo self::mergeSQLVars($q, $vars);
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowsAsArrays($ps);
+    }
+
+    public function getInstallsToUpgrade($commit_hash) {
+        $q  = "SELECT * FROM user_routes WHERE is_active = 1 ";
+        $q .= "AND commit_hash != :commit_hash LIMIT 10;";
+
+        $vars = array(
+            ':commit_hash'=>$commit_hash
         );
         //echo self::mergeSQLVars($q, $vars);
         $ps = $this->execute($q, $vars);
@@ -128,6 +141,32 @@ class UserRouteMySQLDAO extends PDODAO {
         return $this->getUpdateCount($ps);
     }
 
+    public function updateCommitHash($id, $commit_hash) {
+        $q  = "UPDATE user_routes SET commit_hash = :commit_hash ";
+        $q .= "WHERE id = :id ";
+
+        $vars = array(
+            ':commit_hash'=>$commit_hash,
+            ':id'=>(int) $id
+        );
+        //echo self::mergeSQLVars($q, $vars)."\n";
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
+    public function setActive($id, $is_active) {
+        $q  = "UPDATE user_routes SET is_active = :is_active ";
+        $q .= "WHERE id = :id ";
+
+        $vars = array(
+            ':is_active'=> (int) $is_active,
+            ':id'=>(int) $id
+        );
+        //echo self::mergeSQLVars($q, $vars)."\n";
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
     private static function mergeSQLVars($sql, $vars) {
         foreach ($vars as $k => $v) {
             $sql = str_replace($k, (is_int($v))?$v:"'".$v."'", $sql);
@@ -163,6 +202,21 @@ class UserRouteMySQLDAO extends PDODAO {
         if ($this->profiler_enabled) Profiler::setDAOMethod(__METHOD__);
         $ps = $this->execute($q, $vars);
         return array($this->getInsertId($ps), $api_key);
+    }
+
+    public function insertLogEntry($user_route_id, $commit_hash, $success, $migration_message) {
+        $q = "INSERT INTO install_log (user_route_id, commit_hash, migration_success, migration_message) VALUES ";
+        $q .= "(:user_route_id, :commit_hash, :migration_success, :migration_message ); ";
+
+        $vars = array(
+            ':user_route_id'=>$user_route_id,
+            ':commit_hash'=>$commit_hash,
+            ':migration_success'=>$success,
+            ':migration_message'=>$migration_message,
+        );
+        if ($this->profiler_enabled) Profiler::setDAOMethod(__METHOD__);
+        $ps = $this->execute($q, $vars);
+        return $this->getInsertId($ps);
     }
 
     /**
