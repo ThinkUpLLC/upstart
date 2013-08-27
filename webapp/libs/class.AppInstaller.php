@@ -187,6 +187,8 @@ class AppInstaller {
     }
 
     protected function setUpAppFiles($path) {
+        $path = self::subdomainifyPath($path);
+
         if (is_dir ($this->app_source_path . $path )) {
             $unique = uniqid();
             $path .= substr($unique, strlen($unique)-4, strlen($unique));
@@ -210,6 +212,21 @@ class AppInstaller {
             self::output("Created new data directory " . $this->data_path . $path);
         } else {
             throw new Exception("Could not create new data directory");
+        }
+        return $path;
+    }
+
+    /**
+     * Make sure that path is valid characters for subdomains - not capital letters or special characters.
+     * @param str $path
+     * @return str $path
+     */
+    protected function subdomainifyPath($path) {
+        $path = strtolower($path);
+        $path = preg_replace("/[^a-zA-Z0-9\s]/", "", $path);
+        if ($path == '') {
+            $unique = uniqid();
+            $path .= substr($unique, strlen($unique)-4, strlen($unique));
         }
         return $path;
     }
