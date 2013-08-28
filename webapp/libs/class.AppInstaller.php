@@ -36,10 +36,10 @@ class AppInstaller {
      */
     var $user_password;
     /**
-     * Base URL for installations.
+     * User installation URL
      * @var str
      */
-    var $url_base;
+    var $user_installation_url;
     /**
      * Whether or not to echo output
      * @var bool
@@ -55,7 +55,7 @@ class AppInstaller {
         $this->admin_email = $cfg->getValue('admin_email');
         $this->admin_password = $cfg->getValue('admin_password');
         $this->user_password = $cfg->getValue('user_password');
-        $this->url_base = $cfg->getValue('url_base');
+        $this->user_installation_url = $cfg->getValue('user_installation_url');
     }
 
     public function install($route_id, $echo_output=false) {
@@ -69,7 +69,7 @@ class AppInstaller {
         && isset($this->admin_email)
         && isset($this->admin_password)
         && isset($this->user_password)
-        && isset($this->url_base)) {
+        && isset($this->user_installation_url)) {
 
             $route = null;
             if (isset($route_id)) {
@@ -145,7 +145,7 @@ class AppInstaller {
                         list($admin_id, $admin_api_key, $owner_id, $owner_api_key) = self::createUsers($route['email']);
                         self::setUpServiceUser($owner_id, $route);
 
-                        $url = $this->url_base.$code."/";
+                        $url = str_replace ("{user}", $code, $this->user_installation_url);
 
                         self::switchToUpstartDatabase();
 
@@ -244,8 +244,10 @@ class AppInstaller {
     }
 
     protected function setUpDatabaseOptions($code) {
+        $server_name = str_replace ("{user}", $code, $this->user_installation_url);
+        $server_name = str_replace ("http://", '', $server_name);
         $q = "INSERT INTO   thinkupstart_".$code.".tu_options (namespace, option_name, option_value, last_updated,
-        created) VALUES ( 'application_options',  'server_name',  'www.thinkup.com', NOW(), NOW())";
+        created) VALUES ( 'application_options',  'server_name',  '". $server_name .".thinkup.com', NOW(), NOW())";
         PDODAO::$PDO->exec($q);
 
         self::output("Added database options");
