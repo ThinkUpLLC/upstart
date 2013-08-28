@@ -246,8 +246,9 @@ class AppInstaller {
     protected function setUpDatabaseOptions($code) {
         $server_name = str_replace ("{user}", $code, $this->user_installation_url);
         $server_name = str_replace ("http://", '', $server_name);
+        $server_name = str_replace ("/", '', $server_name);
         $q = "INSERT INTO   thinkupstart_".$code.".tu_options (namespace, option_name, option_value, last_updated,
-        created) VALUES ( 'application_options',  'server_name',  '". $server_name .".thinkup.com', NOW(), NOW())";
+        created) VALUES ( 'application_options',  'server_name',  '". $server_name ."', NOW(), NOW())";
         PDODAO::$PDO->exec($q);
 
         self::output("Added database options");
