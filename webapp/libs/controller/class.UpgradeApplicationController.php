@@ -17,7 +17,11 @@ class UpgradeApplicationController extends Controller {
             // Check to make sure all Dispatch workers are shut down
             $worker_status = Dispatcher::getNagiosCheckStatus();
             $this->addToView('worker_status', $worker_status);
-
+            if (strrpos($worker_status, 'NOT OK') !== false) {
+                $this->addToView('workers_ok', false);
+            } else {
+                $this->addToView('workers_ok', true);
+            }
             // Check if master app and chameleon are at same hash
             $chameleon_commit_hash = $installer->getChameleonInstallCommitHash();
             $this->addToView('chameleon_commit_hash', $chameleon_commit_hash);
@@ -28,7 +32,7 @@ class UpgradeApplicationController extends Controller {
 
             // Only show Go button if installs are in sync and there are upgrades needed
             if ($total_installs_to_upgrade > 0 && $chameleon_commit_hash == $commit_hash
-            && strrpos($worker_status, 'running worker') === false) {
+            && strrpos($worker_status, 'NOT OK') !== false) {
                 $show_go_button = true;
             }
             $this->addToView('show_go_button', $show_go_button);
