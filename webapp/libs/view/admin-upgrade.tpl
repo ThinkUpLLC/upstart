@@ -61,12 +61,12 @@
     <div id="logo"><h1>Think<span>Up</span>grader</h1> </div>
 
 {if $smarty.get.upgrade eq 'true'}
-<p><span style="color:green;font-weight:bold">{$successful_upgrades} successful</span> {if $failed_upgrades > 0}and <span style="color:red">{$failed_upgrades} failed</span> {/if}upgrades complete.</p>
+<p><span style="color:green;font-weight:bold">{$successful_upgrades|number_format} successful</span> {if $failed_upgrades > 0}and <span style="color:red">{$failed_upgrades} failed</span> {/if}upgrades complete.</p>
 <p>Don't forget to restart Dispatch's workers!</p>
 {else}
 <p>Steps to run upgrader:</p>
 <ol>
-<li{if $total_installs_to_upgrade eq 0} class="alert alert-danger"{/if}><span style="font-weight:bold">{$total_installs_to_upgrade} installations</span> need an upgrade.</li>
+<li{if $total_installs_to_upgrade eq 0} class="alert alert-danger"{/if}><span style="font-weight:bold">{$total_installs_to_upgrade|number_format} installations</span> need an upgrade.</li>
 <li {if $workers_ok} class="alert alert-danger"{/if}>Shut down Dispatch workers. Current worker status:<br /> <b>{$worker_status}</b></li>
 <li>Update master and chameleon installations via git pull. 
 <br/>
