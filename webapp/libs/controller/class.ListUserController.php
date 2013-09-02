@@ -28,6 +28,13 @@ class ListUserController extends Controller {
         if ($page > 1) {
             $this->addToView('prev_page', $page-1);
         }
+        $worker_status = Dispatcher::getNagiosCheckStatus();
+        if (strrpos($worker_status, 'NOT OK') !== false) {
+            $this->addToView('workers_ok', false);
+        } else {
+            $this->addToView('workers_ok', true);
+        }
+        $this->addToView('worker_status', $worker_status);
 
         return $this->generateView();
     }
