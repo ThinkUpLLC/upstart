@@ -70,7 +70,7 @@
           <th>Username</th>
           <th>Waitlisted</th>
           <th>Followers</th>
-          <th>Installation Status</th>
+          <th>Dispatched</th>
       </tr>
       {foreach $users as $user}
       <tr>
@@ -78,7 +78,7 @@
         <td><a href="https://twitter.com/intent/user?user_id={$user.twitter_user_id}" title="{$user.email} waitlisted {$user.date_waitlisted}">@{$user.twitter_username}</a></td>
         <td>{$user.date_waitlisted|relative_datetime}&nbsp;ago</td>
         <td style="text-align:right">{$user.follower_count|number_format}</td>
-        <td>{if $user.route}{if $user.is_active eq 0}<a href="install.php?id={$user.id}" class="btn btn-success btn-mini">Install app</a> <cite style="color:red" title="{$user.id} is inactive"}>x</cite>{else}<a href="{$user.route}" target="_new">{$user.route}</a>{/if}{else}<a href="install.php?id={$user.id}" class="btn btn-success btn-mini">Install app</a>{/if}</td>
+        <td>{if $user.route}{if $user.is_active eq 0}<a href="install.php?id={$user.id}" class="btn btn-success btn-mini">Install app</a> <cite style="color:red" title="{$user.id} is inactive"}>x</cite>{else}<a href="{$user.route}" target="_new">{$user.last_dispatched|relative_datetime} ago</a>{/if}{else}<a href="install.php?id={$user.id}" class="btn btn-success btn-mini">Install app</a>{/if}</td>
       </tr>
       {/foreach}
     </table>
