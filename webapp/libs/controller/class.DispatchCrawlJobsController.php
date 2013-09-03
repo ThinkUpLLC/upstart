@@ -12,7 +12,13 @@ class DispatchCrawlJobsController extends Controller {
             $number_of_calls = $jobs_to_dispatch / 25;
             while ($number_of_calls > 0) {
 
-                $stale_routes = $dao->getStaleRoutes();
+                $stale_routes = $dao->getStaleRoutes10kAndUp();
+                if (count($stale_routes) == 0) {
+                    $stale_routes = $dao->getStaleRoutes1kTo10k();
+                }
+                if (count($stale_routes) == 0) {
+                    $stale_routes = $dao->getStaleRoutes();
+                }
 
                 if (count($stale_routes) > 0 ) {
                     $jobs_array = array();
