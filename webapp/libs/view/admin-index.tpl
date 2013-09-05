@@ -62,7 +62,10 @@
 
 <h2>{$total|number_format} waitlisted</h2>
 <h2>{$total_active_routes|number_format} installed</h2>
-<p>Stalest dispatched {$stalest_dispatch_time|relative_datetime} ago</p>
+<p>Stalest dispatched:<br>
+10k+ followers: {$stalest_dispatch_time_10k_up|relative_datetime} ago<br>
+1k to 10k followers: {$stalest_dispatch_time_1k_to_10k|relative_datetime} ago<br>
+< 1k: {$stalest_dispatch_time|relative_datetime} ago</p>
 <p {if !$workers_ok} class="alert alert-danger"{/if}>Dispatch status: <b>{$worker_status}</b></p>
     <table class="table table-condensed table-hover">
       <tr>

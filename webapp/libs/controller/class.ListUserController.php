@@ -18,8 +18,14 @@ class ListUserController extends Controller {
         $this->addToView('total', $total);
         $active_total = $dao->getTotalActiveRoutes();
         $this->addToView('total_active_routes', $active_total);
+
+        $stalest_dispatch_time = $dao->getStalestRoute10kAndUpLastDispatchTime();
+        $this->addToView('stalest_dispatch_time_10k_up', $stalest_dispatch_time);
+        $stalest_dispatch_time = $dao->getStalestRoute1kTo10kLastDispatchTime();
+        $this->addToView('stalest_dispatch_time_1k_to_10k', $stalest_dispatch_time);
         $stalest_dispatch_time = $dao->getStalestRouteLastDispatchTime();
         $this->addToView('stalest_dispatch_time', $stalest_dispatch_time);
+
         $this->addToView('page', $page);
         if (sizeof($users) == 51) {
             array_pop($users);
