@@ -115,7 +115,7 @@ class UserRouteMySQLDAO extends PDODAO {
 
     public function getStaleRoutes($count=25) {
         $q  = "SELECT * FROM user_routes WHERE is_active = 1 ";
-        $q .= "AND last_dispatched < DATE_SUB(NOW(), INTERVAL 12 HOUR) ORDER BY last_dispatched ASC ";
+        $q .= "AND last_dispatched < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 12 HOUR) ORDER BY last_dispatched ASC ";
         $q .= "LIMIT :limit;";
 
         $vars = array(
@@ -128,7 +128,7 @@ class UserRouteMySQLDAO extends PDODAO {
 
     public function getStaleRoutes10kAndUp($count=25) {
         $q  = "SELECT * FROM user_routes WHERE is_active = 1 AND follower_count >= 10000 ";
-        $q .= "AND last_dispatched < DATE_SUB(NOW(), INTERVAL 2 HOUR) ORDER BY last_dispatched ASC ";
+        $q .= "AND last_dispatched < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 2 HOUR) ORDER BY last_dispatched ASC ";
         $q .= "LIMIT :limit;";
 
         $vars = array(
@@ -141,7 +141,7 @@ class UserRouteMySQLDAO extends PDODAO {
 
     public function getStaleRoutes1kTo10k($count=25) {
         $q  = "SELECT * FROM user_routes WHERE is_active = 1 AND (follower_count < 10000 AND follower_count >= 1000) ";
-        $q .= "AND last_dispatched < DATE_SUB(NOW(), INTERVAL 4 HOUR) ORDER BY last_dispatched ASC ";
+        $q .= "AND last_dispatched < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 4 HOUR) ORDER BY last_dispatched ASC ";
         $q .= "LIMIT :limit;";
 
         $vars = array(
