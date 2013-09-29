@@ -13,7 +13,10 @@ Loader::register(array(
     dirname(__FILE__).'/libs/',
     dirname(__FILE__).'/libs/model/',
     dirname(__FILE__).'/libs/controller/',
-    dirname(__FILE__).'/extlibs/twitteroauth/'
+    dirname(__FILE__).'/libs/dao/',
+    dirname(__FILE__).'/libs/exceptions/',
+    dirname(__FILE__).'/extlibs/twitteroauth/',
+    dirname(__FILE__).'/extlibs/mailchimp/'
 ));
 require_once 'extlibs/twitteroauth/twitteroauth.php';
 require_once 'extlibs/twitteroauth/OAuth.php';
