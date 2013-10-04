@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GetTransactionsForSubscriptionResponse xmlns="http://fps.amazonaws.com/doc/2010-08-28/">
+  <!--Optional:-->
+  <GetTransactionsForSubscriptionResult>
+    <!--Zero or more repetitions:-->
+    <SubscriptionTransaction>
+      <TransactionId>string</TransactionId>
+      <TransactionDate>2008-09-29T01:49:45</TransactionDate>
+      <TransactionSerialNumber>100</TransactionSerialNumber>
+      <TransactionAmount>
+        <CurrencyCode>USD</CurrencyCode>
+        <Value>string</Value>
+      </TransactionAmount>
+      <Description>string</Description>
+      <TransactionStatus>Cancelled</TransactionStatus>
+    </SubscriptionTransaction>
+  </GetTransactionsForSubscriptionResult>
+  <ResponseMetadata>
+    <RequestId>string</RequestId>
+  </ResponseMetadata>
+</GetTransactionsForSubscriptionResponse>

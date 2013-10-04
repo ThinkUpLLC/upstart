@@ -20,4 +20,4 @@ Loader::register(array(
 ));
 require_once 'extlibs/twitteroauth/twitteroauth.php';
 require_once 'extlibs/twitteroauth/OAuth.php';
-
+require_once 'extlibs/amazon/CBUI/CBUIRecurringTokenPipeline.php';
