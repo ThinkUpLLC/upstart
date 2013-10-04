@@ -133,13 +133,16 @@
             <div class="alert alert-success">{$success_msg}</div>
             {/if}
 
+            {if $do_show_form eq true}
             <h2>Create Your ThinkUp Account</h2>
+            {include file="_usermessage.tpl" field="email"}
             <input type="text" class="input-block-level" placeholder="Email address" name="email" value="{$prefill_email}">
+            {include file="_usermessage.tpl" field="password"}
             <input type="password" class="input-block-level" placeholder="Password: 8 alphanumeric characters" name="password" value="">
 
             <button class="btn btn-large btn-primary btn-info big-btn" type="submit">Sign in with Twitter</button>
             <button class="btn btn-large btn-primary btn-info big-btn" type="submit">Sign in with Facebook</button>
-
+            {/if}
           </form>
 <h2>Debug</h2>
 <p>Amazon caller_reference = {$amazon_caller_reference}</p>

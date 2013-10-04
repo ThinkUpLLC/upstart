@@ -3,11 +3,6 @@
  * Create interface to Amazon Flexible Payment System
  */
 class SubscribeController extends Controller {
-    /*
-     * Subscription level names
-     */
-    var $levels = array('member'=>60, 'developer'=>120, 'executive'=>996);
-
     public function control() {
         $this->setViewTemplate('subscribe-index.tpl');
         $click_dao = new ClickMySQLDAO();
@@ -16,7 +11,7 @@ class SubscribeController extends Controller {
         $this->addToView('caller_reference', $caller_reference);
         SessionCache::put('caller_reference', $caller_reference);
 
-        foreach ($this->levels as $level=>$amount) {
+        foreach (SignUpController::$subscription_levels as $level=>$amount) {
             $callback_url = UpstartHelper::getApplicationURL().'newsubscriber.php?l='.$level;
             $subscribe_url = self::getAmazonFPSURL($caller_reference, $callback_url, $amount);
             $this->addToView('subscribe_'.$level.'_url', $subscribe_url);
@@ -45,6 +40,7 @@ class SubscribeController extends Controller {
         $pipeline->addParameter("paymentMethod", "CC"); //accept only credit card payments
         $pipeline->addParameter("paymentReason", "ThinkUp monthly subscription");
         $pipeline->addParameter("validityStart", date("U", mktime(12, 0, 0, 1, 15, 2014)));
+        //$pipeline->addParameter("validityStart", date("U", mktime(12, 0, 0, 10, 4, 2013)));
         $pipeline->addParameter("cobrandingUrl",
         UpstartHelper::getApplicationURL(false, false, false)."assets/img/thinkup-logo-transparent.png");
         $pipeline->addParameter("websiteDescription", "ThinkUp");
