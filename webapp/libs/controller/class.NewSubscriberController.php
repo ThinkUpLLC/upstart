@@ -36,6 +36,7 @@ class NewSubscriberController extends SignUpController {
                 $do_show_form = true;
             }
         } else { //user has returned from Amazon
+            $internal_caller_reference = SessionCache::get('caller_reference');
             if (isset($internal_caller_reference) && $this->isAmazonResponseValid($internal_caller_reference)) {
                 $amazon_caller_reference = $_GET['callerReference'];
                 $this->addToView('amazon_caller_reference', $amazon_caller_reference);
