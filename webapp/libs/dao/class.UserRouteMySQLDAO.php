@@ -23,7 +23,7 @@ class UserRouteMySQLDAO extends PDODAO {
         } catch (PDOException $e) {
             $exception = $e->getMessage();
             if ((preg_match('/Duplicate entry/', $exception)>0) && (preg_match('/for key \'email\'/', $exception)>0)) {
-                return false;
+                throw new DuplicateUserRouteException();
             }
         }
         return $this->getInsertId($ps);

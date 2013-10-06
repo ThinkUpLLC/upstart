@@ -65,17 +65,11 @@ class RouteUserController extends SignUpController {
                     //Update waitlisted user with user name, user id, tokens, is_verified, follower_count
                     $waitlisted_email = SessionCache::get('waitlisted_email');
                     $dao = new UserRouteMySQLDAO();
-                    $route_id = $dao->insert($waitlisted_email, $authed_twitter_user['user_name'],
-                    $authed_twitter_user['user_id'], $tok['oauth_token'], $tok['oauth_token_secret'],
-                    $authed_twitter_user['is_verified'], $authed_twitter_user['follower_count'],
-                    $authed_twitter_user['full_name']);
-                    if ($route_id !== false) {
-                        if (self::subscribeUserViaMailChimp($waitlisted_email)) {
-                            $this->addSuccessMessage("Thanks, @".$authed_twitter_user['user_name'].
-                            "!<br><br>You're on ThinkUp's waiting list. We'll let you know when your spot opens up." );
-                            //Let up on the email for now
-                            //self::notifyAdmins($authed_twitter_user, $waitlisted_email);
-                        }
+                    try {
+                        $route_id = $dao->insert($waitlisted_email, $authed_twitter_user['user_name'],
+                        $authed_twitter_user['user_id'], $tok['oauth_token'], $tok['oauth_token_secret'],
+                        $authed_twitter_user['is_verified'], $authed_twitter_user['follower_count'],
+                        $authed_twitter_user['full_name']);
                         //Install application
                         try {
                             $installer = new AppInstaller();
@@ -83,10 +77,15 @@ class RouteUserController extends SignUpController {
                         } catch (Exception $e) {
                             self::notifyAdmins($authed_twitter_user, $waitlisted_email, $e->getMessage());
                         }
-
-                    } else {
-                        $this->addErrorMessage("Something went wrong. Couldn't add  @".
-                        $authed_twitter_user['user_name']." to the list." );
+                    } catch (DuplicateUserRouteException $e ) {
+                        $this->addSuccessMessage("Thanks, @".$authed_twitter_user['user_name'].
+                        "!<br><br>You're on ThinkUp's waiting list. We'll let you know when your spot opens up." );
+                    }
+                    if (self::subscribeUserViaMailChimp($waitlisted_email)) {
+                        $this->addSuccessMessage("Thanks, @".$authed_twitter_user['user_name'].
+                            "!<br><br>You're on ThinkUp's waiting list. We'll let you know when your spot opens up." );
+                        //Let up on the email for now
+                        //self::notifyAdmins($authed_twitter_user, $waitlisted_email);
                     }
                 } else {
                     $this->addErrorMessage("Oops! Something went wrong. Twitter didn't return a valid user.");
