@@ -24,11 +24,11 @@
  */
 abstract class Amazon_FPS_CBUIPipeline {
 
-	const SIGNATURE_KEYNAME = "signature";
-	const SIGNATURE_METHOD_KEYNAME = "signatureMethod";
-	const SIGNATURE_VERSION_KEYNAME = "signatureVersion";
-	const HMAC_SHA1_ALGORITHM = "HmacSHA1";
-	const HMAC_SHA256_ALGORITHM = "HmacSHA256";
+    const SIGNATURE_KEYNAME = "signature";
+    const SIGNATURE_METHOD_KEYNAME = "signatureMethod";
+    const SIGNATURE_VERSION_KEYNAME = "signatureVersion";
+    const HMAC_SHA1_ALGORITHM = "HmacSHA1";
+    const HMAC_SHA256_ALGORITHM = "HmacSHA256";
 
     const HTTP_GET_METHOD = "GET";
 
@@ -124,7 +124,7 @@ abstract class Amazon_FPS_CBUIPipeline {
             $algorithm = $parameters[self::SIGNATURE_METHOD_KEYNAME];
             $stringToSign = self::_calculateStringToSignV2($parameters, $httpMethod, $host, $requestURI);
         } else {
-		throw new Exception("Invalid Signature Version Specified.");
+            throw new Exception("Invalid Signature Version Specified.");
         }
         return self::_sign($stringToSign, $this->awsSecretKey, $algorithm);
     }
@@ -136,21 +136,21 @@ abstract class Amazon_FPS_CBUIPipeline {
      */
     private static function _calculateStringToSignV2(array $parameters, $httpMethod, $hostHeader, $requestURI) {
         if ($httpMethod == null) {
-        	throw new Exception("HttpMethod cannot be null");
+            throw new Exception("HttpMethod cannot be null");
         }
         $data = $httpMethod;
         $data .= "\n";
 
         if ($hostHeader == null) {
-        	$hostHeader = "";
+            $hostHeader = "";
         }
         $data .= $hostHeader;
         $data .= "\n";
 
         if (!isset ($requestURI)) {
-        	$requestURI = "/";
+            $requestURI = "/";
         }
-		$uriencoded = implode("/", array_map(array("Amazon_FPS_CBUIPipeline", "_urlencode"), explode("/", $requestURI)));
+        $uriencoded = implode("/", array_map(array("Amazon_FPS_CBUIPipeline", "_urlencode"), explode("/", $requestURI)));
         $data .= $uriencoded;
         $data .= "\n";
 
@@ -160,7 +160,7 @@ abstract class Amazon_FPS_CBUIPipeline {
     }
 
     private static function _urlencode($value) {
-		return str_replace('%7E', '~', rawurlencode($value));
+        return str_replace('%7E', '~', rawurlencode($value));
     }
 
     /**
@@ -186,7 +186,7 @@ abstract class Amazon_FPS_CBUIPipeline {
             throw new Exception ("Non-supported signing method specified");
         }
         return base64_encode(
-            hash_hmac($hash, $data, $key, true)
+        hash_hmac($hash, $data, $key, true)
         );
     }
 
@@ -217,20 +217,20 @@ abstract class Amazon_FPS_CBUIPipeline {
     }
 
     private function  getHostHeader($endPoint) {
-		$url = parse_url($endPoint);
-		$host = $url['host'];
-		$scheme = strtoupper($url['scheme']);
-		if (isset($url['port'])) {
-			$port = $url['port'];
-			if (("HTTPS" == $scheme && $port != 443) ||  ("HTTP" == $scheme && $port != 80)) {
-				return strtolower($host) . ":" . $port;
-			}
-		}
-		return strtolower($host);
-	}
+        $url = parse_url($endPoint);
+        $host = $url['host'];
+        $scheme = strtoupper($url['scheme']);
+        if (isset($url['port'])) {
+            $port = $url['port'];
+            if (("HTTPS" == $scheme && $port != 443) ||  ("HTTP" == $scheme && $port != 80)) {
+                return strtolower($host) . ":" . $port;
+            }
+        }
+        return strtolower($host);
+    }
 
     private function getRequestURI($endPoint) {
-		$url = parse_url($endPoint);
+        $url = parse_url($endPoint);
         $requestURI = $url['path'];
         if (!isset($requestURI)) {
             $requestURI = "/";
@@ -270,7 +270,7 @@ abstract class Amazon_FPS_CBUIPipeline {
      */
     public function getURL() {
         $this->validateCommonMandatoryParameters($this->parameters);
-		$this->validateParameters($this->parameters);
-		return $this->constructUrl($this->parameters);
+        $this->validateParameters($this->parameters);
+        return $this->constructUrl($this->parameters);
     }
 }

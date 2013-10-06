@@ -10,14 +10,24 @@ if ( version_compare(PHP_VERSION, '5.2', '<') ) {
 //Register our lazy class loader
 require_once 'extlibs/isosceles/libs/model/class.Loader.php';
 Loader::register(array(
-    dirname(__FILE__).'/libs/',
-    dirname(__FILE__).'/libs/model/',
-    dirname(__FILE__).'/libs/controller/',
-    dirname(__FILE__).'/libs/dao/',
-    dirname(__FILE__).'/libs/exceptions/',
-    dirname(__FILE__).'/extlibs/twitteroauth/',
-    dirname(__FILE__).'/extlibs/mailchimp/'
+dirname(__FILE__).'/libs/',
+dirname(__FILE__).'/libs/model/',
+dirname(__FILE__).'/libs/controller/',
+dirname(__FILE__).'/libs/dao/',
+dirname(__FILE__).'/libs/exceptions/',
+dirname(__FILE__).'/extlibs/twitteroauth/',
+dirname(__FILE__).'/extlibs/mailchimp/'
 ));
 require_once 'extlibs/twitteroauth/twitteroauth.php';
 require_once 'extlibs/twitteroauth/OAuth.php';
+
 require_once 'extlibs/amazon/CBUI/CBUIRecurringTokenPipeline.php';
+
+require_once 'extlibs/amazon/FPS/Exception.php';
+require_once 'extlibs/amazon/FPS/Interface.php';
+require_once 'extlibs/amazon/FPS/Client.php';
+require_once 'extlibs/amazon/FPS/Model.php';
+require_once 'extlibs/amazon/FPS/Model/VerifySignatureRequest.php';
+require_once 'extlibs/amazon/FPS/Model/VerifySignatureResponse.php';
+require_once 'extlibs/amazon/FPS/Model/VerifySignatureResult.php';
+require_once 'extlibs/amazon/FPS/Model/ResponseMetadata.php';

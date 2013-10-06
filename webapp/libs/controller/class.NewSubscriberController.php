@@ -65,7 +65,7 @@ class NewSubscriberController extends SignUpController {
                 SessionCache::put('token_id', $_GET['tokenID']);
             } else {
                 //@TODO Link Please try again to the subscribe page
-                $this->addErrorMessage("Oops! Something went wrong during Amazon's redirect. Please try again.");
+                $this->addErrorMessage("Oops! This URL is invalid. Please try again.");
             }
         } elseif ($this->hasUserReturnedFromTwitter() || $this->hasUserReturnedFromFacebook()) {
             //@TODO Verify that transactions.token_id exists in database, show error if not.
@@ -153,11 +153,74 @@ class NewSubscriberController extends SignUpController {
 
     private function isAmazonResponseValid($internal_caller_reference) {
         //Check inputs match internal rules
-        if ($internal_caller_reference == $_GET['callerReference']
-        && (array_key_exists($_GET["l"], SignUpController::$subscription_levels))) {
-            return true;
-        } else {
-            return false;
+        return ($internal_caller_reference == $_GET['callerReference']
+        && (array_key_exists($_GET["l"], SignUpController::$subscription_levels))
+        && $this->isAmazonSignatureValid());
+    }
+
+    private function isAmazonSignatureValid() {
+        $cfg = Config::getInstance();
+        $AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
+        $AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
+
+        $service = new Amazon_FPS_Client($AWS_ACCESS_KEY_ID, $AWS_SECRET_ACCESS_KEY);
+
+        try {
+            $endpoint_url = UpstartHelper::getApplicationURL().'newsubscriber.php?l='.$_GET['l'];
+            $request_params_str = '';
+            foreach ($_GET as $key => $value) {
+                if ($key !== "l") {
+                    $request_params_str .= urlencode($key)."=".urlencode($value)."&";
+                }
+            }
+            $request_array = array('UrlEndPoint'=>$endpoint_url, 'HttpParameters'=>$request_params_str);
+            //print_r($request_array);
+            $request_object = new Amazon_FPS_Model_VerifySignatureRequest($request_array);
+            //            echo "<pre>";
+            //            print_r($request_object);
+            //            echo "</pre>";
+            $response = $service->verifySignature($request_object);
+
+            $verifySignatureResult = $response->getVerifySignatureResult();
+            $result = $verifySignatureResult->getVerificationStatus();
+            if ($result == 'Success') {
+                return true;
+            }
+
+            /*
+             echo ("Service Response\n");
+             echo ("=============================================================================\n");
+
+             echo("        VerifySignatureResponse\n");
+             if ($response->isSetVerifySignatureResult()) {
+             echo("            VerifySignatureResult\n");
+             $verifySignatureResult = $response->getVerifySignatureResult();
+             if ($verifySignatureResult->isSetVerificationStatus())
+             {
+             echo("                VerificationStatus\n");
+             echo("                    " . $verifySignatureResult->getVerificationStatus() . "\n");
+             }
+             }
+             if ($response->isSetResponseMetadata()) {
+             echo("            ResponseMetadata\n");
+             $responseMetadata = $response->getResponseMetadata();
+             if ($responseMetadata->isSetRequestId())
+             {
+             echo("                RequestId\n");
+             echo("                    " . $responseMetadata->getRequestId() . "\n");
+             }
+             }
+             */
+        } catch (Amazon_FPS_Exception $ex) {
+            /*
+             echo("Caught Exception: " . $ex->getMessage() . "\n");
+             echo("Response Status Code: " . $ex->getStatusCode() . "\n");
+             echo("Error Code: " . $ex->getErrorCode() . "\n");
+             echo("Error Type: " . $ex->getErrorType() . "\n");
+             echo("Request ID: " . $ex->getRequestId() . "\n");
+             echo("XML: " . $ex->getXML() . "\n");
+             */
         }
+        return false;
     }
 }

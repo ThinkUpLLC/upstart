@@ -22,7 +22,7 @@
 /**
  *  @see Amazon_FPS_Interface
  */
-require_once ('Amazon/FPS/Interface.php');
+//require_once ('Amazon/FPS/Interface.php');
 
 /**
  *
@@ -51,7 +51,7 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
                                'ProxyHost' => null,
                                'ProxyPort' => -1,
                                'MaxErrorRetry' => 3
-                               );
+    );
 
     /**
      * Construct new Client
@@ -748,20 +748,22 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     public function verifySignature($request)
     {
         if (!$request instanceof Amazon_FPS_Model_VerifySignatureRequest) {
-            require_once ('Amazon/FPS/Model/VerifySignatureRequest.php');
+            //require_once ('Amazon/FPS/Model/VerifySignatureRequest.php');
             $request = new Amazon_FPS_Model_VerifySignatureRequest($request);
         }
-        require_once ('Amazon/FPS/Model/VerifySignatureResponse.php');
+        //require_once ('Amazon/FPS/Model/VerifySignatureResponse.php');
+        //print_r($request);
         return Amazon_FPS_Model_VerifySignatureResponse::fromXML($this->_invoke($this->_convertVerifySignature($request)));
     }
 
-        // Private API ------------------------------------------------------------//
+    // Private API ------------------------------------------------------------//
 
     /**
      * Invoke request and return response
      */
     private function _invoke(array $parameters)
     {
+        //echo __METHOD__;
         $actionName = $parameters["Action"];
         $response = array();
         $responseBody = null;
@@ -777,24 +779,25 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
             $retries = 0;
             do {
                 try {
-                        $response = $this->_httpPost($parameters);
-                        if ($response['Status'] === 200) {
-                            $shouldRetry = false;
+                    $response = $this->_httpPost($parameters);
+                    //print_r($response);
+                    if ($response['Status'] === 200) {
+                        $shouldRetry = false;
+                    } else {
+                        if ($response['Status'] === 500 || $response['Status'] === 503) {
+                            $shouldRetry = true;
+                            $this->_pauseOnRetry(++$retries, $response['Status']);
                         } else {
-                            if ($response['Status'] === 500 || $response['Status'] === 503) {
-                                $shouldRetry = true;
-                                $this->_pauseOnRetry(++$retries, $response['Status']);
-                            } else {
-                                throw $this->_reportAnyErrors($response['ResponseBody'], $response['Status']);
-                            }
-                       }
-                /* Rethrow on deserializer error */
+                            throw $this->_reportAnyErrors($response['ResponseBody'], $response['Status']);
+                        }
+                    }
+                    /* Rethrow on deserializer error */
                 } catch (Exception $e) {
-                    require_once ('Amazon/FPS/Exception.php');
+                    //require_once ('Amazon/FPS/Exception.php');
                     if ($e instanceof Amazon_FPS_Exception) {
                         throw $e;
                     } else {
-                        require_once ('Amazon/FPS/Exception.php');
+                        //require_once ('Amazon/FPS/Exception.php');
                         throw new Amazon_FPS_Exception(array('Exception' => $e, 'Message' => $e->getMessage()));
                     }
                 }
@@ -806,7 +809,6 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
         } catch (Exception $t) {
             throw new Amazon_FPS_Exception(array('Exception' => $t, 'Message' => $t->getMessage()));
         }
-
         return $response['ResponseBody'];
     }
 
@@ -818,42 +820,42 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
         $ex = null;
         if (!is_null($responseBody) && strpos($responseBody, '<') === 0) {
             if (preg_match('@<RequestId>(.*)</RequestId>.*<Error><Code>(.*)</Code><Message>(.*)</Message></Error>.*(<Error>)?@mi',
-                $responseBody, $errorMatcherOne)) {
+            $responseBody, $errorMatcherOne)) {
 
                 $requestId = $errorMatcherOne[1];
                 $code = $errorMatcherOne[2];
                 $message = $errorMatcherOne[3];
 
-                require_once ('Amazon/FPS/Exception.php');
+                //require_once ('Amazon/FPS/Exception.php');
                 $ex = new Amazon_FPS_Exception(array ('Message' => $message, 'StatusCode' => $status, 'ErrorCode' => $code,
                                                            'ErrorType' => 'Unknown', 'RequestId' => $requestId, 'XML' => $responseBody));
 
             } elseif (preg_match('@<Error><Code>(.*)</Code><Message>(.*)</Message></Error>.*(<Error>)?.*<RequestID>(.*)</RequestID>@mi',
-                $responseBody, $errorMatcherTwo)) {
+            $responseBody, $errorMatcherTwo)) {
 
                 $code = $errorMatcherTwo[1];
                 $message = $errorMatcherTwo[2];
                 $requestId = $errorMatcherTwo[4];
-                require_once ('Amazon/FPS/Exception.php');
+                //require_once ('Amazon/FPS/Exception.php');
                 $ex = new Amazon_FPS_Exception(array ('Message' => $message, 'StatusCode' => $status, 'ErrorCode' => $code,
                                                               'ErrorType' => 'Unknown', 'RequestId' => $requestId, 'XML' => $responseBody));
             } elseif (preg_match('@<Error><Type>(.*)</Type><Code>(.*)</Code><Message>(.*)</Message>.*</Error>.*(<Error>)?.*<RequestId>(.*)</RequestId>@mi',
-                $responseBody, $errorMatcherThree)) {
+            $responseBody, $errorMatcherThree)) {
 
                 $type = $errorMatcherThree[1];
                 $code = $errorMatcherThree[2];
                 $message = $errorMatcherThree[3];
                 $requestId = $errorMatcherThree[5];
-                require_once ('Amazon/FPS/Exception.php');
+                //require_once ('Amazon/FPS/Exception.php');
                 $ex = new Amazon_FPS_Exception(array ('Message' => $message, 'StatusCode' => $status, 'ErrorCode' => $code,
                                                               'ErrorType' => $type, 'RequestId' => $requestId, 'XML' => $responseBody));
 
             } else {
-                require_once ('Amazon/FPS/Exception.php');
+                //require_once ('Amazon/FPS/Exception.php');
                 $ex = new Amazon_FPS_Exception(array('Message' => 'Internal Error', 'StatusCode' => $status));
             }
         } else {
-            require_once ('Amazon/FPS/Exception.php');
+            //require_once ('Amazon/FPS/Exception.php');
             $ex = new Amazon_FPS_Exception(array('Message' => 'Internal Error', 'StatusCode' => $status));
         }
         return $ex;
@@ -867,8 +869,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
      */
     private function _httpPost(array $parameters)
     {
+        //echo __METHOD__;
         $fpsServiceEndPoint = $this->_config["ServiceURL"];
         $query = http_build_query($parameters);
+        //        echo "<pre>";
+        //        echo $fpsServiceEndPoint."?";
+        //        print_r($query);
+        //        echo "</pre>";
 
         //initialize CURL
         $curlHandle = curl_init();
@@ -880,26 +887,36 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
         curl_setopt($curlHandle, CURLOPT_FRESH_CONNECT, true);
         curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($curlHandle, CURLOPT_SSL_VERIFYHOST, '2');
-        curl_setopt($curlHandle, CURLOPT_CAINFO, '../../ca-bundle.crt');
-        curl_setopt($curlHandle, CURLOPT_CAPATH, '../../ca-bundle.crt');
+        //curl_setopt($curlHandle, CURLOPT_CAINFO, '../../ca-bundle.crt');
+        curl_setopt($curlHandle, CURLOPT_CAINFO, 'extlibs/amazon/ca-bundle.crt');
+        //curl_setopt($curlHandle, CURLOPT_CAPATH, '../../ca-bundle.crt');
+        curl_setopt($curlHandle, CURLOPT_CAPATH, 'extlibs/amazon/ca-bundle.crt');
         curl_setopt($curlHandle, CURLOPT_FOLLOWLOCATION, false);
         curl_setopt($curlHandle, CURLOPT_MAXREDIRS, 0);
         curl_setopt($curlHandle, CURLOPT_HEADER, true);
         curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curlHandle, CURLOPT_NOSIGNAL, true);
-	curl_setopt($curlHandle, CURLOPT_USERAGENT, self::USER_AGENT_IDENTIFIER);
-
+        curl_setopt($curlHandle, CURLOPT_USERAGENT, self::USER_AGENT_IDENTIFIER);
 
         // Execute the request
         $response = curl_exec($curlHandle);
+        //        echo "<pre>";
+        //        print_r($response);
+        //        echo "</pre>";
 
         // to grab the response code only from the Header
         list($other, $responseBody) = explode("\r\n\r\n", $response, 2);
+
+        //Correctly handle HTTP status 100
+        if (strpos($other," 100 Continue") !== false) {
+            list($other, $responseBody) = explode("\r\n\r\n", $responseBody, 2);
+        }
         $other = preg_split("/\r\n|\n|\r/", $other);
         list($protocol, $code, $text) = explode(' ', trim(array_shift($other)), 3);
 
         //close the CURL conection
         curl_close($curlHandle);
+        //echo "end ".__METHOD__;
         return array ('Status' => (int)$code, 'ResponseBody' => $responseBody);
     }
 
@@ -924,6 +941,7 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
      */
     private function _addRequiredParameters(array $parameters)
     {
+        //echo __METHOD__;
         $parameters['AWSAccessKeyId'] = $this->_awsAccessKeyId;
         $parameters['Timestamp'] = $this->_getFormattedTimestamp();
         $parameters['Version'] = self::SERVICE_VERSION;
@@ -941,6 +959,7 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
      */
     private function _getParametersAsString(array $parameters)
     {
+        //echo __METHOD__;
         $queryParameters = array();
         foreach ($parameters as $key => $value) {
             $queryParameters[] = $key . '=' . $this->_urlencode($value);
@@ -969,6 +988,7 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
      *
      */
     private function _signParameters(array $parameters, $key) {
+        //echo __METHOD__;
         $signatureVersion = $parameters['SignatureVersion'];
         $algorithm = "HmacSHA1";
         $stringToSign = null;
@@ -988,6 +1008,7 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
      * @return String to Sign
      */
     private function _calculateStringToSignV2(array $parameters) {
+        //echo __METHOD__;
         $data = 'POST';
         $data .= "\n";
         $endpoint = parse_url ($this->_config['ServiceURL']);
@@ -995,9 +1016,9 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
         $data .= "\n";
         $uri = array_key_exists('path', $endpoint) ? $endpoint['path'] : null;
         if (!isset ($uri)) {
-        	$uri = "/";
+            $uri = "/";
         }
-		$uriencoded = implode("/", array_map(array($this, "_urlencode"), explode("/", $uri)));
+        $uriencoded = implode("/", array_map(array($this, "_urlencode"), explode("/", $uri)));
         $data .= $uriencoded;
         $data .= "\n";
         uksort($parameters, 'strcmp');
@@ -1006,7 +1027,7 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
     private function _urlencode($value) {
-		return str_replace('%7E', '~', rawurlencode($value));
+        return str_replace('%7E', '~', rawurlencode($value));
     }
 
 
@@ -1023,7 +1044,7 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
             throw new Exception ("Non-supported signing method specified");
         }
         return base64_encode(
-            hash_hmac($hash, $data, $key, true)
+        hash_hmac($hash, $data, $key, true)
         );
     }
 
@@ -1717,7 +1738,7 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
      * Convert VerifySignatureRequest to name value pairs
      */
     private function _convertVerifySignature($request) {
-
+        //echo __METHOD__;
         $parameters = array();
         $parameters['Action'] = 'VerifySignature';
         if ($request->isSetUrlEndPoint()) {
