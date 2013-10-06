@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  *  PHP Version 5
  *
  *  @category    Amazon
@@ -9,14 +9,14 @@
  *  @license     http://aws.amazon.com/apache2.0  Apache License, Version 2.0
  *  @version     2010-08-28
  */
-/******************************************************************************* 
- *    __  _    _  ___ 
+/*******************************************************************************
+ *    __  _    _  ___
  *   (  )( \/\/ )/ __)
  *   /__\ \    / \__ \
  *  (_)(_) \/\/  (___/
- * 
+ *
  *  Amazon FPS PHP5 Library
- * 
+ *
  */
 
 /**
@@ -25,9 +25,9 @@
 require_once ('Amazon/FPS/Interface.php');
 
 /**
- * 
+ *
  * Amazon Flexible Payments Service
- * 
+ *
  * Amazon_FPS_Client is an implementation of Amazon_FPS
  *
  */
@@ -42,9 +42,9 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
     /** @var string */
     private  $_awsSecretAccessKey = null;
-	    
+
     /** @var array */
-    private  $_config = array ('ServiceURL' => 'https://fps.amazonaws.com',
+    private  $_config = array ('ServiceURL' => 'https://fps.amazonaws.com', //Sandbox: https://fps.sandbox.amazonaws.com
                                'UserAgent' => self::USER_AGENT_IDENTIFIER,
                                'SignatureVersion' => 2,
                                'SignatureMethod' => 'HmacSHA256',
@@ -84,12 +84,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     // Public API ------------------------------------------------------------//
 
 
-            
+
     /**
-     * Cancel Token 
-     * 
+     * Cancel Token
+     *
      * Cancels any token installed by the calling application on its own account.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}CancelToken.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_CancelTokenRequest request
      * or Amazon_FPS_Model_CancelTokenRequest object itself
@@ -109,12 +109,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Cancel 
-     * 
+     * Cancel
+     *
      * Cancels an ongoing transaction and puts it in cancelled state.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}Cancel.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_CancelRequest request
      * or Amazon_FPS_Model_CancelRequest object itself
@@ -134,12 +134,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Fund Prepaid 
-     * 
+     * Fund Prepaid
+     *
      * Funds the prepaid balance on the given prepaid instrument.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}FundPrepaid.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_FundPrepaidRequest request
      * or Amazon_FPS_Model_FundPrepaidRequest object itself
@@ -159,12 +159,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Account Activity 
-     * 
+     * Get Account Activity
+     *
      * Returns transactions for a given date range.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetAccountActivity.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetAccountActivityRequest request
      * or Amazon_FPS_Model_GetAccountActivityRequest object itself
@@ -184,12 +184,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Account Balance 
-     * 
+     * Get Account Balance
+     *
      * Returns the account balance for an account in real time.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetAccountBalance.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetAccountBalanceRequest request
      * or Amazon_FPS_Model_GetAccountBalanceRequest object itself
@@ -209,11 +209,11 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Transactions For Subscription 
+     * Get Transactions For Subscription
      * Returns the transactions for a given subscriptionID.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetTransactionsForSubscription.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetTransactionsForSubscriptionRequest request
      * or Amazon_FPS_Model_GetTransactionsForSubscriptionRequest object itself
@@ -233,11 +233,11 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Subscription Details 
+     * Get Subscription Details
      * Returns the details of Subscription for a given subscriptionID.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetSubscriptionDetails.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetSubscriptionDetailsRequest request
      * or Amazon_FPS_Model_GetSubscriptionDetailsRequest object itself
@@ -257,12 +257,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Debt Balance 
-     * 
+     * Get Debt Balance
+     *
      * Returns the balance corresponding to the given credit instrument.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetDebtBalance.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetDebtBalanceRequest request
      * or Amazon_FPS_Model_GetDebtBalanceRequest object itself
@@ -282,12 +282,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Outstanding Debt Balance 
-     * 
+     * Get Outstanding Debt Balance
+     *
      * Returns the total outstanding balance for all the credit instruments for the given creditor account.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetOutstandingDebtBalance.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetOutstandingDebtBalanceRequest request
      * or Amazon_FPS_Model_GetOutstandingDebtBalanceRequest object itself
@@ -307,12 +307,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Prepaid Balance 
-     * 
+     * Get Prepaid Balance
+     *
      * Returns the balance available on the given prepaid instrument.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetPrepaidBalance.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetPrepaidBalanceRequest request
      * or Amazon_FPS_Model_GetPrepaidBalanceRequest object itself
@@ -332,12 +332,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Token By Caller 
-     * 
+     * Get Token By Caller
+     *
      * Returns the details of a particular token installed by this calling application using the subway co-branded UI.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetTokenByCaller.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetTokenByCallerRequest request
      * or Amazon_FPS_Model_GetTokenByCallerRequest object itself
@@ -357,12 +357,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Cancel Subscription And Refund 
-     * 
+     * Cancel Subscription And Refund
+     *
      * Cancels a subscription.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}CancelSubscriptionAndRefund.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_CancelSubscriptionAndRefundRequest request
      * or Amazon_FPS_Model_CancelSubscriptionAndRefundRequest object itself
@@ -382,12 +382,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Token Usage 
-     * 
+     * Get Token Usage
+     *
      * Returns the usage of a token.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetTokenUsage.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetTokenUsageRequest request
      * or Amazon_FPS_Model_GetTokenUsageRequest object itself
@@ -407,12 +407,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Tokens 
-     * 
+     * Get Tokens
+     *
      * Returns a list of tokens installed on the given account.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetTokens.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetTokensRequest request
      * or Amazon_FPS_Model_GetTokensRequest object itself
@@ -432,12 +432,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Total Prepaid Liability 
-     * 
+     * Get Total Prepaid Liability
+     *
      * Returns the total liability held by the given account corresponding to all the prepaid instruments owned by the account.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetTotalPrepaidLiability.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetTotalPrepaidLiabilityRequest request
      * or Amazon_FPS_Model_GetTotalPrepaidLiabilityRequest object itself
@@ -457,12 +457,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Transaction 
-     * 
+     * Get Transaction
+     *
      * Returns all details of a transaction.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetTransaction.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetTransactionRequest request
      * or Amazon_FPS_Model_GetTransactionRequest object itself
@@ -482,12 +482,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Transaction Status 
-     * 
+     * Get Transaction Status
+     *
      * Gets the latest status of a transaction.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetTransactionStatus.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetTransactionStatusRequest request
      * or Amazon_FPS_Model_GetTransactionStatusRequest object itself
@@ -507,12 +507,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Payment Instruction 
-     * 
+     * Get Payment Instruction
+     *
      * Gets the payment instruction of a token.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetPaymentInstruction.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetPaymentInstructionRequest request
      * or Amazon_FPS_Model_GetPaymentInstructionRequest object itself
@@ -532,11 +532,11 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Install Payment Instruction 
+     * Install Payment Instruction
      * Installs a payment instruction for caller.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}InstallPaymentInstruction.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_InstallPaymentInstructionRequest request
      * or Amazon_FPS_Model_InstallPaymentInstructionRequest object itself
@@ -556,12 +556,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Pay 
-     * 
+     * Pay
+     *
      * Allows calling applications to move money from a sender to a recipient.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}Pay.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_PayRequest request
      * or Amazon_FPS_Model_PayRequest object itself
@@ -581,12 +581,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Refund 
-     * 
+     * Refund
+     *
      * Refunds a previously completed transaction.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}Refund.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_RefundRequest request
      * or Amazon_FPS_Model_RefundRequest object itself
@@ -606,12 +606,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Reserve 
-     * 
+     * Reserve
+     *
      * Reserve API is part of the Reserve and Settle API conjunction that serve the purpose of a pay where the authorization and settlement have a timing 				difference.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}Reserve.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_ReserveRequest request
      * or Amazon_FPS_Model_ReserveRequest object itself
@@ -631,12 +631,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Settle 
-     * 
+     * Settle
+     *
      * The Settle API is used in conjunction with the Reserve API and is used to settle previously reserved transaction.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}Settle.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_SettleRequest request
      * or Amazon_FPS_Model_SettleRequest object itself
@@ -656,12 +656,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Settle Debt 
-     * 
+     * Settle Debt
+     *
      * Allows a caller to initiate a transaction that atomically transfers money from a sender’s payment instrument to the recipient, while decreasing corresponding 				debt balance.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}SettleDebt.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_SettleDebtRequest request
      * or Amazon_FPS_Model_SettleDebtRequest object itself
@@ -681,12 +681,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Write Off Debt 
-     * 
+     * Write Off Debt
+     *
      * Allows a creditor to write off the debt balance accumulated partially or fully at any time.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}WriteOffDebt.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_WriteOffDebtRequest request
      * or Amazon_FPS_Model_WriteOffDebtRequest object itself
@@ -706,12 +706,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Get Recipient Verification Status 
-     * 
+     * Get Recipient Verification Status
+     *
      * Returns the recipient status.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}GetRecipientVerificationStatus.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_GetRecipientVerificationStatusRequest request
      * or Amazon_FPS_Model_GetRecipientVerificationStatusRequest object itself
@@ -731,12 +731,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-            
+
     /**
-     * Verify Signature 
-     * 
+     * Verify Signature
+     *
      * Verify the signature that FPS sent in IPN or callback urls.
-     * 
+     *
      * @see http://docs.amazonwebservices.com/${docPath}VerifySignature.html
      * @param mixed $request array of parameters for Amazon_FPS_Model_VerifySignatureRequest request
      * or Amazon_FPS_Model_VerifySignatureRequest object itself
@@ -887,7 +887,7 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
         curl_setopt($curlHandle, CURLOPT_HEADER, true);
         curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curlHandle, CURLOPT_NOSIGNAL, true);
-	curl_setopt($curlHandle, CURLOPT_USERAGENT, self::USER_AGENT_IDENTIFIER);	
+	curl_setopt($curlHandle, CURLOPT_USERAGENT, self::USER_AGENT_IDENTIFIER);
 
 
         // Execute the request
@@ -1037,12 +1037,12 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     }
 
 
-                        
+
     /**
      * Convert CancelRequest to name value pairs
      */
     private function _convertCancel($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'Cancel';
         if ($request->isSetTransactionId()) {
@@ -1057,13 +1057,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert CancelTokenRequest to name value pairs
      */
     private function _convertCancelToken($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'CancelToken';
         if ($request->isSetTokenId()) {
@@ -1078,13 +1078,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert CancelSubscriptionAndRefundRequest to name value pairs
      */
     private function _convertCancelSubscriptionAndRefund($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'CancelSubscriptionAndRefund';
         if ($request->isSetSubscriptionId()) {
@@ -1108,13 +1108,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert FundPrepaidRequest to name value pairs
      */
     private function _convertFundPrepaid($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'FundPrepaid';
         if ($request->isSetSenderTokenId()) {
@@ -1159,13 +1159,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetAccountActivityRequest to name value pairs
      */
     private function _convertGetAccountActivity($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetAccountActivity';
         if ($request->isSetMaxBatchSize()) {
@@ -1195,25 +1195,25 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetAccountBalanceRequest to name value pairs
      */
     private function _convertGetAccountBalance($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetAccountBalance';
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetTransactionsForSubscriptionRequest to name value pairs
      */
     private function _convertGetTransactionsForSubscription($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetTransactionsForSubscription';
         if ($request->isSetSubscriptionId()) {
@@ -1222,13 +1222,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetSubscriptionDetailsRequest to name value pairs
      */
     private function _convertGetSubscriptionDetails($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetSubscriptionDetails';
         if ($request->isSetSubscriptionId()) {
@@ -1237,13 +1237,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetDebtBalanceRequest to name value pairs
      */
     private function _convertGetDebtBalance($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetDebtBalance';
         if ($request->isSetCreditInstrumentId()) {
@@ -1252,25 +1252,25 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetOutstandingDebtBalanceRequest to name value pairs
      */
     private function _convertGetOutstandingDebtBalance($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetOutstandingDebtBalance';
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetPrepaidBalanceRequest to name value pairs
      */
     private function _convertGetPrepaidBalance($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetPrepaidBalance';
         if ($request->isSetPrepaidInstrumentId()) {
@@ -1279,13 +1279,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetTokenByCallerRequest to name value pairs
      */
     private function _convertGetTokenByCaller($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetTokenByCaller';
         if ($request->isSetTokenId()) {
@@ -1297,13 +1297,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetTokenUsageRequest to name value pairs
      */
     private function _convertGetTokenUsage($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetTokenUsage';
         if ($request->isSetTokenId()) {
@@ -1312,13 +1312,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetTokensRequest to name value pairs
      */
     private function _convertGetTokens($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetTokens';
         if ($request->isSetTokenStatus()) {
@@ -1336,25 +1336,25 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetTotalPrepaidLiabilityRequest to name value pairs
      */
     private function _convertGetTotalPrepaidLiability($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetTotalPrepaidLiability';
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetTransactionRequest to name value pairs
      */
     private function _convertGetTransaction($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetTransaction';
         if ($request->isSetTransactionId()) {
@@ -1363,13 +1363,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetTransactionStatusRequest to name value pairs
      */
     private function _convertGetTransactionStatus($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetTransactionStatus';
         if ($request->isSetTransactionId()) {
@@ -1378,13 +1378,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetPaymentInstructionRequest to name value pairs
      */
     private function _convertGetPaymentInstruction($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetPaymentInstruction';
         if ($request->isSetTokenId()) {
@@ -1393,13 +1393,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert InstallPaymentInstructionRequest to name value pairs
      */
     private function _convertInstallPaymentInstruction($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'InstallPaymentInstruction';
         if ($request->isSetPaymentInstruction()) {
@@ -1420,13 +1420,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert PayRequest to name value pairs
      */
     private function _convertPay($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'Pay';
         if ($request->isSetSenderTokenId()) {
@@ -1486,13 +1486,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert RefundRequest to name value pairs
      */
     private function _convertRefund($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'Refund';
         if ($request->isSetTransactionId()) {
@@ -1522,13 +1522,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert ReserveRequest to name value pairs
      */
     private function _convertReserve($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'Reserve';
         if ($request->isSetSenderTokenId()) {
@@ -1588,13 +1588,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert SettleRequest to name value pairs
      */
     private function _convertSettle($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'Settle';
         if ($request->isSetReserveTransactionId()) {
@@ -1615,13 +1615,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert SettleDebtRequest to name value pairs
      */
     private function _convertSettleDebt($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'SettleDebt';
         if ($request->isSetSenderTokenId()) {
@@ -1666,13 +1666,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert WriteOffDebtRequest to name value pairs
      */
     private function _convertWriteOffDebt($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'WriteOffDebt';
         if ($request->isSetCreditInstrumentId()) {
@@ -1696,13 +1696,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert GetRecipientVerificationStatusRequest to name value pairs
      */
     private function _convertGetRecipientVerificationStatus($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'GetRecipientVerificationStatus';
         if ($request->isSetRecipientTokenId()) {
@@ -1711,13 +1711,13 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                        
+
+
     /**
      * Convert VerifySignatureRequest to name value pairs
      */
     private function _convertVerifySignature($request) {
-        
+
         $parameters = array();
         $parameters['Action'] = 'VerifySignature';
         if ($request->isSetUrlEndPoint()) {
@@ -1729,6 +1729,6 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
 
         return $parameters;
     }
-        
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+
 }
