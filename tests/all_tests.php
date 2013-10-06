@@ -1,0 +1,16 @@
+<?php
+
+require_once dirname(__FILE__) . '/init.tests.php';
+require_once ISOSCELES_PATH.'extlibs/simpletest/autorun.php';
+//require_once ISOSCELES_PATH.'extlibs/simpletest/web_tester.php';
+//require_once ISOSCELES_PATH.'extlibs/simpletest/mock_objects.php';
+
+
+$all_tests = new TestSuite('Upstart tests');
+$all_tests->add(new TestOfClickMySQLDAO());
+$all_tests->add(new TestOfNewSubscriberController());
+$all_tests->add(new TestOfSubscribeController());
+$all_tests->add(new TestOfTransactionMySQLDAO());
+
+//$tr = new TextReporter();
+//$all_tests->run( $tr );

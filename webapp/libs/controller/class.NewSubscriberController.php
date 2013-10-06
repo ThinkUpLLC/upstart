@@ -9,6 +9,7 @@ class NewSubscriberController extends SignUpController {
 
         if ($this->hasUserPostedSignUpForm()) {
             if (self::isEmailInputValid() & self::isPasswordInputValid()) {
+                //@TODO Create new subscriber row with email and password and store id in session
                 //Store email address in Session Cache
                 SessionCache::put('newaccount_email', $_POST['email']);
                 SessionCache::put('newaccount_pass', $_POST['password']);
@@ -24,7 +25,7 @@ class NewSubscriberController extends SignUpController {
                 if (isset($tok['oauth_token'])) {
                     $token = $tok['oauth_token'];
                     SessionCache::put('oauth_request_token_secret', $tok['oauth_token_secret']);
-                    // Build the authorization URL
+                    // Build Twitter authorization URL
                     $oauthorize_link = $to->getAuthorizeURL($token);
                     //Redirect to oauthorize link
                     header('Location: '.$oauthorize_link);
@@ -68,10 +69,9 @@ class NewSubscriberController extends SignUpController {
                 $this->addErrorMessage("Oops! This URL is invalid. Please try again.");
             }
         } elseif ($this->hasUserReturnedFromTwitter() || $this->hasUserReturnedFromFacebook()) {
-            //@TODO Verify that transactions.token_id exists in database, show error if not.
-            //@TODO Check that email address doesn't already exist in database. If it does, check if there's already
-            // a successful transaction associated.
-            //If so, show error. If no transaction, overwrite existing subscriber row.
+            //@TODO Verify that transactions.token_id is in SessionCache and exists in database, show error if not.
+            //@TODO Verify that subscriber.id is in SessionCache and exists in database, show error if not.
+            //@TODO If so, save transaction ID and subscriber ID in subscriber_transactions table.
 
             if ($this->hasUserReturnedFromTwitter()) {
                 $request_token = $_GET['oauth_token'];
@@ -95,12 +95,8 @@ class NewSubscriberController extends SignUpController {
                         //                    echo "<pre>";
                         //                    print_r($authed_twitter_user);
                         //                    echo "</pre>";
-                        //Update waitlisted user with user name, user id, tokens, is_verified, follower_count
-                        $account_email = SessionCache::get('newaccount_email');
-                        $account_pass = SessionCache::get('newaccount_password');
 
-                        //@TODO Save values to subscribers table.
-                        //@TODO Save transaction ID and subscriber ID in subscriber_transactions table.
+                        //@TODO Update subscriber record with Twitter auth information
                         //                    $dao = new UserRouteMySQLDAO();
                         //                    $route_id = $dao->insert($waitlisted_email, $authed_twitter_user['user_name'],
                         //                    $authed_twitter_user['user_id'], $tok['oauth_token'], $tok['oauth_token_secret'],
