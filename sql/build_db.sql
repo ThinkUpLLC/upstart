@@ -35,7 +35,7 @@ CREATE TABLE clicks (
   PRIMARY KEY (id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Clicks to the pledge page.';
 
-CREATE TABLE transactions (
+CREATE TABLE authorizations (
   id int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal unique ID.',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time of transaction.',
   token_id varchar(100) NOT NULL COMMENT 'Token ID of transaction.',
@@ -43,10 +43,13 @@ CREATE TABLE transactions (
   status_code varchar(2) NOT NULL COMMENT 'The status of the transaction request.',
   error_message varchar(255) DEFAULT NULL COMMENT 'Human readable message that specifies the reason for a request failure (optional).',
   payment_method_expiry varchar(10) DEFAULT NULL COMMENT 'Payment method expiration date (optional).',
+  caller_reference varchar(20) NOT NULL COMMENT 'Caller reference used for authorization request.',
+  recurrence_period varchar(12) NOT NULL DEFAULT '12 Months' COMMENT 'Recurrence period of payment authorization.',
+  token_validity_start_date timestamp NOT NULL COMMENT 'Date the token becomes valid.',
   PRIMARY KEY (id),
   UNIQUE KEY token_id (token_id),
   KEY status_code (status_code)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Amazon Flexible Payment System transactions.';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Amazon FPS recurring-use payment authorizations.';
 
 CREATE TABLE subscribers (
   id int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal unique ID.',
@@ -64,21 +67,21 @@ CREATE TABLE subscribers (
   UNIQUE KEY email (email)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Paid subscribers who have authorized their social network ac';
 
-CREATE TABLE  subscriber_transactions (
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT  'Internal unique ID.',
-timestamp TIMESTAMP NOT NULL COMMENT  'Time transaction was recorded.',
-subscriber_id INT NOT NULL COMMENT  'Subscriber ID keyed to subscribers.',
-transaction_id INT NOT NULL COMMENT  'Transaction ID keyed to transactions.'
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  'Transactions by known subscribers.';
+CREATE TABLE  subscriber_authorizations (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT  'Internal unique ID.',
+    timestamp TIMESTAMP NOT NULL COMMENT  'Time transaction was recorded.',
+    subscriber_id INT NOT NULL COMMENT  'Subscriber ID keyed to subscribers.',
+    authorization_id INT NOT NULL COMMENT  'Authorization ID keyed to authorizations.'
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  'Payment authorizations by known subscribers.';
 
-CREATE TABLE  transaction_status_codes (
-code VARCHAR( 2 ) NOT NULL COMMENT  'Status code.',
-description VARCHAR( 125 ) NOT NULL COMMENT  'Description.',
-PRIMARY KEY (  code )
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  'Amazon Flexible Payment System transaction status codes.';
+CREATE TABLE  authorization_status_codes (
+    code VARCHAR( 2 ) NOT NULL COMMENT  'Status code.',
+    description VARCHAR( 125 ) NOT NULL COMMENT  'Description.',
+    PRIMARY KEY (  code )
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  'Amazon FPS authorization request status codes.';
 
 
-INSERT INTO  transaction_status_codes ( code , description )
+INSERT INTO  authorization_status_codes ( code , description )
 VALUES (
 'SA',  'Success status for the ABT payment method.'
 ), (

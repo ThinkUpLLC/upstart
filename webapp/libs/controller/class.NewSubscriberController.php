@@ -50,15 +50,15 @@ class NewSubscriberController extends SignUpController {
                     $this->addErrorMessage("Oops! Something went wrong. Amazon says: ".$error_message);
                 }
 
-                //Record transaction
-                $transaction_dao = new TransactionMySQLDAO();
+                //Record authorization
+                $authorization_dao = new AuthorizationMySQLDAO();
                 $amount = SignUpController::$subscription_levels[$_GET['l']];
                 $payment_expiry_date = (isset($_GET['expiry']))?$_GET['expiry']:null;
 
                 try {
-                    $transaction_id = $transaction_dao->insert($_GET['tokenID'], $amount, $_GET["status"],
-                    $error_message, $payment_expiry_date);
-                } catch (DuplicateTransactionException $e) {
+                    $authorization_id = $authorization_dao->insert($_GET['tokenID'], $amount, $_GET["status"],
+                    $internal_caller_reference, $error_message, $payment_expiry_date);
+                } catch (DuplicateAuthorizationException $e) {
                     $this->addSuccessMessage("Looks like you already paid for your ThinkUp subscription. ".
                     "   Did you refresh the page?");
                 }

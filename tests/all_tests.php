@@ -10,7 +10,7 @@ $all_tests = new TestSuite('Upstart tests');
 $all_tests->add(new TestOfClickMySQLDAO());
 $all_tests->add(new TestOfNewSubscriberController());
 $all_tests->add(new TestOfSubscribeController());
-$all_tests->add(new TestOfTransactionMySQLDAO());
+$all_tests->add(new TestOfAuthorizationMySQLDAO());
 
 //$tr = new TextReporter();
 //$all_tests->run( $tr );

@@ -1,5 +1,5 @@
 <?php
-class Transaction {
+class Authorization {
     /**
      * @var int Internal unique ID.
      */
@@ -25,10 +25,22 @@ class Transaction {
      */
     var $error_message;
     /**
-     * @var date Payment method expiration date (optional).
+     * @var str Payment method expiration date (optional).
      */
     var $payment_method_expiry;
-    /*
+    /**
+     * @var str Caller reference used for authorization request.
+     */
+    var $caller_reference;
+    /**
+     * @var str Recurrence period of payment authorization.
+     */
+    var $recurrence_period;
+    /**
+     * @var date Date the token becomes valid.
+     */
+    var $token_validity_start_date;
+    /**
      * Status codes
      */
     public static $status_codes = array('SA', 'SB', 'SC', 'SE', 'A', 'CE', 'PE', 'NP', 'NM');
@@ -41,6 +53,9 @@ class Transaction {
             $this->status_code = $row['status_code'];
             $this->error_message = $row['error_message'];
             $this->payment_method_expiry = $row['payment_method_expiry'];
+            $this->caller_reference = $row['caller_reference'];
+            $this->recurrence_period = $row['recurrence_period'];
+            $this->token_validity_start_date = $row['token_validity_start_date'];
         }
     }
 }

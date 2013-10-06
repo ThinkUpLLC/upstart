@@ -26,7 +26,7 @@ class TestOfClickMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($id, 1);
 
         $sql = "SELECT * FROM clicks WHERE id = 1";
-        $stmt = TransactionMySQLDAO::$PDO->query($sql);
+        $stmt = ClickMySQLDAO::$PDO->query($sql);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual(1, $data['id']);
         $this->assertEqual($suffix, $data['caller_reference_suffix']);

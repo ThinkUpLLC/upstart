@@ -35,8 +35,6 @@ class SubscribeController extends Controller {
         $pipeline->setMandatoryParameters($caller_reference, $callback_url, $amount, "12 Months");
 
         //optional parameters
-        //        date_default_timezone_set("America/New_York");
-        //$pipeline->addParameter("paymentMethod", "CC"); //accept only credit card payments
         $pipeline->addParameter("paymentReason", "ThinkUp monthly subscription");
         $pipeline->addParameter("validityStart", date("U", mktime(12, 0, 0, 1, 1, 2014)));
         $pipeline->addParameter("cobrandingUrl",
