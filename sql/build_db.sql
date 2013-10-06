@@ -28,11 +28,12 @@ CREATE TABLE user_routes (
   KEY commit_hash (commit_hash)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Route users to their installation.';
 
-CREATE TABLE  clicks (
-id INT( 11 ) NOT NULL AUTO_INCREMENT COMMENT  'Internal unique ID.',
-timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT  'Time of click.',
-PRIMARY KEY (  id )
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  'Clicks to the pledge page.';
+CREATE TABLE clicks (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal unique ID.',
+  caller_reference_suffix varchar(20) NOT NULL COMMENT 'Second half of caller reference string.',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time of click.',
+  PRIMARY KEY (id)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Clicks to the pledge page.';
 
 CREATE TABLE transactions (
   id int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal unique ID.',

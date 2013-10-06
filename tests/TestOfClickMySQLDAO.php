@@ -20,6 +20,15 @@ class TestOfClickMySQLDAO extends UpstartUnitTestCase {
     public function testInsert() {
         $dao = new ClickMySQLDAO();
         $result = $dao->insert();
-        $this->assertEqual($result, 1);
+        $this->assertEqual(strlen($result), 14);
+        $id = substr($result, 0, 1);
+        $suffix = substr($result, 1);
+        $this->assertEqual($id, 1);
+
+        $sql = "SELECT * FROM clicks WHERE id = 1";
+        $stmt = TransactionMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual(1, $data['id']);
+        $this->assertEqual($suffix, $data['caller_reference_suffix']);
     }
 }

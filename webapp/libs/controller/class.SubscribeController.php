@@ -6,8 +6,7 @@ class SubscribeController extends Controller {
     public function control() {
         $this->setViewTemplate('subscribe-index.tpl');
         $click_dao = new ClickMySQLDAO();
-        $click_id = $click_dao->insert();
-        $caller_reference = uniqid($click_id);
+        $caller_reference = $click_dao->insert();
         $this->addToView('caller_reference', $caller_reference);
         SessionCache::put('caller_reference', $caller_reference);
 

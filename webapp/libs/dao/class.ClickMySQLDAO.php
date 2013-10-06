@@ -1,14 +1,15 @@
 <?php
 class ClickMySQLDAO extends PDODAO {
     public function insert() {
-        $q  = "INSERT INTO clicks (timestamp) VALUES (CURRENT_TIMESTAMP); ";
-        $ps = $this->execute($q);
-        return $this->getInsertId($ps);
+        $q  = "INSERT INTO clicks (caller_reference_suffix, timestamp) VALUES ";
+        $q .= "(:caller_reference_suffix, CURRENT_TIMESTAMP); ";
+        $suffix = uniqid();
+        $vars = array(
+            ':caller_reference_suffix'=>$suffix
+        );
 
-        $sql = "SELECT * FROM clicks WHERE id = ".$result;
-        $stmt = TransactionMySQLDAO::$PDO->query($sql);
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        $this->assertEqual(1, $data['id']);
+        $ps = $this->execute($q, $vars);
+        return $this->getInsertId($ps).$suffix;
     }
 
 }
