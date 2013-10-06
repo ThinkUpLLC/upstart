@@ -9,28 +9,57 @@ class NewSubscriberController extends SignUpController {
 
         if ($this->hasUserPostedSignUpForm()) {
             if (self::isEmailInputValid() & self::isPasswordInputValid()) {
-                //@TODO Create new subscriber row with email and password and store id in session
-                //Store email address in Session Cache
-                SessionCache::put('newaccount_email', $_POST['email']);
-                SessionCache::put('newaccount_pass', $_POST['password']);
+                $redirect_to_network = false;
+                //Create new subscriber record
+                $subscriber_dao = new SubscriberMySQLDAO();
+                try {
+                    $subscriber_id = $subscriber_dao->insert($_POST['email'], $_POST['password']);
+                } catch (DuplicateSubscriberException $e) {
+                    //@TODO Figure out what to do in the case of a repeat subscriber
 
-                $cfg = Config::getInstance();
-                $oauth_consumer_key = $cfg->getValue('oauth_consumer_key');
-                $oauth_consumer_secret = $cfg->getValue('oauth_consumer_secret');
+                    //Stopgap for testing: get the subscriber ID from the DB
+                    $subscriber = $subscriber_dao->getByEmail($_POST['email']);
+                    $subscriber_id = $subscriber->id;
+                }
+                //Store subscriber ID in Session Cache
+                SessionCache::put('subscriber_id', $subscriber_id);
 
-                $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret);
-                //Add unique waitlisted user ID from previous DB operation to callback
-                $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().'newsubscriber.php?n=twitter');
-
-                if (isset($tok['oauth_token'])) {
-                    $token = $tok['oauth_token'];
-                    SessionCache::put('oauth_request_token_secret', $tok['oauth_token_secret']);
-                    // Build Twitter authorization URL
-                    $oauthorize_link = $to->getAuthorizeURL($token);
-                    //Redirect to oauthorize link
-                    header('Location: '.$oauthorize_link);
+                //Verify that authorization.token_id is in SessionCache and exists in database, show error if not
+                $token_id = SessionCache::get('token_id');
+                $authorization_dao = new AuthorizationMySQLDAO();
+                $authorization = $authorization_dao->getByTokenID($token_id);
+                if ($authorization == null) {
+                    $this->addErrorMessage("Oops! Looks like you haven't subscribed yet. Please try again." );
                 } else {
-                    $this->addErrorMessage("Oops! Something went wrong. ".Utils::varDumpToString($tok) );
+                    //Save authorization ID and subscriber ID in subscriber_authorizations table.
+                    $subscriber_authorization_dao = new SubscriberAuthorizationMySQLDAO();
+                    try {
+                        $subscriber_authorization_dao->insert($subscriber_id, $authorization->id);
+                        $redirect_to_network = true;
+                    } catch (DuplicateSubscriberAuthorizationException $e) {
+                        //@TODO Figure out what to do in case of repeat subscriber authorization
+                    }
+                }
+
+                if ($redirect_to_network) {
+                    $cfg = Config::getInstance();
+                    $oauth_consumer_key = $cfg->getValue('oauth_consumer_key');
+                    $oauth_consumer_secret = $cfg->getValue('oauth_consumer_secret');
+
+                    $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret);
+                    //Add unique waitlisted user ID from previous DB operation to callback
+                    $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().'newsubscriber.php?n=twitter');
+
+                    if (isset($tok['oauth_token'])) {
+                        $token = $tok['oauth_token'];
+                        SessionCache::put('oauth_request_token_secret', $tok['oauth_token_secret']);
+                        // Build Twitter authorization URL
+                        $oauthorize_link = $to->getAuthorizeURL($token);
+                        //Redirect to oauthorize link
+                        header('Location: '.$oauthorize_link);
+                    } else {
+                        $this->addErrorMessage("Oops! Something went wrong. ".Utils::varDumpToString($tok) );
+                    }
                 }
             } else { // form inputs were invalid, display it again with errors
                 $this->addToView('prefill_email', $_POST['email']);
@@ -69,10 +98,6 @@ class NewSubscriberController extends SignUpController {
                 $this->addErrorMessage("Oops! This URL is invalid. Please try again.");
             }
         } elseif ($this->hasUserReturnedFromTwitter() || $this->hasUserReturnedFromFacebook()) {
-            //@TODO Verify that transactions.token_id is in SessionCache and exists in database, show error if not.
-            //@TODO Verify that subscriber.id is in SessionCache and exists in database, show error if not.
-            //@TODO If so, save transaction ID and subscriber ID in subscriber_transactions table.
-
             if ($this->hasUserReturnedFromTwitter()) {
                 $request_token = $_GET['oauth_token'];
                 $request_token_secret = SessionCache::get('oauth_request_token_secret');
@@ -89,8 +114,13 @@ class NewSubscriberController extends SignUpController {
                     $api = new TwitterAPIAccessorOAuth($tok['oauth_token'], $tok['oauth_token_secret'],
                     $this->oauth_consumer_key, $this->oauth_consumer_secret, 5,  false);
 
-                    $authed_twitter_user = $api->verifyCredentials();
+                    try {
+                        $authed_twitter_user = $api->verifyCredentials();
+                    } catch (APIErrorException $e) {
+                        $this->addErrorMessage("Oops! Something went wrong. Twitter says: ".$e->getMessage());
+                    }
 
+                    print_r($authed_twitter_user);
                     if (isset($authed_twitter_user['user_name'])) {
                         //                    echo "<pre>";
                         //                    print_r($authed_twitter_user);
@@ -182,31 +212,6 @@ class NewSubscriberController extends SignUpController {
             if ($result == 'Success') {
                 return true;
             }
-
-            /*
-             echo ("Service Response\n");
-             echo ("=============================================================================\n");
-
-             echo("        VerifySignatureResponse\n");
-             if ($response->isSetVerifySignatureResult()) {
-             echo("            VerifySignatureResult\n");
-             $verifySignatureResult = $response->getVerifySignatureResult();
-             if ($verifySignatureResult->isSetVerificationStatus())
-             {
-             echo("                VerificationStatus\n");
-             echo("                    " . $verifySignatureResult->getVerificationStatus() . "\n");
-             }
-             }
-             if ($response->isSetResponseMetadata()) {
-             echo("            ResponseMetadata\n");
-             $responseMetadata = $response->getResponseMetadata();
-             if ($responseMetadata->isSetRequestId())
-             {
-             echo("                RequestId\n");
-             echo("                    " . $responseMetadata->getRequestId() . "\n");
-             }
-             }
-             */
         } catch (Amazon_FPS_Exception $ex) {
             /*
              echo("Caught Exception: " . $ex->getMessage() . "\n");

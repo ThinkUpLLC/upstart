@@ -9,6 +9,14 @@ class Subscriber {
      */
     var $email;
     /**
+     * @var str Subscriber password.
+     */
+    var $pwd;
+    /**
+     * @var str Subscriber password salt.
+     */
+    var $pwd_salt;
+    /**
      * @var str Time of subscription.
      */
     var $creation_time;
@@ -48,6 +56,8 @@ class Subscriber {
         if ($row) {
             $this->id = $row['id'];
             $this->email = $row['email'];
+            $this->pwd = $row['pwd'];
+            $this->pwd_salt = $row['pwd_salt'];
             $this->creation_time = $row['creation_time'];
             $this->network_user_id = $row['network_user_id'];
             $this->network_user_name = $row['network_user_name'];

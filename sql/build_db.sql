@@ -54,6 +54,8 @@ CREATE TABLE authorizations (
 CREATE TABLE subscribers (
   id int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal unique ID.',
   email varchar(200) NOT NULL COMMENT 'Subscriber email address.',
+  pwd varchar(255) NOT NULL COMMENT 'Subscriber password.',
+  pwd_salt varchar(255) NOT NULL COMMENT 'Subscriber password salt.',
   creation_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time of subscription.',
   network_user_id varchar(30) NOT NULL COMMENT 'Subscriber''s network user ID.',
   network_user_name varchar(255) NOT NULL COMMENT 'Subscriber''s network username.',
@@ -67,12 +69,15 @@ CREATE TABLE subscribers (
   UNIQUE KEY email (email)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Paid subscribers who have authorized their social network ac';
 
-CREATE TABLE  subscriber_authorizations (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT  'Internal unique ID.',
-    timestamp TIMESTAMP NOT NULL COMMENT  'Time transaction was recorded.',
-    subscriber_id INT NOT NULL COMMENT  'Subscriber ID keyed to subscribers.',
-    authorization_id INT NOT NULL COMMENT  'Authorization ID keyed to authorizations.'
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  'Payment authorizations by known subscribers.';
+
+CREATE TABLE subscriber_authorizations (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal unique ID.',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Time transaction was recorded.',
+  subscriber_id int(11) NOT NULL COMMENT 'Subscriber ID keyed to subscribers.',
+  authorization_id int(11) NOT NULL COMMENT 'Authorization ID keyed to authorizations.',
+  PRIMARY KEY (id),
+  UNIQUE KEY subscriber_id (subscriber_id,authorization_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Payment authorizations by known subscribers.';
 
 CREATE TABLE  authorization_status_codes (
     code VARCHAR( 2 ) NOT NULL COMMENT  'Status code.',

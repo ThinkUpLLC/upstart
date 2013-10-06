@@ -52,4 +52,17 @@ class TestOfAuthorizationMySQLDAO extends UpstartUnitTestCase {
         $error_message=null, $payment_method_expiry='2015-01-15');
     }
 
+    public function testGetByTokenID() {
+        $dao = new AuthorizationMySQLDAO();
+        $result = $dao->insert($token_id='aabbccdd', $amount=60, $status_code='SE', $caller_reference='xxyyz',
+        $error_message=null, $payment_method_expiry='2015-01-15');
+
+        $authorization = $dao->getByTokenID('aabbccdd');
+        $this->assertIsA($authorization, 'Authorization');
+        $this->assertEqual($authorization->token_id, 'aabbccdd');
+
+        $authorization = $dao->getByTokenID('aabbccdddd');
+        $this->assertNull($authorization);
+    }
+
 }

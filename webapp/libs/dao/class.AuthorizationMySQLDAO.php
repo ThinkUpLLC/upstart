@@ -32,6 +32,13 @@ class AuthorizationMySQLDAO extends PDODAO {
         return $this->getInsertId($ps);
     }
 
+    public function getByTokenID($token_id) {
+        $q = "SELECT * FROM authorizations WHERE token_id = :token_id";
+        $vars = array ( ':token_id' => $token_id);
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowAsObject($ps, "Authorization");
+    }
+
     private static function mergeSQLVars($sql, $vars) {
         foreach ($vars as $k => $v) {
             $sql = str_replace($k, (is_int($v))?$v:"'".$v."'", $sql);
