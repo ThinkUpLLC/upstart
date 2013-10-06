@@ -58,7 +58,8 @@ class NewSubscriberController extends SignUpController {
                         //Redirect to oauthorize link
                         header('Location: '.$oauthorize_link);
                     } else {
-                        $this->addErrorMessage("Oops! Something went wrong. ".Utils::varDumpToString($tok) );
+                        $this->addErrorMessage("Oops! Something went wrong. ".
+                        (isset($tok))?Utils::varDumpToString($tok):'' );
                     }
                 }
             } else { // form inputs were invalid, display it again with errors
