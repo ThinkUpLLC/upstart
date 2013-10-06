@@ -10,13 +10,6 @@ abstract class SignUpController extends Controller {
      */
     public static $subscription_levels = array('member'=>60, 'developer'=>120, 'executive'=>996);
     /**
-     * Check if user has returned from Twitter authorization process
-     * @return bool
-     */
-    protected function hasReturnedFromTwitterAuth() {
-        return (isset($_GET['oauth_token']));
-    }
-    /**
      * Verify posted email address input and add appropriate error message if not
      * return bool
      */

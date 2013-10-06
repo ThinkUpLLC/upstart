@@ -145,4 +145,11 @@ class RouteUserController extends SignUpController {
         Mailer::mail('upstart@thinkup.com', '[Upstart] @'.$authed_twitter_user['user_name']." is on the waitlist",
         $message);
     }
+    /**
+     * Check if user has returned from Twitter authorization process
+     * @return bool
+     */
+    protected function hasReturnedFromTwitterAuth() {
+        return (isset($_GET['oauth_token']));
+    }
 }

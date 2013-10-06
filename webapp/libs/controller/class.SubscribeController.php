@@ -37,10 +37,9 @@ class SubscribeController extends Controller {
 
         //optional parameters
         //        date_default_timezone_set("America/New_York");
-        $pipeline->addParameter("paymentMethod", "CC"); //accept only credit card payments
+        //$pipeline->addParameter("paymentMethod", "CC"); //accept only credit card payments
         $pipeline->addParameter("paymentReason", "ThinkUp monthly subscription");
-        $pipeline->addParameter("validityStart", date("U", mktime(12, 0, 0, 1, 15, 2014)));
-        //$pipeline->addParameter("validityStart", date("U", mktime(12, 0, 0, 10, 4, 2013)));
+        $pipeline->addParameter("validityStart", date("U", mktime(12, 0, 0, 1, 1, 2014)));
         $pipeline->addParameter("cobrandingUrl",
         UpstartHelper::getApplicationURL(false, false, false)."assets/img/thinkup-logo-transparent.png");
         $pipeline->addParameter("websiteDescription", "ThinkUp");

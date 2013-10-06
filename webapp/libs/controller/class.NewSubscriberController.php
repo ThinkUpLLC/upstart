@@ -7,7 +7,7 @@ class NewSubscriberController extends SignUpController {
         $this->setViewTemplate('subscribe-newsubscriber.tpl');
         $do_show_form = false;
 
-        if (sizeof($_POST) > 0) { //user has submitted account creation form
+        if ($this->hasUserPostedSignUpForm()) {
             if (self::isEmailInputValid() & self::isPasswordInputValid()) {
                 //Store email address in Session Cache
                 SessionCache::put('newaccount_email', $_POST['email']);
@@ -19,7 +19,7 @@ class NewSubscriberController extends SignUpController {
 
                 $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret);
                 //Add unique waitlisted user ID from previous DB operation to callback
-                $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().'confirm.php');
+                $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().'newsubscriber.php?n=twitter');
 
                 if (isset($tok['oauth_token'])) {
                     $token = $tok['oauth_token'];
@@ -35,21 +35,92 @@ class NewSubscriberController extends SignUpController {
                 $this->addToView('prefill_email', $_POST['email']);
                 $do_show_form = true;
             }
-        } else { //user has returned from Amazon
+        } elseif ($this->hasUserReturnedFromAmazon()) {
             $internal_caller_reference = SessionCache::get('caller_reference');
             if (isset($internal_caller_reference) && $this->isAmazonResponseValid($internal_caller_reference)) {
                 $amazon_caller_reference = $_GET['callerReference'];
                 $this->addToView('amazon_caller_reference', $amazon_caller_reference);
-                $this->addSuccessMessage("W00t! Thanks for subscribing to ThinkUp, you glorious member, you.");
-                $do_show_form = true;
-                //@TODO Record transaction
-                //@TODO Clear caller_reference from cache and add tokenID to cache
 
+                $error_message = isset($_GET["errorMessage"])?$_GET["errorMessage"]:null;
+                if ($error_message === null ) {
+                    $this->addSuccessMessage("W00t! Thanks for subscribing to ThinkUp, you glorious member, you.");
+                    $do_show_form = true;
+                } else {
+                    $this->addErrorMessage("Oops! Something went wrong. Amazon says: ".$error_message);
+                }
+
+                //Record transaction
+                $transaction_dao = new TransactionMySQLDAO();
+                $amount = SignUpController::$subscription_levels[$_GET['l']];
+                $payment_expiry_date = (isset($_GET['expiry']))?$_GET['expiry']:null;
+
+                try {
+                    $transaction_id = $transaction_dao->insert($_GET['tokenID'], $amount, $_GET["status"],
+                    $error_message, $payment_expiry_date);
+                } catch (DuplicateTransactionException $e) {
+                    $this->addSuccessMessage("Looks like you already paid for your ThinkUp subscription. ".
+                    "   Did you refresh the page?");
+                }
+                //Add tokenID to cache
+                SessionCache::put('token_id', $_GET['tokenID']);
             } else {
-                $this->addErrorMessage("Oops! Something went wrong. Amazon's redirect is invalid or incomplete. ".
                 //@TODO Link Please try again to the subscribe page
-                "Please try again.");
+                $this->addErrorMessage("Oops! Something went wrong during Amazon's redirect. Please try again.");
             }
+        } elseif ($this->hasUserReturnedFromTwitter() || $this->hasUserReturnedFromFacebook()) {
+            //@TODO Verify that transactions.token_id exists in database, show error if not.
+            //@TODO Check that email address doesn't already exist in database. If it does, check if there's already
+            // a successful transaction associated.
+            //If so, show error. If no transaction, overwrite existing subscriber row.
+
+            if ($this->hasUserReturnedFromTwitter()) {
+                $request_token = $_GET['oauth_token'];
+                $request_token_secret = SessionCache::get('oauth_request_token_secret');
+                $to = new TwitterOAuth($this->oauth_consumer_key, $this->oauth_consumer_secret, $request_token,
+                $request_token_secret);
+
+                if (isset($_GET['oauth_verifier'])) {
+                    $tok = $to->getAccessToken($_GET['oauth_verifier']);
+                } else {
+                    $tok = null;
+                }
+
+                if (isset($tok['oauth_token']) && isset($tok['oauth_token_secret'])) {
+                    $api = new TwitterAPIAccessorOAuth($tok['oauth_token'], $tok['oauth_token_secret'],
+                    $this->oauth_consumer_key, $this->oauth_consumer_secret, 5,  false);
+
+                    $authed_twitter_user = $api->verifyCredentials();
+
+                    if (isset($authed_twitter_user['user_name'])) {
+                        //                    echo "<pre>";
+                        //                    print_r($authed_twitter_user);
+                        //                    echo "</pre>";
+                        //Update waitlisted user with user name, user id, tokens, is_verified, follower_count
+                        $account_email = SessionCache::get('newaccount_email');
+                        $account_pass = SessionCache::get('newaccount_password');
+
+                        //@TODO Save values to subscribers table.
+                        //@TODO Save transaction ID and subscriber ID in subscriber_transactions table.
+                        //                    $dao = new UserRouteMySQLDAO();
+                        //                    $route_id = $dao->insert($waitlisted_email, $authed_twitter_user['user_name'],
+                        //                    $authed_twitter_user['user_id'], $tok['oauth_token'], $tok['oauth_token_secret'],
+                        //                    $authed_twitter_user['is_verified'], $authed_twitter_user['follower_count'],
+                        //                    $authed_twitter_user['full_name']);
+
+                        //@TODO Send email to validate email address with URL that includes verification code & address.
+                    } else {
+                        $this->addErrorMessage("Oops! Something went wrong. Twitter didn't return a valid user.");
+                    }
+                } else {
+                    $this->addErrorMessage("Oops! Something went wrong. ".Utils::varDumpToString($tok) );
+                }
+
+            } elseif ($this->hasUserReturnedFromFacebook()) {
+                //@TODO Process Facebook signup here
+            }
+        } else { //No recognizable POST or GET vars set
+            //@TODO Link Please try again to the subscribe page
+            $this->addErrorMessage("Oops! Something went wrong. Please try again.");
         }
         //for debugging
         $internal_caller_reference = SessionCache::get('caller_reference');
@@ -61,24 +132,29 @@ class NewSubscriberController extends SignUpController {
         $this->addToView('do_show_form', $do_show_form);
         return $this->generateView();
     }
-    /*
-     http://dev.upstart.com/subscribe/newaccount.php?l=member&
-     tokenID=64QF9XGGXVD9UNI9S7KB53GYHLQEJRPSG8I8AM34MFGMCXVTD7HPKOEDNGDHS6D7&
-     signatureMethod=RSA-SHA1&status=SC&signatureVersion=2&
-     signature=HESfhdbwQfp0fYyx6%2BmpK%2F4N9tZPTe8N%2Fja0%2B32ab5suvlCqFJi4WU4JuteLY5O3zvuA4uNRJDwL%0A05FbSLhb3jZok4H9c
-     %2BOJbF8VofF7qEUdwhXCHpoXD%2F5LaYTeGCNe8zuSpDupN1Fhcje9sr07oBrB%0AnXNkqKSQW8e7pS5rfvr2KA1eZWGWbnswRT09QJmcTSDzym5%
-     2BGXilhkLIqDr0sxozM21dWprdqGWO%0ATkMoIj%2BHVfha2vE023%2B2p8PGAAb7yStWo4tlan7ER9Gj19qm1QR4fkF6oT5R1wkn1F2X%2Ft9uHzrl
-     %0Ayn3L8iqFxebcfAtN3%2BzOQ6yr0a%2Fg4QJLKxWq6A%3D%3D&
-     certificateUrl=https%3A%2F%2Ffps.amazonaws.com%2Fcerts%2F110713%2FPKICert.pem%3F
-     requestId%3Dbk0guw95btzlsf08awrjgkgv2lw82id929cu6nwonow976zuek3
-     &expiry=01%2F20
-     */
+
+    private function hasUserPostedSignUpForm() {
+        return (sizeof($_POST) > 0);
+    }
+
+    private function hasUserReturnedFromFacebook() {
+        return (isset($_GET['n']) && isset($_GET['oauth_token']) && $_GET["n"] == 'facebook');
+    }
+
+    private function hasUserReturnedFromTwitter() {
+        return (isset($_GET['n']) && isset($_GET['oauth_token']) && $_GET["n"] == 'twitter');
+    }
+
+    private function hasUserReturnedFromAmazon() {
+        return (isset($_GET['callerReference'])  && isset($_GET['tokenID']) && isset($_GET["l"])
+        && isset($_GET['status']) && isset($_GET['certificateUrl']) && isset($_GET['signatureMethod'])
+        && isset($_GET['signature']) );
+    }
+
     private function isAmazonResponseValid($internal_caller_reference) {
-        if ( isset($_GET['callerReference']) &&
-        $internal_caller_reference == $_GET['callerReference'] &&
-        isset($_GET['tokenID']) && isset($_GET['expiry']) && isset($_GET['certificateUrl']) &&
-        isset($_GET['signatureMethod']) && isset($_GET['signature']) && isset($_GET["l"]) &&
-        (array_key_exists($_GET["l"], SignUpController::$subscription_levels))) {
+        //Check inputs match internal rules
+        if ($internal_caller_reference == $_GET['callerReference']
+        && (array_key_exists($_GET["l"], SignUpController::$subscription_levels))) {
             return true;
         } else {
             return false;

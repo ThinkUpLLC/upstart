@@ -9,9 +9,11 @@ class UpstartBasicUnitTestCase extends UnitTestCase {
         ROOT_PATH . 'tests/',
         ROOT_PATH . 'tests/classes/',
         ROOT_PATH . 'tests/fixtures/',
+        ROOT_PATH . 'webapp/libs/',
         ROOT_PATH . 'webapp/libs/model/',
         ROOT_PATH . 'webapp/libs/dao/',
-        ROOT_PATH . 'webapp/libs/controller/'
+        ROOT_PATH . 'webapp/libs/controller/',
+        ROOT_PATH . 'webapp/libs/exceptions/'
         ));
 
         $config = Config::getInstance();

@@ -34,14 +34,18 @@ timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT  'Time of click.'
 PRIMARY KEY (  id )
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  'Clicks to the pledge page.';
 
-CREATE TABLE  transactions (
-id INT NOT NULL AUTO_INCREMENT COMMENT  'Internal unique ID.',
-timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT  'Time of transaction.',
-token_id VARCHAR( 100 ) NOT NULL COMMENT  'Token ID of transaction.',
-amount INT NOT NULL COMMENT  'Monetary amount of transaction in US Dollars.',
-expiry DATE NOT NULL COMMENT  'Expiration date of transaction.',
-PRIMARY KEY (  id )
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  'Amazon Flexible Payment System transactions.';
+CREATE TABLE transactions (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal unique ID.',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time of transaction.',
+  token_id varchar(100) NOT NULL COMMENT 'Token ID of transaction.',
+  amount int(11) NOT NULL COMMENT 'Monetary amount of transaction in US Dollars.',
+  status_code varchar(2) NOT NULL COMMENT 'The status of the transaction request.',
+  error_message varchar(255) DEFAULT NULL COMMENT 'Human readable message that specifies the reason for a request failure (optional).',
+  payment_method_expiry varchar(10) DEFAULT NULL COMMENT 'Payment method expiration date (optional).',
+  PRIMARY KEY (id),
+  UNIQUE KEY token_id (token_id),
+  KEY status_code (status_code)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Amazon Flexible Payment System transactions.';
 
 CREATE TABLE subscribers (
   id int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal unique ID.',
@@ -65,3 +69,31 @@ timestamp TIMESTAMP NOT NULL COMMENT  'Time transaction was recorded.',
 subscriber_id INT NOT NULL COMMENT  'Subscriber ID keyed to subscribers.',
 transaction_id INT NOT NULL COMMENT  'Transaction ID keyed to transactions.'
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  'Transactions by known subscribers.';
+
+CREATE TABLE  transaction_status_codes (
+code VARCHAR( 2 ) NOT NULL COMMENT  'Status code.',
+description VARCHAR( 125 ) NOT NULL COMMENT  'Description.',
+PRIMARY KEY (  code )
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  'Amazon Flexible Payment System transaction status codes.';
+
+
+INSERT INTO  transaction_status_codes ( code , description )
+VALUES (
+'SA',  'Success status for the ABT payment method.'
+), (
+'SB',  'Success status for the ACH (bank account) payment method.'
+), (
+'SC',  'Success status for the credit card payment method.'
+), (
+'SE',  'System error.'
+), (
+'A',  'Buyer abandoned the pipeline.'
+), (
+'CE',  'Specifies a caller exception.'
+), (
+'PE',  'Payment Method Mismatch Error: Specifies that the buyer does not have payment method that you have requested.'
+), (
+'NP',  'This account type does not support the specified payment method.'
+), (
+'NM',  'You are not registered as a third-party caller to make this transaction. Contact Amazon Payments for more information.'
+);

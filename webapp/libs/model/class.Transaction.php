@@ -17,16 +17,30 @@ class Transaction {
      */
     var $amount;
     /**
-     * @var date Expiration date of transaction.
+     * @var str The status of the transaction request.
      */
-    var $expiry;
+    var $status_code;
+    /**
+     * @var str Human readable message that specifies the reason for a request failure (optional).
+     */
+    var $error_message;
+    /**
+     * @var date Payment method expiration date (optional).
+     */
+    var $payment_method_expiry;
+    /*
+     * Status codes
+     */
+    public static $status_codes = array('SA', 'SB', 'SC', 'SE', 'A', 'CE', 'PE', 'NP', 'NM');
     public function __construct($row = false) {
         if ($row) {
             $this->id = $row['id'];
             $this->timestamp = $row['timestamp'];
             $this->token_id = $row['token_id'];
             $this->amount = $row['amount'];
-            $this->expiry = $row['expiry'];
+            $this->status_code = $row['status_code'];
+            $this->error_message = $row['error_message'];
+            $this->payment_method_expiry = $row['payment_method_expiry'];
         }
     }
 }
