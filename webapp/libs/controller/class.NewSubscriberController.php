@@ -39,28 +39,36 @@ class NewSubscriberController extends SignUpController {
                         $redirect_to_network = true;
                     } catch (DuplicateSubscriberAuthorizationException $e) {
                         //@TODO Figure out what to do in case of repeat subscriber authorization
+                        //stopgap for testing
+                        $redirect_to_network = true;
                     }
                 }
 
                 if ($redirect_to_network) {
-                    $cfg = Config::getInstance();
-                    $oauth_consumer_key = $cfg->getValue('oauth_consumer_key');
-                    $oauth_consumer_secret = $cfg->getValue('oauth_consumer_secret');
+                    if ($_POST['n'] == 'twitter') {
+                        //Go to Twitter
+                        $cfg = Config::getInstance();
+                        $oauth_consumer_key = $cfg->getValue('oauth_consumer_key');
+                        $oauth_consumer_secret = $cfg->getValue('oauth_consumer_secret');
 
-                    $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret);
-                    //Add unique waitlisted user ID from previous DB operation to callback
-                    $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().'newsubscriber.php?n=twitter');
+                        $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret);
+                        //Add unique waitlisted user ID from previous DB operation to callback
+                        $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().'newsubscriber.php?n=twitter');
 
-                    if (isset($tok['oauth_token'])) {
-                        $token = $tok['oauth_token'];
-                        SessionCache::put('oauth_request_token_secret', $tok['oauth_token_secret']);
-                        // Build Twitter authorization URL
-                        $oauthorize_link = $to->getAuthorizeURL($token);
-                        //Redirect to oauthorize link
-                        header('Location: '.$oauthorize_link);
-                    } else {
-                        $this->addErrorMessage("Oops! Something went wrong. ".
-                        (isset($tok))?Utils::varDumpToString($tok):'' );
+                        if (isset($tok['oauth_token'])) {
+                            $token = $tok['oauth_token'];
+                            SessionCache::put('oauth_request_token_secret', $tok['oauth_token_secret']);
+                            // Build Twitter authorization URL
+                            $oauthorize_link = $to->getAuthorizeURL($token);
+                            //Redirect to oauthorize link
+                            header('Location: '.$oauthorize_link);
+                        } else {
+                            $this->addErrorMessage("Oops! Something went wrong. ".
+                            (isset($tok))?Utils::varDumpToString($tok):'' );
+                        }
+                    } elseif ($_POST['n'] == 'facebook') {
+                        //Go to Facebook
+                        $this->addSuccessMessage("TODO: Redirect to Facebook here.");
                     }
                 }
             } else { // form inputs were invalid, display it again with errors
@@ -176,6 +184,9 @@ class NewSubscriberController extends SignUpController {
         }
 
         $this->addToView('do_show_form', $do_show_form);
+//        echo '<pre>';
+//        print_r($_POST);
+//        echo '</pre>';
         return $this->generateView();
     }
 

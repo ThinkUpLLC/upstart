@@ -140,8 +140,8 @@
             {include file="_usermessage.tpl" field="password"}
             <input type="password" class="input-block-level" placeholder="Password: 8 alphanumeric characters" name="password" value="">
 
-            <button class="btn btn-large btn-primary btn-info big-btn" type="submit">Sign in with Twitter</button>
-            <button class="btn btn-large btn-primary btn-info big-btn" type="submit">Sign in with Facebook</button>
+            <button class="btn btn-large btn-primary btn-info big-btn" type="submit" name="n" value="twitter">Sign in with Twitter</button>
+            <button class="btn btn-large btn-primary btn-info big-btn" type="submit" name="n" value="facebook">Sign in with Facebook</button>
             {/if}
           </form>
 <h2>Debug</h2>
