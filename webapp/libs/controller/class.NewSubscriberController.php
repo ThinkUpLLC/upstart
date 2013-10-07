@@ -68,7 +68,37 @@ class NewSubscriberController extends SignUpController {
                         }
                     } elseif ($_POST['n'] == 'facebook') {
                         //Go to Facebook
-                        $this->addSuccessMessage("TODO: Redirect to Facebook here.");
+                        $cfg = Config::getInstance();
+                        $facebook_app_id = $cfg->getValue('facebook_app_id');
+                        $facebook_api_secret = $cfg->getValue('facebook_api_secret');
+
+                        // Create Facebook Application instance
+                        $facebook_app = new Facebook(array('appId'  => $facebook_app_id,
+                        'secret' => $facebook_api_secret ));
+
+                        $fb_user = $facebook_app->getUser();
+                        if ($fb_user) {
+                            try {
+                                $fb_user_profile = $facebook_app->api('/me');
+                            } catch (FacebookApiException $e) {
+                                error_log($e);
+                                $fb_user = null;
+                                $fb_user_profile = null;
+                            }
+                        }
+                        //Plant unique token for CSRF protection during auth per https://developers.facebook.com/docs/authentication/
+                        if (SessionCache::get('facebook_auth_csrf') == null) {
+                            SessionCache::put('facebook_auth_csrf', md5(uniqid(rand(), true)));
+                        }
+
+                        $params = array('scope'=>'read_stream,user_likes,user_location,user_website,'.
+                        'read_friendlists,friends_location,manage_pages,read_insights,manage_pages',
+                        'state'=>SessionCache::get('facebook_auth_csrf'),
+                        'redirect_uri'=>UpstartHelper::getApplicationURL().'newsubscriber.php?n=facebook');
+
+                        $fbconnect_link = $facebook_app->getLoginUrl($params);
+                        //Redirect to Facebook connect link
+                        header('Location: '.$fbconnect_link);
                     }
                 }
             } else { // form inputs were invalid, display it again with errors
@@ -108,6 +138,8 @@ class NewSubscriberController extends SignUpController {
                 $this->addErrorMessage("Oops! This URL is invalid. Please try again.");
             }
         } elseif ($this->hasUserReturnedFromTwitter() || $this->hasUserReturnedFromFacebook()) {
+            $update_count = 0;
+
             if ($this->hasUserReturnedFromTwitter()) {
                 $cfg = Config::getInstance();
                 $oauth_consumer_key = $cfg->getValue('oauth_consumer_key');
@@ -144,21 +176,6 @@ class NewSubscriberController extends SignUpController {
                             $authed_twitter_user['user_id'], 'twitter', $authed_twitter_user['full_name'],
                             $tok['oauth_token'], $tok['oauth_token_secret'], $authed_twitter_user['is_verified'],
                             $authed_twitter_user['follower_count']);
-
-                            if ($update_count == 1) {
-                                $this->addSuccessMessage("Almost there! You're subscribed to ThinkUp. ".
-                                "Check your email for a special link to verify your address.");
-                            } else {
-                                $this->addErrorMessage("Oops! Something went wrong. ".
-                                "Couldn't update subscriber details.");
-                            }
-
-                            //Clear SessionCache values, we're done
-                            SessionCache::unsetKey('subscriber_id');
-                            SessionCache::unsetKey('token_id');
-                            SessionCache::unsetKey('oauth_request_token_secret');
-
-                            //@TODO Send confirmattion email with URL that includes verification code & address
                         } else {
                             $this->addErrorMessage("Oops! Something went wrong. Twitter didn't return a valid user.");
                         }
@@ -170,23 +187,79 @@ class NewSubscriberController extends SignUpController {
                     (isset($tok))?Utils::varDumpToString($tok):'' );
                 }
             } elseif ($this->hasUserReturnedFromFacebook()) {
-                //@TODO Process Facebook signup here
+                if ($_GET["state"] == SessionCache::get('facebook_auth_csrf')) {
+                    //Prepare API request
+                    //First, prep redirect URI
+                    $redirect_uri = UpstartHelper::getApplicationURL().'newsubscriber.php?n=facebook';
+
+                    $cfg = Config::getInstance();
+                    $facebook_app_id = $cfg->getValue('facebook_app_id');
+                    $facebook_api_secret = $cfg->getValue('facebook_api_secret');
+
+                    $facebook_app = new Facebook(array('appId'=>$facebook_app_id, 'secret' => $facebook_api_secret ));
+
+                    //Build API request URL
+                    $api_req = 'https://graph.facebook.com/oauth/access_token?client_id='. $facebook_app_id.
+                    '&client_secret='. $facebook_api_secret. '&redirect_uri='.$redirect_uri.'&state='.
+                    SessionCache::get('facebook_auth_csrf').'&code='.$_GET["code"];
+
+                    $access_token_response = FacebookGraphAPIAccessor::rawApiRequest($api_req, false);
+                    parse_str($access_token_response);
+                    if (isset($access_token)) {
+                        $facebook_app->setAccessToken($access_token);
+                        $fb_user_profile = $facebook_app->api('/me');
+                        $fb_username = $fb_user_profile['name'];
+                        $fb_user_id = $fb_user_profile['id'];
+
+                        //Update subscriber record with Facebook auth information
+                        $subscriber_dao = new SubscriberMySQLDAO();
+                        //@TODO Handle case where session item isn't set
+                        $subscriber_id = SessionCache::get('subscriber_id');
+                        $update_count = $subscriber_dao->update($subscriber_id, $fb_user_profile['username'],
+                        $fb_user_profile['id'], 'facebook', $fb_user_profile['name'], $access_token,
+                        $fb_user_profile['verified']);
+                        //                        echo "<pre>";
+                        //                        print_r($fb_user_profile);
+                        //                        echo "</pre>";
+                    } else {
+                        $error_msg = "Problem authorizing your Facebook account.";
+                        $error_object = JSONDecoder::decode($access_token_response);
+                        if (isset($error_object) && isset($error_object->error->type)
+                        && isset($error_object->error->message)) {
+                            $error_msg = $error_msg."<br>Facebook says: \"".$error_object->error->type.": "
+                            .$error_object->error->message. "\"";
+                        } else {
+                            $error_msg = $error_msg."<br>Facebook's response: \"".$access_token_response. "\"";
+                        }
+                        $this->addErrorMessage($error_msg, null, true);
+                    }
+                } else {
+                    $this->addErrorMessage("Could not authenticate Facebook account due to invalid CSRF token.");
+                }
             }
+
+            if ($update_count == 1) {
+                $this->addSuccessMessage("Alrighty then! You're subscribed to ThinkUp. ".
+                "One last step: Check your email for a special link to verify your address.");
+                //Clear SessionCache values, we're done
+                SessionCache::unsetKey('subscriber_id');
+                SessionCache::unsetKey('token_id');
+                SessionCache::unsetKey('oauth_request_token_secret');
+
+                //@TODO Send confirmation email with URL that includes verification code & address
+            } else {
+                $this->addErrorMessage("Oops! Something went wrong. Couldn't save ".ucfirst($_GET['n']). " details. ".
+                " Please try again.");
+                $do_show_form = true;
+            }
+
         } else { //No recognizable POST or GET vars set
             //@TODO Link Please try again to the subscribe page
             $this->addErrorMessage("Oops! Something went wrong. Please try again.");
         }
-        //for debugging
-        $internal_caller_reference = SessionCache::get('caller_reference');
-        $this->addToView('internal_caller_reference', $internal_caller_reference);
-        if (isset($_GET['callerReference'])) {
-            $this->addToView('amazon_caller_reference', $_GET['callerReference']);
-        }
 
         $this->addToView('do_show_form', $do_show_form);
-//        echo '<pre>';
-//        print_r($_POST);
-//        echo '</pre>';
+
         return $this->generateView();
     }
 
@@ -195,7 +268,7 @@ class NewSubscriberController extends SignUpController {
     }
 
     private function hasUserReturnedFromFacebook() {
-        return (isset($_GET['n']) && isset($_GET['oauth_token']) && $_GET["n"] == 'facebook');
+        return (isset($_GET['n']) && isset($_GET['code']) && isset($_GET['state']) && $_GET["n"] == 'facebook');
     }
 
     private function hasUserReturnedFromTwitter() {

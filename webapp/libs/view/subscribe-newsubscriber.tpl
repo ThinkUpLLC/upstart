@@ -144,10 +144,6 @@
             <button class="btn btn-large btn-primary btn-info big-btn" type="submit" name="n" value="facebook">Sign in with Facebook</button>
             {/if}
           </form>
-<h2>Debug</h2>
-<p>Amazon caller_reference = {$amazon_caller_reference}</p>
-<p>ThinkUp caller_reference = {$internal_caller_reference}</p>
-
         </div>
     </div> <!-- /container -->
 
