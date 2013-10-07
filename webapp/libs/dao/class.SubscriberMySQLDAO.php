@@ -26,6 +26,27 @@ class SubscriberMySQLDAO extends PDODAO {
         }
         return $this->getInsertId($ps);
     }
+
+    public function update($subscriber_id, $network_user_name, $network_user_id, $network, $full_name,
+    $oauth_access_token, $oauth_access_token_secret, $is_verified=0, $follower_count=0) {
+        $q = " UPDATE subscribers SET network_user_name=:network_user_name, network_user_id = :network_user_id, ";
+        $q .= "network = :network, full_name = :full_name, oauth_access_token = :oauth_access_token, ";
+        $q .= "oauth_access_token_secret = :oauth_access_token_secret, is_verified = :is_verified, ";
+        $q .= "follower_count = :follower_count WHERE id=:id";
+        $vars = array(
+            ':id'=>$subscriber_id,
+            ':network_user_name'=>$network_user_name,
+            ':network_user_id'=>$network_user_id,
+            ':network'=>$network,
+            ':full_name'=>$full_name,
+            ':oauth_access_token'=>$oauth_access_token,
+            ':oauth_access_token_secret'=>$oauth_access_token_secret,
+            ':follower_count'=>$follower_count,
+            ':is_verified'=>(integer) $is_verified
+        );
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
     /**
      * Generate a unique, random salt by appending the users email to a random number and returning the hash of it
      * @param str $email

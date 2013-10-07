@@ -25,6 +25,7 @@ class NewSubscriberController extends SignUpController {
                 SessionCache::put('subscriber_id', $subscriber_id);
 
                 //Verify that authorization.token_id is in SessionCache and exists in database, show error if not
+                //@TODO Handle case where session item isn't set
                 $token_id = SessionCache::get('token_id');
                 $authorization_dao = new AuthorizationMySQLDAO();
                 $authorization = $authorization_dao->getByTokenID($token_id);
@@ -100,9 +101,14 @@ class NewSubscriberController extends SignUpController {
             }
         } elseif ($this->hasUserReturnedFromTwitter() || $this->hasUserReturnedFromFacebook()) {
             if ($this->hasUserReturnedFromTwitter()) {
+                $cfg = Config::getInstance();
+                $oauth_consumer_key = $cfg->getValue('oauth_consumer_key');
+                $oauth_consumer_secret = $cfg->getValue('oauth_consumer_secret');
+
                 $request_token = $_GET['oauth_token'];
+                //@TODO Handle case where session item isn't set
                 $request_token_secret = SessionCache::get('oauth_request_token_secret');
-                $to = new TwitterOAuth($this->oauth_consumer_key, $this->oauth_consumer_secret, $request_token,
+                $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret, $request_token,
                 $request_token_secret);
 
                 if (isset($_GET['oauth_verifier'])) {
@@ -113,35 +119,48 @@ class NewSubscriberController extends SignUpController {
 
                 if (isset($tok['oauth_token']) && isset($tok['oauth_token_secret'])) {
                     $api = new TwitterAPIAccessorOAuth($tok['oauth_token'], $tok['oauth_token_secret'],
-                    $this->oauth_consumer_key, $this->oauth_consumer_secret, 5,  false);
+                    $oauth_consumer_key, $oauth_consumer_secret, 5,  false);
 
                     try {
                         $authed_twitter_user = $api->verifyCredentials();
+                        if (isset($authed_twitter_user['user_name'])) {
+                            //                            echo "<pre>";
+                            //                            print_r($authed_twitter_user);
+                            //                            echo "</pre>";
+
+                            //Update subscriber record with Twitter auth information
+                            $subscriber_dao = new SubscriberMySQLDAO();
+                            //@TODO Handle case where session item isn't set
+                            $subscriber_id = SessionCache::get('subscriber_id');
+                            $update_count = $subscriber_dao->update($subscriber_id, $authed_twitter_user['user_name'],
+                            $authed_twitter_user['user_id'], 'twitter', $authed_twitter_user['full_name'],
+                            $tok['oauth_token'], $tok['oauth_token_secret'], $authed_twitter_user['is_verified'],
+                            $authed_twitter_user['follower_count']);
+
+                            if ($update_count == 1) {
+                                $this->addSuccessMessage("Almost there! You're subscribed to ThinkUp. ".
+                                "Check your email for a special link to verify your address.");
+                            } else {
+                                $this->addErrorMessage("Oops! Something went wrong. ".
+                                "Couldn't update subscriber details.");
+                            }
+
+                            //Clear SessionCache values, we're done
+                            SessionCache::unsetKey('subscriber_id');
+                            SessionCache::unsetKey('token_id');
+                            SessionCache::unsetKey('oauth_request_token_secret');
+
+                            //@TODO Send confirmattion email with URL that includes verification code & address
+                        } else {
+                            $this->addErrorMessage("Oops! Something went wrong. Twitter didn't return a valid user.");
+                        }
                     } catch (APIErrorException $e) {
                         $this->addErrorMessage("Oops! Something went wrong. Twitter says: ".$e->getMessage());
                     }
-
-                    print_r($authed_twitter_user);
-                    if (isset($authed_twitter_user['user_name'])) {
-                        //                    echo "<pre>";
-                        //                    print_r($authed_twitter_user);
-                        //                    echo "</pre>";
-
-                        //@TODO Update subscriber record with Twitter auth information
-                        //                    $dao = new UserRouteMySQLDAO();
-                        //                    $route_id = $dao->insert($waitlisted_email, $authed_twitter_user['user_name'],
-                        //                    $authed_twitter_user['user_id'], $tok['oauth_token'], $tok['oauth_token_secret'],
-                        //                    $authed_twitter_user['is_verified'], $authed_twitter_user['follower_count'],
-                        //                    $authed_twitter_user['full_name']);
-
-                        //@TODO Send email to validate email address with URL that includes verification code & address.
-                    } else {
-                        $this->addErrorMessage("Oops! Something went wrong. Twitter didn't return a valid user.");
-                    }
                 } else {
-                    $this->addErrorMessage("Oops! Something went wrong. ".Utils::varDumpToString($tok) );
+                    $this->addErrorMessage("Oops! Something went wrong. ".
+                    (isset($tok))?Utils::varDumpToString($tok):'' );
                 }
-
             } elseif ($this->hasUserReturnedFromFacebook()) {
                 //@TODO Process Facebook signup here
             }

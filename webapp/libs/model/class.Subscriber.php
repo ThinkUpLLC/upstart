@@ -37,6 +37,14 @@ class Subscriber {
      */
     var $full_name;
     /**
+     * @var int Follower or subscriber count of service user.
+     */
+    var $follower_count;
+    /**
+     * @var bool Whether or not the service user is verified.
+     */
+    var $is_verified = false;
+    /**
      * @var str OAuth access token for network authorization.
      */
     var $oauth_access_token;
@@ -63,6 +71,8 @@ class Subscriber {
             $this->network_user_name = $row['network_user_name'];
             $this->network = $row['network'];
             $this->full_name = $row['full_name'];
+            $this->follower_count = $row['follower_count'];
+            $this->is_verified = PDODAO::convertDBToBool($row['is_verified']);
             $this->oauth_access_token = $row['oauth_access_token'];
             $this->oauth_access_token_secret = $row['oauth_access_token_secret'];
             $this->verification_code = $row['verification_code'];
