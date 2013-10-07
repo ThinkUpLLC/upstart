@@ -1,0 +1,129 @@
+/* 
+  This was copied over, but the controls and indicators have been modified.
+*/
+
+.carousel {
+  position: relative;
+}
+.carousel-inner {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+} 
+.carousel-inner > .item {
+  display: none;
+  position: relative;
+  -webkit-transition: 0.3s ease-in-out left;
+  transition: 0.3s ease-in-out left;
+}
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  line-height: 1;
+  margin: 0 auto;
+}
+.carousel-inner > .active,
+.carousel-inner > .next,
+.carousel-inner > .prev {
+  display: block;
+}
+.carousel-inner > .active {
+  left: 0;
+}
+.carousel-inner > .next,
+.carousel-inner > .prev {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.carousel-inner > .next {
+  left: 100%;
+}
+.carousel-inner > .prev {
+  left: -100%;
+}
+.carousel-inner > .next.left,
+.carousel-inner > .prev.right {
+  left: 0;
+}
+.carousel-inner > .active.left {
+  left: -100%;
+}
+.carousel-inner > .active.right {
+  left: 100%;
+}
+
+.carousel-control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 15%;
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+  font-size: 20px;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.carousel-control.right {
+  left: auto;
+  right: 0;
+}
+.carousel-control:hover,
+.carousel-control:focus {
+  color: #ffffff;
+  text-decoration: none;
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+}
+.carousel-control .icon-prev,
+.carousel-control .icon-next,
+.carousel-control .glyphicon-chevron-left,
+.carousel-control .glyphicon-chevron-right {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 5;
+  display: inline-block;
+}
+.carousel-control .icon-prev,
+.carousel-control .icon-next {
+  margin-top: -23px + -29px; // Its height and height of caption & indicators
+  margin-left: -18px;
+  .sprite-arrow-left;
+}
+
+.carousel-control .icon-next {
+  .sprite-arrow-right;
+  margin-left: -5px;
+}
+
+.carousel-indicators {
+  width: 60%;
+  margin: 0 20%;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+.carousel-indicators li {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  text-indent: -999px;
+  background-color: #d8d8d8;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 0 3px;
+}
+.carousel-indicators .active {
+  background-color: @blue;
+}
+.carousel-caption {
+  padding: 10px 0;
+  font: 13px/16px @font-serif;
+  font-style: italic;
+  text-align: center;
+}

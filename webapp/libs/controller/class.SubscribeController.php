@@ -4,14 +4,14 @@
  */
 class SubscribeController extends Controller {
     public function control() {
-        $this->setViewTemplate('subscribe-index.tpl');
+        $this->setViewTemplate('pledge-subscribe.tpl');
         $click_dao = new ClickMySQLDAO();
         $caller_reference = $click_dao->insert();
         $this->addToView('caller_reference', $caller_reference);
         SessionCache::put('caller_reference', $caller_reference);
 
         foreach (SignUpController::$subscription_levels as $level=>$amount) {
-            $callback_url = UpstartHelper::getApplicationURL().'newsubscriber.php?l='.$level;
+            $callback_url = UpstartHelper::getApplicationURL().'new.php?l='.$level;
             $subscribe_url = self::getAmazonFPSURL($caller_reference, $callback_url, $amount);
             $this->addToView('subscribe_'.$level.'_url', $subscribe_url);
         }

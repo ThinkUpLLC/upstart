@@ -47,6 +47,21 @@ class SubscriberMySQLDAO extends PDODAO {
         $ps = $this->execute($q, $vars);
         return $this->getUpdateCount($ps);
     }
+
+    //@TODO Cache these totals in their own table to avoid all these joins on the front page
+    public function getTotalSubscribers($amount = 0) {
+        $q = "SELECT count(*) as total FROM subscribers s ";
+        if ($amount > 0) {
+            $q .= "INNER JOIN subscriber_authorizations sa ON s.id = sa.subscriber_id ";
+            $q .= "INNER JOIN authorizations a ON a.id = sa.authorization_id WHERE a.amount = :amount";
+            $vars = array ( ':amount' => $amount);
+            $ps = $this->execute($q, $vars);
+        } else {
+            $ps = $this->execute($q);
+        }
+        $result = $this->getDataRowAsArray($ps);
+        return $result["total"];
+    }
     /**
      * Generate a unique, random salt by appending the users email to a random number and returning the hash of it
      * @param str $email

@@ -1,0 +1,1348 @@
+@font-face {
+  font-family: "HelveticaNeueETW02-45Lt";
+  src: url("../fonts/903208/7e44a768-e2b1-4525-9ce2-3bdf2251567e.eot?#iefix");
+  src: url("../fonts/903208/7e44a768-e2b1-4525-9ce2-3bdf2251567e.eot?#iefix") format("eot"), url("../fonts/903208/78abe6d7-60ee-4a4c-b5f7-676fcff72e80.woff") format("woff"), url("../fonts/903208/303701d4-af3a-47bc-a704-22e366d2b3af.ttf") format("truetype"), url("../fonts/903208/da4e5d93-0c5b-4300-b52b-2ddb956f353a.svg#da4e5d93-0c5b-4300-b52b-2ddb956f353a") format("svg");
+}
+@font-face {
+  font-family: "HelveticaNeueETW02-55Rg";
+  src: url("../fonts/903214/e30c4534-e8af-416e-b7fb-c395323e8424.eot?#iefix");
+  src: url("../fonts/903214/e30c4534-e8af-416e-b7fb-c395323e8424.eot?#iefix") format("eot"), url("../fonts/903214/541908c1-6856-4337-b6cb-f57a88784cbe.woff") format("woff"), url("../fonts/903214/354b6f86-00e3-4843-b8d0-9107b4ae0100.ttf") format("truetype"), url("../fonts/903214/2e170156-a84c-48cf-bc19-5c5c4db18b03.svg#2e170156-a84c-48cf-bc19-5c5c4db18b03") format("svg");
+}
+@font-face {
+  font-family: "HelveticaNeueETW02-56It";
+  src: url("../fonts/903217/ca06b225-d224-48c2-ab8c-a6eda074d756.eot?#iefix");
+  src: url("../fonts/903217/ca06b225-d224-48c2-ab8c-a6eda074d756.eot?#iefix") format("eot"), url("../fonts/903217/11ca5dc2-974e-4412-8869-4f48a57e5a59.woff") format("woff"), url("../fonts/903217/3369d7bb-e954-48d5-b70a-55a19aa2d32c.ttf") format("truetype"), url("../fonts/903217/0f30cb1b-0940-4b65-b27b-fa0428820449.svg#0f30cb1b-0940-4b65-b27b-fa0428820449") format("svg");
+}
+@font-face {
+  font-family: "HelveticaNeueETW02-75Bd";
+  src: url("../fonts/903226/e1c22775-19f1-4788-907d-302e5782b5d3.eot?#iefix");
+  src: url("../fonts/903226/e1c22775-19f1-4788-907d-302e5782b5d3.eot?#iefix") format("eot"), url("../fonts/903226/74e6e2e1-e281-4b18-8319-dd0e21f3dad3.woff") format("woff"), url("../fonts/903226/484e3cbf-aa5e-4e0f-b623-c94d37c19bdb.ttf") format("truetype"), url("../fonts/903226/0300804c-d9d8-4cb4-8c92-cbcd9b238244.svg#0300804c-d9d8-4cb4-8c92-cbcd9b238244") format("svg");
+}
+.type-serif {
+  font-size: 14px;
+  font-family: "Libre Baskerville", georgia, serif;
+  line-height: 18px;
+}
+.type-sans {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.type-sans em {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-56It", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.type-sans strong {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+/* 
+  This was copied over, but the controls and indicators have been modified.
+*/
+.carousel {
+  position: relative;
+}
+.carousel-inner {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+.carousel-inner > .item {
+  display: none;
+  position: relative;
+  -webkit-transition: 0.3s ease-in-out left;
+  transition: 0.3s ease-in-out left;
+}
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  line-height: 1;
+  margin: 0 auto;
+}
+.carousel-inner > .active,
+.carousel-inner > .next,
+.carousel-inner > .prev {
+  display: block;
+}
+.carousel-inner > .active {
+  left: 0;
+}
+.carousel-inner > .next,
+.carousel-inner > .prev {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.carousel-inner > .next {
+  left: 100%;
+}
+.carousel-inner > .prev {
+  left: -100%;
+}
+.carousel-inner > .next.left,
+.carousel-inner > .prev.right {
+  left: 0;
+}
+.carousel-inner > .active.left {
+  left: -100%;
+}
+.carousel-inner > .active.right {
+  left: 100%;
+}
+.carousel-control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 15%;
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+  font-size: 20px;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.carousel-control.right {
+  left: auto;
+  right: 0;
+}
+.carousel-control:hover,
+.carousel-control:focus {
+  color: #ffffff;
+  text-decoration: none;
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+}
+.carousel-control .icon-prev,
+.carousel-control .icon-next,
+.carousel-control .glyphicon-chevron-left,
+.carousel-control .glyphicon-chevron-right {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 5;
+  display: inline-block;
+}
+.carousel-control .icon-prev,
+.carousel-control .icon-next {
+  margin-top: -52px;
+  margin-left: -18px;
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -63px -2px;
+  width: 23px;
+  height: 55px;
+}
+.carousel-control .icon-next {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -36px -2px;
+  width: 23px;
+  height: 55px;
+  margin-left: -5px;
+}
+.carousel-indicators {
+  width: 60%;
+  margin: 0 20%;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+.carousel-indicators li {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  text-indent: -999px;
+  background-color: #d8d8d8;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 0 3px;
+}
+.carousel-indicators .active {
+  background-color: #0099f0;
+}
+.carousel-caption {
+  padding: 10px 0;
+  font: 13px/16px "Libre Baskerville", georgia, serif;
+  font-style: italic;
+  text-align: center;
+}
+/* glue: 0.3 hash: 010dfb6b05 */
+.sprite-lightbulb,
+.sprite-arrow-right,
+.sprite-arrow-left,
+.sprite-book,
+.sprite-graduation,
+.sprite-explosion,
+.sprite-map-pin,
+.sprite-friends,
+.sprite-friends-orange,
+.sprite-binoculars,
+.sprite-photo-gallery,
+.sprite-calendar,
+.sprite-cards,
+.sprite-megaphone,
+.sprite-elephant,
+.sprite-forbidden,
+.sprite-number-one,
+.sprite-meter,
+.sprite-smiley-face,
+.sprite-quotes,
+.sprite-lightning,
+.sprite-heart,
+.sprite-question-mark,
+.sprite-speech-bubble,
+.sprite-arrow-up,
+.sprite-arrow-down {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+}
+.sprite-lightbulb {
+  background-position: -2px -2px;
+  width: 30px;
+  height: 65px;
+}
+.sprite-arrow-right {
+  background-position: -36px -2px;
+  width: 23px;
+  height: 55px;
+}
+.sprite-arrow-left {
+  background-position: -63px -2px;
+  width: 23px;
+  height: 55px;
+}
+.sprite-book {
+  background-position: -90px -2px;
+  width: 30px;
+  height: 45px;
+}
+.sprite-graduation {
+  background-position: -2px -71px;
+  width: 39px;
+  height: 21px;
+}
+.sprite-explosion {
+  background-position: -123px -2px;
+  width: 38px;
+  height: 38px;
+}
+.sprite-map-pin {
+  background-position: -123px -44px;
+  width: 23px;
+  height: 36px;
+}
+.sprite-friends {
+  background-position: -2px -96px;
+  width: 36px;
+  height: 26px;
+}
+.sprite-friends-orange {
+  background-position: -42px -96px;
+  width: 36px;
+  height: 25px;
+}
+.sprite-binoculars {
+  background-position: -81px -96px;
+  width: 36px;
+  height: 24px;
+}
+.sprite-photo-gallery {
+  background-position: -2px -125px;
+  width: 35px;
+  height: 27px;
+}
+.sprite-calendar {
+  background-position: -165px -2px;
+  width: 30px;
+  height: 34px;
+}
+.sprite-cards {
+  background-position: -2px -156px;
+  width: 33px;
+  height: 30px;
+}
+.sprite-megaphone {
+  background-position: -41px -125px;
+  width: 33px;
+  height: 27px;
+}
+.sprite-elephant {
+  background-position: -39px -156px;
+  width: 32px;
+  height: 27px;
+}
+.sprite-forbidden {
+  background-position: -199px -2px;
+  width: 32px;
+  height: 32px;
+}
+.sprite-number-one {
+  background-position: -199px -38px;
+  width: 31px;
+  height: 31px;
+}
+.sprite-meter {
+  background-position: -199px -72px;
+  width: 31px;
+  height: 25px;
+}
+.sprite-smiley-face {
+  background-position: -199px -101px;
+  width: 30px;
+  height: 30px;
+}
+.sprite-quotes {
+  background-position: -199px -135px;
+  width: 30px;
+  height: 22px;
+}
+.sprite-lightning {
+  background-position: -165px -40px;
+  width: 15px;
+  height: 29px;
+}
+.sprite-heart {
+  background-position: -165px -73px;
+  width: 28px;
+  height: 26px;
+}
+.sprite-question-mark {
+  background-position: -165px -103px;
+  width: 26px;
+  height: 26px;
+}
+.sprite-speech-bubble {
+  background-position: -199px -161px;
+  width: 25px;
+  height: 23px;
+}
+.sprite-arrow-up {
+  background-position: -165px -133px;
+  width: 12px;
+  height: 6px;
+}
+.sprite-arrow-down {
+  background-position: -181px -133px;
+  width: 12px;
+  height: 6px;
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .sprite-lightbulb,
+  .sprite-arrow-right,
+  .sprite-arrow-left,
+  .sprite-book,
+  .sprite-graduation,
+  .sprite-explosion,
+  .sprite-map-pin,
+  .sprite-friends,
+  .sprite-friends-orange,
+  .sprite-binoculars,
+  .sprite-photo-gallery,
+  .sprite-calendar,
+  .sprite-cards,
+  .sprite-megaphone,
+  .sprite-elephant,
+  .sprite-forbidden,
+  .sprite-number-one,
+  .sprite-meter,
+  .sprite-smiley-face,
+  .sprite-quotes,
+  .sprite-lightning,
+  .sprite-heart,
+  .sprite-question-mark,
+  .sprite-speech-bubble,
+  .sprite-arrow-up,
+  .sprite-arrow-down {
+    background-image: url('../img/icons@2x.png');
+    -webkit-background-size: 232px 188px;
+    -moz-background-size: 232px 188px;
+    background-size: 232px 188px;
+  }
+}
+.sprite-smiley-face {
+  background-position: -198px -101px;
+  width: 31px;
+  height: 30px;
+}
+.sprite-meter {
+  background-position: -198px -72px;
+  width: 31px;
+  height: 25px;
+}
+/* ==========================================================================
+   Main Styles (Mobile first!)
+   ========================================================================== */
+html {
+  -webkit-font-smoothing: subpixel-antialiased;
+  color: #333333;
+}
+strong {
+  font-weight: normal;
+}
+.content-wrapper {
+  margin: 10px 0;
+  overflow: hidden;
+}
+.content-wrapper .left-column,
+.content-wrapper .right-column {
+  margin-bottom: 32px;
+}
+.content-wrapper .left-column {
+  background: url(../img/border-top.png) top left repeat-x;
+  padding-top: 2px;
+  margin: 0 10px 32px;
+}
+.content-wrapper .page-header {
+  background: url(../img/rocketship-little-alt.png) bottom right no-repeat;
+  background-size: 91px 302px;
+  min-height: 190px;
+}
+.content-wrapper .page-header h1 {
+  font-family: "HelveticaNeueETW02-45Lt", helvetica, arial, sans-sarif;
+  font-weight: 300;
+  font-size: 23px;
+  color: #000000;
+  line-height: 24px;
+  margin: 0 0 12px;
+  padding-top: 12px;
+  padding-right: 40px;
+  letter-spacing: -2px;
+}
+.content-wrapper .page-header h1 .site-name {
+  color: #0099f0;
+}
+.content-wrapper .page-header h1 .site-name strong {
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+}
+.content-wrapper .page-header h1 .the-rest {
+  display: block;
+}
+.content-wrapper .page-header p {
+  padding-right: 110px;
+  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  color: #ff5600;
+  font-size: 14px;
+  line-height: 16px;
+  margin: 0 0 1em;
+}
+.content-wrapper .page-header p strong {
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+}
+.content-wrapper .video-wrapper {
+  border-top: 1px dashed #ff5600;
+  padding: 12px 0 0;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item {
+  padding: 12px 0;
+  border-bottom: 1px dashed #ff5600;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item header {
+  position: relative;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  font-size: 13px;
+  line-height: 16px;
+  color: #ff5600;
+  display: block;
+  padding-right: 24px;
+  letter-spacing: -1px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item header:after {
+  content: " ";
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -181px -133px;
+  width: 12px;
+  height: 6px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item header:hover {
+  cursor: pointer;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item.active header:after {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -165px -133px;
+  width: 12px;
+  height: 6px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item.active .content,
+.content-wrapper .fundraiser-qa .fundraiser-qa-item.active .pull-quote {
+  display: block;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item .content {
+  display: none;
+  margin: 16px 0;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item .content p {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  line-height: 18px;
+  margin-top: 16px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item .content p em {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-56It", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item .content p strong {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item .content p:first-child {
+  margin-top: 0;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote {
+  display: none;
+  margin: 0 0 24px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote .author-photo {
+  float: right;
+  width: 70px;
+  height: 70px;
+  border-radius: 55px;
+  margin: 0 0 0 10px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote p,
+.content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote .author {
+  font: 18px/20px "Libre Baskerville", georgia, serif;
+  color: #0099f0;
+  margin-left: 8px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote p {
+  text-indent: -8px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote .author {
+  font-style: italic;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote .author .author-info:before {
+  content: " / ";
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  line-height: 18px;
+  margin-bottom: 24px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li:before,
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li:after {
+  clear: both;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li em {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-56It", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li strong {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li:before {
+  margin-top: 2px;
+  content: "";
+  float: left;
+  height: 40px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.fans:before {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -41px -125px;
+  width: 33px;
+  height: 27px;
+  margin-right: 10px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.reaction:before {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -123px -2px;
+  width: 38px;
+  height: 38px;
+  margin-right: 5px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.comparison:before {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -2px -125px;
+  width: 35px;
+  height: 27px;
+  margin-right: 8px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.time-machine:before {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -165px -2px;
+  width: 30px;
+  height: 34px;
+  margin-right: 13px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.user-reminder:before {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -2px -96px;
+  width: 36px;
+  height: 26px;
+  margin-right: 7px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.standout:before {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -81px -96px;
+  width: 36px;
+  height: 24px;
+  margin-right: 7px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.nearby:before {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -123px -44px;
+  width: 23px;
+  height: 36px;
+  margin-right: 13px;
+  margin-left: 7px;
+  margin-top: 0;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.liked-link:before {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -39px -156px;
+  width: 32px;
+  height: 27px;
+  margin-right: 11px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.happy:before {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -199px -101px;
+  width: 30px;
+  background-position: -198px -101px;
+  width: 31px;
+  height: 30px;
+  margin-right: 12px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.quotes:before {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -199px -135px;
+  width: 30px;
+  height: 22px;
+  margin-right: 13px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.self-centered:before {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -199px -38px;
+  width: 31px;
+  height: 31px;
+  margin-right: 12px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.getting-better:before {
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -2px -71px;
+  width: 39px;
+  height: 21px;
+  margin-right: 4px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-not-thinkup header a em {
+  font-style: normal;
+  color: #000000;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-not-thinkup .content ul {
+  margin: 0;
+  padding: 0 0 0 16px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-not-thinkup .content ul li {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  line-height: 18px;
+  margin-bottom: 5px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-not-thinkup .content ul li em {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-56It", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-not-thinkup .content ul li strong {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content li {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  line-height: 18px;
+  margin-bottom: 5px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content li em {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-56It", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content li strong {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item {
+  margin-top: 16px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item:first-child {
+  margin-top: 0;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item .faq-question {
+  font: 14px/16px "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  color: #0099f0;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item .faq-question:hover {
+  cursor: pointer;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item .faq-answer {
+  display: none;
+  font: 14px/20px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  margin-top: 16px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item.active .faq-answer {
+  display: block;
+}
+.content-wrapper .call-to-action {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  padding: 0 10px;
+}
+.content-wrapper .call-to-action header {
+  font: 20px/22px "HelveticaNeueETW02-45Lt", helvetica, arial, sans-sarif;
+  font-weight: 300;
+  letter-spacing: -2px;
+  color: #000000;
+}
+.content-wrapper .call-to-action header .number {
+  color: #ff5600;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+}
+.content-wrapper .call-to-action .sample-contributors h4 {
+  font-weight: normal;
+  margin: 4px 0 20px;
+}
+.content-wrapper .call-to-action .sample-contributors ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px;
+  overflow: hidden;
+  height: 108px;
+  width: 174px;
+}
+.content-wrapper .call-to-action .sample-contributors ul li {
+  float: left;
+  width: 50px;
+  height: 50px;
+  margin: 0 8px 8px 0;
+}
+.content-wrapper .call-to-action .sample-contributors ul li img {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+}
+.content-wrapper .call-to-action .pledge-now {
+  position: absolute;
+  width: 144px;
+  height: 144px;
+  right: -29px;
+  bottom: -36px;
+  border-radius: 75px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  padding: 40px 30px 0;
+  color: #fff;
+  font: 20px/22px "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  font-weight: 300;
+  text-align: center;
+  text-decoration: none;
+  background-color: #0099f0;
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#0ba6ff), to(#0089d7));
+  background-image: -webkit-linear-gradient(top, #0ba6ff, 0%, #0089d7, 100%);
+  background-image: -moz-linear-gradient(top, #0ba6ff 0%, #0089d7 100%);
+  background-image: linear-gradient(to bottom, #0ba6ff 0%, #0089d7 100%);
+  background-repeat: repeat-x;
+}
+.content-wrapper .call-to-action .pledge-now:before {
+  content: " ";
+  position: absolute;
+  top: 88px;
+  left: 63px;
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -165px -40px;
+  width: 15px;
+  height: 29px;
+}
+.content-wrapper .call-to-action .pledge-now:hover {
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#00a0fa), to(#0092e6));
+  background-image: -webkit-linear-gradient(top, #00a0fa, 0%, #0092e6, 100%);
+  background-image: -moz-linear-gradient(top, #00a0fa 0%, #0092e6 100%);
+  background-image: linear-gradient(to bottom, #00a0fa 0%, #0092e6 100%);
+  background-repeat: repeat-x;
+}
+.content-wrapper .funding-levels {
+  margin: 0 10px;
+}
+.content-wrapper .funding-levels .funding-levels-header {
+  font: 13px/16px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  color: #000000;
+  margin-bottom: 20px;
+  width: 174px;
+}
+.content-wrapper .funding-levels .level {
+  border-top: 1px dashed #0099f0;
+}
+.content-wrapper .funding-levels .level#level-developer a {
+  background: #fef9ce;
+}
+.content-wrapper .funding-levels .level#level-developer a:hover {
+  background: #e6f5fe;
+}
+.content-wrapper .funding-levels .level a {
+  display: block;
+  padding: 12px 8px;
+  color: #333333;
+  background: #fffef6;
+  text-decoration: none;
+}
+.content-wrapper .funding-levels .level a:hover {
+  background: #e6f5fe;
+}
+.content-wrapper .funding-levels .level a header {
+  font: 13px/20px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  margin-bottom: 20px;
+}
+.content-wrapper .funding-levels .level a header:before,
+.content-wrapper .funding-levels .level a header:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.content-wrapper .funding-levels .level a header:after {
+  clear: both;
+}
+.content-wrapper .funding-levels .level a header .level-name {
+  float: left;
+  width: 50%;
+}
+.content-wrapper .funding-levels .level a header .level-name h5 {
+  color: #0099f0;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  font-size: 16px;
+  margin: 0;
+  font-weight: 300;
+}
+.content-wrapper .funding-levels .level a header .level-cost {
+  float: right;
+  width: 50%;
+  color: #ff5600;
+  text-align: right;
+}
+.content-wrapper .funding-levels .level a header .level-cost .monthly {
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+}
+.content-wrapper .funding-levels .level a .level-description p {
+  font: 14px/20px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  margin-bottom: 10px;
+}
+.content-wrapper .funding-levels .level a .level-description .level-benefits {
+  padding-left: 18px;
+}
+.content-wrapper .funding-levels .level a .level-description .level-benefits li {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  line-height: 18px;
+  margin: 0 0 5px;
+}
+.content-wrapper .funding-levels .level a .level-description .level-benefits li em {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-56It", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .funding-levels .level a .level-description .level-benefits li strong {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .funding-levels .level a .level-description .level-benefits li.book-offer {
+  padding-left: 38px;
+  margin-left: -38px;
+}
+.content-wrapper .funding-levels .level a .level-description .level-benefits li.book-offer strong {
+  font-size: 11px;
+  text-transform: uppercase;
+}
+.content-wrapper .funding-levels .level a .level-description .level-benefits li.book-offer:before {
+  content: " ";
+  float: left;
+  background-image: url('../img/icons.png');
+  background-repeat: no-repeat;
+  background-position: -90px -2px;
+  width: 30px;
+  height: 45px;
+  margin-right: 8px;
+  margin-top: 5px;
+}
+.page-footer {
+  margin: 0 10px 15px;
+  background: url(../img/border-top.png) top left repeat-x;
+  padding-top: 17px;
+  font: 11px/11px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+}
+.page-footer:before,
+.page-footer:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.page-footer:after {
+  clear: both;
+}
+.page-footer .copyright,
+.page-footer .motto {
+  float: left;
+  width: 50%;
+}
+.page-footer .motto {
+  text-align: right;
+}
+body.pledge .content-wrapper .page-header {
+  margin-bottom: 40px;
+  background: none;
+  min-height: 0;
+}
+body.pledge .content-wrapper .page-header h1 {
+  font-size: 34px;
+  line-height: 33px;
+}
+body.pledge .content-wrapper .funding-levels {
+  margin: 0;
+}
+body.pledge .content-wrapper .funding-levels .funding-levels-header {
+  width: 75%;
+  color: #ff5600;
+  font: 16px/20px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+}
+body.pledge .content-wrapper .funding-levels .level a {
+  padding: 10px 10px 32px;
+}
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+@media only screen and (min-width: 400px) {
+  .content-wrapper .page-header h1 {
+    font-size: 28px;
+    line-height: 29px;
+  }
+}
+@media only screen and (min-width: 640px) {
+  .content-wrapper {
+    width: 960px;
+    margin: 16px auto 0;
+    padding: 0 20px;
+    overflow: visible;
+  }
+  .content-wrapper:before,
+  .content-wrapper:after {
+    content: " ";
+    /* 1 */
+  
+    display: table;
+    /* 2 */
+  
+  }
+  .content-wrapper:after {
+    clear: both;
+  }
+  .content-wrapper .right-column,
+  .content-wrapper .left-column {
+    background: url(../img/border-top.png) top left repeat-x;
+    padding-top: 2px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .content-wrapper .left-column {
+    float: left;
+    width: 660px;
+  }
+  .content-wrapper .right-column {
+    float: right;
+    width: 300px;
+    background-position: 4px 0;
+  }
+  .content-wrapper .page-header {
+    background: url(../img/rocketship-big.png) 8px 0 no-repeat;
+    background-size: 138px 265px;
+    min-height: 210px;
+    border-top: 0;
+    border-bottom: 1px dashed #ff5600;
+    margin: 0 0 22px 0;
+  }
+  .content-wrapper .page-header h1 {
+    font-size: 40px;
+    line-height: 42px;
+    padding: 8px 0 46px 85px;
+    margin: 0;
+  }
+  .content-wrapper .page-header p {
+    width: 400px;
+    font-size: 16px;
+    line-height: 20px;
+    padding-left: 160px;
+    margin: 0 0 12px;
+  }
+  .content-wrapper .video-wrapper,
+  .content-wrapper .fundraiser-qa {
+    padding-right: 9px;
+    border-right: 1px dashed rgba(255, 86, 0, 0.3);
+    margin-right: 10px;
+    border-top: 0;
+    margin-left: 0;
+  }
+  .content-wrapper .video-wrapper {
+    padding-top: 0;
+    padding-bottom: 20px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item {
+    padding: 0 60px 30px 0;
+    border-bottom: 0;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item header {
+    position: relative;
+    font: 17px/20px "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+    color: #ff5600;
+    display: block;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item header:after {
+    display: none;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item header:hover {
+    cursor: auto;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item .content {
+    display: block;
+    position: relative;
+    margin: 20px 0 0;
+    padding-left: 80px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item .content:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 22px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item .content p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote {
+    display: block;
+    padding-left: 80px;
+    margin: 30px 0 0;
+    position: relative;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 22px;
+    background-image: url('../img/icons.png');
+    background-repeat: no-repeat;
+    background-position: -199px -161px;
+    width: 25px;
+    height: 23px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote .author-photo {
+    width: 110px;
+    height: 110px;
+    margin-left: 65px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote .author {
+    padding-left: 100px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote .author .author-info {
+    display: block;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote .author .author-info:before {
+    display: none;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content {
+    position: relative;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content:before {
+    background-image: url('../img/icons.png');
+    background-repeat: no-repeat;
+    background-position: -2px -2px;
+    width: 30px;
+    height: 65px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper {
+    position: relative;
+    margin-left: -80px;
+    background: url(../img/laptop-bgd.jpg) 12px 0 no-repeat;
+    min-height: 353px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-inner {
+    top: 37px;
+    left: 15px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-inner > .item {
+    -webkit-transition: 0;
+    transition: 0;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-inner > .item img {
+    border: 1px solid #999;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-control {
+    left: -8px;
+    opacity: 1;
+    filter: alpha(opacity=100);
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-control:hover {
+    opacity: .5;
+    filter: alpha(opacity=50);
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-control.right {
+    left: auto;
+    right: -38px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-control .icon-prev {
+    margin-left: -36px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-control .icon-next {
+    margin-left: 20px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-caption {
+    padding: 60px 0 10px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-indicators {
+    margin: 40px auto 0;
+    padding-left: 23px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content:before {
+    background-image: url('../img/icons.png');
+    background-repeat: no-repeat;
+    background-position: -2px -156px;
+    width: 33px;
+    height: 30px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content p {
+    margin-bottom: 24px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples:before,
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples:after {
+    content: " ";
+    /* 1 */
+  
+    display: table;
+    /* 2 */
+  
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples:after {
+    clear: both;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 140px;
+    margin-right: 20px;
+    float: left;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li:last-child {
+    margin-left: 0;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-not-thinkup header a em {
+    font-style: normal;
+    color: #333333;
+    text-decoration: underline;
+    text-transform: uppercase;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-not-thinkup .content:before {
+    background-image: url('../img/icons.png');
+    background-repeat: no-repeat;
+    background-position: -199px -2px;
+    width: 32px;
+    height: 32px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content:before {
+    background-image: url('../img/icons.png');
+    background-repeat: no-repeat;
+    background-position: -199px -72px;
+    background-position: -198px -72px;
+    width: 31px;
+    height: 25px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whos-behind-thinkup .content:before {
+    background-image: url('../img/icons.png');
+    background-repeat: no-repeat;
+    background-position: -42px -96px;
+    width: 36px;
+    height: 25px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content:before {
+    background-image: url('../img/icons.png');
+    background-repeat: no-repeat;
+    background-position: -165px -103px;
+    width: 26px;
+    height: 26px;
+  }
+  .content-wrapper .call-to-action {
+    height: 260px;
+    border-bottom: 1px dashed #ff5600;
+    box-sizing: content-box;
+    -moz-box-sizing: border-box;
+    padding: 0 0 12px;
+    margin: 0;
+  }
+  .content-wrapper .call-to-action header {
+    font: 30px/28px "HelveticaNeueETW02-45Lt", helvetica, arial, sans-sarif;
+    font-weight: 300;
+    padding-top: 13px;
+  }
+  .content-wrapper .call-to-action .sample-contributors h4 {
+    margin-bottom: 10px;
+  }
+  .content-wrapper .call-to-action .sample-contributors ul {
+    height: 60px;
+    width: 210px;
+  }
+  .content-wrapper .call-to-action .sample-contributors ul li {
+    float: left;
+    width: 60px;
+    height: 60px;
+    margin: 0 10px 10px 0;
+  }
+  .content-wrapper .call-to-action .sample-contributors ul li img {
+    height: 60px;
+    width: 60px;
+    border-radius: 30px;
+  }
+  .content-wrapper .call-to-action .pledge-now {
+    width: 160px;
+    height: 160px;
+    bottom: -68px;
+    right: -15px;
+    border-radius: 80px;
+    padding: 44px 30px 0;
+    font-size: 24px;
+    line-height: 26px;
+  }
+  .content-wrapper .call-to-action .pledge-now:before {
+    top: 104px;
+    left: 73px;
+  }
+  .content-wrapper .funding-levels {
+    margin: 0;
+  }
+  .content-wrapper .funding-levels .funding-levels-header {
+    font: 14px/18px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+    margin: 15px 0 18px 8px;
+    width: 160px;
+  }
+  .content-wrapper .funding-levels .funding-levels-header .wide-line-one {
+    display: block;
+  }
+  .page-footer {
+    width: 960px;
+    margin: 0 auto 16px;
+  }
+  body.pledge .content-wrapper {
+    width: 640px;
+  }
+  body.pledge .content-wrapper .left-column {
+    width: 640px;
+  }
+  body.pledge .content-wrapper .page-header {
+    border: 0;
+    min-height: 0;
+  }
+  body.pledge .content-wrapper .page-header h1 {
+    padding: 12px 0 24px;
+    font-size: 48px;
+    line-height: 46px;
+  }
+  body.pledge .content-wrapper .funding-levels .level a {
+    position: relative;
+    padding: 32px 160px 32px 80px;
+  }
+  body.pledge .content-wrapper .funding-levels .level a .level-description .level-benefits {
+    margin-bottom: 0;
+  }
+  body.pledge .content-wrapper .funding-levels .level a:before {
+    content: "Pledge at this level now";
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    right: 15px;
+    top: -10px;
+    border-radius: 75px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    padding: 33px 16px 0;
+    color: #fff;
+    font: 14px/18px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+    font-weight: 300;
+    text-align: center;
+    text-decoration: none;
+    background-color: #0099f0;
+    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#0ba6ff), to(#0089d7));
+    background-image: -webkit-linear-gradient(top, #0ba6ff, 0%, #0089d7, 100%);
+    background-image: -moz-linear-gradient(top, #0ba6ff 0%, #0089d7 100%);
+    background-image: linear-gradient(to bottom, #0ba6ff 0%, #0089d7 100%);
+    background-repeat: repeat-x;
+  }
+  body.pledge .content-wrapper .funding-levels .level a:before:hover {
+    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#00a0fa), to(#0092e6));
+    background-image: -webkit-linear-gradient(top, #00a0fa, 0%, #0092e6, 100%);
+    background-image: -moz-linear-gradient(top, #00a0fa 0%, #0092e6 100%);
+    background-image: linear-gradient(to bottom, #00a0fa 0%, #0092e6 100%);
+    background-repeat: repeat-x;
+  }
+  body.pledge .page-footer {
+    width: 640px;
+  }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .page-footer {
+    background-image: url(../img/border-top@2x.png);
+    background-size: 7px 2px;
+  }
+}

@@ -1,0 +1,1020 @@
+@import "variables-and-mixins.less";
+@import "vendor/bootstrap-carousel.less";
+@import "icons.less";
+
+/* ==========================================================================
+   Main Styles (Mobile first!)
+   ========================================================================== */
+
+html {
+  -webkit-font-smoothing: subpixel-antialiased;
+  color: @text-color;
+}
+
+strong {
+  font-weight: normal;
+}
+
+.content-wrapper {
+  margin: 10px 0;
+  overflow: hidden;
+
+  .left-column, .right-column {
+    margin-bottom: 32px;
+  }
+
+  .left-column {
+    background: url(../img/border-top.png) top left repeat-x;
+    padding-top: 2px;
+    margin: 0 10px 32px;
+  }
+
+  .page-header {
+    // Using the doubled size by default (similar file sizes)
+    background: url(../img/rocketship-little-alt.png) bottom right no-repeat;
+    background-size: 91px 302px;
+    min-height: 190px;
+
+    h1 {
+      font-family: @font-sans-light;
+      font-weight: 300;
+      font-size: 23px;
+      color: @headline-color;
+      line-height: 24px;
+      margin: 0 0 12px;
+      padding-top: 12px;
+      padding-right: 40px;
+      letter-spacing: -2px;
+
+      .site-name {
+        color: @blue;
+
+        strong {
+          font-family: @font-sans-bold;
+        }
+      }
+
+      .the-rest {
+        display: block;
+      }
+    }
+
+    p {
+      padding-right: 110px;
+      font-family: @font-sans;
+      color: @orange;
+      font-size: 14px;
+      line-height: 16px;
+      margin: 0 0 1em;
+
+      strong {
+        font-family: @font-sans-bold;
+      }
+    }
+  }
+
+  .video-wrapper {
+    border-top: 1px dashed @orange;
+    padding: 12px 0 0;
+  }
+
+  .fundraiser-qa {
+
+    .fundraiser-qa-item {
+      padding: 12px 0;
+      border-bottom: 1px dashed @orange;
+
+      header {
+        position: relative;
+        font-family: @font-sans-bold;
+        font-size: @font-size;
+        line-height: 16px;
+        color: @orange;
+        display: block;
+        padding-right: 24px;
+        letter-spacing: -1px;
+
+        &:after {
+          content: " ";
+          position: absolute;
+          top: 5px;
+          right: 10px;
+          .sprite-arrow-down;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      &.active {
+        header:after {
+          .sprite-arrow-up;
+        }
+
+        .content, .pull-quote {
+          display: block;
+        }
+      }
+
+      .content {
+        display: none; // Hide on load
+        margin: 16px 0;
+
+        p {
+          .type-sans;
+          margin-top: 16px;
+
+          &:first-child {
+            margin-top: 0;
+          }
+        }
+      }
+
+      .pull-quote {
+        display: none; // Hide on load
+        margin: 0 0 24px;
+
+        .author-photo {
+          float: right;
+          width: 70px;
+          height: 70px;
+          border-radius: 55px;
+          margin: 0 0 0 10px;
+        }
+
+        p, .author {
+          font: 18px/20px @font-serif; 
+          color: @blue;
+          margin-left: 8px;
+        }
+
+        p {
+          text-indent: -8px;
+        }
+
+        .author {
+          font-style: italic;
+
+          .author-info:before {
+            content: " / ";
+          }
+        }
+      }
+
+      // Individual Question Styles
+      &#qa-item-insights {
+        .content {
+          .insight-examples {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+              .clearfix;
+              .type-sans;
+              margin-bottom: 24px;
+
+              &:before {
+                margin-top: 2px;
+                content: "";
+                float: left;
+                height: 40px;
+              }
+
+              &.fans:before {
+                .sprite-megaphone;
+                margin-right: 43px - @width;
+              }
+
+              &.reaction:before {
+                .sprite-explosion;
+                margin-right: 43px - @width;
+              }
+
+              &.comparison:before {
+                .sprite-photo-gallery;
+                margin-right: 43px - @width;
+              }
+
+              &.time-machine:before {
+                .sprite-calendar;
+                margin-right: 43px - @width;
+              }
+
+              &.user-reminder:before {
+                .sprite-friends;
+                margin-right: 43px - @width;
+              }
+
+              &.standout:before {
+                .sprite-binoculars;
+                margin-right: 43px - @width;
+              }
+
+              &.nearby:before {
+                .sprite-map-pin;
+                margin-right: 43px - @width - 7px;
+                margin-left: 7px;
+                margin-top: 0;
+              }
+
+              &.liked-link:before {
+                .sprite-elephant;
+                margin-right: 43px - @width;
+              }
+
+              &.happy:before {
+                .sprite-smiley-face;
+                margin-right: 43px - @width;
+              }
+
+              &.quotes:before {
+                .sprite-quotes;
+                margin-right: 43px - @width;
+              }
+
+              &.self-centered:before {
+                .sprite-number-one;
+                margin-right: 43px - @width;
+              }
+
+              &.getting-better:before {
+                .sprite-graduation;
+                margin-right: 43px - @width;
+              }
+
+            }
+          }
+
+        }
+      }
+
+      &#qa-item-not-thinkup {
+        header {
+          a {
+            em {
+              font-style: normal;
+              color: @headline-color;
+              text-decoration: underline;
+              text-transform: uppercase;
+            }
+          }
+        }
+        .content {
+          ul {
+            margin: 0;
+            padding: 0 0 0 16px;
+
+            li {
+              .type-sans;
+              margin-bottom: 5px;
+            }
+          }          
+        }
+      }
+
+      &#qa-item-what-i-get {
+        .content {
+          li {
+            .type-sans;
+            margin-bottom: 5px;
+          }
+        }
+      }
+
+      &#qa-item-faq {
+        .content {
+          .faq {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            .faq-item {
+              margin-top: 16px;
+
+              &:first-child {
+                margin-top: 0;
+              }
+
+              .faq-question {
+                font: 14px/16px @font-sans-bold;
+                color: @blue;
+
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+
+              .faq-answer {
+                display: none;
+                font: 14px/20px @font-sans;
+                margin-top: 16px;
+              }
+
+              &.active .faq-answer {
+                display: block;
+              }
+
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .call-to-action {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    padding: 0 10px;
+
+    header {
+      font: 20px/22px @font-sans-light;
+      font-weight: 300;
+      letter-spacing: -2px;
+      color: @headline-color;
+
+      .number {
+        color: @orange;
+        font-family: @font-sans-bold;
+      }
+    }
+
+    .sample-contributors {
+      h4 {
+        font-weight: normal;
+        margin: 4px 0 20px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 10px;
+        overflow: hidden;
+        height: 108px;
+        width: 174px;
+
+        li {
+          float: left;
+          width: 50px;
+          height: 50px;
+          margin: 0 8px 8px 0;
+          img {
+            height: 50px;
+            width: 50px;
+            border-radius: 25px;
+          }
+        }
+      }
+    }
+
+    .pledge-now {
+      position: absolute;
+      width: 144px;
+      height: 144px;
+      right: -29px;
+      bottom: -36px;
+      border-radius: 75px;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      padding: 40px 30px 0;
+      color: #fff;
+      font: 20px/22px @font-sans-bold;
+      font-weight: 300;
+      text-align: center;
+      text-decoration: none;
+      background-color: @blue;
+      .vertical-gradient(lighten(@blue, 5%), darken(@blue, 5%));
+
+      &:before {
+        content: " ";
+        position: absolute;
+        top: 88px;
+        left: 63px;
+        .sprite-lightning;
+      }
+
+      &:hover {
+        .vertical-gradient(lighten(@blue, 2%), darken(@blue, 2%));
+      }
+    }
+  }
+
+  .funding-levels {
+    margin: 0 10px;
+
+    .funding-levels-header {
+      font: 13px/16px @font-sans;
+      color: @headline-color;
+      margin-bottom: 20px;
+      width: 174px;
+    }
+
+    .level {
+      border-top: 1px dashed @blue;
+
+      &#level-developer a {
+        background: @beige;
+
+        &:hover {
+          background: mix(@blue, #fff, 10%);
+        }
+      }
+
+      a {
+        display: block;
+        padding: 12px 8px;
+        color: @text-color;
+        background: @light-beige;
+        text-decoration: none;
+
+        &:hover {
+          background: mix(@blue, #fff, 10%);
+        }
+
+
+        header {
+          .clearfix;
+          font: 13px/20px @font-sans;
+          margin-bottom: 20px;
+
+          .level-name {
+            float: left;
+            width: 50%;
+
+            h5 {
+              color: @blue;
+              font-family: @font-sans-bold;
+              font-size: 16px;
+              margin: 0;
+              font-weight: 300;
+            }
+          }
+
+          .level-cost {
+            float: right;
+            width: 50%;
+            color: @orange;
+            text-align: right;
+
+            .monthly {
+              font-family: @font-sans-bold;
+            }
+          }
+        }
+
+        .level-description {
+          p {
+            font: 14px/20px @font-sans;
+            margin-bottom: 10px;
+          }
+
+          .level-benefits {
+            padding-left: 18px;
+            li {
+              .type-sans;
+              margin: 0 0 5px;
+
+              &.book-offer {
+                padding-left: 38px;
+                margin-left: -38px;
+                strong {
+                  font-size: 11px;
+                  text-transform: uppercase;
+                }
+
+                &:before {
+                  content: " ";
+                  float: left;
+                  .sprite-book;
+                  margin-right: 8px;
+                  margin-top: 5px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.page-footer {
+  margin: 0 10px 15px;
+  background: url(../img/border-top.png) top left repeat-x;
+  padding-top: 17px;
+  .clearfix;
+  font: 11px/11px @font-sans;
+
+  .copyright, .motto {
+    float: left;
+    width: 50%;
+  }
+
+  .motto {
+    text-align: right;
+  }
+}
+
+// Pledge Page styles
+
+body.pledge {
+  .content-wrapper {
+    .page-header {
+      margin-bottom: 40px;
+      background: none;
+      min-height: 0;
+
+      h1 {
+        font-size: 34px;
+        line-height: 33px;
+      }
+    }
+
+    .funding-levels {
+      margin: 0;
+
+      .funding-levels-header {
+        width: 75%;
+        color: @orange;
+        font: 16px/20px @font-sans;
+      }
+
+      .level {
+        a {
+          padding: 10px 10px 32px;
+        }
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+@media only screen and (min-width: 400px) {
+  .content-wrapper {
+    .page-header {
+      h1 {
+        font-size: 28px;
+        line-height: 29px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 640px) {
+
+  .content-wrapper {
+    width: 960px;
+    margin: 16px auto 0;
+    padding: 0 20px;
+    .clearfix;
+    overflow: visible;
+
+    .right-column, .left-column {
+      background: url(../img/border-top.png) top left repeat-x;
+      padding-top: 2px;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .left-column {
+      float: left;
+      width: 660px;
+    }
+
+    .right-column {
+      float: right;
+      width: 300px;
+      background-position: 4px 0;
+    }
+
+    .page-header {
+      background: url(../img/rocketship-big.png) 8px 0 no-repeat;
+      background-size: 138px 265px;
+      min-height: 210px;
+      border-top: 0;
+      border-bottom: 1px dashed @orange;
+      margin: 0 0 22px 0;
+
+      h1 {
+        font-size: 40px;
+        line-height: 42px;
+        padding: 8px 0 46px 85px;
+        margin: 0;
+      }
+
+      p {
+        width: 400px;
+        font-size: 16px;
+        line-height: 20px;
+        padding-left: 160px;
+        margin: 0 0 12px;
+      }
+    }
+
+    .video-wrapper, .fundraiser-qa {
+      padding-right: 9px;
+      border-right: 1px dashed fade(@orange, 30%);
+      margin-right: 10px;
+      border-top: 0;
+      margin-left: 0;
+    }
+
+    .video-wrapper {
+      padding-top: 0;
+      padding-bottom: 20px;
+    }
+
+    .fundraiser-qa {
+
+      .fundraiser-qa-item {
+        padding: 0 60px 30px 0;
+        border-bottom: 0;
+
+        header {
+          position: relative;
+          font: 17px/20px @font-sans-bold;
+          color: @orange;
+          display: block;
+
+          &:after {
+            display: none;
+          }
+
+          &:hover {
+            cursor: auto;
+          }
+        }
+
+        .content {
+          display: block;
+          position: relative;
+          margin: 20px 0 0;
+          padding-left: 80px;
+
+          &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 22px;
+          }
+
+
+          p {
+            font-size: 14px;
+            line-height: 20px;
+          }
+        }
+
+        .pull-quote {
+          display: block;
+          padding-left: 80px;
+          margin: 30px 0 0;
+          position: relative;
+
+          &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 22px;
+            .sprite-speech-bubble;
+          }
+
+          .author-photo {
+            width: 110px;
+            height: 110px;
+            margin-left: 65px;
+          }
+
+          .author {
+            padding-left: 100px;
+
+            .author-info {
+              display: block;
+
+              &:before {
+                display: none;
+              }
+            }
+          }
+        }
+
+        // Individual Question Styles
+        &#qa-item-whats-thinkup {
+          .content {
+            position: relative;
+
+            &:before {
+              .sprite-lightbulb;
+            }
+
+            .carousel-wrapper {
+              position: relative;
+              margin-left: -80px;
+              background: url(../img/laptop-bgd.jpg) 12px 0 no-repeat;
+              min-height: 353px;
+
+              .carousel {
+
+                .carousel-inner {
+                  top: 37px;
+                  left: 15px;
+
+                  > .item {
+                    -webkit-transition: 0;
+                    transition: 0;
+
+                    img {
+                      border: 1px solid #999;
+                    }
+                  }
+                }
+
+                .carousel-control {
+                  left: -8px;
+                  opacity: 1;
+                  filter: alpha(opacity=100);
+
+                  &:hover {
+                    opacity: .5;
+                    filter: alpha(opacity=50);
+                  }
+
+                  &.right {
+                    left: auto;
+                    right: -38px;
+                  }
+
+
+                  .icon-prev {
+                    margin-left: -36px;
+                  }
+
+                  .icon-next {
+                    margin-left: 20px;
+                  }
+                }
+
+                .carousel-caption {
+                  padding: 60px 0 10px;
+                }
+
+                .carousel-indicators {
+                  margin: 40px auto 0;
+                  padding-left: 23px;
+                }
+              }
+            }
+          }
+        }
+
+        &#qa-item-insights {
+          .content {
+            &:before {
+              .sprite-cards;
+            }
+
+            p {
+              margin-bottom: 24px;
+            }
+
+            .insight-examples {
+              .clearfix;
+
+              li {
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                width: 140px;
+                margin-right: 20px;
+                float: left;
+
+                &:last-child {
+                  margin-left: 0;
+                }
+              }
+            }
+
+          }
+        }
+
+        &#qa-item-not-thinkup {
+          header {
+            a {
+              em {
+                font-style: normal;
+                color: @text-color;
+                text-decoration: underline;
+                text-transform: uppercase;
+              }
+            }
+          }
+          .content {
+            &:before {
+              .sprite-forbidden;
+            }
+          }
+        }
+
+        &#qa-item-goal {
+          .content {
+            &:before {
+              .sprite-meter;
+            }
+          }
+        }
+
+        &#qa-item-whos-behind-thinkup {
+          .content {
+            &:before {
+              .sprite-friends-orange;
+            }
+          }
+        }
+
+        &#qa-item-faq {
+          .content {
+            &:before {
+              .sprite-question-mark;
+            }
+          }
+        }
+
+      }    
+    }
+
+    .call-to-action {
+      height: 260px;
+      border-bottom: 1px dashed @orange;
+      box-sizing: content-box;
+      -moz-box-sizing: border-box;
+      padding: 0 0 12px;
+      margin: 0;
+
+      header {
+        font: 30px/28px @font-sans-light;
+        font-weight: 300;
+        padding-top: 13px;
+      }
+
+      .sample-contributors {
+        h4 {
+          margin-bottom: 10px;
+        }
+
+        ul {
+          height: 60px;
+          width: 210px;
+
+          li {
+            float: left;
+            width: 60px;
+            height: 60px;
+            margin: 0 10px 10px 0;
+            img {
+              height: 60px;
+              width: 60px;
+              border-radius: 30px;
+            }
+          }
+
+        }
+      }
+
+      .pledge-now {
+        width: 160px;
+        height: 160px;
+        bottom: -68px;
+        right: -15px;
+        border-radius: 80px;
+        padding: 44px 30px 0;
+        font-size: 24px;
+        line-height: 26px;
+
+        &:before {
+          top: 104px;
+          left: 73px;
+        }
+
+        &:hover {
+        }
+      }
+
+    }
+
+    .funding-levels {
+      margin: 0;
+
+      .funding-levels-header {
+        font: 14px/18px @font-sans;
+        margin: 15px 0 18px 8px;
+        width: 160px;
+
+        .wide-line-one {
+          display: block;
+        }
+      }
+    }
+
+  }
+
+
+  .page-footer {
+    width: 960px;
+    margin: 0 auto 16px;
+  }
+
+  body.pledge {
+    .content-wrapper {
+      width: 640px;
+
+      .left-column {
+        width: 640px;
+      }
+
+      .page-header {
+        border: 0;
+        min-height: 0;
+
+        h1 {
+          padding: 12px 0 24px;
+          font-size: 48px;
+          line-height: 46px;
+        }
+      }
+
+      .funding-levels {
+        .level {
+          a {
+            position: relative;
+            padding: 32px 160px 32px 80px;
+
+            .level-description {
+              .level-benefits {
+                margin-bottom: 0;
+              }
+            }
+
+            &:before {
+              content: "Pledge at this level now";
+              position: absolute;
+              width: 120px;
+              height: 120px;
+              right: 15px;
+              top: -10px;
+              border-radius: 75px;
+              box-sizing: border-box;
+              -moz-box-sizing: border-box;
+              padding: 33px 16px 0;
+              color: #fff;
+              font: 14px/18px @font-sans;
+              font-weight: 300;
+              text-align: center;
+              text-decoration: none;
+              background-color: @blue;
+              .vertical-gradient(lighten(@blue, 5%), darken(@blue, 5%));
+
+              &:hover {
+                .vertical-gradient(lighten(@blue, 2%), darken(@blue, 2%));
+              }
+
+            }
+          }
+        }
+      }
+    }
+
+    .page-footer {
+      width: 640px;
+    }
+  }
+
+}
+
+// @media only screen and (min-width: 1080px) {
+
+//   .content-wrapper {
+//     width: 1040px;
+
+//     .left-column {
+//       float: left;
+//       width: 740px;
+//     }
+
+//     .right-column {
+//       float: right;
+//       width: 300px;
+//     }
+//   }
+// }
+
+@media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .page-footer {
+    background-image: url(../img/border-top@2x.png);
+    background-size: 7px 2px;
+  }
+}

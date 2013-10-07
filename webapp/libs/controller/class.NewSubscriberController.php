@@ -4,7 +4,7 @@
  */
 class NewSubscriberController extends SignUpController {
     public function control() {
-        $this->setViewTemplate('subscribe-newsubscriber.tpl');
+        $this->setViewTemplate('pledge-new.tpl');
         $do_show_form = false;
 
         if ($this->hasUserPostedSignUpForm()) {
@@ -53,7 +53,7 @@ class NewSubscriberController extends SignUpController {
 
                         $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret);
                         //Add unique waitlisted user ID from previous DB operation to callback
-                        $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().'newsubscriber.php?n=twitter');
+                        $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().'new.php?n=twitter');
 
                         if (isset($tok['oauth_token'])) {
                             $token = $tok['oauth_token'];
@@ -94,7 +94,7 @@ class NewSubscriberController extends SignUpController {
                         $params = array('scope'=>'read_stream,user_likes,user_location,user_website,'.
                         'read_friendlists,friends_location,manage_pages,read_insights,manage_pages',
                         'state'=>SessionCache::get('facebook_auth_csrf'),
-                        'redirect_uri'=>UpstartHelper::getApplicationURL().'newsubscriber.php?n=facebook');
+                        'redirect_uri'=>UpstartHelper::getApplicationURL().'new.php?n=facebook');
 
                         $fbconnect_link = $facebook_app->getLoginUrl($params);
                         //Redirect to Facebook connect link
@@ -190,7 +190,7 @@ class NewSubscriberController extends SignUpController {
                 if ($_GET["state"] == SessionCache::get('facebook_auth_csrf')) {
                     //Prepare API request
                     //First, prep redirect URI
-                    $redirect_uri = UpstartHelper::getApplicationURL().'newsubscriber.php?n=facebook';
+                    $redirect_uri = UpstartHelper::getApplicationURL().'new.php?n=facebook';
 
                     $cfg = Config::getInstance();
                     $facebook_app_id = $cfg->getValue('facebook_app_id');
@@ -296,7 +296,7 @@ class NewSubscriberController extends SignUpController {
         $service = new Amazon_FPS_Client($AWS_ACCESS_KEY_ID, $AWS_SECRET_ACCESS_KEY);
 
         try {
-            $endpoint_url = UpstartHelper::getApplicationURL().'newsubscriber.php?l='.$_GET['l'];
+            $endpoint_url = UpstartHelper::getApplicationURL().'new.php?l='.$_GET['l'];
             $request_params_str = '';
             foreach ($_GET as $key => $value) {
                 if ($key !== "l") {
