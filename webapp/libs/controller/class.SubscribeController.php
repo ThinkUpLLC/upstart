@@ -10,18 +10,20 @@ class SubscribeController extends Controller {
         $this->addToView('caller_reference', $caller_reference);
         SessionCache::put('caller_reference', $caller_reference);
 
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $total_subscribers = $subscriber_dao->getTotalSubscribers($amount = 0);
+        $this->addToView('total_subscribers', $total_subscribers);
+
         foreach (SignUpController::$subscription_levels as $level=>$amount) {
+            //Get Amazon URL
             $callback_url = UpstartHelper::getApplicationURL().'new.php?l='.$level;
             $subscribe_url = self::getAmazonFPSURL($caller_reference, $callback_url, $amount);
             $this->addToView('subscribe_'.$level.'_url', $subscribe_url);
+
+            //Get subscriber totals
+            $total_backers = $subscriber_dao->getTotalSubscribers($amount);
+            $this->addToView('total_'.$level.'_subscribers', $total_backers);
         }
-
-        //DEBUG
-        $app_url = UpstartHelper::getApplicationURL();
-        $this->addToView('app_url', $app_url);
-        $image_url = UpstartHelper::getApplicationURL(false, false, false)."assets/img/thinkup-logo-transparent.png";
-        $this->addToView('image_url', $image_url);
-
         return $this->generateView();
     }
 

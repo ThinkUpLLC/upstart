@@ -32,7 +32,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Member</h5>
-                <div class="backers">1,234 backers</div>
+                <div class="backers">{$total_member_subscribers} backers</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">$5/month</div>
@@ -53,7 +53,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Developer</h5>
-                <div class="backers">1,234 backers</div>
+                <div class="backers">{$total_developer_subscribers|number_format} backers</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">$10/month</div>
@@ -76,7 +76,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Executive</h5>
-                <div class="backers">1,234 backers</div>
+                <div class="backers">{$total_executive_subscribers|number_format} backers</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">$83/month</div>
