@@ -26,7 +26,7 @@
             <span class="the-rest">and feel good about social networking again.</span>
           </h1>
 
-          <p><strong>We’re building ThinkUp</strong>, a new app that helps us get more out of the time we spend online. To do it right, we have to build a company that puts users first. So we need your help!</p>
+          <p><strong>We’re building ThinkUp</strong>, an app that gives you the best insights into how you use social networks like Twitter and Facebook. To do it right, we have to create a company that puts users first. So we need your help!</p>
         </header>
 
         <div class="video-wrapper">
@@ -37,9 +37,9 @@
           <div class="fundraiser-qa-item" id="qa-item-whats-thinkup">
             <header>What is ThinkUp?</header>
             <div class="content">
-              <p>ThinkUp is a brand new app that connects your Facebook, Twitter, or Instagram or other social networking accounts and tells you what matters and what's meaningful online. It works with whatever device you have: iPhone or Android, PC or Mac or iPad. ThinkUp can help you make more friends, listen better to your connections, or even learn a little bit about yourself.</p>
+              <p>ThinkUp is a brand new app that connects your Facebook, Twitter, Instagram, and other social networking accounts and tells you what matters most about the time you've spent there. It works with whatever device you have: iPhone or Android, PC or Mac or iPad. ThinkUp can help you make more friends, listen better to your connections, and even learn a little bit about yourself.</p>
 
-              <p>ThinkUp is also our new company, focused on the idea that people are looking for Internet companies they can trust. We're putting our users and community first, because we think that's the best way to be good to the Internet and all the people on it.</p>
+              <p>ThinkUp is also our new company, focused on the idea that people are looking for Internet companies they can trust. We're putting our users and community first, because we think that's the best way to create a better web for everyone.</p>
 
               <div class="carousel-wrapper">
                 <div id="sample-screens" class="carousel slide" data-interval="false">
@@ -85,34 +85,42 @@
             </div>
           </div>
 
-          <div class="fundraiser-qa-item" id="qa-item-whos-behind-thinkup">
-            <header>Who’s behind ThinkUp?</header>
-            <div class="content">
-              <p>Our cofounders, Gina Trapani and Anil Dash, have been working to build ThinkUp for a few years. Gina was the founding editor of Lifehacker, created Todo.txt, an open data format and suite of task manager apps, and hosts popular podcasts This Week in Google and In Beta. Anil has been writing since the late 90s on his personal blog and in magazines such as Wired, and helped launch Movable Type, which was one of the earliest and most popular blogging apps at the beginning of the social media era.</p>
-
-              <p>Gina and Anil have advocated for a more thoughtful technology and a better Internet for more than a decade. Instead of just writing or talking about it, ThinkUp is an effort to actually build a company and product that can make it happen. We’ve already joined forces with an enthusiastic and diverse open source community of contributors around the world who believe in that vision, and in our product. We hope you'll be the next to join our community by becoming a member of ThinkUp.</p>
-            </div>
-          </div>
-
           <div class="fundraiser-qa-item" id="qa-item-insights">
             <header>What does ThinkUp do?</header>
             <div class="content">
-              <p>ThinkUp is like a friend who shows you awesome things about your social network that you couldn’t find anywhere else. You just open up the app on your phone, tablet or computer, and see insights like these:</p>
+              <p>ThinkUp is like a friend who points out the coolest parts of your social network, the stuff you can't find anywhere else. You just open up the app on your phone, tablet or computer, and see insights like these:</p>
                 <ul class="insight-examples">
                   <li class="happy">Did that tweet I sent out make people happy?</li>
                   <li class="fans">Who are my biggest fans on Facebook or Twitter this week?</li>
                   <li class="standout">Did anybody who’s really well-known see what I wrote?</li>
-                  <li class="liked-link">My friend shared a cool link last week, can you help me find it?</li>
+                  <li class="liked-link">What was that funny joke my friend made last week?</li>
                   <li class="self-centered">Am I talking about myself too much? Should I rein it in a little bit?</li>
                   <li class="quotes">Do people like it when I post quotes from famous people?</li>
                   <li class="user-reminder">Of the people I've lost touch with, who should I reach out to?</li>
-                  <li class="comparison">Did I get more likes when in the green shirt or the blue shirt?</li>
+                  <li class="comparison">Did people like my old profile pic better than my new one?</li>
                   <li class="nearby">Are any of my new friends or followers people who live nearby?</li>
                   <li class="reaction">What did I say this week that got the biggest reaction?</li>
                   <li class="time-machine">Was anything memorable going on a year ago that is worth sharing?</li>
                   <li class="getting-better">Am I getting any better at using these social networks?</li>
                 </ul>
             </div>
+
+          <div class="fundraiser-qa-item" id="qa-item-not-thinkup">
+            <header>We’re just as proud of what ThinkUp <em>doesn’t do</em>:</header>
+            <div class="content">
+              <ul>
+                <li>ThinkUp does NOT monetize your personal data behind your back.</li>
+                <li>We do NOT try to turn your social network into a popularity contest about the number of followers you have.</li>
+                <li>ThinkUp does NOT try to assign some point score to you based on how you talk to your friends.</li>
+                <li>We are NOT trying to offer reporting on brand impressions for conversion funnels</li>
+                <li>We’ll never lock your information into some proprietary system, since ThinkUp is completely open source.</li>
+                <li>ThinkUp does NOT change its terms of service all the time without telling you about it.</li>
+                <li>We do NOT tolerate people being jerks to each other in our developer community. After almost four years, our mailing list has never had a flame war.</li>
+                <li>We will NOT build self-driving cars or buy fancy racing yachts. (This is an easy promise to keep.)</li>
+              </ul>
+            </div>
+          </div>
+
             <blockquote class="pull-quote">
               <img src="{$site_root_path}assets/img/placeholder-pullquote.jpg" alt="Fake Man!" class="author-photo" />
               <p>“I occasionally had problems logging in but Gina responded to my emails immediately.”</p>
@@ -122,22 +130,17 @@
             </blockquote>
           </div>
 
-          <div class="fundraiser-qa-item" id="qa-item-not-thinkup">
-            <header>We’re just as proud of what ThinkUp <em>doesn’t do</em>:</header>
-            <div class="content">
-              <ul>
-                <li>ThinkUp does NOT do things with your personal data behind your back.</li>
-                <li>We do NOT try to turn your social network into a popularity contest about the number of followers you have.</li>
-                <li>ThinkUp does NOT try to assign some point score to you based on how you talk to your friends.</li>
-                <li>We are NOT trying to offer reporting on brand impressions for conversion funnels</li>
-                <li>We’ll never lock your information into some proprietary system, since ThinkUp is completely open source.</li>
-                <li>ThinkUp does NOT change its terms of service all the time without telling you about it.</li>
-                <li>We do NOT tolerate people being jerks to each other in our developer community;  After almost four years, our mailing list has never had a flame war.</li>
-                <li>We will NOT build self-driving cars or buy fancy racing yachts. (This is an easy promise to keep.)</li>
 
-              </ul>
+          <div class="fundraiser-qa-item" id="qa-item-whos-behind-thinkup">
+            <header>Who’s behind ThinkUp?</header>
+            <div class="content">
+              <p>Our cofounders, Gina Trapani and Anil Dash, have been building ThinkUp since 2009. Gina was the founding editor of Lifehacker, created Todo.txt, and hosts popular podcasts This Week in Google and In Beta. Anil has been writing since the late 90s on his personal blog and in magazines such as Wired, and helped launch Movable Type, which was one of the earliest and most popular blogging apps at the beginning of the social media era.</p>
+
+              <p>Gina and Anil have advocated for a more thoughtful technology and a better Internet for more than a decade. Instead of just writing or talking about it, ThinkUp is an effort to actually build a company and product that can make it happen. We’ve already joined forces with an enthusiastic and diverse open source community of contributors around the world who believe in that vision, and in our product. We hope you'll be the next to join us by becoming a member of ThinkUp.</p>
             </div>
           </div>
+
+
 
           <div class="fundraiser-qa-item" id="qa-item-goal">
             <header>What’s the goal of this campaign?</header>
