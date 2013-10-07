@@ -216,7 +216,7 @@ class NewSubscriberController extends SignUpController {
                         //@TODO Handle case where session item isn't set
                         $subscriber_id = SessionCache::get('subscriber_id');
                         $update_count = $subscriber_dao->update($subscriber_id, $fb_user_profile['username'],
-                        $fb_user_profile['id'], 'facebook', $fb_user_profile['name'], $access_token,
+                        $fb_user_profile['id'], 'facebook', $fb_user_profile['name'], $access_token, '',
                         $fb_user_profile['verified']);
                         //                        echo "<pre>";
                         //                        print_r($fb_user_profile);
