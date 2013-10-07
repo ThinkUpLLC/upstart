@@ -88,7 +88,7 @@
           <div class="fundraiser-qa-item" id="qa-item-insights">
             <header>What does ThinkUp do?</header>
             <div class="content">
-              <p>ThinkUp is like a friend who points out the coolest parts of your social network, the stuff you can't find anywhere else. You just open up the app on your phone, tablet or computer, and see insights like these:</p>
+              <p>ThinkUp is like a friend who points out the coolest things about your social network, the stuff that you can't find anywhere else. You just open up the app on your phone, tablet or computer, and see insights like these:</p>
                 <ul class="insight-examples">
                   <li class="happy">Did that tweet I sent out make people happy?</li>
                   <li class="fans">Who are my biggest fans on Facebook or Twitter this week?</li>
