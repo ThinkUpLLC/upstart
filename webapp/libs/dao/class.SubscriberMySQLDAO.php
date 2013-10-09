@@ -62,6 +62,20 @@ class SubscriberMySQLDAO extends PDODAO {
         $result = $this->getDataRowAsArray($ps);
         return $result["total"];
     }
+
+    public function getVerificationCode($email) {
+        $q = "SELECT verification_code FROM subscribers WHERE email = :email;";
+        $vars = array (':email'=>$email);
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowAsArray($ps);
+    }
+
+    public function verifyEmailAddress($email) {
+        $q = "UPDATE subscribers SET is_email_verified = 1 WHERE email = :email ";
+        $vars = array (':email'=>$email);
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
     /**
      * Generate a unique, random salt by appending the users email to a random number and returning the hash of it
      * @param str $email
@@ -79,10 +93,19 @@ class SubscriberMySQLDAO extends PDODAO {
     private function hashPassword($password, $salt) {
         return hash('sha256', $password.$salt);
     }
+
     public function getByEmail($email) {
         $q = "SELECT * FROM subscribers WHERE email = :email";
         $vars = array ( ':email' => $email);
         $ps = $this->execute($q, $vars);
         return $this->getDataRowAsObject($ps, "Subscriber");
     }
+
+    public function getByID($subscriber_id) {
+        $q = "SELECT * FROM subscribers WHERE id = :subscriber_id";
+        $vars = array ( ':subscriber_id' => $subscriber_id);
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowAsObject($ps, "Subscriber");
+    }
+
 }

@@ -34,3 +34,5 @@ require_once 'extlibs/amazon/FPS/Model/VerifySignatureRequest.php';
 require_once 'extlibs/amazon/FPS/Model/VerifySignatureResponse.php';
 require_once 'extlibs/amazon/FPS/Model/VerifySignatureResult.php';
 require_once 'extlibs/amazon/FPS/Model/ResponseMetadata.php';
+
+require_once 'extlibs/mandrill/Mandrill.php';

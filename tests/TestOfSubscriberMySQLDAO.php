@@ -70,4 +70,32 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($subscriber->is_verified, 1);
     }
 
+    public function testGetVerificationCode() {
+        $builder = FixtureBuilder::build('subscribers', array('email'=>'ginatrapani@example.com',
+        'verification_code'=>1234));
+
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->getVerificationCode('ginatrapani@example.com');
+        $this->assertEqual($result['verification_code'], 1234);
+
+        $result = $dao->getVerificationCode('doesnotexist@example.com');
+        $this->assertEqual($result['verification_code'], null);
+    }
+
+    public function testVerifyEmailAddress() {
+        $builder = FixtureBuilder::build('subscribers', array('email'=>'ginatrapani@example.com',
+        'verification_code'=>1234, 'is_email_verified'=>0));
+
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->verifyEmailAddress('ginatrapani@example.com');
+        $this->assertEqual($result, 1);
+
+        $sql = "SELECT is_email_verified FROM subscribers WHERE email = 'ginatrapani@example.com'";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual(1, $data['is_email_verified']);
+
+        $result = $dao->verifyEmailAddress('idontxexist@example.com');
+        $this->assertEqual($result, 0);
+    }
 }

@@ -139,6 +139,9 @@ class NewSubscriberController extends SignUpController {
             }
         } elseif ($this->hasUserReturnedFromTwitter() || $this->hasUserReturnedFromFacebook()) {
             $update_count = 0;
+            $subscriber_dao = new SubscriberMySQLDAO();
+            //@TODO Handle case where session item isn't set
+            $subscriber_id = SessionCache::get('subscriber_id');
 
             if ($this->hasUserReturnedFromTwitter()) {
                 $cfg = Config::getInstance();
@@ -169,9 +172,6 @@ class NewSubscriberController extends SignUpController {
                             //                            echo "</pre>";
 
                             //Update subscriber record with Twitter auth information
-                            $subscriber_dao = new SubscriberMySQLDAO();
-                            //@TODO Handle case where session item isn't set
-                            $subscriber_id = SessionCache::get('subscriber_id');
                             $update_count = $subscriber_dao->update($subscriber_id, $authed_twitter_user['user_name'],
                             $authed_twitter_user['user_id'], 'twitter', $authed_twitter_user['full_name'],
                             $tok['oauth_token'], $tok['oauth_token_secret'], $authed_twitter_user['is_verified'],
@@ -212,9 +212,6 @@ class NewSubscriberController extends SignUpController {
                         $fb_user_id = $fb_user_profile['id'];
 
                         //Update subscriber record with Facebook auth information
-                        $subscriber_dao = new SubscriberMySQLDAO();
-                        //@TODO Handle case where session item isn't set
-                        $subscriber_id = SessionCache::get('subscriber_id');
                         $update_count = $subscriber_dao->update($subscriber_id, $fb_user_profile['username'],
                         $fb_user_profile['id'], 'facebook', $fb_user_profile['name'], $access_token, '',
                         $fb_user_profile['verified']);
@@ -241,12 +238,18 @@ class NewSubscriberController extends SignUpController {
             if ($update_count == 1) {
                 $this->addSuccessMessage("Alrighty then! You're subscribed to ThinkUp. ".
                 "One last step: Check your email for a special link to verify your address.");
+
+                $subscriber = $subscriber_dao->getByID($subscriber_id);
+
+                //Send confirmation email with URL that includes verification code & address
+                MandrillMailer::sendConfirmationEmail($subscriber->email, $subscriber->full_name,
+                UpstartHelper::getApplicationURL().'confirm.php?usr='.urlencode($subscriber->email)."&code=".
+                $subscriber->verification_code);
+
                 //Clear SessionCache values, we're done
                 SessionCache::unsetKey('subscriber_id');
                 SessionCache::unsetKey('token_id');
                 SessionCache::unsetKey('oauth_request_token_secret');
-
-                //@TODO Send confirmation email with URL that includes verification code & address
             } else {
                 $this->addErrorMessage("Oops! Something went wrong. Couldn't save ".ucfirst($_GET['n']). " details. ".
                 " Please try again.");

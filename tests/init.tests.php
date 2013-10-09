@@ -25,9 +25,12 @@ require_once ROOT_PATH.'webapp/extlibs/isosceles/libs/model/class.Loader.php';
 Loader::register(array(
 ROOT_PATH . 'tests/',
 ROOT_PATH . 'tests/classes/',
+ROOT_PATH . 'tests/fixtures/',
 ROOT_PATH . 'webapp/libs/',
 ROOT_PATH . 'webapp/libs/model/',
 ROOT_PATH . 'webapp/libs/dao/',
 ROOT_PATH . 'webapp/libs/controller/',
 ROOT_PATH . 'webapp/libs/exceptions/'
 ));
+
+require_once WEBAPP_PATH.'extlibs/mandrill/Mandrill.php';
