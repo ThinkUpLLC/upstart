@@ -50,4 +50,11 @@ class AuthorizationMySQLDAO extends PDODAO {
         $sql = str_replace('#prefix#', $prefix, $sql);
         return $sql;
     }
+
+    public function getTotalAuthorizations() {
+        $q  = "SELECT SUM(amount) as total FROM authorizations;";
+        $ps = $this->execute($q);
+        $result = $this->getDataRowAsArray($ps);
+        return $result['total'];
+    }
 }

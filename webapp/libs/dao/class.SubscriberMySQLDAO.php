@@ -108,4 +108,29 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getDataRowAsObject($ps, "Subscriber");
     }
 
+
+    public function getSubscriberList($page_number=1, $count=50) {
+        $start_on_record = ($page_number - 1) * $count;
+        $q  = "SELECT * FROM subscribers s ";
+        $q .= "INNER JOIN subscriber_authorizations sa ON s.id = sa.subscriber_id ";
+        $q .= "INNER JOIN authorizations a ON sa.authorization_id = sa.authorization_id ";
+        $q .= "INNER JOIN authorization_status_codes sc ON sc.code = a.status_code ";
+        $q .= "ORDER BY s.creation_time DESC ";
+        $q .= "LIMIT :start_on_record, :limit;";
+
+        $vars = array(
+            ':start_on_record'=>$start_on_record,
+            ':limit'=>$count
+        );
+        //echo self::mergeSQLVars($q, $vars);
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowsAsObjects($ps, 'Subscriber');
+    }
+
+    public function getListTotal() {
+        $q  = "SELECT count(*) as total FROM subscribers;";
+        $ps = $this->execute($q);
+        $result = $this->getDataRowAsArray($ps);
+        return $result['total'];
+    }
 }
