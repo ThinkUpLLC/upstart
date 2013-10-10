@@ -56,14 +56,15 @@
     <div class="container">
 
 <div class="row-fluid">
-  <div class="span2"></div>
-  <div class="span8">
+  <div class="span1"></div>
+  <div class="span10">
     <div id="logo"><a href="?p=1"><h1>Think<span>Up</span></h1></a></div>
 <h2>${$total_authorizations|number_format} pledged by {$total_subscribers|number_format} subscribers</h2>
     <table class="table table-condensed table-hover">
       <tr>
           <th></th>
           <th>Name</th>
+          <th>Email</th>
           <th>Network</th>
           <th>Subscribed</th>
           <th style="text-align:right">Amount</th>
@@ -74,6 +75,7 @@
       <tr>
         <td> {if $subscriber->is_verified}<img src="../assets/img/twitter_verified_icon.png" />{/if}</td>
         <td>{$subscriber->full_name}</td>
+        <td>{$subscriber->email}</th>
         <td>{$subscriber->network}</td>
         <td>{$subscriber->creation_time}</td>
         <td style="text-align:right">${$subscriber->amount}</td>
@@ -83,7 +85,7 @@
       {/foreach}
     </table>
 
-<div class="span2"></div>
+<div class="span1"></div>
 
 {if $prev_page}<a href="?p={$prev_page}">&larr; previous</a>{/if} {if $next_page and $prev_page}|{/if} {if $next_page}<a href="?p={$next_page}">next &rarr;</a>{/if}
 </div>
