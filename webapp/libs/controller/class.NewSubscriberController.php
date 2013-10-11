@@ -19,34 +19,34 @@ class NewSubscriberController extends SignUpController {
                 $subscriber_dao = new SubscriberMySQLDAO();
                 try {
                     $subscriber_id = $subscriber_dao->insert($_POST['email'], $_POST['password']);
-                } catch (DuplicateSubscriberException $e) {
-                    //@TODO Figure out what to do in the case of a repeat subscriber
+                    //Store subscriber ID in Session Cache
+                    SessionCache::put('subscriber_id', $subscriber_id);
 
-                    //Stopgap for testing: get the subscriber ID from the DB
-                    $subscriber = $subscriber_dao->getByEmail($_POST['email']);
-                    $subscriber_id = $subscriber->id;
-                }
-                //Store subscriber ID in Session Cache
-                SessionCache::put('subscriber_id', $subscriber_id);
-
-                //Verify that authorization.token_id is in SessionCache and exists in database, show error if not
-                $token_id = SessionCache::get('token_id');
-                $authorization_dao = new AuthorizationMySQLDAO();
-                $authorization = $authorization_dao->getByTokenID($token_id);
-                if ($authorization == null) {
-                    $this->addErrorMessage($generic_error_msg);
-                    $this->logError(__METHOD__.','.__LINE__);
-                } else {
-                    //Save authorization ID and subscriber ID in subscriber_authorizations table.
-                    $subscriber_authorization_dao = new SubscriberAuthorizationMySQLDAO();
-                    try {
+                    //Verify that authorization.token_id is in SessionCache and exists in database, show error if not
+                    $token_id = SessionCache::get('token_id');
+                    $authorization_dao = new AuthorizationMySQLDAO();
+                    $authorization = $authorization_dao->getByTokenID($token_id);
+                    if ($authorization == null) {
+                        $this->addErrorMessage($generic_error_msg);
+                        $this->logError(__METHOD__.','.__LINE__);
+                        $redirect_to_network = false;
+                        $do_show_form = false;
+                    } else {
+                        //Save authorization ID and subscriber ID in subscriber_authorizations table.
+                        $subscriber_authorization_dao = new SubscriberAuthorizationMySQLDAO();
                         $subscriber_authorization_dao->insert($subscriber_id, $authorization->id);
                         $redirect_to_network = true;
-                    } catch (DuplicateSubscriberAuthorizationException $e) {
-                        //@TODO Figure out what to do in case of repeat subscriber authorization
-                        //stopgap for testing
-                        $redirect_to_network = true;
                     }
+                } catch (DuplicateSubscriberException $e) {
+                    $this->addErrorMessage("Whoa! We love the enthusiasm, but someone already joined ThinkUp ".
+                    "with this email address. Please enter another address, or ".
+                    "<a href=\"mailto:help@thinkup.com\">contact us</a> with questions.");
+
+                    $redirect_to_network = false;
+                    $do_show_form = true;
+                } catch (DuplicateSubscriberAuthorizationException $e) {
+                    //Ignore duplicate subscriber/authorization, just assume user refreshed page
+                    $redirect_to_network = true;
                 }
 
                 if ($redirect_to_network) {
