@@ -1,7 +1,7 @@
 <?php
 class PledgeController extends Controller {
     public function control() {
-        $this->setViewTemplate('pledge-index.tpl');
+        $this->setViewTemplate('index.tpl');
 
         $subscriber_dao = new SubscriberMySQLDAO();
         $total_subscribers = $subscriber_dao->getTotalSubscribers($amount = 0);

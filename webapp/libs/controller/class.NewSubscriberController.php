@@ -4,7 +4,7 @@
  */
 class NewSubscriberController extends SignUpController {
     public function control() {
-        $this->setViewTemplate('pledge-new.tpl');
+        $this->setViewTemplate('new.tpl');
         $do_show_form = false;
 
         if ($this->hasUserPostedSignUpForm()) {

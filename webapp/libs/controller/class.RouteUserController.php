@@ -16,7 +16,7 @@ class RouteUserController extends SignUpController {
     var $oauth_consumer_secret;
 
     public function control() {
-        $this->setViewTemplate('index.tpl');
+        $this->setViewTemplate('waitlist.tpl');
 
         $cfg = Config::getInstance();
         $this->oauth_consumer_key = $cfg->getValue('oauth_consumer_key');
@@ -28,7 +28,7 @@ class RouteUserController extends SignUpController {
 
             $to = new TwitterOAuth($this->oauth_consumer_key, $this->oauth_consumer_secret);
             //Add unique waitlisted user ID from previous DB operation to callback
-            $tok = $to->getRequestToken(UpstartHelper::getApplicationURL());
+            $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().'waitlist.php');
 
             if (isset($tok['oauth_token'])) {
                 $token = $tok['oauth_token'];

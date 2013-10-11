@@ -24,7 +24,7 @@ class ConfirmEmailController extends Controller {
         }
     }
     public function control() {
-        $this->setViewTemplate('pledge-confirm.tpl');
+        $this->setViewTemplate('confirm.tpl');
         if ($this->is_missing_param) {
             $this->addErrorMessage('Oops! Something went wrong. Invalid email verification credentials.');
         } else {

@@ -4,7 +4,7 @@
  */
 class SubscribeController extends Controller {
     public function control() {
-        $this->setViewTemplate('pledge-subscribe.tpl');
+        $this->setViewTemplate('subscribe.tpl');
         $click_dao = new ClickMySQLDAO();
         $caller_reference = $click_dao->insert();
         $this->addToView('caller_reference', $caller_reference);

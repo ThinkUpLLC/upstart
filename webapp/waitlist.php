@@ -1,6 +1,5 @@
 <?php
-chdir('..');
 require_once 'init.php';
 
-$controller = new PledgeController();
+$controller = new RouteUserController();
 echo $controller->control();

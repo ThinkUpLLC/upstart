@@ -1,5 +1,5 @@
 <?php
 require_once 'init.php';
 
-$controller = new RouteUserController();
+$controller = new PledgeController();
 echo $controller->control();
