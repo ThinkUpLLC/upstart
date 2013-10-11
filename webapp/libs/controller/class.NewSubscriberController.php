@@ -5,6 +5,11 @@
 class NewSubscriberController extends SignUpController {
     public function control() {
         $this->setViewTemplate('new.tpl');
+
+        $generic_error_msg = '<strong>Oops!</strong> Something went wrong and our team is looking into it.<br> '.
+        'Sorry for the trouble. Please <a href="'.UpstartHelper::getApplicationURL().'">try again</a>, or '.
+        '<a href="mailto:help@thinkup.com">contact us</a> with questions.';
+
         $do_show_form = false;
 
         if ($this->hasUserPostedSignUpForm()) {
@@ -25,12 +30,12 @@ class NewSubscriberController extends SignUpController {
                 SessionCache::put('subscriber_id', $subscriber_id);
 
                 //Verify that authorization.token_id is in SessionCache and exists in database, show error if not
-                //@TODO Handle case where session item isn't set
                 $token_id = SessionCache::get('token_id');
                 $authorization_dao = new AuthorizationMySQLDAO();
                 $authorization = $authorization_dao->getByTokenID($token_id);
                 if ($authorization == null) {
-                    $this->addErrorMessage("Oops! Looks like you haven't subscribed yet. Please try again." );
+                    $this->addErrorMessage($generic_error_msg);
+                    $this->logError(__METHOD__.','.__LINE__);
                 } else {
                     //Save authorization ID and subscriber ID in subscriber_authorizations table.
                     $subscriber_authorization_dao = new SubscriberAuthorizationMySQLDAO();
@@ -63,8 +68,8 @@ class NewSubscriberController extends SignUpController {
                             //Redirect to oauthorize link
                             header('Location: '.$oauthorize_link);
                         } else {
-                            $this->addErrorMessage("Oops! Something went wrong. ".
-                            (isset($tok))?Utils::varDumpToString($tok):'' );
+                            $this->addErrorMessage($generic_error_msg);
+                            $this->logError(__METHOD__.','.__LINE__, (isset($tok))?Utils::varDumpToString($tok):'');
                         }
                     } elseif ($_POST['n'] == 'facebook') {
                         //Go to Facebook
@@ -86,7 +91,8 @@ class NewSubscriberController extends SignUpController {
                                 $fb_user_profile = null;
                             }
                         }
-                        //Plant unique token for CSRF protection during auth per https://developers.facebook.com/docs/authentication/
+                        //Plant unique token for CSRF protection during auth
+                        //per https://developers.facebook.com/docs/authentication/
                         if (SessionCache::get('facebook_auth_csrf') == null) {
                             SessionCache::put('facebook_auth_csrf', md5(uniqid(rand(), true)));
                         }
@@ -116,7 +122,8 @@ class NewSubscriberController extends SignUpController {
                     $this->addSuccessMessage("W00t! Thanks for subscribing to ThinkUp, you glorious member, you.");
                     $do_show_form = true;
                 } else {
-                    $this->addErrorMessage("Oops! Something went wrong. Amazon says: ".$error_message);
+                    $this->addErrorMessage($generic_error_msg);
+                    $this->logError(__METHOD__.','.__LINE__, "Amazon error: ".$error_message);
                 }
 
                 //Record authorization
@@ -128,19 +135,19 @@ class NewSubscriberController extends SignUpController {
                     $authorization_id = $authorization_dao->insert($_GET['tokenID'], $amount, $_GET["status"],
                     $internal_caller_reference, $error_message, $payment_expiry_date);
                 } catch (DuplicateAuthorizationException $e) {
-                    $this->addSuccessMessage("Looks like you already paid for your ThinkUp subscription. ".
+                    $this->addSuccessMessage("Whoa there! It like you already paid for your ThinkUp subscription. ".
                     "   Did you refresh the page?");
                 }
                 //Add tokenID to cache
                 SessionCache::put('token_id', $_GET['tokenID']);
             } else {
-                //@TODO Link Please try again to the subscribe page
-                $this->addErrorMessage("Oops! This URL is invalid. Please try again.");
+                $this->addErrorMessage($generic_error_msg);
+                $this->logError(__METHOD__.','.__LINE__);
             }
         } elseif ($this->hasUserReturnedFromTwitter() || $this->hasUserReturnedFromFacebook()) {
+            $do_show_form = false;
             $update_count = 0;
             $subscriber_dao = new SubscriberMySQLDAO();
-            //@TODO Handle case where session item isn't set
             $subscriber_id = SessionCache::get('subscriber_id');
 
             if ($this->hasUserReturnedFromTwitter()) {
@@ -149,7 +156,6 @@ class NewSubscriberController extends SignUpController {
                 $oauth_consumer_secret = $cfg->getValue('oauth_consumer_secret');
 
                 $request_token = $_GET['oauth_token'];
-                //@TODO Handle case where session item isn't set
                 $request_token_secret = SessionCache::get('oauth_request_token_secret');
                 $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret, $request_token,
                 $request_token_secret);
@@ -176,15 +182,19 @@ class NewSubscriberController extends SignUpController {
                             $authed_twitter_user['user_id'], 'twitter', $authed_twitter_user['full_name'],
                             $tok['oauth_token'], $tok['oauth_token_secret'], $authed_twitter_user['is_verified'],
                             $authed_twitter_user['follower_count']);
+                            $do_show_form = true;
                         } else {
-                            $this->addErrorMessage("Oops! Something went wrong. Twitter didn't return a valid user.");
+                            $this->addErrorMessage($generic_error_msg);
+                            $this->logError(__METHOD__.','.__LINE__, "Twitter user returned: ".
+                            Utils::varDumpToString($authed_twitter_user));
                         }
                     } catch (APIErrorException $e) {
-                        $this->addErrorMessage("Oops! Something went wrong. Twitter says: ".$e->getMessage());
+                        $this->addErrorMessage($generic_error_msg);
+                        $this->logError(__METHOD__.','.__LINE__, "Twitter says: ".$e->getMessage());
                     }
                 } else {
-                    $this->addErrorMessage("Oops! Something went wrong. ".
-                    (isset($tok))?Utils::varDumpToString($tok):'' );
+                    $this->addErrorMessage($generic_error_msg);
+                    $this->logError(__METHOD__.','.__LINE__, (isset($tok))?Utils::varDumpToString($tok):'');
                 }
             } elseif ($this->hasUserReturnedFromFacebook()) {
                 if ($_GET["state"] == SessionCache::get('facebook_auth_csrf')) {
@@ -218,6 +228,7 @@ class NewSubscriberController extends SignUpController {
                         //                        echo "<pre>";
                         //                        print_r($fb_user_profile);
                         //                        echo "</pre>";
+                        $do_show_form = true;
                     } else {
                         $error_msg = "Problem authorizing your Facebook account.";
                         $error_object = JSONDecoder::decode($access_token_response);
@@ -228,16 +239,18 @@ class NewSubscriberController extends SignUpController {
                         } else {
                             $error_msg = $error_msg."<br>Facebook's response: \"".$access_token_response. "\"";
                         }
-                        $this->addErrorMessage($error_msg, null, true);
+                        $this->addErrorMessage($generic_error_msg);
+                        $this->logError(__METHOD__.','.__LINE__, $error_msg);
                     }
                 } else {
-                    $this->addErrorMessage("Could not authenticate Facebook account due to invalid CSRF token.");
+                    $this->addErrorMessage($generic_error_msg);
+                    $this->logError(__METHOD__.','.__LINE__, "Invalid CSRF token");
                 }
             }
 
             if ($update_count == 1) {
-                $this->addSuccessMessage("Alrighty then! You're subscribed to ThinkUp. ".
-                "One last step: Check your email for a special link to verify your address.");
+                $this->addSuccessMessage("Hooray! You've joined ThinkUp. ".
+                "One last step: Check your email for a special link to confirm your address.");
 
                 $subscriber = $subscriber_dao->getByID($subscriber_id);
 
@@ -250,15 +263,14 @@ class NewSubscriberController extends SignUpController {
                 SessionCache::unsetKey('subscriber_id');
                 SessionCache::unsetKey('token_id');
                 SessionCache::unsetKey('oauth_request_token_secret');
+                $do_show_form = false;
             } else {
-                $this->addErrorMessage("Oops! Something went wrong. Couldn't save ".ucfirst($_GET['n']). " details. ".
-                " Please try again.");
-                $do_show_form = true;
+                $this->addErrorMessage($generic_error_msg);
+                $this->logError(__METHOD__.','.__LINE__);
             }
-
         } else { //No recognizable POST or GET vars set
-            //@TODO Link Please try again to the subscribe page
-            $this->addErrorMessage("Oops! Something went wrong. Please try again.");
+            $this->addErrorMessage($generic_error_msg);
+            $this->logError(__METHOD__.','.__LINE__);
         }
 
         $this->addToView('do_show_form', $do_show_form);

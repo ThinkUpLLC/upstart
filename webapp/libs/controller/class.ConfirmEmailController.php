@@ -25,8 +25,12 @@ class ConfirmEmailController extends Controller {
     }
     public function control() {
         $this->setViewTemplate('confirm.tpl');
+        $generic_error_msg = '<strong>Oops!</strong> Something went wrong.<br> '.
+        'Sorry for the trouble. Please try again, or '.
+        '<a href="mailto:help@thinkup.com">contact us</a> with questions.';
+
         if ($this->is_missing_param) {
-            $this->addErrorMessage('Oops! Something went wrong. Invalid email verification credentials.');
+            $this->addErrorMessage($generic_error_msg);
         } else {
             $subscriber_dao = new SubscriberMySQLDAO();
             $verification_code = $subscriber_dao->getVerificationCode($_GET['usr']);
@@ -40,7 +44,8 @@ class ConfirmEmailController extends Controller {
                     $this->addErrorMessage('Houston, we have a problem: Email address not found.');
                 }
             } else {
-                $this->addErrorMessage('Houston, we have a problem: Email verification failed.');
+                $this->addErrorMessage('Houston, we have a problem: Email confirmation failed. Please try again or '.
+                '<a href="mailto:help@thinkup.com">contact us</a> with questions.');
             }
         }
         return $this->generateView();
