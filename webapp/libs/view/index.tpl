@@ -218,6 +218,23 @@
 
         <div class="funding-levels">
           <header class="funding-levels-header"><span class="wide-line-one">Choose one</span> of these subscription options&hellip;</header>
+          <div class="level" id="level-member"><a href="{$subscribe_earlybird_url}">
+            <header class="level-header">
+              <div class="level-name">
+                <h5>Early Bird</h5>
+                <div class="backers">{$total_earlybird_subscribers} backers</div>
+              </div>
+              <div class="level-cost">
+                <div class="monthly">$50/year</div>
+                <div class="annually">Save $10!</div>
+            </header>
+
+            <div class="level-description">
+              <p>Subscribe to ThinkUp before anyone else and get all the benefits of being a Member for $10 off!</p>
+              <p>Only {250 - $total_earlybird_subscribers} of 250 early bird memberships left!</p>
+            </div>
+          </a></div>
+
           <div class="level" id="level-member"><a href="{$site_root_path}pledge/subscribe.php">
             <header class="level-header">
               <div class="level-name">
@@ -243,7 +260,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Developer</h5>
-                <div class="backers">{$total_developer_subscribers|number_format} backers</div>
+                <div class="backers">{$total_pro_subscribers|number_format} backers</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">$10/month</div>

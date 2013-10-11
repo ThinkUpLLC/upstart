@@ -8,7 +8,7 @@ abstract class SignUpController extends Controller {
     /*
      * Subscription level names
      */
-    public static $subscription_levels = array('member'=>60, 'developer'=>120, 'executive'=>996);
+    public static $subscription_levels = array('earlybird'=>50, 'member'=>60, 'pro'=>120, 'executive'=>996);
     /**
      * Verify posted email address input and add appropriate error message if not
      * return bool
