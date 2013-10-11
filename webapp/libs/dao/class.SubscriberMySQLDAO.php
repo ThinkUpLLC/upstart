@@ -119,7 +119,7 @@ class SubscriberMySQLDAO extends PDODAO {
         $start_on_record = ($page_number - 1) * $count;
         $q  = "SELECT * FROM subscribers s ";
         $q .= "INNER JOIN subscriber_authorizations sa ON s.id = sa.subscriber_id ";
-        $q .= "INNER JOIN authorizations a ON sa.authorization_id = sa.authorization_id ";
+        $q .= "INNER JOIN authorizations a ON sa.authorization_id = a.id ";
         $q .= "INNER JOIN authorization_status_codes sc ON sc.code = a.status_code ";
         $q .= "ORDER BY s.creation_time DESC ";
         $q .= "LIMIT :start_on_record, :limit;";

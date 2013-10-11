@@ -13,7 +13,11 @@ class TestOfMandrillMailer extends UpstartUnitTestCase {
     }
 
     public function testMail() {
+        //Uncomment these out to test with live Mandrill service
+        /*
         MandrillMailer::sendConfirmationEmail('ginatrapani+testmandrill@gmail.com', 'Greta Von Trapp',
         'http://example.com/confirm.php');
+        MandrillMailer::sendConfirmationEmail('greg@eod.com', 'Greg', 'http://example.com/confirm.php');
+        */
     }
 }
