@@ -9,6 +9,7 @@ require_once ISOSCELES_PATH.'extlibs/simpletest/autorun.php';
 $all_tests = new TestSuite('Upstart tests');
 $all_tests->add(new TestOfAuthorizationMySQLDAO());
 $all_tests->add(new TestOfClickMySQLDAO());
+$all_tests->add(new TestOfErrorLogMySQLDAO());
 $all_tests->add(new TestOfNewSubscriberController());
 $all_tests->add(new TestOfSubscribeController());
 $all_tests->add(new TestOfSubscriberAuthorizationMySQLDAO());

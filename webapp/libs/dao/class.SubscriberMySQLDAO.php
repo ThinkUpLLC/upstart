@@ -115,7 +115,6 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getDataRowAsObject($ps, "Subscriber");
     }
 
-
     public function getSubscriberList($page_number=1, $count=50) {
         $start_on_record = ($page_number - 1) * $count;
         $q  = "SELECT * FROM subscribers s ";
