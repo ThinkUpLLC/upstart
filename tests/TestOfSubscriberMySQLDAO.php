@@ -28,12 +28,12 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual('ginatrapani@example.com', $data['email']);
     }
 
-    public function testInsertDuplicate() {
+    public function testInsertDuplicateEmail() {
         $dao = new SubscriberMySQLDAO();
         $result = $dao->insert('ginatrapani@example.com', 'secr3tpassword');
 
         //test inserting same token twice
-        $this->expectException('DuplicateSubscriberException');
+        $this->expectException('DuplicateSubscriberEmailException');
         $result = $dao->insert('ginatrapani@example.com', 'secr3tpassword');
     }
 
@@ -68,6 +68,21 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($subscriber->full_name, 'Gina Trapani');
         $this->assertEqual($subscriber->follower_count, 649);
         $this->assertEqual($subscriber->is_verified, 1);
+    }
+
+    public function testUpdateDuplicateConnection() {
+        $dao = new SubscriberMySQLDAO();
+        $result1 = $dao->insert('ginatrapani@example.com', 'secr3tpassword');
+        $this->assertEqual($result1, 1);
+        $result2 = $dao->insert('ginatrapani+1@example.com', 'secr3tpassword');
+
+        $update_count = $dao->update($result1, "gina trapani", '930061', 'twitter', 'Gina Trapani', 'aabbcc', 'xxyyzz',
+        1, 649);
+        $this->assertEqual($update_count, 1);
+
+        $this->expectException('DuplicateSubscriberConnectionException');
+        $update_count = $dao->update($result2, "gina trapani", '930061', 'twitter', 'Gina Trapani', 'aabbcc', 'xxyyzz',
+        1, 649);
     }
 
     public function testGetVerificationCode() {

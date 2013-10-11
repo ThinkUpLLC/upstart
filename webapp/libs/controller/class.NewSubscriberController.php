@@ -37,73 +37,23 @@ class NewSubscriberController extends SignUpController {
                         $subscriber_authorization_dao->insert($subscriber_id, $authorization->id);
                         $redirect_to_network = true;
                     }
-                } catch (DuplicateSubscriberException $e) {
+                } catch (DuplicateSubscriberEmailException $e) {
                     $this->addErrorMessage("Whoa! We love the enthusiasm, but someone already joined ThinkUp ".
-                    "with this email address. Please enter another address, or ".
+                    "with that email address. Please enter another address, or ".
                     "<a href=\"mailto:help@thinkup.com\">contact us</a> with questions.");
 
                     $redirect_to_network = false;
                     $do_show_form = true;
-                } catch (DuplicateSubscriberAuthorizationException $e) {
-                    //Ignore duplicate subscriber/authorization, just assume user refreshed page
-                    $redirect_to_network = true;
                 }
 
                 if ($redirect_to_network) {
                     if ($_POST['n'] == 'twitter') {
+                        $twitter_auth_link = self::getTwitterAuthLink();
                         //Go to Twitter
-                        $cfg = Config::getInstance();
-                        $oauth_consumer_key = $cfg->getValue('oauth_consumer_key');
-                        $oauth_consumer_secret = $cfg->getValue('oauth_consumer_secret');
-
-                        $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret);
-                        //Add unique waitlisted user ID from previous DB operation to callback
-                        $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().'new.php?n=twitter');
-
-                        if (isset($tok['oauth_token'])) {
-                            $token = $tok['oauth_token'];
-                            SessionCache::put('oauth_request_token_secret', $tok['oauth_token_secret']);
-                            // Build Twitter authorization URL
-                            $oauthorize_link = $to->getAuthorizeURL($token);
-                            //Redirect to oauthorize link
-                            header('Location: '.$oauthorize_link);
-                        } else {
-                            $this->addErrorMessage($generic_error_msg);
-                            $this->logError(__METHOD__.','.__LINE__, (isset($tok))?Utils::varDumpToString($tok):'');
-                        }
+                        header('Location: '.$twitter_auth_link);
                     } elseif ($_POST['n'] == 'facebook') {
                         //Go to Facebook
-                        $cfg = Config::getInstance();
-                        $facebook_app_id = $cfg->getValue('facebook_app_id');
-                        $facebook_api_secret = $cfg->getValue('facebook_api_secret');
-
-                        // Create Facebook Application instance
-                        $facebook_app = new Facebook(array('appId'  => $facebook_app_id,
-                        'secret' => $facebook_api_secret ));
-
-                        $fb_user = $facebook_app->getUser();
-                        if ($fb_user) {
-                            try {
-                                $fb_user_profile = $facebook_app->api('/me');
-                            } catch (FacebookApiException $e) {
-                                error_log($e);
-                                $fb_user = null;
-                                $fb_user_profile = null;
-                            }
-                        }
-                        //Plant unique token for CSRF protection during auth
-                        //per https://developers.facebook.com/docs/authentication/
-                        if (SessionCache::get('facebook_auth_csrf') == null) {
-                            SessionCache::put('facebook_auth_csrf', md5(uniqid(rand(), true)));
-                        }
-
-                        $params = array('scope'=>'read_stream,user_likes,user_location,user_website,'.
-                        'read_friendlists,friends_location,manage_pages,read_insights,manage_pages',
-                        'state'=>SessionCache::get('facebook_auth_csrf'),
-                        'redirect_uri'=>UpstartHelper::getApplicationURL().'new.php?n=facebook');
-
-                        $fbconnect_link = $facebook_app->getLoginUrl($params);
-                        //Redirect to Facebook connect link
+                        $fbconnect_link = self::getFacebookConnectLink();
                         header('Location: '.$fbconnect_link);
                     }
                 }
@@ -188,6 +138,16 @@ class NewSubscriberController extends SignUpController {
                             $this->logError(__METHOD__.','.__LINE__, "Twitter user returned: ".
                             Utils::varDumpToString($authed_twitter_user));
                         }
+                    } catch (DuplicateSubscriberConnectionException $e) {
+                        $this->addErrorMessage("Whoa! We love your enthusiasm, but @".
+                        $authed_twitter_user['user_name']." has already joined ThinkUp. Connect another Twitter or ".
+                        "Facebook account to ThinkUp.");
+
+                        $this->addToView('do_show_just_auth_buttons', true);
+                        $twitter_auth_link = self::getTwitterAuthLink();
+                        $this->addToView('twitter_auth_link', $twitter_auth_link);
+                        $fb_connect_link = self::getFacebookConnectLink();
+                        $this->addToView('fb_connect_link', $fb_connect_link);
                     } catch (APIErrorException $e) {
                         $this->addErrorMessage($generic_error_msg);
                         $this->logError(__METHOD__.','.__LINE__, "Twitter says: ".$e->getMessage());
@@ -221,14 +181,24 @@ class NewSubscriberController extends SignUpController {
                         $fb_username = $fb_user_profile['name'];
                         $fb_user_id = $fb_user_profile['id'];
 
-                        //Update subscriber record with Facebook auth information
-                        $update_count = $subscriber_dao->update($subscriber_id, $fb_user_profile['username'],
-                        $fb_user_profile['id'], 'facebook', $fb_user_profile['name'], $access_token, '',
-                        $fb_user_profile['verified']);
-                        //                        echo "<pre>";
-                        //                        print_r($fb_user_profile);
-                        //                        echo "</pre>";
-                        $do_show_form = true;
+                        try {
+                            //Update subscriber record with Facebook auth information
+                            $update_count = $subscriber_dao->update($subscriber_id, $fb_user_profile['username'],
+                            $fb_user_profile['id'], 'facebook', $fb_user_profile['name'], $access_token, '',
+                            $fb_user_profile['verified']);
+                            //                        echo "<pre>";
+                            //                        print_r($fb_user_profile);
+                            //                        echo "</pre>";
+                        } catch (DuplicateSubscriberConnectionException $e) {
+                            $this->addErrorMessage("Whoa! We love your enthusiasm, but @".
+                            $authed_twitter_user['user_name']." has already joined ThinkUp. Connect another Twitter ".
+                            "or Facebook account to ThinkUp.");
+                            $this->addToView('do_show_just_auth_buttons', true);
+                            $twitter_auth_link = self::getTwitterAuthLink();
+                            $this->addToView('twitter_auth_link', $twitter_auth_link);
+                            $fb_connect_link = self::getFacebookConnectLink();
+                            $this->addToView('fb_connect_link', $fb_connect_link);
+                        }
                     } else {
                         $error_msg = "Problem authorizing your Facebook account.";
                         $error_object = JSONDecoder::decode($access_token_response);
@@ -260,13 +230,8 @@ class NewSubscriberController extends SignUpController {
                 $subscriber->verification_code);
 
                 //Clear SessionCache values, we're done
-                SessionCache::unsetKey('subscriber_id');
-                SessionCache::unsetKey('token_id');
-                SessionCache::unsetKey('oauth_request_token_secret');
+                SessionCache::clearAllKeys();
                 $do_show_form = false;
-            } else {
-                $this->addErrorMessage($generic_error_msg);
-                $this->logError(__METHOD__.','.__LINE__);
             }
         } else { //No recognizable POST or GET vars set
             $this->addErrorMessage($generic_error_msg);
@@ -276,6 +241,57 @@ class NewSubscriberController extends SignUpController {
         $this->addToView('do_show_form', $do_show_form);
 
         return $this->generateView();
+    }
+
+    private function getTwitterAuthLink() {
+        $twitter_auth_link = null;
+        $cfg = Config::getInstance();
+        $oauth_consumer_key = $cfg->getValue('oauth_consumer_key');
+        $oauth_consumer_secret = $cfg->getValue('oauth_consumer_secret');
+
+        $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret);
+        //Add unique waitlisted user ID from previous DB operation to callback
+        $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().'new.php?n=twitter');
+
+        if (isset($tok['oauth_token'])) {
+            $token = $tok['oauth_token'];
+            SessionCache::put('oauth_request_token_secret', $tok['oauth_token_secret']);
+            // Build Twitter authorization URL
+            $twitter_auth_link = $to->getAuthorizeURL($token);
+        } else {
+            $this->addErrorMessage($generic_error_msg);
+            $this->logError(__METHOD__.','.__LINE__, (isset($tok))?Utils::varDumpToString($tok):'');
+        }
+        return $twitter_auth_link;
+    }
+
+    private function getFacebookConnectLink() {
+        $fbconnect_link = null;
+        $cfg = Config::getInstance();
+        $facebook_app_id = $cfg->getValue('facebook_app_id');
+        $facebook_api_secret = $cfg->getValue('facebook_api_secret');
+
+        // Create Facebook Application instance
+        $facebook_app = new Facebook(array('appId'  => $facebook_app_id, 'secret' => $facebook_api_secret ));
+
+        try {
+            //Plant unique token for CSRF protection during auth
+            //per https://developers.facebook.com/docs/authentication/
+            if (SessionCache::get('facebook_auth_csrf') == null) {
+                SessionCache::put('facebook_auth_csrf', md5(uniqid(rand(), true)));
+            }
+
+            $params = array('scope'=>'read_stream,user_likes,user_location,user_website,'.
+                'read_friendlists,friends_location,manage_pages,read_insights,manage_pages',
+                'state'=>SessionCache::get('facebook_auth_csrf'),
+                'redirect_uri'=>UpstartHelper::getApplicationURL().'new.php?n=facebook');
+
+            $fbconnect_link = $facebook_app->getLoginUrl($params);
+        } catch (FacebookApiException $e) {
+            $this->addErrorMessage($generic_error_msg);
+            $this->logError(__METHOD__.','.__LINE__, $e->getMessage());
+        }
+        return $fbconnect_link;
     }
 
     private function hasUserPostedSignUpForm() {

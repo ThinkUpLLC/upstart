@@ -16,15 +16,15 @@ class SubscriberMySQLDAO extends PDODAO {
 
         try {
             $ps = $this->execute($q, $vars);
+            return $this->getInsertId($ps);
         } catch (PDOException $e) {
             $message = $e->getMessage();
-            if (strpos($message,'Duplicate entry') !== false) {
-                throw new DuplicateSubscriberException($message);
+            if (strpos($message,'Duplicate entry') !== false && strpos($message,'email') !== false) {
+                throw new DuplicateSubscriberEmailException($message);
             } else {
                 throw new PDOException($message);
             }
         }
-        return $this->getInsertId($ps);
     }
 
     public function update($subscriber_id, $network_user_name, $network_user_id, $network, $full_name,
@@ -44,8 +44,15 @@ class SubscriberMySQLDAO extends PDODAO {
             ':follower_count'=>$follower_count,
             ':is_verified'=>(integer) $is_verified
         );
-        $ps = $this->execute($q, $vars);
-        return $this->getUpdateCount($ps);
+        try {
+            $ps = $this->execute($q, $vars);
+            return $this->getUpdateCount($ps);
+        } catch (PDOException $e) {
+            $message = $e->getMessage();
+            if (strpos($message,'Duplicate entry') !== false && strpos($message,'network_user_id') !== false) {
+                throw new DuplicateSubscriberConnectionException($message);
+            }
+        }
     }
 
     //@TODO Cache these totals in their own table to avoid all these joins on the front page

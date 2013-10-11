@@ -42,4 +42,11 @@ class SessionCache {
         $config = Config::getInstance();
         unset($_SESSION[$config->getValue('source_root_path')][$key]);
     }
+
+    public static function clearAllKeys() {
+        $config = Config::getInstance();
+        foreach ($_SESSION[$config->getValue('source_root_path')] as $key=>$value) {
+            SessionCache::unsetKey($key);
+        }
+    }
 }

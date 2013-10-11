@@ -143,6 +143,10 @@
             <button class="btn btn-large btn-primary btn-info big-btn" type="submit" name="n" value="twitter">Sign in with Twitter</button>
             <button class="btn btn-large btn-primary btn-info big-btn" type="submit" name="n" value="facebook">Sign in with Facebook</button>
             {/if}
+            {if $do_show_just_auth_buttons eq true}
+            <a href="{$twitter_auth_link}">Sign in with Twitter</a><br><br>
+            <a href="{$fb_connect_link}">Sign in with Facebook</a>
+            {/if}
           </form>
         </div>
     </div> <!-- /container -->

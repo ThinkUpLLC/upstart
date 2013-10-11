@@ -57,9 +57,9 @@ CREATE TABLE subscribers (
   pwd varchar(255) NOT NULL COMMENT 'Subscriber password.',
   pwd_salt varchar(255) NOT NULL COMMENT 'Subscriber password salt.',
   creation_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time of subscription.',
-  network_user_id varchar(30) NOT NULL COMMENT 'Subscriber''s network user ID.',
+  network_user_id varchar(30) NULL DEFAULT NULL COMMENT 'Subscriber''s network user ID.',
   network_user_name varchar(255) NOT NULL COMMENT 'Subscriber''s network username.',
-  network varchar(20) NOT NULL COMMENT 'Subscriber''s authorized network, ie, Twitter or Facebook.',
+  network varchar(20) NULL DEFAULT NULL COMMENT 'Subscriber''s authorized network, ie, Twitter or Facebook.',
   full_name varchar(255) NOT NULL COMMENT 'Subscriber''s full name (as specified on network).',
   follower_count int(11) NOT NULL COMMENT 'Follower or subscriber count of service user.',
   is_verified int(1) NOT NULL COMMENT 'Whether or not the service user is verified.',
@@ -68,7 +68,8 @@ CREATE TABLE subscribers (
   verification_code int(10) NOT NULL COMMENT 'Code for verifying email address.',
   is_email_verified int(1) NOT NULL COMMENT 'Whether or not email address has been verified, 1 or 0.',
   PRIMARY KEY (id),
-  UNIQUE KEY email (email)
+  UNIQUE KEY email (email),
+  UNIQUE KEY network_user_id (network_user_id,network)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Paid subscribers who have authorized their social network ac';
 
 CREATE TABLE subscriber_authorizations (
