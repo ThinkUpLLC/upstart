@@ -1,7 +1,7 @@
 <?php
 class ListSubscriberController extends Controller {
     public function control() {
-        $this->setViewTemplate('admin-subscribers.tpl');
+        $this->setViewTemplate('admin-index.tpl');
 
         $page = (isset($_GET['p']))?(integer)$_GET['p']:1;
         if ($page < 1) {

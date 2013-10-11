@@ -2,5 +2,5 @@
 chdir('..');
 require_once 'init.php';
 
-$controller = new ListSubscriberController();
+$controller = new ListUserController();
 echo $controller->control();

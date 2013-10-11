@@ -5,7 +5,7 @@
  */
 class ListUserController extends Controller {
     public function control() {
-        $this->setViewTemplate('admin-index.tpl');
+        $this->setViewTemplate('admin-waitlist.tpl');
 
         $page = (isset($_GET['p']))?(integer)$_GET['p']:1;
         if ($page < 1) {

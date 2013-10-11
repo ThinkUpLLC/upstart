@@ -56,36 +56,37 @@
     <div class="container">
 
 <div class="row-fluid">
-  <div class="span1"></div>
-  <div class="span10">
+  <div class="span4"></div>
+  <div class="span4">
     <div id="logo"><a href="?p=1"><h1>Think<span>Up</span></h1></a></div>
-<h2>${$total_authorizations|number_format} pledged by {$total_subscribers|number_format} subscribers</h2>
+
+<h2>{$total|number_format} waitlisted</h2>
+<h2>{$total_active_routes|number_format} installed</h2>
+<p>Stalest dispatched:<br>
+10k+ followers: {$stalest_dispatch_time_10k_up|relative_datetime} ago<br>
+1k to 10k followers: {$stalest_dispatch_time_1k_to_10k|relative_datetime} ago<br>
+< 1k: {$stalest_dispatch_time|relative_datetime} ago</p>
+<p {if !$workers_ok} class="alert alert-danger"{/if}>Dispatch status: <b>{$worker_status}</b></p>
     <table class="table table-condensed table-hover">
       <tr>
           <th></th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Network</th>
-          <th>Subscribed</th>
-          <th style="text-align:right">Amount</th>
-          <th>Notes</th>
-          <th>Actions</th>
+          <th>Username</th>
+          <th>Waitlisted</th>
+          <th>Followers</th>
+          <th>Dispatched</th>
       </tr>
-      {foreach $subscribers as $subscriber}
+      {foreach $users as $user}
       <tr>
-        <td> {if $subscriber->is_verified}<img src="../assets/img/twitter_verified_icon.png" />{/if}</td>
-        <td>{$subscriber->full_name}</td>
-        <td>{$subscriber->email}</th>
-        <td>{$subscriber->network}</td>
-        <td>{$subscriber->creation_time}</td>
-        <td style="text-align:right">${$subscriber->amount}</td>
-        <td><a title="{$subscriber->description}">{$subscriber->status_code}</a>{if $subscriber->is_email_verified eq 0}, Email not verified{/if}{if $subscriber->error_message}, Amazon error: {$subscriber->error_message}{/if}</td>
-        <td><a href="javascript:alert('Not built yet');" class="btn btn-success btn-mini">Charge</a></td>
+        <td> {if $user.is_verified}<img src="../assets/img/twitter_verified_icon.png" />{/if}</td>
+        <td><a href="https://twitter.com/intent/user?user_id={$user.twitter_user_id}" title="{$user.email} waitlisted {$user.date_waitlisted}">@{$user.twitter_username}</a></td>
+        <td>{$user.date_waitlisted|relative_datetime}&nbsp;ago</td>
+        <td style="text-align:right">{$user.follower_count|number_format}</td>
+        <td style="text-align:right">{if $user.route}{if $user.is_active eq 0}<a href="install.php?id={$user.id}" class="btn btn-success btn-mini">Install app</a> <cite style="color:red" title="{$user.id} is inactive"}>x</cite>{else}<a href="{$user.route}" target="_new">{$user.last_dispatched|relative_datetime}&nbsp;ago</a>{/if}{else}<a href="install.php?id={$user.id}" class="btn btn-success btn-mini">Install app</a>{/if}</td>
       </tr>
       {/foreach}
     </table>
 
-<div class="span1"></div>
+<div class="span4"></div>
 
 {if $prev_page}<a href="?p={$prev_page}">&larr; previous</a>{/if} {if $next_page and $prev_page}|{/if} {if $next_page}<a href="?p={$next_page}">next &rarr;</a>{/if}
 </div>
