@@ -59,6 +59,7 @@
   <div class="span1"></div>
   <div class="span10">
     <div id="logo"><a href="?p=1"><h1>Think<span>Up</span></h1></a></div>
+    <h2>Error Log</h2>
     <table class="table table-condensed table-hover">
       <tr>
           <th>Location</th>
