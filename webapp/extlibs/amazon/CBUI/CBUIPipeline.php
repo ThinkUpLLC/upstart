@@ -35,9 +35,9 @@ abstract class Amazon_FPS_CBUIPipeline {
     /**
      * The default URL corresponds to production environment. Change the URL for sandbox environment.
      */
-    protected static $CBUI_URL = "https://authorize.payments.amazon.com/cobranded-ui/actions/start";
+    //protected static $CBUI_URL = "https://authorize.payments.amazon.com/cobranded-ui/actions/start";
     //SANDBOX
-    //protected static $CBUI_URL = "https://authorize.payments-sandbox.amazon.com/cobranded-ui/actions/start";
+    protected static $CBUI_URL = "https://authorize.payments-sandbox.amazon.com/cobranded-ui/actions/start";
     //For Payments API, update endpoint to sandbox in /FPS/Client.php
 
     /**

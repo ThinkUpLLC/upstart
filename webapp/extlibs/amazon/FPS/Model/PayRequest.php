@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  *  PHP Version 5
  *
  *  @category    Amazon
@@ -9,30 +9,30 @@
  *  @license     http://aws.amazon.com/apache2.0  Apache License, Version 2.0
  *  @version     2010-08-28
  */
-/******************************************************************************* 
- *    __  _    _  ___ 
+/*******************************************************************************
+ *    __  _    _  ___
  *   (  )( \/\/ )/ __)
  *   /__\ \    / \__ \
  *  (_)(_) \/\/  (___/
- * 
+ *
  *  Amazon FPS PHP5 Library
  *  Generated: Wed Jun 15 05:50:14 GMT+00:00 2011
- * 
+ *
  */
 
 /**
  *  @see Amazon_FPS_Model
  */
-require_once ('Amazon/FPS/Model.php');  
+//require_once ('Amazon/FPS/Model.php');
 
-    
+
 
 /**
  * Amazon_FPS_Model_PayRequest
- * 
+ *
  * Properties:
  * <ul>
- * 
+ *
  * <li>SenderTokenId: string</li>
  * <li>RecipientTokenId: string</li>
  * <li>TransactionAmount: Amazon_FPS_Model_Amount</li>
@@ -47,19 +47,19 @@ require_once ('Amazon/FPS/Model.php');
  * <li>OverrideIPNURL: string</li>
  *
  * </ul>
- */ 
+ */
 class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 {
 
 
     /**
      * Construct new Amazon_FPS_Model_PayRequest
-     * 
-     * @param mixed $data DOMElement or Associative Array to construct from. 
-     * 
+     *
+     * @param mixed $data DOMElement or Associative Array to construct from.
+     *
      * Valid properties:
      * <ul>
-     * 
+     *
      * <li>SenderTokenId: string</li>
      * <li>RecipientTokenId: string</li>
      * <li>TransactionAmount: Amazon_FPS_Model_Amount</li>
@@ -91,26 +91,27 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
         'MarketplaceVariableFee' => array('FieldValue' => null, 'FieldType' => 'int'),
         'OverrideIPNURL' => array('FieldValue' => null, 'FieldType' => 'string'),
         );
+        echo "<pre>";print_r($data);
         parent::__construct($data);
     }
 
         /**
      * Gets the value of the SenderTokenId property.
-     * 
+     *
      * @return string SenderTokenId
      */
-    public function getSenderTokenId() 
+    public function getSenderTokenId()
     {
         return $this->_fields['SenderTokenId']['FieldValue'];
     }
 
     /**
      * Sets the value of the SenderTokenId property.
-     * 
+     *
      * @param string SenderTokenId
      * @return this instance
      */
-    public function setSenderTokenId($value) 
+    public function setSenderTokenId($value)
     {
         $this->_fields['SenderTokenId']['FieldValue'] = $value;
         return $this;
@@ -118,7 +119,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Sets the value of the SenderTokenId and returns this instance
-     * 
+     *
      * @param string $value SenderTokenId
      * @return Amazon_FPS_Model_PayRequest instance
      */
@@ -131,7 +132,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Checks if SenderTokenId is set
-     * 
+     *
      * @return bool true if SenderTokenId  is set
      */
     public function isSetSenderTokenId()
@@ -141,21 +142,21 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Gets the value of the RecipientTokenId property.
-     * 
+     *
      * @return string RecipientTokenId
      */
-    public function getRecipientTokenId() 
+    public function getRecipientTokenId()
     {
         return $this->_fields['RecipientTokenId']['FieldValue'];
     }
 
     /**
      * Sets the value of the RecipientTokenId property.
-     * 
+     *
      * @param string RecipientTokenId
      * @return this instance
      */
-    public function setRecipientTokenId($value) 
+    public function setRecipientTokenId($value)
     {
         $this->_fields['RecipientTokenId']['FieldValue'] = $value;
         return $this;
@@ -163,7 +164,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Sets the value of the RecipientTokenId and returns this instance
-     * 
+     *
      * @param string $value RecipientTokenId
      * @return Amazon_FPS_Model_PayRequest instance
      */
@@ -176,7 +177,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Checks if RecipientTokenId is set
-     * 
+     *
      * @return bool true if RecipientTokenId  is set
      */
     public function isSetRecipientTokenId()
@@ -186,21 +187,21 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Gets the value of the TransactionAmount.
-     * 
+     *
      * @return Amount TransactionAmount
      */
-    public function getTransactionAmount() 
+    public function getTransactionAmount()
     {
         return $this->_fields['TransactionAmount']['FieldValue'];
     }
 
     /**
      * Sets the value of the TransactionAmount.
-     * 
+     *
      * @param Amount TransactionAmount
      * @return void
      */
-    public function setTransactionAmount($value) 
+    public function setTransactionAmount($value)
     {
         $this->_fields['TransactionAmount']['FieldValue'] = $value;
         return;
@@ -208,7 +209,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Sets the value of the TransactionAmount  and returns this instance
-     * 
+     *
      * @param Amount $value TransactionAmount
      * @return Amazon_FPS_Model_PayRequest instance
      */
@@ -221,7 +222,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Checks if TransactionAmount  is set
-     * 
+     *
      * @return bool true if TransactionAmount property is set
      */
     public function isSetTransactionAmount()
@@ -232,21 +233,21 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Gets the value of the ChargeFeeTo property.
-     * 
+     *
      * @return ChargeFeeTo ChargeFeeTo
      */
-    public function getChargeFeeTo() 
+    public function getChargeFeeTo()
     {
         return $this->_fields['ChargeFeeTo']['FieldValue'];
     }
 
     /**
      * Sets the value of the ChargeFeeTo property.
-     * 
+     *
      * @param ChargeFeeTo ChargeFeeTo
      * @return this instance
      */
-    public function setChargeFeeTo($value) 
+    public function setChargeFeeTo($value)
     {
         $this->_fields['ChargeFeeTo']['FieldValue'] = $value;
         return $this;
@@ -254,7 +255,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Sets the value of the ChargeFeeTo and returns this instance
-     * 
+     *
      * @param ChargeFeeTo $value ChargeFeeTo
      * @return Amazon_FPS_Model_PayRequest instance
      */
@@ -267,7 +268,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Checks if ChargeFeeTo is set
-     * 
+     *
      * @return bool true if ChargeFeeTo  is set
      */
     public function isSetChargeFeeTo()
@@ -277,21 +278,21 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Gets the value of the CallerReference property.
-     * 
+     *
      * @return string CallerReference
      */
-    public function getCallerReference() 
+    public function getCallerReference()
     {
         return $this->_fields['CallerReference']['FieldValue'];
     }
 
     /**
      * Sets the value of the CallerReference property.
-     * 
+     *
      * @param string CallerReference
      * @return this instance
      */
-    public function setCallerReference($value) 
+    public function setCallerReference($value)
     {
         $this->_fields['CallerReference']['FieldValue'] = $value;
         return $this;
@@ -299,7 +300,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Sets the value of the CallerReference and returns this instance
-     * 
+     *
      * @param string $value CallerReference
      * @return Amazon_FPS_Model_PayRequest instance
      */
@@ -312,7 +313,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Checks if CallerReference is set
-     * 
+     *
      * @return bool true if CallerReference  is set
      */
     public function isSetCallerReference()
@@ -322,21 +323,21 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Gets the value of the CallerDescription property.
-     * 
+     *
      * @return string CallerDescription
      */
-    public function getCallerDescription() 
+    public function getCallerDescription()
     {
         return $this->_fields['CallerDescription']['FieldValue'];
     }
 
     /**
      * Sets the value of the CallerDescription property.
-     * 
+     *
      * @param string CallerDescription
      * @return this instance
      */
-    public function setCallerDescription($value) 
+    public function setCallerDescription($value)
     {
         $this->_fields['CallerDescription']['FieldValue'] = $value;
         return $this;
@@ -344,7 +345,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Sets the value of the CallerDescription and returns this instance
-     * 
+     *
      * @param string $value CallerDescription
      * @return Amazon_FPS_Model_PayRequest instance
      */
@@ -357,7 +358,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Checks if CallerDescription is set
-     * 
+     *
      * @return bool true if CallerDescription  is set
      */
     public function isSetCallerDescription()
@@ -367,21 +368,21 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Gets the value of the SenderDescription property.
-     * 
+     *
      * @return string SenderDescription
      */
-    public function getSenderDescription() 
+    public function getSenderDescription()
     {
         return $this->_fields['SenderDescription']['FieldValue'];
     }
 
     /**
      * Sets the value of the SenderDescription property.
-     * 
+     *
      * @param string SenderDescription
      * @return this instance
      */
-    public function setSenderDescription($value) 
+    public function setSenderDescription($value)
     {
         $this->_fields['SenderDescription']['FieldValue'] = $value;
         return $this;
@@ -389,7 +390,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Sets the value of the SenderDescription and returns this instance
-     * 
+     *
      * @param string $value SenderDescription
      * @return Amazon_FPS_Model_PayRequest instance
      */
@@ -402,7 +403,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Checks if SenderDescription is set
-     * 
+     *
      * @return bool true if SenderDescription  is set
      */
     public function isSetSenderDescription()
@@ -412,21 +413,21 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Gets the value of the DescriptorPolicy.
-     * 
+     *
      * @return DescriptorPolicy DescriptorPolicy
      */
-    public function getDescriptorPolicy() 
+    public function getDescriptorPolicy()
     {
         return $this->_fields['DescriptorPolicy']['FieldValue'];
     }
 
     /**
      * Sets the value of the DescriptorPolicy.
-     * 
+     *
      * @param DescriptorPolicy DescriptorPolicy
      * @return void
      */
-    public function setDescriptorPolicy($value) 
+    public function setDescriptorPolicy($value)
     {
         $this->_fields['DescriptorPolicy']['FieldValue'] = $value;
         return;
@@ -434,7 +435,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Sets the value of the DescriptorPolicy  and returns this instance
-     * 
+     *
      * @param DescriptorPolicy $value DescriptorPolicy
      * @return Amazon_FPS_Model_PayRequest instance
      */
@@ -447,7 +448,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Checks if DescriptorPolicy  is set
-     * 
+     *
      * @return bool true if DescriptorPolicy property is set
      */
     public function isSetDescriptorPolicy()
@@ -458,21 +459,21 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Gets the value of the TransactionTimeoutInMins property.
-     * 
+     *
      * @return int TransactionTimeoutInMins
      */
-    public function getTransactionTimeoutInMins() 
+    public function getTransactionTimeoutInMins()
     {
         return $this->_fields['TransactionTimeoutInMins']['FieldValue'];
     }
 
     /**
      * Sets the value of the TransactionTimeoutInMins property.
-     * 
+     *
      * @param int TransactionTimeoutInMins
      * @return this instance
      */
-    public function setTransactionTimeoutInMins($value) 
+    public function setTransactionTimeoutInMins($value)
     {
         $this->_fields['TransactionTimeoutInMins']['FieldValue'] = $value;
         return $this;
@@ -480,7 +481,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Sets the value of the TransactionTimeoutInMins and returns this instance
-     * 
+     *
      * @param int $value TransactionTimeoutInMins
      * @return Amazon_FPS_Model_PayRequest instance
      */
@@ -493,7 +494,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Checks if TransactionTimeoutInMins is set
-     * 
+     *
      * @return bool true if TransactionTimeoutInMins  is set
      */
     public function isSetTransactionTimeoutInMins()
@@ -503,21 +504,21 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Gets the value of the MarketplaceFixedFee.
-     * 
+     *
      * @return Amount MarketplaceFixedFee
      */
-    public function getMarketplaceFixedFee() 
+    public function getMarketplaceFixedFee()
     {
         return $this->_fields['MarketplaceFixedFee']['FieldValue'];
     }
 
     /**
      * Sets the value of the MarketplaceFixedFee.
-     * 
+     *
      * @param Amount MarketplaceFixedFee
      * @return void
      */
-    public function setMarketplaceFixedFee($value) 
+    public function setMarketplaceFixedFee($value)
     {
         $this->_fields['MarketplaceFixedFee']['FieldValue'] = $value;
         return;
@@ -525,7 +526,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Sets the value of the MarketplaceFixedFee  and returns this instance
-     * 
+     *
      * @param Amount $value MarketplaceFixedFee
      * @return Amazon_FPS_Model_PayRequest instance
      */
@@ -538,7 +539,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Checks if MarketplaceFixedFee  is set
-     * 
+     *
      * @return bool true if MarketplaceFixedFee property is set
      */
     public function isSetMarketplaceFixedFee()
@@ -549,21 +550,21 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Gets the value of the MarketplaceVariableFee property.
-     * 
+     *
      * @return int MarketplaceVariableFee
      */
-    public function getMarketplaceVariableFee() 
+    public function getMarketplaceVariableFee()
     {
         return $this->_fields['MarketplaceVariableFee']['FieldValue'];
     }
 
     /**
      * Sets the value of the MarketplaceVariableFee property.
-     * 
+     *
      * @param int MarketplaceVariableFee
      * @return this instance
      */
-    public function setMarketplaceVariableFee($value) 
+    public function setMarketplaceVariableFee($value)
     {
         $this->_fields['MarketplaceVariableFee']['FieldValue'] = $value;
         return $this;
@@ -571,7 +572,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Sets the value of the MarketplaceVariableFee and returns this instance
-     * 
+     *
      * @param int $value MarketplaceVariableFee
      * @return Amazon_FPS_Model_PayRequest instance
      */
@@ -584,7 +585,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Checks if MarketplaceVariableFee is set
-     * 
+     *
      * @return bool true if MarketplaceVariableFee  is set
      */
     public function isSetMarketplaceVariableFee()
@@ -594,21 +595,21 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Gets the value of the OverrideIPNURL property.
-     * 
+     *
      * @return string OverrideIPNURL
      */
-    public function getOverrideIPNURL() 
+    public function getOverrideIPNURL()
     {
         return $this->_fields['OverrideIPNURL']['FieldValue'];
     }
 
     /**
      * Sets the value of the OverrideIPNURL property.
-     * 
+     *
      * @param string OverrideIPNURL
      * @return this instance
      */
-    public function setOverrideIPNURL($value) 
+    public function setOverrideIPNURL($value)
     {
         $this->_fields['OverrideIPNURL']['FieldValue'] = $value;
         return $this;
@@ -616,7 +617,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Sets the value of the OverrideIPNURL and returns this instance
-     * 
+     *
      * @param string $value OverrideIPNURL
      * @return Amazon_FPS_Model_PayRequest instance
      */
@@ -629,7 +630,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
 
     /**
      * Checks if OverrideIPNURL is set
-     * 
+     *
      * @return bool true if OverrideIPNURL  is set
      */
     public function isSetOverrideIPNURL()

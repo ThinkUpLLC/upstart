@@ -31,6 +31,7 @@ class SubscribeController extends Controller {
         $cfg = Config::getInstance();
         $AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
         $AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
+        $amazon_payment_auth_validity_start = $cfg->getValue('amazon_payment_auth_validity_start');
 
         $pipeline = new Amazon_FPS_CBUIRecurringTokenPipeline($AWS_ACCESS_KEY_ID, $AWS_SECRET_ACCESS_KEY);
 
@@ -38,7 +39,7 @@ class SubscribeController extends Controller {
 
         //optional parameters
         $pipeline->addParameter("paymentReason", "ThinkUp monthly subscription");
-        $pipeline->addParameter("validityStart", date("U", mktime(12, 0, 0, 1, 1, 2014)));
+        $pipeline->addParameter("validityStart", $amazon_payment_auth_validity_start);
         $pipeline->addParameter("cobrandingUrl",
         UpstartHelper::getApplicationURL(false, false, false)."assets/img/thinkup-logo-transparent.png");
         $pipeline->addParameter("websiteDescription", "ThinkUp");

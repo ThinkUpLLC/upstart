@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  *  PHP Version 5
  *
  *  @category    Amazon
@@ -9,47 +9,47 @@
  *  @license     http://aws.amazon.com/apache2.0  Apache License, Version 2.0
  *  @version     2010-08-28
  */
-/******************************************************************************* 
- *    __  _    _  ___ 
+/*******************************************************************************
+ *    __  _    _  ___
  *   (  )( \/\/ )/ __)
  *   /__\ \    / \__ \
  *  (_)(_) \/\/  (___/
- * 
+ *
  *  Amazon FPS PHP5 Library
  *  Generated: Wed Jun 15 05:50:14 GMT+00:00 2011
- * 
+ *
  */
 
 /**
  *  @see Amazon_FPS_Model
  */
-require_once ('Amazon/FPS/Model.php');  
+//require_once ('Amazon/FPS/Model.php');
 
-    
+
 
 /**
  * Amazon_FPS_Model_Amount
- * 
+ *
  * Properties:
  * <ul>
- * 
+ *
  * <li>CurrencyCode: CurrencyCode</li>
  * <li>Value: string</li>
  *
  * </ul>
- */ 
+ */
 class Amazon_FPS_Model_Amount extends Amazon_FPS_Model
 {
 
 
     /**
      * Construct new Amazon_FPS_Model_Amount
-     * 
-     * @param mixed $data DOMElement or Associative Array to construct from. 
-     * 
+     *
+     * @param mixed $data DOMElement or Associative Array to construct from.
+     *
      * Valid properties:
      * <ul>
-     * 
+     *
      * <li>CurrencyCode: CurrencyCode</li>
      * <li>Value: string</li>
      *
@@ -61,26 +61,27 @@ class Amazon_FPS_Model_Amount extends Amazon_FPS_Model
         'CurrencyCode' => array('FieldValue' => null, 'FieldType' => 'CurrencyCode'),
         'Value' => array('FieldValue' => null, 'FieldType' => 'string'),
         );
+        print_r($data);
         parent::__construct($data);
     }
 
         /**
      * Gets the value of the CurrencyCode property.
-     * 
+     *
      * @return CurrencyCode CurrencyCode
      */
-    public function getCurrencyCode() 
+    public function getCurrencyCode()
     {
         return $this->_fields['CurrencyCode']['FieldValue'];
     }
 
     /**
      * Sets the value of the CurrencyCode property.
-     * 
+     *
      * @param CurrencyCode CurrencyCode
      * @return this instance
      */
-    public function setCurrencyCode($value) 
+    public function setCurrencyCode($value)
     {
         $this->_fields['CurrencyCode']['FieldValue'] = $value;
         return $this;
@@ -88,7 +89,7 @@ class Amazon_FPS_Model_Amount extends Amazon_FPS_Model
 
     /**
      * Sets the value of the CurrencyCode and returns this instance
-     * 
+     *
      * @param CurrencyCode $value CurrencyCode
      * @return Amazon_FPS_Model_Amount instance
      */
@@ -101,7 +102,7 @@ class Amazon_FPS_Model_Amount extends Amazon_FPS_Model
 
     /**
      * Checks if CurrencyCode is set
-     * 
+     *
      * @return bool true if CurrencyCode  is set
      */
     public function isSetCurrencyCode()
@@ -111,21 +112,21 @@ class Amazon_FPS_Model_Amount extends Amazon_FPS_Model
 
     /**
      * Gets the value of the Value property.
-     * 
+     *
      * @return string Value
      */
-    public function getValue() 
+    public function getValue()
     {
         return $this->_fields['Value']['FieldValue'];
     }
 
     /**
      * Sets the value of the Value property.
-     * 
+     *
      * @param string Value
      * @return this instance
      */
-    public function setValue($value) 
+    public function setValue($value)
     {
         $this->_fields['Value']['FieldValue'] = $value;
         return $this;
@@ -133,7 +134,7 @@ class Amazon_FPS_Model_Amount extends Amazon_FPS_Model
 
     /**
      * Sets the value of the Value and returns this instance
-     * 
+     *
      * @param string $value Value
      * @return Amazon_FPS_Model_Amount instance
      */
@@ -146,7 +147,7 @@ class Amazon_FPS_Model_Amount extends Amazon_FPS_Model
 
     /**
      * Checks if Value is set
-     * 
+     *
      * @return bool true if Value  is set
      */
     public function isSetValue()

@@ -44,7 +44,8 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     private  $_awsSecretAccessKey = null;
 
     /** @var array */
-    private  $_config = array ('ServiceURL' => 'https://fps.amazonaws.com', //Sandbox: https://fps.sandbox.amazonaws.com
+    private  $_config = array (//'ServiceURL' => 'https://fps.amazonaws.com', //Sandbox: https://fps.sandbox.amazonaws.com
+                               'ServiceURL' => 'https://fps.sandbox.amazonaws.com', //Sandbox: https://fps.sandbox.amazonaws.com
                                'UserAgent' => self::USER_AGENT_IDENTIFIER,
                                'SignatureVersion' => 2,
                                'SignatureMethod' => 'HmacSHA256',
@@ -573,10 +574,10 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     public function pay($request)
     {
         if (!$request instanceof Amazon_FPS_Model_PayRequest) {
-            require_once ('Amazon/FPS/Model/PayRequest.php');
+            //require_once ('Amazon/FPS/Model/PayRequest.php');
             $request = new Amazon_FPS_Model_PayRequest($request);
         }
-        require_once ('Amazon/FPS/Model/PayResponse.php');
+        //require_once ('Amazon/FPS/Model/PayResponse.php');
         return Amazon_FPS_Model_PayResponse::fromXML($this->_invoke($this->_convertPay($request)));
     }
 
