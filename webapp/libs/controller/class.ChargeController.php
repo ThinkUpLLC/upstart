@@ -18,7 +18,6 @@ class ChargeController extends Controller {
 
         $service = new Amazon_FPS_Client($AWS_ACCESS_KEY_ID, $AWS_SECRET_ACCESS_KEY);
 
-        echo 'hai';
         $click_dao = new ClickMySQLDAO();
         $caller_reference = $click_dao->insert();
         try {
