@@ -188,10 +188,10 @@ class NewSubscriberController extends SignUpController {
                             //Update subscriber record with Facebook auth information
                             $update_count = $subscriber_dao->update($subscriber_id, $fb_user_profile['username'],
                             $fb_user_profile['id'], 'facebook', $fb_user_profile['name'], $access_token, '',
-                            $fb_user_profile['verified']);
-                            //                        echo "<pre>";
-                            //                        print_r($fb_user_profile);
-                            //                        echo "</pre>";
+                            0);
+                            //                            echo "<pre>";
+                            //                            print_r($fb_user_profile);
+                            //                            echo "</pre>";
                         } catch (DuplicateSubscriberConnectionException $e) {
                             $this->addErrorMessage("Whoa! We love your enthusiasm, but @".
                             $authed_twitter_user['user_name']." has already joined ThinkUp. Connect another Twitter ".
