@@ -80,7 +80,10 @@
         <td>{$subscriber->creation_time}</td>
         <td style="text-align:right">${$subscriber->amount}</td>
         <td><a title="{$subscriber->description}">{$subscriber->status_code}</a>{if $subscriber->is_email_verified eq 0}, Email not verified{/if}{if $subscriber->error_message}, Amazon error: {$subscriber->error_message}{/if}</td>
-        <td><a href="charge.php?token_id={$subscriber->token_id}&amount={$subscriber->amount|urlencode}" class="btn btn-success btn-mini">Charge</a></td>
+        <td>{if $smarty.now > $subscriber->token_validity_start_date_ts}
+        <a href="charge.php?token_id={$subscriber->token_id}&amount={$subscriber->amount|urlencode}" class="btn btn-success btn-mini">Charge</a>{else}
+        Charge after {$subscriber->token_validity_start_date}{/if}  
+         </td>
       </tr>
       {/foreach}
     </table>

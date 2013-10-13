@@ -117,7 +117,7 @@ class SubscriberMySQLDAO extends PDODAO {
 
     public function getSubscriberList($page_number=1, $count=50) {
         $start_on_record = ($page_number - 1) * $count;
-        $q  = "SELECT * FROM subscribers s ";
+        $q  = "SELECT *, UNIX_TIMESTAMP(token_validity_start_date) AS token_validity_start_date_ts FROM subscribers s ";
         $q .= "INNER JOIN subscriber_authorizations sa ON s.id = sa.subscriber_id ";
         $q .= "INNER JOIN authorizations a ON sa.authorization_id = a.id ";
         $q .= "INNER JOIN authorization_status_codes sc ON sc.code = a.status_code ";
