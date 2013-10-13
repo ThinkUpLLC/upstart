@@ -45,19 +45,25 @@ abstract class SignUpController extends Controller {
         return (isset($_POST['password']) && $is_valid_password);
     }
 
-    protected function logError($filename, $line_number, $method, $extra_debug = null) {
+    protected function logError($title, $filename, $line_number, $method) {
         exec('git rev-parse --verify HEAD 2> /dev/null', $output);
         $commit_hash = $output[0];
-        $debug = "SESSION:
-".Utils::varDumpToString($_SESSION)."
-GET:
-".Utils::varDumpToString($_GET)."
-POST:
-".Utils::varDumpToString($_POST)."
-ADDITIONAL NOTES:
-".(($extra_debug==null)?'None':$extra_debug);
+        $debug = $title.'
+
+';
+        if (sizeof($_SESSION) > 0) {
+            $debug .= 'SESSION:
+'.Utils::varDumpToString($_SESSION);
+        }
+        if (sizeof($_GET) > 0) {
+            $debug .= 'GET:
+'.Utils::varDumpToString($_GET);
+        }
+        if (sizeof($_POST) > 0) {
+            $debug .= 'POST:
+'.Utils::varDumpToString($_POST);
+        }
         $error_dao = new ErrorLogMySQLDAO();
         $error_dao->insert($commit_hash, $filename, $line_number, $method, $debug);
     }
-
 }

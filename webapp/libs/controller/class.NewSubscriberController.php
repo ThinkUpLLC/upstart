@@ -29,7 +29,8 @@ class NewSubscriberController extends SignUpController {
                     $authorization = $authorization_dao->getByTokenID($token_id);
                     if ($authorization == null) {
                         $this->addErrorMessage($generic_error_msg);
-                        $this->logError(__FILE__,__LINE__,__METHOD__);
+                        $this->logError('Authorization not found. Token ID: "'.$token_id.'"', __FILE__,__LINE__,
+                        __METHOD__);
                         $redirect_to_network = false;
                         $do_show_form = false;
                     } else {
@@ -74,7 +75,7 @@ class NewSubscriberController extends SignUpController {
                     $do_show_form = true;
                 } else {
                     $this->addErrorMessage($generic_error_msg);
-                    $this->logError(__FILE__,__LINE__,__METHOD__, "Amazon error: ".$error_message);
+                    $this->logError("Amazon returned error: ".$error_message, __FILE__,__LINE__,__METHOD__);
                 }
 
                 //Record authorization
@@ -96,7 +97,8 @@ class NewSubscriberController extends SignUpController {
                 SessionCache::put('token_id', $_GET['tokenID']);
             } else {
                 $this->addErrorMessage($generic_error_msg);
-                $this->logError(__FILE__,__LINE__,__METHOD__);
+                $this->logError('Internal caller reference not set or Amazon response invalid', __FILE__,__LINE__,
+                __METHOD__);
             }
         } elseif ($this->hasUserReturnedFromTwitter() || $this->hasUserReturnedFromFacebook()) {
             $do_show_form = false;
@@ -139,8 +141,8 @@ class NewSubscriberController extends SignUpController {
                             $do_show_form = true;
                         } else {
                             $this->addErrorMessage($generic_error_msg);
-                            $this->logError(__FILE__,__LINE__,__METHOD__, "Twitter user returned: ".
-                            Utils::varDumpToString($authed_twitter_user));
+                            $this->logError("Invalid Twitter user returned: ".
+                            Utils::varDumpToString($authed_twitter_user),__FILE__,__LINE__,__METHOD__);
                         }
                     } catch (DuplicateSubscriberConnectionException $e) {
                         $this->addErrorMessage("Whoa! We love your enthusiasm, but @".
@@ -154,11 +156,12 @@ class NewSubscriberController extends SignUpController {
                         $this->addToView('fb_connect_link', $fb_connect_link);
                     } catch (APIErrorException $e) {
                         $this->addErrorMessage($generic_error_msg);
-                        $this->logError(__FILE__,__LINE__,__METHOD__, "Twitter says: ".$e->getMessage());
+                        $this->logError(get_class($e).":".$e->getMessage(),__FILE__,__LINE__,__METHOD__);
                     }
                 } else {
                     $this->addErrorMessage($generic_error_msg);
-                    $this->logError(__FILE__,__LINE__,__METHOD__, (isset($tok))?Utils::varDumpToString($tok):'');
+                    $this->logError('Twitter access tokens not set'. (isset($tok))?Utils::varDumpToString($tok):'',
+                    __FILE__,__LINE__,__METHOD__);
                 }
             } elseif ($this->hasUserReturnedFromFacebook()) {
                 if ($_GET["state"] == SessionCache::get('facebook_auth_csrf')) {
@@ -214,11 +217,11 @@ class NewSubscriberController extends SignUpController {
                             $error_msg = $error_msg."<br>Facebook's response: \"".$access_token_response. "\"";
                         }
                         $this->addErrorMessage($generic_error_msg);
-                        $this->logError(__FILE__,__LINE__,__METHOD__, $error_msg);
+                        $this->logError( $error_msg, __FILE__,__LINE__,__METHOD__);
                     }
                 } else {
                     $this->addErrorMessage($generic_error_msg);
-                    $this->logError(__FILE__,__LINE__,__METHOD__, "Invalid CSRF token");
+                    $this->logError( "Facebook auth error: Invalid CSRF token", __FILE__,__LINE__,__METHOD__);
                 }
             }
 
@@ -239,7 +242,7 @@ class NewSubscriberController extends SignUpController {
             }
         } else { //No recognizable POST or GET vars set
             $this->addErrorMessage($generic_error_msg);
-            $this->logError(__FILE__,__LINE__,__METHOD__);
+            $this->logError('No recognizable POST or GET vars set', __FILE__,__LINE__,__METHOD__);
         }
 
         $this->addToView('do_show_form', $do_show_form);
@@ -264,7 +267,8 @@ class NewSubscriberController extends SignUpController {
             $twitter_auth_link = $to->getAuthorizeURL($token);
         } else {
             $this->addErrorMessage($generic_error_msg);
-            $this->logError(__FILE__,__LINE__,__METHOD__, (isset($tok))?Utils::varDumpToString($tok):'');
+            $this->logError('Twitter auth link failure, token not set '.(isset($tok))?Utils::varDumpToString($tok):'',
+            __FILE__,__LINE__,__METHOD__);
         }
         return $twitter_auth_link;
     }
@@ -293,7 +297,7 @@ class NewSubscriberController extends SignUpController {
             $fbconnect_link = $facebook_app->getLoginUrl($params);
         } catch (FacebookApiException $e) {
             $this->addErrorMessage($generic_error_msg);
-            $this->logError(__FILE__,__LINE__,__METHOD__, $e->getMessage());
+            $this->logError(get_class($e).': '.$e->getMessage(), __FILE__,__LINE__,__METHOD__);
         }
         return $fbconnect_link;
     }
