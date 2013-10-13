@@ -199,7 +199,7 @@
 
       <div class="right-column">
         <div class="call-to-action">
-          <header><span class="number">{$total_subscribers|number_format}</span> people contributed so far</header>
+          <header><span class="number">{$subscriber_counts['all']|number_format}</span> people contributed so far</header>
 
           <div class="sample-contributors">
             <h4>Including backers like these:</h4>
@@ -222,7 +222,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Early Bird</h5>
-                <div class="backers">{$total_earlybird_subscribers} backers</div>
+                <div class="backers">{$subscriber_counts[50]|number_format} backers</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">$50/year</div>
@@ -231,7 +231,7 @@
 
             <div class="level-description">
               <p>Subscribe to ThinkUp before anyone else and get all the benefits of being a Member for $10 off!</p>
-              <p>Only {250 - $total_earlybird_subscribers} of 250 early bird memberships left!</p>
+              <p>Only {250 - $subscriber_counts[50]} of 250 early bird memberships left!</p>
             </div>
           </a></div>
 
@@ -239,7 +239,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Member</h5>
-                <div class="backers">{$total_member_subscribers|number_format} backers</div>
+                <div class="backers">{$subscriber_counts[60]|number_format} backers</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">$5/month</div>
@@ -260,7 +260,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Developer</h5>
-                <div class="backers">{$total_pro_subscribers|number_format} backers</div>
+                <div class="backers">{$subscriber_counts[120]|number_format} backers</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">$10/month</div>
@@ -283,7 +283,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Executive</h5>
-                <div class="backers">{$total_executive_subscribers|number_format} backers</div>
+                <div class="backers">{$subscriber_counts[996]|number_format} backers</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">$83/month</div>

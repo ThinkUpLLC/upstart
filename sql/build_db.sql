@@ -119,3 +119,9 @@ CREATE TABLE error_log (
   debug text NOT NULL COMMENT 'Debugging info.',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Log of user errors.';
+
+CREATE TABLE  subscriber_counts (
+amount INT NOT NULL COMMENT  'Amount of yearly subscription.',
+count INT NOT NULL COMMENT  'Total subscribers at this amount.',
+PRIMARY KEY (  amount )
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  'Cached totals of backer counts at subscription levels.';
