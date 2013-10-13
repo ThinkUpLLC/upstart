@@ -1,6 +1,7 @@
 <?php
 class PledgeController extends Controller {
     public function control() {
+        $this->disableCaching();
         $this->setViewTemplate('index.tpl');
         if ($this->shouldRefreshCache() ) {
             $subscriber_count_dao = new SubscriberCountMySQLDAO();

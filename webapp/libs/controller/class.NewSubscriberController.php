@@ -4,6 +4,7 @@
  */
 class NewSubscriberController extends SignUpController {
     public function control() {
+        $this->disableCaching();
         $this->setViewTemplate('new.tpl');
 
         $generic_error_msg = '<strong>Oops!</strong> Something went wrong and our team is looking into it.<br> '.
