@@ -9,6 +9,9 @@ class AuthorizationMySQLDAO extends PDODAO {
         $q .= "caller_reference, token_validity_start_date) ";
         $q .= "VALUES (:token_id, :amount, :status_code, :error_message, :payment_method_expiry, :caller_reference, ";
         $q .= ":token_validity_start_date);";
+
+        $cfg = Config::getInstance();
+        $token_validity_start_date = $cfg->getValue('amazon_payment_auth_validity_start');
         $vars = array(
             ':token_id'=>$token_id,
             ':amount'=>$amount,
@@ -16,7 +19,7 @@ class AuthorizationMySQLDAO extends PDODAO {
             ':error_message'=>$error_message,
             ':payment_method_expiry'=>$payment_method_expiry,
             ':caller_reference'=>$caller_reference,
-            ':token_validity_start_date'=>'2014-01-01 00:00:00' //@TODO Stop hardcoding this
+            ':token_validity_start_date'=>date("Y-m-d H:i:s",$token_validity_start_date)
         );
         //echo self::mergeSQLVars($q, $vars);
         try {
