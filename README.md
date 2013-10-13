@@ -31,6 +31,7 @@ $ISOSCELES_CFG['user_password']
 $ISOSCELES_CFG['user_installation_url']     = "http://{user}.upstart.com/sandbox/";
 
 //Amazon Payments
+$ISOSCELES_CFG['amazon_sandbox']            = true;
 $ISOSCELES_CFG['AWS_ACCESS_KEY_ID']
 $ISOSCELES_CFG['AWS_SECRET_ACCESS_KEY']
 $ISOSCELES_CFG['amazon_payment_auth_validity_start']     = date("U", mktime(12, 0, 0, 10, 10, 2013));

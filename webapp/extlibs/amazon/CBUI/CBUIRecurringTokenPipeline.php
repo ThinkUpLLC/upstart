@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  *  PHP Version 5
  *
  *  @category    Amazon
@@ -9,17 +9,15 @@
  *  @license     http://aws.amazon.com/apache2.0  Apache License, Version 2.0
  *  @version     2010-08-28
  */
-/******************************************************************************* 
- *    __  _    _  ___ 
+/*******************************************************************************
+ *    __  _    _  ___
  *   (  )( \/\/ )/ __)
  *   /__\ \    / \__ \
  *  (_)(_) \/\/  (___/
- * 
+ *
  *  Amazon FPS PHP5 Library
- * 
+ *
  */
-
-require_once('CBUIPipeline.php');
 
 class Amazon_FPS_CBUIRecurringTokenPipeline extends Amazon_FPS_CBUIPipeline {
 
@@ -34,8 +32,8 @@ class Amazon_FPS_CBUIRecurringTokenPipeline extends Amazon_FPS_CBUIPipeline {
     /**
      * Set mandatory parameters required for recurring token pipeline.
      */
-    function setMandatoryParameters($callerReference, $returnUrl, 
-    		$transactionAmount, $recurringPeriod) {
+    function setMandatoryParameters($callerReference, $returnUrl,
+    $transactionAmount, $recurringPeriod) {
         $this->addParameter("callerReference", $callerReference);
         $this->addParameter("returnURL", $returnUrl);
         $this->addParameter("transactionAmount", $transactionAmount);

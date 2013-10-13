@@ -44,8 +44,8 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     private  $_awsSecretAccessKey = null;
 
     /** @var array */
-    private  $_config = array ('ServiceURL' => 'https://fps.amazonaws.com', //Production
-                               //'ServiceURL' => 'https://fps.sandbox.amazonaws.com', //Sandbox
+    private  $_config = array (//'ServiceURL' => 'https://fps.amazonaws.com', //Production
+                               'ServiceURL' => 'https://fps.sandbox.amazonaws.com', //Sandbox
                                'UserAgent' => self::USER_AGENT_IDENTIFIER,
                                'SignatureVersion' => 2,
                                'SignatureMethod' => 'HmacSHA256',
