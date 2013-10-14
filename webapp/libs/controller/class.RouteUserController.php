@@ -17,6 +17,7 @@ class RouteUserController extends SignUpController {
 
     public function control() {
         $this->setViewTemplate('waitlist.tpl');
+        $this->disableCaching();
 
         $cfg = Config::getInstance();
         $this->oauth_consumer_key = $cfg->getValue('oauth_consumer_key');
