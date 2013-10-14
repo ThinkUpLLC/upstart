@@ -91,8 +91,8 @@ class NewSubscriberController extends SignUpController {
                     $subscriber_counts_dao->increment($amount);
                     $this->view_mgr->clear_all_cache();
                 } catch (DuplicateAuthorizationException $e) {
-                    $this->addSuccessMessage("Whoa there! It like you already paid for your ThinkUp subscription. ".
-                    "   Did you refresh the page?");
+                    $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
+                    "subscription.  Did you refresh the page?");
                 }
                 //Add tokenID to cache
                 SessionCache::put('token_id', $_GET['tokenID']);
@@ -146,7 +146,7 @@ class NewSubscriberController extends SignUpController {
                             Utils::varDumpToString($authed_twitter_user),__FILE__,__LINE__,__METHOD__);
                         }
                     } catch (DuplicateSubscriberConnectionException $e) {
-                        $this->addErrorMessage("Whoa! We love your enthusiasm, but @".
+                        $this->addErrorMessage("Whoa! We're love your enthusiasm, but @".
                         $authed_twitter_user['user_name']." has already joined ThinkUp. Connect another Twitter or ".
                         "Facebook account to ThinkUp.");
 
@@ -198,9 +198,9 @@ class NewSubscriberController extends SignUpController {
                             //                            print_r($fb_user_profile);
                             //                            echo "</pre>";
                         } catch (DuplicateSubscriberConnectionException $e) {
-                            $this->addErrorMessage("Whoa! We love your enthusiasm, but @".
-                            $authed_twitter_user['user_name']." has already joined ThinkUp. Connect another Twitter ".
-                            "or Facebook account to ThinkUp.");
+                            $this->addErrorMessage("Whoa! We love your enthusiasm, but ".
+                            $fb_user_profile['name']." on Facebook has already joined ThinkUp. ".
+                            "Connect another Facebook or Twitter account to ThinkUp.");
                             $this->addToView('do_show_just_auth_buttons', true);
                             $twitter_auth_link = self::getTwitterAuthLink();
                             $this->addToView('twitter_auth_link', $twitter_auth_link);

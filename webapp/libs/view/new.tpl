@@ -128,22 +128,22 @@
       <div class="upstart-form">
           <form class="form-signin" method="post" action="">
             <div id="logo"><h1>Think<span>Up</span></h1></div>
-            {if $error_msg}<div class="alert alert-error">{$error_msg}</div>{/if}
-            {if $success_msg}
+            {if isset($error_msg)}<div class="alert alert-error">{$error_msg}</div>{/if}
+            {if isset($success_msg)}
             <div class="alert alert-success">{$success_msg}</div>
             {/if}
 
             {if $do_show_form eq true}
             <h2>Create Your ThinkUp Account</h2>
             {include file="_usermessage.tpl" field="email"}
-            <input type="text" class="input-block-level" placeholder="Email address" name="email" value="{$prefill_email}">
+            <input type="text" class="input-block-level" placeholder="Email address" name="email" value="{if isset($prefill_email)}{$prefill_email}{/if}">
             {include file="_usermessage.tpl" field="password"}
             <input type="password" class="input-block-level" placeholder="Password: 8 alphanumeric characters" name="password" value="">
 
             <button class="btn btn-large btn-primary btn-info big-btn" type="submit" name="n" value="twitter">Sign in with Twitter</button>
             <button class="btn btn-large btn-primary btn-info big-btn" type="submit" name="n" value="facebook">Sign in with Facebook</button>
             {/if}
-            {if $do_show_just_auth_buttons eq true}
+            {if isset($do_show_just_auth_buttons) && $do_show_just_auth_buttons eq true}
             <a href="{$twitter_auth_link}">Sign in with Twitter</a><br><br>
             <a href="{$fb_connect_link}">Sign in with Facebook</a>
             {/if}
