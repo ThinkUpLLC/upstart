@@ -1,6 +1,7 @@
 <?php
 class ListSubscriberController extends Controller {
     public function control() {
+        $this->disableCaching();
         $this->setViewTemplate('admin-index.tpl');
 
         $page = (isset($_GET['p']))?(integer)$_GET['p']:1;

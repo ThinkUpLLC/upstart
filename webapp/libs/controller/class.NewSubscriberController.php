@@ -89,6 +89,7 @@ class NewSubscriberController extends SignUpController {
                     // Update subscriber_counts
                     $subscriber_counts_dao = new SubscriberCountMySQLDAO();
                     $subscriber_counts_dao->increment($amount);
+                    $this->view_mgr->clear_all_cache();
                 } catch (DuplicateAuthorizationException $e) {
                     $this->addSuccessMessage("Whoa there! It like you already paid for your ThinkUp subscription. ".
                     "   Did you refresh the page?");
@@ -160,7 +161,7 @@ class NewSubscriberController extends SignUpController {
                     }
                 } else {
                     $this->addErrorMessage($generic_error_msg);
-                    $this->logError('Twitter access tokens not set'. (isset($tok))?Utils::varDumpToString($tok):'',
+                    $this->logError('Twitter access tokens not set '. (isset($tok)?Utils::varDumpToString($tok):''),
                     __FILE__,__LINE__,__METHOD__);
                 }
             } elseif ($this->hasUserReturnedFromFacebook()) {

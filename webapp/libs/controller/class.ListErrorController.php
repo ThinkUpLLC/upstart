@@ -1,6 +1,7 @@
 <?php
 class ListErrorController extends Controller {
     public function control() {
+        $this->disableCaching();
         $this->setViewTemplate('admin-errorlog.tpl');
 
         $page = (isset($_GET['p']))?(integer)$_GET['p']:1;
