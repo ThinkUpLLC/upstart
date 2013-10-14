@@ -20,13 +20,13 @@ class UserRouteMySQLDAO extends PDODAO {
         //echo self::mergeSQLVars($q, $vars);
         try {
             $ps = $this->execute($q, $vars);
+            return $this->getInsertId($ps);
         } catch (PDOException $e) {
             $exception = $e->getMessage();
             if ((preg_match('/Duplicate entry/', $exception)>0) && (preg_match('/for key \'email\'/', $exception)>0)) {
                 throw new DuplicateUserRouteException();
             }
         }
-        return $this->getInsertId($ps);
     }
 
     public function get($email, $twitter_user_id) {
