@@ -38,7 +38,7 @@
         </header>
 
         <div class="video-wrapper">
-          <iframe width="300" height="225" src="//www.youtube.com/embed/dQw4w9WgXcQ?showinfo=0&controls=2" frameborder="0" allowfullscreen></iframe>
+          <iframe width="300" height="225" src="//www.youtube.com/embed/Z8s_AFq6bm4?showinfo=0&controls=2" frameborder="0" allowfullscreen></iframe>
         </div>
 
         <div class="social-wrapper">
