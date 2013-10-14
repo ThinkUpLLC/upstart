@@ -44,7 +44,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Member</h5>
-                <div class="backers">{$subscriber_counts[60]|number_format} backers</div>
+                <div class="backers">{if isset($subscriber_counts[60])}(${$subscriber_counts[60]|number_format}{else}0{/if} backers</div>
               </div>
               <div class="level-cost">
                 <div class="annually">$60/year</div>
@@ -65,7 +65,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Pro</h5>
-                <div class="backers">{$subscriber_counts[120]|number_format} backers</div>
+                <div class="backers">{if isset($subscriber_counts[120])}{$subscriber_counts[120]|number_format}{else}0{/if} backers</div>
               </div>
               <div class="level-cost">
                 <div class="annually">$120/year</div>
@@ -87,7 +87,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Executive</h5>
-                <div class="backers">{$subscriber_counts[996]|number_format} backers</div>
+                <div class="backers">{if isset($subscriber_counts[996])}{$subscriber_counts[996]|number_format}{else}0{/if} backers</div>
               </div>
               <div class="level-cost">
                 <div class="annually">$996/year</div>
