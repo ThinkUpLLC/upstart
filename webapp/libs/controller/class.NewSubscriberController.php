@@ -71,7 +71,7 @@ class NewSubscriberController extends SignUpController {
 
                 $error_message = isset($_GET["errorMessage"])?$_GET["errorMessage"]:null;
                 if ($error_message === null ) {
-                    $this->addSuccessMessage("W00t! Thanks for subscribing to ThinkUp, you glorious member, you.");
+                    $this->addSuccessMessage("Thanks so much for subscribing to ThinkUp!");
                     $do_show_form = true;
                 } else {
                     $this->addErrorMessage($generic_error_msg);
@@ -227,8 +227,8 @@ class NewSubscriberController extends SignUpController {
             }
 
             if ($update_count == 1) {
-                $this->addSuccessMessage("Hooray! You've joined ThinkUp. ".
-                "One last step: Check your email for a special link to confirm your address.");
+                $this->addSuccessMessage("Hooray! You're now a ThinkUp member!<br><br> We sent you an ".
+                "email to confirm your address - just click the link in that message and you're all set.");
 
                 $subscriber = $subscriber_dao->getByID($subscriber_id);
 

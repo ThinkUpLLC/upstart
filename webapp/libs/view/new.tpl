@@ -135,13 +135,14 @@
 
             {if $do_show_form eq true}
             <h2>Create Your ThinkUp Account</h2>
+            <p>To finish creating your account, enter your email, choose a password, and connect to Twitter or Facebook. (You'll be able to add other accounts after you sign up.)</p>
             {include file="_usermessage.tpl" field="email"}
-            <input type="text" class="input-block-level" placeholder="Email address" name="email" value="{if isset($prefill_email)}{$prefill_email}{/if}">
+            <input type="text" class="input-block-level" placeholder="yourname@example.com" name="email" value="{if isset($prefill_email)}{$prefill_email}{/if}">
             {include file="_usermessage.tpl" field="password"}
-            <input type="password" class="input-block-level" placeholder="Password: 8 alphanumeric characters" name="password" value="">
+            <input type="password" class="input-block-level" placeholder="Password (At least 8 characters)" name="password" value="">
 
-            <button class="btn btn-large btn-primary btn-info big-btn" type="submit" name="n" value="twitter">Sign in with Twitter</button>
-            <button class="btn btn-large btn-primary btn-info big-btn" type="submit" name="n" value="facebook">Sign in with Facebook</button>
+            <button class="btn btn-large btn-primary btn-info big-btn" type="submit" name="n" value="twitter">Connect to Twitter</button>
+            <button class="btn btn-large btn-primary btn-info big-btn" type="submit" name="n" value="facebook">Connect to Facebook</button>
             {/if}
             {if isset($do_show_just_auth_buttons) && $do_show_just_auth_buttons eq true}
             <a href="{$twitter_auth_link}">Sign in with Twitter</a><br><br>
