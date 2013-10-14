@@ -128,8 +128,8 @@
       <div class="upstart-form">
           <form class="form-signin" method="post" action="">
             <div id="logo"><h1>Think<span>Up</span></h1></div>
-            {if $error_msg}<div class="alert alert-error">{$error_msg}</div>{/if}
-            {if $success_msg}
+            {if isset($error_msg)}<div class="alert alert-error">{$error_msg}</div>{/if}
+            {if isset($success_msg)}
             <div class="alert alert-success">{$success_msg}</div>
             <a href="https://twitter.com/thinkup" class="twitter-follow-button" data-show-count="true" data-size="large" data-lang="en">Follow @thinkup</a>
             {literal}
@@ -139,7 +139,7 @@
 <div class="fb-like" data-href="https://www.facebook.com/thinkupapp" data-send="true" data-width="300" data-show-faces="false"></div>
 
             {else}
-            <input type="text" class="input-block-level" placeholder="Email address" name="email" value="{$prefill_email}">
+            <input type="text" class="input-block-level" placeholder="Email address" name="email" value="{if isset($prefill_email)}{$prefill_email}{/if}">
             <button class="btn btn-large btn-primary btn-info big-btn" type="submit">Get on the waiting list</button>
             {/if}
           </form>
