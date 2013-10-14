@@ -31,7 +31,7 @@
           <h1>
             Help launch
             <span class="site-name"><strong>Think</strong>Up</span>
-            <span class="the-rest">and feel good about<br />social networking again.</span>
+            <span class="the-rest">and feel good about<br />social networking.</span>
           </h1>
 
           <p><strong>We’re building ThinkUp</strong>, a new app that will make you happier about the time you spend on Twitter and Facebook. To do it right, we want to build a company that respects users more than any other tech company. Now we need your help!</p>
@@ -336,7 +336,7 @@
       <div class="right-column">
         <div class="call-to-action">
           <header><span class="number">{$subscriber_counts['all']|number_format}</span> backers have joined so far</header>
-          <div class="pledge-goals"><strong>{$days_to_go} days and {(1000-$subscriber_counts['all'])|number_format} backers to go!</strong><br>We're hoping 1,000 backers will join by November 15th so that we can bring ThinkUp to everyone in January 2014.</div>
+          <div class="pledge-goals"><strong>{$days_to_go} days and {(1000-$subscriber_counts['all'])|number_format} backers to go!</strong><br>We need 1,000 backers to join us by November 15th so that we can bring ThinkUp to everyone in January 2014.</div>
 
           <a href="subscribe.php" class="pledge-now">Join Now</a>
         </div>
