@@ -337,7 +337,7 @@
               </div>
               <div class="level-cost">
                 <div class="annually">$50/year</div>
-                <div class="monthly">Only {250 - $subscriber_counts[50]} of 250 left!</div>
+                <div class="monthly">Only {if isset($subscriber_counts[50])}{250 - $subscriber_counts[50]}{else}250{/if} of 250 left!</div>
             </header>
 
             <div class="level-description">
