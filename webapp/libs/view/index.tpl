@@ -13,7 +13,7 @@
     <meta property="og:description" content="Help launch ThinkUp: Join the campaign and get access to the new app that shows you what's meaningful and fun in your social networks." />
 
     <meta name="viewport" content="width=device-width, user-scalable=no">
-    <link rel="stylesheet" href="css/vendor/normalize.min.css">
+    <link rel="stylesheet" href="{$site_root_path}assets/css/vendor/normalize.min.css">
     <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="{$site_root_path}assets/css/main.css">
@@ -398,7 +398,7 @@
         <div class="newsletter-signup-wrapper">
           <header>
             <h5>Not a member yet?</h5>
-            <p>Sign up for our newsletter</p>
+            <p>Sign up for our newsletter.</p>
           </header>
           <div class="content">
             <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">

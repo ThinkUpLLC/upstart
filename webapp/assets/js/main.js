@@ -31,10 +31,10 @@
         }, function(data) {
           console.log(data);
           if (((data != null ? data.code : void 0) != null) && data.code !== 200) {
-            alert("You need to use a valid email address.");
+            alert("Please enter a valid email address.");
             return $form.children(".button").removeAttr("disabled");
           } else {
-            return $(".newsletter-signup-wrapper .content").html("<p>Thanks for signing up! Please check your email address to confirm your subscription.</p>");
+            return $(".newsletter-signup-wrapper .content").html("<p>Thanks for signing up for our newsletter! Please check your email to confirm your signup.</p>");
           }
         });
       }
