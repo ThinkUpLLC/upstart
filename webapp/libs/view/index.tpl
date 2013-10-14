@@ -107,7 +107,7 @@
           </div>
 
           <div class="fundraiser-qa-item" id="qa-item-not-thinkup">
-            <header>We’re just as proud of what ThinkUp <em>doesn’t</em> do<:</header>
+            <header>We’re just as proud of what ThinkUp <em>doesn’t</em> do:</header>
             <div class="content">
               <ul>
                 <li>We do NOT try to turn your social network into a popularity contest about the number of followers you have.</li>
