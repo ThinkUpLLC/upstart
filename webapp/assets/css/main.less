@@ -281,6 +281,7 @@ strong {
         }
       }
 
+
       &#qa-item-not-thinkup {
         header {
           a {
@@ -292,6 +293,20 @@ strong {
             }
           }
         }
+        .content {
+          ul {
+            margin: 0;
+            padding: 0 0 0 16px;
+
+            li {
+              .type-sans;
+              margin-bottom: 5px;
+            }
+          }          
+        }
+      }
+
+      &#qa-item-goal {
         .content {
           ul {
             margin: 0;
@@ -321,15 +336,22 @@ strong {
             padding: 0;
             list-style: none;
 
+            h3 {
+              font-size: 14px;
+              line-height: 20px;
+              margin-bottom: 20px;
+              font-family: @font-sans-bold;
+            }
+
             .faq-item {
-              margin-top: 16px;
+              margin-top: 20px;
 
               &:first-child {
                 margin-top: 0;
               }
 
               .faq-question {
-                font: 14px/16px @font-sans-bold;
+                font: 14px/20px @font-sans-bold;
                 color: @blue;
 
                 &:hover {
@@ -736,6 +758,35 @@ body.pledge {
   }
 }
 
+// Transactional Pages
+
+body.transactional {
+  .content-wrapper {
+    .page-header {
+      margin-bottom: 40px;
+      background: none;
+      min-height: 0;
+
+      h1 {
+        font-size: 32px;
+        line-height: 31px;
+      }
+
+      h2 {
+        font-size: 18px;
+        line-height: 20px;
+        letter-spacing: -1px;
+        margin: 8px 0 0;
+      }
+    }
+
+    .form-wrapper {
+
+    }
+  }
+}
+
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */
@@ -1082,6 +1133,7 @@ body.pledge {
         border: 0;
         min-height: 0;
         margin-bottom: 0;
+        padding: 0;
 
         h1 {
           height: auto;
@@ -1190,28 +1242,50 @@ body.pledge {
     }
 
     .page-footer {
-      width: 640px;
+      width: 620px;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 
+  body.transactional {
+    .content-wrapper {
+      width: 620px;
+
+      .left-column {
+        width: 620px;
+      }
+
+      .page-header {
+        border: 0;
+        min-height: 0;
+        margin-bottom: 0;
+        padding: 0;
+
+        h1 {
+          height: auto;
+          padding: 12px 0 0;
+          font-size: 48px;
+          line-height: 46px;
+        }
+
+        h2 {
+          font-size: 24px;
+          line-height: 28px;
+          letter-spacing: -1px;
+        }
+      }
+    }
+
+    .page-footer {
+      width: 620px;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+  }
+
 }
-
-// @media only screen and (min-width: 1080px) {
-
-//   .content-wrapper {
-//     width: 1040px;
-
-//     .left-column {
-//       float: left;
-//       width: 740px;
-//     }
-
-//     .right-column {
-//       float: right;
-//       width: 300px;
-//     }
-//   }
-// }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   .content-wrapper {

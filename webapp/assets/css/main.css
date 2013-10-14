@@ -722,6 +722,26 @@ strong.level-span {
   font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
   line-height: 18px;
 }
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content ul {
+  margin: 0;
+  padding: 0 0 0 16px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content ul li {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  line-height: 18px;
+  margin-bottom: 5px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content ul li em {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-56It", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content ul li strong {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content li {
   font-size: 13px;
   font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
@@ -743,14 +763,20 @@ strong.level-span {
   padding: 0;
   list-style: none;
 }
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq h3 {
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 20px;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+}
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item {
-  margin-top: 16px;
+  margin-top: 20px;
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item:first-child {
   margin-top: 0;
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item .faq-question {
-  font: 14px/16px "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  font: 14px/20px "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
   color: #0099f0;
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item .faq-question:hover {
@@ -848,16 +874,10 @@ strong.level-span {
 .content-wrapper .funding-levels .level {
   border-top: 1px dashed #0099f0;
 }
-.content-wrapper .funding-levels .level#level-member a {
+.content-wrapper .funding-levels .level#level-pro a {
   background: #fef9ce;
 }
-.content-wrapper .funding-levels .level#level-member a:hover {
-  background: #e6f5fe;
-}
-.content-wrapper .funding-levels .level#level-executive a {
-  background: #fef9ce;
-}
-.content-wrapper .funding-levels .level#level-executive a:hover {
+.content-wrapper .funding-levels .level#level-pro a:hover {
   background: #e6f5fe;
 }
 .content-wrapper .funding-levels .level a {
@@ -1113,7 +1133,7 @@ body.pledge .content-wrapper .funding-levels .level a {
   position: relative;
 }
 body.pledge .content-wrapper .funding-levels .level a:before {
-  content: "Join at this level";
+  content: "Pledge at this level";
   position: absolute;
   width: 100%;
   top: 8px;
@@ -1136,6 +1156,21 @@ body.pledge .content-wrapper .funding-levels.level-selected .level.selected a .l
 }
 body.pledge .content-wrapper .funding-levels.level-selected .level.selected a:before {
   content: "Pay with Amazon";
+}
+body.transactional .content-wrapper .page-header {
+  margin-bottom: 40px;
+  background: none;
+  min-height: 0;
+}
+body.transactional .content-wrapper .page-header h1 {
+  font-size: 32px;
+  line-height: 31px;
+}
+body.transactional .content-wrapper .page-header h2 {
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: -1px;
+  margin: 8px 0 0;
 }
 /* ==========================================================================
    Media Queries
@@ -1440,6 +1475,7 @@ body.pledge .content-wrapper .funding-levels.level-selected .level.selected a:be
     border: 0;
     min-height: 0;
     margin-bottom: 0;
+    padding: 0;
   }
   body.pledge .content-wrapper .page-header h1 {
     height: auto;
@@ -1489,7 +1525,7 @@ body.pledge .content-wrapper .funding-levels.level-selected .level.selected a:be
     margin-bottom: 0;
   }
   body.pledge .content-wrapper .funding-levels .level a:before {
-    content: "Join at this level now";
+    content: "Pledge at this level now";
     position: absolute;
     width: 120px;
     height: 120px;
@@ -1531,7 +1567,37 @@ body.pledge .content-wrapper .funding-levels.level-selected .level.selected a:be
     background-color: #fef9ce;
   }
   body.pledge .page-footer {
-    width: 640px;
+    width: 620px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  body.transactional .content-wrapper {
+    width: 620px;
+  }
+  body.transactional .content-wrapper .left-column {
+    width: 620px;
+  }
+  body.transactional .content-wrapper .page-header {
+    border: 0;
+    min-height: 0;
+    margin-bottom: 0;
+    padding: 0;
+  }
+  body.transactional .content-wrapper .page-header h1 {
+    height: auto;
+    padding: 12px 0 0;
+    font-size: 48px;
+    line-height: 46px;
+  }
+  body.transactional .content-wrapper .page-header h2 {
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: -1px;
+  }
+  body.transactional .page-footer {
+    width: 620px;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
