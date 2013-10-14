@@ -9,7 +9,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="{$site_root_path}assets/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 40px;
@@ -110,7 +110,7 @@
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
+      <script src="{$site_root_path}assets/js/html5shiv.js"></script>
     <![endif]-->
 
     <!-- Fav and touch icons -->
