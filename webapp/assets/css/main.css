@@ -1107,7 +1107,7 @@ body.pledge .content-wrapper .funding-levels .level a {
   position: relative;
 }
 body.pledge .content-wrapper .funding-levels .level a:before {
-  content: "Pledge at this level";
+  content: "Join at this level";
   position: absolute;
   width: 100%;
   top: 8px;
@@ -1483,7 +1483,7 @@ body.pledge .content-wrapper .funding-levels.level-selected .level.selected a:be
     margin-bottom: 0;
   }
   body.pledge .content-wrapper .funding-levels .level a:before {
-    content: "Pledge at this level now";
+    content: "Join at this level now";
     position: absolute;
     width: 120px;
     height: 120px;

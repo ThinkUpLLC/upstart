@@ -322,7 +322,7 @@
       <div class="right-column">
         <div class="call-to-action">
           <header><span class="number">{$subscriber_counts['all']|number_format}</span> backers have joined us</header>
-          <div class="pledge-goals"><strong>{$days_to_go} days and {(1000-$subscriber_counts['all'])|number_format} members to go!</strong><br>We're aiming for 1,000 members to join by November 15th so that we can bring ThinkUp to everyone in January 2014.</div>
+          <div class="pledge-goals"><strong>{$days_to_go} days and {(1000-$subscriber_counts['all'])|number_format} backers to go!</strong><br>We're hoping 1,000 backers will join by November 15th so that we can bring ThinkUp to everyone in January 2014.</div>
 
           <a href="subscribe.php" class="pledge-now">Join Now</a>
         </div>
