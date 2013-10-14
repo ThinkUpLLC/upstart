@@ -16,7 +16,7 @@ class SubscribeController extends Controller {
 
         $selected_level = null;
         if (isset($_GET['level']) && ($_GET['level'] == "member" || $_GET['level'] == "pro"
-        || $_GET['level'] == "executive")) {
+        || $_GET['level'] == "executive" || $_GET['level'] == "earlybird")) {
             $selected_level = htmlspecialchars($_GET['level']);
         }
         foreach (SignUpController::$subscription_levels as $level=>$amount) {

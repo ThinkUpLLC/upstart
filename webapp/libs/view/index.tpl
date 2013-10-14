@@ -107,7 +107,7 @@
           </div>
 
           <div class="fundraiser-qa-item" id="qa-item-not-thinkup">
-            <header>We’re just as proud of what ThinkUp <em>doesn’t do</em>:</header>
+            <header>We’re just as proud of what ThinkUp <em>doesn’t</em> do<:</header>
             <div class="content">
               <ul>
                 <li>We do NOT try to turn your social network into a popularity contest about the number of followers you have.</li>
@@ -321,14 +321,30 @@
 
       <div class="right-column">
         <div class="call-to-action">
-          <header><span class="number">{$subscriber_counts['all']|number_format}</span> backers have joined us</header>
+          <header><span class="number">{$subscriber_counts['all']|number_format}</span> backers have joined so far</header>
           <div class="pledge-goals"><strong>{$days_to_go} days and {(1000-$subscriber_counts['all'])|number_format} backers to go!</strong><br>We're hoping 1,000 backers will join by November 15th so that we can bring ThinkUp to everyone in January 2014.</div>
 
           <a href="subscribe.php" class="pledge-now">Join Now</a>
         </div>
 
         <div class="funding-levels">
-          <header class="funding-levels-header"><span class="wide-line-one">Here are your</span> yearly subscription options&hellip;</header>
+          <header class="funding-levels-header"><span class="wide-line-one">Here are your</span> subscription options&hellip;</header>
+          <div class="level" id="level-earlybird"><a href="subscribe.php?level=earlybird">
+            <header class="level-header">
+              <div class="level-name">
+                <h5>Early Bird</h5>
+                <div class="backers">{if isset($subscriber_counts[50])}{$subscriber_counts[50]|number_format}{else}0{/if} backers</div>
+              </div>
+              <div class="level-cost">
+                <div class="annually">$50/year</div>
+                <div class="monthly">Only {250 - $subscriber_counts[50]} of 250 left!</div>
+            </header>
+
+            <div class="level-description">
+              <p>Get all the benefits of the <strong class="level-span">Member</strong> level and save 10 bucks! Limited to first 250 backers.</p>
+            </div>
+          </a></div>
+
           <div class="level" id="level-member"><a href="subscribe.php?level=member">
             <header class="level-header">
               <div class="level-name">
@@ -337,14 +353,14 @@
               </div>
               <div class="level-cost">
                 <div class="annually">$60/year</div>
-                <div class="monthly">Only $5 a month!</div>
+                <div class="monthly">Just 5 bucks a month!</div>
             </header>
 
             <div class="level-description">
               <p>Join ThinkUp and get all this cool stuff:</p>
               <ul class="level-benefits">
-                <li>Insights on your Facebook, Twitter or other social network account (1 account per service)</li>
-                <li>Be first in line to reserve your name on ThinkUp</li>
+                <li>Insights on your Facebook, Twitter or other social network account (1 account per service).</li>
+                <li>First place in line to reserve your username on ThinkUp.</li>
                 <li class="book-offer">We wrote you a book! <em>Insights</em> is a series of interviews with dozens of super creative people about the future of social networking.</li>
               </ul>
             </div>
@@ -362,12 +378,12 @@
             </header>
 
             <div class="level-description">
-              <p>For folks with multiple social networking accounts and developers:</p>
+              <p>Folks with multiple social networking accounts and developers get:</p>
               <ul class="level-benefits">
-                <li>All the benefits of the <strong class="level-span">Member</strong> level</li>
-                <li>Up to <strong>10</strong> accounts across all supported services</li>
-                <li>First access to new Beta features as they’re developed</li>
-                <li>Access to new APIs and data services for building apps around ThinkUp</li>
+                <li>All the benefits of the <strong class="level-span">Member</strong> level, plus:</li>
+                <li>Support for up to <strong>10</strong> social network accounts across all supported services.</li>
+                <li>First access to new beta features as they’re developed.</li>
+                <li>Access to new APIs and data services for building apps around ThinkUp.</li>
               </ul>
             </div>
           </a></div>
@@ -386,10 +402,10 @@
             <div class="level-description">
               <p>If you're a company, an organization, or want a stake in ThinkUp's future:</p>
               <ul class="level-benefits">
-                <li>All the benefits of the <strong class="level-span">Member</strong> and <strong class="level-span">Pro</strong> levels</li>
-                <li>Let us know how many social networking accounts you need to support</li>
-                <li>Our company's founders will consult with you before making key decisions about ThinkUp's future. You'll get email updates with the same information we send to our investors or advisers (minus anything that would get us in legal trouble!)</li>
-                <li class="book-offer">We'll <strong>personalize</strong> the book we wrote for you. Our founders will call out which part of <em>Insights</em> are most relevant to your work or your goals</li>
+                <li>Get all the benefits of the <strong class="level-span">Member</strong> and <strong class="level-span">Pro</strong> levels.</li>
+                <li>Let us know how many social networking accounts you need to support.</li>
+                <li>Our company's founders will consult with you before making key decisions about ThinkUp's future. You'll get email updates with the same information we send to our investors or advisers (minus anything that would get us in legal trouble!).</li>
+                <li class="book-offer">We'll <strong>personalize</strong> the book we wrote for you. Our founders will call out which part of <em>Insights</em> are most relevant to your work or your goals.</li>
               </ul>
             </div>
           </a></div>

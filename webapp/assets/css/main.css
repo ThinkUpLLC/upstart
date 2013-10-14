@@ -848,10 +848,16 @@ strong.level-span {
 .content-wrapper .funding-levels .level {
   border-top: 1px dashed #0099f0;
 }
-.content-wrapper .funding-levels .level#level-pro a {
+.content-wrapper .funding-levels .level#level-member a {
   background: #fef9ce;
 }
-.content-wrapper .funding-levels .level#level-pro a:hover {
+.content-wrapper .funding-levels .level#level-member a:hover {
+  background: #e6f5fe;
+}
+.content-wrapper .funding-levels .level#level-executive a {
+  background: #fef9ce;
+}
+.content-wrapper .funding-levels .level#level-executive a:hover {
   background: #e6f5fe;
 }
 .content-wrapper .funding-levels .level a {
