@@ -135,8 +135,6 @@
             <div class="alert alert-success">{$success_msg}</div>
             {/if}
           </form>
-          <h2>TODO:</h2>
-          <p>Add share on Twitter/Facebook/G+ buttons</p>
         </div>
     </div> <!-- /container -->
 
