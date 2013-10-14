@@ -31,7 +31,7 @@
           <h1>
             Help launch
             <span class="site-name"><strong>Think</strong>Up</span>
-            <span class="the-rest">and feel good about<br />social networking.</span>
+            <span class="the-rest">and feel good about<br />social networking again.</span>
           </h1>
 
           <p><strong>We’re building ThinkUp</strong>, a new app that will make you happier about the time you spend on Twitter and Facebook. To do it right, we want to build a company that respects users more than any other tech company. Now we need your help!</p>
@@ -116,7 +116,7 @@
                 <li>We are NOT trying to optimize conversion rates on your monetized eyeballs.</li>
                 <li>We’ll never lock your information into some proprietary system, since ThinkUp is completely open source.</li>
                 <li>ThinkUp does NOT change its terms of service without consulting with the community.</li>
-                <li>We do NOT tolerate people being jerks to each other in our developer community (our mailing list has never had a flame war).</li>
+                <li>We do NOT tolerate people being jerks to each other in our developer community. (Our mailing list has never had a flamewar.)</li>
                 <li>We are NOT going to stop fighting for a better web.</li>
 
               </ul>
@@ -126,7 +126,7 @@
           <div class="fundraiser-qa-item" id="qa-item-whos-behind-thinkup">
             <header>Who’s behind ThinkUp?</header>
             <div class="content">
-              <p>Our cofounders, Gina Trapani and Anil Dash, have been building ThinkUp for a few years. Gina was the founding editor of Lifehacker and hosts the popular podcasts “This Week in Google” and “In Beta”, (she also created Todo.txt). Anil has been writing since the late 90s on his personal blog and in magazines such as Wired, and helped launch Movable Type, which powered the early blogosphere.</p>
+              <p>Our cofounders, Gina Trapani and Anil Dash, have been working on ThinkUp together for a few years. Gina helped build one of the earliest social networks for teens, was the founding editor of Lifehacker and hosts the popular podcasts “This Week in Google” and “In Beta.” She also created Todo.txt. Anil has been writing since the late 90s on his personal blog and in magazines such as Wired, and helped launch Movable Type, which powered the early blogosphere.</p>
 
               <p>Gina and Anil have advocated for the idea of more thoughtful technology and a better Internet for more than a decade. Instead of just writing or talking about it, ThinkUp is an effort to actually build a company and product that can make those goals happen. We’ve already joined forces with an enthusiastic and diverse open source community of contributors around the world who believe in that vision and in our product. We hope you'll be the next to join our community by becoming a member of ThinkUp.</p>
             </div>
@@ -135,14 +135,14 @@
           <div class="fundraiser-qa-item" id="qa-item-goal">
             <header>What’s the goal of this campaign?</header>
             <div class="content">
-              <p>We want to build a great Internet company, that’s focused on doing the right thing for our users, our community, and the web. We're doing this by making an app that shows people exactly how meaningful their online interactions can be.</p>
+              <p>We want to build a great tech company that’s focused on doing the right thing for our users, our community, and the web. We're doing this by making an app that shows people exactly how meaningful their online interactions can be.</p>
 
               <p>Our goal for this campaign is to raise enough money to focus on making a great product. This means we must:</p>
 
               <ul>
-                <li>Raise enough money that ThinkUp is sustainable as a company</li>
-                <li>Develop a business model where we are as accountable to our users as we are to investors and aligned with what our users care about</li>
-                <li>Be ready not just to launch, but to keep building for the long term</li>
+                <li>Raise enough money to make ThinkUp sustainable as a company.</li>
+                <li>Develop a business model where we are as accountable to our users as we are to investors and aligned with what our users care about.</li>
+                <li>Be ready not just to launch, but to keep building for the long-term.</li>
               </ul>
 
               <p>You can join ThinkUp now at the <strong class="level-span">Member</strong>, <strong class="level-span">Pro</strong> or <strong class="level-span">Executive</strong> level, and be one of the very first users of ThinkUp in early 2014. When you do, you’ll help make ThinkUp available to everyone.</p>
@@ -152,13 +152,13 @@
           <div class="fundraiser-qa-item" id="qa-item-what-i-get">
             <header>What do I get for backing ThinkUp?</header>
             <div class="content">
-              <p>Every subscriber at every level gets great <strong class="level-span">Member</strong> benefits as soon as we launch:</p>
+              <p>Every backer at every level gets great <strong class="level-span">Member</strong> benefits as soon as we launch:</p>
 
               <ul>
-                <li>Be first in line to reserve your name on ThinkUp, and have immediate access when we launch in January 2014.</li>
+                <li>First place in line to reserve your username on ThinkUp, and immediate access when we launch in January 2014.</li>
                 <li>ThinkUp insights for Facebook, Twitter and YouTube, with Instagram, Google+ and Foursquare to follow</li>
-                <li>Get locked in at the early-bird price.</li>
-                <li>An exclusive, brand new e-book, Insights, which explains the future of social networking based on interviews with dozens of the most creative and influential users of social media.</li>
+                <li>A lock on the early-bird price.</li>
+                <li>An exclusive, brand new e-book, <i>Insights</i>, which explains the future of social networking based on interviews with dozens of the most creative and influential users of social media.</li>
                 <li>The ability to weigh in on changes to ThinkUp’s features, terms of service and product roadmap before those changes happen.</li>
               </ul>
 
@@ -359,7 +359,7 @@
             <div class="level-description">
               <p>Join ThinkUp and get all this cool stuff:</p>
               <ul class="level-benefits">
-                <li>Insights on your Facebook, Twitter or other social network account (1 account per service).</li>
+                <li>Insights on your Facebook, Twitter or other social network account. (1 per service)</li>
                 <li>First place in line to reserve your username on ThinkUp.</li>
                 <li class="book-offer">We wrote you a book! <em>Insights</em> is a series of interviews with dozens of super creative people about the future of social networking.</li>
               </ul>

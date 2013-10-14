@@ -71,7 +71,7 @@
             <div class="level-description">
               <p>Join ThinkUp and get all this cool stuff:</p>
               <ul class="level-benefits">
-                <li>Insights on your Facebook, Twitter or other social network account (1 account per service).</li>
+                <li>Insights on your Facebook, Twitter or other social network account. (1 per service)</li>
                 <li>First place in line to reserve your username on ThinkUp.</li>
                 <li class="book-offer">We wrote you a book! <em>Insights</em> is a series of interviews with dozens of super creative people about the future of social networking.</li>
               </ul>
