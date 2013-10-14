@@ -1,18 +1,23 @@
 @import "variables-and-mixins.less";
-@import "vendor/bootstrap-carousel.less";
 @import "icons.less";
 
 /* ==========================================================================
    Main Styles (Mobile first!)
    ========================================================================== */
 
-html {
+body {
   -webkit-font-smoothing: subpixel-antialiased;
   color: @text-color;
+  font-family: @font-sans;
 }
 
 strong {
   font-weight: normal;
+  font-family: @font-sans-bold;
+
+  &.level-span {
+    color: @blue;
+  }
 }
 
 .content-wrapper {
@@ -26,7 +31,7 @@ strong {
   .left-column {
     background: url(../img/border-top.png) top left repeat-x;
     padding-top: 2px;
-    margin: 0 10px 32px;
+    margin: 0 8px 32px;
   }
 
   .page-header {
@@ -34,6 +39,7 @@ strong {
     background: url(../img/rocketship-little-alt.png) bottom right no-repeat;
     background-size: 91px 302px;
     min-height: 190px;
+    padding: 0 8px;
 
     h1 {
       font-family: @font-sans-light;
@@ -78,10 +84,25 @@ strong {
     padding: 12px 0 0;
   }
 
+  .social-wrapper {
+    .clearfix;
+    .social-buttons {
+      margin: 8px auto 0;
+      padding-left: 10px;
+      width: 300px;
+
+      .social-button {
+        width: 100px;
+        float: left;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
   .fundraiser-qa {
 
     .fundraiser-qa-item {
-      padding: 12px 0;
+      padding: 12px 6px;
       border-bottom: 1px dashed @orange;
 
       header {
@@ -91,14 +112,14 @@ strong {
         line-height: 16px;
         color: @orange;
         display: block;
-        padding-right: 24px;
+        padding-right: 32px;
         letter-spacing: -1px;
 
         &:after {
           content: " ";
           position: absolute;
           top: 5px;
-          right: 10px;
+          right: 8px;
           .sprite-arrow-down;
         }
 
@@ -163,6 +184,16 @@ strong {
       }
 
       // Individual Question Styles
+      &#qa-item-whats-thinkup {
+        .sample-insights {
+          position: relative;
+          background: url(../img/insight-examples.jpg) top left no-repeat;
+          width: 640px;
+          height: 467px;
+          left: -80px;
+        }
+      }
+
       &#qa-item-insights {
         .content {
           .insight-examples {
@@ -310,6 +341,27 @@ strong {
                 display: none;
                 font: 14px/20px @font-sans;
                 margin-top: 16px;
+
+                a {
+                  color: @blue;
+
+                  &:hover {
+                    text-decoration: none;
+                  }
+                }
+
+                ul {
+                  padding-left: 20px;
+                  list-style: disc;
+
+                  li {
+                    margin-top: 1em;
+
+                    &:first-child {
+                      margin-top: 0;
+                    }
+                  }
+                }
               }
 
               &.active .faq-answer {
@@ -328,7 +380,7 @@ strong {
     -moz-box-sizing: border-box;
     position: relative;
     width: 100%;
-    padding: 0 10px;
+    padding: 0 16px;
 
     header {
       font: 20px/22px @font-sans-light;
@@ -342,39 +394,19 @@ strong {
       }
     }
 
-    .sample-contributors {
-      h4 {
-        font-weight: normal;
-        margin: 4px 0 20px;
-      }
-
-      ul {
-        list-style: none;
-        padding: 0;
-        margin: 0 0 10px;
-        overflow: hidden;
-        height: 108px;
-        width: 174px;
-
-        li {
-          float: left;
-          width: 50px;
-          height: 50px;
-          margin: 0 8px 8px 0;
-          img {
-            height: 50px;
-            width: 50px;
-            border-radius: 25px;
-          }
-        }
-      }
+    .pledge-goals {
+      font-size: 12px;
+      line-height: 16px;
+      margin: 16px 0;
+      padding-right: 112px;
     }
 
     .pledge-now {
       position: absolute;
+      overflow: hidden;
       width: 144px;
       height: 144px;
-      right: -29px;
+      right: -32px;
       bottom: -36px;
       border-radius: 75px;
       box-sizing: border-box;
@@ -386,7 +418,9 @@ strong {
       text-align: center;
       text-decoration: none;
       background-color: @blue;
-      .vertical-gradient(lighten(@blue, 5%), darken(@blue, 5%));
+      -webkit-animation: pulsing 5s 1.5s infinite;
+      -moz-animation: pulsing 5s 1.5s infinite;
+      animation: pulsing 5s 1.5s infinite;
 
       &:before {
         content: " ";
@@ -395,27 +429,24 @@ strong {
         left: 63px;
         .sprite-lightning;
       }
-
-      &:hover {
-        .vertical-gradient(lighten(@blue, 2%), darken(@blue, 2%));
-      }
     }
   }
 
   .funding-levels {
-    margin: 0 10px;
+    margin: 0 8px;
 
     .funding-levels-header {
       font: 13px/16px @font-sans;
       color: @headline-color;
       margin-bottom: 20px;
       width: 174px;
+      padding: 0 8px;
     }
 
     .level {
       border-top: 1px dashed @blue;
 
-      &#level-developer a {
+      &#level-pro a {
         background: @beige;
 
         &:hover {
@@ -425,7 +456,7 @@ strong {
 
       a {
         display: block;
-        padding: 12px 8px;
+        padding: 12px 6px;
         color: @text-color;
         background: @light-beige;
         text-decoration: none;
@@ -459,7 +490,7 @@ strong {
             color: @orange;
             text-align: right;
 
-            .monthly {
+            .annually {
               font-family: @font-sans-bold;
             }
           }
@@ -499,12 +530,67 @@ strong {
       }
     }
   }
+
+  .newsletter-signup-wrapper {
+    padding: 12px 16px;
+
+    p {
+      margin: 0;
+      .type-sans;
+    }
+
+    header {
+      padding-bottom: 16px;
+
+      h5 {
+        color: @blue;
+        font-family: @font-sans-bold;
+        font-size: 16px;
+        margin: 0;
+        font-weight: 300;
+      }
+    }
+
+    .content {
+      .clearfix;
+
+      .email {
+        font-family: @font-sans;
+        float: left;
+        -webkit-appearance: none;
+        width: 200px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        border: 1px solid #d8d8d8;
+        padding: 3px 4px;
+        display: inline-block;
+        font-size: 14px;
+        line-height: 14px;
+        height: 24px;
+        color: @text-color;
+      }
+
+      .button {
+        float: right;
+        width: 80px;
+        display: inline-block;
+        background: @blue;
+        color: #fff;
+        font-family: @font-sans-bold;
+        border: 0;
+        font-size: 12px;
+        height: 24px;
+        vertical-align: top;
+        padding: 0;
+      }
+    }
+  }
 }
 
 .page-footer {
-  margin: 0 10px 15px;
+  margin: 0 8px 32px;
   background: url(../img/border-top.png) top left repeat-x;
-  padding-top: 17px;
+  padding: 16px 8px 0;
   .clearfix;
   font: 11px/11px @font-sans;
 
@@ -516,6 +602,36 @@ strong {
   .motto {
     text-align: right;
   }
+
+  .follow-wrapper {
+    clear: both;
+    text-align: center;
+    margin-top: 32px;
+
+    .follow-links {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: inline;
+
+      li {
+        display: inline-block;
+        margin: 0 20px;
+
+        a {
+          color: #999;
+          text-decoration: none;
+          font-size: 20px;
+          line-height: 20px;
+
+          &:hover {
+            color: @blue;
+          }
+        }
+      }
+    }
+  }
+
 }
 
 // Pledge Page styles
@@ -537,16 +653,85 @@ body.pledge {
       margin: 0;
 
       .funding-levels-header {
-        width: 75%;
-        color: @orange;
-        font: 16px/20px @font-sans;
+        width: 100%;
+        text-align: center;
+        padding: 0;
+
+        a {
+          color: #fff;
+          text-decoration: none;
+          background: @blue;
+          font-family: @font-sans-bold;
+          border-radius: 3px;
+          margin-top: 8px;
+          padding: 3px 5px;
+          display: inline-block;
+
+          &:hover {
+            background: darken(@blue, 5%);
+          }
+        }
+
+        .payment-details {
+          color: @orange;
+          font: 16px/20px @font-sans;
+        }
+
+        .payment-faq {
+          list-style: none;
+          padding-left: 0;
+          color: #aaa;
+          font-size: 10px;
+          line-height: 14px;
+        }
       }
 
       .level {
         a {
-          padding: 10px 10px 32px;
+          padding: 49px 10px 31px;
+          position: relative;
+
+          &:before {
+            content: "Pledge at this level";
+            position: absolute;
+            width: 100%;
+            top: 8px;
+            left: 0;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            color: #fff;
+            font: 14px/16px @font-sans-bold;
+            padding: 8px 0;
+            font-weight: 300;
+            text-align: center;
+            text-decoration: none;
+            background-color: @blue;
+          }
         }
       }
+
+      &.level-selected {
+        .level {
+          a {
+            .level-description {
+              display: none;
+            }            
+          }
+        }
+
+        .level.selected {
+          a {
+            .level-description {
+              display: block;
+            }
+
+            &:before {
+              content: "Pay with Amazon";
+            }         
+          }
+        }
+      }
+
     }
   }
 }
@@ -577,7 +762,7 @@ body.pledge {
 
     .right-column, .left-column {
       background: url(../img/border-top.png) top left repeat-x;
-      padding-top: 2px;
+      padding: 2px 0 0;
       margin-left: 0;
       margin-right: 0;
     }
@@ -604,20 +789,22 @@ body.pledge {
       h1 {
         font-size: 40px;
         line-height: 42px;
-        padding: 8px 0 46px 85px;
+        height: 126px;
+        padding: 8px 0 45px 85px;
         margin: 0;
       }
 
       p {
         width: 400px;
-        font-size: 16px;
-        line-height: 20px;
+        font-size: 14px;
+        line-height: 17px;
         padding-left: 160px;
         margin: 0 0 12px;
+        height: 85px;
       }
     }
 
-    .video-wrapper, .fundraiser-qa {
+    .video-wrapper, .fundraiser-qa, .social-wrapper {
       padding-right: 9px;
       border-right: 1px dashed fade(@orange, 30%);
       margin-right: 10px;
@@ -628,6 +815,11 @@ body.pledge {
     .video-wrapper {
       padding-top: 0;
       padding-bottom: 20px;
+    }
+
+    .social-wrapper {
+      margin-top: 0;
+      padding: 0;
     }
 
     .fundraiser-qa {
@@ -689,6 +881,7 @@ body.pledge {
             width: 110px;
             height: 110px;
             margin-left: 65px;
+            border: 1px solid #d8d8d8;
           }
 
           .author {
@@ -711,64 +904,6 @@ body.pledge {
 
             &:before {
               .sprite-lightbulb;
-            }
-
-            .carousel-wrapper {
-              position: relative;
-              margin-left: -80px;
-              background: url(../img/laptop-bgd.jpg) 12px 0 no-repeat;
-              min-height: 353px;
-
-              .carousel {
-
-                .carousel-inner {
-                  top: 37px;
-                  left: 15px;
-
-                  > .item {
-                    -webkit-transition: 0;
-                    transition: 0;
-
-                    img {
-                      border: 1px solid #999;
-                    }
-                  }
-                }
-
-                .carousel-control {
-                  left: -8px;
-                  opacity: 1;
-                  filter: alpha(opacity=100);
-
-                  &:hover {
-                    opacity: .5;
-                    filter: alpha(opacity=50);
-                  }
-
-                  &.right {
-                    left: auto;
-                    right: -38px;
-                  }
-
-
-                  .icon-prev {
-                    margin-left: -36px;
-                  }
-
-                  .icon-next {
-                    margin-left: 20px;
-                  }
-                }
-
-                .carousel-caption {
-                  padding: 60px 0 10px;
-                }
-
-                .carousel-indicators {
-                  margin: 40px auto 0;
-                  padding-left: 23px;
-                }
-              }
             }
           }
         }
@@ -795,6 +930,10 @@ body.pledge {
 
                 &:last-child {
                   margin-left: 0;
+                }
+
+                &:nth-child(3n+1) {
+                  clear: left;
                 }
               }
             }
@@ -848,9 +987,9 @@ body.pledge {
     }
 
     .call-to-action {
-      height: 260px;
+      height: 277px;
       border-bottom: 1px dashed @orange;
-      box-sizing: content-box;
+      box-sizing: border-box;
       -moz-box-sizing: border-box;
       padding: 0 0 12px;
       margin: 0;
@@ -861,28 +1000,11 @@ body.pledge {
         padding-top: 13px;
       }
 
-      .sample-contributors {
-        h4 {
-          margin-bottom: 10px;
-        }
-
-        ul {
-          height: 60px;
-          width: 210px;
-
-          li {
-            float: left;
-            width: 60px;
-            height: 60px;
-            margin: 0 10px 10px 0;
-            img {
-              height: 60px;
-              width: 60px;
-              border-radius: 30px;
-            }
-          }
-
-        }
+      .pledge-goals {
+        font-size: 14px;
+        line-height: 18px;
+        margin-top: 18px;
+        padding-right: 0;
       }
 
       .pledge-now {
@@ -913,6 +1035,7 @@ body.pledge {
         font: 14px/18px @font-sans;
         margin: 15px 0 18px 8px;
         width: 160px;
+        padding: 0;
 
         .wide-line-one {
           display: block;
@@ -920,27 +1043,48 @@ body.pledge {
       }
     }
 
+    .newsletter-signup-wrapper {
+      padding: 12px 6px;
+    }
+
   }
 
 
   .page-footer {
     width: 960px;
-    margin: 0 auto 16px;
+    margin: 0 auto 32px;
+
+    .copyright, .motto {
+      width: 20%;
+    }
+
+    .motto {
+      float: right;
+    }
+
+    .follow-wrapper {
+      clear: none;
+      width: 60%;
+      padding-left: 20%;
+      margin: 0;
+    }
   }
 
   body.pledge {
     .content-wrapper {
-      width: 640px;
+      width: 620px;
 
       .left-column {
-        width: 640px;
+        width: 620px;
       }
 
       .page-header {
         border: 0;
         min-height: 0;
+        margin-bottom: 0;
 
         h1 {
+          height: auto;
           padding: 12px 0 24px;
           font-size: 48px;
           line-height: 46px;
@@ -948,6 +1092,31 @@ body.pledge {
       }
 
       .funding-levels {
+        .funding-levels-header {
+          margin-left: 0;
+          .clearfix;
+          text-align: left;
+
+          .payment-details, .payment-faq {
+            float: left;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+          }
+
+          .payment-details {
+            width: 400px;
+            padding-left: 8px;
+            padding-right: 80px;
+          }
+
+          .payment-faq {
+            list-style: disc;
+            width: 220px;
+            padding-left: 30px;
+            margin: 0;
+            font-size: 11px;
+          }
+        }
         .level {
           a {
             position: relative;
@@ -965,23 +1134,55 @@ body.pledge {
               width: 120px;
               height: 120px;
               right: 15px;
-              top: -10px;
+              top: 8px;
+              left: auto;
               border-radius: 75px;
               box-sizing: border-box;
               -moz-box-sizing: border-box;
               padding: 33px 16px 0;
               color: #fff;
-              font: 14px/18px @font-sans;
+              font: 14px/18px @font-sans-bold;
               font-weight: 300;
               text-align: center;
               text-decoration: none;
               background-color: @blue;
-              .vertical-gradient(lighten(@blue, 5%), darken(@blue, 5%));
+            }
+          }
+        }
 
-              &:hover {
-                .vertical-gradient(lighten(@blue, 2%), darken(@blue, 2%));
+        &.level-selected {
+          .level {
+            a {
+                padding-top: 40px;
+                padding-bottom: 40px;
+            }
+
+            &.selected {
+              a {
+                padding-top: 32px;
+                padding-bottom: 32px;
+
+                &:before {
+                  content: "Pay with Amazon";
+                  font-size: 18px;
+                  line-height: 20px;
+                  padding-top: 37px;
+                }
+
+                &:hover {
+                  background-color: @light-beige;
+
+                  &:before {
+                    background: darken(@blue, 5%);
+                  }
+                }
               }
 
+              &#level-pro {
+                a:hover {
+                  background-color: @beige;
+                }
+              }
             }
           }
         }
@@ -1013,6 +1214,20 @@ body.pledge {
 // }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .content-wrapper {
+    .fundraiser-qa {
+      .fundraiser-qa-item {
+        &#qa-item-whats-thinkup {
+          .sample-insights {
+            background-size: 320px 233px;
+            width: 320px;
+            height: 233px;
+            left: 0;
+          }
+        }
+      }
+    }
+  }
   .page-footer {
     background-image: url(../img/border-top@2x.png);
     background-size: 7px 2px;

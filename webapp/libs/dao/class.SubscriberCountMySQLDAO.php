@@ -20,7 +20,7 @@ class SubscriberCountMySQLDAO extends PDODAO {
 
     public function getAll() {
         $q  = "SELECT * FROM subscriber_counts UNION SELECT 'all', sum(count) FROM subscriber_counts";
-        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); echo "HAI";} else { echo "NO"; }
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
         $rows = $this->getDataRowsAsArrays($ps);
         $counts = array();

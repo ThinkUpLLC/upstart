@@ -20,6 +20,35 @@ $ ->
     $theVideo.width($newWidth).height($newWidth * $theVideo.data "aspect-ratio")
   $(window).resize()
 
-  # Let users swipe images in carousel
-  $("body").on "swipeleft", ".carousel", -> $(@).carousel 'next'
-  $("body").on "swiperight", ".carousel", -> $(@).carousel 'prev'
+  # Submit the newsletter form without refreshing
+  $("body").on("submit", ".newsletter-signup-form", (e) ->
+    e.preventDefault()
+    $email = $(@).children(".email").val()
+    if $email?
+      $form = $(@)
+      $form.children(".button").attr "disabled", "disabled"
+      $.getJSON(
+        "list-subscribe.php"
+        { email: $email }
+        (data) ->
+          console.log data
+          if data?.code? and data.code isnt 200
+            alert "You need to use a valid email address."
+            $form.children(".button").removeAttr "disabled"
+          else
+            $(".newsletter-signup-wrapper .content").html("""<p>Thanks for signing up! Please check your email address to confirm your subscription.</p>""")
+      )
+  )
+
+  # Hide and show levels on pledge page
+  $("body.pledge").on("tap", ".funding-levels .level", (e) ->
+    $this = $(@)
+    if not $this.parent().hasClass "level-selected" then $this.parent().addClass "level-selected"
+    if $this.hasClass "selected"
+      true
+    else
+      $(".funding-levels .level").removeClass "selected"
+      $this.addClass "selected"
+      $(".funding-levels-header .payment-details").html """You selected the <strong>#{$this.data("name").charAt(0).toUpperCase() + $this.data("name").slice(1)}</strong> level<br><a href="#{$this.children().attr("href")}">Pay with Amazon</a>"""
+      e.preventDefault()
+  )

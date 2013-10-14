@@ -69,3 +69,46 @@ src:url("../fonts/903226/e1c22775-19f1-4788-907d-302e5782b5d3.eot?#iefix") forma
   // We're gonna live without IE9 support, since we can't use border-radius with it.
   // filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",argb(@start-color),argb(@end-color))); // IE9 and down
 }
+
+.pulsing-keyframes {
+  0% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+  }
+
+  6% {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+  }
+
+  10% {
+   -webkit-transform: scale(0.95); 
+   -moz-transform: scale(0.95); 
+   -o-transform: scale(0.95);
+  }
+
+  12% {
+   -webkit-transform: scale(1.025); 
+   -moz-transform: scale(1.025); 
+   -o-transform: scale(1.025); 
+  }
+
+  14% {
+   -webkit-transform: scale(0.985); 
+   -moz-transform: scale(0.985); 
+   -o-transform: scale(0.985);
+  }
+
+  15%, 100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+  }
+}
+
+
+@-webkit-keyframes pulsing { .pulsing-keyframes; }
+@-moz-keyframes pulsing { .pulsing-keyframes; }
+@keyframes pulsing { .pulsing-keyframes; }

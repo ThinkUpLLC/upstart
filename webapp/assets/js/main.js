@@ -19,11 +19,40 @@
       return $theVideo.width($newWidth).height($newWidth * $theVideo.data("aspect-ratio"));
     });
     $(window).resize();
-    $("body").on("swipeleft", ".carousel", function() {
-      return $(this).carousel('next');
+    $("body").on("submit", ".newsletter-signup-form", function(e) {
+      var $email, $form;
+      e.preventDefault();
+      $email = $(this).children(".email").val();
+      if ($email != null) {
+        $form = $(this);
+        $form.children(".button").attr("disabled", "disabled");
+        return $.getJSON("list-subscribe.php", {
+          email: $email
+        }, function(data) {
+          console.log(data);
+          if (((data != null ? data.code : void 0) != null) && data.code !== 200) {
+            alert("You need to use a valid email address.");
+            return $form.children(".button").removeAttr("disabled");
+          } else {
+            return $(".newsletter-signup-wrapper .content").html("<p>Thanks for signing up! Please check your email address to confirm your subscription.</p>");
+          }
+        });
+      }
     });
-    return $("body").on("swiperight", ".carousel", function() {
-      return $(this).carousel('prev');
+    return $("body.pledge").on("tap", ".funding-levels .level", function(e) {
+      var $this;
+      $this = $(this);
+      if (!$this.parent().hasClass("level-selected")) {
+        $this.parent().addClass("level-selected");
+      }
+      if ($this.hasClass("selected")) {
+        return true;
+      } else {
+        $(".funding-levels .level").removeClass("selected");
+        $this.addClass("selected");
+        $(".funding-levels-header .payment-details").html("You selected the <strong>" + ($this.data("name").charAt(0).toUpperCase() + $this.data("name").slice(1)) + "</strong> level<br><a href=\"" + ($this.children().attr("href")) + "\">Pay with Amazon</a>");
+        return e.preventDefault();
+      }
     });
   });
 

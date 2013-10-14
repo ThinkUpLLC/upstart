@@ -38,138 +38,135 @@
   font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
   line-height: 18px;
 }
-/* 
-  This was copied over, but the controls and indicators have been modified.
-*/
-.carousel {
-  position: relative;
+.pulsing-keyframes 0% {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -o-transform: scale(1);
 }
-.carousel-inner {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
+.pulsing-keyframes 6% {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -o-transform: scale(1.1);
 }
-.carousel-inner > .item {
-  display: none;
-  position: relative;
-  -webkit-transition: 0.3s ease-in-out left;
-  transition: 0.3s ease-in-out left;
+.pulsing-keyframes 10% {
+  -webkit-transform: scale(0.95);
+  -moz-transform: scale(0.95);
+  -o-transform: scale(0.95);
 }
-.carousel-inner > .item > img,
-.carousel-inner > .item > a > img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  line-height: 1;
-  margin: 0 auto;
+.pulsing-keyframes 12% {
+  -webkit-transform: scale(1.025);
+  -moz-transform: scale(1.025);
+  -o-transform: scale(1.025);
 }
-.carousel-inner > .active,
-.carousel-inner > .next,
-.carousel-inner > .prev {
-  display: block;
+.pulsing-keyframes 14% {
+  -webkit-transform: scale(0.985);
+  -moz-transform: scale(0.985);
+  -o-transform: scale(0.985);
 }
-.carousel-inner > .active {
-  left: 0;
+.pulsing-keyframes 15%,
+.pulsing-keyframes 100% {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -o-transform: scale(1);
 }
-.carousel-inner > .next,
-.carousel-inner > .prev {
-  position: absolute;
-  top: 0;
-  width: 100%;
+@-webkit-keyframes pulsing {
+  0% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+  }
+  6% {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+  }
+  10% {
+    -webkit-transform: scale(0.95);
+    -moz-transform: scale(0.95);
+    -o-transform: scale(0.95);
+  }
+  12% {
+    -webkit-transform: scale(1.025);
+    -moz-transform: scale(1.025);
+    -o-transform: scale(1.025);
+  }
+  14% {
+    -webkit-transform: scale(0.985);
+    -moz-transform: scale(0.985);
+    -o-transform: scale(0.985);
+  }
+  15%,
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+  }
 }
-.carousel-inner > .next {
-  left: 100%;
+@-moz-keyframes pulsing {
+  0% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+  }
+  6% {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+  }
+  10% {
+    -webkit-transform: scale(0.95);
+    -moz-transform: scale(0.95);
+    -o-transform: scale(0.95);
+  }
+  12% {
+    -webkit-transform: scale(1.025);
+    -moz-transform: scale(1.025);
+    -o-transform: scale(1.025);
+  }
+  14% {
+    -webkit-transform: scale(0.985);
+    -moz-transform: scale(0.985);
+    -o-transform: scale(0.985);
+  }
+  15%,
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+  }
 }
-.carousel-inner > .prev {
-  left: -100%;
-}
-.carousel-inner > .next.left,
-.carousel-inner > .prev.right {
-  left: 0;
-}
-.carousel-inner > .active.left {
-  left: -100%;
-}
-.carousel-inner > .active.right {
-  left: 100%;
-}
-.carousel-control {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 15%;
-  opacity: 0.3;
-  filter: alpha(opacity=30);
-  font-size: 20px;
-  color: #ffffff;
-  text-align: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-}
-.carousel-control.right {
-  left: auto;
-  right: 0;
-}
-.carousel-control:hover,
-.carousel-control:focus {
-  color: #ffffff;
-  text-decoration: none;
-  opacity: 0.9;
-  filter: alpha(opacity=90);
-}
-.carousel-control .icon-prev,
-.carousel-control .icon-next,
-.carousel-control .glyphicon-chevron-left,
-.carousel-control .glyphicon-chevron-right {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 5;
-  display: inline-block;
-}
-.carousel-control .icon-prev,
-.carousel-control .icon-next {
-  margin-top: -52px;
-  margin-left: -18px;
-  background-image: url('../img/icons.png');
-  background-repeat: no-repeat;
-  background-position: -63px -2px;
-  width: 23px;
-  height: 55px;
-}
-.carousel-control .icon-next {
-  background-image: url('../img/icons.png');
-  background-repeat: no-repeat;
-  background-position: -36px -2px;
-  width: 23px;
-  height: 55px;
-  margin-left: -5px;
-}
-.carousel-indicators {
-  width: 60%;
-  margin: 0 20%;
-  padding: 0;
-  list-style: none;
-  text-align: center;
-}
-.carousel-indicators li {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  text-indent: -999px;
-  background-color: #d8d8d8;
-  border-radius: 8px;
-  cursor: pointer;
-  margin: 0 3px;
-}
-.carousel-indicators .active {
-  background-color: #0099f0;
-}
-.carousel-caption {
-  padding: 10px 0;
-  font: 13px/16px "Libre Baskerville", georgia, serif;
-  font-style: italic;
-  text-align: center;
+@keyframes pulsing {
+  0% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+  }
+  6% {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+  }
+  10% {
+    -webkit-transform: scale(0.95);
+    -moz-transform: scale(0.95);
+    -o-transform: scale(0.95);
+  }
+  12% {
+    -webkit-transform: scale(1.025);
+    -moz-transform: scale(1.025);
+    -o-transform: scale(1.025);
+  }
+  14% {
+    -webkit-transform: scale(0.985);
+    -moz-transform: scale(0.985);
+    -o-transform: scale(0.985);
+  }
+  15%,
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+  }
 }
 /* glue: 0.3 hash: 010dfb6b05 */
 .sprite-lightbulb,
@@ -377,12 +374,17 @@
 /* ==========================================================================
    Main Styles (Mobile first!)
    ========================================================================== */
-html {
+body {
   -webkit-font-smoothing: subpixel-antialiased;
   color: #333333;
+  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
 }
 strong {
   font-weight: normal;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+}
+strong.level-span {
+  color: #0099f0;
 }
 .content-wrapper {
   margin: 10px 0;
@@ -395,12 +397,13 @@ strong {
 .content-wrapper .left-column {
   background: url(../img/border-top.png) top left repeat-x;
   padding-top: 2px;
-  margin: 0 10px 32px;
+  margin: 0 8px 32px;
 }
 .content-wrapper .page-header {
   background: url(../img/rocketship-little-alt.png) bottom right no-repeat;
   background-size: 91px 302px;
   min-height: 190px;
+  padding: 0 8px;
 }
 .content-wrapper .page-header h1 {
   font-family: "HelveticaNeueETW02-45Lt", helvetica, arial, sans-sarif;
@@ -437,8 +440,30 @@ strong {
   border-top: 1px dashed #ff5600;
   padding: 12px 0 0;
 }
+.content-wrapper .social-wrapper:before,
+.content-wrapper .social-wrapper:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.content-wrapper .social-wrapper:after {
+  clear: both;
+}
+.content-wrapper .social-wrapper .social-buttons {
+  margin: 8px auto 0;
+  padding-left: 10px;
+  width: 300px;
+}
+.content-wrapper .social-wrapper .social-buttons .social-button {
+  width: 100px;
+  float: left;
+  margin-bottom: 20px;
+}
 .content-wrapper .fundraiser-qa .fundraiser-qa-item {
-  padding: 12px 0;
+  padding: 12px 6px;
   border-bottom: 1px dashed #ff5600;
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item header {
@@ -448,14 +473,14 @@ strong {
   line-height: 16px;
   color: #ff5600;
   display: block;
-  padding-right: 24px;
+  padding-right: 32px;
   letter-spacing: -1px;
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item header:after {
   content: " ";
   position: absolute;
   top: 5px;
-  right: 10px;
+  right: 8px;
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
   background-position: -181px -133px;
@@ -524,6 +549,13 @@ strong {
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote .author .author-info:before {
   content: " / ";
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights {
+  position: relative;
+  background: url(../img/insight-examples.jpg) top left no-repeat;
+  width: 640px;
+  height: 467px;
+  left: -80px;
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples {
   list-style: none;
@@ -729,6 +761,22 @@ strong {
   font: 14px/20px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
   margin-top: 16px;
 }
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item .faq-answer a {
+  color: #0099f0;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item .faq-answer a:hover {
+  text-decoration: none;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item .faq-answer ul {
+  padding-left: 20px;
+  list-style: disc;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item .faq-answer ul li {
+  margin-top: 1em;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item .faq-answer ul li:first-child {
+  margin-top: 0;
+}
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq .faq-item.active .faq-answer {
   display: block;
 }
@@ -737,7 +785,7 @@ strong {
   -moz-box-sizing: border-box;
   position: relative;
   width: 100%;
-  padding: 0 10px;
+  padding: 0 16px;
 }
 .content-wrapper .call-to-action header {
   font: 20px/22px "HelveticaNeueETW02-45Lt", helvetica, arial, sans-sarif;
@@ -749,34 +797,18 @@ strong {
   color: #ff5600;
   font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
 }
-.content-wrapper .call-to-action .sample-contributors h4 {
-  font-weight: normal;
-  margin: 4px 0 20px;
-}
-.content-wrapper .call-to-action .sample-contributors ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 10px;
-  overflow: hidden;
-  height: 108px;
-  width: 174px;
-}
-.content-wrapper .call-to-action .sample-contributors ul li {
-  float: left;
-  width: 50px;
-  height: 50px;
-  margin: 0 8px 8px 0;
-}
-.content-wrapper .call-to-action .sample-contributors ul li img {
-  height: 50px;
-  width: 50px;
-  border-radius: 25px;
+.content-wrapper .call-to-action .pledge-goals {
+  font-size: 12px;
+  line-height: 16px;
+  margin: 16px 0;
+  padding-right: 112px;
 }
 .content-wrapper .call-to-action .pledge-now {
   position: absolute;
+  overflow: hidden;
   width: 144px;
   height: 144px;
-  right: -29px;
+  right: -32px;
   bottom: -36px;
   border-radius: 75px;
   box-sizing: border-box;
@@ -788,11 +820,9 @@ strong {
   text-align: center;
   text-decoration: none;
   background-color: #0099f0;
-  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#0ba6ff), to(#0089d7));
-  background-image: -webkit-linear-gradient(top, #0ba6ff, 0%, #0089d7, 100%);
-  background-image: -moz-linear-gradient(top, #0ba6ff 0%, #0089d7 100%);
-  background-image: linear-gradient(to bottom, #0ba6ff 0%, #0089d7 100%);
-  background-repeat: repeat-x;
+  -webkit-animation: pulsing 5s 1.5s infinite;
+  -moz-animation: pulsing 5s 1.5s infinite;
+  animation: pulsing 5s 1.5s infinite;
 }
 .content-wrapper .call-to-action .pledge-now:before {
   content: " ";
@@ -805,34 +835,28 @@ strong {
   width: 15px;
   height: 29px;
 }
-.content-wrapper .call-to-action .pledge-now:hover {
-  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#00a0fa), to(#0092e6));
-  background-image: -webkit-linear-gradient(top, #00a0fa, 0%, #0092e6, 100%);
-  background-image: -moz-linear-gradient(top, #00a0fa 0%, #0092e6 100%);
-  background-image: linear-gradient(to bottom, #00a0fa 0%, #0092e6 100%);
-  background-repeat: repeat-x;
-}
 .content-wrapper .funding-levels {
-  margin: 0 10px;
+  margin: 0 8px;
 }
 .content-wrapper .funding-levels .funding-levels-header {
   font: 13px/16px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
   color: #000000;
   margin-bottom: 20px;
   width: 174px;
+  padding: 0 8px;
 }
 .content-wrapper .funding-levels .level {
   border-top: 1px dashed #0099f0;
 }
-.content-wrapper .funding-levels .level#level-developer a {
+.content-wrapper .funding-levels .level#level-pro a {
   background: #fef9ce;
 }
-.content-wrapper .funding-levels .level#level-developer a:hover {
+.content-wrapper .funding-levels .level#level-pro a:hover {
   background: #e6f5fe;
 }
 .content-wrapper .funding-levels .level a {
   display: block;
-  padding: 12px 8px;
+  padding: 12px 6px;
   color: #333333;
   background: #fffef6;
   text-decoration: none;
@@ -873,7 +897,7 @@ strong {
   color: #ff5600;
   text-align: right;
 }
-.content-wrapper .funding-levels .level a header .level-cost .monthly {
+.content-wrapper .funding-levels .level a header .level-cost .annually {
   font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
 }
 .content-wrapper .funding-levels .level a .level-description p {
@@ -918,10 +942,79 @@ strong {
   margin-right: 8px;
   margin-top: 5px;
 }
+.content-wrapper .newsletter-signup-wrapper {
+  padding: 12px 16px;
+}
+.content-wrapper .newsletter-signup-wrapper p {
+  margin: 0;
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .newsletter-signup-wrapper p em {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-56It", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .newsletter-signup-wrapper p strong {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .newsletter-signup-wrapper header {
+  padding-bottom: 16px;
+}
+.content-wrapper .newsletter-signup-wrapper header h5 {
+  color: #0099f0;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  font-size: 16px;
+  margin: 0;
+  font-weight: 300;
+}
+.content-wrapper .newsletter-signup-wrapper .content:before,
+.content-wrapper .newsletter-signup-wrapper .content:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.content-wrapper .newsletter-signup-wrapper .content:after {
+  clear: both;
+}
+.content-wrapper .newsletter-signup-wrapper .content .email {
+  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  float: left;
+  -webkit-appearance: none;
+  width: 200px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  border: 1px solid #d8d8d8;
+  padding: 3px 4px;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 14px;
+  height: 24px;
+  color: #333333;
+}
+.content-wrapper .newsletter-signup-wrapper .content .button {
+  float: right;
+  width: 80px;
+  display: inline-block;
+  background: #0099f0;
+  color: #fff;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  border: 0;
+  font-size: 12px;
+  height: 24px;
+  vertical-align: top;
+  padding: 0;
+}
 .page-footer {
-  margin: 0 10px 15px;
+  margin: 0 8px 32px;
   background: url(../img/border-top.png) top left repeat-x;
-  padding-top: 17px;
+  padding: 16px 8px 0;
   font: 11px/11px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
 }
 .page-footer:before,
@@ -944,6 +1037,30 @@ strong {
 .page-footer .motto {
   text-align: right;
 }
+.page-footer .follow-wrapper {
+  clear: both;
+  text-align: center;
+  margin-top: 32px;
+}
+.page-footer .follow-wrapper .follow-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: inline;
+}
+.page-footer .follow-wrapper .follow-links li {
+  display: inline-block;
+  margin: 0 20px;
+}
+.page-footer .follow-wrapper .follow-links li a {
+  color: #999;
+  text-decoration: none;
+  font-size: 20px;
+  line-height: 20px;
+}
+.page-footer .follow-wrapper .follow-links li a:hover {
+  color: #0099f0;
+}
 body.pledge .content-wrapper .page-header {
   margin-bottom: 40px;
   background: none;
@@ -957,12 +1074,62 @@ body.pledge .content-wrapper .funding-levels {
   margin: 0;
 }
 body.pledge .content-wrapper .funding-levels .funding-levels-header {
-  width: 75%;
+  width: 100%;
+  text-align: center;
+  padding: 0;
+}
+body.pledge .content-wrapper .funding-levels .funding-levels-header a {
+  color: #fff;
+  text-decoration: none;
+  background: #0099f0;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  border-radius: 3px;
+  margin-top: 8px;
+  padding: 3px 5px;
+  display: inline-block;
+}
+body.pledge .content-wrapper .funding-levels .funding-levels-header a:hover {
+  background: #0089d7;
+}
+body.pledge .content-wrapper .funding-levels .funding-levels-header .payment-details {
   color: #ff5600;
   font: 16px/20px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
 }
+body.pledge .content-wrapper .funding-levels .funding-levels-header .payment-faq {
+  list-style: none;
+  padding-left: 0;
+  color: #aaa;
+  font-size: 10px;
+  line-height: 14px;
+}
 body.pledge .content-wrapper .funding-levels .level a {
-  padding: 10px 10px 32px;
+  padding: 49px 10px 31px;
+  position: relative;
+}
+body.pledge .content-wrapper .funding-levels .level a:before {
+  content: "Pledge at this level";
+  position: absolute;
+  width: 100%;
+  top: 8px;
+  left: 0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  color: #fff;
+  font: 14px/16px "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  padding: 8px 0;
+  font-weight: 300;
+  text-align: center;
+  text-decoration: none;
+  background-color: #0099f0;
+}
+body.pledge .content-wrapper .funding-levels.level-selected .level a .level-description {
+  display: none;
+}
+body.pledge .content-wrapper .funding-levels.level-selected .level.selected a .level-description {
+  display: block;
+}
+body.pledge .content-wrapper .funding-levels.level-selected .level.selected a:before {
+  content: "Pay with Amazon";
 }
 /* ==========================================================================
    Media Queries
@@ -995,7 +1162,7 @@ body.pledge .content-wrapper .funding-levels .level a {
   .content-wrapper .right-column,
   .content-wrapper .left-column {
     background: url(../img/border-top.png) top left repeat-x;
-    padding-top: 2px;
+    padding: 2px 0 0;
     margin-left: 0;
     margin-right: 0;
   }
@@ -1019,18 +1186,21 @@ body.pledge .content-wrapper .funding-levels .level a {
   .content-wrapper .page-header h1 {
     font-size: 40px;
     line-height: 42px;
-    padding: 8px 0 46px 85px;
+    height: 126px;
+    padding: 8px 0 45px 85px;
     margin: 0;
   }
   .content-wrapper .page-header p {
     width: 400px;
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 14px;
+    line-height: 17px;
     padding-left: 160px;
     margin: 0 0 12px;
+    height: 85px;
   }
   .content-wrapper .video-wrapper,
-  .content-wrapper .fundraiser-qa {
+  .content-wrapper .fundraiser-qa,
+  .content-wrapper .social-wrapper {
     padding-right: 9px;
     border-right: 1px dashed rgba(255, 86, 0, 0.3);
     margin-right: 10px;
@@ -1040,6 +1210,10 @@ body.pledge .content-wrapper .funding-levels .level a {
   .content-wrapper .video-wrapper {
     padding-top: 0;
     padding-bottom: 20px;
+  }
+  .content-wrapper .social-wrapper {
+    margin-top: 0;
+    padding: 0;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item {
     padding: 0 60px 30px 0;
@@ -1094,6 +1268,7 @@ body.pledge .content-wrapper .funding-levels .level a {
     width: 110px;
     height: 110px;
     margin-left: 65px;
+    border: 1px solid #d8d8d8;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote .author {
     padding-left: 100px;
@@ -1113,49 +1288,6 @@ body.pledge .content-wrapper .funding-levels .level a {
     background-position: -2px -2px;
     width: 30px;
     height: 65px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper {
-    position: relative;
-    margin-left: -80px;
-    background: url(../img/laptop-bgd.jpg) 12px 0 no-repeat;
-    min-height: 353px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-inner {
-    top: 37px;
-    left: 15px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-inner > .item {
-    -webkit-transition: 0;
-    transition: 0;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-inner > .item img {
-    border: 1px solid #999;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-control {
-    left: -8px;
-    opacity: 1;
-    filter: alpha(opacity=100);
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-control:hover {
-    opacity: .5;
-    filter: alpha(opacity=50);
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-control.right {
-    left: auto;
-    right: -38px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-control .icon-prev {
-    margin-left: -36px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-control .icon-next {
-    margin-left: 20px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-caption {
-    padding: 60px 0 10px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .carousel-wrapper .carousel .carousel-indicators {
-    margin: 40px auto 0;
-    padding-left: 23px;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content:before {
     background-image: url('../img/icons.png');
@@ -1188,6 +1320,9 @@ body.pledge .content-wrapper .funding-levels .level a {
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li:last-child {
     margin-left: 0;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li:nth-child(3n+1) {
+    clear: left;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-not-thinkup header a em {
     font-style: normal;
@@ -1225,9 +1360,9 @@ body.pledge .content-wrapper .funding-levels .level a {
     height: 26px;
   }
   .content-wrapper .call-to-action {
-    height: 260px;
+    height: 277px;
     border-bottom: 1px dashed #ff5600;
-    box-sizing: content-box;
+    box-sizing: border-box;
     -moz-box-sizing: border-box;
     padding: 0 0 12px;
     margin: 0;
@@ -1237,23 +1372,11 @@ body.pledge .content-wrapper .funding-levels .level a {
     font-weight: 300;
     padding-top: 13px;
   }
-  .content-wrapper .call-to-action .sample-contributors h4 {
-    margin-bottom: 10px;
-  }
-  .content-wrapper .call-to-action .sample-contributors ul {
-    height: 60px;
-    width: 210px;
-  }
-  .content-wrapper .call-to-action .sample-contributors ul li {
-    float: left;
-    width: 60px;
-    height: 60px;
-    margin: 0 10px 10px 0;
-  }
-  .content-wrapper .call-to-action .sample-contributors ul li img {
-    height: 60px;
-    width: 60px;
-    border-radius: 30px;
+  .content-wrapper .call-to-action .pledge-goals {
+    font-size: 14px;
+    line-height: 18px;
+    margin-top: 18px;
+    padding-right: 0;
   }
   .content-wrapper .call-to-action .pledge-now {
     width: 160px;
@@ -1276,28 +1399,81 @@ body.pledge .content-wrapper .funding-levels .level a {
     font: 14px/18px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
     margin: 15px 0 18px 8px;
     width: 160px;
+    padding: 0;
   }
   .content-wrapper .funding-levels .funding-levels-header .wide-line-one {
     display: block;
   }
+  .content-wrapper .newsletter-signup-wrapper {
+    padding: 12px 6px;
+  }
   .page-footer {
     width: 960px;
-    margin: 0 auto 16px;
+    margin: 0 auto 32px;
+  }
+  .page-footer .copyright,
+  .page-footer .motto {
+    width: 20%;
+  }
+  .page-footer .motto {
+    float: right;
+  }
+  .page-footer .follow-wrapper {
+    clear: none;
+    width: 60%;
+    padding-left: 20%;
+    margin: 0;
   }
   body.pledge .content-wrapper {
-    width: 640px;
+    width: 620px;
   }
   body.pledge .content-wrapper .left-column {
-    width: 640px;
+    width: 620px;
   }
   body.pledge .content-wrapper .page-header {
     border: 0;
     min-height: 0;
+    margin-bottom: 0;
   }
   body.pledge .content-wrapper .page-header h1 {
+    height: auto;
     padding: 12px 0 24px;
     font-size: 48px;
     line-height: 46px;
+  }
+  body.pledge .content-wrapper .funding-levels .funding-levels-header {
+    margin-left: 0;
+    text-align: left;
+  }
+  body.pledge .content-wrapper .funding-levels .funding-levels-header:before,
+  body.pledge .content-wrapper .funding-levels .funding-levels-header:after {
+    content: " ";
+    /* 1 */
+  
+    display: table;
+    /* 2 */
+  
+  }
+  body.pledge .content-wrapper .funding-levels .funding-levels-header:after {
+    clear: both;
+  }
+  body.pledge .content-wrapper .funding-levels .funding-levels-header .payment-details,
+  body.pledge .content-wrapper .funding-levels .funding-levels-header .payment-faq {
+    float: left;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+  body.pledge .content-wrapper .funding-levels .funding-levels-header .payment-details {
+    width: 400px;
+    padding-left: 8px;
+    padding-right: 80px;
+  }
+  body.pledge .content-wrapper .funding-levels .funding-levels-header .payment-faq {
+    list-style: disc;
+    width: 220px;
+    padding-left: 30px;
+    margin: 0;
+    font-size: 11px;
   }
   body.pledge .content-wrapper .funding-levels .level a {
     position: relative;
@@ -1312,35 +1488,53 @@ body.pledge .content-wrapper .funding-levels .level a {
     width: 120px;
     height: 120px;
     right: 15px;
-    top: -10px;
+    top: 8px;
+    left: auto;
     border-radius: 75px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     padding: 33px 16px 0;
     color: #fff;
-    font: 14px/18px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+    font: 14px/18px "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
     font-weight: 300;
     text-align: center;
     text-decoration: none;
     background-color: #0099f0;
-    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#0ba6ff), to(#0089d7));
-    background-image: -webkit-linear-gradient(top, #0ba6ff, 0%, #0089d7, 100%);
-    background-image: -moz-linear-gradient(top, #0ba6ff 0%, #0089d7 100%);
-    background-image: linear-gradient(to bottom, #0ba6ff 0%, #0089d7 100%);
-    background-repeat: repeat-x;
   }
-  body.pledge .content-wrapper .funding-levels .level a:before:hover {
-    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#00a0fa), to(#0092e6));
-    background-image: -webkit-linear-gradient(top, #00a0fa, 0%, #0092e6, 100%);
-    background-image: -moz-linear-gradient(top, #00a0fa 0%, #0092e6 100%);
-    background-image: linear-gradient(to bottom, #00a0fa 0%, #0092e6 100%);
-    background-repeat: repeat-x;
+  body.pledge .content-wrapper .funding-levels.level-selected .level a {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  body.pledge .content-wrapper .funding-levels.level-selected .level.selected a {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+  body.pledge .content-wrapper .funding-levels.level-selected .level.selected a:before {
+    content: "Pay with Amazon";
+    font-size: 18px;
+    line-height: 20px;
+    padding-top: 37px;
+  }
+  body.pledge .content-wrapper .funding-levels.level-selected .level.selected a:hover {
+    background-color: #fffef6;
+  }
+  body.pledge .content-wrapper .funding-levels.level-selected .level.selected a:hover:before {
+    background: #0089d7;
+  }
+  body.pledge .content-wrapper .funding-levels.level-selected .level.selected#level-pro a:hover {
+    background-color: #fef9ce;
   }
   body.pledge .page-footer {
     width: 640px;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights {
+    background-size: 320px 233px;
+    width: 320px;
+    height: 233px;
+    left: 0;
+  }
   .page-footer {
     background-image: url(../img/border-top@2x.png);
     background-size: 7px 2px;
