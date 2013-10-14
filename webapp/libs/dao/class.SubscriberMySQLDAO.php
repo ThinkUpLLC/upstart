@@ -13,7 +13,7 @@ class SubscriberMySQLDAO extends PDODAO {
             ':pwd_salt'=>$pwd_salt,
             ':verification_code'=>$verification_code
         );
-
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         try {
             $ps = $this->execute($q, $vars);
             return $this->getInsertId($ps);
@@ -45,6 +45,7 @@ class SubscriberMySQLDAO extends PDODAO {
             ':is_verified'=>(integer) $is_verified
         );
         try {
+            if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
             $ps = $this->execute($q, $vars);
             return $this->getUpdateCount($ps);
         } catch (PDOException $e) {
@@ -64,6 +65,7 @@ class SubscriberMySQLDAO extends PDODAO {
             $vars = array ( ':amount' => $amount);
             $ps = $this->execute($q, $vars);
         } else {
+            if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
             $ps = $this->execute($q);
         }
         $result = $this->getDataRowAsArray($ps);
@@ -73,6 +75,7 @@ class SubscriberMySQLDAO extends PDODAO {
     public function getVerificationCode($email) {
         $q = "SELECT verification_code FROM subscribers WHERE email = :email;";
         $vars = array (':email'=>$email);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
         return $this->getDataRowAsArray($ps);
     }
@@ -80,6 +83,7 @@ class SubscriberMySQLDAO extends PDODAO {
     public function verifyEmailAddress($email) {
         $q = "UPDATE subscribers SET is_email_verified = 1 WHERE email = :email ";
         $vars = array (':email'=>$email);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
         return $this->getUpdateCount($ps);
     }
@@ -104,6 +108,7 @@ class SubscriberMySQLDAO extends PDODAO {
     public function getByEmail($email) {
         $q = "SELECT * FROM subscribers WHERE email = :email";
         $vars = array ( ':email' => $email);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
         return $this->getDataRowAsObject($ps, "Subscriber");
     }
@@ -111,6 +116,7 @@ class SubscriberMySQLDAO extends PDODAO {
     public function getByID($subscriber_id) {
         $q = "SELECT * FROM subscribers WHERE id = :subscriber_id";
         $vars = array ( ':subscriber_id' => $subscriber_id);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
         return $this->getDataRowAsObject($ps, "Subscriber");
     }
@@ -129,12 +135,14 @@ class SubscriberMySQLDAO extends PDODAO {
             ':limit'=>$count
         );
         //echo self::mergeSQLVars($q, $vars);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
         return $this->getDataRowsAsObjects($ps, 'Subscriber');
     }
 
     public function getListTotal() {
         $q  = "SELECT count(*) as total FROM subscribers;";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
         $result = $this->getDataRowAsArray($ps);
         return $result['total'];

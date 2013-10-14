@@ -2,4 +2,4 @@
 require_once 'init.php';
 
 $controller = new RouteUserController();
-echo $controller->control();
+echo $controller->go();

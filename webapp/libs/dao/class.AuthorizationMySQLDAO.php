@@ -22,6 +22,7 @@ class AuthorizationMySQLDAO extends PDODAO {
             ':token_validity_start_date'=>date("Y-m-d H:i:s",$token_validity_start_date)
         );
         //echo self::mergeSQLVars($q, $vars);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         try {
             $ps = $this->execute($q, $vars);
         } catch (PDOException $e) {
@@ -38,24 +39,14 @@ class AuthorizationMySQLDAO extends PDODAO {
     public function getByTokenID($token_id) {
         $q = "SELECT * FROM authorizations WHERE token_id = :token_id";
         $vars = array ( ':token_id' => $token_id);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
         return $this->getDataRowAsObject($ps, "Authorization");
     }
 
-    private static function mergeSQLVars($sql, $vars) {
-        foreach ($vars as $k => $v) {
-            $sql = str_replace($k, (is_int($v))?$v:"'".$v."'", $sql);
-        }
-        $config = Config::getInstance();
-        $prefix = $config->getValue('table_prefix');
-        $gmt_offset = $config->getGMTOffset();
-        $sql = str_replace('#gmt_offset#', $gmt_offset, $sql);
-        $sql = str_replace('#prefix#', $prefix, $sql);
-        return $sql;
-    }
-
     public function getTotalAuthorizations() {
         $q  = "SELECT SUM(amount) as total FROM authorizations;";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
         $result = $this->getDataRowAsArray($ps);
         return $result['total'];

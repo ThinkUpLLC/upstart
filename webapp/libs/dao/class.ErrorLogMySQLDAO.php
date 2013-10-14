@@ -10,7 +10,7 @@ class ErrorLogMySQLDAO extends PDODAO {
             ':method'=>$method,
             ':debug'=>$debug
         );
-
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
         return $this->getInsertId($ps);
     }
@@ -26,6 +26,7 @@ class ErrorLogMySQLDAO extends PDODAO {
             ':limit'=>$count
         );
         //echo self::mergeSQLVars($q, $vars);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
         return $this->getDataRowsAsArrays($ps);
     }

@@ -7,6 +7,7 @@ class SubscriberAuthorizationMySQLDAO extends PDODAO {
             ':subscriber_id'=>$subscriber_id,
             ':authorization_id'=>$token_id
         );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         try {
             $ps = $this->execute($q, $vars);
         } catch (PDOException $e) {

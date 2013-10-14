@@ -5,10 +5,12 @@ class SubscriberCountMySQLDAO extends PDODAO {
         $vars = array(
             ':amount'=>$amount
         );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
         $update_count = $this->getUpdateCount($ps);
         if ($update_count < 1) {
             $q  = "INSERT INTO subscriber_counts (amount, count) VALUES (:amount, 1);";
+            if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
             $ps = $this->execute($q, $vars);
             return $this->getUpdateCount($ps);
         } else {
@@ -18,6 +20,7 @@ class SubscriberCountMySQLDAO extends PDODAO {
 
     public function getAll() {
         $q  = "SELECT * FROM subscriber_counts UNION SELECT 'all', sum(count) FROM subscriber_counts";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); echo "HAI";} else { echo "NO"; }
         $ps = $this->execute($q);
         $rows = $this->getDataRowsAsArrays($ps);
         $counts = array();

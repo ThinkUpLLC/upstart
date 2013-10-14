@@ -2,4 +2,4 @@
 require_once 'init.php';
 
 $controller = new NewSubscriberController();
-echo $controller->control();
+echo $controller->go();
