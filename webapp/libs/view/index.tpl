@@ -126,7 +126,7 @@
           <div class="fundraiser-qa-item" id="qa-item-whos-behind-thinkup">
             <header>Who’s behind ThinkUp?</header>
             <div class="content">
-              <p>Our cofounders, Gina Trapani and Anil Dash, have been working on ThinkUp together for a few years. Gina helped build one of the earliest social networks for teens, was the founding editor of Lifehacker and hosts the popular podcasts “This Week in Google” and “In Beta.” She also created Todo.txt. Anil has been writing since the late 90s on his personal blog and in magazines such as Wired, and helped launch Movable Type, which powered the early blogosphere.</p>
+              <p>Our cofounders, Gina Trapani and Anil Dash, have been working on ThinkUp together for a few years. Gina was the founding editor of Lifehacker, helped build one of the earliest social networks for teens, created Todo.txt, and hosts the popular podcasts “This Week in Google” and “In Beta.” Anil has been writing since the late 90s on his personal blog and in magazines such as Wired, and helped launch Movable Type, which powered the early blogosphere.</p>
 
               <p>Gina and Anil have advocated for the idea of more thoughtful technology and a better Internet for more than a decade. Instead of just writing or talking about it, ThinkUp is an effort to actually build a company and product that can make those goals happen. We’ve already joined forces with an enthusiastic and diverse open source community of contributors around the world who believe in that vision and in our product. We hope you'll be the next to join our community by becoming a member of ThinkUp.</p>
             </div>
@@ -140,9 +140,9 @@
               <p>Our goal for this campaign is to raise enough money to focus on making a great product. This means we must:</p>
 
               <ul>
-                <li>Raise enough money to make ThinkUp sustainable as a company.</li>
-                <li>Develop a business model where we are as accountable to our users as we are to investors and aligned with what our users care about.</li>
-                <li>Be ready not just to launch, but to keep building for the long-term.</li>
+                <li>Make ThinkUp sustainable as a company by inspiring enough people to become members with active yearly subscriptions.</li>
+                <li>Develop a business model that makes us as accountable to our users as we are to investors.</li>
+                <li>Be ready not just to launch once, but to keep iterating and evolving over the long-term.</li>
               </ul>
 
               <p>You can join ThinkUp now at the <strong class="level-span">Member</strong>, <strong class="level-span">Pro</strong> or <strong class="level-span">Executive</strong> level, and be one of the very first users of ThinkUp in early 2014. When you do, you’ll help make ThinkUp available to everyone.</p>
@@ -174,7 +174,7 @@
               <ul class="faq">
                 <li class="faq-item">
                   <div class="faq-question">Is this the same app you guys launched two years ago?</div>
-                  <div class="faq-answer">No! We tore that all apart and made a whole new app on top of that engine. Now ThinkUp has a sleek new look. (We kept the name ThinkUp because it's an awesome name.)</div>
+                  <div class="faq-answer">No! We tore that all apart and made a whole new app on top of that engine. (We kept the name ThinkUp because it's awesome.)</div>
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">What happened to Expert Labs?</div>
@@ -190,9 +190,9 @@
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">Isn’t ThinkUp open source? Can I run it on my own? Is ThinkUp.com any different?</div>
-                  <div class="faq-answer"><p>It sure is, and if you have the tech skills to run it on your own server, we think that's awesome! (It is roughly about the same amount of work as getting WordPress running on your server.)</p>
+                  <div class="faq-answer"><p>It sure is, and if you have the tech skills to run it on your own server, we think that's fantastic! (It is roughly about the same amount of work as getting WordPress running on your server.)</p>
 
-                  <p>The version of ThinkUp that you grab from <a href="https://github.com/ginatrapani/ThinkUp">GitHub</a> and put on your server is exactly the same as what we run on ThinkUp.com, though we've built some systems around it for managing payments and some other infrastructure details.</p></div>
+                  <p>The version of <a href="http://thinkup.com/download/">ThinkUp that you can download</a> and install on your web server or <a href="https://github.com/ginatrapani/ThinkUp">clone from GitHub</a> is what we will run on ThinkUp.com, though we've built systems around it for managing payments and other infrastructure details.</p></div>
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">I’m a developer! How can I build insights for ThinkUp?</div>
@@ -212,12 +212,12 @@
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">Are you hiring?</div>
-                  <div class="faq-answer">Maybe soon! It partially depends on how this funding campaign goes. The good news is that, if you've got something to contribute, you can do that now and we'll work to make it worth your while. Some people have contributed code to ThinkUp and we helped the get jobs at companies like Facebook or Google before we had a company ourselves. Some helped on design or documentation and we were able to refer more work to them, or hire them for projects. And some have been helpful in building the community, by answering questions or writing up useful blog posts, and we greet them with warm hugs and buy coffee when we're in the same town because it's great to make friends.</div>
+                  <div class="faq-answer">Maybe soon! It partially depends on how this funding campaign goes. The good news is that, if you've got something to contribute, you can do that now and we'll work to make it worth your while. Some people have contributed code to ThinkUp and we helped them get jobs at companies like Facebook or Google before we had a company ourselves. Some helped on design or documentation and we were able to refer more work to them, or hire them for projects. And some have been helpful in building the community, by answering questions or writing up useful blog posts, and we greet them with warm hugs and buy coffee when we're in the same town because it's great to make friends.</div>
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">What are you being huge hypocrites about?</div>
                   <div class="faq-answer">
-                    <p>Probably a bunch of stuff! Here are some of the ones we’re aware of so far, and let us know what we’re missing.</p>
+                    <p>Probably a bunch of stuff. Here are some of the ones we’re aware of so far. (Let us know what we’re missing.)</p>
 
                     <ul>
                       <li><strong>By starting with a paid set of users, we run the dangers of catering to a set of people and companies who have the disposable income to join something like this.</strong> We plan to address this with deliberate efforts at inclusion once ThinkUp is available more broadly, but our judgment was that the benefits of a sustainable company were a prerequisite to addressing the larger issues of who we’re serving with ThinkUp.</li>
@@ -226,35 +226,36 @@
                       <li><strong>ThinkUp is really just for those who already have big social networks, and helps the already-successful get even more successful.</strong> This one’s a legitimate criticism -- right now ThinkUp is more useful for folks that already have some kind of network. But our goal is to keep iterating so that it can be of use to anybody, no matter how many connections they have online.</li>
                       <li><strong>You say you want your community to be open and welcoming, but your CEO is always going on rants on Twitter.</strong> Yeah, Anil can be pretty annoying sometimes. But our fundamental principle is that our community and the things they can do matter more than any one person. We hope to welcome folks into the ThinkUp community who are pointedly, and constructively, critical about everything we do.</li>
                       <li><strong>Isn’t taking funding from VCs evil? Aren’t you really critical of venture capital?</strong> We sure are. Much of the system, and many of its participants, can encourage things that we think are bad for the web, or for society. So we took a really long time, and had a lot of really in-depth conversations, in our process of vetting the investors that we work with. We’re confident that we’ve found people who respect our values and care about the web, and that’s why we’re happy to make them part of bringing ThinkUp to the world.</li>
-                      <li><strong>You’re not being open enough!</strong> This one’s kinda vague, but it can certainly be argued that there are parts of what we do that are less open. (For example, our payment system isn’t open source like ThinkUp itself is.) We’re open to feedback on this, but the goal is for us to go as far as is humanly possible in sharing the functioning of our company with our community and our users, so we’ll rely on you to keep us honest.</li>
+                      <li><strong>You’re not being open enough!</strong> This one’s kinda vague, but yes, there are parts of what we do that are less open. (For example, our payment system isn’t open source like ThinkUp itself is.) We want your feedback on this, but the goal is for us to go as far as is humanly possible in sharing the functioning of our company with our community and our users, so we’ll rely on you to keep us honest.</li>
                     </ul>
                   </div>
                 </li>
                 <li class="faq-item">
-                  <div class="faq-question">How come you’re doing a crowdfunding campaign if you’ve raised funding?</div>
-                  <div class="faq-answer"><p>We raised a little bit of funding to be able to do immediate work like this crowdfunding campaign and to pay folks like professional designers to make ThinkUp good enough for the world to use.</p>
+                  <div class="faq-question">How come you’re doing a crowdfunding campaign if you’ve already raised money?</div>
+                  <div class="faq-answer"><p>We raised a relatively small round of funding to be able to do immediate work like this campaign and to pay folks like professional designers to make ThinkUp good enough for the world to use.</p>
 
-                  <p>But we're doing this crowdfunding campaign because that's what it's going to take to get ThinkUp out to the whole world. We need your help to make it real, and to prove there's demand for this kind of app and this kind of company.</p></div>
+                  <p>But we're doing this crowdfunding campaign because that's what it's going to take to get ThinkUp out to the whole world. We need your help to make it real, to prove there's demand for this kind of app and this kind of company, and keep us as accountable to you as we are to our investors.</p></div>
                 </li>
                 <li class="faq-item">
-                  <div class="faq-question">Why aren’t you using Kickstarter or IndieGogo?</div>
-                  <div class="faq-answer">We love those platforms! But we wanted to focus on a subscription plan for our app, and we had to build that system anyway, so we thought it’d be easiest for our users if we just had one integrated system that was easy enough to use. By going with Amazon payments, it should be just as easy to become a ThinkUp member as it is to back a Kickstarter campaign.</div>
+                  <div class="faq-question">Why aren’t you using Kickstarter or Indiegogo?</div>
+                  <div class="faq-answer"><p>We love those platforms! But this isn't a one-time thing for us; we're in it for the long haul. That's why we're asking backers to join us with a recurring subscription&mdash;rather than a one-time contribution&mdash;so we can iterate our app and our business over time. We had to build a subscription system anyway, so we decided to run this campaign on our own software to get a headstart on development and create a single gateway for our users.</p>
+                  <p>Since we're using Amazon Payments, it should be just as easy to become a ThinkUp member as it is to back a Kickstarter campaign.</p></div>
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">Is this all or nothing? What if you don't meet your goal?</div>
-                  <div class="faq-answer">No, we’re launching no matter what. But if we don’t make our goal, we’ll have to spend more time thinking about our business model and working with our users to figure out how to make ThinkUp sustainable and how to support its growth going forward.</div>
+                  <div class="faq-answer">No, we’re launching no matter what. But if we don’t reach our goal, we’ll have to spend more time thinking about our business model and working with our users to figure out how to support ThinkUp's growth going forward.</div>
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">How come you don’t show the app in your little video? Is this thing real?</div>
-                  <div class="faq-answer">It’s totally real! We just are in the process of an extensive redesign of the app and didn’t want to show off the old version too much because the new one is so much nicer looking. You can check out this demo if you want to see how the old version looks: <a href="http://thinkup.com/demo/ginatrapani">http://thinkup.com/demo/ginatrapani</a></div>
+                  <div class="faq-answer">It’s completely real. We are in the process of an extensive redesign of the app and didn’t want to show off the old version too much because the new one is so much nicer-looking. You can <a href="http://thinkup.com/demo/ginatrapani">check out this demo</a> if you want to see how the old version looks.</div>
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">How do I know you can make this thing work?</div>
-                  <div class="faq-answer">Our founders have built apps, and companies, before, and learned a lot from doing so. Anil helped start up Six Apart, the company that made Movable Type and TypePad, which was one of the first paid hosted services for people to sign up for on the Internet. Gina’s had a number of successful open source apps and projects, from Todo.txt today to Better Gmail and many other apps in the past, in addition to cofounding Lifehacker. Best of all, we’ve got a lot of help from our community, and from our friends who’ve made some pretty big apps and sites, too.</div>
+                  <div class="faq-answer">Our founders have built apps and companies before, and learned a lot from doing so. Anil helped start Six Apart, the company that made Movable Type and TypePad, which was one of the first paid hosted services for people to sign up for on the Internet. Gina’s had a number of successful open source apps and projects, from Todo.txt today to Better Gmail and many other apps in the past, in addition to founding Lifehacker. Best of all, we’ve got a lot of help from our community, and from our friends who’ve made some pretty big apps and sites, too.</div>
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">When the heck are you folks launching?</div>
-                  <div class="faq-answer">All the members who join in this campaign will be able to use ThinkUp on January 15th. We know that some people have been waiting a long while for the chance to use the app, and we’re sorry it took so long. We just wanted to take our time and get things right in the process of building ThinkUp not just as an app, but as a company.</div>
+                  <div class="faq-answer">All the members who join in this campaign will be able to use ThinkUp on January 15th. We know that some people have been waiting awhile for the chance to use the app, and we’re sorry it took so long. We just wanted to take our time and get things right in the process of building ThinkUp not just as an app, but as a company.</div>
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">I joined, but I don't see a charge in my Amazon account. How come?</div>
@@ -286,7 +287,7 @@
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">I don't have an Amazon account. Can I join?</div>
-                  <div class="faq-answer">No, you’ll have to get an Amazon account.</div>
+                  <div class="faq-answer">Yes, just select on "I am a new customer" on Amazon Payments' login page to create your account. You will need an Amazon account in order to join ThinkUp.</div>
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">I’m not in the United States, can I still join?</div>
@@ -305,12 +306,12 @@
                   <div class="faq-answer">Any browser released in the last 5 or so years should work fine. We test things out on Chrome, Internet Explorer, Firefox and Safari. We test on Chrome and Safari on mobile devices too. We love you Opera folks, so please don’t email us, because ThinkUp will probably work, but we just don’t test on there. It probably won’t work well on that weird web browser thing on the Nintendo Wii.</div>
                 </li>
                 <li class="faq-item">
-                  <div class="faq-question">I have a question that's not listed here. How do I get help?</div>
-                  <div class="faq-answer">Email us at <a href="mailto:help@thinkup.com">help@thinkup.com</a> and one of our founders will help you out. If you are already a member, mention that you’re a member so we know to be really extra nice!</div>
-                </li>
-                <li class="faq-item">
                   <div class="faq-question">What’s your terms of service? What’s your privacy policy?</div>
                   <div class="faq-answer">We’re going to decide that with the help of our members who sign up during this campaign. Our plan is to share a good starting point for those policies with users, and people who’ve joined as members will be able to comment and suggest edits all the way up until we launch.</div>
+                </li>
+                <li class="faq-item">
+                  <div class="faq-question">I have a question that's not listed here. How do I get help?</div>
+                  <div class="faq-answer">Send an email to <a href="mailto:help@thinkup.com">help@thinkup.com</a> and one of our founders will help you out. If you are already a member, let us know and we'll be extra nice!</div>
                 </li>
               </ul>
             </div>
