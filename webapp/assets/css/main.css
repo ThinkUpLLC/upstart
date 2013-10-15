@@ -722,38 +722,26 @@ strong.level-span {
   font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
   line-height: 18px;
 }
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content ul {
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content ul,
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content ul {
   margin: 0;
   padding: 0 0 0 16px;
 }
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content ul li {
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content ul li,
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content ul li {
   font-size: 13px;
   font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
   line-height: 18px;
   margin-bottom: 5px;
 }
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content ul li em {
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content ul li em,
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content ul li em {
   font-size: 13px;
   font-family: "HelveticaNeueETW02-56It", helvetica, arial, sans-sarif;
   line-height: 18px;
 }
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content ul li strong {
-  font-size: 13px;
-  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
-  line-height: 18px;
-}
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content li {
-  font-size: 13px;
-  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
-  line-height: 18px;
-  margin-bottom: 5px;
-}
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content li em {
-  font-size: 13px;
-  font-family: "HelveticaNeueETW02-56It", helvetica, arial, sans-sarif;
-  line-height: 18px;
-}
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content li strong {
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content ul li strong,
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content ul li strong {
   font-size: 13px;
   font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
   line-height: 18px;
@@ -1017,11 +1005,11 @@ strong.level-span {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   border: 1px solid #d8d8d8;
-  padding: 3px 4px;
+  padding: 6px;
   display: inline-block;
   font-size: 14px;
   line-height: 14px;
-  height: 24px;
+  height: 30px;
   color: #333333;
 }
 .content-wrapper .newsletter-signup-wrapper .content .button {
@@ -1033,7 +1021,7 @@ strong.level-span {
   font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
   border: 0;
   font-size: 12px;
-  height: 24px;
+  height: 30px;
   vertical-align: top;
   padding: 0;
 }
