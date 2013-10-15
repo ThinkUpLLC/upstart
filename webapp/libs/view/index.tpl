@@ -111,12 +111,13 @@
             <header>We’re just as proud of what ThinkUp <em>doesn’t</em> do:</header>
             <div class="content">
               <ul>
-                <li>We do NOT try to turn your social network into a popularity contest about the number of followers you have.</li>
+                <li>ThinkUp does NOT try to turn your social network into a popularity contest about the number of followers you have.</li>
                 <li>ThinkUp does NOT try to assign some point score to you based on how you talk to your friends.</li>
-                <li>ThinkUp does NOT do things with your personal data behind your back.</li>
+                <li>ThinkUp does NOT do things with your personal data without your permission.</li>
                 <li>We are NOT trying to optimize conversion rates on your monetized eyeballs.</li>
-                <li>We’ll never lock your information into some proprietary system, since ThinkUp is completely open source.</li>
+                <li>We’ll never lock your information into some proprietary system, since ThinkUp is open source.</li>
                 <li>ThinkUp does NOT change its terms of service without consulting with the community.</li>
+                <li>ThinkUp does NOT tweet or post on your behalf behind your back.</li>
                 <li>We do NOT tolerate people being jerks to each other in our developer community. (Our mailing list has never had a flamewar.)</li>
                 <li>We are NOT going to stop fighting for a better web.</li>
 
