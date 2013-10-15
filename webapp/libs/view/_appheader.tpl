@@ -1,6 +1,6 @@
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <link rel="stylesheet" href="{$site_root_path}assets/css/vendor/normalize.min.css">
-  <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+  <link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic" rel='stylesheet' type='text/css'>
   <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
   <link rel="stylesheet" href="{$site_root_path}assets/css/main.css">
 

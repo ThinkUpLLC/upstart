@@ -16,16 +16,7 @@
     <meta itemprop="description" content="Join ThinkUp and be happy about the time you spend on Twitter and Facebook.">
     <meta itemprop="image" content="https://www.thinkup.com/join/assets/img/insight-examples.jpg">
 
-    <meta name="viewport" content="width=device-width, user-scalable=no">
-    <link rel="stylesheet" href="{$site_root_path}assets/css/vendor/normalize.min.css">
-    <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="{$site_root_path}assets/css/main.css">
-
-  <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <script>window.html5 || document.write('<script src="{$site_root_path}assets/js/vendor/html5shiv.js"><\/script>')</script>
-  <![endif]-->
+    {include file="_appheader.tpl"}
   </head>
   <body>
 
@@ -451,32 +442,7 @@
       </div><!-- end right column -->
     </div>
 
-    <footer class="page-footer">
-      <div class="copyright">&copy;2013 ThinkUp, LLC</div>
-      <div class="motto">It is nice to be nice.</div>
-      <div class="follow-wrapper">
-        <ul class="follow-links">
-          <li class="twitter"><a href="https://twitter.com/thinkup"><i class="icon-twitter"></i></a></li>
-          <li class="facebook"><a href="https://facebook.com/thinkupapp"><i class="icon-facebook-sign"></i></a></li>
-          <li class="google-plus"><a href="https://plus.google.com/109397312975756759279"><i class="icon-google-plus"></i></a></li>
-          <li class="github"><a href="https://github.com/ginatrapani/ThinkUp"><i class="icon-github"></i></a></li>
-        </ul>
-      </div>
-    </footer>
-
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="{$site_root_path}assets/js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
-    <script src="{$site_root_path}assets/js/vendor/bootstrap-carousel.min.js"></script>
-    <script src="{$site_root_path}assets/js/vendor/jquery.mobile.custom.min.js"></script>
-    <script src="{$site_root_path}assets/js/main.js"></script>
-
-    {literal}<script>
-      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-      g.src='//www.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>{/literal}
+    {include file="_appfooter.tpl"}
     <div class="attribution">Illustration credits: 1. <a href="http://thenounproject.com/noun/lightning/#icon-No865" target="_blank">Lightning</a> designed by <a href="http://thenounproject.com/matthewhock" target="_blank">Matthew Hock</a> from The Noun Project 2. <a href="http://thenounproject.com/noun/binoculars/#icon-No1625" target="_blank">Binoculars</a> designed by <a href="http://thenounproject.com/DrawPerfect" target="_blank">Paul IJsendoorn</a> from The Noun Project</div>
   </body>
 </html>
