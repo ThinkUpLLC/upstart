@@ -227,8 +227,7 @@ class NewSubscriberController extends SignUpController {
             }
 
             if ($update_count == 1) {
-                $this->addSuccessMessage("Hooray! You're now a ThinkUp member!<br><br> We sent you an ".
-                "email to confirm your address - just click the link in that message and you're all set.");
+                $this->addSuccessMessage("Hooray! You're now a ThinkUp member!");
 
                 $subscriber = $subscriber_dao->getByID($subscriber_id);
 

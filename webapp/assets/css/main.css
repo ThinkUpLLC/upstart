@@ -1186,7 +1186,7 @@ body.transactional .content-wrapper .page-header h2 {
   letter-spacing: -1px;
   margin: 8px 0 0;
 }
-body.transactional .content-wrapper .form-wrapper .message {
+body.transactional .content-wrapper .message {
   font-size: 14px;
   line-height: 20px;
   font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
@@ -1198,8 +1198,8 @@ body.transactional .content-wrapper .form-wrapper .message {
   margin-bottom: 20px;
   border-radius: 3px;
 }
-body.transactional .content-wrapper .form-wrapper .message:before,
-body.transactional .content-wrapper .form-wrapper .message:after {
+body.transactional .content-wrapper .message:before,
+body.transactional .content-wrapper .message:after {
   content: " ";
   /* 1 */
 
@@ -1207,27 +1207,44 @@ body.transactional .content-wrapper .form-wrapper .message:after {
   /* 2 */
 
 }
-body.transactional .content-wrapper .form-wrapper .message:after {
+body.transactional .content-wrapper .message:after {
   clear: both;
 }
-body.transactional .content-wrapper .form-wrapper .message .icon {
+body.transactional .content-wrapper .message .icon {
   font-size: 18px;
   line-height: 20px;
   width: 30px;
   margin-left: -30px;
   float: left;
 }
-body.transactional .content-wrapper .form-wrapper .message.info {
+body.transactional .content-wrapper .message.info {
   background: rgba(0, 153, 240, 0.25);
   color: #0099f0;
 }
-body.transactional .content-wrapper .form-wrapper .message.success {
+body.transactional .content-wrapper .message.success {
   background: rgba(0, 196, 48, 0.25);
   color: #00c430;
 }
-body.transactional .content-wrapper .form-wrapper .message.warning {
+body.transactional .content-wrapper .message.warning {
   background: rgba(245, 17, 17, 0.25);
   color: #f51111;
+}
+body.transactional .content-wrapper .button {
+  display: inline-block;
+  background: #0099f0;
+  color: #fff;
+  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  border: 0;
+  border-radius: 3px;
+  font-size: 16px;
+  line-height: 24px;
+  height: 24px;
+  padding: 0 5px;
+  text-decoration: none;
+}
+body.transactional .content-wrapper .button:hover {
+  background: #0089d7;
+  cursor: pointer;
 }
 body.transactional .content-wrapper .form-wrapper header {
   font-size: 14px;
@@ -1250,21 +1267,6 @@ body.transactional .content-wrapper .form-wrapper .input-text {
   padding: 9px;
   color: #333333;
   border: 1px solid #999999;
-}
-body.transactional .content-wrapper .form-wrapper .button {
-  display: inline-block;
-  background: #0099f0;
-  color: #fff;
-  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
-  border: 0;
-  border-radius: 3px;
-  font-size: 16px;
-  height: 40px;
-  padding: 0;
-}
-body.transactional .content-wrapper .form-wrapper .button:hover {
-  background: #0089d7;
-  cursor: pointer;
 }
 body.new-user .content-wrapper .form-wrapper .credentials {
   border: 0;
@@ -1295,15 +1297,59 @@ body.new-user .content-wrapper .form-wrapper .buttons .button {
   float: left;
   width: 140px;
   margin-left: 20px;
-  padding: 0 5px;
   font-size: 14px;
   line-height: 16px;
+  height: 40px;
 }
 body.new-user .content-wrapper .form-wrapper .buttons .button i {
   display: none;
 }
 body.new-user .content-wrapper .form-wrapper .buttons .button:first-child {
   margin-left: 0;
+}
+body.email-confirmation .content-wrapper .spread-the-word header {
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 22px;
+  margin-bottom: 18px;
+}
+body.email-confirmation .content-wrapper .spread-the-word .buttons:before,
+body.email-confirmation .content-wrapper .spread-the-word .buttons:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+body.email-confirmation .content-wrapper .spread-the-word .buttons:after {
+  clear: both;
+}
+body.email-confirmation .content-wrapper .spread-the-word .buttons .button {
+  display: block;
+  width: 280px;
+  padding: 0 10px;
+  font-size: 20px;
+  line-height: 40px;
+  height: 40px;
+  margin-bottom: 20px;
+}
+body.email-confirmation .content-wrapper .spread-the-word .buttons .button i {
+  display: inline-block;
+  width: 30px;
+}
+body.email-confirmation .content-wrapper .spread-the-word .buttons .button.twitter {
+  background: #00aced;
+}
+body.email-confirmation .content-wrapper .spread-the-word .buttons .button.facebook {
+  background: #3b5998;
+}
+body.email-confirmation .content-wrapper .spread-the-word .buttons .button.google-plus {
+  background: #dd4b39;
+}
+body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtube {
+  background: #bb0000;
 }
 /* ==========================================================================
    Media Queries
@@ -1595,10 +1641,10 @@ body.new-user .content-wrapper .form-wrapper .buttons .button:first-child {
   .content-wrapper .newsletter-signup-wrapper {
     padding: 12px 6px;
   }
- .attribution {
+  .attribution {
     width: 960px;
     margin: 0 auto 32px;
-     text-align: center;
+    text-align: center;
   }
   .page-footer {
     padding: 16px 0;
@@ -1784,6 +1830,13 @@ body.new-user .content-wrapper .form-wrapper .buttons .button:first-child {
   body.new-user .content-wrapper .form-wrapper .buttons .button i {
     display: inline;
     padding-right: 5px;
+  }
+  body.email-confirmation .content-wrapper .spread-the-word .buttons .button {
+    float: left;
+    margin-left: 20px;
+  }
+  body.email-confirmation .content-wrapper .spread-the-word .buttons .button:nth-child(2n+1) {
+    margin-left: 0;
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {

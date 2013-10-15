@@ -39,7 +39,7 @@ class ConfirmEmailController extends Controller {
                 $subscriber = $subscriber_dao->getByEmail($_GET['usr']);
                 if (isset($subscriber) && isset($subscriber->is_email_verified)) {
                     $subscriber_dao->verifyEmailAddress($_GET['usr']);
-                    $this->addSuccessMessage("Success! Your email has been verified.");
+                    $this->addSuccessMessage("Your email is confirmed!");
                 } else {
                     $this->addErrorMessage('Houston, we have a problem: Email address not found.');
                 }

@@ -1,160 +1,87 @@
-
+{if isset($success_msg) && $success_msg eq "Hooray! You're now a ThinkUp member!"}
+{assign var="confirming_email" value="true"}
+{else}
+{assign var="confirming_email" value="false"}
+{/if}
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8">
-    <title>ThinkUp</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Join ThinkUp: Create Your Account</title>
     <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Le styles -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <style type="text/css">
-      body {
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background-color: #f5f5f5;
-      }
-
-       .upstart-form {
-            max-width: 300px;
-            padding: 19px 29px 29px;
-            margin: 0 auto 20px;
-            background-color: #fff;
-            border: 1px solid #e5e5e5;
-            -webkit-border-radius: 5px;
-               -moz-border-radius: 5px;
-                    border-radius: 5px;
-            -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-               -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                    box-shadow: 0 1px 2px rgba(0,0,0,.05);
-       }
-      .form-signin .form-signin-heading,
-      .form-signin  {
-        margin-bottom: 10px;
-      }
-      .form-signin input[type="text"],
-      .form-signin input[type="password"] {
-        font-size: 16px;
-        height: auto;
-        margin-bottom: 15px;
-        padding: 7px 9px;
-      }
-
-      /* Logo */
-        div#logo {
-        }
-        
-        div#logo h1 {
-            margin: 18px 0 18px 0;
-            padding: 0;
-            color: #00aeef;
-            font-size: 72px;
-            line-height: 72px;
-            letter-spacing: -2px;
-        }
-
-        div#logo h1 span {
-            color: #404040;
-            font-weight: normal;
-        }
-        .big-btn {
-            display: inline-block;
-            font: 400 24px/39px;    
-            padding: 12px 36px;
-            margin: 8px 0px;
-            
-            -webkit-border-radius: 8px;
-            -moz-border-radius: 8px;
-            border-radius: 8px;
-           
-            color:#fff; 
-            text-shadow: #3799ca 0 -1px 0;
-            box-shadow: 0 1px 1px rgba(0,0,0,0.2) ;
-            
-            background-color: #00AEEF;
-            background-image: -moz-linear-gradient(top, #00AEEF, #0072EF);
-            background-image: -ms-linear-gradient(top, #00AEEF, #0072EF);
-            background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#00AEEF), to(#0072EF));
-            background-image: -webkit-linear-gradient(top, #00AEEF, #0072EF);
-            background-image: -o-linear-gradient(top, #00AEEF, #0072EF);
-            background-image: linear-gradient(top, #00AEEF, #0072EF);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00AEEF', endColorstr='#0072EF', GradientType=0);
-        }
-        
-        .big-btn:link, 
-        .big-btn:visited {
-            color:#ffffff;
-        }
-        
-        .big-btn:hover {    
-            color: #ffffff; 
-            text-decoration: none;  
-            
-            background-color: #4d90fe;  
-            background-image: -moz-linear-gradient(top, #4d90fe, #4787ed);
-            background-image: -ms-linear-gradient(top, #4d90fe, #4787ed);
-            background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#4d90fe), to(#4787ed));
-            background-image: -webkit-linear-gradient(top, #4d90fe, #4787ed);
-            background-image: -o-linear-gradient(top, #4d90fe, #4787ed);
-            background-image: linear-gradient(top, #4d90fe, #4787ed);
-            
-            background-repeat: repeat-x;
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4d90fe', endColorstr='#4787ed', GradientType=0);
-            
-            
-        }
-    </style>
-    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
-    <![endif]-->
-
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
+    {include file="_appheader.tpl"}
   </head>
+  <body {if $confirming_email eq "true"} class="email-confirmation transactional"{else}class="new-user transactional"{/if}>
 
-  <body>
-
-    <div class="container">
-
-      <div class="upstart-form">
-          <form class="form-signin" method="post" action="">
-            <div id="logo"><h1>Think<span>Up</span></h1></div>
-            {if isset($error_msg)}<div class="alert alert-error">{$error_msg}</div>{/if}
+    <div class="content-wrapper">
+      <div class="left-column">
+        <header class="page-header">
+          <h1><span class="site-name"><strong>Think</strong>Up</span></h1>
+            {if $confirming_email eq "true"}
+            <h2>Confirm your email</h2>
+            {else}
+           <h2>Create your account</h2>
+           {/if}
+        </header>
+        <div class="content">
+            {if isset($error_msg)}
+                <div class="message warning"><i class="icon icon-warning-sign"></i> {$error_msg}</div>
+            {/if}
             {if isset($success_msg)}
-            <div class="alert alert-success">{$success_msg}</div>
+                <div class="message success"><i class="icon icon-ok-sign"></i> {$success_msg}</div>
             {/if}
 
-            {if $do_show_form eq true}
-            <h2>Create Your ThinkUp Account</h2>
-            <p>To finish creating your account, enter your email, choose a password, and connect to Twitter or Facebook. (You'll be able to add other accounts after you sign up.)</p>
-            {include file="_usermessage.tpl" field="email"}
-            <input type="text" class="input-block-level" placeholder="yourname@example.com" name="email" value="{if isset($prefill_email)}{$prefill_email}{/if}">
-            {include file="_usermessage.tpl" field="password"}
-            <input type="password" class="input-block-level" placeholder="Password (At least 8 characters)" name="password" value="">
+          {if $confirming_email eq "true"}
+          <p>We sent you an email to confirm your address. Just click the link in that message and you're all set.</p>
 
-            <button class="btn btn-large btn-primary btn-info big-btn" type="submit" name="n" value="twitter">Connect to Twitter</button>
-            <button class="btn btn-large btn-primary btn-info big-btn" type="submit" name="n" value="facebook">Connect to Facebook</button>
-            {/if}
-            {if isset($do_show_just_auth_buttons) && $do_show_just_auth_buttons eq true}
-            <a href="{$twitter_auth_link}">Sign in with Twitter</a><br><br>
-            <a href="{$fb_connect_link}">Sign in with Facebook</a>
-            {/if}
+          <div class="spread-the-word">
+            <header>In the meantime, please spread the word!</header>
+            {include file="_appsharebuttons.tpl"}
+          </div>
+          {/if}
+
+
+          {if $do_show_form eq true}
+          <div class="form-wrapper">
+          <header>You won't be charged until ThinkUp launches in January. To finish creating your account, enter your email, choose a password, and connect to Twitter or Facebook. (You'll be able to add other accounts after you sign up.)</header>
+
+          <form method="post" action="">
+            <fieldset class="credentials">
+              <div class="field-group">
+                {include file="_appusermessage.tpl" field="email"}
+                <label for="email">Email</label>
+                <input type="email" class="input-text" placeholder="yourname@example.com" name="email" value="{if isset($prefill_email)}{$prefill_email}{/if}">
+              </div>
+              <div class="field-group">
+                {include file="_appusermessage.tpl" field="password"}
+                <label for="password">Password</label>
+                <input type="password" class="input-text" placeholder="(At least 8 characters)" name="password" value="">
+            </fieldset>
+
+            <fieldset class="buttons">
+              <button class="button twitter" type="submit" name="n" value="twitter"><i class="icon-twitter"></i> Connect via Twitter</button>
+              <button class="button facebook" type="submit" name="n" value="facebook"><i class="icon-facebook"></i> Connect via Facebook</button>
+            </fieldset>
+          </form>
+          </div>
+          {/if}
+
+        {if isset($do_show_just_auth_buttons) && $do_show_just_auth_buttons eq true}
+          <div class="form-wrapper">
+          <form method="post" action="">
+            <fieldset class="buttons">
+              <button class="button twitter"><a href="{$twitter_auth_link}" style="color:white;text-decoration:none"><i class="icon-twitter"></i> Connect via Twitter</a></button>
+              <button class="button facebook"><a href="{$fb_connect_link}" style="color:white;text-decoration:none"><i class="icon-facebook"></i> Connect via Facebook</a></button>
+            </fieldset>
           </form>
         </div>
-    </div> <!-- /container -->
+       {/if}
+ 
 
+      </div><!-- end left column -->
+    </div>
 
-
+    {include file="_appfooter.tpl"}
   </body>
 </html>
-
-

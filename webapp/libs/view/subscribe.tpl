@@ -45,7 +45,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Early Bird</h5>
-                <div class="backers">{if isset($subscriber_counts[50])}{$subscriber_counts[50]|number_format}{else}0{/if} backers</div>
+                <div class="backers">{if isset($subscriber_counts[50])}{$subscriber_counts[50]|number_format} backer{if $subscriber_counts[50] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
                 <div class="annually">$50/year</div>
@@ -61,7 +61,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Member</h5>
-                <div class="backers">{if isset($subscriber_counts[60])}{$subscriber_counts[60]|number_format}{else}0{/if} backers</div>
+                <div class="backers">{if isset($subscriber_counts[60])}{$subscriber_counts[60]|number_format} backer{if $subscriber_counts[60] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
                 <div class="annually">$60/year</div>
@@ -82,7 +82,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Pro</h5>
-                <div class="backers">{if isset($subscriber_counts[120])}{$subscriber_counts[120]|number_format}{else}0{/if} backers</div>
+                <div class="backers">{if isset($subscriber_counts[120])}{$subscriber_counts[120]|number_format} backer{if $subscriber_counts[120] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
                 <div class="annually">$120/year</div>
@@ -104,7 +104,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Executive</h5>
-                <div class="backers">{if isset($subscriber_counts[996])}{$subscriber_counts[996]|number_format}{else}0{/if} backers</div>
+                <div class="backers">{if isset($subscriber_counts[996])}{$subscriber_counts[996]|number_format} backer{if $subscriber_counts[996] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
                 <div class="annually">$996/year</div>

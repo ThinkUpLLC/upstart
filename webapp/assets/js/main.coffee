@@ -1,11 +1,9 @@
-# document.addEventListener('touchmove', (e) ->
-#     e.preventDefault()
-# , false)
-
 $ ->
   # For mobile, show the answer to each question when the user taps the title.
   $("body").on "tap", ".fundraiser-qa-item header", (e) ->
     if $(window).width() <= 640 then $(@).parent().toggleClass "active"
+
+  # Same idea for the FAQ, but everywhere.
   $("body").on "tap", "#qa-item-faq .faq-question", (e) ->
     $(@).parent().toggleClass "active"
 

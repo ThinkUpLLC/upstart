@@ -15,13 +15,13 @@ abstract class SignUpController extends Controller {
      */
     protected function isEmailInputValid() {
         if (isset($_POST['email']) && empty($_POST['email'])) {
-            $this->addErrorMessage('Please enter your email address.', 'email');
+            $this->addInfoMessage('Please enter your email address.', 'email');
         }
         $is_valid_address = false;
         if (isset($_POST['email']) && !empty($_POST['email'])) {
             $is_valid_address = UpstartHelper::validateEmail($_POST['email']);
             if (!$is_valid_address) {
-                $this->addErrorMessage('Please enter a valid email address.', 'email');
+                $this->addInfoMessage('Please enter a valid email address.', 'email');
             }
         }
         return (isset($_POST['email']) && $is_valid_address);
@@ -32,13 +32,13 @@ abstract class SignUpController extends Controller {
      */
     protected function isPasswordInputValid() {
         if (isset($_POST['password']) && empty($_POST['password'])) {
-            $this->addErrorMessage('Please enter a password.', 'password');
+            $this->addInfoMessage('Please enter a password.', 'password');
         }
         $is_valid_password = false;
         if (isset($_POST['password']) && !empty($_POST['password'])) {
             $is_valid_password = UpstartHelper::validatePassword($_POST['password']);
             if (!$is_valid_password) {
-                $this->addErrorMessage('Password must be at least 8 characters and contain both numbers and letters.',
+                $this->addInfoMessage('Password must be at least 8 characters and contain both numbers and letters.',
                 'password');
             }
         }
