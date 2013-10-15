@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Help launch ThinkUp: Select Your Membership Level</title>
+    <title>Join ThinkUp: Select Your Membership Level</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <link rel="stylesheet" href="{$site_root_path}assets/css/vendor/normalize.min.css">

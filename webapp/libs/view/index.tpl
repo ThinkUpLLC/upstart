@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Help Launch ThinkUp</title>
+    <title>Join ThinkUp</title>
     <meta name="description" content="Help launch ThinkUp: Join the campaign and get access to the new app that shows you what's meaningful and fun in your social networks.">
 
-    <meta property="og:title" content="Help launch ThinkUp" />
+    <meta property="og:title" content="Join ThinkUp" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.thinkup.com" />
     <meta property="og:image" content="facebook-share.png" />
