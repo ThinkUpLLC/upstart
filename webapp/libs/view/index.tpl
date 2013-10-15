@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html itemscope itemtype="http://schema.org/Event">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -8,9 +8,13 @@
 
     <meta property="og:title" content="Join ThinkUp" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.thinkup.com" />
-    <meta property="og:image" content="facebook-share.png" />
-    <meta property="og:description" content="Help launch ThinkUp: Join the campaign and get access to the new app that shows you what's meaningful and fun in your social networks." />
+    <meta property="og:url" content="http://thinkup.com/join/" />
+    <meta property="og:image" content="http://thinkup.com/join/assets/img/facebook-share.png" />
+    <meta property="og:description" content="Help launch ThinkUp: Support the campaign and get access to the new app that shows you what's meaningful and fun in your social networks." />
+ 
+    <meta itemprop="name" content="Join ThinkUp">
+    <meta itemprop="description" content="Join ThinkUp and be happy about the time you spend on Twitter and Facebook.">
+    <meta itemprop="image" content="https://www.thinkup.com/join/assets/img/insight-examples.jpg">
 
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <link rel="stylesheet" href="{$site_root_path}assets/css/vendor/normalize.min.css">
