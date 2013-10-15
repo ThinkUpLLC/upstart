@@ -41,15 +41,15 @@
             </ul>
           </header>
           
-          <div class="level{if $level eq "earlybird"} selected{/if}" id="level-earlybird" data-name="Early Bird"><a href="{$subscribe_earlybird_url}">
+          <div class="level" id="level-earlybird" data-name="Early Bird"><a href="#">
             <header class="level-header">
               <div class="level-name">
                 <h5>Early Bird</h5>
-                <div class="backers">{if isset($subscriber_counts[50])}{$subscriber_counts[50]|number_format} backer{if $subscriber_counts[50] neq 1}s{/if}{else}0 backers{/if}</div>
+                <div class="backers">250 backers</div>
               </div>
               <div class="level-cost">
                 <div class="annually">$50/year</div>
-                <div class="monthly">Only {if isset($subscriber_counts[50])}{250 - $subscriber_counts[50]}{else}250{/if} of 250 left!</div>
+                <div class="monthly"><span style="color:red;font-weight:bold;">SOLD OUT!</span></div>
             </header>
 
             <div class="level-description">

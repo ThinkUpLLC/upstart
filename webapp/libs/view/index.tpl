@@ -344,7 +344,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Early Bird</h5>
-                <div class="backers">{if isset($subscriber_counts[50])}{$subscriber_counts[50]|number_format} backer{if $subscriber_counts[50] neq 1}s{/if}{else}0 backers{/if}</div>
+                <div class="backers">250 backers</div>
               </div>
               <div class="level-cost">
                 <div class="annually">$50/year</div>
