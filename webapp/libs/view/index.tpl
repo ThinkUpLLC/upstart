@@ -340,7 +340,7 @@
 
         <div class="funding-levels">
           <header class="funding-levels-header"><span class="wide-line-one">Here are your</span> subscription options&hellip;</header>
-          <div class="level" id="level-earlybird"><a href="subscribe.php?level=earlybird">
+          <div class="level" id="level-earlybird"><a href="#">
             <header class="level-header">
               <div class="level-name">
                 <h5>Early Bird</h5>
@@ -348,12 +348,8 @@
               </div>
               <div class="level-cost">
                 <div class="annually">$50/year</div>
-                <div class="monthly">Only {if isset($subscriber_counts[50])}{250 - $subscriber_counts[50]}{else}250{/if} of 250 left!</div>
+                <div class="monthly"><span style="color:red;font-weight:bold;">SOLD OUT!</span></div>
             </header>
-
-            <div class="level-description">
-              <p>Get all the benefits of the <strong class="level-span">Member</strong> level and save 10 bucks! Limited to first 250 backers.</p>
-            </div>
           </a></div>
 
           <div class="level" id="level-member"><a href="subscribe.php?level=member">
