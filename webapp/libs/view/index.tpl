@@ -436,6 +436,11 @@
               <input type="submit" value="Subscribe" name="subscribe" class="button">
             </form>
           </div>
+          <br><br>
+          <header>
+            <h5>Wanna be a corporate sponsor?</h5>
+            <p><a style="color: #0099f0" href="mailto:anil@thinkup.com">Get in touch</a>. (Your logo here!)</p>
+          </header>
         </div>
       </div><!-- end right column -->
     </div>
