@@ -10,7 +10,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="http://thinkup.com/join/" />
     <meta property="og:image" content="http://thinkup.com/join/assets/img/facebook-share.png" />
-    <meta property="og:description" content="Help launch ThinkUp: Support the campaign and get access to the new app that shows you what's meaningful and fun in your social networks." />
+    <meta property="og:description" content="Join ThinkUp and be happy about the time you spend on Twitter and Facebook." />
  
     <meta itemprop="name" content="Join ThinkUp">
     <meta itemprop="description" content="Join ThinkUp and be happy about the time you spend on Twitter and Facebook.">
