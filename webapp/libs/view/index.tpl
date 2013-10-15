@@ -38,7 +38,8 @@
         </header>
 
         <div class="video-wrapper">
-          <iframe width="300" height="169" src="//www.youtube.com/embed/Z8s_AFq6bm4?showinfo=0&amp;controls=1" frameborder="0" allowfullscreen></iframe>
+          <iframe width="300" height="169" src="//www.youtube.com/embed/3l1QTyHKvGc?showinfo=0&amp;controls=1" frameborder="0" allowfullscreen></iframe>
+          
         </div>
 
         <div class="social-wrapper">
@@ -93,7 +94,7 @@
                   <li class="user-reminder">Which old friends have I lost touch with?</li>
                   <li class="nearby">Do any of my friends or followers live nearby?</li>
                   <li class="reaction">What did I say this week that got the biggest reaction?</li>
-                  <li>Do any of my followers work at that company?</li>
+                  <li class="company">Do any of my followers work at that company?</li>
                   <li class="getting-better">Am I getting any better at using these social networks?</li>
                 </ul>
             </div>
@@ -471,6 +472,7 @@
       g.src='//www.google-analytics.com/ga.js';
       s.parentNode.insertBefore(g,s)}(document,'script'));
     </script>{/literal}
+    <div class="attribution">Illustration credits: 1. <a href="http://thenounproject.com/noun/lightning/#icon-No865" target="_blank">Lightning</a> designed by <a href="http://thenounproject.com/matthewhock" target="_blank">Matthew Hock</a> from The Noun Project 2. <a href="http://thenounproject.com/noun/binoculars/#icon-No1625" target="_blank">Binoculars</a> designed by <a href="http://thenounproject.com/DrawPerfect" target="_blank">Paul IJsendoorn</a> from The Noun Project</div>
   </body>
 </html>
 

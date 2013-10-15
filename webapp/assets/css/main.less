@@ -255,6 +255,12 @@ strong {
                 margin-right: 43px - @width;
               }
 
+              &.company:before {
+                .sprite-factory;
+                margin-right: 43px - @width;
+              }
+
+
               &.happy:before {
                 .sprite-smiley-face;
                 margin-right: 43px - @width;
@@ -600,6 +606,17 @@ strong {
   }
 }
 
+.attribution {
+  margin: 0 8px 16px;
+  padding: 0 8px;
+  color: #ccc;
+  font: 11px/15px @font-sans;
+
+  a {
+    color: #ccc;
+  }
+}
+
 .page-footer {
   margin: 0 8px 32px;
   background: url(../img/border-top.png) top left repeat-x;
@@ -754,7 +771,8 @@ body.pledge {
 body.transactional {
   .content-wrapper {
     .page-header {
-      margin-bottom: 40px;
+      margin-bottom: 20px;
+      padding: 0;
       background: none;
       min-height: 0;
 
@@ -772,7 +790,129 @@ body.transactional {
     }
 
     .form-wrapper {
+      .message {
+        .clearfix;
+        font-size: 14px;
+        line-height: 20px;
+        font-family: @font-sans-bold;
+        font-weight: 300;
+        background: fade(@text-color, 25%);
+        color: @text-color;
+        padding: 8px;
+        padding-left: 38px;
+        margin-bottom: 20px;
+        border-radius: 3px;
 
+        .icon {
+          font-size: 18px;
+          line-height: 20px;
+          width: 30px;
+          margin-left: -30px;
+          float: left;
+        }
+
+        &.info {
+          background: fade(@blue, 25%);
+          color: @blue;
+        }
+
+        &.success {
+          background: fade(@green, 25%);
+          color: @green;
+        }
+
+        &.warning {
+          background: fade(@red, 25%);
+          color: @red;
+        }
+      }
+
+      header {
+        font-size: 14px;
+        line-height: 20px;
+        margin-bottom: 20px;
+      }
+
+      fieldset {
+        border: 0;
+        padding: 0;
+        margin: 0;
+      }
+
+      label {
+        font-size: 16px;
+        line-height: 40px;
+      }
+
+      .input-text {
+        font-family: @font-sans;
+        font-size: 16px;
+        line-height: 20px;
+        padding: 9px;
+        color: @text-color;
+        border: 1px solid mix(@text-color, #fff, 50%);
+      }
+
+      .button {
+        display: inline-block;
+        background: @blue;
+        color: #fff;
+        font-family: @font-sans;
+        border: 0;
+        border-radius: 3px;
+        font-size: 16px;
+        height: 40px;
+        padding: 0;
+
+        &:hover {
+          background: darken(@blue, 5%);
+          cursor: pointer;
+        }
+      }
+
+    }
+  }
+}
+
+body.new-user {
+  .content-wrapper {
+    .form-wrapper {
+      .credentials {
+        border: 0;
+        padding: 0;
+        margin: 0;
+
+        .field-group {
+          margin-bottom: 20px;
+
+          .input-text {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            width: 300px;
+          }
+        }
+      }
+
+      .buttons {
+        .clearfix;
+
+        .button {
+          float: left;
+          width: 140px;
+          margin-left: 20px;
+          padding: 0 5px;
+          font-size: 14px;
+          line-height: 16px;
+
+          i {
+            display: none;
+          }
+
+          &:first-child {
+            margin-left: 0;
+          }
+        }
+      }
     }
   }
 }
@@ -950,6 +1090,14 @@ body.transactional {
           }
         }
 
+        &#qa-item-what-i-get {
+          .content {
+            &:before {
+              .sprite-shopping-bag;
+            }
+          }
+        }
+
         &#qa-item-insights {
           .content {
             &:before {
@@ -964,18 +1112,29 @@ body.transactional {
               .clearfix;
 
               li {
-                box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                width: 140px;
-                margin-right: 20px;
+                width: 240px;
+                margin-left: 20px;
                 float: left;
 
-                &:last-child {
-                  margin-left: 0;
+                &.fans:before {
+                  margin-bottom: 8px;
                 }
 
-                &:nth-child(3n+1) {
+                &.time-machine:before {
+                  margin-bottom: 2px;
+                }
+
+                &.quotes:before {
+                  margin-bottom: 14px;
+                }
+
+                &.self-centered:before {
+                  margin-bottom: 5px;
+                }
+
+                &:nth-child(2n+1) {
                   clear: left;
+                  margin-left: 0;
                 }
               }
             }
@@ -1091,10 +1250,16 @@ body.transactional {
 
   }
 
-
-  .page-footer {
+  .attribution {
     width: 960px;
     margin: 0 auto 32px;
+    text-align: center;
+  }
+
+  .page-footer {
+    padding: 16px 0;
+    width: 960px;
+    margin: 0 auto 8px;
 
     .copyright, .motto {
       width: 20%;
@@ -1249,9 +1414,6 @@ body.transactional {
 
       .page-header {
         border: 0;
-        min-height: 0;
-        margin-bottom: 0;
-        padding: 0;
 
         h1 {
           height: auto;
@@ -1273,8 +1435,47 @@ body.transactional {
       padding-left: 0;
       padding-right: 0;
     }
-
   }
+
+  body.new-user {
+    .content-wrapper {
+      .form-wrapper {
+        .credentials {
+          .field-group {
+            .clearfix;
+            margin-bottom: 20px;
+
+            label {
+              float: left;
+              width: 140px;
+              margin-right: 20px;
+            }
+
+            .input-text {
+              width: 460px;
+            }
+          }
+        }
+
+        .buttons {
+          padding-left: 160px;
+
+          .button {
+            font-size: 16px;
+            width: 220px;
+            text-align: left;
+            padding: 0 10px;
+
+            i {
+              display: inline;
+              padding-right: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+
 
 }
 
