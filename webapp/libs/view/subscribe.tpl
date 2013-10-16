@@ -41,22 +41,6 @@
             </ul>
           </header>
           
-          <div class="level" id="level-earlybird" data-name="Early Bird"><a href="#">
-            <header class="level-header">
-              <div class="level-name">
-                <h5>Early Bird</h5>
-                <div class="backers">250 backers</div>
-              </div>
-              <div class="level-cost">
-                <div class="annually">$50/year</div>
-                <div class="monthly"><span style="color:red;font-weight:bold;">SOLD OUT!</span></div>
-            </header>
-
-            <div class="level-description">
-              <p>Get all the benefits of the <strong class="level-span">Member</strong> level and save 10 bucks! Limited to first 250 backers.</p>
-            </div>
-          </a></div>
-
           <div class="level{if $level eq "member"} selected{/if}" id="level-member" data-name="Member"><a href="{$subscribe_member_url}">
             <header class="level-header">
               <div class="level-name">

@@ -340,11 +340,11 @@
 
         <div class="funding-levels">
           <header class="funding-levels-header"><span class="wide-line-one">Here are your</span> subscription options&hellip;</header>
-          <div class="level" id="level-earlybird"><a href="#">
+          <div class="level" id="level-earlybird"><a title="Sold out!">
             <header class="level-header">
               <div class="level-name">
                 <h5>Early Bird</h5>
-                <div class="backers">250 backers</div>
+                <div class="backers">{if isset($subscriber_counts[50])}{$subscriber_counts[50]|number_format} backer{if $subscriber_counts[50] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
                 <div class="annually">$50/year</div>
