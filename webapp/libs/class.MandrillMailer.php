@@ -2,7 +2,7 @@
 
 class MandrillMailer {
 
-    const FROM_EMAIL = 'gina@thinkup.com';
+    const FROM_EMAIL = 'help@thinkup.com';
 
     const FROM_NAME = 'Gina and Anil at ThinkUp';
 
