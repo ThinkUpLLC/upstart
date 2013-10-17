@@ -193,6 +193,9 @@
                   <p>The version of <a href="http://thinkup.com/download/">ThinkUp that you can download</a> and install on your web server or <a href="https://github.com/ginatrapani/ThinkUp">clone from GitHub</a> is what we will run on ThinkUp.com, though we've built systems around it for managing payments and other infrastructure details.</p></div>
                 </li>
                 <li class="faq-item">
+                  <div class="faq-question">How will the new company affect the application's open source development?</div>
+                  <div class="faq-answer">It will make it better and faster! ThinkUp the company will support, enhance, and speed up development of the open source application because we'll have the financial backing to invest more time and resources into it. The open source app will always be free to download and run on your own server.</div>
+                <li class="faq-item">
                   <div class="faq-question">I’m a developer! How can I build insights for ThinkUp?</div>
                   <div class="faq-answer">Oh we love this question! Right now, there's a "Hello World" example insight that you can learn from <a href="https://github.com/ginatrapani/ThinkUp">on GitHub</a>, but we'll be publishing full API docs and a style guide for insights soon so you can really go crazy. It's just a short wait until we finalize the way those APIs and design elements look.</div>
                 </li>
