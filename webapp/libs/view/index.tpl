@@ -234,11 +234,18 @@
                 
                 <li class="faq-item">
                   <div class="faq-question">I joined, but I don't see a charge in my Amazon account. How come?</div>
-                  <div class="faq-answer">You won’t be charged until January 15, 2014. We’ll remind you before then so that you’re not surprised with a credit card charge right after the holidays.</div>
+                  <div class="faq-answer"><p>You won’t be charged until January 15, 2014. We’ll remind you before then so that you’re not surprised with a credit card charge right after the holidays.</p>
+                  <p>To see or cancel your payment authorization, log into <a href="http://payments.amazon.com">Amazon Payments</a>, click the "Edit My Account Settings" link, then click on "Manage my payment authorizations." You'll see an authorization to "THINKUP LLC." Click on the "Details" link to see the Authorization ID or cancel.</p></div>
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">I've joined. Can I change my membership level?</div>
-                  <div class="faq-answer">Yeah, just email us at <a href="mailto:help@thinkup.com">help@thinkup.com</a> and mention your confirmation number from Amazon. (A good way to do that is to forward your Amazon confirmation email to <a href="mailto:help@thinkup.com">help@thinkup.com</a> and just tell us at the top of the email what level you want to switch to.)</div>
+                  <div class="faq-answer"><p>Yeah, just email us at <a href="mailto:help@thinkup.com">help@thinkup.com</a> and tell us:
+                  <ul>
+                  <li>The membership level you want to switch to</li>
+                  <li>The email address you used to sign up for ThinkUp</li>
+                  <li>Your Amazon Payments Authorization ID</li>
+                  </ul>
+                  <p>To get your Amazon Payments Authorization ID, log into <a href="http://payments.amazon.com">Amazon Payments</a>, click the "Edit My Account Settings" link, then click on "Manage my payment authorizations." You'll see an authorization to "THINKUP LLC." Click on the "Details" link to get the Authorization ID.</p></div>
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">I've joined. When can I choose my ThinkUp username?</div>
