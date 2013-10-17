@@ -235,7 +235,7 @@
                 <li class="faq-item">
                   <div class="faq-question">I joined, but I don't see a charge in my Amazon account. How come?</div>
                   <div class="faq-answer"><p>You won’t be charged until January 15, 2014. We’ll remind you before then so that you’re not surprised with a credit card charge right after the holidays.</p>
-                  <p>To see or cancel your payment authorization, log into <a href="http://payments.amazon.com">Amazon Payments</a>, click the "Edit My Account Settings" link, then click on "Manage my payment authorizations." You'll see an authorization to "THINKUP LLC." Click on the "Details" link to see the Authorization ID or cancel.</p></div>
+                  <p>To manage your payment authorization, log into <a href="http://payments.amazon.com">Amazon Payments</a>, click the "Edit My Account Settings" link, then click on "Manage my payment authorizations." You'll see an authorization to "THINKUP LLC." Click on the "Details" link to see more.</p></div>
                 </li>
                 <li class="faq-item">
                   <div class="faq-question">I've joined. Can I change my membership level?</div>
@@ -272,11 +272,19 @@
                   <div class="faq-answer">Yes! But pricing is in U.S. Dollars, so be sure you know how that converts to your local currency.</div>
                 </li>
                 <li class="faq-item">
+                  <div class="faq-question">I tried backing ThinkUp, but ran into an error midway through. What should I do?</div>
+                  <div class="faq-answer"><p>Oh no! We're so sorry you had trouble signing up for ThinkUp. To fix it, let's cancel your failed signup and start fresh. Here's how:</p>
+                  <ul>
+                  <li>If you successfully authorized ThinkUp via Amazon Payments, you should've received an email confirmation from Amazon. If so, go ahead and cancel the authorization. To do so, log into <a href="http://payments.amazon.com">Amazon Payments</a>, click the "Edit My Account Settings" link, then click on "Manage my payment authorizations." You'll see an authorization to "THINKUP LLC." Click on the "Details" link, then click on the Cancel button.</li>
+                  <li>Once you cancelled the authorization, you can return to ThinkUp and try signing up again. If you get an error message about a duplicate email address (from your failed signup), email us at <a href="mailto:help@thinkup.com">help@thinkup.com</a> and tell us the email address you signed up with and we'll delete it from our system. Once that's done, you can re-sign up.</li>
+                  </ul></p>
+                  <p>We're deeply sorry for the inconvenience. Thanks for your patience with us.</p>  
+                </li>
+                <li class="faq-item">
                   <div class="faq-question">I've joined. Can I cancel my membership?</div>
                   <div class="faq-answer">You can, but we’d be so sad! Email us at <a href="mailto:help@thinkup.com">help@thinkup.com</a> to let us know what the situation is, and we’ll either help you solve whatever the problem is or cancel your membership immediately.</div>
                 </li>
 
-                
                 <h3>Crowdfunding questions</h3>
                 <li class="faq-item">
                   <div class="faq-question">How come you’re doing a crowdfunding campaign if you’ve already raised some money? Haven't you been critical of venture capital?</div>
