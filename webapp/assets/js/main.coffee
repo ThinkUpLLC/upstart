@@ -6,7 +6,9 @@ $ ->
   # Same idea for the FAQ, but everywhere.
   $("body").on "tap", "#qa-item-faq .faq-question", (e) ->
     $(@).parent().toggleClass "active"
-
+    if $(@).parent().hasClass "active"
+      history.replaceState null, null, "##{$(@).parent().attr "id"}"
+  
   # Make the width of the video fluid
   $theVideo = $(".video-wrapper iframe")
   $fluidVideoContainer = $(".video-wrapper")
@@ -37,6 +39,11 @@ $ ->
             $(".newsletter-signup-wrapper .content").html("""<p>Thanks for signing up! Please check your email address to confirm your subscription.</p>""")
       )
   )
+
+  # Open FAQ items when the anchor is in the URL
+  if $(window.location.hash).length > 0
+    $(window).scrollTop ($(window.location.hash).offset().top - 2)
+    $(window.location.hash).toggleClass "active"
 
   # Hide and show levels on pledge page
   $("body.pledge").on("tap", ".funding-levels .level", (e) ->

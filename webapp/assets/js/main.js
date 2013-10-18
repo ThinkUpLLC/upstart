@@ -7,7 +7,10 @@
       if ($(window).width() <= 640) return $(this).parent().toggleClass("active");
     });
     $("body").on("tap", "#qa-item-faq .faq-question", function(e) {
-      return $(this).parent().toggleClass("active");
+      $(this).parent().toggleClass("active");
+      if ($(this).parent().hasClass("active")) {
+        return history.replaceState(null, null, "#" + ($(this).parent().attr("id")));
+      }
     });
     $theVideo = $(".video-wrapper iframe");
     $fluidVideoContainer = $(".video-wrapper");
@@ -31,14 +34,18 @@
         }, function(data) {
           console.log(data);
           if (((data != null ? data.code : void 0) != null) && data.code !== 200) {
-            alert("Please enter a valid email address.");
+            alert("You need to use a valid email address.");
             return $form.children(".button").removeAttr("disabled");
           } else {
-            return $(".newsletter-signup-wrapper .content").html("<p>Thanks for signing up for our newsletter! Please check your email to confirm your signup.</p>");
+            return $(".newsletter-signup-wrapper .content").html("<p>Thanks for signing up! Please check your email address to confirm your subscription.</p>");
           }
         });
       }
     });
+    if ($(window.location.hash).length > 0) {
+      $(window).scrollTop($(window.location.hash).offset().top - 2);
+      $(window.location.hash).toggleClass("active");
+    }
     return $("body.pledge").on("tap", ".funding-levels .level", function(e) {
       var $this;
       $this = $(this);
