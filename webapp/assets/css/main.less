@@ -187,10 +187,11 @@ strong {
       &#qa-item-whats-thinkup {
         .sample-insights {
           position: relative;
-          background: url(../img/insight-examples.jpg) top left no-repeat;
-          width: 640px;
-          height: 467px;
-          left: -80px;
+          background: url(../img/insight-examples@0.5x.jpg) top left no-repeat;
+          background-size: 320px 233px;
+          width: 320px;
+          height: 233px;
+          left: -10px;
         }
       }
 
@@ -528,19 +529,21 @@ strong {
               margin: 0 0 5px;
 
               &.book-offer {
-                padding-left: 38px;
-                margin-left: -38px;
+                position: relative;
+                padding-left: 40px;
+
                 strong {
                   font-size: 11px;
                   text-transform: uppercase;
                 }
 
                 &:before {
+                  position: absolute;
                   content: " ";
                   float: left;
                   .sprite-book;
-                  margin-right: 8px;
-                  margin-top: 5px;
+                  top: 4px;
+                  left: 0;
                 }
               }
             }
@@ -1137,6 +1140,13 @@ body.email-confirmation {
             &:before {
               .sprite-lightbulb;
             }
+
+            .sample-insights {
+              width: 640px;
+              height: 467px;
+              left: -80px;
+            }
+
           }
         }
 
@@ -1551,11 +1561,11 @@ body.email-confirmation {
       .fundraiser-qa-item {
         &#qa-item-whats-thinkup {
           .sample-insights {
+            background-image: url(../img/insight-examples.jpg);
             background-size: 320px 233px;
             width: 320px;
             height: 233px;
-            left: 0;
-          }
+          }            
         }
       }
     }
@@ -1563,5 +1573,22 @@ body.email-confirmation {
   .page-footer {
     background-image: url(../img/border-top@2x.png);
     background-size: 7px 2px;
+  }
+}
+
+@media screen and (min-width: 640px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .content-wrapper {
+    .fundraiser-qa {
+      .fundraiser-qa-item {
+        &#qa-item-whats-thinkup {
+          .content {
+            .sample-insights {
+              background-image: url(../img/insight-examples@2x.jpg);
+              background-size: 640px 467px;
+            }            
+          }
+        }
+      }
+    }
   }
 }
