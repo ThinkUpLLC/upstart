@@ -40,7 +40,7 @@
         <div class="social-wrapper">
           <div class="social-buttons">
             <div class="twitter social-button">
-              <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://thinkup.com" data-text="Help launch ThinkUp: Support the campaign and learn what's meaningful and fun in your social networks." data-dnt="true">Tweet</a>
+              <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://www.thinkup.com/join/" data-text="Help launch ThinkUp: Support the campaign and learn what's meaningful and fun in your social networks." data-dnt="true">Tweet</a>
   {literal}<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>{/literal}
             </div>
             <div class="facebook social-button">
@@ -48,7 +48,7 @@
             </div>
             <div class="google-plus social-button">
               <!-- Place this tag where you want the share button to render. -->
-              <div class="g-plus" data-action="share" data-annotation="bubble" data-height="15" data-href="http://thinkup.com"></div>
+              <div class="g-plus" data-action="share" data-annotation="bubble" data-height="15" data-href="https://www.thinkup.com/join/"></div>
 
               <!-- Place this tag after the last share tag. -->
               {literal}<script type="text/javascript">
