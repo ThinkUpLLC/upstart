@@ -419,6 +419,10 @@ strong {
       line-height: 16px;
       margin: 16px 0;
       padding-right: 112px;
+
+      br {
+        display: none;
+      }
     }
 
     .pledge-now {
@@ -466,14 +470,6 @@ strong {
     .level {
       border-top: 1px dashed @blue;
 
-      &#level-pro a {
-        background: @beige;
-
-        &:hover {
-          background: mix(@blue, #fff, 10%);
-        }
-      }
-
       a {
         display: block;
         padding: 12px 6px;
@@ -510,7 +506,7 @@ strong {
             color: @orange;
             text-align: right;
 
-            .annually {
+            .monthly {
               font-family: @font-sans-bold;
             }
           }
@@ -550,6 +546,41 @@ strong {
           }
         }
       }
+
+      &:nth-child(2n+1) a {
+        background: @beige;
+
+        &:hover {
+          background: mix(@blue, #fff, 10%);
+        }
+      }
+
+      &.sold-out {
+        a {
+          background: @light-beige;
+
+          &:hover {
+            background: @light-beige;
+          }
+
+          header {
+            margin-bottom: 0;
+          }
+
+          header {
+            opacity: 0.5;
+
+            .level-cost .monthly {
+              text-transform: uppercase;
+            }
+          }
+
+          .level-description {
+            display: none;
+          }
+        }
+      }
+
     }
   }
 
@@ -625,11 +656,17 @@ strong {
   background: url(../img/border-top.png) top left repeat-x;
   padding: 16px 8px 0;
   .clearfix;
-  font: 11px/11px @font-sans;
+  font: 11px/15px @font-sans;
 
-  .copyright, .motto {
+  .copyright-privacy, .motto {
     float: left;
     width: 50%;
+  }
+
+  .privacy {
+    display: block;
+    color: @blue;
+    text-decoration: none;
   }
 
   .motto {
@@ -639,7 +676,7 @@ strong {
   .follow-wrapper {
     clear: both;
     text-align: center;
-    margin-top: 32px;
+    margin-top: 40px;
 
     .follow-links {
       margin: 0;
@@ -1258,7 +1295,6 @@ body.email-confirmation {
     }
 
     .call-to-action {
-      height: 277px;
       border-bottom: 1px dashed @orange;
       box-sizing: border-box;
       -moz-box-sizing: border-box;
@@ -1273,16 +1309,25 @@ body.email-confirmation {
 
       .pledge-goals {
         font-size: 14px;
-        line-height: 18px;
-        margin-top: 18px;
+        line-height: 17px;
         padding-right: 0;
+        margin: 16px 0 0;
+
+        .current-status {
+          display: block;
+          margin-bottom: 60px;
+        }
+
+        br {
+          display: block;
+        }
       }
 
       .pledge-now {
         width: 160px;
         height: 160px;
         bottom: -68px;
-        right: -15px;
+        right: -20px;
         border-radius: 80px;
         padding: 44px 30px 0;
         font-size: 24px;
@@ -1304,7 +1349,7 @@ body.email-confirmation {
 
       .funding-levels-header {
         font: 14px/18px @font-sans;
-        margin: 15px 0 18px 8px;
+        margin: 15px 0 18px 0;
         width: 160px;
         padding: 0;
 
@@ -1331,7 +1376,7 @@ body.email-confirmation {
     width: 960px;
     margin: 0 auto 8px;
 
-    .copyright, .motto {
+    .copyright-privacy, .motto {
       width: 20%;
     }
 

@@ -351,24 +351,27 @@
 
       <div class="right-column">
         <div class="call-to-action">
-          <header><span class="number">{$subscriber_counts['all']|number_format}</span> backers have joined so far</header>
-          <div class="pledge-goals"><strong>{$days_to_go} days and {(1000-$subscriber_counts['all'])|number_format} backers to go!</strong><br>We need 1,000 backers to join us by November 15th so that we can bring ThinkUp to everyone in January 2014.</div>
+          <header><span class="number">{$days_to_go}</span> days left to be among the first to join</header>
+          <div class="pledge-goals"><strong class="current-status">Join over {$subscriber_counts['all']|number_format} others in bringing ThinkUp to everyone.</strong>
+            We need 1,000 backers to <br>join us by November 15<sup>th</sup> <br>so that we can bring <br>ThinkUp to everyone <br>in January 2014.</div>
 
           <a href="subscribe.php" class="pledge-now">Join Now</a>
         </div>
 
         <div class="funding-levels">
           <header class="funding-levels-header"><span class="wide-line-one">Here are your</span> subscription options&hellip;</header>
-          <div class="level" id="level-earlybird"><a title="Sold out!">
+          <div class="level sold-out" id="level-earlybird"><a>
             <header class="level-header">
               <div class="level-name">
                 <h5>Early Bird</h5>
                 <div class="backers">{if isset($subscriber_counts[50])}{$subscriber_counts[50]|number_format} backer{if $subscriber_counts[50] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
+                <div class="monthly">Sold Out!</div>
                 <div class="annually">$50/year</div>
-                <div class="monthly"><span style="color:red;font-weight:bold;">SOLD OUT!</span></div>
             </header>
+            <div class="level-description">
+            </div>
           </a></div>
 
           <div class="level" id="level-member"><a href="subscribe.php?level=member">
@@ -378,8 +381,8 @@
                 <div class="backers">{if isset($subscriber_counts[60])}{$subscriber_counts[60]|number_format} backer{if $subscriber_counts[60] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
+                <div class="monthly">Just $5 a month!</div>
                 <div class="annually">$60/year</div>
-                <div class="monthly">Just 5 bucks a month!</div>
             </header>
 
             <div class="level-description">
@@ -399,8 +402,8 @@
                 <div class="backers">{if isset($subscriber_counts[120])}{$subscriber_counts[120]|number_format} backer{if $subscriber_counts[120] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
-                <div class="annually">$120/year</div>
                 <div class="monthly">Only $10 a month!</div>
+                <div class="annually">$120/year</div>
             </header>
 
             <div class="level-description">
@@ -421,8 +424,8 @@
                 <div class="backers">{if isset($subscriber_counts[996])}{$subscriber_counts[996]|number_format} backer{if $subscriber_counts[996] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
-                <div class="annually">$996/year</div>
                 <div class="monthly">Only $83 a month!</div>
+                <div class="annually">$996/year</div>
             </header>
 
             <div class="level-description">

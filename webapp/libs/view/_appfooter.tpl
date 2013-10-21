@@ -1,5 +1,8 @@
     <footer class="page-footer">
-      <div class="copyright">&copy;2013 ThinkUp, LLC</div>
+      <div class="copyright-privacy">
+        <div class="copyright">&copy;2013 ThinkUp, LLC</div>
+        <a class="privacy" href="https://github.com/ThinkUpLLC/policy">Privacy and stuff</a>
+      </div>
       <div class="motto">It is nice to be nice.</div>
       <div class="follow-wrapper">
         <ul class="follow-links">

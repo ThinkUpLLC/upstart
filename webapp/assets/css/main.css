@@ -834,6 +834,9 @@ strong.level-span {
   margin: 16px 0;
   padding-right: 112px;
 }
+.content-wrapper .call-to-action .pledge-goals br {
+  display: none;
+}
 .content-wrapper .call-to-action .pledge-now {
   position: absolute;
   overflow: hidden;
@@ -879,12 +882,6 @@ strong.level-span {
 .content-wrapper .funding-levels .level {
   border-top: 1px dashed #0099f0;
 }
-.content-wrapper .funding-levels .level#level-pro a {
-  background: #fef9ce;
-}
-.content-wrapper .funding-levels .level#level-pro a:hover {
-  background: #e6f5fe;
-}
 .content-wrapper .funding-levels .level a {
   display: block;
   padding: 12px 6px;
@@ -928,7 +925,7 @@ strong.level-span {
   color: #ff5600;
   text-align: right;
 }
-.content-wrapper .funding-levels .level a header .level-cost .annually {
+.content-wrapper .funding-levels .level a header .level-cost .monthly {
   font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
 }
 .content-wrapper .funding-levels .level a .level-description p {
@@ -973,6 +970,30 @@ strong.level-span {
   height: 45px;
   top: 4px;
   left: 0;
+}
+.content-wrapper .funding-levels .level:nth-child(2n+1) a {
+  background: #fef9ce;
+}
+.content-wrapper .funding-levels .level:nth-child(2n+1) a:hover {
+  background: #e6f5fe;
+}
+.content-wrapper .funding-levels .level.sold-out a {
+  background: #fffef6;
+}
+.content-wrapper .funding-levels .level.sold-out a:hover {
+  background: #fffef6;
+}
+.content-wrapper .funding-levels .level.sold-out a header {
+  margin-bottom: 0;
+}
+.content-wrapper .funding-levels .level.sold-out a header {
+  opacity: 0.5;
+}
+.content-wrapper .funding-levels .level.sold-out a header .level-cost .monthly {
+  text-transform: uppercase;
+}
+.content-wrapper .funding-levels .level.sold-out a .level-description {
+  display: none;
 }
 .content-wrapper .newsletter-signup-wrapper {
   padding: 12px 16px;
@@ -1056,7 +1077,7 @@ strong.level-span {
   margin: 0 8px 32px;
   background: url(../img/border-top.png) top left repeat-x;
   padding: 16px 8px 0;
-  font: 11px/11px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  font: 11px/15px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
 }
 .page-footer:before,
 .page-footer:after {
@@ -1070,10 +1091,15 @@ strong.level-span {
 .page-footer:after {
   clear: both;
 }
-.page-footer .copyright,
+.page-footer .copyright-privacy,
 .page-footer .motto {
   float: left;
   width: 50%;
+}
+.page-footer .privacy {
+  display: block;
+  color: #0099f0;
+  text-decoration: none;
 }
 .page-footer .motto {
   text-align: right;
@@ -1081,7 +1107,7 @@ strong.level-span {
 .page-footer .follow-wrapper {
   clear: both;
   text-align: center;
-  margin-top: 32px;
+  margin-top: 40px;
 }
 .page-footer .follow-wrapper .follow-links {
   margin: 0;
@@ -1609,7 +1635,6 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     height: 26px;
   }
   .content-wrapper .call-to-action {
-    height: 277px;
     border-bottom: 1px dashed #ff5600;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -1623,15 +1648,22 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   }
   .content-wrapper .call-to-action .pledge-goals {
     font-size: 14px;
-    line-height: 18px;
-    margin-top: 18px;
+    line-height: 17px;
     padding-right: 0;
+    margin: 16px 0 0;
+  }
+  .content-wrapper .call-to-action .pledge-goals .current-status {
+    display: block;
+    margin-bottom: 60px;
+  }
+  .content-wrapper .call-to-action .pledge-goals br {
+    display: block;
   }
   .content-wrapper .call-to-action .pledge-now {
     width: 160px;
     height: 160px;
     bottom: -68px;
-    right: -15px;
+    right: -20px;
     border-radius: 80px;
     padding: 44px 30px 0;
     font-size: 24px;
@@ -1646,7 +1678,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   }
   .content-wrapper .funding-levels .funding-levels-header {
     font: 14px/18px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
-    margin: 15px 0 18px 8px;
+    margin: 15px 0 18px 0;
     width: 160px;
     padding: 0;
   }
@@ -1666,7 +1698,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     width: 960px;
     margin: 0 auto 8px;
   }
-  .page-footer .copyright,
+  .page-footer .copyright-privacy,
   .page-footer .motto {
     width: 20%;
   }
@@ -1867,79 +1899,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     -moz-background-size: 216px 190px;
     background-size: 216px 190px;
   }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.fans:before {
-    background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.reaction:before {
-    background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.comparison:before {
-    background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.time-machine:before {
-    background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.user-reminder:before {
-    background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.standout:before {
-    background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.nearby:before {
-    background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.liked-link:before {
-    background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.company:before {
-    background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.happy:before {
-    background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.quotes:before {
-    background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.self-centered:before {
-    background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.getting-better:before {
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li:before {
     background-image: url('../img/icons@2x.png') !important;
     -webkit-background-size: 216px 190px;
     -moz-background-size: 216px 190px;
