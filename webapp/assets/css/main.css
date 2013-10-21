@@ -38,6 +38,12 @@
   font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
   line-height: 18px;
 }
+.retina-sprite {
+  background-image: url('../img/icons@2x.png') !important;
+  -webkit-background-size: 216px 190px;
+  -moz-background-size: 216px 190px;
+  background-size: 216px 190px;
+}
 .pulsing-keyframes 0% {
   -webkit-transform: scale(1);
   -moz-transform: scale(1);
@@ -1506,6 +1512,8 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     height: 65px;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights {
+    background: url(../img/insight-examples.jpg) top left no-repeat;
+    background-size: 640px 467px;
     width: 640px;
     height: 467px;
     left: -80px;
@@ -1841,11 +1849,113 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .content-wrapper .fundraiser-qa header:after {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa.active header:after {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.fans:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.reaction:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.comparison:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.time-machine:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.user-reminder:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.standout:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.nearby:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.liked-link:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.company:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.happy:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.quotes:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.self-centered:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.getting-better:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights {
     background-image: url(../img/insight-examples.jpg);
     background-size: 320px 233px;
     width: 320px;
     height: 233px;
+  }
+  .content-wrapper .call-to-action .pledge-now:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .funding-levels .level a .level-description .level-benefits li.book-offer:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
   }
   .page-footer {
     background-image: url(../img/border-top@2x.png);
@@ -1853,6 +1963,24 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   }
 }
 @media screen and (min-width: 640px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item .content:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content:before {
+    background-image: url('../img/icons@2x.png') !important;
+    -webkit-background-size: 216px 190px;
+    -moz-background-size: 216px 190px;
+    background-size: 216px 190px;
+  }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights {
     background-image: url(../img/insight-examples@2x.jpg);
     background-size: 640px 467px;

@@ -1142,6 +1142,8 @@ body.email-confirmation {
             }
 
             .sample-insights {
+              background: url(../img/insight-examples.jpg) top left no-repeat;
+              background-size: 640px 467px;
               width: 640px;
               height: 467px;
               left: -80px;
@@ -1555,40 +1557,4 @@ body.email-confirmation {
 
 }
 
-@media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-  .content-wrapper {
-    .fundraiser-qa {
-      .fundraiser-qa-item {
-        &#qa-item-whats-thinkup {
-          .sample-insights {
-            background-image: url(../img/insight-examples.jpg);
-            background-size: 320px 233px;
-            width: 320px;
-            height: 233px;
-          }            
-        }
-      }
-    }
-  }
-  .page-footer {
-    background-image: url(../img/border-top@2x.png);
-    background-size: 7px 2px;
-  }
-}
-
-@media screen and (min-width: 640px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-  .content-wrapper {
-    .fundraiser-qa {
-      .fundraiser-qa-item {
-        &#qa-item-whats-thinkup {
-          .content {
-            .sample-insights {
-              background-image: url(../img/insight-examples@2x.jpg);
-              background-size: 640px 467px;
-            }            
-          }
-        }
-      }
-    }
-  }
-}
+@import "retina.less";
