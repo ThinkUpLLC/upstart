@@ -75,9 +75,9 @@
               <button class="button facebook"><a href="{$fb_connect_link}" style="color:white;text-decoration:none"><i class="icon-facebook"></i> Connect via Facebook</a></button>
             </fieldset>
           </form>
-        </div>
-       {/if}
- 
+          </div>
+        {/if}
+        </div> 
 
       </div><!-- end left column -->
     </div>

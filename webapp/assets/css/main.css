@@ -1219,6 +1219,12 @@ body.transactional .content-wrapper .message .icon {
   margin-left: -30px;
   float: left;
 }
+body.transactional .content-wrapper .message a {
+  color: #0099f0;
+}
+body.transactional .content-wrapper .message a:hover {
+  text-decoration: none;
+}
 body.transactional .content-wrapper .message.info {
   background: rgba(0, 153, 240, 0.25);
   color: #0099f0;

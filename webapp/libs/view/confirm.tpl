@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Join ThinkUp: Confirm Your Email</title>
+    <title>Join ThinkUp: Confirm your email</title>
     <meta name="description" content="">
     {include file="_appheader.tpl"}
   </head>
@@ -13,7 +13,7 @@
       <div class="left-column">
         <header class="page-header">
           <h1><span class="site-name"><strong>Think</strong>Up</span></h1>
-          <h2>Confirm your email</h2>
+          <h2>One last step</h2>
         </header>
 
         <div class="content">
