@@ -9,5 +9,5 @@
   <a class="button google-plus" href="https://plus.google.com/share?url=http%3A%2F%2Fthinkup.com%2Fjoin%2F"
   onclick="window.open('https://plus.google.com/share?url=https%3A%2F%2Fwww.thinkup.com%2Fjoin%2F','gplus-share-dialog','width=500,height=550');return false;"><i class="icon-google-plus"></i>Share on Google+</a>
 
-  <a href="http://www.youtube.com/watch?v=3l1QTyHKvGc" class="button youtube" target="_blank"><i class="icon-youtube-sign"></i>Share the Video</a>
+  <a href="https://www.youtube.com/watch?v=TeqeSmBwpcw" class="button youtube" target="_blank"><i class="icon-youtube-sign"></i>Share the Video</a>
 </div>
