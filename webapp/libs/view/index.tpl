@@ -351,8 +351,8 @@
 
       <div class="right-column">
         <div class="call-to-action">
-          <header><span class="number">{$days_to_go}</span> days left to be among the first to join</header>
-          <div class="pledge-goals"><strong class="current-status">Join over {$subscriber_counts['all']|number_format} others in bringing ThinkUp to everyone.</strong>
+          <header><span class="number">{$days_to_go}</span> days left to join the launch</header>
+          <div class="pledge-goals"><strong class="current-status">Join {$subscriber_counts['all']|number_format} backers and help bring ThinkUp to everyone.</strong>
             We need 1,000 backers to <br>join us by November 15<sup>th</sup> <br>so that we can bring <br>ThinkUp to everyone <br>in January 2014.</div>
 
           <a href="subscribe.php" class="pledge-now">Join Now</a>
