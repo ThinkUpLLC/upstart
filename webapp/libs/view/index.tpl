@@ -381,8 +381,8 @@
                 <div class="backers">{if isset($subscriber_counts[60])}{$subscriber_counts[60]|number_format} backer{if $subscriber_counts[60] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
-                <div class="monthly">Just $5 a month!</div>
-                <div class="annually">$60/year</div>
+                <div class="monthly">$60/year</div>
+                <div class="annually">Just 5 bucks a month!</div>
             </header>
 
             <div class="level-description">
@@ -402,8 +402,8 @@
                 <div class="backers">{if isset($subscriber_counts[120])}{$subscriber_counts[120]|number_format} backer{if $subscriber_counts[120] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
-                <div class="monthly">Only $10 a month!</div>
-                <div class="annually">$120/year</div>
+                <div class="monthly">$120/year</div>
+                <div class="annually">Only $10 a month!</div>
             </header>
 
             <div class="level-description">
@@ -424,8 +424,8 @@
                 <div class="backers">{if isset($subscriber_counts[996])}{$subscriber_counts[996]|number_format} backer{if $subscriber_counts[996] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
-                <div class="monthly">Only $83 a month!</div>
-                <div class="annually">$996/year</div>
+                <div class="monthly">$996/year</div>
+                <div class="annually">Only $83 a month!</div>
             </header>
 
             <div class="level-description">
