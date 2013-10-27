@@ -141,7 +141,8 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     public function getListTotal() {
-        $q  = "SELECT count(*) as total FROM subscribers;";
+        $q  = "SELECT count(*) as total FROM subscribers s ";
+        $q .= "INNER JOIN subscriber_authorizations sa ON sa.subscriber_id = s.id;";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
         $result = $this->getDataRowAsArray($ps);

@@ -45,7 +45,8 @@ class AuthorizationMySQLDAO extends PDODAO {
     }
 
     public function getTotalAuthorizations() {
-        $q  = "SELECT SUM(amount) as total FROM authorizations;";
+        $q  = "SELECT SUM(amount) as total FROM authorizations a ";
+        $q .= "INNER JOIN subscriber_authorizations sa ON sa.authorization_id = a.id;";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
         $result = $this->getDataRowAsArray($ps);
