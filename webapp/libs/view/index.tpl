@@ -123,6 +123,10 @@
           <div class="fundraiser-qa-item" id="qa-item-whos-behind-thinkup">
             <header>Who’s behind ThinkUp?</header>
             <div class="content">
+              <div class="headshots">
+                <img src="{$site_root_path}assets/img/gina-headshot@2x.jpg" alt="Gina Trapani" /><img src="{$site_root_path}assets/img/anil-headshot@2x.jpg" alt="Anil Dash" />
+              </div>
+
               <p>Our cofounders, Gina Trapani and Anil Dash, have been working on ThinkUp together for a few years. Gina was the founding editor of Lifehacker, helped build one of the earliest social networks for teens, created Todo.txt, and hosts the popular podcasts “This Week in Google” and “In Beta.” Anil has been writing since the late 90s on his personal blog and in magazines such as Wired, and helped launch Movable Type, which powered the early blogosphere.</p>
 
               <p>Gina and Anil have advocated for the idea of more thoughtful technology and a better Internet for more than a decade. Instead of just writing or talking about it, ThinkUp is an effort to actually build a company and product that can make those goals happen. We’ve already joined forces with an enthusiastic and diverse open source community of contributors around the world who believe in that vision and in our product. We hope you'll be the next to join our community by becoming a member of ThinkUp.</p>

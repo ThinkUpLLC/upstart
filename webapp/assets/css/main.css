@@ -763,6 +763,20 @@ strong.level-span {
   font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
   line-height: 18px;
 }
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whos-behind-thinkup .content .headshots {
+  width: 300px;
+  float: right;
+  margin: 0 0 16px 0;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whos-behind-thinkup .content .headshots img {
+  width: 140px;
+  border-radius: 70px;
+  display: inline-block;
+  margin-left: 20px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whos-behind-thinkup .content .headshots img:first-child {
+  margin: 0;
+}
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq {
   margin: 0;
   padding: 0;
@@ -1388,6 +1402,12 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
 /* ==========================================================================
    Media Queries
    ========================================================================== */
+@media only screen and (max-width: 400px) {
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whos-behind-thinkup .content .headshots {
+    float: none;
+    margin: 0 auto 16px;
+  }
+}
 @media only screen and (min-width: 400px) {
   .content-wrapper .page-header h1 {
     font-size: 28px;
@@ -1626,6 +1646,15 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     background-position: -104px -91px;
     width: 36px;
     height: 25px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whos-behind-thinkup .content .headshots {
+    width: 140px;
+    margin: 0 0 0 20px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whos-behind-thinkup .content .headshots img,
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whos-behind-thinkup .content .headshots img:first-child {
+    display: block;
+    margin: 0 0 16px;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content:before {
     background-image: url('../img/icons.png');

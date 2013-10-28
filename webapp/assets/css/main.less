@@ -327,6 +327,27 @@ strong {
         }
       }
 
+      &#qa-item-whos-behind-thinkup {
+        .content {
+          .headshots {
+            width: 300px;
+            float: right;
+            margin: 0 0 16px 0;
+
+            img {
+              width: 140px;
+              border-radius: 70px;
+              display: inline-block;
+              margin-left: 20px;
+
+              &:first-child {
+                margin: 0;
+              }
+            }
+          }
+        }
+      }
+
       &#qa-item-faq {
         .content {
           .faq {
@@ -1020,6 +1041,21 @@ body.email-confirmation {
    Media Queries
    ========================================================================== */
 
+@media only screen and (max-width: 400px) {
+  .content-wrapper {
+    .fundraiser-qa {
+      .fundraiser-qa-item#qa-item-whos-behind-thinkup {
+        .content {
+          .headshots {
+            float: none;
+            margin: 0 auto 16px;
+          }
+        }
+      } 
+    }
+  }
+}
+
 @media only screen and (min-width: 400px) {
   .content-wrapper {
     .page-header {
@@ -1280,6 +1316,17 @@ body.email-confirmation {
             &:before {
               .sprite-friends-orange;
             }
+
+            .headshots {
+              width: 140px;
+              margin: 0 0 0 20px;
+
+              img, img:first-child {
+                display: block;
+                margin: 0 0 16px;
+              }
+            }
+
           }
         }
 
