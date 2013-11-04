@@ -113,4 +113,39 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $result = $dao->verifyEmailAddress('idontxexist@example.com');
         $this->assertEqual($result, 0);
     }
+
+    public function testGetSearchResults() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'ginatrapani@example.com',
+        'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis'));
+        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'lexluther@evilmail.com',
+        'verification_code'=>1234, 'is_email_verified'=>0));
+        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'xanderharris@buff.com',
+        'verification_code'=>1234, 'is_email_verified'=>0));
+        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'willowrosenberg@willow.com',
+        'verification_code'=>1234, 'is_email_verified'=>0));
+
+        $dao = new SubscriberMySQLDAO();
+        //test match email address
+        $result = $dao->getSearchResults('ginatrapani@example.com');
+        $this->assertEqual(sizeof($result), 1);
+        $result = $dao->getSearchResults('.com');
+        $this->assertEqual(sizeof($result), 4);
+
+        //test match username
+        $result = $dao->getSearchResults('gtra');
+        $this->assertEqual(sizeof($result), 1);
+
+        //test match full name
+        $result = $dao->getSearchResults('Gena');
+        $this->assertEqual(sizeof($result), 1);
+        $result = $dao->getSearchResults('gena davisson');
+        $this->assertEqual(sizeof($result), 0);
+        $result = $dao->getSearchResults('gena davis');
+        $this->assertEqual(sizeof($result), 1);
+
+        //test no matches
+        $result = $dao->getSearchResults('yaya');
+        $this->assertEqual(sizeof($result), 0);
+    }
 }

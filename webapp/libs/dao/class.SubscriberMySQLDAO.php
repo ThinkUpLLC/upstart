@@ -56,7 +56,6 @@ class SubscriberMySQLDAO extends PDODAO {
         }
     }
 
-    //@TODO Cache these totals in their own table to avoid all these joins on the front page
     public function getTotalSubscribers($amount = 0) {
         $q = "SELECT count(*) as total FROM subscribers s ";
         if ($amount > 0) {
@@ -147,5 +146,28 @@ class SubscriberMySQLDAO extends PDODAO {
         $ps = $this->execute($q);
         $result = $this->getDataRowAsArray($ps);
         return $result['total'];
+    }
+
+    public function getSearchResults($search_term, $page_number = 1, $count = 50) {
+        $start_on_record = ($page_number - 1) * $count;
+        $q = "SELECT *, UNIX_TIMESTAMP(token_validity_start_date) FROM subscribers s ";
+        $q .= "LEFT JOIN subscriber_authorizations sa ON s.id = sa.subscriber_id ";
+        $q .= "LEFT JOIN authorizations a ON sa.authorization_id = a.id ";
+        $q .= "LEFT JOIN authorization_status_codes sc ON sc.code = a.status_code ";
+        $q .= "WHERE email LIKE :search_term OR network_user_name LIKE :search_term1 OR full_name LIKE :search_term2 ";
+        $q .= "ORDER BY s.creation_time DESC ";
+        $q .= "LIMIT :start_on_record, :limit;";
+
+        $vars = array(
+            ':search_term1'=>'%'.$search_term.'%',
+            ':search_term2'=>'%'.$search_term.'%',
+            ':search_term'=>'%'.$search_term.'%',
+            ':start_on_record'=>$start_on_record,
+            ':limit'=>$count
+        );
+        //echo self::mergeSQLVars($q, $vars);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowsAsObjects($ps, 'Subscriber');
     }
 }

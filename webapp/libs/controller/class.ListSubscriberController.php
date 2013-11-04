@@ -8,12 +8,17 @@ class ListSubscriberController extends Controller {
         if ($page < 1) {
             $page =1;
         }
+        $search_term = (isset($_GET['q']))?$_GET['q']:null;
         $subscriber_dao = new SubscriberMySQLDAO();
-        $subscribers = $subscriber_dao->getSubscriberList($page, 51);
+        if ($search_term != null ) {
+            $subscribers = $subscriber_dao->getSearchResults($search_term, $page, 51);
+        } else {
+            $subscribers = $subscriber_dao->getSubscriberList($page, 51);
+        }
+        $this->addToView('search_term', $search_term);
         $this->addToView('subscribers', $subscribers);
         $total_subscribers = $subscriber_dao->getListTotal();
         $this->addToView('total_subscribers', $total_subscribers);
-
         $authorization_dao = new AuthorizationMySQLDAO();
         $total_authorizations = $authorization_dao->getTotalAuthorizations();
         $this->addToView('total_authorizations', $total_authorizations);

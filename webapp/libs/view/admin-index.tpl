@@ -60,6 +60,22 @@
   <div class="span10">
     <div id="logo"><a href="?p=1"><h1>Think<span>Up</span></h1></a></div>
 <h2>${$total_authorizations|number_format} pledged by {$total_subscribers|number_format} subscribers</h2>
+{if $search_term}
+    <h3>Showing search results for <span style="background-color:yellow">{$search_term}</span>. <a href="?p={$page}">Show all.</a></h3>
+    {if $subscribers|count eq 0}
+        {assign "show_search_form" "true"}
+    {/if}
+{else}
+    {assign "show_search_form" "true"}
+{/if}
+
+{if $show_search_form eq "true"}
+<form>
+<input type="text" name="q" action="index.php" class="form-control" placeholder="Email or name">
+<input type="submit" value="Search" class="btn btn-default">
+</form>
+{/if}
+
     <table class="table table-condensed table-hover">
       <tr>
           <th></th>
@@ -90,7 +106,7 @@
 
 <div class="span1"></div>
 
-{if $prev_page}<a href="?p={$prev_page}">&larr; previous</a>{/if} {if $next_page and $prev_page}|{/if} {if $next_page}<a href="?p={$next_page}">next &rarr;</a>{/if}
+{if $prev_page}<a href="?p={$prev_page}{if $search_term}&q={$search_term|urlencode}{/if}">&larr; previous</a>{/if} {if $next_page and $prev_page}|{/if} {if $next_page}<a href="?p={$next_page}{if $search_term}&q={$search_term|urlencode}{/if}">next &rarr;</a>{/if}
 </div>
 </div>
     </div> <!-- /container -->
