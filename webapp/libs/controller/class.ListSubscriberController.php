@@ -22,6 +22,7 @@ class ListSubscriberController extends Controller {
         $authorization_dao = new AuthorizationMySQLDAO();
         $total_authorizations = $authorization_dao->getTotalAuthorizations();
         $this->addToView('total_authorizations', $total_authorizations);
+        $this->addToView('application_url', UpstartHelper::getApplicationURL());
 
         $this->addToView('page', $page);
         if (sizeof($subscribers) == 51) {

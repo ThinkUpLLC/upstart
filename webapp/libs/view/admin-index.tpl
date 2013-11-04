@@ -95,7 +95,8 @@
         <td>{$subscriber->network}</td>
         <td>{$subscriber->creation_time}</td>
         <td style="text-align:right">${$subscriber->amount}</td>
-        <td><a title="{$subscriber->description}">{$subscriber->status_code}</a>{if $subscriber->is_email_verified eq 0}, Email not verified{/if}{if $subscriber->error_message}, Amazon error: {$subscriber->error_message}{/if}</td>
+        <td><a title="{$subscriber->description}">{$subscriber->status_code}</a>{if $subscriber->is_email_verified eq 0}, <a href="mailto:{$subscriber->email}?subject=Confirm your email address&body={$application_url}confirm.php?usr={$subscriber->email|urlencode|urlencode}{"&"|urlencode}code={$subscriber->verification_code}" title="Email address is uncomfirmed. Click here to send an email with the confirmation link." target="_blank">Confirm email</a>{/if}
+        {if $subscriber->error_message}, Amazon error: {$subscriber->error_message}{/if}</td>
         <td>{if $smarty.now > $subscriber->token_validity_start_date_ts}
         <a href="charge.php?token_id={$subscriber->token_id}&amount={$subscriber->amount|urlencode}" class="btn btn-success btn-mini">Charge</a>{else}
         Charge after {$subscriber->token_validity_start_date}{/if}  
