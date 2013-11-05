@@ -148,4 +148,53 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $result = $dao->getSearchResults('yaya');
         $this->assertEqual(sizeof($result), 0);
     }
+
+    public function testArchiveSubscriber() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'ginatrapani@example.com',
+        'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis'));
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>2, 'email'=>'lexluther@evilmail.com',
+        'network_user_name'=>'lexluther', 'verification_code'=>1234, 'is_email_verified'=>0));
+        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'xanderharris@buff.com',
+        'verification_code'=>1234, 'is_email_verified'=>0));
+        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'willowrosenberg@willow.com',
+        'verification_code'=>1234, 'is_email_verified'=>0));
+        $builders[] = FixtureBuilder::build('authorizations', array('id'=>1, 'token_id'=>'aabbccdd' ));
+        $builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>2,
+        'authorization_id'=>1));
+
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->archiveSubscriber(1);
+        $this->assertEqual($result, 1);
+
+        $sql = "SELECT * FROM subscriber_archive WHERE email = 'ginatrapani@example.com'";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual('gtra', $data['network_user_name']);
+        $this->assertEqual('', $data['token_id']);
+
+        $result = $dao->archiveSubscriber(2);
+        $this->assertEqual($result, 1);
+
+        $sql = "SELECT * FROM subscriber_archive WHERE email = 'lexluther@evilmail.com'";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual('lexluther', $data['network_user_name']);
+        $this->assertEqual('aabbccdd', $data['token_id']);
+    }
+
+    public function testDeleteBySubscriberID() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>101, 'email'=>'willow@buffy.com',
+        'network_user_name'=>'willowr'));
+
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->deleteBySubscriberID(101);
+        $this->assertEqual($result, 1);
+
+        $sql = "SELECT * FROM subscribers WHERE id=101";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertFalse($data);
+    }
 }

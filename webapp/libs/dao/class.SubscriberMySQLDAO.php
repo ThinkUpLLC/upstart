@@ -116,13 +116,15 @@ class SubscriberMySQLDAO extends PDODAO {
         $q = "SELECT * FROM subscribers WHERE id = :subscriber_id";
         $vars = array ( ':subscriber_id' => $subscriber_id);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        //echo self::mergeSQLVars($q, $vars);
         $ps = $this->execute($q, $vars);
         return $this->getDataRowAsObject($ps, "Subscriber");
     }
 
     public function getSubscriberList($page_number=1, $count=50) {
         $start_on_record = ($page_number - 1) * $count;
-        $q  = "SELECT *, UNIX_TIMESTAMP(token_validity_start_date) AS token_validity_start_date_ts FROM subscribers s ";
+        $q  = "SELECT s.id as subscriber_id, s.*, sa.*, a.*, ";
+        $q .= "UNIX_TIMESTAMP(token_validity_start_date) AS token_validity_start_date_ts FROM subscribers s ";
         $q .= "INNER JOIN subscriber_authorizations sa ON s.id = sa.subscriber_id ";
         $q .= "INNER JOIN authorizations a ON sa.authorization_id = a.id ";
         $q .= "INNER JOIN authorization_status_codes sc ON sc.code = a.status_code ";
@@ -169,5 +171,34 @@ class SubscriberMySQLDAO extends PDODAO {
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
         return $this->getDataRowsAsObjects($ps, 'Subscriber');
+    }
+
+    public function archiveSubscriber($subscriber_id) {
+        $q = "INSERT INTO subscriber_archive SELECT s.email, s.pwd, s.pwd_salt, s.creation_time, s.network_user_id, ";
+        $q .= "s.network_user_name, s.network, s.full_name, s.follower_count, s.is_verified, s.oauth_access_token, ";
+        $q .= "s.oauth_access_token_secret, s.verification_code, s.is_email_verified, a.token_id, a.amount, ";
+        $q .= "a.status_code, a.error_message, a.payment_method_expiry, a.caller_reference, a.recurrence_period, ";
+        $q .= "a.token_validity_start_date FROM subscribers s LEFT JOIN subscriber_authorizations sa ";
+        $q .= "ON s.id = sa.subscriber_id LEFT JOIN authorizations a ON a.id = sa.authorization_id ";
+        $q .= "WHERE s.id = :subscriber_id";
+
+        $vars = array(
+            ':subscriber_id'=>$subscriber_id
+        );
+        //echo self::mergeSQLVars($q, $vars);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
+    public function deleteBySubscriberID($subscriber_id) {
+        $q  = "DELETE FROM subscribers WHERE id = :subscriber_id";
+        $vars = array(
+            ':subscriber_id'=>$subscriber_id
+        );
+        //echo self::mergeSQLVars($q, $vars);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
     }
 }

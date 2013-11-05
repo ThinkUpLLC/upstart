@@ -65,4 +65,28 @@ class TestOfAuthorizationMySQLDAO extends UpstartUnitTestCase {
         $this->assertNull($authorization);
     }
 
+    public function testDeleteBySubscriberID() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>1,
+        'authorization_id'=>11));
+        $builders[] = FixtureBuilder::build('authorizations', array('id'=>11, 'token_id'=>'aabbddccedd'));
+        $builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>2,
+        'authorization_id'=>10));
+        $builders[] = FixtureBuilder::build('authorizations', array('id'=>10, 'token_id'=>'aabbddccedds'));
+
+        $dao = new AuthorizationMySQLDAO();
+        $result = $dao->deleteBySubscriberID(1);
+        $this->assertEqual($result, 1);
+
+
+        $sql = "SELECT * FROM authorizations WHERE id=11";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertFalse($data);
+
+        $sql = "SELECT * FROM authorizations WHERE id=10";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual(sizeof($data), 10);
+    }
 }

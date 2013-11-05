@@ -52,4 +52,16 @@ class AuthorizationMySQLDAO extends PDODAO {
         $result = $this->getDataRowAsArray($ps);
         return $result['total'];
     }
+
+    public function deleteBySubscriberID($subscriber_id) {
+        $q  = "DELETE authorizations FROM authorizations INNER JOIN subscriber_authorizations sa ";
+        $q .= "ON authorizations.id = sa.authorization_id  WHERE sa.subscriber_id = :subscriber_id";
+        $vars = array(
+            ':subscriber_id'=>$subscriber_id
+        );
+        //echo self::mergeSQLVars($q, $vars);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
 }

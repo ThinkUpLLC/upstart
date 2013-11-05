@@ -125,3 +125,28 @@ amount INT NOT NULL COMMENT  'Amount of yearly subscription.',
 count INT NOT NULL COMMENT  'Total subscribers at this amount.',
 PRIMARY KEY (  amount )
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  'Cached totals of backer counts at subscription levels.';
+
+CREATE TABLE subscriber_archive (
+  email varchar(200) NOT NULL COMMENT 'Subscriber email address.',
+  pwd varchar(255) NOT NULL COMMENT 'Subscriber password.',
+  pwd_salt varchar(255) NOT NULL COMMENT 'Subscriber password salt.',
+  creation_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time of subscription.',
+  network_user_id varchar(30) NULL DEFAULT NULL COMMENT 'Subscriber''s network user ID.',
+  network_user_name varchar(255) NOT NULL COMMENT 'Subscriber''s network username.',
+  network varchar(20) NULL DEFAULT NULL COMMENT 'Subscriber''s authorized network, ie, Twitter or Facebook.',
+  full_name varchar(255) NOT NULL COMMENT 'Subscriber''s full name (as specified on network).',
+  follower_count int(11) NOT NULL COMMENT 'Follower or subscriber count of service user.',
+  is_verified int(1) NOT NULL COMMENT 'Whether or not the service user is verified.',
+  oauth_access_token varchar(255) NOT NULL COMMENT 'OAuth access token for network authorization.',
+  oauth_access_token_secret varchar(255) NOT NULL COMMENT 'OAuth secret access token for network authorization.',
+  verification_code int(10) NOT NULL COMMENT 'Code for verifying email address.',
+  is_email_verified int(1) NOT NULL COMMENT 'Whether or not email address has been verified, 1 or 0.',
+  token_id varchar(100) NOT NULL COMMENT 'Token ID of payment authorization.',
+  amount int(11) NOT NULL COMMENT 'Monetary amount of payment authorization in US Dollars.',
+  status_code varchar(2) NOT NULL COMMENT 'The status of the payment authorization.',
+  error_message varchar(255) DEFAULT NULL COMMENT 'Human readable message that specifies the reason for a request failure (optional).',
+  payment_method_expiry varchar(10) DEFAULT NULL COMMENT 'Payment method expiration date (optional).',
+  caller_reference varchar(20) NOT NULL COMMENT 'Caller reference used for authorization request.',
+  recurrence_period varchar(12) NOT NULL DEFAULT '12 Months' COMMENT 'Recurrence period of payment authorization.',
+  token_validity_start_date timestamp NOT NULL COMMENT 'Date the token becomes valid.'
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Deleted subscribers with authorizaton data.';

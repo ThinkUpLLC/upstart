@@ -1,0 +1,1 @@
+{if $subscriber->network eq 'twitter'}<a href="https://twitter.com/intent/user?user_id={$subscriber->network_user_id}">@{$subscriber->network_user_name}{/if}{if $subscriber->network eq 'facebook'}<a href="https://facebook.com/{$subscriber->network_user_id}" target="_new">{$subscriber->full_name}{/if}{if $subscriber->network}</a>{/if}

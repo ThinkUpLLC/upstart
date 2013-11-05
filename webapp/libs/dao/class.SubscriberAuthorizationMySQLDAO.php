@@ -20,4 +20,29 @@ class SubscriberAuthorizationMySQLDAO extends PDODAO {
         }
         return $this->getInsertId($ps);
     }
+
+    public function deleteBySubscriberID($subscriber_id) {
+        $q  = "DELETE FROM subscriber_authorizations WHERE subscriber_id = :subscriber_id";
+        $vars = array(
+            ':subscriber_id'=>$subscriber_id
+        );
+        //echo self::mergeSQLVars($q, $vars);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
+    public function getBySubscriberID($subscriber_id) {
+        $q  = "SELECT * FROM authorizations a INNER JOIN subscriber_authorizations sa ON a.id = sa.authorization_id ";
+        $q .= "LEFT JOIN authorization_status_codes sc ON sc.code = a.status_code ";
+        $q .= "WHERE subscriber_id = :subscriber_id";
+        $vars = array(
+            ':subscriber_id'=>$subscriber_id
+        );
+        //echo self::mergeSQLVars($q, $vars);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowsAsObjects($ps, "Authorization");
+    }
+
 }
