@@ -60,6 +60,22 @@
   <div class="span10">
     <div id="logo"><a href="?p=1"><h1>Think<span>Up</span></h1></a></div>
 <h2>${$total_authorizations|number_format} pledged by {$total_subscribers|number_format} subscribers</h2>
+{if $search_term}
+    <h3>Showing search results for <span style="background-color:yellow">{$search_term}</span>. <a href="?p={$page}">Show all.</a></h3>
+    {if $subscribers|count eq 0}
+        {assign "show_search_form" "true"}
+    {/if}
+{else}
+    {assign "show_search_form" "true"}
+{/if}
+
+{if $show_search_form eq "true"}
+<form>
+<input type="text" name="q" action="index.php" class="form-control" placeholder="Email or name">
+<input type="submit" value="Search" class="btn btn-default">
+</form>
+{/if}
+
     <table class="table table-condensed table-hover">
       <tr>
           <th></th>
@@ -79,7 +95,8 @@
         <td>{$subscriber->network}</td>
         <td>{$subscriber->creation_time}</td>
         <td style="text-align:right">${$subscriber->amount}</td>
-        <td><a title="{$subscriber->description}">{$subscriber->status_code}</a>{if $subscriber->is_email_verified eq 0}, Email not verified{/if}{if $subscriber->error_message}, Amazon error: {$subscriber->error_message}{/if}</td>
+        <td><a title="{$subscriber->description}">{$subscriber->status_code}</a>{if $subscriber->is_email_verified eq 0}, <a href="mailto:{$subscriber->email}?subject=Confirm your email address&body={$application_url}confirm.php?usr={$subscriber->email|urlencode|urlencode}{"&"|urlencode}code={$subscriber->verification_code}" title="Email address is uncomfirmed. Click here to send an email with the confirmation link." target="_blank">Confirm email</a>{/if}
+        {if $subscriber->error_message}, Amazon error: {$subscriber->error_message}{/if}</td>
         <td>{if $smarty.now > $subscriber->token_validity_start_date_ts}
         <a href="charge.php?token_id={$subscriber->token_id}&amount={$subscriber->amount|urlencode}" class="btn btn-success btn-mini">Charge</a>{else}
         Charge after {$subscriber->token_validity_start_date}{/if}  
@@ -90,7 +107,7 @@
 
 <div class="span1"></div>
 
-{if $prev_page}<a href="?p={$prev_page}">&larr; previous</a>{/if} {if $next_page and $prev_page}|{/if} {if $next_page}<a href="?p={$next_page}">next &rarr;</a>{/if}
+{if $prev_page}<a href="?p={$prev_page}{if $search_term}&q={$search_term|urlencode}{/if}">&larr; previous</a>{/if} {if $next_page and $prev_page}|{/if} {if $next_page}<a href="?p={$next_page}{if $search_term}&q={$search_term|urlencode}{/if}">next &rarr;</a>{/if}
 </div>
 </div>
     </div> <!-- /container -->
