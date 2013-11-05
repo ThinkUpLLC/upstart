@@ -130,6 +130,8 @@
               <p>Our cofounders, Gina Trapani and Anil Dash, have been working on ThinkUp together for a few years. Gina was the founding editor of Lifehacker, helped build one of the earliest social networks for teens, created Todo.txt, and hosts the popular podcasts “This Week in Google” and “In Beta.” Anil has been writing since the late 90s on his personal blog and in magazines such as Wired, and helped launch Movable Type, which powered the early blogosphere.</p>
 
               <p>Gina and Anil have advocated for the idea of more thoughtful technology and a better Internet for more than a decade. Instead of just writing or talking about it, ThinkUp is an effort to actually build a company and product that can make those goals happen. We’ve already joined forces with an enthusiastic and diverse open source community of contributors around the world who believe in that vision and in our product. We hope you'll be the next to join our community by becoming a member of ThinkUp.</p>
+
+              <p><a href="http://blog.thinkup.com" class="blog-tout">See Gina and Anil’s updates on the ThinkUp blog.</a></p>
             </div>
           </div>
 
@@ -159,7 +161,7 @@
                 <li>First place in line to reserve your username on ThinkUp, and immediate access when we launch in January 2014.</li>
                 <li>ThinkUp insights for Facebook, Twitter and YouTube, with Instagram, Google+ and Foursquare to follow</li>
                 <li>A lock on the early-bird price.</li>
-                <li>An exclusive, brand new e-book, <i>Insights</i>, which explains the future of social networking based on interviews with dozens of the most creative and influential users of social media.</li>
+                <li>An exclusive, brand new e-book, <i>Insights</i>, which explains the future of social networking based on interviews with dozens of the most creative and influential users of social media. <a href="http://blog.thinkup.com">Preview the interviews on the ThinkUp blog.</a></li>
                 <li>The ability to weigh in on changes to ThinkUp’s features, terms of service and product roadmap before those changes happen.</li>
               </ul>
 
@@ -455,12 +457,22 @@
               <input type="submit" value="Subscribe" name="subscribe" class="button">
             </form>
           </div>
-          <br><br>
-          <header>
-            <h5>Wanna be a corporate sponsor?</h5>
-            <p><a style="color: #0099f0" href="mailto:anil@thinkup.com">Get in touch</a>. (Your logo here!)</p>
-          </header>
         </div>
+
+        <div class="corporate-sponsor">
+          <h5>Wanna be a corporate sponsor?</h5>
+          <p><a style="color: #0099f0" href="mailto:anil@thinkup.com">Get in touch</a>. (Your logo here!)</p>
+        </div>
+
+        <div class="works-with">
+          <h6>Works with:</h6>
+          <ul>
+            <li>Windows, Mac or Linux</li>
+            <li>Android or iPhone</li>
+            <li>Chrome, Internet Explorer, Firefox or Safari</li>
+          </ul>
+        </div>
+
       </div><!-- end right column -->
     </div>
 

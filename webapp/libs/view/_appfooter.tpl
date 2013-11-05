@@ -8,7 +8,7 @@
         <ul class="follow-links">
           <li class="twitter"><a href="https://twitter.com/thinkup"><i class="icon-twitter"></i></a></li>
           <li class="facebook"><a href="https://facebook.com/thinkupapp"><i class="icon-facebook-sign"></i></a></li>
-          <li class="google-plus"><a href="http://gplus.to/thinkup"><i class="icon-google-plus"></i></a></li>
+          <li class="google-plus"><a href="https://plus.google.com/109397312975756759279" rel="publisher"><i class="icon-google-plus"></i></a></li>
           <li class="github"><a href="https://github.com/ginatrapani/ThinkUp"><i class="icon-github"></i></a></li>
         </ul>
       </div>

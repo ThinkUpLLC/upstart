@@ -322,6 +322,15 @@ strong {
             li {
               .type-sans;
               margin-bottom: 5px;
+
+              a {
+                color: @blue;
+                text-decoration: none;
+
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
             }
           }          
         }
@@ -343,6 +352,15 @@ strong {
               &:first-child {
                 margin: 0;
               }
+            }
+          }
+
+          p a {
+            color: @blue;
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: underline;
             }
           }
         }
@@ -659,6 +677,44 @@ strong {
       }
     }
   }
+
+  .corporate-sponsor {
+    padding: 12px 16px;
+
+    p {
+      margin: 0;
+      .type-sans;
+    }
+
+    h5 {
+      color: @blue;
+      font-family: @font-sans-bold;
+      font-size: 16px;
+      margin: 0;
+      font-weight: 300;
+    }
+  }
+
+  .works-with {
+    padding: 12px 6px;
+
+    h6 {
+      color: @blue;
+      font-family: @font-sans-bold;
+      font-size: 12px;
+      line-height: 20px;
+      margin: 0;
+      font-weight: 300;
+    }
+
+    ul {
+      margin: 0;
+      font-size: 12px;
+      line-height: 20px;
+      padding: 0 0 0 18px;
+    }
+  }
+
 }
 
 .attribution {
@@ -1129,7 +1185,8 @@ body.email-confirmation {
     }
 
     .video-wrapper {
-      padding-top: 0;
+      padding-top: 8px;
+      margin-top: -8px;
       padding-bottom: 20px;
     }
 
@@ -1228,8 +1285,7 @@ body.email-confirmation {
               width: 640px;
               height: 467px;
               left: -80px;
-            }
-
+            }            
           }
         }
 
@@ -1406,7 +1462,7 @@ body.email-confirmation {
       }
     }
 
-    .newsletter-signup-wrapper {
+    .newsletter-signup-wrapper, .corporate-sponsor {
       padding: 12px 6px;
     }
 

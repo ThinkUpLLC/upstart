@@ -40,9 +40,9 @@
 }
 .retina-sprite {
   background-image: url('../img/icons@2x.png') !important;
-  -webkit-background-size: 216px 190px;
-  -moz-background-size: 216px 190px;
-  background-size: 216px 190px;
+  -webkit-background-size: 248px 208px;
+  -moz-background-size: 248px 208px;
+  background-size: 248px 208px;
 }
 .pulsing-keyframes 0% {
   -webkit-transform: scale(1);
@@ -174,7 +174,8 @@
     -o-transform: scale(1);
   }
 }
-/* glue: 0.3 hash: b93f707f80 */
+/* glue: 0.3 hash: ad1cdd8409 */
+.sprite-supported-devices,
 .sprite-lightbulb,
 .sprite-arrow-right,
 .sprite-arrow-left,
@@ -206,147 +207,153 @@
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
 }
-.sprite-lightbulb {
+.sprite-supported-devices {
   background-position: -1px -1px;
+  width: 60px;
+  height: 71px;
+}
+.sprite-lightbulb {
+  background-position: -63px -1px;
   width: 30px;
   height: 65px;
 }
 .sprite-arrow-right {
-  background-position: -33px -1px;
+  background-position: -95px -1px;
   width: 23px;
   height: 55px;
 }
 .sprite-arrow-left {
-  background-position: -58px -1px;
+  background-position: -120px -1px;
   width: 23px;
   height: 55px;
 }
 .sprite-shopping-bag {
-  background-position: -83px -1px;
+  background-position: -1px -74px;
   width: 30px;
   height: 45px;
 }
 .sprite-book {
-  background-position: -114px -1px;
+  background-position: -33px -74px;
   width: 30px;
   height: 45px;
 }
 .sprite-graduation {
-  background-position: -1px -68px;
+  background-position: -64px -74px;
   width: 39px;
   height: 21px;
 }
 .sprite-explosion {
-  background-position: -1px -91px;
+  background-position: -145px -1px;
   width: 38px;
   height: 38px;
 }
 .sprite-map-pin {
-  background-position: -41px -91px;
+  background-position: -145px -41px;
   width: 23px;
   height: 36px;
 }
 .sprite-friends {
-  background-position: -66px -91px;
+  background-position: -145px -79px;
   width: 36px;
   height: 26px;
 }
 .sprite-friends-orange {
-  background-position: -104px -91px;
+  background-position: -1px -121px;
   width: 36px;
   height: 25px;
 }
 .sprite-binoculars {
-  background-position: -146px -1px;
+  background-position: -39px -121px;
   width: 36px;
   height: 24px;
 }
 .sprite-photo-gallery {
-  background-position: -146px -27px;
+  background-position: -1px -148px;
   width: 35px;
   height: 27px;
 }
 .sprite-calendar {
-  background-position: -146px -56px;
+  background-position: -185px -1px;
   width: 30px;
   height: 34px;
 }
 .sprite-cards {
-  background-position: -146px -92px;
+  background-position: -1px -177px;
   width: 33px;
   height: 30px;
 }
 .sprite-megaphone {
-  background-position: -1px -131px;
+  background-position: -38px -148px;
   width: 33px;
   height: 27px;
 }
 .sprite-elephant {
-  background-position: -183px -1px;
+  background-position: -36px -177px;
   width: 32px;
   height: 27px;
 }
 .sprite-forbidden {
-  background-position: -183px -30px;
+  background-position: -216px -1px;
   width: 32px;
   height: 32px;
 }
 .sprite-number-one {
-  background-position: -183px -64px;
+  background-position: -216px -35px;
   width: 31px;
   height: 31px;
 }
 .sprite-meter {
-  background-position: -183px -96px;
+  background-position: -216px -67px;
   width: 31px;
   height: 25px;
 }
 .sprite-factory {
-  background-position: -183px -123px;
+  background-position: -216px -94px;
   width: 31px;
   height: 28px;
 }
 .sprite-smiley-face {
-  background-position: -1px -159px;
+  background-position: -216px -124px;
   width: 30px;
   height: 30px;
 }
 .sprite-quotes {
-  background-position: -36px -131px;
+  background-position: -216px -156px;
   width: 30px;
   height: 22px;
 }
 .sprite-lightning {
-  background-position: -33px -159px;
+  background-position: -185px -37px;
   width: 15px;
   height: 29px;
 }
 .sprite-heart {
-  background-position: -50px -159px;
+  background-position: -216px -179px;
   width: 28px;
   height: 26px;
 }
 .sprite-question-mark {
-  background-position: -80px -159px;
+  background-position: -185px -68px;
   width: 26px;
   height: 26px;
 }
 .sprite-speech-bubble {
-  background-position: -108px -159px;
+  background-position: -185px -96px;
   width: 25px;
   height: 23px;
 }
 .sprite-arrow-up {
-  background-position: -114px -48px;
-  width: 12px;
+  background-position: -201px -37px;
+  width: 13px;
   height: 6px;
 }
 .sprite-arrow-down {
-  background-position: -128px -48px;
-  width: 12px;
+  background-position: -201px -45px;
+  width: 13px;
   height: 6px;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 200/100), only screen and (min-device-pixel-ratio: 2) {
+  .sprite-supported-devices,
   .sprite-lightbulb,
   .sprite-arrow-right,
   .sprite-arrow-left,
@@ -376,9 +383,9 @@
   .sprite-arrow-up,
   .sprite-arrow-down {
     background-image: url('../img/icons@2x.png');
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
+    -webkit-background-size: 248px 208px;
+    -moz-background-size: 248px 208px;
+    background-size: 248px 208px;
   }
 }
 /* ==========================================================================
@@ -493,8 +500,8 @@ strong.level-span {
   right: 8px;
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -128px -48px;
-  width: 12px;
+  background-position: -201px -45px;
+  width: 13px;
   height: 6px;
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item header:hover {
@@ -503,8 +510,8 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item.active header:after {
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -114px -48px;
-  width: 12px;
+  background-position: -201px -37px;
+  width: 13px;
   height: 6px;
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item.active .content,
@@ -610,7 +617,7 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.fans:before {
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -1px -131px;
+  background-position: -38px -148px;
   width: 33px;
   height: 27px;
   margin-right: 10px;
@@ -618,7 +625,7 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.reaction:before {
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -1px -91px;
+  background-position: -145px -1px;
   width: 38px;
   height: 38px;
   margin-right: 5px;
@@ -626,7 +633,7 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.comparison:before {
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -146px -27px;
+  background-position: -1px -148px;
   width: 35px;
   height: 27px;
   margin-right: 8px;
@@ -634,7 +641,7 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.time-machine:before {
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -146px -56px;
+  background-position: -185px -1px;
   width: 30px;
   height: 34px;
   margin-right: 13px;
@@ -642,7 +649,7 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.user-reminder:before {
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -66px -91px;
+  background-position: -145px -79px;
   width: 36px;
   height: 26px;
   margin-right: 7px;
@@ -650,7 +657,7 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.standout:before {
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -146px -1px;
+  background-position: -39px -121px;
   width: 36px;
   height: 24px;
   margin-right: 7px;
@@ -658,7 +665,7 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.nearby:before {
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -41px -91px;
+  background-position: -145px -41px;
   width: 23px;
   height: 36px;
   margin-right: 13px;
@@ -668,7 +675,7 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.liked-link:before {
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -183px -1px;
+  background-position: -36px -177px;
   width: 32px;
   height: 27px;
   margin-right: 11px;
@@ -676,7 +683,7 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.company:before {
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -183px -123px;
+  background-position: -216px -94px;
   width: 31px;
   height: 28px;
   margin-right: 12px;
@@ -684,7 +691,7 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.happy:before {
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -1px -159px;
+  background-position: -216px -124px;
   width: 30px;
   height: 30px;
   margin-right: 13px;
@@ -692,7 +699,7 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.quotes:before {
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -36px -131px;
+  background-position: -216px -156px;
   width: 30px;
   height: 22px;
   margin-right: 13px;
@@ -700,7 +707,7 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.self-centered:before {
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -183px -64px;
+  background-position: -216px -35px;
   width: 31px;
   height: 31px;
   margin-right: 12px;
@@ -708,7 +715,7 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.getting-better:before {
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -1px -68px;
+  background-position: -64px -74px;
   width: 39px;
   height: 21px;
   margin-right: 4px;
@@ -763,6 +770,15 @@ strong.level-span {
   font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
   line-height: 18px;
 }
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content ul li a,
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content ul li a {
+  color: #0099f0;
+  text-decoration: none;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content ul li a:hover,
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content ul li a:hover {
+  text-decoration: underline;
+}
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whos-behind-thinkup .content .headshots {
   width: 300px;
   float: right;
@@ -776,6 +792,13 @@ strong.level-span {
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whos-behind-thinkup .content .headshots img:first-child {
   margin: 0;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whos-behind-thinkup .content p a {
+  color: #0099f0;
+  text-decoration: none;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whos-behind-thinkup .content p a:hover {
+  text-decoration: underline;
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content .faq {
   margin: 0;
@@ -879,7 +902,7 @@ strong.level-span {
   left: 63px;
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -33px -159px;
+  background-position: -185px -37px;
   width: 15px;
   height: 29px;
 }
@@ -979,7 +1002,7 @@ strong.level-span {
   float: left;
   background-image: url('../img/icons.png');
   background-repeat: no-repeat;
-  background-position: -114px -1px;
+  background-position: -33px -74px;
   width: 30px;
   height: 45px;
   top: 4px;
@@ -1077,6 +1100,49 @@ strong.level-span {
   height: 30px;
   vertical-align: top;
   padding: 0;
+}
+.content-wrapper .corporate-sponsor {
+  padding: 12px 16px;
+}
+.content-wrapper .corporate-sponsor p {
+  margin: 0;
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .corporate-sponsor p em {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-56It", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .corporate-sponsor p strong {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .corporate-sponsor h5 {
+  color: #0099f0;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  font-size: 16px;
+  margin: 0;
+  font-weight: 300;
+}
+.content-wrapper .works-with {
+  padding: 12px 6px;
+}
+.content-wrapper .works-with h6 {
+  color: #0099f0;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  font-size: 12px;
+  line-height: 20px;
+  margin: 0;
+  font-weight: 300;
+}
+.content-wrapper .works-with ul {
+  margin: 0;
+  font-size: 12px;
+  line-height: 20px;
+  padding: 0 0 0 18px;
 }
 .attribution {
   margin: 0 8px 16px;
@@ -1482,7 +1548,8 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     margin-left: 0;
   }
   .content-wrapper .video-wrapper {
-    padding-top: 0;
+    padding-top: 8px;
+    margin-top: -8px;
     padding-bottom: 20px;
   }
   .content-wrapper .social-wrapper {
@@ -1534,7 +1601,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     left: 22px;
     background-image: url('../img/icons.png');
     background-repeat: no-repeat;
-    background-position: -108px -159px;
+    background-position: -185px -96px;
     width: 25px;
     height: 23px;
   }
@@ -1559,7 +1626,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content:before {
     background-image: url('../img/icons.png');
     background-repeat: no-repeat;
-    background-position: -1px -1px;
+    background-position: -63px -1px;
     width: 30px;
     height: 65px;
   }
@@ -1573,14 +1640,14 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content:before {
     background-image: url('../img/icons.png');
     background-repeat: no-repeat;
-    background-position: -83px -1px;
+    background-position: -1px -74px;
     width: 30px;
     height: 45px;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content:before {
     background-image: url('../img/icons.png');
     background-repeat: no-repeat;
-    background-position: -146px -92px;
+    background-position: -1px -177px;
     width: 33px;
     height: 30px;
   }
@@ -1629,21 +1696,21 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-not-thinkup .content:before {
     background-image: url('../img/icons.png');
     background-repeat: no-repeat;
-    background-position: -183px -30px;
+    background-position: -216px -1px;
     width: 32px;
     height: 32px;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-goal .content:before {
     background-image: url('../img/icons.png');
     background-repeat: no-repeat;
-    background-position: -183px -96px;
+    background-position: -216px -67px;
     width: 31px;
     height: 25px;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whos-behind-thinkup .content:before {
     background-image: url('../img/icons.png');
     background-repeat: no-repeat;
-    background-position: -104px -91px;
+    background-position: -1px -121px;
     width: 36px;
     height: 25px;
   }
@@ -1659,7 +1726,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-faq .content:before {
     background-image: url('../img/icons.png');
     background-repeat: no-repeat;
-    background-position: -80px -159px;
+    background-position: -185px -68px;
     width: 26px;
     height: 26px;
   }
@@ -1714,7 +1781,8 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   .content-wrapper .funding-levels .funding-levels-header .wide-line-one {
     display: block;
   }
-  .content-wrapper .newsletter-signup-wrapper {
+  .content-wrapper .newsletter-signup-wrapper,
+  .content-wrapper .corporate-sponsor {
     padding: 12px 6px;
   }
   .attribution {
@@ -1916,23 +1984,23 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-  .content-wrapper .fundraiser-qa header:after {
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item header:after {
     background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
+    -webkit-background-size: 248px 208px;
+    -moz-background-size: 248px 208px;
+    background-size: 248px 208px;
   }
-  .content-wrapper .fundraiser-qa.active header:after {
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item.active header:after {
     background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
+    -webkit-background-size: 248px 208px;
+    -moz-background-size: 248px 208px;
+    background-size: 248px 208px;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li:before {
     background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
+    -webkit-background-size: 248px 208px;
+    -moz-background-size: 248px 208px;
+    background-size: 248px 208px;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights {
     background-image: url(../img/insight-examples.jpg);
@@ -1942,15 +2010,15 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   }
   .content-wrapper .call-to-action .pledge-now:before {
     background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
+    -webkit-background-size: 248px 208px;
+    -moz-background-size: 248px 208px;
+    background-size: 248px 208px;
   }
   .content-wrapper .funding-levels .level a .level-description .level-benefits li.book-offer:before {
     background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
+    -webkit-background-size: 248px 208px;
+    -moz-background-size: 248px 208px;
+    background-size: 248px 208px;
   }
   .page-footer {
     background-image: url(../img/border-top@2x.png);
@@ -1960,21 +2028,21 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
 @media screen and (min-width: 640px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   .content-wrapper .fundraiser-qa .fundraiser-qa-item .content:before {
     background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
+    -webkit-background-size: 248px 208px;
+    -moz-background-size: 248px 208px;
+    background-size: 248px 208px;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote:before {
     background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
+    -webkit-background-size: 248px 208px;
+    -moz-background-size: 248px 208px;
+    background-size: 248px 208px;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content:before {
     background-image: url('../img/icons@2x.png') !important;
-    -webkit-background-size: 216px 190px;
-    -moz-background-size: 216px 190px;
-    background-size: 216px 190px;
+    -webkit-background-size: 248px 208px;
+    -moz-background-size: 248px 208px;
+    background-size: 248px 208px;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights {
     background-image: url(../img/insight-examples@2x.jpg);
