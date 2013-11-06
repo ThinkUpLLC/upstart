@@ -1122,6 +1122,30 @@ strong.level-span {
   line-height: 20px;
   padding: 0 0 0 18px;
 }
+.content-wrapper .insights-callout .photos {
+  margin: 8px 0;
+}
+.content-wrapper .insights-callout .photos:before,
+.content-wrapper .insights-callout .photos:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.content-wrapper .insights-callout .photos:after {
+  clear: both;
+}
+.content-wrapper .insights-callout .photos img {
+  float: left;
+  width: 60px;
+  margin-left: 16px;
+  border-radius: 30px;
+}
+.content-wrapper .insights-callout .photos img:first-child {
+  margin: 0;
+}
 .attribution {
   margin: 0 8px 16px;
   padding: 0 8px;

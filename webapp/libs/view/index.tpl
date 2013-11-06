@@ -484,11 +484,12 @@
 
         <div class="insights-callout sidebar-callout">
           <h5><em>Insights</em></h5>
+          <div class="photos"><img src="{$site_root_path}assets/img/steve-martin.jpg" alt="Steve Martin"><img src="{$site_root_path}assets/img/catherine-bracy.jpg" alt="Catherine Bracy"><img src="{$site_root_path}assets/img/tim-oreilly.jpg" alt="Tim O’Reilly"><img src="{$site_root_path}assets/img/chelsea-peretti.jpg" alt="Chelsea Peretti"></div>
           <p>Every member gets the <strong>EXCLUSIVE</strong> book <em>Insights</em>, with interviews about the future of social media. Read sample interviews from Steve Martin, <a href="http://blog.thinkup.com/post/64984463786/thinkup-insights-interview-fred-wilson">Fred Wilson</a>, <a href="http://blog.thinkup.com/post/64975236304/thinkup-insights-interview-juliana-rotich">Juliana Rotich</a>, <a href="http://blog.thinkup.com/post/65630262082/thinkup-insights-interview-chelsea-peretti">Chelsea Peretti</a>, <a href="http://blog.thinkup.com/post/65716858017/thinkup-insights-interview-tim-oreilly">Tim O’Reilly</a> and <a href="http://blog.thinkup.com/post/64976688375/the-thinkup-insights-interviews">more</a>.
         </div>
 
         <div class="works-with sidebar-callout">
-          <h6>Works with:</h6>
+          <h6>ThinkUp works with:</h6>
           <ul>
             <li>Windows, Mac or Linux</li>
             <li>Android or iPhone</li>
