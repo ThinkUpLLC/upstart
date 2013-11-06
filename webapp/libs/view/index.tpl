@@ -359,7 +359,7 @@
         <div class="call-to-action">
           <header><span class="number">{$days_to_go}</span> days left to join the launch</header>
           <div class="pledge-goals"><strong class="current-status">Join {$subscriber_counts['all']|number_format} backers and help bring ThinkUp to everyone.</strong>
-            We’re raising the stakes: If 2,000<br>people join by 11/15, every<br>
+            We’re raising the stakes: If 2,000<br>people join by Nov 15<sup>th</sup>, every<br>
             member gets a code for a<br>
             <strong>FREE YEAR OF THINKUP</strong><br>
             to give to a friend.</div>
@@ -464,6 +464,12 @@
           </a></div>
         </div>
 
+        <div class="insights-callout sidebar-callout">
+          <h5><em>Insights</em></h5>
+          <div class="photos"><img src="{$site_root_path}assets/img/steve-martin.jpg" alt="Steve Martin"><img src="{$site_root_path}assets/img/catherine-bracy.jpg" alt="Catherine Bracy"><img src="{$site_root_path}assets/img/tim-oreilly.jpg" alt="Tim O’Reilly"><img src="{$site_root_path}assets/img/chelsea-peretti.jpg" alt="Chelsea Peretti"></div>
+          <p>Every member gets the <strong>EXCLUSIVE</strong> book <em>Insights</em>, with interviews about the future of social media. Read sample interviews from Steve Martin, <a href="http://blog.thinkup.com/post/64984463786/thinkup-insights-interview-fred-wilson">Fred Wilson</a>, <a href="http://blog.thinkup.com/post/64975236304/thinkup-insights-interview-juliana-rotich">Juliana Rotich</a>, <a href="http://blog.thinkup.com/post/65630262082/thinkup-insights-interview-chelsea-peretti">Chelsea Peretti</a>, <a href="http://blog.thinkup.com/post/65716858017/thinkup-insights-interview-tim-oreilly">Tim O’Reilly</a> and <a href="http://blog.thinkup.com/post/64976688375/the-thinkup-insights-interviews">more</a>.
+        </div>
+
         <div class="newsletter-signup-wrapper sidebar-callout">
           <header>
             <h5>Not a member yet?</h5>
@@ -480,21 +486,6 @@
         <div class="corporate-sponsor sidebar-callout">
           <h5>Wanna be a corporate sponsor?</h5>
           <p><a style="color: #0099f0" href="mailto:anil@thinkup.com">Get in touch</a>. (Your logo here!)</p>
-        </div>
-
-        <div class="insights-callout sidebar-callout">
-          <h5><em>Insights</em></h5>
-          <div class="photos"><img src="{$site_root_path}assets/img/steve-martin.jpg" alt="Steve Martin"><img src="{$site_root_path}assets/img/catherine-bracy.jpg" alt="Catherine Bracy"><img src="{$site_root_path}assets/img/tim-oreilly.jpg" alt="Tim O’Reilly"><img src="{$site_root_path}assets/img/chelsea-peretti.jpg" alt="Chelsea Peretti"></div>
-          <p>Every member gets the <strong>EXCLUSIVE</strong> book <em>Insights</em>, with interviews about the future of social media. Read sample interviews from Steve Martin, <a href="http://blog.thinkup.com/post/64984463786/thinkup-insights-interview-fred-wilson">Fred Wilson</a>, <a href="http://blog.thinkup.com/post/64975236304/thinkup-insights-interview-juliana-rotich">Juliana Rotich</a>, <a href="http://blog.thinkup.com/post/65630262082/thinkup-insights-interview-chelsea-peretti">Chelsea Peretti</a>, <a href="http://blog.thinkup.com/post/65716858017/thinkup-insights-interview-tim-oreilly">Tim O’Reilly</a> and <a href="http://blog.thinkup.com/post/64976688375/the-thinkup-insights-interviews">more</a>.
-        </div>
-
-        <div class="works-with sidebar-callout">
-          <h6>ThinkUp works with:</h6>
-          <ul>
-            <li>Windows, Mac or Linux</li>
-            <li>Android or iPhone</li>
-            <li>Chrome, Internet Explorer, Firefox or Safari</li>
-          </ul>
         </div>
 
       </div><!-- end right column -->
