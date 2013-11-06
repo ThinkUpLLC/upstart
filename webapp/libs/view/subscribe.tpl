@@ -38,7 +38,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Late Bird</h5>
-                <div class="backers">{assign "late_bird_total" value=($subscriber_counts[50] - 243)} {if $late_bird_total < 0}{assign "late_bird_total" value=0}{/if} {$late_bird_total} backer{if $late_bird_total neq 1}s{/if}</div>
+                <div class="backers">{assign "late_bird_total" value=($subscriber_counts[50] - 250)} {if $late_bird_total < 0}{assign "late_bird_total" value=0}{/if} {$late_bird_total} backer{if $late_bird_total neq 1}s{/if}</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">$50/year</div>

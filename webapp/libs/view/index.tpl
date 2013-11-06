@@ -373,7 +373,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Early Bird</h5>
-                <div class="backers">{if isset($subscriber_counts[50])}{$subscriber_counts[50]|number_format} backer{if $subscriber_counts[50] neq 1}s{/if}{else}0 backers{/if}</div>
+                <div class="backers">250 backers</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">Sold Out!</div>
@@ -387,7 +387,7 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Late Bird</h5>
-                <div class="backers">{assign "late_bird_total" value=($subscriber_counts[50] - 243)} {if $late_bird_total < 0}{assign "late_bird_total" value=0}{/if} {$late_bird_total} backer{if $late_bird_total neq 1}s{/if}</div>
+                <div class="backers">{assign "late_bird_total" value=($subscriber_counts[50] - 250)} {if $late_bird_total < 0}{assign "late_bird_total" value=0}{/if} {$late_bird_total} backer{if $late_bird_total neq 1}s{/if}</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">$50/year</div>
