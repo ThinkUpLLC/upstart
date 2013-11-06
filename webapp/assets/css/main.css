@@ -1032,34 +1032,41 @@ strong.level-span {
 .content-wrapper .funding-levels .level.sold-out a .level-description {
   display: none;
 }
-.content-wrapper .newsletter-signup-wrapper {
+.content-wrapper .sidebar-callout {
   padding: 12px 16px;
 }
-.content-wrapper .newsletter-signup-wrapper p {
-  margin: 0;
-  font-size: 13px;
-  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
-  line-height: 18px;
-}
-.content-wrapper .newsletter-signup-wrapper p em {
-  font-size: 13px;
-  font-family: "HelveticaNeueETW02-56It", helvetica, arial, sans-sarif;
-  line-height: 18px;
-}
-.content-wrapper .newsletter-signup-wrapper p strong {
-  font-size: 13px;
-  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
-  line-height: 18px;
-}
-.content-wrapper .newsletter-signup-wrapper header {
-  padding-bottom: 16px;
-}
-.content-wrapper .newsletter-signup-wrapper header h5 {
+.content-wrapper .sidebar-callout h5 {
   color: #0099f0;
   font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
   font-size: 16px;
   margin: 0;
   font-weight: 300;
+}
+.content-wrapper .sidebar-callout p {
+  margin: 0;
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .sidebar-callout p em {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-56It", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .sidebar-callout p strong {
+  font-size: 13px;
+  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  line-height: 18px;
+}
+.content-wrapper .sidebar-callout p a {
+  color: #0099f0;
+  text-decoration: none;
+}
+.content-wrapper .sidebar-callout p a:hover {
+  text-decoration: underline;
+}
+.content-wrapper .newsletter-signup-wrapper header {
+  padding-bottom: 16px;
 }
 .content-wrapper .newsletter-signup-wrapper .content:before,
 .content-wrapper .newsletter-signup-wrapper .content:after {
@@ -1100,35 +1107,6 @@ strong.level-span {
   height: 30px;
   vertical-align: top;
   padding: 0;
-}
-.content-wrapper .corporate-sponsor {
-  padding: 12px 16px;
-}
-.content-wrapper .corporate-sponsor p {
-  margin: 0;
-  font-size: 13px;
-  font-family: "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
-  line-height: 18px;
-}
-.content-wrapper .corporate-sponsor p em {
-  font-size: 13px;
-  font-family: "HelveticaNeueETW02-56It", helvetica, arial, sans-sarif;
-  line-height: 18px;
-}
-.content-wrapper .corporate-sponsor p strong {
-  font-size: 13px;
-  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
-  line-height: 18px;
-}
-.content-wrapper .corporate-sponsor h5 {
-  color: #0099f0;
-  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
-  font-size: 16px;
-  margin: 0;
-  font-weight: 300;
-}
-.content-wrapper .works-with {
-  padding: 12px 6px;
 }
 .content-wrapper .works-with h6 {
   color: #0099f0;
@@ -1758,8 +1736,8 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   .content-wrapper .call-to-action .pledge-now {
     width: 160px;
     height: 160px;
-    bottom: -68px;
-    right: -20px;
+    bottom: -75px;
+    right: -40px;
     border-radius: 80px;
     padding: 44px 30px 0;
     font-size: 24px;
@@ -1781,8 +1759,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   .content-wrapper .funding-levels .funding-levels-header .wide-line-one {
     display: block;
   }
-  .content-wrapper .newsletter-signup-wrapper,
-  .content-wrapper .corporate-sponsor {
+  .content-wrapper .sidebar-callout {
     padding: 12px 6px;
   }
   .attribution {

@@ -359,7 +359,10 @@
         <div class="call-to-action">
           <header><span class="number">{$days_to_go}</span> days left to join the launch</header>
           <div class="pledge-goals"><strong class="current-status">Join {$subscriber_counts['all']|number_format} backers and help bring ThinkUp to everyone.</strong>
-            We need 1,000 backers to <br>join us by November 15<sup>th</sup> <br>so that we can bring <br>ThinkUp to everyone <br>in January 2014.</div>
+            We’re raising the stakes: If 2,000<br>people join by 11/15, every<br>
+            member gets a code for a<br>
+            <strong>FREE YEAR OF THINKUP</strong><br>
+            to give to a friend.</div>
 
           <a href="subscribe.php" class="pledge-now">Join Now</a>
         </div>
@@ -377,6 +380,21 @@
                 <div class="annually">$50/year</div>
             </header>
             <div class="level-description">
+            </div>
+          </a></div>
+
+          <div class="level" id="level-latebird"><a href="subscribe.php?level=earlybird">
+            <header class="level-header">
+              <div class="level-name">
+                <h5>Late Bird</h5>
+                <div class="backers">{if isset($subscriber_counts[50])}{$subscriber_counts[50]|number_format} backer{if $subscriber_counts[50] neq 1}s{/if}{else}0 backers{/if}</div>
+              </div>
+              <div class="level-cost">
+                <div class="monthly">$50/year</div>
+                <div class="annually">About $4 a month!</div>
+            </header>
+            <div class="level-description">
+              <p>Save $10 off the regular membership rate, because procrastinators are people too!</p>
             </div>
           </a></div>
 
@@ -446,7 +464,7 @@
           </a></div>
         </div>
 
-        <div class="newsletter-signup-wrapper">
+        <div class="newsletter-signup-wrapper sidebar-callout">
           <header>
             <h5>Not a member yet?</h5>
             <p>Sign up for our newsletter.</p>
@@ -459,12 +477,17 @@
           </div>
         </div>
 
-        <div class="corporate-sponsor">
+        <div class="corporate-sponsor sidebar-callout">
           <h5>Wanna be a corporate sponsor?</h5>
           <p><a style="color: #0099f0" href="mailto:anil@thinkup.com">Get in touch</a>. (Your logo here!)</p>
         </div>
 
-        <div class="works-with">
+        <div class="insights-callout sidebar-callout">
+          <h5><em>Insights</em></h5>
+          <p>Every member gets the <strong>EXCLUSIVE</strong> book <em>Insights</em>, with interviews about the future of social media. Read sample interviews from Steve Martin, <a href="http://blog.thinkup.com/post/64984463786/thinkup-insights-interview-fred-wilson">Fred Wilson</a>, <a href="http://blog.thinkup.com/post/64975236304/thinkup-insights-interview-juliana-rotich">Juliana Rotich</a>, <a href="http://blog.thinkup.com/post/65630262082/thinkup-insights-interview-chelsea-peretti">Chelsea Peretti</a>, <a href="http://blog.thinkup.com/post/65716858017/thinkup-insights-interview-tim-oreilly">Tim O’Reilly</a> and <a href="http://blog.thinkup.com/post/64976688375/the-thinkup-insights-interviews">more</a>.
+        </div>
+
+        <div class="works-with sidebar-callout">
           <h6>Works with:</h6>
           <ul>
             <li>Windows, Mac or Linux</li>

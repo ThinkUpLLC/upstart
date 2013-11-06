@@ -22,7 +22,7 @@
           <header class="funding-levels-header">
             <div class="payment-details">
               {if $level}
-                You selected the <strong>{if $level eq 'earlybird'}Early Bird{else}{$level|ucfirst}{/if}</strong> level.<br><a href="{$selected_subscribe_url}">Pay with Amazon</a>
+                You selected the <strong>{if $level eq 'earlybird'}Late Bird{else}{$level|ucfirst}{/if}</strong> level.<br><a href="{$selected_subscribe_url}">Pay with Amazon</a>
               {else}
                 Here are your subscription options&hellip;
               {/if}
@@ -32,6 +32,21 @@
               <li>We will not charge you anything until 1/15/2014.</li>
             </ul>
           </header>
+
+          <div class="level{if $level eq "earlybird"} selected{/if}" id="level-latebird" data-name="Late Bird"><a href="{$subscribe_earlybird_url}">
+            <header class="level-header">
+              <div class="level-name">
+                <h5>Late Bird</h5>
+                <div class="backers">{if isset($subscriber_counts[50])}{$subscriber_counts[50]|number_format} backer{if $subscriber_counts[50] neq 1}s{/if}{else}0 backers{/if}</div>
+              </div>
+              <div class="level-cost">
+                <div class="monthly">$50/year</div>
+                <div class="annually">About $4 a month!</div>
+            </header>
+            <div class="level-description">
+              <p>Save $10 off the regular membership rate, because procrastinators are people too!</p>
+            </div>
+          </a></div>
           
           <div class="level{if $level eq "member"} selected{/if}" id="level-member" data-name="Member"><a href="{$subscribe_member_url}">
             <header class="level-header">
