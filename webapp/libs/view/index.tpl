@@ -387,14 +387,14 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Late Bird</h5>
-                <div class="backers">{if isset($subscriber_counts[50])}{$subscriber_counts[50]|number_format} backer{if $subscriber_counts[50] neq 1}s{/if}{else}0 backers{/if}</div>
+                <div class="backers">{assign "late_bird_total" value=($subscriber_counts[50] - 243)} {if $late_bird_total < 0}{assign "late_bird_total" value=0}{/if} {$late_bird_total} backer{if $late_bird_total neq 1}s{/if}</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">$50/year</div>
-                <div class="annually">About $4 a month!</div>
+                <div class="annually">{if (550 - $subscriber_counts[50]) < 1}<span style="color:red;font-weight:bold;">SOLD OUT!</span>{else}Only {if (550 - $subscriber_counts[50]) <= 300}{550 - $subscriber_counts[50]}{else}300{/if} of 300 left!{/if}</div>
             </header>
             <div class="level-description">
-              <p>Save $10 off the regular membership rate, because procrastinators are people too!</p>
+              <p><p>Get all the benefits of the <strong class="level-span">Member</strong> level and save 10 bucks! Because procrastinators are people, too.</p>
             </div>
           </a></div>
 
