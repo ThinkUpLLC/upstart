@@ -71,9 +71,9 @@
               <p>ThinkUp is also our new company, focused on the idea that people are looking for tech companies they can trust. We're putting our users and community first, because we think that's the best way to create a better web for everyone.</p>
 
               <div class="sample-insights"><!--
-                --><a href="{$site_root_path}assets/img/sample-insight-bio@2x.jpg" data-lightbox="sample-insights" class="sample-insight"><img src="{$site_root_path}assets/img/sample-insight-bio-thumb@2x.jpg" alt="App Screenshot"></a><!--
-                --><a href="{$site_root_path}assets/img/sample-insight-speedometer@2x.jpg" data-lightbox="sample-insights" class="sample-insight hide-on-mobile"><img src="{$site_root_path}assets/img/sample-insight-speedometer-thumb@2x.jpg" alt="App Screenshot"></a><!--
-                --><a href="{$site_root_path}assets/img/sample-insight-deblasio@2x.jpg" data-lightbox="sample-insights" class="sample-insight"><img src="{$site_root_path}assets/img/sample-insight-deblasio-thumb@2x.jpg" alt="App Screenshot"></a><!--
+                --><a href="{$site_root_path}assets/img/sample-insight-bio@2x.png" data-lightbox="sample-insights" class="sample-insight"><img src="{$site_root_path}assets/img/sample-insight-bio-thumb@2x.jpg" alt="App Screenshot"></a><!--
+                --><a href="{$site_root_path}assets/img/sample-insight-speedometer@2x.png" data-lightbox="sample-insights" class="sample-insight hide-on-mobile"><img src="{$site_root_path}assets/img/sample-insight-speedometer-thumb@2x.jpg" alt="App Screenshot"></a><!--
+                --><a href="{$site_root_path}assets/img/sample-insight-deblasio@2x.png" data-lightbox="sample-insights" class="sample-insight"><img src="{$site_root_path}assets/img/sample-insight-deblasio-thumb@2x.jpg" alt="App Screenshot"></a><!--
             --></div>
             </div>
           </div>
