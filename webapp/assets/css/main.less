@@ -29,9 +29,8 @@ strong {
   }
 
   .left-column {
-    background: url(../img/border-top.png) top left repeat-x;
-    padding-top: 2px;
     margin: 0 8px 16px;
+    border-top: 1px dotted @blue;
   }
 
   .page-header {
@@ -80,7 +79,7 @@ strong {
   }
 
   .video-wrapper {
-    border-top: 1px dashed @orange;
+    border-top: 1px dotted @orange;
     padding: 12px 0 0;
   }
 
@@ -103,7 +102,7 @@ strong {
 
     .fundraiser-qa-item {
       padding: 12px 6px;
-      border-bottom: 1px dashed @orange;
+      border-bottom: 1px dotted @orange;
 
       header {
         position: relative;
@@ -520,7 +519,7 @@ strong {
 
     .level {
       overflow: hidden;
-      border-top: 1px dashed @blue;
+      border-top: 1px dotted @blue;
 
       a {
         display: block;
@@ -753,7 +752,7 @@ strong {
 
 .page-footer {
   margin: 0 8px 32px;
-  background: url(../img/border-top.png) top left repeat-x;
+  border-top: 1px dotted @blue;
   padding: 16px 8px 0;
   .clearfix;
   font: 11px/15px @font-sans;
@@ -1154,12 +1153,12 @@ body.email-confirmation {
     padding: 0 20px;
     .clearfix;
     overflow: visible;
+    border-top: 1px dotted @blue;
 
     .right-column, .left-column {
-      background: url(../img/border-top.png) top left repeat-x;
-      padding: 2px 0 0;
       margin-left: 0;
       margin-right: 0;
+      border-top: 0;
     }
 
     .left-column {
@@ -1178,8 +1177,8 @@ body.email-confirmation {
       background: url(../img/rocketship-big.png) 8px 0 no-repeat;
       background-size: 138px 265px;
       min-height: 210px;
-      border-top: 0;
-      border-bottom: 1px dashed @orange;
+      // border-top: 0;
+      border-bottom: 1px dotted @orange;
       margin: 0 0 22px 0;
 
       h1 {
@@ -1202,7 +1201,7 @@ body.email-confirmation {
 
     .video-wrapper, .fundraiser-qa, .social-wrapper {
       padding-right: 9px;
-      border-right: 1px dashed fade(@orange, 30%);
+      border-right: 1px dotted fade(@orange, 30%);
       margin-right: 10px;
       border-top: 0;
       margin-left: 0;
@@ -1305,7 +1304,8 @@ body.email-confirmation {
 
             .sample-insights {
               .sample-insight {
-                margin-left: 25px;
+                width: 150px;
+                margin: 0 0 0 24px;
 
                 img {
                   width: 150px;
@@ -1346,7 +1346,7 @@ body.email-confirmation {
 
               li {
                 width: 240px;
-                margin-left: 20px;
+                margin-left: 19px;
                 float: left;
 
                 &.fans:before {
@@ -1432,7 +1432,7 @@ body.email-confirmation {
     }
 
     .call-to-action {
-      border-bottom: 1px dashed @orange;
+      border-bottom: 1px dotted @orange;
       box-sizing: border-box;
       -moz-box-sizing: border-box;
       padding: 0 0 12px;

@@ -413,9 +413,8 @@ strong.level-span {
   margin-bottom: 32px;
 }
 .content-wrapper .left-column {
-  background: url(../img/border-top.png) top left repeat-x;
-  padding-top: 2px;
   margin: 0 8px 16px;
+  border-top: 1px dotted #0099f0;
 }
 .content-wrapper .page-header {
   background: url(../img/rocketship-little-alt.png) bottom right no-repeat;
@@ -455,7 +454,7 @@ strong.level-span {
   font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
 }
 .content-wrapper .video-wrapper {
-  border-top: 1px dashed #ff5600;
+  border-top: 1px dotted #ff5600;
   padding: 12px 0 0;
 }
 .content-wrapper .social-wrapper:before,
@@ -482,7 +481,7 @@ strong.level-span {
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item {
   padding: 12px 6px;
-  border-bottom: 1px dashed #ff5600;
+  border-bottom: 1px dotted #ff5600;
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item header {
   position: relative;
@@ -935,7 +934,7 @@ strong.level-span {
 }
 .content-wrapper .funding-levels .level {
   overflow: hidden;
-  border-top: 1px dashed #0099f0;
+  border-top: 1px dotted #0099f0;
 }
 .content-wrapper .funding-levels .level a {
   display: block;
@@ -1175,7 +1174,7 @@ strong.level-span {
 }
 .page-footer {
   margin: 0 8px 32px;
-  background: url(../img/border-top.png) top left repeat-x;
+  border-top: 1px dotted #0099f0;
   padding: 16px 8px 0;
   font: 11px/15px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
 }
@@ -1506,6 +1505,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     margin: 16px auto 0;
     padding: 0 20px;
     overflow: visible;
+    border-top: 1px dotted #0099f0;
   }
   .content-wrapper:before,
   .content-wrapper:after {
@@ -1521,10 +1521,9 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   }
   .content-wrapper .right-column,
   .content-wrapper .left-column {
-    background: url(../img/border-top.png) top left repeat-x;
-    padding: 2px 0 0;
     margin-left: 0;
     margin-right: 0;
+    border-top: 0;
   }
   .content-wrapper .left-column {
     float: left;
@@ -1540,8 +1539,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     background: url(../img/rocketship-big.png) 8px 0 no-repeat;
     background-size: 138px 265px;
     min-height: 210px;
-    border-top: 0;
-    border-bottom: 1px dashed #ff5600;
+    border-bottom: 1px dotted #ff5600;
     margin: 0 0 22px 0;
   }
   .content-wrapper .page-header h1 {
@@ -1563,7 +1561,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   .content-wrapper .fundraiser-qa,
   .content-wrapper .social-wrapper {
     padding-right: 9px;
-    border-right: 1px dashed rgba(255, 86, 0, 0.3);
+    border-right: 1px dotted rgba(255, 86, 0, 0.3);
     margin-right: 10px;
     border-top: 0;
     margin-left: 0;
@@ -1652,7 +1650,8 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     height: 65px;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights .sample-insight {
-    margin-left: 25px;
+    width: 150px;
+    margin: 0 0 0 24px;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights .sample-insight img {
     width: 150px;
@@ -1694,7 +1693,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li {
     width: 240px;
-    margin-left: 20px;
+    margin-left: 19px;
     float: left;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples li.fans:before {
@@ -1757,7 +1756,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     height: 26px;
   }
   .content-wrapper .call-to-action {
-    border-bottom: 1px dashed #ff5600;
+    border-bottom: 1px dotted #ff5600;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     padding: 0 0 12px;
@@ -2034,10 +2033,6 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     -webkit-background-size: 248px 208px;
     -moz-background-size: 248px 208px;
     background-size: 248px 208px;
-  }
-  .page-footer {
-    background-image: url(../img/border-top@2x.png);
-    background-size: 7px 2px;
   }
 }
 @media screen and (min-width: 640px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
