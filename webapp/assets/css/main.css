@@ -1,3 +1,4 @@
+@import "vendor/lightbox.css";
 @font-face {
   font-family: "HelveticaNeueETW02-45Lt";
   src: url("../fonts/903208/7e44a768-e2b1-4525-9ce2-3bdf2251567e.eot?#iefix");
@@ -414,7 +415,7 @@ strong.level-span {
 .content-wrapper .left-column {
   background: url(../img/border-top.png) top left repeat-x;
   padding-top: 2px;
-  margin: 0 8px 32px;
+  margin: 0 8px 16px;
 }
 .content-wrapper .page-header {
   background: url(../img/rocketship-little-alt.png) bottom right no-repeat;
@@ -567,13 +568,30 @@ strong.level-span {
 .content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote .author .author-info:before {
   content: " / ";
 }
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights {
-  position: relative;
-  background: url(../img/insight-examples@0.5x.jpg) top left no-repeat;
-  background-size: 320px 233px;
-  width: 320px;
-  height: 233px;
-  left: -10px;
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights:before,
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights:after {
+  clear: both;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights .sample-insight {
+  float: left;
+  margin-left: 20px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights .sample-insight img {
+  width: 132px;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights .sample-insight.hide-on-mobile {
+  display: none;
+}
+.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights .sample-insight:first-child {
+  margin: 0;
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples {
   list-style: none;
@@ -853,7 +871,7 @@ strong.level-span {
   -moz-box-sizing: border-box;
   position: relative;
   width: 100%;
-  padding: 0 16px;
+  padding: 0 12px;
 }
 .content-wrapper .call-to-action header {
   font: 20px/22px "HelveticaNeueETW02-45Lt", helvetica, arial, sans-sarif;
@@ -879,8 +897,8 @@ strong.level-span {
   overflow: hidden;
   width: 144px;
   height: 144px;
-  right: -32px;
-  bottom: -36px;
+  right: -20px;
+  bottom: -105px;
   border-radius: 75px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -913,10 +931,10 @@ strong.level-span {
   font: 13px/16px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
   color: #000000;
   margin-bottom: 20px;
-  width: 174px;
-  padding: 0 8px;
+  padding: 0 5px;
 }
 .content-wrapper .funding-levels .level {
+  overflow: hidden;
   border-top: 1px dashed #0099f0;
 }
 .content-wrapper .funding-levels .level a {
@@ -1511,6 +1529,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   .content-wrapper .left-column {
     float: left;
     width: 660px;
+    margin-bottom: 32px;
   }
   .content-wrapper .right-column {
     float: right;
@@ -1632,12 +1651,17 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     width: 30px;
     height: 65px;
   }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights {
-    background: url(../img/insight-examples.jpg) top left no-repeat;
-    background-size: 640px 467px;
-    width: 640px;
-    height: 467px;
-    left: -80px;
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights .sample-insight {
+    margin-left: 25px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights .sample-insight img {
+    width: 150px;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights .sample-insight:first-child {
+    margin: 0;
+  }
+  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights .sample-insight.hide-on-mobile {
+    display: block;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content:before {
     background-image: url('../img/icons.png');
@@ -1752,7 +1776,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   }
   .content-wrapper .call-to-action .pledge-goals .current-status {
     display: block;
-    margin-bottom: 60px;
+    margin: 110px 0 34px;
   }
   .content-wrapper .call-to-action .pledge-goals br {
     display: block;
@@ -1761,7 +1785,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     width: 160px;
     height: 160px;
     bottom: -75px;
-    right: -40px;
+    right: -20px;
     border-radius: 80px;
     padding: 44px 30px 0;
     font-size: 24px;
@@ -1776,12 +1800,8 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   }
   .content-wrapper .funding-levels .funding-levels-header {
     font: 14px/18px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
-    margin: 15px 0 18px 0;
-    width: 160px;
+    margin: 15px 0 18px 5px;
     padding: 0;
-  }
-  .content-wrapper .funding-levels .funding-levels-header .wide-line-one {
-    display: block;
   }
   .content-wrapper .sidebar-callout {
     padding: 12px 6px;
@@ -2003,12 +2023,6 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     -moz-background-size: 248px 208px;
     background-size: 248px 208px;
   }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights {
-    background-image: url(../img/insight-examples.jpg);
-    background-size: 320px 233px;
-    width: 320px;
-    height: 233px;
-  }
   .content-wrapper .call-to-action .pledge-now:before {
     background-image: url('../img/icons@2x.png') !important;
     -webkit-background-size: 248px 208px;
@@ -2044,9 +2058,5 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     -webkit-background-size: 248px 208px;
     -moz-background-size: 248px 208px;
     background-size: 248px 208px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights {
-    background-image: url(../img/insight-examples@2x.jpg);
-    background-size: 640px 467px;
   }
 }

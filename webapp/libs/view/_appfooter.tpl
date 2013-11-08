@@ -18,6 +18,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
     <script src="{$site_root_path}assets/js/vendor/jquery.mobile.custom.min.js"></script>
+    <script src="{$site_root_path}assets/js/vendor/lightbox-2.6.min.js"></script>
     <script src="{$site_root_path}assets/js/main.js"></script>
 
     {literal}<script>

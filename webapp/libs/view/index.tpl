@@ -70,7 +70,11 @@
 
               <p>ThinkUp is also our new company, focused on the idea that people are looking for tech companies they can trust. We're putting our users and community first, because we think that's the best way to create a better web for everyone.</p>
 
-              <div class="sample-insights"></div>
+              <div class="sample-insights">
+                <a href="{$site_root_path}assets/img/sample-insight-bio@2x.jpg" data-lightbox="sample-insights" class="sample-insight"><img src="{$site_root_path}assets/img/sample-insight-bio-thumb@2x.jpg" alt="App Screenshot"></a>
+                <a href="{$site_root_path}assets/img/sample-insight-speedometer@2x.jpg" data-lightbox="sample-insights" class="sample-insight hide-on-mobile"><img src="{$site_root_path}assets/img/sample-insight-speedometer-thumb@2x.jpg" alt="App Screenshot"></a>
+                <a href="{$site_root_path}assets/img/sample-insight-deblasio@2x.jpg" data-lightbox="sample-insights" class="sample-insight"><img src="{$site_root_path}assets/img/sample-insight-deblasio-thumb@2x.jpg" alt="App Screenshot"></a>
+              </div>
             </div>
           </div>
 
@@ -358,17 +362,19 @@
       <div class="right-column">
         <div class="call-to-action">
           <header><span class="number">{$days_to_go}</span> days left to join the launch</header>
-          <div class="pledge-goals"><strong class="current-status">Join {$subscriber_counts['all']|number_format} backers and help bring ThinkUp to everyone.</strong>
-            We’re raising the stakes: If 2,000<br>people join by Nov 15<sup>th</sup>, every<br>
-            member gets a code for a<br>
-            <strong>FREE YEAR OF THINKUP</strong><br>
-            to give to a friend.</div>
+          <div class="pledge-goals"><strong class="current-status">Join {$subscriber_counts['all']|number_format} backers and<br>
+          help bring ThinkUp<br>
+          to everyone.</strong></div>
 
           <a href="subscribe.php" class="pledge-now">Join Now</a>
         </div>
 
         <div class="funding-levels">
-          <header class="funding-levels-header"><span class="wide-line-one">Here are your</span> subscription options&hellip;</header>
+          <header class="funding-levels-header">If 2,000 people join<br>
+            by Nov 15<sup>th</sup>, every<br>
+            member gets a <strong>FREE<br>
+            YEAR OF THINKUP</strong><br>
+            to give to a friend.</header>
           <div class="level sold-out" id="level-earlybird"><a>
             <header class="level-header">
               <div class="level-name">

@@ -31,7 +31,7 @@ strong {
   .left-column {
     background: url(../img/border-top.png) top left repeat-x;
     padding-top: 2px;
-    margin: 0 8px 32px;
+    margin: 0 8px 16px;
   }
 
   .page-header {
@@ -186,12 +186,24 @@ strong {
       // Individual Question Styles
       &#qa-item-whats-thinkup {
         .sample-insights {
-          position: relative;
-          background: url(../img/insight-examples@0.5x.jpg) top left no-repeat;
-          background-size: 320px 233px;
-          width: 320px;
-          height: 233px;
-          left: -10px;
+          .clearfix;
+
+          .sample-insight {
+            float: left;
+            margin-left: 20px;
+
+            img {
+              width: 132px;
+            }
+
+            &.hide-on-mobile {
+              display: none;
+            }
+
+            &:first-child {
+              margin: 0;
+            }
+          }
         }
       }
 
@@ -439,7 +451,7 @@ strong {
     -moz-box-sizing: border-box;
     position: relative;
     width: 100%;
-    padding: 0 16px;
+    padding: 0 12px;
 
     header {
       font: 20px/22px @font-sans-light;
@@ -469,8 +481,8 @@ strong {
       overflow: hidden;
       width: 144px;
       height: 144px;
-      right: -32px;
-      bottom: -36px;
+      right: -20px;
+      bottom: -105px;
       border-radius: 75px;
       box-sizing: border-box;
       -moz-box-sizing: border-box;
@@ -502,11 +514,12 @@ strong {
       font: 13px/16px @font-sans;
       color: @headline-color;
       margin-bottom: 20px;
-      width: 174px;
-      padding: 0 8px;
+      padding: 0 5px;
+
     }
 
     .level {
+      overflow: hidden;
       border-top: 1px dashed @blue;
 
       a {
@@ -1152,6 +1165,7 @@ body.email-confirmation {
     .left-column {
       float: left;
       width: 660px;
+      margin-bottom: 32px;
     }
 
     .right-column {
@@ -1290,11 +1304,21 @@ body.email-confirmation {
             }
 
             .sample-insights {
-              background: url(../img/insight-examples.jpg) top left no-repeat;
-              background-size: 640px 467px;
-              width: 640px;
-              height: 467px;
-              left: -80px;
+              .sample-insight {
+                margin-left: 25px;
+
+                img {
+                  width: 150px;
+                }
+
+                &:first-child {
+                  margin: 0;
+                }
+
+                &.hide-on-mobile {
+                  display: block;
+                }
+              }
             }            
           }
         }
@@ -1428,7 +1452,7 @@ body.email-confirmation {
 
         .current-status {
           display: block;
-          margin-bottom: 60px;
+          margin: 110px 0 34px;
         }
 
         br {
@@ -1440,7 +1464,7 @@ body.email-confirmation {
         width: 160px;
         height: 160px;
         bottom: -75px;
-        right: -40px;
+        right: -20px;
         border-radius: 80px;
         padding: 44px 30px 0;
         font-size: 24px;
@@ -1462,13 +1486,8 @@ body.email-confirmation {
 
       .funding-levels-header {
         font: 14px/18px @font-sans;
-        margin: 15px 0 18px 0;
-        width: 160px;
+        margin: 15px 0 18px 5px;
         padding: 0;
-
-        .wide-line-one {
-          display: block;
-        }
       }
     }
 
@@ -1724,3 +1743,7 @@ body.email-confirmation {
 }
 
 @import "retina.less";
+
+// Lightbox
+
+@import "vendor/lightbox.css";
