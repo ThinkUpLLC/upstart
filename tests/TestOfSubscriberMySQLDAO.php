@@ -87,7 +87,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
 
     public function testGetVerificationCode() {
         $builder = FixtureBuilder::build('subscribers', array('email'=>'ginatrapani@example.com',
-        'verification_code'=>1234));
+        'verification_code'=>1234, 'thinkup_username'=>'unique'));
 
         $dao = new SubscriberMySQLDAO();
         $result = $dao->getVerificationCode('ginatrapani@example.com');
@@ -99,7 +99,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
 
     public function testVerifyEmailAddress() {
         $builder = FixtureBuilder::build('subscribers', array('email'=>'ginatrapani@example.com',
-        'verification_code'=>1234, 'is_email_verified'=>0));
+        'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique'));
 
         $dao = new SubscriberMySQLDAO();
         $result = $dao->verifyEmailAddress('ginatrapani@example.com');
@@ -117,13 +117,14 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
     public function testGetSearchResults() {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('email'=>'ginatrapani@example.com',
-        'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis'));
+        'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+        'thinkup_username'=>'unique1'));
         $builders[] = FixtureBuilder::build('subscribers', array('email'=>'lexluther@evilmail.com',
-        'verification_code'=>1234, 'is_email_verified'=>0));
+        'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique2'));
         $builders[] = FixtureBuilder::build('subscribers', array('email'=>'xanderharris@buff.com',
-        'verification_code'=>1234, 'is_email_verified'=>0));
+        'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique3'));
         $builders[] = FixtureBuilder::build('subscribers', array('email'=>'willowrosenberg@willow.com',
-        'verification_code'=>1234, 'is_email_verified'=>0));
+        'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique4'));
 
         $dao = new SubscriberMySQLDAO();
         //test match email address
@@ -152,13 +153,15 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
     public function testArchiveSubscriber() {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('email'=>'ginatrapani@example.com',
-        'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis'));
+        'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+        'thinkup_username'=>'unique1'));
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>2, 'email'=>'lexluther@evilmail.com',
-        'network_user_name'=>'lexluther', 'verification_code'=>1234, 'is_email_verified'=>0));
+        'network_user_name'=>'lexluther', 'verification_code'=>1234, 'is_email_verified'=>0,
+        'thinkup_username'=>'unique2'));
         $builders[] = FixtureBuilder::build('subscribers', array('email'=>'xanderharris@buff.com',
-        'verification_code'=>1234, 'is_email_verified'=>0));
+        'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique3'));
         $builders[] = FixtureBuilder::build('subscribers', array('email'=>'willowrosenberg@willow.com',
-        'verification_code'=>1234, 'is_email_verified'=>0));
+        'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique4'));
         $builders[] = FixtureBuilder::build('authorizations', array('id'=>1, 'token_id'=>'aabbccdd' ));
         $builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>2,
         'authorization_id'=>1));
@@ -186,7 +189,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
     public function testDeleteBySubscriberID() {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>101, 'email'=>'willow@buffy.com',
-        'network_user_name'=>'willowr'));
+        'network_user_name'=>'willowr', 'thinkup_username'=>'unique1'));
 
         $dao = new SubscriberMySQLDAO();
         $result = $dao->deleteBySubscriberID(101);
@@ -196,5 +199,34 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $stmt = SubscriberMySQLDAO::$PDO->query($sql);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertFalse($data);
+    }
+
+    public function testSetUsername() {
+        //Subscriber doesn't exist
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->setUsername(1, 'willowrosenberg');
+        $this->assertFalse($result);
+
+        //Subscriber exists and has no username
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>101, 'email'=>'willow@buffy.com',
+        'network_user_name'=>'willowr', 'thinkup_username'=>null));
+
+        $result = $dao->setUsername(101, 'willowrosenberg');
+        $this->assertTrue($result);
+
+        $sql = "SELECT * FROM subscribers WHERE id=101";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertTrue($data);
+        $this->assertEqual('willowrosenberg', $data['thinkup_username']);
+
+        //Try to set a duplicate username
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>102, 'email'=>'xander@buffy.com',
+        'network_user_name'=>'xanderh', 'thinkup_username'=>null));
+
+        //test inserting same token twice
+        $this->expectException('DuplicateSubscriberUsernameException');
+        $result = $dao->setUsername(102, 'willowrosenberg');
     }
 }

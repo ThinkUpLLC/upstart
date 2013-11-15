@@ -9,6 +9,9 @@ class Dispatcher {
         //print_r($result);
         $result_decoded = JSONDecoder::decode($result);
         //print_r($result_decoded);
+        if (!isset($result_decoded->success)) {
+            throw new Exception("Error dispatching crawl job. Dispatch response: ". $result);
+        }
         return $result_decoded;
     }
 

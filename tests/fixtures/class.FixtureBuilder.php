@@ -191,10 +191,10 @@ class FixtureBuilder {
         $sql = "INSERT INTO " . $this->config->getValue('table_prefix') . $table;
         foreach( $columns as $column) {
             $field_value = (! is_null($args)) && isset( $args[ $column['Field'] ]) ? $args[ $column['Field'] ] : null;
-            if ( isset($column['Key']) && $column['Key'] == 'UNI' && ! $field_value) {
-                throw new FixtureBuilderException($column['Field'] .
-                ' has a unique key constraint, a value must be defined for this column');
-            }
+//            if ( isset($column['Key']) && $column['Key'] == 'UNI' && ! $field_value) {
+//                throw new FixtureBuilderException($column['Field'] .
+//                ' has a unique key constraint, a value must be defined for this column');
+//            }
             if ( isset($column['Extra']) && $column['Extra'] == 'auto_increment' && ! $field_value ) {
                 continue;
             }

@@ -41,10 +41,10 @@ class AppInstaller {
      */
     var $user_installation_url;
     /**
-     * Whether or not to echo output
-     * @var bool
+     * Installation results message
+     * @var str
      */
-    var $echo_output;
+    var $results_message = "";
 
     public function __construct() {
         $cfg = Config::getInstance();
@@ -58,9 +58,7 @@ class AppInstaller {
         $this->user_installation_url = $cfg->getValue('user_installation_url');
     }
 
-    public function install($route_id, $echo_output=false) {
-        $this->echo_output = $echo_output;
-
+    public function install($subscriber_id) {
         $commit_hash = self::getMasterInstallCommitHash();
 
         if (isset($this->app_source_path)
@@ -71,108 +69,108 @@ class AppInstaller {
         && isset($this->user_password)
         && isset($this->user_installation_url)) {
 
-            $route = null;
-            if (isset($route_id)) {
-                $dao = new UserRouteMySQLDAO();
-                $route = $dao->getById($route_id);
+            $subscriber = null;
+            if (isset($subscriber_id)) {
+                $subscriber_dao = new SubscriberMySQLDAO();
+                $subscriber = $subscriber_dao->getById($subscriber_id);
             }
-            if (!isset($route)) {
-                if (isset($route_id)) {
-                    self::output('User route doesn\'t exist');
+            if (!isset($subscriber)) {
+                if (isset($subscriber_id)) {
+                    throw new Exception('Subscriber doesn\'t exist');
                 } else {
-                    self::output('No user route specified');
+                    throw new Exception('No subscriber specified');
                 }
             } else {
-                if ($route['route'] == '') {
-                    try {
-                        session_write_close();
-                        $code = self::setUpAppFiles($route['twitter_username']);
-                        $database_name = self::createDatabase($code);
+                if ($subscriber->date_installed != null) {
+                    throw new Exception('Installation already exists.');
+                } elseif ($subscriber->thinkup_username == null) {
+                    throw new Exception("ThinkUp username is not set.");
+                } else {
+                    session_write_close();
+                    self::setUpAppFiles($subscriber->thinkup_username);
+                    $database_name = self::createDatabase($subscriber->thinkup_username);
 
-                        // Run upgrade.php --with-new-sql
-                        // Get in the right directory to exec the upgrade
-                        $cfg = Config::getInstance();
-                        $master_app_source_path = $cfg->getValue('master_app_source_path');
-                        if (!chdir($master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader') ) {
-                            throw new Exception("Could not chdir to ".
-                            $master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader');
-                        }
+                    // Run upgrade.php --with-new-sql
+                    // Get in the right directory to exec the upgrade
+                    $cfg = Config::getInstance();
+                    $master_app_source_path = $cfg->getValue('master_app_source_path');
+                    if (!chdir($master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader') ) {
+                        throw new Exception("Could not chdir to ".
+                        $master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader');
+                    }
 
-                        // Initialize upgrade call parameters that are the same for every installation
-                        /*
-                        * {"installation_name":"steveklabnik", "timezone":"America/Los_Angeles", "db_host":"localhost",
-                        * "db_name":"thinkupstart_steveklabnik", "db_socket":"/tmp/mysql.sock",  "db_port":""}
-                        */
-                        $upgrade_params_array = array(
-                        'installation_name'=>$code,
+                    // Initialize upgrade call parameters that are the same for every installation
+                    /*
+                    * {"installation_name":"steveklabnik", "timezone":"America/Los_Angeles", "db_host":"localhost",
+                    * "db_name":"thinkupstart_steveklabnik", "db_socket":"/tmp/mysql.sock",  "db_port":""}
+                    */
+                    $upgrade_params_array = array(
+                        'installation_name'=>$subscriber->thinkup_username,
                         'timezone'=>$cfg->getValue('dispatch_timezone'),
                         'db_host'=>$cfg->getValue('db_host'),
-                        'db_name'=>'thinkupstart_'.$code,
+                        'db_name'=>'thinkupstart_'.$subscriber->thinkup_username,
                         'db_socket'=>$cfg->getValue('dispatch_socket'),
                         'db_port'=>$cfg->getValue('db_port')
-                        );
-                        $upgrade_params_json = json_encode($upgrade_params_array);
+                    );
+                    $upgrade_params_json = json_encode($upgrade_params_array);
 
-                        // Capture returned JSON
-                        if (!exec("php upgrade.php '".$upgrade_params_json."'", $upgrade_status_json) ) {
-                            throw new Exception('Unable to exec php upgrade.php '.$upgrade_params_json);
-                        }
-
-                        // print_r($upgrade_status_json);
-                        $upgrade_status_array = JSONDecoder::decode($upgrade_status_json[0], true);
-
-                        // DEBUG start
-                        //                        echo "php upgrade.php '".$upgrade_params_json."'";
-                        //                        print_r($upgrade_status_array);
-                        // DEBUG end
-
-                        self::switchToUpstartDatabase();
-
-                        if ($upgrade_status_array['migration_success'] === true) {
-                            $dao->insertLogEntry($route_id, $commit_hash, 1,
-                            $upgrade_status_array['migration_message']);
-                        } else {
-                            // If error, set inactive, and store message, status, commit in install_log
-                            $dao->setActive($route_id, 0);
-                            $dao->insertLogEntry($route_id, $commit_hash, 0,
-                            $upgrade_status_array['migration_message']);
-                        }
-                        // END Run upgrade.php --with-new-sql
-
-                        self::switchToInstallationDatabase($code);
-                        self::setUpDatabaseOptions($code);
-
-                        list($admin_id, $admin_api_key, $owner_id, $owner_api_key) = self::createUsers($route['email']);
-                        self::setUpServiceUser($owner_id, $route);
-
-                        $url = str_replace ("{user}", $code, $this->user_installation_url);
-
-                        self::switchToUpstartDatabase();
-
-                        $dao->updateRoute($route_id, $url, $database_name, $commit_hash, $is_active=1);
-                        self::output("Updated waitlist with link and db name");
-                        self::dispatchCrawlJob($code);
-                        $dao->updateLastDispatchedTime($route_id);
-                        $dao->insertLogEntry($route_id, $commit_hash, 1, "Installed");
-
-                        self::output("Complete. Log in at <a href=\"$url\" target=\"new\">".$url."</a>.");
-                    } catch (Exception $e) {
-                        self::output($e->getMessage());
+                    // Capture returned JSON
+                    if (!exec("php upgrade.php '".$upgrade_params_json."'", $upgrade_status_json) ) {
+                        throw new Exception('Unable to exec php upgrade.php '.$upgrade_params_json);
                     }
-                } else {
-                    self::output('Installation exists at <a href="'.$route['route'].' target="new">'.$route['route'].
-                    "</a>.");
+
+                    // print_r($upgrade_status_json);
+                    $upgrade_status_array = JSONDecoder::decode($upgrade_status_json[0], true);
+
+                    // DEBUG start
+                    // echo "php upgrade.php '".$upgrade_params_json."'";
+                    // print_r($upgrade_status_array);
+                    // DEBUG end
+
+                    self::switchToUpstartDatabase();
+
+                    $install_log_dao = new InstallLogMySQLDAO();
+                    if ($upgrade_status_array['migration_success'] === true) {
+                        $install_log_dao->insertLogEntry($subscriber_id, $commit_hash, 1,
+                        $upgrade_status_array['migration_message']);
+                    } else {
+                        // If error, set inactive, and store message, status, commit in install_log
+                        $subscriber_dao->setInstallationActive($subscriber_id, 0);
+                        $install_log_dao->insertLogEntry($subscriber_id, $commit_hash, 0,
+                        $upgrade_status_array['migration_message']);
+                    }
+                    // END Run upgrade.php --with-new-sql
+
+                    self::switchToInstallationDatabase($subscriber->thinkup_username);
+                    self::setUpDatabaseOptions($subscriber->thinkup_username);
+
+                    list($admin_id, $admin_api_key, $owner_id, $owner_api_key) =
+                    self::createUsers($subscriber->email);
+                    self::setUpServiceUser($owner_id, $subscriber);
+
+                    $url = str_replace ("{user}", $subscriber->thinkup_username, $this->user_installation_url);
+
+                    self::switchToUpstartDatabase();
+
+                    //@TODO Set the correct session_api_token
+                    $session_api_token = 'todo:setthisuprght';
+                    $subscriber_dao->intializeInstallation($subscriber_id, $session_api_token, $commit_hash);
+                    self::logToUserMessage("Updated waitlist with link and db name");
+                    self::dispatchCrawlJob($subscriber->thinkup_username);
+                    $subscriber_dao->updateLastDispatchedTime($subscriber_id);
+                    $install_log_dao->insertLogEntry($subscriber_id, $commit_hash, 1, "Installed");
+
+                    self::logToUserMessage("Complete. Log in at <a href=\"$url\" target=\"new\">".$url."</a>.");
                 }
             }
+            return $this->results_message;
         } else {
-            self::output('Sorry, the installer is not configured to run just yet. Yet!');
+            throw new Exception("Sorry, the installer is not configured to run just yet. Yet!");
         }
     }
 
-    protected function output($message) {
-        if ($this->echo_output) {
-            echo "<li>".$message."</li>";
-        }
+    protected function logToUserMessage($message) {
+        $this->results_message .= "<li>".$message."</li>";
     }
 
     private static function switchToUpstartDatabase() {
@@ -181,14 +179,12 @@ class AppInstaller {
         PDODAO::$PDO->exec($q);
     }
 
-    private static function switchToInstallationDatabase($code) {
-        $q = "USE ". 'thinkupstart_'.$code;
+    private static function switchToInstallationDatabase($thinkup_username) {
+        $q = "USE ". 'thinkupstart_'.$thinkup_username;
         PDODAO::$PDO->exec($q);
     }
 
     protected function setUpAppFiles($path) {
-        $path = self::subdomainifyPath($path);
-
         if (is_dir ($this->app_source_path . $path )) {
             $unique = uniqid();
             $path .= substr($unique, strlen($unique)-4, strlen($unique));
@@ -199,7 +195,7 @@ class AppInstaller {
         $cmd = 'ln -s '.$this->master_app_source_path.' '.$this->app_source_path.$path;
         $cmd_result = exec($cmd, $output, $return_var);
         if (is_link($this->app_source_path.$path )) {
-            self::output("Symlinked new ThinkUp installation at $path");
+            self::logToUserMessage("Symlinked new ThinkUp installation at ". $this->app_source_path.$path);
         } else {
             $result = Utils::varDumpToString($output);
             throw new Exception("Could not create symlink from ".$this->master_app_source_path." to ".
@@ -209,75 +205,61 @@ class AppInstaller {
         $cmd = 'mkdir '. $this->data_path . $path;
         exec($cmd);
         if (is_dir($this->data_path . $path )) {
-            self::output("Created new data directory " . $this->data_path . $path);
+            self::logToUserMessage("Created new data directory " . $this->data_path . $path);
+            return true;
         } else {
-            throw new Exception("Could not create new data directory");
+            throw new Exception("Could not create new data directory ".$this->data_path . $path);
         }
-        return $path;
     }
 
-    /**
-     * Make sure that path is valid characters for subdomains - not capital letters or special characters.
-     * @param str $path
-     * @return str $path
-     */
-    protected function subdomainifyPath($path) {
-        $path = strtolower($path);
-        $path = preg_replace("/[^a-zA-Z0-9\s]/", "", $path);
-        if ($path == '') {
-            $unique = uniqid();
-            $path .= substr($unique, strlen($unique)-4, strlen($unique));
-        }
-        return $path;
-    }
-
-    protected function createDatabase($code) {
-        $q = "CREATE DATABASE thinkupstart_$code; USE thinkupstart_$code;";
+    protected function createDatabase($thinkup_username) {
+        $q = "CREATE DATABASE thinkupstart_$thinkup_username; USE thinkupstart_$thinkup_username;";
         PDODAO::$PDO->exec($q);
 
         $query_file = $this->master_app_source_path . '/install/sql/build-db_mysql.sql';
         $q = file_get_contents($query_file);
         PDODAO::$PDO->exec($q);
 
-        self::output("Created new database thinkupstart_$code");
-        return "thinkupstart_$code";
+        self::logToUserMessage("Created new database thinkupstart_$thinkup_username");
+        return "thinkupstart_$thinkup_username";
     }
 
-    protected function setUpDatabaseOptions($code) {
-        $server_name = str_replace ("{user}", $code, $this->user_installation_url);
+    protected function setUpDatabaseOptions($thinkup_username) {
+        $server_name = str_replace ("{user}", $thinkup_username, $this->user_installation_url);
         $server_name = str_replace ("http://", '', $server_name);
         $server_name = str_replace ("https://", '', $server_name);
         $server_name = str_replace ("/", '', $server_name);
-        $q = "INSERT INTO   thinkupstart_".$code.".tu_options (namespace, option_name, option_value, last_updated,
+        $q = "INSERT INTO   thinkupstart_".$thinkup_username.
+        ".tu_options (namespace, option_name, option_value, last_updated,
         created) VALUES ( 'application_options',  'server_name',  '". $server_name ."', NOW(), NOW())";
         PDODAO::$PDO->exec($q);
 
-        self::output("Added database options");
+        self::logToUserMessage("Added database options");
     }
 
     protected function createUsers($email) {
-        $dao = new UserRouteMySQLDAO();
+        $tu_tables_dao = new ThinkUpTablesMySQLDAO();
         //insert admin into owners
-        list($admin_id, $admin_api_key) = $dao->createOwner($this->admin_email, $this->admin_password, true);
+        list($admin_id, $admin_api_key) = $tu_tables_dao->createOwner($this->admin_email, $this->admin_password, true);
 
         //insert user into owners
-        list($user_id, $user_api_key) = $dao->createOwner($email, $this->user_password);
+        list($user_id, $user_api_key) = $tu_tables_dao->createOwner($email, $this->user_password);
 
-        self::output("Inserted $this->admin_email password $this->admin_password and user ".$email.
+        self::logToUserMessage("Inserted $this->admin_email password $this->admin_password and user ".$email.
         " with password $this->user_password");
         return array($admin_id, $admin_api_key, $user_id, $user_api_key);
     }
 
-    protected function setUpServiceUser($owner_id, $route) {
-        $dao = new UserRouteMySQLDAO();
+    protected function setUpServiceUser($owner_id, $subscriber) {
+        $tu_tables_dao = new ThinkUpTablesMySQLDAO();
         //insert Twitter user into instances
-        $instance_id = $dao->insertInstance($route['twitter_user_id'], $route['twitter_username']);
+        $instance_id = $tu_tables_dao->insertInstance($subscriber->network_user_id, $subscriber->network_user_name);
 
         //associate owner with Twitter user in owner_instances and add auth tokens
-        $dao->insertOwnerInstance($owner_id, $instance_id, $route['oauth_access_token'],
-        $route['oauth_access_token_secret']);
+        $tu_tables_dao->insertOwnerInstance($owner_id, $instance_id, $subscriber->oauth_access_token,
+        $subscriber->oauth_access_token_secret);
 
-        self::output("Inserted Twitter account and associate with ".$route['email']."");
+        self::logToUserMessage("Inserted Twitter account and associate with ".$subscriber->email."");
 
         //add consumer key info to options
         $cfg = Config::getInstance();
@@ -285,28 +267,25 @@ class AppInstaller {
         $oauth_consumer_secret = $cfg->getValue('oauth_consumer_secret');
 
         //add app keys to options table
-        $dao->insertOptionValue('plugin_options-1', 'oauth_consumer_key', $oauth_consumer_key);
-        $dao->insertOptionValue('plugin_options-1', 'oauth_consumer_secret', $oauth_consumer_secret);
+        $tu_tables_dao->insertOptionValue('plugin_options-1', 'oauth_consumer_key', $oauth_consumer_key);
+        $tu_tables_dao->insertOptionValue('plugin_options-1', 'oauth_consumer_secret', $oauth_consumer_secret);
     }
 
-    protected function dispatchCrawlJob($installation_name) {
+    protected function dispatchCrawlJob($thinkup_username) {
         $cfg = Config::getInstance();
         $jobs_array = array();
         $jobs_array[] = array(
-        'installation_name'=>$installation_name,
+        'installation_name'=>$thinkup_username,
         'timezone'=>$cfg->getValue('dispatch_timezone'),
         'db_host'=>$cfg->getValue('db_host'),
-        'db_name'=>'thinkupstart_'.$installation_name,
+        'db_name'=>'thinkupstart_'.$thinkup_username,
         'db_socket'=>$cfg->getValue('dispatch_socket'),
         'db_port'=>$cfg->getValue('db_port'),
         'high_priority'=>'true'
         );
         // call Dispatcher
         $result_decoded = Dispatcher::dispatch($jobs_array);
-        if (!isset($result_decoded->success)) {
-            self::output($api_call . '\n'. $result_decoded);
-        }
-        self::output("Dispatched crawl job");
+        self::logToUserMessage("Dispatched crawl job: " .Utils::varDumpToString($result_decoded));
     }
 
     public function getMasterInstallCommitHash() {

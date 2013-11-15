@@ -24,6 +24,26 @@ class ListSubscriberController extends Controller {
         $this->addToView('total_authorizations', $total_authorizations);
         $this->addToView('application_url', UpstartHelper::getApplicationURL());
 
+        /* Begin installation stats */
+        $active_total = $subscriber_dao->getTotalActiveInstalls();
+        $this->addToView('total_active_installs', $active_total);
+
+        $stalest_dispatch_time_10k_up = $subscriber_dao->getStalestInstall10kAndUpLastDispatchTime();
+        $this->addToView('stalest_dispatch_time_10k_up', $stalest_dispatch_time_10k_up);
+        $stalest_dispatch_time_1k_to_10k = $subscriber_dao->getStalestInstall1kTo10kLastDispatchTime();
+        $this->addToView('stalest_dispatch_time_1k_to_10k', $stalest_dispatch_time_1k_to_10k);
+        $stalest_dispatch_time = $subscriber_dao->getStalestInstallLastDispatchTime();
+        $this->addToView('stalest_dispatch_time', $stalest_dispatch_time);
+
+        $worker_status = Dispatcher::getNagiosCheckStatus();
+        if (strrpos($worker_status, 'NOT OK') !== false) {
+            $this->addToView('workers_ok', false);
+        } else {
+            $this->addToView('workers_ok', true);
+        }
+        $this->addToView('worker_status', $worker_status);
+        /* End installation stats */
+
         $this->addToView('page', $page);
         if (sizeof($subscribers) == 51) {
             array_pop($subscribers);

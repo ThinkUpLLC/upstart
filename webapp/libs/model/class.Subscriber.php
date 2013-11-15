@@ -60,6 +60,38 @@ class Subscriber {
      * @var bool Whether or not email address has been verified, 1 or 0.
      */
     var $is_email_verified = false;
+    /**
+     * @var tinyint Whether or not subscriber was on waitlist (1 if so, 0 if not).
+     */
+    var $is_from_waitlist;
+    /**
+     * @var str Subscriber's membership level (Member, Pro, Exec, Early Bird, etc).
+     */
+    var $membership_level;
+    /**
+     * @var str ThinkUp username.
+     */
+    var $thinkup_username;
+    /**
+     * @var str Installation start time.
+     */
+    var $date_installed;
+    /**
+     * @var str API token for authorizing on installation.
+     */
+    var $session_api_token;
+    /**
+     * @var str Last time this installation was dispatched for crawl.
+     */
+    var $last_dispatched;
+    /**
+     * @var str Git commit hash of installation version.
+     */
+    var $commit_hash;
+    /**
+     * @var str Non-persistent, user installation URL
+     */
+    var $installation_url = null;
     public function __construct($row = false) {
         if ($row) {
             $this->id = $row['id'];
@@ -77,6 +109,13 @@ class Subscriber {
             $this->oauth_access_token_secret = $row['oauth_access_token_secret'];
             $this->verification_code = $row['verification_code'];
             $this->is_email_verified = PDODAO::convertDBToBool($row['is_email_verified']);
+            $this->is_from_waitlist = $row['is_from_waitlist'];
+            $this->membership_level = $row['membership_level'];
+            $this->thinkup_username = $row['thinkup_username'];
+            $this->date_installed = $row['date_installed'];
+            $this->session_api_token = $row['session_api_token'];
+            $this->last_dispatched = $row['last_dispatched'];
+            $this->commit_hash = $row['commit_hash'];
         }
     }
 }

@@ -11,7 +11,7 @@ class UpgradeApplicationController extends Controller {
         $this->addToView('commit_hash', $commit_hash);
 
         $show_go_button = false;
-        $dao = new UserRouteMySQLDAO();
+        $subscriber_dao = new SubscriberMySQLDAO();
 
         if ($_GET['upgrade'] != 'true') {
             // Check to make sure all Dispatch workers are shut down
@@ -27,7 +27,7 @@ class UpgradeApplicationController extends Controller {
             $this->addToView('chameleon_commit_hash', $chameleon_commit_hash);
 
             // Check how many installations need an upgrade
-            $total_installs_to_upgrade = $dao->getTotalInstallsToUpgrade($commit_hash);
+            $total_installs_to_upgrade = $subscriber_dao->getTotalInstallsToUpgrade($commit_hash);
             $this->addToView('total_installs_to_upgrade', $total_installs_to_upgrade);
 
             // Only show Go button if installs are in sync and there are upgrades needed
@@ -64,7 +64,7 @@ class UpgradeApplicationController extends Controller {
             );
 
             // Get 10 installations that are active but haven't been upgraded to latest hash
-            $installs_to_upgrade = $dao->getInstallsToUpgrade($commit_hash);
+            $installs_to_upgrade = $subscriber_dao->getInstallsToUpgrade($commit_hash);
 
             // While there are installations that need to be upgraded:
             while (sizeof($installs_to_upgrade) > 0) {
@@ -89,16 +89,17 @@ class UpgradeApplicationController extends Controller {
                     //                    print_r($upgrade_status_array);
                     // DEBUG end
 
+                    $install_log_dao = new InstallLogMySQLDAO();
                     if ($upgrade_status_array['migration_success'] === true) {
                         // If success, store git commit in 2 tables, message, and status in install_log
-                        $dao->updateCommitHash($install_to_upgrade['id'], $commit_hash);
-                        $dao->insertLogEntry($install_to_upgrade['id'], $commit_hash, 1,
+                        $subscriber_dao->updateCommitHash($install_to_upgrade['id'], $commit_hash);
+                        $install_log_dao->insertLogEntry($install_to_upgrade['id'], $commit_hash, 1,
                         $upgrade_status_array['migration_message']);
                         $successful_upgrades++;
                     } else {
                         // If error, set inactive, and store message, status, commit in install_log
-                        $dao->setActive($install_to_upgrade['id'], 0);
-                        $dao->insertLogEntry($install_to_upgrade['id'], $commit_hash, 0,
+                        $subscriber_dao->setInstallationActive($install_to_upgrade['id'], 0);
+                        $install_log_dao->insertLogEntry($install_to_upgrade['id'], $commit_hash, 0,
                         $upgrade_status_array['migration_message']);
                         $failed_upgrades++;
                     }
@@ -106,7 +107,7 @@ class UpgradeApplicationController extends Controller {
                     $upgrade_status_array = null;
                 }
                 // Get another 10 installations that are active but haven't been upgraded to latest hash
-                $installs_to_upgrade = $dao->getInstallsToUpgrade($commit_hash);
+                $installs_to_upgrade = $subscriber_dao->getInstallsToUpgrade($commit_hash);
             }
             // Output how many installs error'ed, how many success
             $this->addToView('successful_upgrades', $successful_upgrades);

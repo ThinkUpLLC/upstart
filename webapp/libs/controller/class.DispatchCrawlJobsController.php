@@ -1,8 +1,8 @@
 <?php
 class DispatchCrawlJobsController extends Controller {
     public function control() {
-        // get stalest active user routes
-        $dao = new UserRouteMySQLDAO();
+        // get stalest subscriber installations
+        $subscriber_dao = new SubscriberMySQLDAO();
         $cfg = Config::getInstance();
         $jobs_to_dispatch = $cfg->getValue('jobs_to_dispatch');
 
@@ -12,23 +12,23 @@ class DispatchCrawlJobsController extends Controller {
             $number_of_calls = $jobs_to_dispatch / 25;
             while ($number_of_calls > 0) {
 
-                $stale_routes = $dao->getStaleRoutes10kAndUp();
-                if (count($stale_routes) == 0) {
-                    $stale_routes = $dao->getStaleRoutes1kTo10k();
+                $stale_installs = $subscriber_dao->getStaleInstalls10kAndUp();
+                if (count($stale_installs) == 0) {
+                    $stale_installs = $subscriber_dao->getStaleInstalls1kTo10k();
                 }
-                if (count($stale_routes) == 0) {
-                    $stale_routes = $dao->getStaleRoutes();
+                if (count($stale_installs) == 0) {
+                    $stale_installs = $subscriber_dao->getStaleInstalls();
                 }
 
-                if (count($stale_routes) > 0 ) {
+                if (count($stale_installs) > 0 ) {
                     $jobs_array = array();
                     // json_encode them
-                    foreach ($stale_routes as $route) {
+                    foreach ($stale_installs as $install) {
                         $jobs_array[] = array(
-                        'installation_name'=>$route['twitter_username'],
+                        'installation_name'=>$install['twitter_username'],
                         'timezone'=>$cfg->getValue('dispatch_timezone'),
                         'db_host'=>$cfg->getValue('db_host'),
-                        'db_name'=>$route['database_name'],
+                        'db_name'=>$install['database_name'],
                         'db_socket'=>$cfg->getValue('dispatch_socket'),
                         'db_port'=>$cfg->getValue('db_port')
                         );
@@ -41,8 +41,8 @@ class DispatchCrawlJobsController extends Controller {
                     }
 
                     // update last_dispatched_date on stale user routes
-                    foreach ($stale_routes as $route) {
-                        $dao->updateLastDispatchedTime($id=$route['id']);
+                    foreach ($stale_installs as $install) {
+                        $subscriber_dao->updateLastDispatchedTime($id=$install['id']);
                     }
                 }
                 $number_of_calls--;
