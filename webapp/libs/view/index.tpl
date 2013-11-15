@@ -361,7 +361,7 @@
 
       <div class="right-column">
         <div class="call-to-action">
-          <header><span class="number">{$days_to_go}</span> days left to join the launch</header>
+          <header><span class="number">{$days_to_go}</span> day{if $days_to_go neq 1}s{/if} left to join the launch</header>
           <div class="pledge-goals"><strong class="current-status">Join {$subscriber_counts['all']|number_format} backers and<br>
           help bring ThinkUp<br>
           to everyone.</strong></div>
