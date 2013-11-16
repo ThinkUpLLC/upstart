@@ -457,6 +457,31 @@ strong.level-span {
   border-top: 1px dotted #ff5600;
   padding: 12px 0 0;
 }
+.content-wrapper .video-wrapper .sample-insights:before,
+.content-wrapper .video-wrapper .sample-insights:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.content-wrapper .video-wrapper .sample-insights:after {
+  clear: both;
+}
+.content-wrapper .video-wrapper .sample-insights .sample-insight {
+  float: left;
+  margin-left: 10px;
+}
+.content-wrapper .video-wrapper .sample-insights .sample-insight img {
+  width: 147px;
+}
+.content-wrapper .video-wrapper .sample-insights .sample-insight.hide-on-mobile {
+  display: none;
+}
+.content-wrapper .video-wrapper .sample-insights .sample-insight:first-child {
+  margin: 0;
+}
 .content-wrapper .social-wrapper:before,
 .content-wrapper .social-wrapper:after {
   content: " ";
@@ -566,31 +591,6 @@ strong.level-span {
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item .pull-quote .author .author-info:before {
   content: " / ";
-}
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights:before,
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights:after {
-  content: " ";
-  /* 1 */
-
-  display: table;
-  /* 2 */
-
-}
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights:after {
-  clear: both;
-}
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights .sample-insight {
-  float: left;
-  margin-left: 20px;
-}
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights .sample-insight img {
-  width: 132px;
-}
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights .sample-insight.hide-on-mobile {
-  display: none;
-}
-.content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .sample-insights .sample-insight:first-child {
-  margin: 0;
 }
 .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-insights .content .insight-examples {
   list-style: none;
@@ -877,6 +877,7 @@ strong.level-span {
   font-weight: 300;
   letter-spacing: -2px;
   color: #000000;
+  margin-bottom: 36px;
 }
 .content-wrapper .call-to-action header .number {
   color: #ff5600;
@@ -897,7 +898,7 @@ strong.level-span {
   width: 144px;
   height: 144px;
   right: -20px;
-  bottom: -105px;
+  bottom: -25px;
   border-radius: 75px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -964,7 +965,7 @@ strong.level-span {
 }
 .content-wrapper .funding-levels .level a header .level-name {
   float: left;
-  width: 50%;
+  width: 40%;
 }
 .content-wrapper .funding-levels .level a header .level-name h5 {
   color: #0099f0;
@@ -975,7 +976,7 @@ strong.level-span {
 }
 .content-wrapper .funding-levels .level a header .level-cost {
   float: right;
-  width: 50%;
+  width: 60%;
   color: #ff5600;
   text-align: right;
 }
@@ -1082,8 +1083,22 @@ strong.level-span {
 .content-wrapper .sidebar-callout p a:hover {
   text-decoration: underline;
 }
+.content-wrapper .newsletter-signup-wrapper {
+  padding: 12px 6px 24px;
+  border-top: 1px dotted #ff5600;
+  border-bottom: 1px dotted #ff5600;
+}
 .content-wrapper .newsletter-signup-wrapper header {
   padding-bottom: 16px;
+}
+.content-wrapper .newsletter-signup-wrapper header h5 {
+  font: 17px/20px "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
+  color: #0099f0;
+  margin: 0;
+}
+.content-wrapper .newsletter-signup-wrapper header p {
+  margin: 0;
+  font: 14px/20px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;
 }
 .content-wrapper .newsletter-signup-wrapper .content:before,
 .content-wrapper .newsletter-signup-wrapper .content:after {
@@ -1125,43 +1140,41 @@ strong.level-span {
   vertical-align: top;
   padding: 0;
 }
-.content-wrapper .works-with h6 {
-  color: #0099f0;
-  font-family: "HelveticaNeueETW02-75Bd", helvetica, arial, sans-sarif;
-  font-size: 12px;
-  line-height: 20px;
-  margin: 0;
-  font-weight: 300;
+.content-wrapper .github-callout {
+  border-top: 1px dotted #0099f0;
+  padding-top: 16px;
 }
-.content-wrapper .works-with ul {
-  margin: 0;
-  font-size: 12px;
-  line-height: 20px;
-  padding: 0 0 0 18px;
+.content-wrapper .github-callout h5 {
+  text-align: center;
+  margin-bottom: 8px;
 }
-.content-wrapper .insights-callout .photos {
-  margin: 8px 0;
+.content-wrapper .github-callout .button {
+  display: block;
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#fafafa), to(#eaeaea));
+  background-image: -webkit-linear-gradient(top, #fafafa, 0%, #eaeaea, 100%);
+  background-image: -moz-linear-gradient(top, #fafafa 0%, #eaeaea 100%);
+  background-image: linear-gradient(to bottom, #fafafa 0%, #eaeaea 100%);
+  background-repeat: repeat-x;
+  color: #555;
+  font-size: 14px;
+  line-height: 30px;
+  border-radius: 3px;
+  width: 150px;
+  margin: 0 auto;
+  padding: 0 8px;
+  border: 1px solid #c5c5c5;
 }
-.content-wrapper .insights-callout .photos:before,
-.content-wrapper .insights-callout .photos:after {
-  content: " ";
-  /* 1 */
-
-  display: table;
-  /* 2 */
-
+.content-wrapper .github-callout .button .icon-github {
+  font-size: 20px;
+  line-height: 30px;
 }
-.content-wrapper .insights-callout .photos:after {
-  clear: both;
-}
-.content-wrapper .insights-callout .photos img {
-  float: left;
-  width: 60px;
-  margin-left: 16px;
-  border-radius: 30px;
-}
-.content-wrapper .insights-callout .photos img:first-child {
-  margin: 0;
+.content-wrapper .github-callout .button:hover {
+  text-decoration: none;
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#f3f3f3), to(#e3e3e3));
+  background-image: -webkit-linear-gradient(top, #f3f3f3, 0%, #e3e3e3, 100%);
+  background-image: -moz-linear-gradient(top, #f3f3f3 0%, #e3e3e3 100%);
+  background-image: linear-gradient(to bottom, #f3f3f3 0%, #e3e3e3 100%);
+  background-repeat: repeat-x;
 }
 .attribution {
   margin: 0 8px 16px;
@@ -1559,7 +1572,8 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   }
   .content-wrapper .video-wrapper,
   .content-wrapper .fundraiser-qa,
-  .content-wrapper .social-wrapper {
+  .content-wrapper .social-wrapper,
+  .content-wrapper .newsletter-signup-wrapper {
     padding-right: 9px;
     border-right: 1px dotted rgba(255, 86, 0, 0.3);
     margin-right: 10px;
@@ -1571,9 +1585,52 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     margin-top: -8px;
     padding-bottom: 20px;
   }
+  .content-wrapper .video-wrapper .sample-insights .sample-insight {
+    width: 200px;
+    margin: 0 0 0 19px;
+  }
+  .content-wrapper .video-wrapper .sample-insights .sample-insight img {
+    width: 200px;
+  }
+  .content-wrapper .video-wrapper .sample-insights .sample-insight:first-child {
+    margin: 0;
+  }
+  .content-wrapper .video-wrapper .sample-insights .sample-insight.hide-on-mobile {
+    display: block;
+  }
   .content-wrapper .social-wrapper {
     margin-top: 0;
     padding: 0;
+  }
+  .content-wrapper .newsletter-signup-wrapper {
+    border-top: 0;
+    border-bottom: 0;
+    padding: 0 9px 30px 0;
+  }
+  .content-wrapper .newsletter-signup-wrapper:before,
+  .content-wrapper .newsletter-signup-wrapper:after {
+    content: " ";
+    /* 1 */
+  
+    display: table;
+    /* 2 */
+  
+  }
+  .content-wrapper .newsletter-signup-wrapper:after {
+    clear: both;
+  }
+  .content-wrapper .newsletter-signup-wrapper header,
+  .content-wrapper .newsletter-signup-wrapper .content {
+    float: left;
+    width: 319px;
+  }
+  .content-wrapper .newsletter-signup-wrapper .content .email {
+    width: 230px;
+    height: 40px;
+    padding: 11px 6px;
+  }
+  .content-wrapper .newsletter-signup-wrapper .content .button {
+    height: 40px;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item {
     padding: 0 60px 30px 0;
@@ -1648,19 +1705,6 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     background-position: -63px -1px;
     width: 30px;
     height: 65px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights .sample-insight {
-    width: 150px;
-    margin: 0 0 0 24px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights .sample-insight img {
-    width: 150px;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights .sample-insight:first-child {
-    margin: 0;
-  }
-  .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-whats-thinkup .content .sample-insights .sample-insight.hide-on-mobile {
-    display: block;
   }
   .content-wrapper .fundraiser-qa .fundraiser-qa-item#qa-item-what-i-get .content:before {
     background-image: url('../img/icons.png');
@@ -1767,6 +1811,9 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     font-weight: 300;
     padding-top: 13px;
   }
+  .content-wrapper .call-to-action header br {
+    display: none;
+  }
   .content-wrapper .call-to-action .pledge-goals {
     font-size: 14px;
     line-height: 17px;
@@ -1783,8 +1830,8 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
   .content-wrapper .call-to-action .pledge-now {
     width: 160px;
     height: 160px;
-    bottom: -75px;
-    right: -20px;
+    bottom: -25px;
+    right: -10px;
     border-radius: 80px;
     padding: 44px 30px 0;
     font-size: 24px;
@@ -1795,7 +1842,7 @@ body.email-confirmation .content-wrapper .spread-the-word .buttons .button.youtu
     left: 73px;
   }
   .content-wrapper .funding-levels {
-    margin: 0;
+    margin: 15px 0 0;
   }
   .content-wrapper .funding-levels .funding-levels-header {
     font: 14px/18px "HelveticaNeueETW02-55Rg", helvetica, arial, sans-sarif;

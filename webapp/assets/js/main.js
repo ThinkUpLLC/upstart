@@ -12,8 +12,8 @@
         return history.replaceState(null, null, "#" + ($(this).parent().attr("id")));
       }
     });
-    $theVideo = $(".video-wrapper iframe");
-    $fluidVideoContainer = $(".video-wrapper");
+    $theVideo = $("#qa-item-whats-thinkup .content iframe");
+    $fluidVideoContainer = $("#qa-item-whats-thinkup .content");
     $theVideo.data("aspect-ratio", $theVideo.height() / $theVideo.width());
     $theVideo.removeAttr("height").removeAttr("width");
     $(window).resize(function() {

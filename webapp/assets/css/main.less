@@ -81,6 +81,28 @@ strong {
   .video-wrapper {
     border-top: 1px dotted @orange;
     padding: 12px 0 0;
+
+    .sample-insights {
+      .clearfix;
+
+      .sample-insight {
+        float: left;
+        margin-left: 10px;
+
+        img {
+          width: 147px;
+        }
+
+        &.hide-on-mobile {
+          display: none;
+        }
+
+        &:first-child {
+          margin: 0;
+        }
+      }
+    }
+
   }
 
   .social-wrapper {
@@ -184,26 +206,6 @@ strong {
 
       // Individual Question Styles
       &#qa-item-whats-thinkup {
-        .sample-insights {
-          .clearfix;
-
-          .sample-insight {
-            float: left;
-            margin-left: 20px;
-
-            img {
-              width: 132px;
-            }
-
-            &.hide-on-mobile {
-              display: none;
-            }
-
-            &:first-child {
-              margin: 0;
-            }
-          }
-        }
       }
 
       &#qa-item-insights {
@@ -457,6 +459,7 @@ strong {
       font-weight: 300;
       letter-spacing: -2px;
       color: @headline-color;
+      margin-bottom: 36px;
 
       .number {
         color: @orange;
@@ -481,7 +484,7 @@ strong {
       width: 144px;
       height: 144px;
       right: -20px;
-      bottom: -105px;
+      bottom: -25px;
       border-radius: 75px;
       box-sizing: border-box;
       -moz-box-sizing: border-box;
@@ -540,7 +543,7 @@ strong {
 
           .level-name {
             float: left;
-            width: 50%;
+            width: 40%;
 
             h5 {
               color: @blue;
@@ -553,7 +556,7 @@ strong {
 
           .level-cost {
             float: right;
-            width: 50%;
+            width: 60%;
             color: @orange;
             text-align: right;
 
@@ -662,8 +665,23 @@ strong {
   }
 
   .newsletter-signup-wrapper {
+    padding: 12px 6px 24px;
+    border-top: 1px dotted @orange;
+    border-bottom: 1px dotted @orange;
+
     header {
       padding-bottom: 16px;
+
+      h5 {
+        font: 17px/20px @font-sans-bold;
+        color: @blue;
+        margin: 0;
+      }
+
+      p {
+        margin: 0;
+        font: 14px/20px @font-sans;
+      }
     }
 
     .content {
@@ -701,42 +719,38 @@ strong {
     }
   }
 
-  .works-with {
-    h6 {
-      color: @blue;
-      font-family: @font-sans-bold;
-      font-size: 12px;
-      line-height: 20px;
-      margin: 0;
-      font-weight: 300;
+  .github-callout {
+    border-top: 1px dotted @blue;
+    padding-top: 16px;
+
+    h5 {
+      text-align: center;
+      margin-bottom: 8px;
     }
 
-    ul {
-      margin: 0;
-      font-size: 12px;
-      line-height: 20px;
-      padding: 0 0 0 18px;
-    }
-  }
+    .button {
+      display: block;
+      .vertical-gradient(#fafafa, #eaeaea);
+      color: #555;
+      font-size: 14px;
+      line-height: 30px;
+      border-radius: 3px;
+      width: 150px;
+      margin: 0 auto;
+      padding: 0 8px;
+      border: 1px solid #c5c5c5;
 
-  .insights-callout {
-    .photos {
-      margin: 8px 0;
-      .clearfix;
+      .icon-github {
+        font-size: 20px;
+        line-height: 30px;
+      }
 
-      img {
-        float: left;
-        width: 60px;
-        margin-left: 16px;
-        border-radius: 30px;
-
-        &:first-child {
-          margin: 0;
-        }
+      &:hover {
+        text-decoration: none;
+        .vertical-gradient(#f3f3f3, #e3e3e3);
       }
     }
   }
-
 }
 
 .attribution {
@@ -1199,7 +1213,7 @@ body.email-confirmation {
       }
     }
 
-    .video-wrapper, .fundraiser-qa, .social-wrapper {
+    .video-wrapper, .fundraiser-qa, .social-wrapper, .newsletter-signup-wrapper {
       padding-right: 9px;
       border-right: 1px dotted fade(@orange, 30%);
       margin-right: 10px;
@@ -1211,11 +1225,56 @@ body.email-confirmation {
       padding-top: 8px;
       margin-top: -8px;
       padding-bottom: 20px;
+
+      .sample-insights {
+        .sample-insight {
+          width: 200px;
+          margin: 0 0 0 19px;
+
+          img {
+            width: 200px;
+          }
+
+          &:first-child {
+            margin: 0;
+          }
+
+          &.hide-on-mobile {
+            display: block;
+          }
+        }
+      }            
+
     }
 
     .social-wrapper {
       margin-top: 0;
       padding: 0;
+    }
+
+    .newsletter-signup-wrapper {
+      border-top: 0;
+      border-bottom: 0;
+      padding: 0 9px 30px 0;
+
+      .clearfix;
+
+      header, .content {
+        float: left;
+        width: 319px;
+      }
+
+      .content {
+        .email {
+          width: 230px;
+          height: 40px;
+          padding: 11px 6px;
+        }
+
+        .button {
+          height: 40px;
+        }
+      }
     }
 
     .fundraiser-qa {
@@ -1301,25 +1360,6 @@ body.email-confirmation {
             &:before {
               .sprite-lightbulb;
             }
-
-            .sample-insights {
-              .sample-insight {
-                width: 150px;
-                margin: 0 0 0 24px;
-
-                img {
-                  width: 150px;
-                }
-
-                &:first-child {
-                  margin: 0;
-                }
-
-                &.hide-on-mobile {
-                  display: block;
-                }
-              }
-            }            
           }
         }
 
@@ -1442,6 +1482,10 @@ body.email-confirmation {
         font: 30px/28px @font-sans-light;
         font-weight: 300;
         padding-top: 13px;
+
+        br {
+          display: none;
+        }
       }
 
       .pledge-goals {
@@ -1463,8 +1507,8 @@ body.email-confirmation {
       .pledge-now {
         width: 160px;
         height: 160px;
-        bottom: -75px;
-        right: -20px;
+        bottom: -25px;
+        right: -10px;
         border-radius: 80px;
         padding: 44px 30px 0;
         font-size: 24px;
@@ -1482,7 +1526,7 @@ body.email-confirmation {
     }
 
     .funding-levels {
-      margin: 0;
+      margin: 15px 0 0;
 
       .funding-levels-header {
         font: 14px/18px @font-sans;

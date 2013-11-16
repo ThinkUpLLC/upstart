@@ -24,17 +24,19 @@
       <div class="left-column">
         <header class="page-header">
           <h1>
-            Help launch
-            <span class="site-name"><strong>Think</strong>Up</span>
-            <span class="the-rest">and feel good about<br />social networking.</span>
+            <span class="site-name"><strong>Think</strong>Up</span> helps you
+            <span class="the-rest">feel good about<br />social networking.</span>
           </h1>
 
-          <p><strong>We’re building ThinkUp</strong>, a new app that will make you happier about the time you spend on Twitter and Facebook. To do it right, we want to build a company that respects users more than any other tech company. Now we need your help!</p>
+          <p><strong>We’re building ThinkUp</strong>, a new app that will make you happier about the time you spend on Twitter and Facebook. To do it right, we're building a company that respects users more than any other tech company. And our community is making it possible.</p>
         </header>
 
         <div class="video-wrapper">
-          <iframe width="300" height="169" src="//www.youtube.com/embed/TeqeSmBwpcw?showinfo=0&amp;controls=1" frameborder="0" allowfullscreen></iframe>
-          
+            <div class="sample-insights"><!--
+              --><a href="{$site_root_path}assets/img/sample-insight-bio@2x.png" data-lightbox="sample-insights" class="sample-insight"><img src="{$site_root_path}assets/img/sample-insight-bio-thumb@2x.jpg" alt="App Screenshot"></a><!--
+              --><a href="{$site_root_path}assets/img/sample-insight-speedometer@2x.png" data-lightbox="sample-insights" class="sample-insight hide-on-mobile"><img src="{$site_root_path}assets/img/sample-insight-speedometer-thumb@2x.jpg" alt="App Screenshot"></a><!--
+              --><a href="{$site_root_path}assets/img/sample-insight-deblasio@2x.png" data-lightbox="sample-insights" class="sample-insight"><img src="{$site_root_path}assets/img/sample-insight-deblasio-thumb@2x.jpg" alt="App Screenshot"></a><!--
+          --></div>          
         </div>
 
         <div class="social-wrapper">
@@ -62,6 +64,20 @@
           </div>
         </div>
 
+        <div class="newsletter-signup-wrapper">
+          <header>
+            <h5>Find out when we launch</h5>
+            <p>We’ll alert you when ThinkUp is ready</p>
+          </header>
+          <div class="content">
+            <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">
+              <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email">
+              <input type="submit" value="Subscribe" name="subscribe" class="button">
+            </form>
+          </div>
+        </div>
+
+
         <div class="fundraiser-qa">
           <div class="fundraiser-qa-item" id="qa-item-whats-thinkup">
             <header>What’s ThinkUp?</header>
@@ -70,11 +86,8 @@
 
               <p>ThinkUp is also our new company, focused on the idea that people are looking for tech companies they can trust. We're putting our users and community first, because we think that's the best way to create a better web for everyone.</p>
 
-              <div class="sample-insights"><!--
-                --><a href="{$site_root_path}assets/img/sample-insight-bio@2x.png" data-lightbox="sample-insights" class="sample-insight"><img src="{$site_root_path}assets/img/sample-insight-bio-thumb@2x.jpg" alt="App Screenshot"></a><!--
-                --><a href="{$site_root_path}assets/img/sample-insight-speedometer@2x.png" data-lightbox="sample-insights" class="sample-insight hide-on-mobile"><img src="{$site_root_path}assets/img/sample-insight-speedometer-thumb@2x.jpg" alt="App Screenshot"></a><!--
-                --><a href="{$site_root_path}assets/img/sample-insight-deblasio@2x.png" data-lightbox="sample-insights" class="sample-insight"><img src="{$site_root_path}assets/img/sample-insight-deblasio-thumb@2x.jpg" alt="App Screenshot"></a><!--
-            --></div>
+              <iframe width="300" height="169" src="//www.youtube.com/embed/TeqeSmBwpcw?showinfo=0&amp;controls=1" frameborder="0" allowfullscreen></iframe>
+
             </div>
           </div>
 
@@ -361,54 +374,21 @@
 
       <div class="right-column">
         <div class="call-to-action">
-          <header><span class="number">{$days_to_go}</span> day{if $days_to_go neq 1}s{/if} left to join the launch</header>
-          <div class="pledge-goals"><strong class="current-status">Join {$subscriber_counts['all']|number_format} backers and<br>
-          help bring ThinkUp<br>
-          to everyone.</strong></div>
+          <header>ThinkUp is launching<br>
+          January 15th</header>
+
+          <div class="pledge-goals"><strong class="current-status">Over 1,200 backers<br>
+          funded ThinkUp’s<br>
+          launch</strong></div>
 
           <a href="subscribe.php" class="pledge-now">Join Now</a>
         </div>
 
         <div class="funding-levels">
-          <header class="funding-levels-header">If 2,000 people join<br>
-            by Nov 15<sup>th</sup>, every<br>
-            member gets a <strong>FREE<br>
-            YEAR OF THINKUP</strong><br>
-            to give to a friend.</header>
-          <div class="level sold-out" id="level-earlybird"><a>
-            <header class="level-header">
-              <div class="level-name">
-                <h5>Early Bird</h5>
-                <div class="backers">250 backers</div>
-              </div>
-              <div class="level-cost">
-                <div class="monthly">Sold Out!</div>
-                <div class="annually">$50/year</div>
-            </header>
-            <div class="level-description">
-            </div>
-          </a></div>
-
-          <div class="level" id="level-latebird"><a href="subscribe.php?level=earlybird">
-            <header class="level-header">
-              <div class="level-name">
-                <h5>Late Bird</h5>
-                <div class="backers">{assign "late_bird_total" value=($subscriber_counts[50] - 250)} {if $late_bird_total < 0}{assign "late_bird_total" value=0}{/if} {$late_bird_total} backer{if $late_bird_total neq 1}s{/if}</div>
-              </div>
-              <div class="level-cost">
-                <div class="monthly">$50/year</div>
-                <div class="annually">{if (550 - $subscriber_counts[50]) < 1}<span style="color:red;font-weight:bold;">SOLD OUT!</span>{else}Only {if (550 - $subscriber_counts[50]) <= 300}{550 - $subscriber_counts[50]}{else}300{/if} of 300 left!{/if}</div>
-            </header>
-            <div class="level-description">
-              <p><p>Get all the benefits of the <strong class="level-span">Member</strong> level and save 10 bucks! Because procrastinators are people, too.</p>
-            </div>
-          </a></div>
-
           <div class="level" id="level-member"><a href="subscribe.php?level=member">
             <header class="level-header">
               <div class="level-name">
                 <h5>Member</h5>
-                <div class="backers">{if isset($subscriber_counts[60])}{$subscriber_counts[60]|number_format} backer{if $subscriber_counts[60] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">$60/year</div>
@@ -420,7 +400,6 @@
               <ul class="level-benefits">
                 <li>Insights on your Facebook, Twitter or other social network account. (1 per service)</li>
                 <li>First place in line to reserve your username on ThinkUp.</li>
-                <li class="book-offer">We wrote you a book! <em>Insights</em> is a series of interviews with dozens of super creative people about the future of social networking.</li>
               </ul>
             </div>
           </a></div>
@@ -429,7 +408,6 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Pro</h5>
-                <div class="backers">{if isset($subscriber_counts[120])}{$subscriber_counts[120]|number_format} backer{if $subscriber_counts[120] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">$120/year</div>
@@ -451,7 +429,6 @@
             <header class="level-header">
               <div class="level-name">
                 <h5>Executive</h5>
-                <div class="backers">{if isset($subscriber_counts[996])}{$subscriber_counts[996]|number_format} backer{if $subscriber_counts[996] neq 1}s{/if}{else}0 backers{/if}</div>
               </div>
               <div class="level-cost">
                 <div class="monthly">$996/year</div>
@@ -464,35 +441,16 @@
                 <li>Get all the benefits of the <strong class="level-span">Member</strong> and <strong class="level-span">Pro</strong> levels.</li>
                 <li>Let us know how many social networking accounts you need to support.</li>
                 <li>Our company's founders will consult with you before making key decisions about ThinkUp's future. You'll get email updates with the same information we send to our investors or advisers (minus anything that would get us in legal trouble!).</li>
-                <li class="book-offer">We'll <strong>personalize</strong> the book we wrote for you. Our founders will call out which part of <em>Insights</em> are most relevant to your work or your goals.</li>
               </ul>
             </div>
           </a></div>
         </div>
 
-        <div class="insights-callout sidebar-callout">
-          <h5><em>Insights</em></h5>
-          <div class="photos"><img src="{$site_root_path}assets/img/steve-martin.jpg" alt="Steve Martin"><img src="{$site_root_path}assets/img/catherine-bracy.jpg" alt="Catherine Bracy"><img src="{$site_root_path}assets/img/tim-oreilly.jpg" alt="Tim O’Reilly"><img src="{$site_root_path}assets/img/chelsea-peretti.jpg" alt="Chelsea Peretti"></div>
-          <p>Every member gets the <strong>EXCLUSIVE</strong> book <em>Insights</em>, with interviews about the future of social media. Read sample interviews from <a href="http://blog.thinkup.com/post/66221055057/thinkup-insights-interview-steve-martin">Steve Martin</a>, <a href="http://blog.thinkup.com/post/64984463786/thinkup-insights-interview-fred-wilson">Fred Wilson</a>, <a href="http://blog.thinkup.com/post/64975236304/thinkup-insights-interview-juliana-rotich">Juliana Rotich</a>, <a href="http://blog.thinkup.com/post/65630262082/thinkup-insights-interview-chelsea-peretti">Chelsea Peretti</a>, <a href="http://blog.thinkup.com/post/65716858017/thinkup-insights-interview-tim-oreilly">Tim O’Reilly</a> and <a href="http://blog.thinkup.com/post/64976688375/the-thinkup-insights-interviews">more</a>.
+        <div class="github-callout sidebar-callout">
+          <h5>Are you a developer?</h5>
+          <p><a class="button" href="http://github.com/ginatrapani/ThinkUp"><i class="icon-github"></i> Join us on Github.</a></p>
         </div>
 
-        <div class="newsletter-signup-wrapper sidebar-callout">
-          <header>
-            <h5>Not a member yet?</h5>
-            <p>Sign up for our newsletter.</p>
-          </header>
-          <div class="content">
-            <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">
-              <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email">
-              <input type="submit" value="Subscribe" name="subscribe" class="button">
-            </form>
-          </div>
-        </div>
-
-        <div class="corporate-sponsor sidebar-callout">
-          <h5>Wanna be a corporate sponsor?</h5>
-          <p><a style="color: #0099f0" href="mailto:anil@thinkup.com">Get in touch</a>. (Your logo here!)</p>
-        </div>
 
       </div><!-- end right column -->
     </div>
