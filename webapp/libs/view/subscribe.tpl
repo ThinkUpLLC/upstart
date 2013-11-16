@@ -33,23 +33,6 @@
             </ul>
           </header>
 
-        {if (550 - $subscriber_counts[50]) > 0}
-          <div class="level{if $level eq "earlybird"} selected{/if}" id="level-latebird" data-name="Late Bird"><a href="{$subscribe_earlybird_url}">
-            <header class="level-header">
-              <div class="level-name">
-                <h5>Late Bird</h5>
-                <div class="backers">{assign "late_bird_total" value=($subscriber_counts[50] - 250)} {if $late_bird_total < 0}{assign "late_bird_total" value=0}{/if} {$late_bird_total} backer{if $late_bird_total neq 1}s{/if}</div>
-              </div>
-              <div class="level-cost">
-                <div class="monthly">$50/year</div>
-                <div class="annually">Only {if (550 - $subscriber_counts[50]) <= 300}{550 - $subscriber_counts[50]}{else}300{/if} of 300 left!</div>
-            </header>
-            <div class="level-description">
-              <p>Get all the benefits of the <strong class="level-span">Member</strong> level and save 10 bucks! Because procrastinators are people, too.</p>
-            </div>
-          </a></div>
-          {/if}
-
           <div class="level{if $level eq "member"} selected{/if}" id="level-member" data-name="Member"><a href="{$subscribe_member_url}">
             <header class="level-header">
               <div class="level-name">
@@ -62,11 +45,10 @@
             </header>
 
             <div class="level-description">
-              <p>Join ThinkUp and get all this cool stuff:</p>
+              <p>Join ThinkUp and get:</p>
               <ul class="level-benefits">
                 <li>Insights on your Facebook, Twitter or other social network account. (1 per service)</li>
                 <li>First place in line to reserve your username on ThinkUp.</li>
-                <li class="book-offer">We wrote you a book! <em>Insights</em> is a series of interviews with dozens of super creative people about the future of social networking.</li>
               </ul>
             </div>
           </a></div>
@@ -110,7 +92,6 @@
                 <li>Get all the benefits of the <strong class="level-span">Member</strong> and <strong class="level-span">Pro</strong> levels.</li>
                 <li>Let us know how many social networking accounts you need to support.</li>
                 <li>Our company's founders will consult with you before making key decisions about ThinkUp's future. You'll get email updates with the same information we send to our investors or advisers (minus anything that would get us in legal trouble!).</li>
-                <li class="book-offer">We'll <strong>personalize</strong> the book we wrote for you. Our founders will call out which part of <em>Insights</em> are most relevant to your work or your goals.</li>
               </ul>
             </div>
           </a></div>

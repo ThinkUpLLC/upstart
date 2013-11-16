@@ -374,12 +374,12 @@
 
       <div class="right-column">
         <div class="call-to-action">
-          <header>ThinkUp is launching<br>
+          <header>ThinkUp will launch on<br>
           January 15th</header>
 
           <div class="pledge-goals"><strong class="current-status">Over 1,200 backers<br>
           funded ThinkUp’s<br>
-          launch</strong></div>
+          launch.</strong></div>
 
           <a href="subscribe.php" class="pledge-now">Join Now</a>
         </div>
@@ -396,7 +396,7 @@
             </header>
 
             <div class="level-description">
-              <p>Join ThinkUp and get all this cool stuff:</p>
+              <p>Join ThinkUp and get:</p>
               <ul class="level-benefits">
                 <li>Insights on your Facebook, Twitter or other social network account. (1 per service)</li>
                 <li>First place in line to reserve your username on ThinkUp.</li>
@@ -448,7 +448,7 @@
 
         <div class="github-callout sidebar-callout">
           <h5>Are you a developer?</h5>
-          <p><a class="button" href="http://github.com/ginatrapani/ThinkUp"><i class="icon-github"></i> Join us on Github.</a></p>
+          <p><a class="button" href="http://github.com/ginatrapani/ThinkUp"><i class="icon-github"></i> Join us on GitHub</a></p>
         </div>
 
 
