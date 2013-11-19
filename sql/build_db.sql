@@ -120,12 +120,6 @@ CREATE TABLE error_log (
   PRIMARY KEY (id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Log of user errors.';
 
-CREATE TABLE  subscriber_counts (
-amount INT NOT NULL COMMENT  'Amount of yearly subscription.',
-count INT NOT NULL COMMENT  'Total subscribers at this amount.',
-PRIMARY KEY (  amount )
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT =  'Cached totals of backer counts at subscription levels.';
-
 CREATE TABLE subscriber_archive (
   email varchar(200) NOT NULL COMMENT 'Subscriber email address.',
   pwd varchar(255) NOT NULL COMMENT 'Subscriber password.',

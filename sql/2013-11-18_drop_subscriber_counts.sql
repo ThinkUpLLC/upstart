@@ -1,0 +1,1 @@
+DROP TABLE subscriber_counts;

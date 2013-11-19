@@ -10,9 +10,6 @@ class SubscribeController extends Controller {
         $caller_reference = $click_dao->insert();
         $this->addToView('caller_reference', $caller_reference);
         SessionCache::put('caller_reference', $caller_reference);
-        $subscriber_count_dao = new SubscriberCountMySQLDAO();
-        $subscriber_counts = $subscriber_count_dao->getAll();
-        $this->addToView('subscriber_counts', $subscriber_counts);
 
         $selected_level = null;
         if (isset($_GET['level']) && ($_GET['level'] == "member" || $_GET['level'] == "pro"

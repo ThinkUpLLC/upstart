@@ -86,10 +86,6 @@ class NewSubscriberController extends SignUpController {
                 try {
                     $authorization_id = $authorization_dao->insert($_GET['tokenID'], $amount, $_GET["status"],
                     $internal_caller_reference, $error_message, $payment_expiry_date);
-                    // Update subscriber_counts
-                    $subscriber_counts_dao = new SubscriberCountMySQLDAO();
-                    $subscriber_counts_dao->increment($amount);
-                    $this->view_mgr->clear_all_cache();
                 } catch (DuplicateAuthorizationException $e) {
                     $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
                     "subscription.  Did you refresh the page?");
