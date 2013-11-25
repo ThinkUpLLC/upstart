@@ -19,7 +19,7 @@
           <th></th>
           <th>Name</th>
           <th>Email</th>
-          <th>Followers</th>
+          <th style="text-align:right">Followers</th>
           <th>Subscribed</th>
           <th>Level</th>
       </tr>
@@ -28,7 +28,7 @@
         <td style="cursor:pointer"> {if $subscriber->is_verified}<img src="../assets/img/twitter_verified_icon.png" />{/if}</td>
         <td style="cursor:pointer">{include file="_admin-network_user.tpl" link_to_network="false"}</td>
         <td style="cursor:pointer">{$subscriber->email} {include file="_admin-confirm_email.tpl"}</th>
-        <td style="cursor:pointer">{if $subscriber->follower_count > 0}{$subscriber->follower_count|number_format}{/if}</td>
+        <td style="cursor:pointer;text-align:right">{if $subscriber->follower_count > 0}{$subscriber->follower_count|number_format}{/if}</td>
         <td style="cursor:pointer">{$subscriber->creation_time|relative_datetime} ago</td>
         <td style="cursor:pointer">{$subscriber->membership_level}</td>
       </tr>
