@@ -37,6 +37,14 @@ class NewSubscriberController extends SignUpController {
                         //Save authorization ID and subscriber ID in subscriber_authorizations table.
                         $subscriber_authorization_dao = new SubscriberAuthorizationMySQLDAO();
                         $subscriber_authorization_dao->insert($subscriber_id, $authorization->id);
+                        //Update subscribers record with level
+                        if (isset(SignUpController::$membership_levels[(string) $authorization->amount])) {
+                            $membership_level = SignUpController::$membership_levels[(string) $authorization->amount];
+                            $subscriber_dao->setMembershipLevel($subscriber_id, $membership_level);
+                        } else {
+                            $this->logError('No membership level found for '.$authorization->amount, __FILE__,__LINE__,
+                            __METHOD__);
+                        }
                         $redirect_to_network = true;
                     }
                 } catch (DuplicateSubscriberEmailException $e) {

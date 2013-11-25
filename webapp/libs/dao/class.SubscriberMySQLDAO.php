@@ -293,6 +293,19 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getUpdateCount($ps);
     }
 
+    public function setMembershipLevel($id, $membership_level) {
+        $q  = "UPDATE subscribers SET membership_level = :membership_level ";
+        $q .= "WHERE id = :id ";
+
+        $vars = array(
+            ':membership_level'=> $membership_level,
+            ':id'=>(int) $id
+        );
+        //echo self::mergeSQLVars($q, $vars)."\n";
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
     public function getSubscribersNotInstalled($count=25) {
         $q  = "SELECT id FROM subscribers WHERE date_installed IS null ";
         $q .= "LIMIT :limit;";
