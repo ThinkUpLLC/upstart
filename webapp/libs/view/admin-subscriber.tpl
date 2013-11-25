@@ -28,11 +28,11 @@
       </tr>
       </table>
       {if $authorizations}
-      <h4>Authorization</h3>
+      <h4>Payment Authorization</h3>
       <table class="table table-condensed table-hover">
       {foreach $authorizations as $authorization}
       <tr>
-        <td>Authorization Token</td>
+        <td>Token</td>
         <td><input type="text" width="15" value="{$authorization->token_id}"></td>
       </tr>
       <tr>
@@ -48,11 +48,12 @@
         <td>{$authorization->payment_method_expiry}</td>
       </tr>
       <tr>
+        <td>Valid starting</td>
+        <td>{$authorization->token_validity_start_date}</td>
+      </tr>
+      <tr>
         <td></td>
-        <td>{if $smarty.now > $authorization->token_validity_start_date_ts}
-        <a href="charge.php?token_id={$authorization->token_id}&amount={$authorization->amount|urlencode}" class="btn btn-success btn-mini">Charge</a>{else}
-        Charge after {$authorization->token_validity_start_date}{/if}
-        </td>
+        <td>{if $smarty.now > $authorization->token_validity_start_date_ts}<a href="charge.php?token_id={$authorization->token_id}&amount={$authorization->amount|urlencode}" class="btn btn-success btn-mini">Charge</a>{/if}</td>
       </tr>
       {if $subscriber->error_message}
       <tr class="danger">
