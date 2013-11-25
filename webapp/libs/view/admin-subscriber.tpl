@@ -53,7 +53,7 @@
       </tr>
       <tr>
         <td></td>
-        <td>{if $smarty.now > $authorization->token_validity_start_date_ts}<a href="charge.php?token_id={$authorization->token_id}&amount={$authorization->amount|urlencode}" class="btn btn-success btn-mini">Charge</a>{/if}</td>
+        <td>{if $smarty.now > $authorization->token_validity_start_date_ts}<a href="subscriber.php?id={$subscriber->id}&action=charge&token_id={$authorization->token_id}&amount={$authorization->amount|urlencode}" class="btn btn-success btn-mini">Charge</a>{/if}</td>
       </tr>
       {if $subscriber->error_message}
       <tr class="danger">
