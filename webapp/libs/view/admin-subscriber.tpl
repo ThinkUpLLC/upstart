@@ -49,7 +49,7 @@
       </tr>
       <tr>
         <td></td>
-        <td>{if $smarty.now > $subscriber->token_validity_start_date_ts}
+        <td>{if $smarty.now > $authorization->token_validity_start_date_ts}
         <a href="charge.php?token_id={$authorization->token_id}&amount={$authorization->amount|urlencode}" class="btn btn-success btn-mini">Charge</a>{else}
         Charge after {$authorization->token_validity_start_date}{/if}
         </td>
