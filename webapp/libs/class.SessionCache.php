@@ -1,7 +1,7 @@
 <?php
 class SessionCache {
     /**
-     * Put a value in ThinkUp's $_SESSION key.
+     * Put a value in $_SESSION key.
      * @param str $key
      * @param str $value
      */
@@ -11,7 +11,7 @@ class SessionCache {
     }
 
     /**
-     * Get a value from ThinkUp's $_SESSION.
+     * Get a value from $_SESSION.
      * @param str $key
      * @return mixed Value
      */
@@ -25,7 +25,7 @@ class SessionCache {
     }
 
     /**
-     * Check if a key in ThinkUp's $_SESSION has a value set.
+     * Check if a key in $_SESSION has a value set.
      * @param str $key
      * @return bool
      */
@@ -35,7 +35,7 @@ class SessionCache {
     }
 
     /**
-     * Unset key's value in ThinkUp's $_SESSION
+     * Unset key's value in $_SESSION
      * @param str $key
      */
     public static function unsetKey($key) {
