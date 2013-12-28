@@ -48,13 +48,16 @@ class AppInstaller {
 
     public function __construct() {
         $cfg = Config::getInstance();
+        // @TODO Verify all the directories exist, throw an Exception if not
         $this->app_source_path = $cfg->getValue('app_source_path');
         $this->master_app_source_path = $cfg->getValue('master_app_source_path');
         $this->chameleon_app_source_path = $cfg->getValue('chameleon_app_source_path');
         $this->data_path = $cfg->getValue('data_path');
+
         $this->admin_email = $cfg->getValue('admin_email');
         $this->admin_password = $cfg->getValue('admin_password');
         $this->user_password = $cfg->getValue('user_password');
+        // @TODO Verify this string includes {user} in it and is URLish
         $this->user_installation_url = $cfg->getValue('user_installation_url');
     }
 
@@ -87,74 +90,31 @@ class AppInstaller {
                     throw new Exception("ThinkUp username is not set.");
                 } else {
                     session_write_close();
-                    self::setUpAppFiles($subscriber->thinkup_username);
+                    // Set up application files
+                    self::setUpApplicationFiles($subscriber->thinkup_username);
+                    // Set up installation database
                     $database_name = self::createDatabase($subscriber->thinkup_username);
-
-                    // Run upgrade.php --with-new-sql
-                    // Get in the right directory to exec the upgrade
-                    $cfg = Config::getInstance();
-                    $master_app_source_path = $cfg->getValue('master_app_source_path');
-                    if (!chdir($master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader') ) {
-                        throw new Exception("Could not chdir to ".
-                        $master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader');
-                    }
-
-                    // Initialize upgrade call parameters that are the same for every installation
-                    /*
-                    * {"installation_name":"steveklabnik", "timezone":"America/Los_Angeles", "db_host":"localhost",
-                    * "db_name":"thinkupstart_steveklabnik", "db_socket":"/tmp/mysql.sock",  "db_port":""}
-                    */
-                    $upgrade_params_array = array(
-                        'installation_name'=>$subscriber->thinkup_username,
-                        'timezone'=>$cfg->getValue('dispatch_timezone'),
-                        'db_host'=>$cfg->getValue('db_host'),
-                        'db_name'=>'thinkupstart_'.$subscriber->thinkup_username,
-                        'db_socket'=>$cfg->getValue('dispatch_socket'),
-                        'db_port'=>$cfg->getValue('db_port')
-                    );
-                    $upgrade_params_json = json_encode($upgrade_params_array);
-
-                    // Capture returned JSON
-                    if (!exec("php upgrade.php '".$upgrade_params_json."'", $upgrade_status_json) ) {
-                        throw new Exception('Unable to exec php upgrade.php '.$upgrade_params_json);
-                    }
-
-                    // print_r($upgrade_status_json);
-                    $upgrade_status_array = JSONDecoder::decode($upgrade_status_json[0], true);
-
-                    // DEBUG start
-                    // echo "php upgrade.php '".$upgrade_params_json."'";
-                    // print_r($upgrade_status_array);
-                    // DEBUG end
-
-                    self::switchToUpstartDatabase();
-
+                    // Upgrade database
                     $install_log_dao = new InstallLogMySQLDAO();
-                    if ($upgrade_status_array['migration_success'] === true) {
-                        $install_log_dao->insertLogEntry($subscriber_id, $commit_hash, 1,
-                        $upgrade_status_array['migration_message']);
-                    } else {
-                        // If error, set inactive, and store message, status, commit in install_log
-                        $subscriber_dao->setInstallationActive($subscriber_id, 0);
-                        $install_log_dao->insertLogEntry($subscriber_id, $commit_hash, 0,
-                        $upgrade_status_array['migration_message']);
-                    }
-                    // END Run upgrade.php --with-new-sql
+                    self::upgradeDatabaseToLatestMigrations($subscriber, $commit_hash, $install_log_dao,
+                    $subscriber_dao);
+
+                    // Create session API token Upstart will use to log into ThinkUp via the Session API
+                    $subscriber->session_api_token = hash('sha256', rand(). $subscriber->email);
 
                     self::switchToInstallationDatabase($subscriber->thinkup_username);
-                    self::setUpDatabaseOptions($subscriber->thinkup_username);
+                    self::setUpApplicationOptions($subscriber->thinkup_username);
 
                     list($admin_id, $admin_api_key, $owner_id, $owner_api_key) =
-                    self::createUsers($subscriber->email);
+                    self::createOwners($subscriber->email, $subscriber->session_api_token);
                     self::setUpServiceUser($owner_id, $subscriber);
 
                     $url = str_replace ("{user}", $subscriber->thinkup_username, $this->user_installation_url);
 
                     self::switchToUpstartDatabase();
 
-                    //@TODO Set the correct session_api_token
-                    $session_api_token = 'todo:setthisuprght';
-                    $subscriber_dao->intializeInstallation($subscriber_id, $session_api_token, $commit_hash);
+                    $subscriber_dao->intializeInstallation($subscriber_id, $subscriber->session_api_token,
+                    $commit_hash);
                     self::logToUserMessage("Updated waitlist with link and db name");
                     self::dispatchCrawlJob($subscriber->thinkup_username);
                     $subscriber_dao->updateLastDispatchedTime($subscriber_id);
@@ -166,6 +126,67 @@ class AppInstaller {
             return $this->results_message;
         } else {
             throw new Exception("Sorry, the installer is not configured to run just yet. Yet!");
+        }
+    }
+
+    /**
+     * Upgrade the user installation database to the latest migrations, the equivalent of running
+     * upgrade.php --with-new-sql. We do this in case we're deploying code with migrations that haven't been rolled
+     * into a release yet.
+     * @param  Subscriber $subscriber
+     * @param  str $commit_hash Commit has of master app source / user installation
+     * @param  InstallLogMySQLDAO $install_log_dao
+     * @param  SubscriberMySQLDAO $subscriber_dao
+     * @throws Exception if unable to exec the upgrade command
+     * @return void
+     */
+    protected function upgradeDatabaseToLatestMigrations(Subscriber $subscriber, $commit_hash,
+        InstallLogMySQLDAO $install_log_dao, SubscriberMySQLDAO $subscriber_dao) {
+        // Get in the right directory to exec the upgrade
+        $cfg = Config::getInstance();
+        $master_app_source_path = $cfg->getValue('chameleon_app_source_path');
+        if (!chdir($master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader') ) {
+            throw new Exception("Could not chdir to ".
+            $master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader');
+        }
+
+        // Initialize upgrade call parameters that are the same for every installation
+        /*
+        * {"installation_name":"steveklabnik", "timezone":"America/Los_Angeles", "db_host":"localhost",
+        * "db_name":"thinkupstart_steveklabnik", "db_socket":"/tmp/mysql.sock",  "db_port":""}
+        */
+        $upgrade_params_array = array(
+            'installation_name'=>$subscriber->thinkup_username,
+            'timezone'=>$cfg->getValue('dispatch_timezone'),
+            'db_host'=>$cfg->getValue('db_host'),
+            'db_name'=>'thinkupstart_'.$subscriber->thinkup_username,
+            'db_socket'=>$cfg->getValue('dispatch_socket'),
+            'db_port'=>$cfg->getValue('db_port')
+        );
+        $upgrade_params_json = json_encode($upgrade_params_array);
+
+        // Capture returned JSON
+        if (!exec("php upgrade.php '".$upgrade_params_json."'", $upgrade_status_json, $return_int) ) {
+            throw new Exception('Unable to exec php upgrade.php '.$upgrade_params_json.
+            "  Returned data was ". $return_int ." output " . Utils::varDumpToString($upgrade_status_json));
+        }
+        $upgrade_status_array = JSONDecoder::decode($upgrade_status_json[0], true);
+
+        // DEBUG start
+        // echo "php upgrade.php '".$upgrade_params_json."'";
+        // print_r($upgrade_status_array);
+        // DEBUG end
+
+        self::switchToUpstartDatabase();
+
+        if ($upgrade_status_array['migration_success'] === true) {
+            $install_log_dao->insertLogEntry($subscriber->id, $commit_hash, 1,
+            $upgrade_status_array['migration_message']);
+        } else {
+            // If error, set inactive, and store message, status, commit in install_log
+            $subscriber_dao->setInstallationActive($subscriber->id, 0);
+            $install_log_dao->insertLogEntry($subscriber->id, $commit_hash, 0,
+            $upgrade_status_array['migration_message']);
         }
     }
 
@@ -184,7 +205,14 @@ class AppInstaller {
         PDODAO::$PDO->exec($q);
     }
 
-    protected function setUpAppFiles($path) {
+    /**
+     * Create the user installation with a symlink in app_source_path to the master_app_source path.
+     * Symlink the user installation data directory in data_path.
+     * @param str $path Folder name of user installation (usually ThinkUp username)
+     * @throws Exception If master_app_source is not a directory, if symlink was not created, if data dir symlink was
+     *         not created
+     */
+    protected function setUpApplicationFiles($path) {
         if (is_dir ($this->app_source_path . $path )) {
             $unique = uniqid();
             $path .= substr($unique, strlen($unique)-4, strlen($unique));
@@ -212,6 +240,12 @@ class AppInstaller {
         }
     }
 
+    /**
+     * Create user installation database.
+     * @param  str $thinkup_username Name of database (usually the user's ThinkUp username)
+     * @return str Newly-created database name
+     * @throws PDOException
+     */
     protected function createDatabase($thinkup_username) {
         $q = "CREATE DATABASE thinkupstart_$thinkup_username; USE thinkupstart_$thinkup_username;";
         PDODAO::$PDO->exec($q);
@@ -224,26 +258,44 @@ class AppInstaller {
         return "thinkupstart_$thinkup_username";
     }
 
-    protected function setUpDatabaseOptions($thinkup_username) {
+    /**
+     * Set any required application options, like server_name.
+     * @param str $thinkup_username User installation username.
+     * @return void
+     */
+    protected function setUpApplicationOptions($thinkup_username) {
+        $server_name = self::getInstallationServerName($thinkup_username);
+        $tu_tables_dao = new ThinkUpTablesMySQLDAO();
+        $tu_tables_dao->insertOptionValue( 'application_options', 'server_name', $server_name);
+        self::logToUserMessage("Added server_name application option (".$server_name.")");
+    }
+
+    /**
+     * Get the servername for the user installation. For subdomain setups, this should be username.thinkup.com.
+     * For subdirectory setups, this should be example.com.
+     * @param  str $thinkup_username ThinkUp username
+     * @return str Installation server name
+     */
+    public function getInstallationServerName($thinkup_username){
         $server_name = str_replace ("{user}", $thinkup_username, $this->user_installation_url);
         $server_name = str_replace ("http://", '', $server_name);
         $server_name = str_replace ("https://", '', $server_name);
+        if (strpos($server_name, '/') !== false) {
+            $split_server_name = explode('/', $server_name);
+            $server_name = $split_server_name[0];
+        }
         $server_name = str_replace ("/", '', $server_name);
-        $q = "INSERT INTO   thinkupstart_".$thinkup_username.
-        ".tu_options (namespace, option_name, option_value, last_updated,
-        created) VALUES ( 'application_options',  'server_name',  '". $server_name ."', NOW(), NOW())";
-        PDODAO::$PDO->exec($q);
-
-        self::logToUserMessage("Added database options");
+        return $server_name;
     }
 
-    protected function createUsers($email) {
+    protected function createOwners($email, $session_api_token) {
         $tu_tables_dao = new ThinkUpTablesMySQLDAO();
         //insert admin into owners
         list($admin_id, $admin_api_key) = $tu_tables_dao->createOwner($this->admin_email, $this->admin_password, true);
 
         //insert user into owners
-        list($user_id, $user_api_key) = $tu_tables_dao->createOwner($email, $this->user_password);
+        list($user_id, $user_api_key) = $tu_tables_dao->createOwner($email, $this->user_password, false,
+        $session_api_token);
 
         self::logToUserMessage("Inserted $this->admin_email password $this->admin_password and user ".$email.
         " with password $this->user_password");
@@ -288,18 +340,30 @@ class AppInstaller {
         self::logToUserMessage("Dispatched crawl job: " .Utils::varDumpToString($result_decoded));
     }
 
+    /**
+     * Get the commit hash of the master app source.
+     * @return str git commit hash
+     */
     public function getMasterInstallCommitHash() {
-        $cur_dir = getcwd();
-        chdir($this->master_app_source_path);
-        exec('git rev-parse --verify HEAD 2> /dev/null', $output);
-        $commit_hash = $output[0];
-        chdir($cur_dir);
-        return $commit_hash;
+        return self::getCommitHash($this->master_app_source_path);
     }
 
+    /**
+     * Get the commit hash of the chamelon app source.
+     * @return str git commit hash
+     */
     public function getChameleonInstallCommitHash() {
+        return self::getCommitHash($this->chameleon_app_source_path);
+    }
+
+    /**
+     * Get the commit hash of the git repository in a given directory.
+     * @param str $path Location of git repository
+     * @return str git commit hash
+     */
+    private function getCommitHash($path) {
         $cur_dir = getcwd();
-        chdir($this->chameleon_app_source_path);
+        chdir($path);
         exec('git rev-parse --verify HEAD 2> /dev/null', $output);
         $commit_hash = $output[0];
         chdir($cur_dir);
