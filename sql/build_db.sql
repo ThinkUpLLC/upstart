@@ -18,7 +18,7 @@ CREATE TABLE authorizations (
   PRIMARY KEY (id),
   UNIQUE KEY token_id (token_id),
   KEY status_code (status_code)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Amazon FPS recurring-use payment authorizations.';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Amazon FPS recurring-use payment authorizations.';
 
 -- --------------------------------------------------------
 
@@ -43,7 +43,7 @@ CREATE TABLE clicks (
   caller_reference_suffix varchar(20) NOT NULL COMMENT 'Second half of caller reference string.',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time of click.',
   PRIMARY KEY (id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Clicks to the pledge page.';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Clicks to the pledge page.';
 
 -- --------------------------------------------------------
 
@@ -75,7 +75,7 @@ CREATE TABLE install_log (
   migration_success tinyint(4) NOT NULL COMMENT 'Whether or not install/upgrade was successful.',
   migration_message text NOT NULL COMMENT 'Install/upgrade debug message.',
   PRIMARY KEY (id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Installation upgrade log.';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Installation upgrade log.';
 
 -- --------------------------------------------------------
 
@@ -99,19 +99,23 @@ CREATE TABLE subscribers (
   oauth_access_token_secret varchar(255) NOT NULL COMMENT 'OAuth secret access token for network authorization.',
   verification_code int(10) NOT NULL COMMENT 'Code for verifying email address.',
   is_email_verified int(1) NOT NULL COMMENT 'Whether or not email address has been verified, 1 or 0.',
-  is_from_waitlist tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Whether or not subscriber was on waitlist (1 if so, 0 if not).',
+  is_from_waitlist int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not subscriber was on waitlist (1 if so, 0 if not).',
   membership_level varchar(20) NOT NULL DEFAULT '' COMMENT 'Subscriber''s membership level (Member, Pro, Exec, Early Bird, etc).',
   thinkup_username varchar(50) DEFAULT NULL COMMENT 'ThinkUp username.',
   date_installed timestamp NULL DEFAULT NULL COMMENT 'Installation start time.',
-  session_api_token varchar(64) DEFAULT NULL COMMENT 'API token for authorizing on installation.',
+  api_key_private varchar(32) DEFAULT NULL COMMENT 'API key for authorizing on installation.',
   last_dispatched timestamp NULL DEFAULT NULL COMMENT 'Last time this installation was dispatched for crawl.',
   commit_hash varchar(41) DEFAULT NULL COMMENT 'Git commit hash of installation version.',
-  is_installation_active tinyint(1) DEFAULT NULL COMMENT 'Whether or not the installation is active.',
+  is_installation_active int(1) DEFAULT NULL COMMENT 'Whether or not the installation is active.',
+  last_login date DEFAULT NULL COMMENT 'Last time member logged in.',
+  failed_logins int(11) NOT NULL DEFAULT '0' COMMENT 'Current number of failed login attempts.',
+  account_status varchar(150) NOT NULL DEFAULT '' COMMENT 'Description of account status, i.e., "Inactive due to excessive failed login attempts".',
+  is_activated int(1) NOT NULL DEFAULT '0' COMMENT 'If user is activated, 1 for true, 0 for false.',
   PRIMARY KEY (id),
   UNIQUE KEY email (email),
   UNIQUE KEY network_user_id (network_user_id,network),
   UNIQUE KEY thinkup_username (thinkup_username)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Paid subscribers who have authorized their social network ac';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Paid subscribers who have authorized their social network ac';
 
 -- --------------------------------------------------------
 
@@ -165,5 +169,4 @@ CREATE TABLE subscriber_authorizations (
   authorization_id int(11) NOT NULL COMMENT 'Authorization ID keyed to authorizations.',
   PRIMARY KEY (id),
   UNIQUE KEY subscriber_id (subscriber_id,authorization_id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Payment authorizations by known subscribers.';
-
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Payment authorizations by known subscribers.';

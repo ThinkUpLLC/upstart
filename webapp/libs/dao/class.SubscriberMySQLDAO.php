@@ -192,7 +192,7 @@ class SubscriberMySQLDAO extends PDODAO {
         $q = "INSERT INTO subscriber_archive SELECT s.email, s.pwd, s.pwd_salt, s.creation_time, s.network_user_id, ";
         $q .= "s.network_user_name, s.network, s.full_name, s.follower_count, s.is_verified, s.oauth_access_token, ";
         $q .= "s.oauth_access_token_secret, s.verification_code, s.is_email_verified, s.is_from_waitlist, ";
-        $q .= "s.membership_level, s.thinkup_username, s.date_installed, s.session_api_token, s.last_dispatched, ";
+        $q .= "s.membership_level, s.thinkup_username, s.date_installed, s.api_key_private, s.last_dispatched, ";
         $q .= "s.commit_hash, s.is_installation_active, a.token_id, a.amount, ";
         $q .= "a.status_code, a.error_message, a.payment_method_expiry, a.caller_reference, a.recurrence_period, ";
         $q .= "a.token_validity_start_date FROM subscribers s LEFT JOIN subscriber_authorizations sa ";
@@ -219,12 +219,12 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getUpdateCount($ps);
     }
 
-    public function intializeInstallation($id, $session_api_token, $commit_hash) {
-        $q  = "UPDATE subscribers SET date_installed=NOW(), session_api_token = :session_api_token, ";
+    public function intializeInstallation($id, $api_key_private, $commit_hash) {
+        $q  = "UPDATE subscribers SET date_installed=NOW(), api_key_private = :api_key_private, ";
         $q .= "commit_hash = :commit_hash WHERE id = :id ";
         $vars = array(
             ':id'=>$id,
-            ':session_api_token'=>$session_api_token,
+            ':api_key_private'=>$api_key_private,
             ':commit_hash'=>$commit_hash,
         );
         $ps = $this->execute($q, $vars);
@@ -392,5 +392,118 @@ class SubscriberMySQLDAO extends PDODAO {
         $ps = $this->execute($q);
         $result = $this->getDataRowAsArray($ps);
         return $result['total'];
+    }
+
+    public function isAuthorized($email, $password) {
+        // Get salt from the database
+        $db_salt = $this->getSaltByEmail($email);
+        // Get password from the database
+        $db_password = $this->getPass($email);
+
+        $hashed_pwd = $this->hashPassword($password, $db_salt); // Hash the new way
+        // Check if it matches the password stored in the database
+        return ($hashed_pwd == $db_password);
+    }
+
+    /**
+     * Retrives the salt for a given user
+     * @param str $email
+     * @return str Salt
+     */
+    private function getSaltByEmail($email){
+        $q = "SELECT pwd_salt ";
+        $q .= "FROM subscribers s ";
+        $q .= "WHERE s.email = :email";
+        $vars = array(':email'=>$email);
+        $ps = $this->execute($q, $vars);
+        $query = $this->getDataRowAsArray($ps);
+        return $query['pwd_salt'];
+    }
+
+    public function getPass($email) {
+        $q = "SELECT pwd FROM subscribers WHERE email = :email AND is_email_verified='1' LIMIT 1;";
+        $vars = array(
+            ':email'=>$email
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        $result = $this->getDataRowAsArray($ps);
+        if (isset($result['pwd'])) {
+            return $result['pwd'];
+        } else {
+            return false;
+        }
+    }
+
+    public function updateLastLogin($email) {
+        $q = " UPDATE subscribers SET last_login=now() WHERE email=:email";
+        $vars = array(
+            ':email'=>$email
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
+    public function resetFailedLogins($email) {
+        $q = "UPDATE subscribers
+              SET failed_logins=0
+              WHERE email=:email";
+        $vars = array(
+            ":email" => $email
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return ( $this->getUpdateCount($ps) > 0 )? true : false;
+    }
+
+    public function setAccountStatus($email, $status) {
+        $q = "UPDATE subscribers
+              SET account_status=:account_status
+              WHERE email=:email";
+        $vars = array(
+            ":account_status" => $status,
+            ":email" => $email
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return ( $this->getUpdateCount($ps) > 0 )? true : false;
+    }
+
+    public function clearAccountStatus($email) {
+        return  $this->setAccountStatus($email, '');
+    }
+
+    public function incrementFailedLogins($email) {
+        $q = "UPDATE subscribers
+              SET failed_logins=failed_logins+1
+              WHERE email=:email";
+        $vars = array(
+            ":email" => $email
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return ( $this->getUpdateCount($ps) > 0 )? true : false;
+    }
+
+    public function deactivateSubscriber($email) {
+        $this->updateActivation($email, false);
+    }
+
+    /**
+     * Set the value of the is_activated field.
+     * @param str $email
+     * @param bool $is_activated
+     * @return int Count of affected rows
+     */
+    private function updateActivation($email, $is_activated) {
+        $q = " UPDATE subscribers SET is_activated=:is_activated WHERE email=:email";
+        $vars = array(
+            ':email'=>$email,
+            ':is_activated'=>(($is_activated)?1:0)
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
     }
 }

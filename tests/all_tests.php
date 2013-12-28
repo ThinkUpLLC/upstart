@@ -17,6 +17,7 @@ $all_tests->add(new TestOfSubscribeController());
 $all_tests->add(new TestOfSubscriberAuthorizationMySQLDAO());
 $all_tests->add(new TestOfAuthorizationMySQLDAO());
 $all_tests->add(new TestOfSubscriberMySQLDAO());
+$all_tests->add(new TestOfLoginController());
 $all_tests->add(new TestOfSessionCache());
 $all_tests->add(new TestOfAppInstaller());
 

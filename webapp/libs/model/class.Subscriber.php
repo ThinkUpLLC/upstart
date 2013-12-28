@@ -61,9 +61,9 @@ class Subscriber {
      */
     var $is_email_verified = false;
     /**
-     * @var tinyint Whether or not subscriber was on waitlist (1 if so, 0 if not).
+     * @var bool Whether or not subscriber was on waitlist (1 if so, 0 if not).
      */
-    var $is_from_waitlist;
+    var $is_from_waitlist = false;
     /**
      * @var str Subscriber's membership level (Member, Pro, Exec, Early Bird, etc).
      */
@@ -77,9 +77,9 @@ class Subscriber {
      */
     var $date_installed;
     /**
-     * @var str API token for authorizing on installation.
+     * @var str API key for authorizing on installation.
      */
-    var $session_api_token;
+    var $api_key_private;
     /**
      * @var str Last time this installation was dispatched for crawl.
      */
@@ -89,9 +89,25 @@ class Subscriber {
      */
     var $commit_hash;
     /**
-     * @var str Non-persistent, user installation URL
+     * @var bool Whether or not the installation is active.
      */
-    var $installation_url = null;
+    var $is_installation_active = false;
+    /**
+     * @var date Last time member logged in.
+     */
+    var $last_login;
+    /**
+     * @var int Current number of failed login attempts.
+     */
+    var $failed_logins;
+    /**
+     * @var str Description of account status, i.e., "Inactive due to excessive failed login attempts".
+     */
+    var $account_status;
+    /**
+     * @var bool If user is activated, 1 for true, 0 for false.
+     */
+    var $is_activated = false;
     public function __construct($row = false) {
         if ($row) {
             $this->id = $row['id'];
@@ -109,13 +125,18 @@ class Subscriber {
             $this->oauth_access_token_secret = $row['oauth_access_token_secret'];
             $this->verification_code = $row['verification_code'];
             $this->is_email_verified = PDODAO::convertDBToBool($row['is_email_verified']);
-            $this->is_from_waitlist = $row['is_from_waitlist'];
+            $this->is_from_waitlist = PDODAO::convertDBToBool($row['is_from_waitlist']);
             $this->membership_level = $row['membership_level'];
             $this->thinkup_username = $row['thinkup_username'];
             $this->date_installed = $row['date_installed'];
-            $this->session_api_token = $row['session_api_token'];
+            $this->api_key_private = $row['api_key_private'];
             $this->last_dispatched = $row['last_dispatched'];
             $this->commit_hash = $row['commit_hash'];
+            $this->is_installation_active = PDODAO::convertDBToBool($row['is_installation_active']);
+            $this->last_login = $row['last_login'];
+            $this->failed_logins = $row['failed_logins'];
+            $this->account_status = $row['account_status'];
+            $this->is_activated = PDODAO::convertDBToBool($row['is_activated']);
         }
     }
 }

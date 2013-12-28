@@ -38,7 +38,24 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $app_installer = new AppInstaller();
         $app_installer->install(6);
         // @TODO add assertions
-        // Assert Upstart session_api_token = ThinkUp's owner api_key_private
+
+        // Assert Upstart user pass and salt match ThinkUp owner pass and salt
+        $stmt = PDODAO::$PDO->query('SELECT pwd, pwd_salt, api_key_private FROM thinkupstart_' 
+            . $thinkup_username . '.tu_owners WHERE email = "me@example.com"');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $thinkup_owner_pass = $row['pwd'];
+        $thinkup_owner_pass_salt = $row['pwd_salt'];
+
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber = $subscriber_dao->getByEmail('me@example.com');
+
+        $this->assertEqual($subscriber->pwd, $thinkup_owner_pass);
+        $this->assertEqual($subscriber->pwd_salt, $thinkup_owner_pass_salt);
+
+        // Assert Upstart api_key_private = ThinkUp's owner api_key_private
+        $thinkup_owner_api_key_private = $row['api_key_private'];
+        $this->assertEqual($subscriber->api_key_private, $thinkup_owner_api_key_private);
+
         // Assert ThinkUp application option server name is correct
         // Assert ThinkUp database_version option is correct/up-to-date
 

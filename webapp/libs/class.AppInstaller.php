@@ -31,11 +31,6 @@ class AppInstaller {
      */
     var $admin_password;
     /**
-     * Default user password.
-     * @var str
-     */
-    var $user_password;
-    /**
      * User installation URL
      * @var str
      */
@@ -56,7 +51,6 @@ class AppInstaller {
 
         $this->admin_email = $cfg->getValue('admin_email');
         $this->admin_password = $cfg->getValue('admin_password');
-        $this->user_password = $cfg->getValue('user_password');
         // @TODO Verify this string includes {user} in it and is URLish
         $this->user_installation_url = $cfg->getValue('user_installation_url');
     }
@@ -69,7 +63,6 @@ class AppInstaller {
         && isset($this->data_path)
         && isset($this->admin_email)
         && isset($this->admin_password)
-        && isset($this->user_password)
         && isset($this->user_installation_url)) {
 
             $subscriber = null;
@@ -100,20 +93,21 @@ class AppInstaller {
                     $subscriber_dao);
 
                     // Create session API token Upstart will use to log into ThinkUp via the Session API
-                    $subscriber->session_api_token = hash('sha256', rand(). $subscriber->email);
+                    $api_key_private = hash('sha256', rand(). $subscriber->email);
+                    $subscriber->api_key_private = substr($api_key_private, 0, 32);
 
                     self::switchToInstallationDatabase($subscriber->thinkup_username);
                     self::setUpApplicationOptions($subscriber->thinkup_username);
 
                     list($admin_id, $admin_api_key, $owner_id, $owner_api_key) =
-                    self::createOwners($subscriber->email, $subscriber->session_api_token);
+                    self::createOwners($subscriber);
                     self::setUpServiceUser($owner_id, $subscriber);
 
                     $url = str_replace ("{user}", $subscriber->thinkup_username, $this->user_installation_url);
 
                     self::switchToUpstartDatabase();
 
-                    $subscriber_dao->intializeInstallation($subscriber_id, $subscriber->session_api_token,
+                    $subscriber_dao->intializeInstallation($subscriber_id, $subscriber->api_key_private,
                     $commit_hash);
                     self::logToUserMessage("Updated waitlist with link and db name");
                     self::dispatchCrawlJob($subscriber->thinkup_username);
@@ -288,17 +282,19 @@ class AppInstaller {
         return $server_name;
     }
 
-    protected function createOwners($email, $session_api_token) {
+    protected function createOwners(Subscriber $subscriber) {
         $tu_tables_dao = new ThinkUpTablesMySQLDAO();
         //insert admin into owners
-        list($admin_id, $admin_api_key) = $tu_tables_dao->createOwner($this->admin_email, $this->admin_password, true);
+        list($admin_pwd_salt, $admin_hashed_pwd) = $tu_tables_dao->saltAndHashPwd($this->admin_email,
+            $this->admin_password);
+        list($admin_id, $admin_api_key) = $tu_tables_dao->createOwner($this->admin_email, $admin_hashed_pwd,
+            $admin_pwd_salt, true);
 
         //insert user into owners
-        list($user_id, $user_api_key) = $tu_tables_dao->createOwner($email, $this->user_password, false,
-        $session_api_token);
+        list($user_id, $user_api_key) = $tu_tables_dao->createOwner($subscriber->email, $subscriber->pwd,
+            $subscriber->pwd_salt, false, $subscriber->api_key_private);
 
-        self::logToUserMessage("Inserted $this->admin_email password $this->admin_password and user ".$email.
-        " with password $this->user_password");
+        self::logToUserMessage("Inserted $this->admin_email and user ".$subscriber->email);
         return array($admin_id, $admin_api_key, $user_id, $user_api_key);
     }
 
@@ -327,13 +323,13 @@ class AppInstaller {
         $cfg = Config::getInstance();
         $jobs_array = array();
         $jobs_array[] = array(
-        'installation_name'=>$thinkup_username,
-        'timezone'=>$cfg->getValue('dispatch_timezone'),
-        'db_host'=>$cfg->getValue('db_host'),
-        'db_name'=>'thinkupstart_'.$thinkup_username,
-        'db_socket'=>$cfg->getValue('dispatch_socket'),
-        'db_port'=>$cfg->getValue('db_port'),
-        'high_priority'=>'true'
+            'installation_name'=>$thinkup_username,
+            'timezone'=>$cfg->getValue('dispatch_timezone'),
+            'db_host'=>$cfg->getValue('db_host'),
+            'db_name'=>'thinkupstart_'.$thinkup_username,
+            'db_socket'=>$cfg->getValue('dispatch_socket'),
+            'db_port'=>$cfg->getValue('db_port'),
+            'high_priority'=>'true'
         );
         // call Dispatcher
         $result_decoded = Dispatcher::dispatch($jobs_array);

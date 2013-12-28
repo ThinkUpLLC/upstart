@@ -54,11 +54,9 @@ class ThinkUpTablesMySQLDAO extends PDODAO {
         }
     }
 
-    public function createOwner($email, $pwd, $is_admin=false, $session_api_token = null) {
+    public function createOwner($email, $hashed_pwd, $pwd_salt, $is_admin=false, $api_key_private = null) {
         $activation_code = rand(1000, 9999);
-        $pwd_salt = $this->generateSalt($email);
         $api_key = $this->generateAPIKey();
-        $hashed_pwd = $this->hashPassword($pwd, $pwd_salt);
 
         $q = "INSERT INTO tu_owners SET email=:email, pwd=:hashed_pwd, pwd_salt=:pwd_salt, joined=NOW(), ";
         $q .= "activation_code=:activation_code, full_name=:full_name, api_key=:api_key, ";
@@ -74,11 +72,23 @@ class ThinkUpTablesMySQLDAO extends PDODAO {
                 ':activation_code'=>$activation_code,
                 ':full_name'=>'',
                 ':api_key'=>$api_key,
-                ':api_key_private'=>$session_api_token
+                ':api_key_private'=>$api_key_private
         );
         if ($this->profiler_enabled) Profiler::setDAOMethod(__METHOD__);
         $ps = $this->execute($q, $vars);
         return array($this->getInsertId($ps), $api_key);
+    }
+
+    /**
+     * Generate a password salt and hash it given an email address and password.
+     * @param  str $email ThinkUp member email address
+     * @param  str $pwd   ThinkUp member password
+     * @return arr array(salted pass, hashed pass)
+     */
+    public function saltAndHashPwd($email, $pwd) {
+        $pwd_salt = $this->generateSalt($email);
+        $hashed_pwd = $this->hashPassword($pwd, $pwd_salt);
+        return array($pwd_salt, $hashed_pwd);
     }
 
     /**
