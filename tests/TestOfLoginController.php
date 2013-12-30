@@ -122,6 +122,7 @@ class TestOfLoginController extends UpstartUnitTestCase {
 
         $controller = new LoginController(true);
         $results = $controller->go();
+        $this->debug($results);
 
         $this->assertPattern('/me@example.com/', $results);
     }

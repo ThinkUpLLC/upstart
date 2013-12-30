@@ -3,17 +3,16 @@ class LoginController extends Controller {
 
     public function control() {
         $this->setPageTitle('Log in');
-        $this->setViewTemplate('session.login.tpl');
+        $this->setViewTemplate('user.login.tpl');
         $this->disableCaching();
 
         if (isset($_GET['msg'])) {
             $this->addSuccessMessage($_GET['msg']);
         }
-        //don't show login form if already logged in
+        // if already logged in, show settings screen
         if ( Session::isLoggedIn()) {
-            $logged_in_user = Session::getLoggedInUser();
-            $this->addToView('logged_in_user', $logged_in_user);
-            return $this->generateView();
+            $settings_controller = new SettingsController(true);
+            return $settings_controller->go();
         } else  {
             $subscriber_dao = new SubscriberMySQLDAO();
 
@@ -77,27 +76,34 @@ class LoginController extends Controller {
                         $this->addToView('logged_in_user', $logged_in_user);
                         $subscriber = $subscriber_dao->getByEmail($logged_in_user);
 
-                        $config = Config::getInstance();
-                        $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
-                        $config->getValue('user_installation_url'));
-                        $upstart_url = UpstartHelper::getApplicationURL() . $config->getValue('site_root_path');
+                        if (isset($subscriber->thinkup_username) && isset($subscriber->date_installed)
+                            && $subscriber->is_installation_active) {
+                            $config = Config::getInstance();
+                            $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
+                            $config->getValue('user_installation_url'));
+                            $upstart_url = UpstartHelper::getApplicationURL() . $config->getValue('site_root_path');
 
-                        $params = array("u"=>$logged_in_user, "k"=>$subscriber->api_key_private,
-                        'success_redir'=> $user_installation_url,
-                        'failure_redir'=> $upstart_url . '');
+                            $params = array("u"=>$logged_in_user, "k"=>$subscriber->api_key_private,
+                            'success_redir'=> $user_installation_url,
+                            'failure_redir'=> $upstart_url . '');
 
-                        $url = $user_installation_url.'api/v1/session/login.php?';
-                        end($params);
-                        $last_param = key($params);
-                        foreach ($params as $key=>$value) {
-                            $url .= $key ."=" . urlencode($value);
-                            if ($key != $last_param) {
-                                $url .= "&";
+                            $url = $user_installation_url.'api/v1/session/login.php?';
+                            end($params);
+                            $last_param = key($params);
+                            foreach ($params as $key=>$value) {
+                                $url .= $key ."=" . urlencode($value);
+                                if ($key != $last_param) {
+                                    $url .= "&";
+                                }
                             }
-                        }
-                        // Redirect to installation to log in
-                        if (!$this->redirect($url)) {
-                            $this->generateView(); //for testing
+                            // Redirect to installation to log in
+                            if (!$this->redirect($url)) {
+                                $this->generateView(); //for testing
+                            }
+                        } else {
+                            // No installation, show settings screen
+                            $settings_controller = new SettingsController(true);
+                            return $settings_controller->go();
                         }
                     }
                 }
