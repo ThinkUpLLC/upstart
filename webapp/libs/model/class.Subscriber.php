@@ -139,4 +139,33 @@ class Subscriber {
             $this->is_activated = PDODAO::convertDBToBool($row['is_activated']);
         }
     }
+
+    /**
+     * Generates a new password recovery token and returns it.
+     *
+     * The internal format of the token is a Unix timestamp of when it was set (for checking if it's stale), an
+     * underscore, and then the token itself.
+     *
+     * @return string A new password token for embedding in a link and emailing a user.
+     */
+    public function setPasswordRecoveryToken() {
+        $token = md5(uniqid(rand()));
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber_dao->updatePasswordToken($this->email, $token . '_' . time());
+        return $token;
+    }
+
+    /**
+     * Returns whether a given password recovery token is valid or not.
+     *
+     * This requires that the token not be stale (older than a day), and that  token itself matches what's in the
+     * database.
+     *
+     * @param string $token The token to validate against the database.
+     * @return bool Whether the token is valid or not.
+     */
+    public function validateRecoveryToken($token) {
+        $data = explode('_', $this->password_token);
+        return ((time() - $data[1] <= 86400) && ($token == $data[0]));
+    }
 }

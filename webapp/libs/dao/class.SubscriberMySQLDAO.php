@@ -490,6 +490,10 @@ class SubscriberMySQLDAO extends PDODAO {
         $this->updateActivation($email, false);
     }
 
+    public function activateSubscriber($email) {
+        $this->updateActivation($email, true);
+    }
+
     /**
      * Set the value of the is_activated field.
      * @param str $email
@@ -501,6 +505,61 @@ class SubscriberMySQLDAO extends PDODAO {
         $vars = array(
             ':email'=>$email,
             ':is_activated'=>(($is_activated)?1:0)
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
+    public function updatePasswordToken($email, $token) {
+        $q = "UPDATE subscribers
+              SET password_token=:token
+              WHERE email=:email";
+        $vars = array(
+            ":token" => $token,
+            ":email" => $email
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
+    public function getByPasswordToken($token) {
+        $q = "SELECT * FROM subscribers WHERE password_token LIKE :token";
+        $vars = array(':token' => $token . '_%');
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowAsObject($ps, 'Subscriber');
+    }
+
+    public function updatePassword($email, $pwd) {
+        // Generate new unique salt and store it in the database
+        $salt = $this->generateSalt($email);
+        $this->updateSalt($email, $salt);
+        //Hash the password using the new salt
+        $hashed_password = $this->hashPassword($pwd, $salt);
+        //Store the new hashed password in the database
+        $q = " UPDATE subscribers SET pwd=:hashed_password WHERE email=:email";
+        $vars = array(
+            ':email'=>$email,
+            ':hashed_password'=>$hashed_password
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
+    /**
+     * Updates the password salt for a given user
+     * @param str $email
+     * @param str $salt
+     * @return int Number of rows updated
+     */
+    private function updateSalt($email, $salt) {
+        $q = "UPDATE subscribers SET pwd_salt=:salt WHERE email=:email";
+        $vars = array(
+            ':email'=>$email,
+            ':salt'=>$salt
         );
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);

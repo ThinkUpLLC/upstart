@@ -111,6 +111,7 @@ CREATE TABLE subscribers (
   failed_logins int(11) NOT NULL DEFAULT '0' COMMENT 'Current number of failed login attempts.',
   account_status varchar(150) NOT NULL DEFAULT '' COMMENT 'Description of account status, i.e., "Inactive due to excessive failed login attempts".',
   is_activated int(1) NOT NULL DEFAULT '0' COMMENT 'If user is activated, 1 for true, 0 for false.',
+  password_token varchar(64) DEFAULT NULL COMMENT 'Password reset token.',
   PRIMARY KEY (id),
   UNIQUE KEY email (email),
   UNIQUE KEY network_user_id (network_user_id,network),

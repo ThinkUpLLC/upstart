@@ -75,11 +75,8 @@ class UpstartHelper {
         }
         //Finally fall back to stored application setting set by Installer::storeServerName
         if ($server == '') {
-            $option_dao = DAOFactory::getDAO('OptionDAO');
-            $server_app_setting = $option_dao->getOptionByName(OptionDAO::APP_OPTIONS, 'server_name');
-            if (isset($server_app_setting)) {
-                $server = $server_app_setting->option_value;
-            }
+            $config = Config::getInstance();
+            $server = $config->getValue('upstart_host');
         }
         //domain name is always lowercase
         $server = strtolower($server);
@@ -87,7 +84,7 @@ class UpstartHelper {
     }
 
     public static function getSiteRootPathFromFileSystem() {
-        $dirs_under_root = array('admin');
+        $dirs_under_root = array('admin', 'tests', 'user');
         if (isset($_SERVER['PHP_SELF'])) {
             $current_script_path = explode('/', $_SERVER['PHP_SELF']);
         } else {
@@ -100,5 +97,11 @@ class UpstartHelper {
         $current_script_path = implode('/', $current_script_path) . '/';
         return $current_script_path;
     }
-
+    /**
+     * Return whether currently in test mode.
+     * @return bool Whether in test mode
+     */
+    public static function isTest() {
+        return (isset($_SESSION["MODE"]) && $_SESSION["MODE"] == "TESTS") || getenv("MODE")=="TESTS";
+    }
 }

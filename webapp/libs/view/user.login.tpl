@@ -20,7 +20,7 @@ Logged in as {$logged_in_user}  [<a href="logout.php">Log out</a>]
 	<form action="index.php" method="POST">
 		Email address: <input type="text" name="email" {if isset($email)}value="{$email|filter_xss}"{/if}><br />
 		Password: <input type="text" name="pwd" value=""><br/>
-		<input type="Submit" name="Submit" value="Log In">
+		<input type="Submit" name="Submit" value="Log In">  <a href="forgot.php">Forgot?</a>
 	</form>
 {/if}
 </body>
