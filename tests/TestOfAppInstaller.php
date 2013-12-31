@@ -51,6 +51,8 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
 
         $this->assertEqual($subscriber->pwd, $thinkup_owner_pass);
         $this->assertEqual($subscriber->pwd_salt, $thinkup_owner_pass_salt);
+        $this->assertEqual($subscriber->is_installation_active, 1);
+        $this->assertNotNull($subscriber->date_installed);
 
         // Assert Upstart api_key_private = ThinkUp's owner api_key_private
         $thinkup_owner_api_key_private = $row['api_key_private'];

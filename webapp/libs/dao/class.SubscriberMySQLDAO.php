@@ -221,7 +221,7 @@ class SubscriberMySQLDAO extends PDODAO {
 
     public function intializeInstallation($id, $api_key_private, $commit_hash) {
         $q  = "UPDATE subscribers SET date_installed=NOW(), api_key_private = :api_key_private, ";
-        $q .= "commit_hash = :commit_hash WHERE id = :id ";
+        $q .= "commit_hash = :commit_hash, is_installation_active=1 WHERE id = :id ";
         $vars = array(
             ':id'=>$id,
             ':api_key_private'=>$api_key_private,
