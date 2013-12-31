@@ -9,7 +9,6 @@ Installation
 Upstart doesn't have ThinkUp's easy web-based installer, but its innards are very similar. Here's how to get it installed locally.
 
 1. First, clone this repository:
-
 ```
 $ git clone git@github.com:ThinkUpLLC/upstart.git
 ```
@@ -24,12 +23,12 @@ $ git submodule update
 
 4. Symlink Upstart's webapp directory to a web-accessible folder on your local web server. On ThinkUp.com, that directory is currently ```join```. So if you symlink webapp to join on localhost, you'd load ```http://localhost/join/``` in your browser.
 
-4. Create your config file. This file lives in the Isosceles directory. Copy over the sample using this command:
+5. Create your config file. This file lives in the Isosceles directory. Copy over the sample using this command:
 ```$ cp webapp/extlibs/isosceles/libs/config.sample.inc.php cp webapp/extlibs/isosceles/libs/config.inc.php```
 
-5. Fill in the config.inc.php file basic values from your setup, particularly site_root_path and db_name, db_user, and db_password. Upstarts datadir_path must be writable by the web server (for caching Smarty output).
+6. Fill in the config.inc.php file basic values from your setup, particularly site_root_path and db_name, db_user, and db_password. Upstarts datadir_path must be writable by the web server (for caching Smarty output).
 
-6. Add Upstart's custom config values, listed below. Get any API keys from Gina via LastPass.
+7. Add Upstart's custom config values, listed below. Get any API keys from Gina via LastPass.
 
 
 Custom Configuration
@@ -84,9 +83,9 @@ $ISOSCELES_CFG['dispatch_http_passwd']
 Using Upstart
 -------------
 
-There are two interfaces for Upstart: a user-facing member signup area, and the internal admin area.
+There are two interfaces for Upstart: a user-facing area, and the internal admin area.
 
-User-facing signup is what you see exposed on ThinkUp.com. It's the user flow which brings you through Amazon Payments, Twitter/Facebook authorization, and ThinkUp.com account creation.
+User-facing signup is what you see exposed on ThinkUp.com. It's the user flow which brings you through Amazon Payments, Twitter/Facebook authorization, and ThinkUp.com account creation. UPDATE: There's now a work-in-progress user area in the /user/ folder.
 
 The internal admin area is located in the admin directory and allows us to browse, search and manage members who have signed up. If your Upstart installation is at ```http://localhost/join/``` then you can see the admin interface at ```http://localhost/join/admin/```. There will be zero data in admin when you first install Upstart. To get test data in there, sign up via the user flow a few times using various email addresses. If you're using Gmail, you can add a +test to your email address to get multiple addresses, that is, ginatrapani+test1@gmail.com and ginatrapani+test2@gmail.com all go to ginatrapani@gmail.com but count as different accounts in Upstart, which enforces email address uniqueness. (With the amazon_sandbox config value set to true, you won't be actually authorizing ThinkUp to charge you for these authorizations. No actual money moves in the sandbox.)
 
