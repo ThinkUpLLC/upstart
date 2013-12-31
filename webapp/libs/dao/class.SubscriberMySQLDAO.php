@@ -565,4 +565,19 @@ class SubscriberMySQLDAO extends PDODAO {
         $ps = $this->execute($q, $vars);
         return $this->getUpdateCount($ps);
     }
+
+    /**
+     * Check if a ThinkUp username is in use.
+     * @param  str  $thinkup_username Username to check
+     * @return bool  Whether or not it is in use
+     */
+    public function isUsernameTaken($thinkup_username) {
+        $q = "SELECT thinkup_username FROM subscribers WHERE thinkup_username=:thinkup_username";
+        $vars = array(
+            ':thinkup_username'=>$thinkup_username
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getDataIsReturned($ps);
+    }
 }

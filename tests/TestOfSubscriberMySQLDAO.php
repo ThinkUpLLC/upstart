@@ -229,4 +229,27 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->expectException('DuplicateSubscriberUsernameException');
         $result = $dao->setUsername(102, 'willowrosenberg');
     }
+
+    public function testIsUsernameTaken() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'ginatrapani@example.com',
+        'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+        'thinkup_username'=>'unique1'));
+        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'lexluther@evilmail.com',
+        'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique2'));
+        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'xanderharris@buff.com',
+        'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique3'));
+        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'willowrosenberg@willow.com',
+        'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique4'));
+
+        $dao = new SubscriberMySQLDAO();
+       //Username not taken
+        $this->assertFalse($dao->isUsernameTaken('cordeliachase'));
+
+        //Usernames taken
+        $this->assertTrue($dao->isUsernameTaken('unique1'));
+        $this->assertTrue($dao->isUsernameTaken('unique2'));
+        $this->assertTrue($dao->isUsernameTaken('unique3'));
+        $this->assertTrue($dao->isUsernameTaken('unique4'));
+    }
 }
