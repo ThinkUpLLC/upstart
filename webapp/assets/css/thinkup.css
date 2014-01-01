@@ -1,12 +1,12 @@
-body.settings-page .container {
+body.settings .container {
   width: 100%;
-  padding: 0 10px;
-  margin: 45px auto 0;
+  padding: 45px 10px 0;
+  margin: 0 auto;
 }
-body.settings-page .container header {
+body.settings .container header {
   margin-top: 20px;
 }
-body.settings-page .container header h1 {
+body.settings .container header h1 {
   text-align: center;
   font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
   font-weight: 600;
@@ -14,26 +14,29 @@ body.settings-page .container header h1 {
   line-height: 1.23;
   margin: 0;
 }
-body.settings-page .container .form-horizontal {
-  font-family: "tablet-gothic", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  margin-bottom: 25px;
-}
-body.settings-page .container .form-horizontal .standard-element {
+body.settings .container .standard-element {
   font-size: 14px;
   line-height: 2;
   padding: 11px 10px 10px;
 }
-body.settings-page .container .form-horizontal fieldset {
+body.settings .container .form-horizontal {
+  font-family: "tablet-gothic", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   margin-bottom: 25px;
 }
-body.settings-page .container .form-horizontal fieldset header {
+body.settings .container .form-horizontal fieldset {
+  margin-bottom: 25px;
+}
+body.settings .container .form-horizontal fieldset.fieldset-no-header {
+  border-top: 1px solid #b9c7ce;
+}
+body.settings .container .form-horizontal fieldset header {
   margin: 0;
   font-size: 14px;
   line-height: 2;
   padding: 11px 10px 10px;
   border-bottom: 1px solid #b9c7ce;
 }
-body.settings-page .container .form-horizontal fieldset header h2 {
+body.settings .container .form-horizontal fieldset header h2 {
   font-family: "tablet-gothic-wide", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 14px;
   line-height: 1;
@@ -41,16 +44,16 @@ body.settings-page .container .form-horizontal fieldset header h2 {
   color: #666666;
   margin: 0;
 }
-body.settings-page .container .form-horizontal fieldset header .help-text {
+body.settings .container .form-horizontal fieldset header .help-text {
   font-family: "tablet-gothic-wide", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 400;
   color: #999999;
 }
-body.settings-page .container .form-horizontal .form-group {
+body.settings .container .form-horizontal .form-group {
   margin: 0;
   border-bottom: 1px solid #b9c7ce;
 }
-body.settings-page .container .form-horizontal .btn-submit {
+body.settings .container .form-horizontal .btn-submit {
   position: fixed;
   top: 5px;
   right: 0;
@@ -66,7 +69,7 @@ body.settings-page .container .form-horizontal .btn-submit {
   line-height: 1;
   font-weight: 600;
 }
-body.settings-page .container .form-horizontal .control-label {
+body.settings .container .form-horizontal .control-label {
   float: left;
   width: 100px;
   color: #999999;
@@ -76,7 +79,7 @@ body.settings-page .container .form-horizontal .control-label {
   text-align: left;
   font-weight: 400;
 }
-body.settings-page .container .form-horizontal .form-control {
+body.settings .container .form-horizontal .form-control {
   width: auto;
   min-width: 140px;
   max-width: 220px;
@@ -94,7 +97,15 @@ body.settings-page .container .form-horizontal .form-control {
   outline: 0;
   border-radius: 0;
 }
-body.settings-page .container .form-horizontal .form-group-toggle .control-label {
+body.settings .container .form-horizontal .help-block {
+  padding: 4px 10px;
+  margin: 0;
+  border-top: 1px solid #dbdbdb;
+  color: #b3b3b3;
+  font-size: 12px;
+  line-height: 1.33;
+}
+body.settings .container .form-horizontal .form-group-toggle .control-label {
   width: 100%;
   min-width: 0;
   padding: 11px 80px 10px 10px;
@@ -102,14 +113,14 @@ body.settings-page .container .form-horizontal .form-group-toggle .control-label
   position: relative;
   color: #000;
 }
-body.settings-page .container .form-horizontal .form-group-toggle .control-label:before,
-body.settings-page .container .form-horizontal .form-group-toggle .control-label:after {
+body.settings .container .form-horizontal .form-group-toggle .control-label:before,
+body.settings .container .form-horizontal .form-group-toggle .control-label:after {
   -webkit-transition: all 100ms ease-in;
   transition: all 100ms ease-in;
   position: absolute;
   content: " ";
 }
-body.settings-page .container .form-horizontal .form-group-toggle .control-label:before {
+body.settings .container .form-horizontal .form-group-toggle .control-label:before {
   width: 40px;
   height: 24px;
   top: 12px;
@@ -117,7 +128,7 @@ body.settings-page .container .form-horizontal .form-group-toggle .control-label
   background: #d0021b;
   border-radius: 12px;
 }
-body.settings-page .container .form-horizontal .form-group-toggle .control-label:after {
+body.settings .container .form-horizontal .form-group-toggle .control-label:after {
   width: 22px;
   height: 22px;
   top: 13px;
@@ -125,28 +136,28 @@ body.settings-page .container .form-horizontal .form-group-toggle .control-label
   border-radius: 11px;
   background: #fff;
 }
-body.settings-page .container .form-horizontal .form-group-toggle input[type=checkbox] {
+body.settings .container .form-horizontal .form-group-toggle input[type=checkbox] {
   position: absolute;
   opacity: 0;
 }
-body.settings-page .container .form-horizontal .form-group-toggle input[type=checkbox]:checked ~ .control-label:before {
+body.settings .container .form-horizontal .form-group-toggle input[type=checkbox]:checked ~ .control-label:before {
   background: #4cd764;
 }
-body.settings-page .container .form-horizontal .form-group-toggle input[type=checkbox]:checked ~ .control-label:after {
+body.settings .container .form-horizontal .form-group-toggle input[type=checkbox]:checked ~ .control-label:after {
   right: 11px;
 }
-body.settings-page .container .form-horizontal .picker {
+body.settings .container .form-horizontal .picker {
   overflow: hidden;
   position: relative;
 }
-body.settings-page .container .form-horizontal .picker .icon {
+body.settings .container .form-horizontal .picker .icon {
   position: absolute;
   top: 0;
   right: 0;
   padding: 18px 10px 17px;
   background: #f0f0f0;
 }
-body.settings-page .container .form-horizontal .picker select {
+body.settings .container .form-horizontal .picker select {
   width: 135%;
   border: 0;
   background: transparent;
@@ -157,32 +168,97 @@ body.settings-page .container .form-horizontal .picker select {
   -webkit-appearance: none;
   padding-right: 70px;
 }
-body.settings-page .container .form-horizontal .picker select:focus {
+body.settings .container .form-horizontal .picker select:focus {
   color: #3ea5cf;
 }
+body.settings .container .list-group {
+  border-top: 1px solid #b9c7ce;
+  margin-top: 20px;
+}
+body.settings .container .list-group .list-group-item {
+  border-radius: 0;
+  background: 0;
+  border: 0;
+  margin: 0;
+  font-size: 14px;
+  line-height: 2;
+  padding: 11px 10px 10px;
+  border-bottom: 1px solid #b9c7ce;
+  position: relative;
+}
+body.settings .container .list-group .list-group-item .account-label {
+  font-weight: 400;
+}
+body.settings .container .list-group .list-group-item .account-label .account-photo {
+  float: left;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+body.settings .container .list-group .list-group-item .account-action {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 20px;
+  line-height: 1;
+}
+body.settings .container .list-group .list-group-item .account-action a {
+  display: block;
+  padding: 15px 10px 14px;
+  color: #d0021b;
+}
+body.settings .container .list-group .list-group-item.list-accounts-item-add {
+  padding: 0;
+}
+body.settings .container .list-group .list-group-item.list-accounts-item-add a {
+  font-size: 14px;
+  line-height: 2;
+  padding: 11px 10px 10px;
+  display: block;
+  color: #333333;
+}
+body.settings .container .list-group .list-group-item.list-accounts-item-add a .account-action {
+  padding: 15px 10px 14px;
+  color: #666666;
+}
+body.settings .container .list-group .list-group-item.list-accounts-item-add a:hover {
+  text-decoration: none;
+  background: #e8e8e8;
+}
+body.settings .container .list-group .list-group-item.list-accounts-item-add a:hover .account-action-add {
+  color: #595959;
+}
+body.settings .container .form-note {
+  text-align: center;
+  margin: 0 16% 20px;
+  color: #999999;
+}
+body.settings .container .accounts-privacy {
+  color: #417505;
+}
 @media (min-width: 400px) {
-  body.settings-page .container {
+  body.settings .container {
     width: 400px;
   }
-  body.settings-page .container .form-horizontal {
+  body.settings .container .form-horizontal {
     font-family: "tablet-gothic-wide", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   }
-  body.settings-page .container .form-horizontal fieldset header {
+  body.settings .container .form-horizontal fieldset header {
     width: 380px;
   }
-  body.settings-page .container .form-horizontal .form-group {
+  body.settings .container .form-horizontal .form-group {
     width: 380px;
   }
-  body.settings-page .container .form-horizontal .control-label {
+  body.settings .container .form-horizontal .control-label {
     width: 150px;
   }
-  body.settings-page .container .form-horizontal .form-control {
+  body.settings .container .form-horizontal .form-control {
     margin-left: 160px;
     width: 220px;
   }
 }
 @media (min-width: 400px) and (min-width: 540px) {
-  body.settings-page .container .form-horizontal .btn-submit {
+  body.settings .container .form-horizontal .btn-submit {
     position: static;
     width: 74px;
     height: 74px;
@@ -191,6 +267,55 @@ body.settings-page .container .form-horizontal .picker select:focus {
     margin: 15px auto 0;
     display: block;
   }
+}
+body.account {
+  background: #46bcff;
+}
+body.account .navbar-default {
+  border-bottom: 0;
+  box-shadow: 0 0 0;
+  position: absolute;
+  margin: 0;
+}
+body.account .navbar-default .navbar-brand {
+  margin: 62px auto 0;
+  width: 190px;
+  height: 48px;
+  background-size: 190px 48px;
+}
+body.account .container {
+  padding-top: 160px;
+}
+body.account .container header {
+  margin-bottom: 45px;
+}
+body.account .container .form-horizontal fieldset.fieldset-no-header,
+body.account .container .form-horizontal .form-group {
+  border-color: #3187d1;
+}
+body.account .container .form-horizontal .control-label {
+  color: #000;
+}
+body.account .container .form-horizontal .help-block {
+  border-color: rgba(49, 135, 209, 0.3);
+  color: #3187d1;
+}
+body.account .container .form-note {
+  margin-top: 40px;
+}
+body.account .container .form-note a {
+  color: #fff;
+  text-decoration: underline;
+}
+body.account .container .form-note a:hover {
+  text-decoration: none;
+}
+.fa-override-before:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
 }
 body {
   background-color: #f0f0f0;
@@ -232,7 +357,7 @@ a:hover {
 .navbar-default .navbar-header .navbar-brand {
   float: none;
   padding: 0;
-  background: url(thinkup-logo.svg);
+  background: url(../img/thinkup-logo.svg);
   background-size: 79px 20px;
   text-indent: 100%;
   display: block;
@@ -254,6 +379,9 @@ a:hover {
 .navbar-default .navbar-header .menu-trigger:focus {
   outline: 0;
   color: #2785d3;
+}
+body.menu-off .navbar-default .navbar-header .menu-trigger {
+  display: none;
 }
 #menu {
   display: none;
@@ -339,9 +467,57 @@ a:hover {
   bottom: -25px;
   right: 10px;
 }
-.container {
-  padding: 45px 0 0;
+.app-message {
+  position: fixed;
   width: 100%;
+  top: 40px;
+  left: 0;
+  background: #FFFABE;
+  border-bottom: 1px solid #BBC7CE;
+  font-size: 13px;
+  line-height: 1.23;
+  padding: 7px 0;
+  font-weight: 400;
+  text-align: center;
+  z-index: 100;
+}
+.app-message.app-message-warning {
+  color: #d0021b;
+  border-color: #d0021b;
+}
+.app-message.app-message-warning .content:before {
+  padding-right: 5px;
+}
+.app-message.app-message-success {
+  color: #417505;
+  border-color: #417505;
+}
+.app-message.app-message-success .content:before {
+  padding-right: 5px;
+}
+.app-message .content {
+  padding: 0 40px;
+}
+.app-message .app-message-close {
+  position: absolute;
+  font-size: 20px;
+  line-height: 1;
+  top: 5px;
+  right: 5px;
+  color: #46bcff;
+}
+.app-message .app-message-close .icon {
+  vertical-align: top;
+}
+.app-message-hidden {
+  display: none;
+}
+.container {
+  padding: 46px 0 0;
+  width: 100%;
+}
+body.app-message-visible .container {
+  padding-top: 71px;
 }
 .stream {
   min-width: 320px;
@@ -491,10 +667,8 @@ a:hover {
 .insight .panel-footer .share-menu:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .insight .panel-footer .share-menu:after {
   clear: both;
@@ -517,10 +691,8 @@ a:hover {
 .insight .panel-footer .share-menu .share-services:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .insight .panel-footer .share-menu .share-services:after {
   clear: both;
@@ -673,10 +845,8 @@ a:hover {
 .user a:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .user a:after {
   clear: both;
@@ -785,10 +955,8 @@ a:hover {
   .insight:after {
     content: " ";
     /* 1 */
-  
     display: table;
     /* 2 */
-  
   }
   .insight:after {
     clear: both;
@@ -814,10 +982,8 @@ a:hover {
   .insight .panel-desktop-right:after {
     content: " ";
     /* 1 */
-  
     display: table;
     /* 2 */
-  
   }
   .insight .panel-desktop-right:after {
     clear: both;
@@ -866,10 +1032,8 @@ a:hover {
   .stream:after {
     content: " ";
     /* 1 */
-  
     display: table;
     /* 2 */
-  
   }
   .stream:after {
     clear: both;
@@ -883,7 +1047,7 @@ a:hover {
   }
   .stream .date-marker.fixed {
     position: fixed;
-    top: 59px;
+    top: 60px;
   }
   .stream .date-marker.absolute {
     position: absolute;
@@ -900,6 +1064,9 @@ a:hover {
   .stream .insight {
     margin-left: 160px;
   }
+  body.app-message-visible .stream .date-marker.fixed {
+    top: 85px;
+  }
 }
 @media (min-width: 820px) {
   body.menu-open #menu {
@@ -911,16 +1078,21 @@ a:hover {
     overflow-x: hidden;
     overflow-y: scroll;
     height: 100%;
-    z-index: 1;
+    z-index: 2;
   }
   body.menu-open .navbar-default {
-    margin-left: 280px;
-  }
-  body.menu-open .navbar-default .navbar-header {
-    margin-left: -280px;
+    left: 280px;
+    right: 0;
+    width: auto;
+    z-index: 1;
   }
   body.menu-open .navbar-default .menu-trigger {
     display: none;
+  }
+  body.menu-open .app-message {
+    left: 280px;
+    right: 0;
+    width: auto;
   }
   body.menu-open #page-content {
     margin-left: 280px;
