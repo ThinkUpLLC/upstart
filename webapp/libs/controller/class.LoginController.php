@@ -1,5 +1,5 @@
 <?php
-class LoginController extends Controller {
+class LoginController extends UpstartController {
 
     public function control() {
         $this->setPageTitle('Log in');
@@ -112,23 +112,4 @@ class LoginController extends Controller {
             }
         }
     }
-
-    /**
-     * Send Location header
-     * @param str $destination
-     * @return bool Whether or not redirect header was sent
-     */
-    protected function redirect($destination=null) {
-        if (!isset($destination)) {
-            $destination = Utils::getSiteRootPathFromFileSystem();
-        }
-        $this->redirect_destination = $destination; //for validation
-        if ( !headers_sent() ) {
-            header('Location: '.$destination);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }

@@ -1,6 +1,6 @@
 <?php
 
-abstract class AuthController extends Controller {
+abstract class AuthController extends UpstartController {
     public function __construct($session_started=false) {
         parent::__construct($session_started);
     }
