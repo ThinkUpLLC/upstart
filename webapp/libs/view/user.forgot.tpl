@@ -1,39 +1,23 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Forgot password</title>
-    <meta name="description" content="">
-    {include file="_appheader.tpl"}
-  </head>
-  <body class="pledge">
+{include file="_userheader.tpl" body_type="settings account menu-off"}
+{include file="_usernavigation.tpl"}
 
+    <div class="container">
+      <header>
+        <h1>Recover your password</h1>
+      </header>
+ 
+      <form role="form" class="form-horizontal" id="form-forgot-password">
+        <fieldset class="fieldset-no-header">
+          <div class="form-group">
+            <label class="control-label" for="control-email">Email</label>
+            <input type="email" class="form-control" id="control-email">
+            <span class="help-block">Be sure to enter the address you used during signup.</span>
+          </div>
+        </fieldset>
+ 
+        <input type="submit" value="Submit" class="btn btn-circle btn-submit">
+ 
+        <p class="form-note"><a href="{$site_root_path}user/">Back to Login</a></p>
+      </form>
 
-<h1>Reset Your Password</h1>
-
-{include file="_appusermessage.tpl"}
-
-<form name="forgot-form" method="post" action="" class="login form-horizontal">
-
-    <fieldset style="background-color : white; padding-top : 30px;">
-
-    <div class="control-group">
-        <label class="control-label" for="site_email">Email&nbsp;Address</label>
-        <div class="controls">
-            <span class="input-prepend">
-                <span class="add-on"><i class="icon-envelope"></i></span>
-                <input type="email" name="email" id="email" required
-                data-validation-required-message="<i class='icon-exclamation-sign'></i> A valid email address is required.">
-            </span>
-        </div>
-    </div>
-    <div class="form-actions">
-            <input type="submit" id="login-save" name="Submit" class="btn btn-primary" value="Send Reset">
-    </div>
-
-    </fieldset>
-</form>
-
-</body>
-</html>
+{include file="_userfooter.tpl"}
