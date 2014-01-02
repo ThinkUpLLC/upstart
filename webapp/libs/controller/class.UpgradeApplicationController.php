@@ -43,7 +43,7 @@ class UpgradeApplicationController extends Controller {
 
             // Get in the right directory to exec the upgrade
             $cfg = Config::getInstance();
-            $master_app_source_path = $cfg->getValue('chameleon_app_source_path');
+            $master_app_source_path = $cfg->getValue('master_app_source_path');
             if (!chdir($master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader') ) {
                 throw new Exception("Could not chdir to ".
                 $master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader');
@@ -70,8 +70,8 @@ class UpgradeApplicationController extends Controller {
             while (sizeof($installs_to_upgrade) > 0) {
                 foreach ($installs_to_upgrade as $install_to_upgrade) {
                     // Call chameleon upgrader at the command line with appropriate JSON
-                    $installation_name = $install_to_upgrade['twitter_username'];
-                    $database_name = $install_to_upgrade['database_name'];
+                    $installation_name = $install_to_upgrade['thinkup_username'];
+                    $database_name = 'thinkupstart_' . $installation_name;
                     $upgrade_params_array['installation_name'] = $installation_name;
                     $upgrade_params_array['db_name'] = $database_name;
                     $upgrade_params_json = json_encode($upgrade_params_array);
@@ -85,8 +85,8 @@ class UpgradeApplicationController extends Controller {
                     $upgrade_status_array = JSONDecoder::decode($upgrade_status_json[0], true);
 
                     // DEBUG start
-                    //                    echo "php upgrade.php '".$upgrade_params_json."'";
-                    //                    print_r($upgrade_status_array);
+                    echo "php upgrade.php '".$upgrade_params_json."'";
+                    print_r($upgrade_status_array);
                     // DEBUG end
 
                     $install_log_dao = new InstallLogMySQLDAO();
