@@ -25,10 +25,10 @@ class DispatchCrawlJobsController extends Controller {
                     // json_encode them
                     foreach ($stale_installs as $install) {
                         $jobs_array[] = array(
-                        'installation_name'=>$install['twitter_username'],
+                        'installation_name'=>$install['thinkup_username'],
                         'timezone'=>$cfg->getValue('dispatch_timezone'),
                         'db_host'=>$cfg->getValue('db_host'),
-                        'db_name'=>$install['database_name'],
+                        'db_name'=>'thinkupstart_'.$install['thinkup_username'],
                         'db_socket'=>$cfg->getValue('dispatch_socket'),
                         'db_port'=>$cfg->getValue('db_port')
                         );
