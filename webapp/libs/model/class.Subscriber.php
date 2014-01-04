@@ -108,6 +108,14 @@ class Subscriber {
      * @var bool If user is activated, 1 for true, 0 for false.
      */
     var $is_activated = false;
+    /**
+     * @var str Password reset token.
+     */
+    var $password_token;
+    /**
+     * @var str Subscriber timezone.
+     */
+    var $timezone;
     public function __construct($row = false) {
         if ($row) {
             $this->id = $row['id'];
@@ -137,6 +145,8 @@ class Subscriber {
             $this->failed_logins = $row['failed_logins'];
             $this->account_status = $row['account_status'];
             $this->is_activated = PDODAO::convertDBToBool($row['is_activated']);
+            $this->password_token = $row['password_token'];
+            $this->timezone = $row['timezone'];
         }
     }
 

@@ -244,7 +244,7 @@ class AppInstaller {
         $q = "CREATE DATABASE thinkupstart_$thinkup_username; USE thinkupstart_$thinkup_username;";
         PDODAO::$PDO->exec($q);
 
-        $query_file = $this->master_app_source_path . '/install/sql/build-db_mysql.sql';
+        $query_file = $this->master_app_source_path . '/install/sql/build-db_mysql-upcoming-release.sql';
         $q = file_get_contents($query_file);
         PDODAO::$PDO->exec($q);
 
@@ -288,11 +288,12 @@ class AppInstaller {
         list($admin_pwd_salt, $admin_hashed_pwd) = $tu_tables_dao->saltAndHashPwd($this->admin_email,
             $this->admin_password);
         list($admin_id, $admin_api_key) = $tu_tables_dao->createOwner($this->admin_email, $admin_hashed_pwd,
-            $admin_pwd_salt, true);
+            $admin_pwd_salt, null, 'America/New_York', true);
 
         //insert user into owners
         list($user_id, $user_api_key) = $tu_tables_dao->createOwner($subscriber->email, $subscriber->pwd,
-            $subscriber->pwd_salt, false, $subscriber->api_key_private);
+            $subscriber->pwd_salt, $subscriber->membership_level, $subscriber->timezone, false,
+            $subscriber->api_key_private);
 
         self::logToUserMessage("Inserted $this->admin_email and user ".$subscriber->email);
         return array($admin_id, $admin_api_key, $user_id, $user_api_key);

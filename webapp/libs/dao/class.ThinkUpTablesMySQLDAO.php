@@ -54,12 +54,14 @@ class ThinkUpTablesMySQLDAO extends PDODAO {
         }
     }
 
-    public function createOwner($email, $hashed_pwd, $pwd_salt, $is_admin=false, $api_key_private = null) {
+    public function createOwner($email, $hashed_pwd, $pwd_salt, $membership_level, $timezone='UTC',
+        $is_admin=false, $api_key_private = null ) {
         $activation_code = rand(1000, 9999);
         $api_key = $this->generateAPIKey();
 
         $q = "INSERT INTO tu_owners SET email=:email, pwd=:hashed_pwd, pwd_salt=:pwd_salt, joined=NOW(), ";
         $q .= "activation_code=:activation_code, full_name=:full_name, api_key=:api_key, ";
+        $q .= "membership_level=:membership_level, timezone=:timezone, ";
         $q .= "api_key_private=:api_key_private, is_activated=1 ";
 
         if ($is_admin) {
@@ -72,7 +74,9 @@ class ThinkUpTablesMySQLDAO extends PDODAO {
                 ':activation_code'=>$activation_code,
                 ':full_name'=>'',
                 ':api_key'=>$api_key,
-                ':api_key_private'=>$api_key_private
+                ':api_key_private'=>$api_key_private,
+                ':membership_level'=>$membership_level,
+                ':timezone'=>$timezone
         );
         if ($this->profiler_enabled) Profiler::setDAOMethod(__METHOD__);
         $ps = $this->execute($q, $vars);
