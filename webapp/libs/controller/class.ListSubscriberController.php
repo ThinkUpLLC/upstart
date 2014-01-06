@@ -35,13 +35,18 @@ class ListSubscriberController extends Controller {
         $stalest_dispatch_time = $subscriber_dao->getStalestInstallLastDispatchTime();
         $this->addToView('stalest_dispatch_time', $stalest_dispatch_time);
 
-        $worker_status = Dispatcher::getNagiosCheckStatus();
-        if (strrpos($worker_status, 'NOT OK') !== false) {
+        try {
+            $worker_status = Dispatcher::getNagiosCheckStatus();
+            if (strrpos($worker_status, 'NOT OK') !== false) {
+                $this->addToView('workers_ok', false);
+            } else {
+                $this->addToView('workers_ok', true);
+            }
+            $this->addToView('worker_status', $worker_status);
+        } catch (JSONDecoderException $e) {
             $this->addToView('workers_ok', false);
-        } else {
-            $this->addToView('workers_ok', true);
+            $this->addToView('worker_status', 'Nagios Status Check Failed');
         }
-        $this->addToView('worker_status', $worker_status);
         /* End installation stats */
 
         $this->addToView('page', $page);
