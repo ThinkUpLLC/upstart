@@ -24,7 +24,7 @@ $ git submodule update
 4. Symlink Upstart's webapp directory to a web-accessible folder on your local web server. On ThinkUp.com, that directory is currently ```join```. So if you symlink webapp to join on localhost, you'd load ```http://localhost/join/``` in your browser.
 
 5. Create your config file. This file lives in the Isosceles directory. Copy over the sample using this command:
-```$ cp webapp/extlibs/isosceles/libs/config.sample.inc.php cp webapp/extlibs/isosceles/libs/config.inc.php```
+```$ cp webapp/extlibs/isosceles/libs/config.sample.inc.php webapp/extlibs/isosceles/libs/config.inc.php```
 
 6. Fill in the config.inc.php file basic values from your setup, particularly site_root_path and db_name, db_user, and db_password. Upstarts datadir_path must be writable by the web server (for caching Smarty output).
 
