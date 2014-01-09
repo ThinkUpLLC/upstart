@@ -80,6 +80,24 @@ CREATE TABLE install_log (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table 'payments'
+--
+
+CREATE TABLE payments (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal unique ID.',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time of transaction.',
+  transaction_id varchar(100) NOT NULL COMMENT 'Transaction ID of payment from Amazon.',
+  request_id varchar(100) NOT NULL COMMENT 'Request ID of transaction, assigned by Amazon.',
+  transaction_status varchar(20) NOT NULL COMMENT 'The status of the payment request.',
+  error_message varchar(255) DEFAULT NULL COMMENT 'Human readable message that specifies the reason for a request failure (optional).',
+  amount int(11) DEFAULT NULL COMMENT 'Amount of payment in USD.',
+  caller_reference varchar(24) DEFAULT NULL COMMENT 'Caller reference used for charge request.',
+  PRIMARY KEY (id)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Amazon FPS payment capture transacrions';
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table 'subscribers'
 --
 
@@ -172,3 +190,18 @@ CREATE TABLE subscriber_authorizations (
   PRIMARY KEY (id),
   UNIQUE KEY subscriber_id (subscriber_id,authorization_id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Payment authorizations by known subscribers.';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table 'subscriber_payments'
+--
+
+CREATE TABLE subscriber_payments (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal unique ID.',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Time transaction was recorded.',
+  subscriber_id int(11) NOT NULL COMMENT 'Subscriber ID keyed to subscribers.',
+  payment_id int(11) NOT NULL COMMENT 'Payment ID keyed to payments.',
+  PRIMARY KEY (id),
+  KEY subscriber_id (subscriber_id)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Payments by known subscribers.';

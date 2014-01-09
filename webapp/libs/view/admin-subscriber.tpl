@@ -28,7 +28,7 @@
       </tr>
       </table>
       {if $authorizations}
-      <h4>Payment Authorization</h3>
+      <h4>Authorization</h3>
       <table class="table table-condensed table-hover">
       {foreach $authorizations as $authorization}
       <tr>
@@ -53,7 +53,7 @@
       </tr>
       <tr>
         <td></td>
-        <td>{if $smarty.now > $authorization->token_validity_start_date_ts}<a href="subscriber.php?id={$subscriber->id}&action=charge&token_id={$authorization->token_id}&amount={$authorization->amount|urlencode}" class="btn btn-success btn-mini">Charge</a>{/if}</td>
+        <td>{if !$paid && $smarty.now > $authorization->token_validity_start_date_ts}<a href="subscriber.php?id={$subscriber->id}&action=charge&token_id={$authorization->token_id}&amount={$authorization->amount|urlencode}" class="btn btn-success btn-mini">Charge</a>{/if}</td>
       </tr>
       {if $subscriber->error_message}
       <tr class="danger">
@@ -68,6 +68,34 @@
   </div>
   <div class="span3"></div>
 </div>
+
+{if $payments}
+<div class="row-fluid">
+<div class="span3"></div>
+  <div class="span6">
+  <h4>Payments</h4>
+  <table class="table table-condensed table-hover">
+    <tr>
+      <th>Timestamp</th><th>Status</th><th>Amount</th><th>Transaction ID or Error</th>
+    {foreach from=$payments item=payment}
+       <tr>
+          <td>{$payment.timestamp}</td>
+          {if $payment.transaction_status}
+            <td>{$payment.transaction_status}</td>
+            <td>${$payment.amount}</td>
+            <td>{$payment.transaction_id}</td>
+          {else}
+            <td class="text-danger">ERROR</td>
+            <td>${$payment.amount}</td>
+            <td>{$payment.error_message|filter_xss}</td>
+          {/if}
+       </tr>
+    {/foreach}
+  </table>
+  </div>
+  <div class="span3"></div>
+</div>
+{/if}
 
 </div>
 </body>

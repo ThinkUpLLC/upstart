@@ -242,9 +242,7 @@ abstract class Amazon_FPS_Model
             } else {
                 if ($this->_isComplexType($fieldType)) {
                     if (array_key_exists($fieldName, $array)) {
-                        echo $fieldType.'
-
-';
+                        //echo $fieldType."\n";
                         //require_once (str_replace('_', DIRECTORY_SEPARATOR, $fieldType) . ".php");
                         $this->_fields[$fieldName]['FieldValue'] = new $fieldType($array[$fieldName]);
                     }

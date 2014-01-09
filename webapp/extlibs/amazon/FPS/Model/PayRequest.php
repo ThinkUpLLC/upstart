@@ -91,7 +91,7 @@ class Amazon_FPS_Model_PayRequest extends Amazon_FPS_Model
         'MarketplaceVariableFee' => array('FieldValue' => null, 'FieldType' => 'int'),
         'OverrideIPNURL' => array('FieldValue' => null, 'FieldType' => 'string'),
         );
-        echo "<pre>";print_r($data);
+        //echo "<pre>";print_r($data);
         parent::__construct($data);
     }
 

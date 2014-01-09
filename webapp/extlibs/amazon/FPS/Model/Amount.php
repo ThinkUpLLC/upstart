@@ -61,7 +61,7 @@ class Amazon_FPS_Model_Amount extends Amazon_FPS_Model
         'CurrencyCode' => array('FieldValue' => null, 'FieldType' => 'CurrencyCode'),
         'Value' => array('FieldValue' => null, 'FieldType' => 'string'),
         );
-        print_r($data);
+        //print_r($data);
         parent::__construct($data);
     }
 

@@ -15,6 +15,8 @@ class ManageSubscriberController extends Controller {
             $subscriber = $subscriber_dao->getByID($subscriber_id);
             $this->addToView('application_url', UpstartHelper::getApplicationURL());
 
+            $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
+
             if (isset($subscriber)) {
                 //Get authorizations and assign to view
                 $subscriber_auth_dao = new SubscriberAuthorizationMySQLDAO();
@@ -53,7 +55,12 @@ class ManageSubscriberController extends Controller {
                         }
                     } elseif ($_GET['action'] == 'charge') {
                         if (isset($_GET['token_id']) && isset($_GET['amount'])) {
-                            self::invokeAmazonPayAction($_GET['token_id'], $_GET['amount']);
+                            $ok = self::invokeAmazonPayAction($subscriber_id, $_GET['token_id'], $_GET['amount']);
+                            if ($ok) {
+                                $this->addSuccessMessage("Payment successful!");
+                            } else {
+                                $this->addErrorMessage("Payment failed!");
+                            }
                         }  else {
                             $this->addErrorMessage("No token and/or amount specified");
                         }
@@ -71,6 +78,17 @@ class ManageSubscriberController extends Controller {
                     $subscriber->subdomainified_username = self::subdomainify($subscriber->network_user_name);
                 }
                 $this->addToView('subscriber', $subscriber);
+
+                $payments = $subscriber_payment_dao->getBySubscriber($subscriber_id);
+                $this->addToView('payments', $payments);
+                $paid = false;
+                foreach ($payments as $p) {
+                    if (empty($p['error_message']) && strtotime($p['timestamp']) > (time() - (60*60*24*365))) {
+                        $paid = true;
+                        break;
+                    }
+                }
+                $this->addToView('paid', $paid);
             } else {
                 $this->addErrorMessage("Subscriber does not exist.");
             }
@@ -120,20 +138,20 @@ class ManageSubscriberController extends Controller {
 
     /**
      * Charge user, record transaction, and report success or error back.
-     * GT: Ripped this sample code directly from Amazon. Must rework to fit our app and record transactions.
-     * @TODO: Create transaction model and DAO functions, remove all of the echo statements
      * @param str $token_id
      * @param int $amount
+     * @return bool Did the payment succeed?
      */
-    private function invokeAmazonPayAction($token_id, $amount) {
+    private function invokeAmazonPayAction($subscriber_id, $token_id, $amount) {
         $cfg = Config::getInstance();
         $AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
         $AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
 
         $service = new Amazon_FPS_Client($AWS_ACCESS_KEY_ID, $AWS_SECRET_ACCESS_KEY);
 
-        $click_dao = new ClickMySQLDAO();
-        $caller_reference = $click_dao->insert();
+        $caller_reference = $subscriber_id.'_'.time();
+        $payment_dao = new PaymentMySQLDAO();
+        $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
         try {
             $params = array();
             $amount_params = array('Value'=>$amount, 'CurrencyCode'=>'USD');
@@ -143,49 +161,40 @@ class ManageSubscriberController extends Controller {
             $params['TransactionAmount'] = $amount_params;
 
             $request_object = new Amazon_FPS_Model_PayRequest($params);
-            echo "<pre>RESPONSE:
-";
-            //print_r($request_object);
             $response = $service->pay($request_object);
 
 
-            print_r($response);
-            echo ("Service Response\n");
-            echo ("=============================================================================\n");
-
-            echo("        PayResponse\n");
-            if ($response->isSetPayResult()) {
-                echo("            PayResult\n");
-                $payResult = $response->getPayResult();
-                if ($payResult->isSetTransactionId())
-                {
-                    echo("                TransactionId\n");
-                    echo("                    " . $payResult->getTransactionId() . "\n");
-                }
-                if ($payResult->isSetTransactionStatus())
-                {
-                    echo("                TransactionStatus\n");
-                    echo("                    " . $payResult->getTransactionStatus() . "\n");
-                }
-            }
+            $request_id = null;
             if ($response->isSetResponseMetadata()) {
-                echo("            ResponseMetadata\n");
                 $responseMetadata = $response->getResponseMetadata();
-                if ($responseMetadata->isSetRequestId())
-                {
-                    echo("                RequestId\n");
-                    echo("                    " . $responseMetadata->getRequestId() . "\n");
+                $request_id = $responseMetadata->getRequestId();
+            }
+            if ($response->isSetPayResult()) {
+                $payResult = $response->getPayResult();
+                $transaction_id = $payResult->getTransactionId();
+                $status = $payResult->getTransactionStatus();
+                $payment_id = $payment_dao->insert($transaction_id, $request_id, $status, $amount, $caller_reference);
+                if ($payment_id) {
+                    $subscriber_payment_dao->insert($subscriber_id, $payment_id);
+                    return true;
                 }
+               $message = "Unable to store payment\n".$response->getXML();
+               $payment_id = $payment_dao->insert(0, $request_id, '', 0, $caller_reference, $message);
+               return false;
             }
 
+            $message = "PayResult not returned\n".$response->getXML();
+            $payment_id = $payment_dao->insert(0, $request_id, '', 0, $caller_reference, $message);
+            return false;
         } catch (Amazon_FPS_Exception $ex) {
-            echo("Caught Exception: " . $ex->getMessage() . "\n");
-            echo("Response Status Code: " . $ex->getStatusCode() . "\n");
-            echo("Error Code: " . $ex->getErrorCode() . "\n");
-            echo("Error Type: " . $ex->getErrorType() . "\n");
-            echo("Request ID: " . $ex->getRequestId() . "\n");
-            echo("XML: " . $ex->getXML() . "\n");
+            $request_id = $ex->getRequestId();
+            $message = $ex->getMessage() ."\n" . $ex->getXML();
+            $payment_id = $payment_dao->insert(0, $request_id, '', 0, $caller_reference, $message);
+            if ($payment_id) {
+                $subscriber_payment_dao->insert($subscriber_id, $payment_id);
+            }
         }
+        return false;
     }
 
 }
