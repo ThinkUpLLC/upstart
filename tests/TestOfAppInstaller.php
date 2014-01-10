@@ -5,6 +5,7 @@ require_once ISOSCELES_PATH.'extlibs/simpletest/autorun.php';
 class TestOfAppInstaller extends UpstartUnitTestCase {
 
     var $thinkup_username = 'testerrific';
+
     public function setUp() {
         parent::setUp();
     }
@@ -43,6 +44,85 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $app_installer = new AppInstaller();
         $server_name = $app_installer->getInstallationServerName('ginatrapani');
         $this->assertEqual($server_name, 'ginatrapani.example.com');
+    }
+
+    public function testUninstallSubscriberNotSpecified() {
+        $app_installer = new AppInstaller();
+        try {
+            $app_installer->uninstall(null);
+        } catch (Exception $e) {
+        }
+        $this->assertNotNull($e);
+        $this->assertEqual($e->getMessage(), 'No subscriber specified.');
+    }
+
+    public function testUninstallSubscriberDoesntExist() {
+        $app_installer = new AppInstaller();
+        try {
+            $app_installer->uninstall(6);
+        } catch (Exception $e) {
+        }
+        $this->assertNotNull($e);
+        $this->assertEqual($e->getMessage(), 'Subscriber does not exist.');
+    }
+
+    public function testUninstallSubscriberUsernameNotSet() {
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'me@example.com',
+        'thinkup_username'=>null, 'date_installed'=> '2014-01-15', 'timezone'=>'UTC'));
+        $app_installer = new AppInstaller();
+        try {
+            $app_installer->uninstall(6);
+        } catch (Exception $e) {
+        }
+        $this->assertNotNull($e);
+        $this->assertEqual($e->getMessage(), 'ThinkUp username is not set.');
+    }
+
+    public function testUninstallInstallationDoesntExist() {
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'me@example.com',
+        'thinkup_username'=>$this->thinkup_username, 'date_installed'=> null, 'timezone'=>'UTC'));
+        $app_installer = new AppInstaller();
+        try {
+            $app_installer->uninstall(6);
+        } catch (Exception $e) {
+        }
+        $this->assertNotNull($e);
+        $this->assertEqual($e->getMessage(), 'Installation does not exist.');
+    }
+
+    public function testUninstall() {
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'me@example.com',
+        'thinkup_username'=>$this->thinkup_username, 'date_installed'=> null, 'timezone'=>'UTC'));
+
+        $config = Config::getInstance();
+        $config->setValue('user_installation_url', 'http://www.example.com/thinkup/{user}/');
+        $app_source_path = $config->getValue('app_source_path');
+        $data_path = $config->getValue('data_path');
+
+        $app_installer = new AppInstaller();
+        $app_installer->install(6);
+
+        // Assert installation completed
+        $this->assertTrue(file_exists($app_source_path.$this->thinkup_username ) );
+        $this->assertTrue(file_exists($data_path.$this->thinkup_username ) );
+
+        // Unininstall
+        $uninstall_results = $app_installer->uninstall(6);
+        $this->debug($uninstall_results);
+
+        // Assert symlink doesn't exist
+        $this->debug($app_source_path.$this->thinkup_username );
+        $this->assertFalse(file_exists($app_source_path.$this->thinkup_username ) );
+
+        // Assert data directory doesn't exist
+        $this->assertFalse(file_exists($data_path.$this->thinkup_username ) );
+
+        // Assert user database doesn't exist
+        $stmt = PDODAO::$PDO->query('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME =  '
+            .' "thinkupstart_' . $this->thinkup_username . '";');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->debug(Utils::varDumpToString($row));
+        $this->assertFalse($row);
     }
 
     public function testInstall() {

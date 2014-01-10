@@ -230,6 +230,19 @@ class SubscriberMySQLDAO extends PDODAO {
         $ps = $this->execute($q, $vars);
     }
 
+    public function updateDateInstalled($id, $date_installed) {
+        $q  = "UPDATE subscribers SET date_installed = :date_installed ";
+        $q .= "WHERE id = :id ";
+
+        $vars = array(
+            ':id'=>(int) $id,
+            ':date_installed'=>$date_installed
+        );
+        //echo self::mergeSQLVars($q, $vars)."\n";
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
     public function updateLastDispatchedTime($id) {
         $q  = "UPDATE subscribers SET last_dispatched = CURRENT_TIMESTAMP() ";
         $q .= "WHERE id = :id ";

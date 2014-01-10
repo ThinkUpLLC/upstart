@@ -123,6 +123,54 @@ class AppInstaller {
         }
     }
 
+    public function uninstall($subscriber_id) {
+        $subscriber = null;
+        if (isset($subscriber_id)) {
+            $subscriber_dao = new SubscriberMySQLDAO();
+            $subscriber = $subscriber_dao->getById($subscriber_id);
+        }
+        if (!isset($subscriber)) {
+            if (isset($subscriber_id)) {
+                throw new Exception('Subscriber does not exist.');
+            } else {
+                throw new Exception('No subscriber specified.');
+            }
+        } else {
+            // Check if installation exists
+            if ($subscriber->date_installed == null || !$subscriber->is_installation_active) {
+                throw new Exception('Installation does not exist.');
+            } elseif ($subscriber->thinkup_username == null) {
+                throw new Exception("ThinkUp username is not set.");
+            } else {
+                // De-symlink directory
+                $cmd = 'rm -rf '.$this->app_source_path.$subscriber->thinkup_username;
+                $cmd_result = exec($cmd, $output, $return_var);
+                self::logToUserMessage("De-symlinked user application directory - ".$cmd);
+
+                // rm -rf data directory
+                $cmd = 'rm -rf '.$this->data_path.$subscriber->thinkup_username;
+                $cmd_result = exec($cmd, $output, $return_var);
+                self::logToUserMessage("Deleted user data directory - ". $cmd);
+
+                // Drop database
+                self::dropDatabase($subscriber->thinkup_username);
+
+                // Set subscriber commit_hash, date_installed, is_installation_active, last_dispatched to null
+                $subscriber_dao->updateLastDispatchedTime($subscriber_id, null);
+                $subscriber_dao->updateCommitHash($subscriber_id, null);
+                $subscriber_dao->setInstallationActive($subscriber_id, 0);
+                $subscriber_dao->updateDateInstalled($subscriber_id, null);
+                self::logToUserMessage("Updated subscriber record");
+
+                // Insert uninstallation record in install log
+                $install_log_dao = new InstallLogMySQLDAO();
+                $install_log_dao->insertLogEntry( $subscriber_id, $subscriber->commit_hash, 1, "Uninstalled");
+                self::logToUserMessage("Uninstallation complete.");
+            }
+        }
+        return $this->results_message;
+    }
+
     /**
      * Upgrade the user installation database to the latest migrations, the equivalent of running
      * upgrade.php --with-new-sql. We do this in case we're deploying code with migrations that haven't been rolled
@@ -139,6 +187,7 @@ class AppInstaller {
         // Get in the right directory to exec the upgrade
         $cfg = Config::getInstance();
         $master_app_source_path = $cfg->getValue('chameleon_app_source_path');
+        $cwd = getcwd();
         if (!chdir($master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader') ) {
             throw new Exception("Could not chdir to ".
             $master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader');
@@ -165,6 +214,8 @@ class AppInstaller {
             "  Returned data was ". $return_int ." output " . Utils::varDumpToString($upgrade_status_json));
         }
         $upgrade_status_array = JSONDecoder::decode($upgrade_status_json[0], true);
+        //Now that the upgrade is done, go back to the original working directory
+        chdir($cwd);
 
         // DEBUG start
         // echo "php upgrade.php '".$upgrade_params_json."'";
@@ -234,6 +285,11 @@ class AppInstaller {
         }
     }
 
+    protected function dropDatabase($thinkup_username) {
+        $q = "DROP DATABASE IF EXISTS thinkupstart_".$thinkup_username;
+        PDODAO::$PDO->exec($q);
+        self::logToUserMessage("Dropped user database thinkupstart_".$thinkup_username);
+    }
     /**
      * Create user installation database.
      * @param  str $thinkup_username Name of database (usually the user's ThinkUp username)
