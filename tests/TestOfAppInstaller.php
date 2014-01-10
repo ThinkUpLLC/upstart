@@ -123,6 +123,14 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->debug(Utils::varDumpToString($row));
         $this->assertFalse($row);
+
+        // Assert subscriber record got updated
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber = $subscriber_dao->getByEmail('me@example.com');
+        $this->assertNull($subscriber->date_installed);
+        $this->assertNull($subscriber->last_dispatched);
+        $this->assertNull($subscriber->commit_hash);
+        $this->assertFalse($subscriber->is_installation_active);
     }
 
     public function testInstall() {

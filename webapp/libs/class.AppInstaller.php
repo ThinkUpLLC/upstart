@@ -156,10 +156,10 @@ class AppInstaller {
                 self::dropDatabase($subscriber->thinkup_username);
 
                 // Set subscriber commit_hash, date_installed, is_installation_active, last_dispatched to null
-                $subscriber_dao->updateLastDispatchedTime($subscriber_id, null);
-                $subscriber_dao->updateCommitHash($subscriber_id, null);
-                $subscriber_dao->setInstallationActive($subscriber_id, 0);
                 $subscriber_dao->updateDateInstalled($subscriber_id, null);
+                $subscriber_dao->setInstallationActive($subscriber_id, 0);
+                $subscriber_dao->updateCommitHash($subscriber_id, null);
+                $subscriber_dao->resetLastDispatchedTime($subscriber_id);
                 self::logToUserMessage("Updated subscriber record");
 
                 // Insert uninstallation record in install log

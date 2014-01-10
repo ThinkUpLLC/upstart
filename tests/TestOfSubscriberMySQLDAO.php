@@ -252,4 +252,21 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertTrue($dao->isUsernameTaken('unique3'));
         $this->assertTrue($dao->isUsernameTaken('unique4'));
     }
+
+    public function testUpdateDateInstalled() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani@example.com',
+        'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+        'thinkup_username'=>'unique1', 'date_installed'=>null));
+
+        $dao = new SubscriberMySQLDAO();
+        $dao->updateDateInstalled(1, '2014-01-15 09:00:00');
+
+        $subscriber = $dao->getByEmail('ginatrapani@example.com');
+        $this->assertEqual($subscriber->date_installed, '2014-01-15 09:00:00');
+
+        $dao->updateDateInstalled(1, null);
+        $subscriber = $dao->getByEmail('ginatrapani@example.com');
+        $this->assertEqual($subscriber->date_installed, null);
+    }
 }

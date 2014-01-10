@@ -255,6 +255,18 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getUpdateCount($ps);
     }
 
+    public function resetLastDispatchedTime($id) {
+        $q  = "UPDATE subscribers SET last_dispatched = null ";
+        $q .= "WHERE id = :id ";
+
+        $vars = array(
+            ':id'=>(int) $id
+        );
+        //echo self::mergeSQLVars($q, $vars)."\n";
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
     public function updateCommitHash($id, $commit_hash) {
         $q  = "UPDATE subscribers SET commit_hash = :commit_hash ";
         $q .= "WHERE id = :id ";
