@@ -46,12 +46,22 @@ class ManageSubscriberController extends Controller {
                     } elseif ($_GET['action'] == 'install') {
                         $installer = new AppInstaller();
                         try {
-                            $install_results = $installer->install($subscriber_id, true);
+                            $install_results = $installer->install($subscriber_id);
                             $this->addSuccessMessage("Installation complete!");
                             $this->addToView('install_results', $install_results);
                             $subscriber = $subscriber_dao->getByID($subscriber_id);
                         } catch (Exception $e) {
                             $this->addErrorMessage("Could not install ThinkUp. ".$e->getMessage());
+                        }
+                    } elseif ($_GET['action'] == 'uninstall') {
+                        $installer = new AppInstaller();
+                        try {
+                            $uninstall_results = $installer->uninstall($subscriber_id);
+                            $this->addSuccessMessage("Uninstallation complete!");
+                            $this->addToView('install_results', $uninstall_results);
+                            $subscriber = $subscriber_dao->getByID($subscriber_id);
+                        } catch (Exception $e) {
+                            $this->addErrorMessage("Could not uninstall ThinkUp. ".$e->getMessage());
                         }
                     } elseif ($_GET['action'] == 'charge') {
                         if (isset($_GET['token_id']) && isset($_GET['amount'])) {
@@ -200,5 +210,4 @@ class ManageSubscriberController extends Controller {
         }
         return false;
     }
-
 }
