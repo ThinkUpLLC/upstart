@@ -15,4 +15,15 @@ class InstallLogMySQLDAO extends PDODAO {
         $ps = $this->execute($q, $vars);
         return $this->getInsertId($ps);
     }
+
+    public function getLogEntriesBySubscriber($subscriber_id) {
+        $q = "SELECT * FROM install_log WHERE subscriber_id = :subscriber_id ORDER BY timestamp DESC";
+
+        $vars = array(
+            ':subscriber_id'=>$subscriber_id
+        );
+        if ($this->profiler_enabled) Profiler::setDAOMethod(__METHOD__);
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowsAsArrays($ps);
+    }
 }

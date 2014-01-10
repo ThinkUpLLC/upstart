@@ -89,6 +89,10 @@ class ManageSubscriberController extends Controller {
                     }
                 }
                 $this->addToView('paid', $paid);
+
+                $install_log_dao = new InstallLogMySQLDAO();
+                $install_log_entries = $install_log_dao->getLogEntriesBySubscriber($subscriber_id);
+                $this->addToView('install_log_entries', $install_log_entries);
             } else {
                 $this->addErrorMessage("Subscriber does not exist.");
             }

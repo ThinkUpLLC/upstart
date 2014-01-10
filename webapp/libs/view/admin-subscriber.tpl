@@ -97,6 +97,33 @@
 </div>
 {/if}
 
+{if $install_log_entries}
+<div class="row-fluid">
+<div class="span3"></div>
+  <div class="span6">
+  <h4>Install Log</h4>
+  <table class="table table-condensed table-hover">
+    <tr>
+      <th>Date</th><th>Message</th>
+    {foreach from=$install_log_entries item=entry}
+       <tr>
+          <td>{$entry.timestamp}</td>
+          {if $entry.migration_success eq 1}
+            <td>{$entry.migration_message}
+          {else}
+            <td class="text-danger">{$entry.migration_message}
+          {/if}
+          <br><br><a href="https://github.com/ginatrapani/ThinkUp/commit/{$entry.commit_hash}">{$entry.commit_hash}</a>
+          </td>
+          <td></td>
+       </tr>
+    {/foreach}
+  </table>
+  </div>
+  <div class="span3"></div>
+</div>
+{/if}
+
 </div>
 </body>
 </html>

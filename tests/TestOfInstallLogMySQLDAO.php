@@ -16,4 +16,11 @@ class TestOfInstallLogMySQLDAO extends UpstartUnitTestCase {
         $dao = new InstallLogMySQLDAO();
         $this->assertIsA($dao, 'InstallLogMySQLDAO');
     }
+
+    public function testGetBySubscriber() {
+        $dao = new InstallLogMySQLDAO();
+        $this->assertIsA($dao, 'InstallLogMySQLDAO');
+        $results = $dao->getLogEntriesBySubscriber(1);
+        $this->assertEqual(sizeof($results), 0);
+    }
 }

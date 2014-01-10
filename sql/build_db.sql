@@ -74,7 +74,9 @@ CREATE TABLE install_log (
   commit_hash varchar(41) NOT NULL COMMENT 'Git commit hash of installation version.',
   migration_success tinyint(4) NOT NULL COMMENT 'Whether or not install/upgrade was successful.',
   migration_message text NOT NULL COMMENT 'Install/upgrade debug message.',
-  PRIMARY KEY (id)
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time of log entry.',
+  PRIMARY KEY (id),
+  KEY `timestamp` (`timestamp`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Installation upgrade log.';
 
 -- --------------------------------------------------------
