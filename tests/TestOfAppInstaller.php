@@ -52,7 +52,8 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $config = Config::getInstance();
         $config->setValue('user_installation_url', 'http://www.example.com/thinkup/{user}/');
         $app_installer = new AppInstaller();
-        $app_installer->install(6);
+        $install_results = $app_installer->install(6);
+        $this->debug($install_results);
         // @TODO add assertions
 
         // Assert Upstart user pass and salt match ThinkUp owner pass and salt

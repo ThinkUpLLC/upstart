@@ -332,9 +332,13 @@ class AppInstaller {
             'db_port'=>$cfg->getValue('db_port'),
             'high_priority'=>'true'
         );
-        // call Dispatcher
-        $result_decoded = Dispatcher::dispatch($jobs_array);
-        self::logToUserMessage("Dispatched crawl job: " .Utils::varDumpToString($result_decoded));
+        if (!UpstartHelper::isTest()) {
+            // call Dispatcher
+            $result_decoded = Dispatcher::dispatch($jobs_array);
+            self::logToUserMessage("Dispatched crawl job: " .Utils::varDumpToString($result_decoded));
+        } else {
+            self::logToUserMessage("Didn't dispatch crawl job since this is a test");
+        }
     }
 
     /**
