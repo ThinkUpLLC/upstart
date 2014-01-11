@@ -168,6 +168,8 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertEqual($subscriber->api_key_private, $thinkup_owner_api_key_private);
 
         // Assert ThinkUp application option server name is correct
+        // Assert ThinkUp plugin option Facebook & Twitter API keys and Mandrill template is set
         // Assert ThinkUp database_version option is correct/up-to-date
+        // Assert admin private API key is set
     }
 }

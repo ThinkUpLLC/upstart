@@ -343,8 +343,11 @@ class AppInstaller {
         //insert admin into owners
         list($admin_pwd_salt, $admin_hashed_pwd) = $tu_tables_dao->saltAndHashPwd($this->admin_email,
             $this->admin_password);
+
+        $cfg = Config::getInstance();
+        $admin_session_api_key = $cfg->getValue('admin_session_api_key');
         list($admin_id, $admin_api_key) = $tu_tables_dao->createOwner($this->admin_email, $admin_hashed_pwd,
-            $admin_pwd_salt, null, 'America/New_York', true);
+            $admin_pwd_salt, null, 'America/New_York', true, $admin_session_api_key);
 
         //insert user into owners
         list($user_id, $user_api_key) = $tu_tables_dao->createOwner($subscriber->email, $subscriber->pwd,
@@ -366,14 +369,23 @@ class AppInstaller {
 
         self::logToUserMessage("Inserted Twitter account and associate with ".$subscriber->email."");
 
-        //add consumer key info to options
+        // Add Twitter consumer key/secret info to options
         $cfg = Config::getInstance();
         $oauth_consumer_key = $cfg->getValue('oauth_consumer_key');
         $oauth_consumer_secret = $cfg->getValue('oauth_consumer_secret');
-
-        //add app keys to options table
         $tu_tables_dao->insertOptionValue('plugin_options-1', 'oauth_consumer_key', $oauth_consumer_key);
         $tu_tables_dao->insertOptionValue('plugin_options-1', 'oauth_consumer_secret', $oauth_consumer_secret);
+
+        // Add Facebook API keys to options
+        $facebook_app_id = $cfg->getValue('facebook_app_id');
+        $facebook_api_secret = $cfg->getValue('facebook_api_secret');
+        $tu_tables_dao->insertOptionValue('plugin_options-2', 'facebook_app_id', $facebook_app_id);
+        $tu_tables_dao->insertOptionValue('plugin_options-2', 'facebook_api_secret', $facebook_api_secret);
+
+        // Add Mandrill template name to options
+        $mandrill_notifications_template = $cfg->getValue('mandrill_notifications_template');
+        $tu_tables_dao->insertOptionValue('plugin_options-6', 'mandrill_template',
+        $mandrill_notifications_template);
     }
 
     protected function dispatchCrawlJob($thinkup_username) {
