@@ -27,7 +27,7 @@ class TestOfForgotPasswordController extends UpstartUnitTestCase {
         $controller = new ForgotPasswordController(true);
         $result = $controller->go();
 
-        $this->assertPattern('/Reset Your Password/', $result);
+        $this->assertPattern('/Recover your password/', $result);
     }
 
     public function testOfCustomJavascript() {
@@ -40,7 +40,7 @@ class TestOfForgotPasswordController extends UpstartUnitTestCase {
 
     public function testOfControllerWithBadEmailAddress() {
         $_POST['email'] = 'im a broken email address';
-        $_POST['Submit'] = "Send Reset";
+        $_POST['Submit'] = "Submit";
 
         $controller = new ForgotPasswordController(true);
         $result = $controller->go();
@@ -55,7 +55,7 @@ class TestOfForgotPasswordController extends UpstartUnitTestCase {
         $this->debug("site_root_path ". $site_root_path);
 
         $_POST['email'] = 'me@example.com';
-        $_POST['Submit'] = "Send Reset";
+        $_POST['Submit'] = "Submit";
         $_SERVER['HTTP_HOST'] = "mytestthinkup";
         $controller = new ForgotPasswordController(true);
         $result = $controller->go();
@@ -80,7 +80,7 @@ class TestOfForgotPasswordController extends UpstartUnitTestCase {
         $config->setValue('app_title_prefix', '');
         $site_root_path = $config->getValue('site_root_path');
         $_POST['email'] = 'me@example.com';
-        $_POST['Submit'] = "Send Reset";
+        $_POST['Submit'] = "Submit";
         $_SERVER['HTTP_HOST'] = "mytestthinkup";
         $_SERVER['HTTPS'] = true;
         $controller = new ForgotPasswordController(true);

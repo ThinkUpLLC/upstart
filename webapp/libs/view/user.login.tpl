@@ -1,27 +1,44 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Log In to ThinkUp</title>
-    <meta name="description" content="">
-    {include file="_appheader.tpl"}
-  </head>
-  <body class="pledge">
+{include file="_appheader.v2.tpl"
+body_classes="settings account menu-off"}
 
 
-{include file="_appusermessage.tpl"}
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="btn menu-trigger">
+        <i class="fa fa-bars"></i>
+      </button>
+      <a class="navbar-brand" href="#"><strong>Think</strong>Up</span></a>
+    </div>
+  </nav>    
+  
+  <div class="container">
+    <header>
+      <h1>Log in (please)</h1>
+    </header>
 
 {if isset($logged_in_user)}
-Logged in as {$logged_in_user}  [<a href="logout.php">Log out</a>]
+    <form class="form-horizontal">
+      <p class="form-note">You’re already logged in as {$logged_in_user}.<br>
+      Do you want to <a href="{$site_root_path}user/logout.php">log out</a>?</p>
+    </form>
 {else}
-<h1>Log in to Upstart and ThinkUp</h1>
+    <form action="index.php" method="POST" class="form-horizontal" id="form-signin">
+      <fieldset class="fieldset-no-header">
+        <div class="form-group">
+          <label class="control-label" for="email">Email</label>
+          <input type="email" name="email" class="form-control" id="email" {if isset($email)}value="{$email|filter_xss}"{/if}>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="pwd">Password</label>
+          <input type="password" class="form-control" id="pwd" name="pwd" value="">
+        </div>
+      </fieldset>
 
-	<form action="index.php" method="POST">
-		Email address: <input type="text" name="email" {if isset($email)}value="{$email|filter_xss}"{/if}><br />
-		Password: <input type="text" name="pwd" value=""><br/>
-		<input type="Submit" name="Submit" value="Log In">  <a href="forgot.php">Forgot?</a>
-	</form>
+      <input type="Submit" name="Submit" value="Log In" class="btn btn-circle btn-submit">
+
+      <p class="form-note"><a href="{$site_root_path}user/forgot.php">Forgot Password?</a></p>
+    </form>
 {/if}
-</body>
-</html>
+
+{include file="_appfooter.v2.tpl"}

@@ -19,7 +19,7 @@
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
     <script src="{$site_root_path}assets/js/vendor/jquery.mobile.custom.min.js"></script>
     <script src="{$site_root_path}assets/js/vendor/lightbox-2.6.min.js"></script>
-    <script src="{$site_root_path}assets/js/main.js"></script>
+    <script src="{$site_root_path}assets/js/landing.js"></script>
 
     {literal}<script>
       var _gaq=[['_setAccount','UA-76614-5'],['_trackPageview']];

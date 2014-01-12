@@ -124,7 +124,7 @@ class TestOfLoginController extends UpstartUnitTestCase {
         $results = $controller->go();
         $this->debug($results);
 
-        $this->assertPattern('/me@example.com/', $results);
+        $this->assertNoPattern('/Log in/', $results);
     }
 
     public function testFailedLoginIncrements() {

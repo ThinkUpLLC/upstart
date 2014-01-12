@@ -4,7 +4,7 @@ class ForgotPasswordController extends Controller {
     public function control() {
         $config = Config::getInstance();
 
-        if (isset($_POST['Submit']) && $_POST['Submit'] == 'Send Reset') {
+        if (isset($_POST['Submit']) && $_POST['Submit'] == 'Submit') {
             $this->disableCaching();
 
             $subscriber_dao = new SubscriberMySQLDAO();

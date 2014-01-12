@@ -9,9 +9,6 @@
   <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
 <![endif]-->
 
-
-    <script src="{$site_root_path}assets/js/jquery.js"></script>
-
 {if isset($header_css)}
 {foreach from=$header_css item=css}
 	<link type="text/css" rel="stylesheet" href="{$site_root_path}{$css}" />
