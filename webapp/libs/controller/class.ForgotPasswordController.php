@@ -9,7 +9,7 @@ class ForgotPasswordController extends Controller {
 
             $subscriber_dao = new SubscriberMySQLDAO();
             $subscriber = $subscriber_dao->getByEmail($_POST['email']);
-            if (isset($subscriber)) {
+            if (isset($subscriber) && ($subscriber->membership_level != 'Waitlist')) {
                 $token = $subscriber->setPasswordRecoveryToken();
 
                 $email_view_mgr = new ViewManager();

@@ -30,6 +30,10 @@ class TestOfLoginController extends UpstartUnitTestCase {
         'pwd'=>$password, 'pwd_salt'=>$test_salt, 'is_email_verified'=>0, 'is_activated'=>0, 'is_admin'=>0,
         'thinkup_username'=>null, 'verification_code'=>'224455'));
 
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>8, 'email'=>'waitlist@example.com',
+        'pwd'=>$password, 'pwd_salt'=>$test_salt, 'is_email_verified'=>0, 'is_activated'=>0, 'is_admin'=>0,
+        'thinkup_username'=>null, 'membership_level'=>'Waitlist'));
+
         return $builders;
     }
 
@@ -84,6 +88,20 @@ class TestOfLoginController extends UpstartUnitTestCase {
         $v_mgr = $controller->getViewManager();
         $this->assertEqual($v_mgr->getTemplateDataItem('controller_title'), 'Log in');
         $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), 'Incorrect email');
+        $this->assertPattern("/Log in/", $results);
+    }
+
+    public function testWaitlistedUser() {
+        $_POST['Submit'] = 'Log In';
+        $_POST['email'] = 'waitlist@example.com';
+        $_POST['pwd'] = 'secretpassword';
+        $controller = new LoginController(true);
+        $results = $controller->go();
+
+        $v_mgr = $controller->getViewManager();
+        $this->assertEqual($v_mgr->getTemplateDataItem('controller_title'), 'Log in');
+        $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), "You're not a ThinkUp member yet. ".
+          "<a href=\"http://thinkup.com\">Join now!</a>");
         $this->assertPattern("/Log in/", $results);
     }
 

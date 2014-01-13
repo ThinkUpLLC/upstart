@@ -49,6 +49,20 @@ class TestOfForgotPasswordController extends UpstartUnitTestCase {
         $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), 'Member does not exist.');
     }
 
+    public function testOfControllerWithWaitlistedUser() {
+        $builder = FixtureBuilder::build('subscribers', array('id'=>2,
+        'email'=>'waitlisted@example.com', 'membership_level'=>'Waitlist'));
+
+        $_POST['email'] = 'waitlisted@example.com';
+        $_POST['Submit'] = "Submit";
+
+        $controller = new ForgotPasswordController(true);
+        $result = $controller->go();
+
+        $v_mgr = $controller->getViewManager();
+        $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), 'Member does not exist.');
+    }
+
     public function testOfControllerWithValidEmailAddress() {
         $config = Config::getInstance();
         $site_root_path = $config->getValue('site_root_path');
