@@ -22,6 +22,12 @@ body.account {
 
     header {
       margin-bottom: 45px;
+
+      h2 {
+        a {
+          color: #fff;
+        }
+      }
     }
 
     .form-horizontal {
@@ -36,6 +42,14 @@ body.account {
       .help-block {
         border-color: fade(@blue-border, 30%);
         color: @blue-border;
+
+        a {
+          color: #fff;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
       }
 
       .btn-submit {

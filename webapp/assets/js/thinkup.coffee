@@ -260,7 +260,7 @@ $ ->
     e.preventDefault()
     wt.appMessage.destroy()
 
-  $("#control-username").on "keyup", -> checkUsername($(@))
+  $("#username").on "keyup", -> checkUsername($(@))
 
   $("#form-reset").on "submit", (e) ->
     if $(@).find("#password").val().length is 0 or  $(@).find("#password_confirm").val().length is 0

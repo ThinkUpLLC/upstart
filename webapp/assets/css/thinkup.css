@@ -97,6 +97,7 @@ body.settings .container .form-horizontal .form-group.form-group-ok:before {
   color: #239a37;
 }
 body.settings .container .form-horizontal .form-group .help-block {
+  margin: 0;
   text-align: left;
   border-bottom: 1px solid #dbdbdb;
 }
@@ -163,7 +164,7 @@ body.settings .container .form-horizontal textarea.form-control {
 }
 body.settings .container .form-horizontal .help-block {
   padding: 4px 10px;
-  margin: 0;
+  margin: 4px 0 0;
   text-align: center;
   color: #b3b3b3;
   font-size: 12px;
@@ -361,6 +362,9 @@ body.account .container {
 body.account .container header {
   margin-bottom: 45px;
 }
+body.account .container header h2 a {
+  color: #fff;
+}
 body.account .container .form-horizontal fieldset.fieldset-no-header,
 body.account .container .form-horizontal .form-group {
   border-color: #3187d1;
@@ -371,6 +375,12 @@ body.account .container .form-horizontal .control-label {
 body.account .container .form-horizontal .help-block {
   border-color: rgba(49, 135, 209, 0.3);
   color: #3187d1;
+}
+body.account .container .form-horizontal .help-block a {
+  color: #fff;
+}
+body.account .container .form-horizontal .help-block a:hover {
+  text-decoration: underline;
 }
 body.account .container .form-horizontal .btn-submit {
   position: static;

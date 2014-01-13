@@ -55,7 +55,7 @@ class TestOfChooseUsernameController extends UpstartUnitTestCase {
         $_POST['username'] = 'setme';
         $result = $controller->go();
         $this->debug($result);
-        $this->assertPattern( '/Settings/', $result );
+        $this->assertPattern( '/You picked a username!/', $result );
     }
 
     public function testNotSetPostValidTakenUsername() {

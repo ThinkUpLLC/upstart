@@ -1,16 +1,6 @@
 {include file="_appheader.v2.tpl"
 body_classes="settings account menu-off"}
 
-  <nav class="navbar navbar-default" role="navigation">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button class="btn menu-trigger">
-        <i class="fa fa-bars"></i>
-      </button>
-      <a class="navbar-brand" href="#"><strong>Think</strong>Up</span></a>
-    </div>
-  </nav>    
-
   <div class="container">
     <header>
       <h1>Pick a new password</h1>

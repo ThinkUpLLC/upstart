@@ -298,7 +298,7 @@
       e.preventDefault();
       return wt.appMessage.destroy();
     });
-    $("#control-username").on("keyup", function() {
+    $("#username").on("keyup", function() {
       return checkUsername($(this));
     });
     $("#form-reset").on("submit", function(e) {

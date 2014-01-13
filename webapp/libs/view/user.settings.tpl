@@ -1,23 +1,7 @@
-{if isset($thinkup_username)}
-  {include file="_appheader.v2.tpl" include_menu=true
-  body_classes="settings menu-open" body_id="settings-main"}
-{else}
-  {include file="_appheader.v2.tpl" page_title="Choose Username" 
-  body_classes="settings account menu-off"}
-{/if}
-
-  <nav class="navbar navbar-default" role="navigation">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button class="btn menu-trigger">
-        <i class="fa fa-bars"></i>
-      </button>
-      <a class="navbar-brand" href="#"><strong>Think</strong>Up</span></a>
-    </div>
-  </nav>    
+{include file="_appheader.v2.tpl" include_menu=true
+body_classes="settings menu-open" body_id="settings-main"}
 
   <div class="container">
-  {if isset($subscriber->thinkup_username)}
     <header>
       <h1>Settings</h1>
     </header>
@@ -77,28 +61,7 @@
             </div>
           </fieldset>
 *}
-
           <input type="submit" value="Done" class="btn btn-circle btn-submit">
         </form>
-
-  {else}
-
-    <header>
-      <h1>Pick your username</h1>
-      <h2>Think carefully. You only pick this once.</h2>
-    </header>
-
-    <form method="POST" role="form" class="form-horizontal" id="form-username" action="{$site_root_path}user/choose.php">
-      <fieldset class="fieldset-no-header">
-        <div class="form-group">
-          <label class="control-label" for="control-username">Username</label>
-          <input type="text" class="form-control" id="control-username" name="username">
-        </div>
-      </fieldset>
-
-      <input type="submit" value="Submit" class="btn btn-circle btn-submit">
-    </form>
-  {/if}
-
 
 {include file="_appfooter.v2.tpl" include_tz_js=true}

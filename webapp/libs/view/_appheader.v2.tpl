@@ -41,7 +41,7 @@
     {if isset($include_menu) and $include_menu}
     <div id="menu">
       <ul class="list-unstyled menu-options">{if isset($subscriber)}
-        <li><a href="//{$thinkup_username}.thinkup.com">Home</a></li>
+        <li><a href="{if isset($subscriber->thinkup_username)}//{$subscriber->thinkup_username}.thinkup.com{else}{$site_root_path}{/if}">Home</a></li>
         <li><a href="{$site_root_path}user/"{if 
         $controller_title eq "Settings"} class="active"{/if}>Settings</a></li>
         <li class="service{if isset($is_facebook_connected) and $is_facebook_connected} {if isset($facebook_error_state)}error{else}active{/if}{else} inactive{/if}"><a href="#">Facebook <i class="fa fa-{if isset($is_facebook_connected) and $is_facebook_connected}{if isset($facebook_error_state)}exclamation-triangle{else}check-circle{/if}{else}facebook-square{/if} icon"></i></a></li>
@@ -49,7 +49,7 @@
         <li><a href="{$site_root_path}user/membership.php"{if $controller_title eq "Subscription Info"} class="active"{/if}>Subscription</a></li>
         <li><a href="mailto:help@thinkup.com">Help</a></li>
         <li class="user-info logged-in">
-          <img src="https://www.thinkup.com/join/assets/img/hilary-mason.jpg" class="user-photo img-circle">
+          {if isset($subscriber->user_photo)}<img src="{$subscriber->user_photo}" class="user-photo img-circle" alt="{$subscriber->full_name}">{/if}
           <div class="current-user">
             <div class="label">Logged in as</div>
             {$subscriber->full_name}
@@ -60,4 +60,13 @@
     </div>
     {/if}
     <div id="page-content">
-        {include file="_appusermessage-v2.tpl"}
+{include file="_appusermessage-v2.tpl"}
+
+<nav class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+    <button class="btn menu-trigger">
+      <i class="fa fa-bars"></i>
+    </button>
+    <a class="navbar-brand" href="{$site_root_path}"><strong>Think</strong>Up</span></a>
+  </div>
+</nav>    

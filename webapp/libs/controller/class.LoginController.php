@@ -9,10 +9,10 @@ class LoginController extends UpstartController {
         if (isset($_GET['msg'])) {
             $this->addSuccessMessage($_GET['msg']);
         }
-        // if already logged in, show settings screen
+        // if already logged in, show username picker screen
         if ( Session::isLoggedIn()) {
-            $settings_controller = new SettingsController(true);
-            return $settings_controller->go();
+            $username_controller = new ChooseUsernameController(true);
+            return $username_controller->go();
         } else  {
             $subscriber_dao = new SubscriberMySQLDAO();
 
@@ -101,9 +101,9 @@ class LoginController extends UpstartController {
                                 $this->generateView(); //for testing
                             }
                         } else {
-                            // No installation, show settings screen
-                            $settings_controller = new SettingsController(true);
-                            return $settings_controller->go();
+                            // No installation, show username screen
+                            $username_controller = new ChooseUsernameController(true);
+                            return $username_controller->go();
                         }
                     }
                 }

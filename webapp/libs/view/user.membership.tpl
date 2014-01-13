@@ -1,16 +1,5 @@
-{assign var=thinkup_username value="capndesign"}
 {include file="_appheader.v2.tpl" include_menu=true
 body_classes="settings menu-open" body_id="settings-subscription"}
-
-  <nav class="navbar navbar-default" role="navigation">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button class="btn menu-trigger">
-        <i class="fa fa-bars"></i>
-      </button>
-      <a class="navbar-brand" href="#"><strong>Think</strong>Up</span></a>
-    </div>
-  </nav>    
 
   <div class="container">
       <header>
@@ -21,7 +10,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
       <ul class="list-group">
         <li class="list-group-item">
           <div class="list-group-item-label">Username:</div>
-          <div class="list-group-item-value"><a href="//{$thinkup_username}.thinkup.com">{$thinkup_username}</a></div>
+          <div class="list-group-item-value">{if isset($subscriber->thinkup_username)}<a href="//{$subscriber->thinkup_username}.thinkup.com">{$subscriber->thinkup_username}</a>{else}<em>None set</em>{/if}</div>
         </li>
         <li class="list-group-item">
           <div class="list-group-item-label">Level:</div>
