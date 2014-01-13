@@ -365,10 +365,11 @@ body.account .navbar-default {
   margin: 0;
 }
 body.account .navbar-default .navbar-brand {
-  margin: 62px auto 0;
-  width: 190px;
-  height: 48px;
-  background-size: 190px 48px;
+  margin: 66px auto 0;
+  background-image: url(../img/thinkup-logo-account@2x.png);
+  width: 161px;
+  height: 44px;
+  background-size: 161px 44px;
 }
 body.account .container {
   padding-top: 160px;
@@ -474,13 +475,16 @@ a:hover {
 .navbar-default .navbar-header .navbar-brand {
   float: none;
   padding: 0;
-  background: url(../img/thinkup-logo.svg);
-  background-size: 79px 20px;
   text-indent: 100%;
   display: block;
-  width: 79px;
-  margin: 8px auto 6px;
+  background: url(../img/thinkup-logo-header@2x.png);
+  background-size: 70px 19px;
+  width: 70px;
+  height: 19px;
+  margin: 9px auto 6px;
   overflow: hidden;
+  font-size: 0;
+  line-height: 0;
 }
 .navbar-default .navbar-header .menu-trigger {
   position: absolute;

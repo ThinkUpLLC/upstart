@@ -336,9 +336,11 @@
     });
     return $("body").on("click", ".show-section", function(e) {
       var $el;
-      e.preventDefault();
       $el = $($(this).data("section-selector"));
-      if ($el.length) return $el.show();
+      if ($el.length) {
+        e.preventDefault();
+        if ($el.length) return $el.show();
+      }
     });
   });
 

@@ -1,3 +1,4 @@
+{if !isset($landing_page) or !$landing_page}
   </div><!-- end container -->
 
   <footer class="footer">
@@ -18,11 +19,11 @@
       </div>
   </footer>
 </div><!-- end page-content -->
-
+{/if}
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="{$site_root_path}assets/js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
-
+{if !isset($landing_page) or !$landing_page}
     <script src="{$site_root_path}assets/js/vendor/bootstrap.min.js"></script>
     <script src="{$site_root_path}assets/js/vendor/jpanelmenu.js"></script>
     <script src="//platform.twitter.com/widgets.js"></script>
@@ -44,6 +45,7 @@
     </script>
     {/if}
     {/if}
+{/if}
 </body>
 
 </html>

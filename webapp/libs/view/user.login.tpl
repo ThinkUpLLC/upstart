@@ -1,6 +1,5 @@
 {include file="_appheader.v2.tpl"
 body_classes="settings account menu-off"}
-
   <div class="container">
     <header>
       <h1>Welcome!</h1>

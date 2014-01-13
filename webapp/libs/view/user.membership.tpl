@@ -6,7 +6,6 @@ body_classes="settings menu-open" body_id="settings-subscription"}
         <h1>Membership Info</h1>
         <h2>This is what our database knows.</h2>
       </header>
-
       <ul class="list-group">
         <li class="list-group-item">
           <div class="list-group-item-label">Username:</div>
@@ -23,7 +22,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
       </ul>
 
       <p class="form-note">Issues with your membership?<br>
-      <a href="#help" class="show-section btn btn-default" data-section-selector="#form-membership-contact">Contact us</a></p>
+      <a href="mailto:help@thinkup.com" class="show-section btn btn-default" {* data-section-selector="#form-membership-contact" *}>Contact us</a></p>
 
       <form role="form" class="form-horizontal" id="form-membership-contact">
         <fieldset>

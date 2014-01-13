@@ -48,7 +48,7 @@ setActiveDateGroup = ->
     # Tracks if any of our date markers are active
     anyActive = false
     $(".date-group").each (i) ->
-      # Is the top of the screen inside a date group? 
+      # Is the top of the screen inside a date group?
       # The 45px is to account for the fixed hehader
       if $(@).offset().top < $(window).scrollTop() + wt.navHeight < $(@).data("scroll-bottom") - 14
         anyActive = true
@@ -278,7 +278,7 @@ $ ->
     $(@).find(".form-group").removeClass("form-group-warning")
     e.preventDefault()
     if $(@).find("#control-password-current").val().length isnt 0
-      if $(@).find("#control-password-new").val().length is 0 and 
+      if $(@).find("#control-password-new").val().length is 0 and
       $(@).find("#control-password-verify").val().length is 0
         wt.appMessage.create "You didn't provide a new password.", "warning"
         $(@).find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning")
@@ -295,6 +295,7 @@ $ ->
 
 
   $("body").on "click", ".show-section", (e) ->
-    e.preventDefault()
     $el = $($(@).data("section-selector"))
-    if $el.length then $el.show()
+    if $el.length
+      e.preventDefault()
+      if $el.length then $el.show()

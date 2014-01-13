@@ -14,12 +14,17 @@
     <meta name="author" content="">
 
     <!-- styles -->
-    <script type="text/javascript" src="//use.typekit.net/zpi4jiv.js"></script>
-    <script type="text/javascript">{literal}try{Typekit.load();}catch(e){}{/literal}</script>
-    <link href="{$site_root_path}assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+    {literal}<script type="text/javascript" src="//use.typekit.net/xzh8ady.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>{/literal}
     <link href="{$site_root_path}assets/css/vendor/font-awesome.min.css" rel="stylesheet">
     <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic|' rel='stylesheet' type='text/css'>
+{if isset($landing_page) and $landing_page}
+    <link rel="stylesheet" href="{$site_root_path}assets/css/vendor/normalize.min.css">
+    <link href="{$site_root_path}assets/css/landing.css" rel="stylesheet">
+{else}
+    <link href="{$site_root_path}assets/css/vendor/bootstrap.min.css" rel="stylesheet">
     <link href="{$site_root_path}assets/css/thinkup.css" rel="stylesheet">
+{/if}
 {if isset($header_css)}
 {foreach from=$header_css item=css}
     <link type="text/css" rel="stylesheet" href="{$site_root_path}{$css}" />
@@ -38,15 +43,16 @@
     <![endif]-->
 </head>
 <body {if isset($body_classes)}class="{$body_classes}"{/if}{if isset($body_id)}id="{$body_id}"{/if}>
+{if !isset($landing_page) or !$landing_page}
     {if isset($include_menu) and $include_menu}
     <div id="menu">
       <ul class="list-unstyled menu-options">{if isset($subscriber)}
         <li><a href="{if isset($subscriber->thinkup_username)}{$thinkup_url}{else}{$site_root_path}{/if}">Home</a></li>
-        <li class="service {$facebook_connection_status}"><a href="{$thinkup_url}account/?p=facebook" class="{if $smarty.get.p eq 'facebook'} active{/if}">Facebook<i class="fa fa-{if $facebook_connection_status eq 'active'}check-circle{elseif $facebook_connection_status eq 'error'}exclamation-triangle{else}facebook{/if} icon"></i></a></li>
+        <li class="service {$facebook_connection_status}"><a href="{$thinkup_url}account/?p=facebook" class="{if $smarty.get.p eq 'facebook'} active{/if}">Facebook<i class="fa fa-{if $facebook_connection_status eq 'active'}check-circle{elseif $facebook_connection_status eq 'error'}exclamation-triangle{else}facebook-square{/if} icon"></i></a></li>
         <li class="service {$twitter_connection_status}"><a href="{$thinkup_url}account/?p=twitter" class="service error{if $smarty.get.p eq 'twitter'} active{/if}">Twitter<i class="fa fa-{if $twitter_connection_status eq 'active'}check-circle{elseif $twitter_connection_status eq 'error'}exclamation-triangle{else}twitter{/if} icon"></i></a></li>
         <li><a href="{$site_root_path}user/membership.php"{if $controller_title eq "Membership Info"} class="active"{/if}>Membership</a></li>
         <li class="user-info logged-in">
-          {if isset($subscriber->user_photo)}<img src="{$subscriber->user_photo}" class="user-photo img-circle" alt="{$subscriber->full_name}">{/if}
+          <img src="http://www.gravatar.com/avatar/{$subscriber->email|strtolower|md5}" class="user-photo img-circle">
           <div class="current-user">
             <div class="label">Logged in as</div>
             {$subscriber->email}
@@ -66,4 +72,5 @@
     </button>
     <a class="navbar-brand" href="{$site_root_path}"><strong>Think</strong>Up</span></a>
   </div>
-</nav>    
+</nav>
+{/if}

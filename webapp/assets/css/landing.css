@@ -1,0 +1,746 @@
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.fa-override-before:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+}
+body {
+  -webkit-font-smoothing: subpixel-antialiased;
+  color: #000000;
+  font-size: 16px;
+  line-height: 1.125;
+  font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
+}
+.container {
+  max-width: 765px;
+  min-width: 320px;
+  width: 100%;
+  margin: 40px auto 0;
+}
+.section {
+  border-width: 1px;
+  border-style: solid;
+  border-right-color: #d4d4d4;
+  border-left: 0;
+  border-bottom: 0;
+  padding: 15px 15px 0;
+  min-height: 240px;
+  background-position: center 90px;
+  background-repeat: no-repeat;
+}
+.section .section-header {
+  font-weight: 600;
+  margin: 0;
+}
+.section p,
+.section li {
+  font-family: "tablet-gothic", helvetica, arial, sans-serif;
+  font-size: 0.875em;
+  line-height: 1.2857142857142858;
+}
+#section-header,
+#section-signup-top {
+  min-height: 0;
+  height: 135px;
+}
+#section-header,
+.section-signup,
+#section-social,
+#section-legal,
+#section-copyright {
+  border-top-color: #46bcff;
+}
+#section-header .section-header,
+.section-signup .section-header,
+#section-social .section-header,
+#section-legal .section-header,
+#section-copyright .section-header {
+  color: #46bcff;
+}
+#section-networks {
+  border-top-color: #ff7f00;
+}
+#section-networks .section-header {
+  color: #ff7f00;
+}
+#section-stats {
+  border-top-color: #008bd6;
+}
+#section-stats .section-header {
+  color: #008bd6;
+}
+#section-devices {
+  border-top-color: #7e57d1;
+}
+#section-devices .section-header {
+  color: #7e57d1;
+}
+#section-goals {
+  border-top-color: #6bb93b;
+}
+#section-goals .section-header {
+  color: #6bb93b;
+}
+#section-matters {
+  border-top-color: #ff39ea;
+}
+#section-matters .section-header {
+  color: #ff39ea;
+}
+#section-community {
+  border-top-color: #b51b2e;
+}
+#section-community .section-header {
+  color: #b51b2e;
+}
+#section-companies {
+  border-top-color: #5b76c1;
+}
+#section-companies .section-header {
+  color: #5b76c1;
+}
+#section-meaning {
+  border-top-color: #d58e19;
+}
+#section-meaning .section-header {
+  color: #d58e19;
+}
+#section-different {
+  border-top-color: #b97cc6;
+}
+#section-different .section-header {
+  color: #b97cc6;
+}
+#section-doesnt {
+  border-top-color: #5fac1c;
+}
+#section-doesnt .section-header {
+  color: #5fac1c;
+}
+#section-header {
+  position: relative;
+  background: none;
+}
+#section-header .logo {
+  position: absolute;
+  top: 17px;
+  left: 27px;
+  margin: 0;
+  width: 148px;
+  height: 40px;
+  text-indent: 100%;
+  font-size: 0;
+  background: url(../img/thinkup-logo.png) 0 0 no-repeat;
+}
+#section-header .logo:before {
+  content: "Beta";
+  position: absolute;
+  top: -17px;
+  right: -130px;
+  width: 67px;
+  height: 34px;
+  font-size: 0;
+  text-indent: 100%;
+  background: url(../img/beta-tag.png) 0 0 no-repeat;
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  #section-header .logo:before {
+    background-image: url(../img/beta-tag@2x.png);
+    background-size: 67px 34px;
+  }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  #section-header .logo {
+    background-image: url(../img/thinkup-logo@2x.png);
+    background-size: 148px 40px;
+  }
+}
+#section-header .headline {
+  margin: 0;
+  position: absolute;
+  left: 27px;
+  top: 57px;
+  font-size: 1.5em;
+  line-height: 0.9166666666666666;
+  font-weight: 600;
+}
+.section-signup .section-header {
+  color: #000;
+}
+.section-signup .action-links {
+  text-align: center;
+}
+.section-signup .btn {
+  text-decoration: none;
+  display: inline-block;
+  background: #4A90E2;
+  height: 80px;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  font-size: 0.9375em;
+  line-height: 1.0666666666666667;
+  letter-spacing: .02em;
+  border-radius: 40px;
+  padding: 24px 0;
+  width: 80px;
+  margin-bottom: 10px;
+}
+.section-signup .btn-circle {
+  text-decoration: none;
+  display: inline-block;
+  background: #4A90E2;
+  height: 80px;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  font-size: 0.9375em;
+  line-height: 1.0666666666666667;
+  letter-spacing: .02em;
+  border-radius: 40px;
+  padding: 24px 0;
+  width: 80px;
+  margin-bottom: 10px;
+  margin-bottom: 0;
+  border: 0;
+  -webkit-appearance: initial;
+  font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
+}
+.section-signup .login-link {
+  font-size: 0.8125em;
+  line-height: 1.2307692307692308;
+  color: #4A4A4A;
+}
+.section-signup .login-link a {
+  color: #4A90E2;
+}
+.section-signup .login-link a:hover {
+  text-decoration: none;
+}
+.section-signup .newsletter-signup-form .email {
+  border: 1px solid #46BCFF;
+  width: 75%;
+  display: inline-block;
+  font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
+  padding: 3px 5px;
+  font-size: 1em;
+  margin: 5px 3px 10px 0;
+  height: 36px;
+}
+.section-signup .newsletter-signup-form .btn-submit {
+  display: inline-block;
+  background: #4A90E2;
+  color: #fff;
+  font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
+  margin-bottom: 0;
+  border: 0;
+  position: relative;
+  vertical-align: baseline;
+  -webkit-appearance: initial;
+  padding: 8px;
+  line-height: 0;
+  font-size: 1.25em;
+}
+#section-signup-top {
+  height: auto;
+}
+#section-signup-top:before,
+#section-signup-top:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+#section-signup-top:after {
+  clear: both;
+}
+#section-signup-top .section-header {
+  color: #000;
+  margin-top: 15px;
+  display: inline-block;
+}
+#section-signup-top .action-links {
+  margin: 15px 0;
+  text-align: left;
+}
+#section-networks {
+  background-image: url(../img/fan-cards.png);
+}
+#section-stats {
+  background-image: url(../img/thinkup-stream.png);
+  min-height: 480px;
+  background-position-y: 100px;
+  background-size: 185px 622.5px;
+}
+#section-devices {
+  background-image: url(../img/devices.png);
+}
+#section-devices br {
+  display: none;
+}
+#section-goals {
+  background-image: url(../img/sample-insight.png);
+  background-size: 272px 166px;
+  background-position: center 115px;
+}
+#section-matters {
+  background-image: url(../img/friends-online.png);
+  background-position-y: 70px;
+}
+#section-community {
+  background-image: url(../img/crowd.png);
+}
+#section-companies {
+  background-image: url(../img/files.png);
+  background-position-y: 100px;
+}
+#section-meaning {
+  background-image: url(../img/photos-illustration.png);
+}
+#section-different {
+  min-height: 0;
+}
+#section-different .section-header {
+  margin-bottom: 15px;
+}
+#section-different .headshots {
+  text-align: center;
+}
+#section-different .headshots .headshot {
+  display: inline-block;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+#section-different .headshots .headshot:first-child {
+  margin: 0;
+}
+#section-different p {
+  margin-bottom: 1.5em;
+}
+#section-doesnt {
+  height: auto;
+}
+#section-doesnt .section-header {
+  margin-bottom: 15px;
+}
+#section-doesnt ul {
+  padding: 0 0 0 20px;
+  margin: 0;
+}
+#section-doesnt ul li {
+  margin-bottom: 1.2857142857142858em;
+}
+#section-signup-bottom {
+  min-height: 0;
+  height: auto;
+}
+#section-signup-bottom:before,
+#section-signup-bottom:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+#section-signup-bottom:after {
+  clear: both;
+}
+#section-signup-bottom .action-links {
+  margin: 15px 0;
+  text-align: left;
+}
+#section-signup-bottom .newsletter-signup-form .email {
+  width: 85%;
+}
+#section-social {
+  padding: 0;
+  height: 200px;
+  min-height: 0;
+}
+#section-social:before,
+#section-social:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+#section-social:after {
+  clear: both;
+}
+#section-social .social-items {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+#section-social .social-items:before,
+#section-social .social-items:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+#section-social .social-items:after {
+  clear: both;
+}
+#section-social .social-items .social-item {
+  float: left;
+  width: 50%;
+  height: 100px;
+  border-right: 1px solid #d4d4d4;
+  text-align: center;
+  padding-top: 15px;
+  font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
+  font-weight: 600;
+}
+#section-social .social-items .social-item header {
+  line-height: 1.1428571428571428;
+  margin-bottom: 8px;
+}
+#section-social .social-items .social-item header a {
+  position: relative;
+  display: block;
+  color: #4A90E2;
+  text-decoration: none;
+}
+#section-social .social-items .social-item header a:hover {
+  text-decoration: underline;
+}
+#section-social .social-items .social-item header a:before {
+  position: absolute;
+  bottom: -43px;
+  left: 0;
+  right: 0;
+  font-size: 35px;
+}
+#section-social .social-items .social-item.sm-no-border {
+  border: 0;
+}
+#section-social .social-items .social-item.sm-border-top {
+  border-top: 1px solid #46BCFF;
+}
+#section-social .social-items .social-item#social-item-blog header a:before {
+  color: #32506d;
+}
+#section-social .social-items .social-item#social-item-github header a:before {
+  color: #333;
+}
+#section-legal,
+#section-copyright {
+  height: auto;
+  min-height: 0;
+  padding: 24px 30px;
+  text-align: center;
+}
+#section-legal .section-header,
+#section-copyright .section-header {
+  color: #000;
+  font-size: 0.8125em;
+  line-height: 1;
+  font-weight: 300;
+}
+#section-legal .section-header a,
+#section-copyright .section-header a {
+  color: #4A90E2;
+  text-decoration: none;
+}
+#section-legal .section-header a:hover,
+#section-copyright .section-header a:hover {
+  text-decoration: underline;
+}
+@media (min-width: 31.875em) {
+  .section {
+    float: left;
+    width: 50%;
+    height: 240px;
+  }
+  .section.row-2 {
+    height: 480px;
+  }
+  .section.col-md-2 {
+    width: 100%;
+  }
+  #section-header {
+    background: url(../img/chart-landscape.png) right 47px no-repeat;
+    background-size: 354px 87.6px;
+  }
+  #section-header:before {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    content: " ";
+    width: 124.8px;
+    height: 148.2px;
+    background: url(../img/hand-smartphone.png) 0 0 no-repeat;
+    background-size: 124.8px 148.2px;
+  }
+  #section-header .logo:before {
+    right: -75px;
+  }
+  .section-signup .btn {
+    width: 132px;
+    font-size: 1.0625em;
+    line-height: 1.0588235294117647;
+    padding: 22px 0;
+  }
+  #section-signup-top {
+    height: 135px;
+  }
+  #section-signup-top:before,
+  #section-signup-top:after {
+    content: " ";
+    /* 1 */
+    display: table;
+    /* 2 */
+  }
+  #section-signup-top:after {
+    clear: both;
+  }
+  #section-signup-top .section-header {
+    margin-top: 15px;
+    float: left;
+  }
+  #section-signup-top .action-links {
+    margin: 15px 0;
+    text-align: left;
+    float: right;
+    width: 50%;
+  }
+  #section-different,
+  #section-meaning {
+    height: 310px;
+  }
+  #section-doesnt:before,
+  #section-doesnt:after {
+    content: " ";
+    /* 1 */
+    display: table;
+    /* 2 */
+  }
+  #section-doesnt:after {
+    clear: both;
+  }
+  #section-doesnt ul {
+    width: 45%;
+    float: left;
+  }
+  #section-doesnt ul:first-of-type {
+    margin-right: 5%;
+    width: 50%;
+  }
+}
+@media (min-width: 34.375em) {
+  #section-different,
+  #section-meaning {
+    height: 290px;
+  }
+  #section-signup-bottom {
+    height: 135px;
+  }
+  #section-signup-bottom:before,
+  #section-signup-bottom:after {
+    content: " ";
+    /* 1 */
+    display: table;
+    /* 2 */
+  }
+  #section-signup-bottom:after {
+    clear: both;
+  }
+  #section-signup-bottom .section-header {
+    float: left;
+    width: 48%;
+    margin-top: 27px;
+  }
+  #section-signup-bottom .action-links {
+    float: right;
+    width: 48%;
+  }
+  #section-signup-bottom .newsletter-signup-form .email {
+    width: 85%;
+  }
+}
+@media (min-width: 48em) {
+  .container {
+    max-width: 767px;
+    border-left: 1px solid #d4d4d4;
+    border-right: 1px solid #d4d4d4;
+  }
+  .container:before,
+  .container:after {
+    content: " ";
+    /* 1 */
+    display: table;
+    /* 2 */
+  }
+  .container:after {
+    clear: both;
+  }
+  .section {
+    width: 255px;
+    background-position: center 110px;
+    height: 300px;
+  }
+  .section.row-2 {
+    height: 600px;
+  }
+  .section.col-lg-1 {
+    width: 255px;
+  }
+  .section.col-lg-2 {
+    width: 510px;
+  }
+  .section.col-lg-3 {
+    width: 765px;
+  }
+  .section.col-lg-right {
+    float: right;
+    border-right: 0;
+  }
+  .section.col-lg-left {
+    float: left;
+  }
+  .section.col-lg-none {
+    float: none;
+    margin: 0 255px;
+  }
+  .section.col-lg-offset-down {
+    margin-top: 228px;
+  }
+  .section.col-lg-offset-up {
+    margin-top: -300px;
+  }
+  #section-header,
+  #section-signup-top {
+    height: 228px;
+  }
+  #section-header {
+    background-size: 590px 146px;
+    background-position: -76px 81px;
+  }
+  #section-header:before {
+    width: 208px;
+    height: 247px;
+    background-size: 208px 247px;
+  }
+  #section-signup-top {
+    text-align: center;
+  }
+  #section-signup-top .action-links,
+  #section-signup-top .section-header {
+    float: none;
+    width: auto;
+    text-align: center;
+  }
+  #section-signup-top .newsletter-signup-form {
+    display: inline-block;
+  }
+  #section-signup-top .section-header {
+    margin: 0 0 15px;
+  }
+  #section-community,
+  #section-companies {
+    background-position-y: 130px;
+  }
+  #section-stats {
+    background-position: center 110px;
+  }
+  #section-devices {
+    background-position: 35px 120px;
+  }
+  #section-devices br {
+    display: block;
+  }
+  #section-meaning {
+    background-position: center 125px;
+  }
+  #section-goals {
+    background-position: 46px 100px;
+  }
+  #section-matters {
+    background-position-y: 90px;
+  }
+  #section-meaning {
+    height: 300px;
+  }
+  #section-social {
+    height: 100px;
+  }
+  #section-social .social-items:before,
+  #section-social .social-items:after {
+    content: " ";
+    /* 1 */
+    display: table;
+    /* 2 */
+  }
+  #section-social .social-items:after {
+    clear: both;
+  }
+  #section-social .social-items .social-item {
+    width: 25%;
+    border-right: 1px solid #d4d4d4;
+  }
+  #section-social .social-items .social-item.sm-no-border {
+    border-right: 1px solid #d4d4d4;
+  }
+  #section-social .social-items .social-item.lg-no-border {
+    border-right: 0;
+  }
+  #section-social .social-items .social-item.sm-border-top {
+    border-top: 0;
+  }
+  #section-different,
+  #section-doesnt {
+    height: 250px;
+  }
+  #section-different .headshots,
+  #section-doesnt .headshots {
+    display: none;
+  }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  #section-networks {
+    background-image: url(../img/fan-cards@2x.png);
+    background-size: 97px 123px;
+  }
+  #section-stats {
+    background-image: url(../img/stream-sample@2x.png);
+    background-size: 179px 498px;
+  }
+  #section-devices {
+    background-image: url(../img/devices@2x.png);
+    background-size: 270px 100px;
+  }
+  #section-matters {
+    background-image: url(../img/friends-online@2x.png);
+    background-size: 176px 170px;
+  }
+  #section-community {
+    background-image: url(../img/crowd@2x.png);
+    background-size: 125px 120px;
+  }
+  #section-companies {
+    background-image: url(../img/files@2x.png);
+    background-size: 149px 123px;
+  }
+  #section-meaning {
+    background-image: url(../img/photos-illustration@2x.png);
+    background-size: 204px 120px;
+  }
+}
+@media screen and (min-width: 31.875em) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  #section-header {
+    background-image: url(../img/chart-landscape@2x.png);
+  }
+  #section-header:before {
+    background-image: url(../img/hand-smartphone@2x.png);
+  }
+}

@@ -131,6 +131,7 @@ class ThinkUpTablesMySQLDAO extends PDODAO {
         $q .= "INNER JOIN tu_owner_instances AS oi ";
         $q .= "ON i.id = oi.instance_id ";
         $q .= "WHERE oi.owner_id = :owner_id  AND is_active = 1 ORDER BY id ASC;";
+        // echo $q;
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
         self::switchToUpstartDatabase();
@@ -145,6 +146,7 @@ class ThinkUpTablesMySQLDAO extends PDODAO {
 
     private static function switchToInstallationDatabase($thinkup_username) {
         $q = "USE ". 'thinkupstart_'.$thinkup_username;
+        // echo $q;
         PDODAO::$PDO->exec($q);
     }
 }
