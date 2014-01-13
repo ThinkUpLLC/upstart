@@ -18,7 +18,8 @@
       <fieldset class="fieldset-no-header">
         <div class="form-group">
           <label class="control-label" for="username">Username</label>
-          <input type="text" class="form-control" id="username" name="username">
+          <input type="text" class="form-control" id="username"
+          name="username" placeholder="catlady99">
         </div>
         <div class="help-block">You’re logged in as {$subscriber->email}. <a href="{$site_root_path}user/logout.php">Log out?</a></div>
       </fieldset>

@@ -344,6 +344,20 @@ body#settings-subscription #form-membership-contact {
 body.account {
   background: #46bcff;
 }
+body.account ::-webkit-input-placeholder {
+  color: #2785d3;
+}
+body.account :-moz-placeholder {
+  /* Firefox 18- */
+  color: #2785d3;
+}
+body.account ::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #2785d3;
+}
+body.account :-ms-input-placeholder {
+  color: #2785d3;
+}
 body.account .navbar-default {
   border-bottom: 0;
   box-shadow: 0 0 0;

@@ -180,12 +180,12 @@
       $group = $el.parent();
       if (((_ref = $el.val().match(/^[\w]{3,15}$/gi)) != null ? _ref.length : void 0) !== 1) {
         $group.removeClass("form-group-ok").addClass("form-group-warning");
-        return wt.appMessage.create("Usernames must be 3-15 characters and contain only numbers and letters", "warning");
+        return wt.appMessage.create("Your username must be between 3 - 15 unaccented numbers or letters.", "warning");
       } else {
         return $.getJSON("/user/check.php?un=" + (encodeURIComponent($el.val())), function(data) {
           if (!data.available) {
             $group.removeClass("form-group-ok").addClass("form-group-warning");
-            return wt.appMessage.create("That username is not available", "warning");
+            return wt.appMessage.create("Sorry, someone already grabbed that name. Please try again.", "warning");
           } else {
             $group.addClass("form-group-ok").removeClass("form-group-warning");
             return wt.appMessage.destroy();
@@ -319,7 +319,7 @@
       e.preventDefault();
       if ($(this).find("#control-password-current").val().length !== 0) {
         if ($(this).find("#control-password-new").val().length === 0 && $(this).find("#control-password-verify").val().length === 0) {
-          wt.appMessage.create("You didn't provide a new password", "warning");
+          wt.appMessage.create("You didn't provide a new password.", "warning");
           $(this).find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning");
           return e.preventDefault();
         } else if (!checkPasswordFormat($(this).find("#control-password-new").val())) {
@@ -327,7 +327,7 @@
           return e.preventDefault();
         } else if ($(this).find("#control-password-new").val() !== $(this).find("#control-password-verify").val()) {
           e.preventDefault();
-          wt.appMessage.create("Passwords must match", "warning");
+          wt.appMessage.create("The passwords must match.", "warning");
           return $(this).find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning");
         } else {
           return wt.appMessage.destroy();

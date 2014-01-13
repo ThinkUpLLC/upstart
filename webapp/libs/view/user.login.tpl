@@ -11,11 +11,13 @@ body_classes="settings account menu-off"}
       <fieldset class="fieldset-no-header">
         <div class="form-group">
           <label class="control-label" for="email">Email</label>
-          <input type="email" name="email" class="form-control" id="email" {if isset($email)}value="{$email|filter_xss}"{/if}>
+          <input type="email" name="email" class="form-control" id="email"
+          {if isset($email)}value="{$email|filter_xss}"{/if} placeholder="you@example.com">
         </div>
         <div class="form-group">
           <label class="control-label" for="pwd">Password</label>
-          <input type="password" class="form-control" id="pwd" name="pwd" value="">
+          <input type="password" class="form-control" id="pwd" name="pwd" value=""
+          placeholder="********">
         </div>
       </fieldset>
 

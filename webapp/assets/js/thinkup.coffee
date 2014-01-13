@@ -157,12 +157,12 @@ checkUsername = ($el) ->
     $group = $el.parent()
     if $el.val().match(/^[\w]{3,15}$/gi)?.length isnt 1
       $group.removeClass("form-group-ok").addClass("form-group-warning")
-      wt.appMessage.create "Usernames must be 3-15 characters and contain only numbers and letters", "warning"
+      wt.appMessage.create "Your username must be between 3 - 15 unaccented numbers or letters.", "warning"
     else
       $.getJSON "/user/check.php?un=#{encodeURIComponent $el.val()}", (data) ->
         if not data.available
           $group.removeClass("form-group-ok").addClass("form-group-warning")
-          wt.appMessage.create "That username is not available", "warning"
+          wt.appMessage.create "Sorry, someone already grabbed that name. Please try again.", "warning"
         else
           $group.addClass("form-group-ok").removeClass("form-group-warning")
           wt.appMessage.destroy()
@@ -280,7 +280,7 @@ $ ->
     if $(@).find("#control-password-current").val().length isnt 0
       if $(@).find("#control-password-new").val().length is 0 and 
       $(@).find("#control-password-verify").val().length is 0
-        wt.appMessage.create "You didn't provide a new password", "warning"
+        wt.appMessage.create "You didn't provide a new password.", "warning"
         $(@).find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning")
         e.preventDefault()
       else if !checkPasswordFormat($(@).find("#control-password-new").val())
@@ -288,7 +288,7 @@ $ ->
         e.preventDefault()
       else if $(@).find("#control-password-new").val() isnt $(@).find("#control-password-verify").val()
         e.preventDefault()
-        wt.appMessage.create "Passwords must match", "warning"
+        wt.appMessage.create "The passwords must match.", "warning"
         $(@).find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning")
       else
         wt.appMessage.destroy()

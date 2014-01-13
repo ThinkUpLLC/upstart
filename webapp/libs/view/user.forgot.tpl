@@ -11,7 +11,8 @@ body_classes="settings account menu-off"}
       <fieldset class="fieldset-no-header">
         <div class="form-group">
           <label class="control-label" for="control-email">Email</label>
-          <input name="email" type="email" class="form-control" id="control-email">
+          <input name="email" type="email" class="form-control"
+          id="control-email" placeholder="you@example.com">
         </div>
       </fieldset>
 

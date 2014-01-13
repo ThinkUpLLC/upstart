@@ -10,11 +10,13 @@ body_classes="settings account menu-off"}
   <fieldset class="fieldset-no-header">
     <div class="form-group">
         <label class="control-label" for="password">New</label>
-        <input type="password" class="form-control" id="password" name="password" value="">
+        <input type="password" class="form-control" id="password"
+        name="password" value="" placeholder="********">
     </div>
     <div class="form-group">
         <label class="control-label" for="password_confirm">Confirm</label>
-        <input type="password" class="form-control" id="password_confirm" name="password_confirm" value="">
+        <input type="password" class="form-control" id="password_confirm"
+        name="password_confirm" value="" placeholder="********">
     </div>
   </fieldset>
 

@@ -3,6 +3,22 @@
 body.account {
   background: @blue;
 
+  ::-webkit-input-placeholder {
+     color: @blue-darker;
+  }
+
+  :-moz-placeholder { /* Firefox 18- */
+     color: @blue-darker;  
+  }
+
+  ::-moz-placeholder {  /* Firefox 19+ */
+     color: @blue-darker;  
+  }
+
+  :-ms-input-placeholder {  
+     color: @blue-darker;  
+  }
+
   .navbar-default {
     border-bottom: 0;
     box-shadow: 0 0 0;
