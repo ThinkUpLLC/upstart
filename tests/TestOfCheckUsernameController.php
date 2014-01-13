@@ -40,13 +40,13 @@ class TestOfCheckUsernameController extends UpstartUnitTestCase {
         $controller = new CheckUsernameController(true);
         $_GET['un'] = 'checkme';
         $result = $controller->go();
-        $this->assertPattern( '/"available":"true"/', $result );
+        $this->assertPattern( '/"available":true/', $result );
     }
 
     public function testUsernameDoesExist() {
         $controller = new CheckUsernameController(true);
         $_GET['un'] = 'iamtaken';
         $result = $controller->go();
-        $this->assertPattern( '/"available":"false"/', $result );
+        $this->assertPattern( '/"available":false/', $result );
     }
 }

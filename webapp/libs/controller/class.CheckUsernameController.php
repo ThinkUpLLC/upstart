@@ -5,7 +5,7 @@ class CheckUsernameController extends Controller {
     	if (isset($_GET['un'])) {
     		$subscriber_dao = new SubscriberMySQLDAO();
     		$is_taken = $subscriber_dao->isUsernameTaken($_GET['un']);
-    		$payload['available'] = ($is_taken)?'false':'true';
+    		$payload['available'] = ($is_taken)?false:true;
     	} else {
     		$payload['error'] = 'No username specified';
     	}
