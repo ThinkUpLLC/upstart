@@ -446,7 +446,7 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     public function getPass($email) {
-        $q = "SELECT pwd FROM subscribers WHERE email = :email AND is_email_verified='1' LIMIT 1;";
+        $q = "SELECT pwd FROM subscribers WHERE email = :email LIMIT 1;";
         $vars = array(
             ':email'=>$email
         );

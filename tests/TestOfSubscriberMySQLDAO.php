@@ -97,6 +97,34 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($result['verification_code'], null);
     }
 
+    public function testGetPass() {
+        $builders = array();
+        $test_salt = 'test_salt';
+        $password = TestLoginHelper::hashPassword('secretpassword', $test_salt);
+
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'me@example.com', 'pwd'=>$password,
+        'pwd_salt'=>$test_salt, 'is_email_verified'=>1, 'is_activated'=>0, 'is_admin'=>1, 'thinkup_username'=>null));
+
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>7, 'email'=>'inactive@example.com',
+        'pwd'=>$password, 'pwd_salt'=>$test_salt, 'is_email_verified'=>0, 'is_activated'=>0, 'is_admin'=>0,
+        'thinkup_username'=>null, 'verification_code'=>'224455'));
+
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>8, 'email'=>'active@example.com',
+        'pwd'=>$password, 'pwd_salt'=>$test_salt, 'is_email_verified'=>1, 'is_activated'=>1, 'is_admin'=>0,
+        'thinkup_username'=>null, 'verification_code'=>'224455'));
+
+        $dao = new SubscriberMySQLDAO();
+        //subscriber who doesn't exist
+        $result = $dao->getPass('idontexist@example.com');
+        $this->assertFalse($result);
+        //subscriber who is not activated
+        $result = $dao->getPass('inactive@example.com');
+        $this->assertTrue($result);
+        //activated subscriber
+        $result = $dao->getPass('active@example.com');
+        $this->assertEqual($result, $password);
+    }
+
     public function testVerifyEmailAddress() {
         $builder = FixtureBuilder::build('subscribers', array('email'=>'ginatrapani@example.com',
         'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique'));

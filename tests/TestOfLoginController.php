@@ -24,7 +24,11 @@ class TestOfLoginController extends UpstartUnitTestCase {
         $password = TestLoginHelper::hashPassword('secretpassword', $test_salt);
 
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'me@example.com', 'pwd'=>$password,
-        'pwd_salt'=>$test_salt, 'is_activated'=>1, 'is_admin'=>1));
+        'pwd_salt'=>$test_salt, 'is_email_verified'=>1, 'is_activated'=>0, 'is_admin'=>1, 'thinkup_username'=>null));
+
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>7, 'email'=>'unverified@example.com',
+        'pwd'=>$password, 'pwd_salt'=>$test_salt, 'is_email_verified'=>0, 'is_activated'=>0, 'is_admin'=>0,
+        'thinkup_username'=>null, 'verification_code'=>'224455'));
 
         return $builders;
     }
@@ -94,6 +98,24 @@ class TestOfLoginController extends UpstartUnitTestCase {
         $this->assertEqual($v_mgr->getTemplateDataItem('controller_title'), 'Log in');
         $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), 'Incorrect password');
         $this->assertPattern("/Log in/", $results);
+    }
+
+    public function testUnverifiedUserWithVerificationCode() {
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('unverified@example.com');
+        $this->assertFalse($subscriber->is_email_verified);
+
+        $_POST['Submit'] = 'Log In';
+        $_POST['email'] = 'unverified@example.com';
+        $_POST['pwd'] = 'secretpassword';
+        $_GET['usr'] = 'unverified@example.com';
+        $_GET['code'] = '224455';
+        $controller = new LoginController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern("/unverified@example.com/", $results);
+        $subscriber = $dao->getByEmail('unverified@example.com');
+        $this->assertTrue($subscriber->is_email_verified);
     }
 
     public function testCleanXSS() {

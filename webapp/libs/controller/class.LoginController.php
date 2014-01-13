@@ -33,20 +33,34 @@ class LoginController extends UpstartController {
                     }
                     $this->addToView('email', $user_email);
                     $subscriber = $subscriber_dao->getByEmail($user_email);
+
+                    // Attempt to quietly verify the email address if it's not already
+                    if (isset($subscriber) && !$subscriber->is_email_verified) {
+                        if (isset($_GET['usr']) && isset($_GET['code']) && ($_GET['usr'] == $_POST['email'])) {
+                            $verification_code = $subscriber_dao->getVerificationCode($_GET['usr']);
+                            if ($_GET['code'] == $verification_code['verification_code']) {
+                                $verified = $subscriber_dao->verifyEmailAddress($_GET['usr']);
+                                if ($verified > 0) {
+                                    $subscriber->is_email_verified = true;
+                                }
+                            }
+                        }
+                    }
                     if (!$subscriber) {
                         $this->addErrorMessage("Incorrect email");
                         return $this->generateView();
-                    } elseif (!$subscriber->is_email_verified) {
-                        $error_msg = 'Inactive account. ';
-                        if ($subscriber->failed_logins == 0) {
-                            $error_msg .= 'You must activate your account.';
-                        } elseif ($subscriber->failed_logins == 10) {
-                            $error_msg .= $subscriber->account_status .
-                            '. <a href="forgot.php">Reset your password.</a>';
-                        }
-                        $disable_xss = true;
-                        $this->addErrorMessage($error_msg, null, $disable_xss);
-                        return $this->generateView();
+                    //@TODO Properly implement is_activated check here with failed login cap
+                    // } elseif (!$subscriber->is_activated) {
+                    //     $error_msg = 'Inactive account. ';
+                    //     if ($subscriber->failed_logins == 0) {
+                    //         $error_msg .= 'Please confirm your email address before logging into ThinkUp.';
+                    //     } elseif ($subscriber->failed_logins == 10) {
+                    //         $error_msg .= $subscriber->account_status .
+                    //         '. <a href="forgot.php">Reset your password.</a>';
+                    //     }
+                    //     $disable_xss = true;
+                    //     $this->addErrorMessage($error_msg, null, $disable_xss);
+                    //     return $this->generateView();
                         // If the credentials supplied by the user are incorrect
                     } elseif (!$subscriber_dao->isAuthorized($user_email, $_POST['pwd']) ) {
                         $error_msg = 'Incorrect password';
