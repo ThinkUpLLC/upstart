@@ -7,7 +7,7 @@ body_classes="settings account menu-off"}
       <h2>Please log in.</h2>
     </header>
 
-    <form action="index.php{if isset($smarty.get.usr) && isset($smarty.get.code)}?usr={$smarty.get.usr}&code={$smarty.get.code}{/if}" method="POST" class="form-horizontal" id="form-signin">
+    <form action="index.php{if isset($usr) && isset($smarty.get.code)}?usr={$usr}&code={$smarty.get.code}{/if}" method="POST" class="form-horizontal" id="form-signin">
       <fieldset class="fieldset-no-header">
         <div class="form-group">
           <label class="control-label" for="email">Email</label>

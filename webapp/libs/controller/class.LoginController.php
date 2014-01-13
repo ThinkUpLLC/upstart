@@ -16,6 +16,11 @@ class LoginController extends UpstartController {
         } else  {
             $subscriber_dao = new SubscriberMySQLDAO();
 
+            // If usr verification parameter is on the query string, add it to the view
+            if (isset($_GET['usr'])) {
+                $this->addToView('usr', rawurlencode($_GET['usr']));
+            }
+
             if (isset($_POST['Submit']) && $_POST['Submit']=='Log In' && isset($_POST['email']) &&
             isset($_POST['pwd']) ) {
                 if ( $_POST['email']=='' || $_POST['pwd']=='') {
@@ -36,12 +41,16 @@ class LoginController extends UpstartController {
 
                     // Attempt to quietly verify the email address if it's not already
                     if (isset($subscriber) && !$subscriber->is_email_verified) {
-                        if (isset($_GET['usr']) && isset($_GET['code']) && ($_GET['usr'] == $_POST['email'])) {
-                            $verification_code = $subscriber_dao->getVerificationCode($_GET['usr']);
-                            if ($_GET['code'] == $verification_code['verification_code']) {
-                                $verified = $subscriber_dao->verifyEmailAddress($_GET['usr']);
-                                if ($verified > 0) {
-                                    $subscriber->is_email_verified = true;
+                        if (isset($_GET['usr'])) {
+                            // account for annoying +/space problem
+                            $email_to_verify =  str_replace(' ', '+', $_GET['usr']);
+                            if (isset($_GET['code'])  && $email_to_verify == $_POST['email']) {
+                                $verification_code = $subscriber_dao->getVerificationCode($email_to_verify);
+                                if ($_GET['code'] == $verification_code['verification_code']) {
+                                    $verified = $subscriber_dao->verifyEmailAddress($email_to_verify);
+                                    if ($verified > 0) {
+                                        $subscriber->is_email_verified = true;
+                                    }
                                 }
                             }
                         }
