@@ -3,15 +3,15 @@
   <div class="container">
 {if isset($subscriber->thinkup_username)}
     <header>
-      <h1>You picked a username!</h1>
-      <h2>Good job. We'll shoot you an email when ThinkUp is ready.<br>
+      <h1>You reserved {$subscriber->thinkup_username}.thinkup.com.</h1>
+      <h2>You'll get an email shortly when ThinkUp is ready for you.<br>
       <a href="{$site_root_path}user/logout.php">Log out</a>
       </h2>
     </header>
 {else}
     <header>
       <h1>Pick your username</h1>
-      <h2>Think carefully. You only pick this once.</h2>
+      <h2>Choose carefully. You'll only do this once.</h2>
     </header>
 
     <form method="POST" role="form" class="form-horizontal" id="form-username" action="{$site_root_path}user/choose-username.php">
@@ -23,7 +23,7 @@
         <div class="help-block">You’re logged in as {$subscriber->email}. <a href="{$site_root_path}user/logout.php">Log out?</a></div>
       </fieldset>
 
-      <input type="submit" value="Submit" class="btn btn-circle btn-submit">
+      <input type="submit" value="Gimme" class="btn btn-circle btn-submit">
     </form>
 {/if}
 {include file="_appfooter.v2.tpl"}

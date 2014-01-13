@@ -27,7 +27,7 @@ class TestOfForgotPasswordController extends UpstartUnitTestCase {
         $controller = new ForgotPasswordController(true);
         $result = $controller->go();
 
-        $this->assertPattern('/Recover your password/', $result);
+        $this->assertPattern('/Reset your password/', $result);
     }
 
     public function testOfCustomJavascript() {
@@ -40,13 +40,13 @@ class TestOfForgotPasswordController extends UpstartUnitTestCase {
 
     public function testOfControllerWithBadEmailAddress() {
         $_POST['email'] = 'im a broken email address';
-        $_POST['Submit'] = "Submit";
+        $_POST['Submit'] = "Send";
 
         $controller = new ForgotPasswordController(true);
         $result = $controller->go();
 
         $v_mgr = $controller->getViewManager();
-        $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), 'Member does not exist.');
+        $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), 'Sorry, can\'t find that email address.');
     }
 
     public function testOfControllerWithWaitlistedUser() {
@@ -54,13 +54,13 @@ class TestOfForgotPasswordController extends UpstartUnitTestCase {
         'email'=>'waitlisted@example.com', 'membership_level'=>'Waitlist'));
 
         $_POST['email'] = 'waitlisted@example.com';
-        $_POST['Submit'] = "Submit";
+        $_POST['Submit'] = "Send";
 
         $controller = new ForgotPasswordController(true);
         $result = $controller->go();
 
         $v_mgr = $controller->getViewManager();
-        $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), 'Member does not exist.');
+        $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), 'Sorry, can\'t find that email address.');
     }
 
     public function testOfControllerWithValidEmailAddress() {
@@ -69,13 +69,13 @@ class TestOfForgotPasswordController extends UpstartUnitTestCase {
         $this->debug("site_root_path ". $site_root_path);
 
         $_POST['email'] = 'me@example.com';
-        $_POST['Submit'] = "Submit";
+        $_POST['Submit'] = "Send";
         $_SERVER['HTTP_HOST'] = "mytestthinkup";
         $controller = new ForgotPasswordController(true);
         $result = $controller->go();
 
         $this->debug($result);
-        $this->assertPattern('/Password recovery information has been sent/', $result );
+        $this->assertPattern('/Check your email for a password reset link./', $result );
 
         $actual_forgot_email = Mailer::getLastMail();
         $this->debug($actual_forgot_email);
@@ -94,13 +94,13 @@ class TestOfForgotPasswordController extends UpstartUnitTestCase {
         $config->setValue('app_title_prefix', '');
         $site_root_path = $config->getValue('site_root_path');
         $_POST['email'] = 'me@example.com';
-        $_POST['Submit'] = "Submit";
+        $_POST['Submit'] = "Send";
         $_SERVER['HTTP_HOST'] = "mytestthinkup";
         $_SERVER['HTTPS'] = true;
         $controller = new ForgotPasswordController(true);
         $result = $controller->go();
 
-        $this->assertTrue(strpos($result, 'Password recovery information has been sent') > 0);
+        $this->assertTrue(strpos($result, 'Check your email for a password reset link.') > 0);
 
         $actual_forgot_email = Mailer::getLastMail();
         $this->debug($actual_forgot_email);

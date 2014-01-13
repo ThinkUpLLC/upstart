@@ -20,10 +20,10 @@ class LoginController extends UpstartController {
             isset($_POST['pwd']) ) {
                 if ( $_POST['email']=='' || $_POST['pwd']=='') {
                     if ( $_POST['email']=='') {
-                        $this->addErrorMessage("Email must not be empty");
+                        $this->addErrorMessage("You'll need to enter an email address.");
                         return $this->generateView();
                     } else {
-                        $this->addErrorMessage("Password must not be empty");
+                        $this->addErrorMessage("You'll need a password.");
                         return $this->generateView();
                     }
                 } else {
@@ -47,7 +47,7 @@ class LoginController extends UpstartController {
                         }
                     }
                     if (!$subscriber) {
-                        $this->addErrorMessage("Incorrect email");
+                        $this->addErrorMessage("Sorry, can't find that email.");
                         return $this->generateView();
                     //@TODO Properly implement is_activated check here with failed login cap
                     // } elseif (!$subscriber->is_activated) {
@@ -68,7 +68,7 @@ class LoginController extends UpstartController {
                         $this->addErrorMessage($error_msg, null, $disable_xss=true);
                         return $this->generateView();
                     } elseif (!$subscriber_dao->isAuthorized($user_email, $_POST['pwd']) ) {
-                        $error_msg = 'Incorrect password';
+                        $error_msg = 'That password doesn\'t seem right.';
                         if ($subscriber->failed_logins >= 9) { // where 9 represents the 10th attempt!
                             $subscriber_dao->deactivateSubscriber($user_email);
                             $status = 'Account deactivated due to too many failed logins';

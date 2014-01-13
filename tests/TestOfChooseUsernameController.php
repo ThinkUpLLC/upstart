@@ -45,7 +45,7 @@ class TestOfChooseUsernameController extends UpstartUnitTestCase {
         $controller = new ChooseUsernameController(true);
         $result = $controller->go();
         $this->debug($result);
-        $this->assertPattern( '/Think carefully/', $result );
+        $this->assertPattern( '/Choose carefully/', $result );
         $this->assertNoPattern( '/Settings/', $result );
     }
 
@@ -55,7 +55,7 @@ class TestOfChooseUsernameController extends UpstartUnitTestCase {
         $_POST['username'] = 'setme';
         $result = $controller->go();
         $this->debug($result);
-        $this->assertPattern( '/You picked a username!/', $result );
+        $this->assertPattern( '/You reserved/', $result );
     }
 
     public function testNotSetPostValidTakenUsername() {
@@ -73,35 +73,35 @@ class TestOfChooseUsernameController extends UpstartUnitTestCase {
         $_POST['username'] = 'invalidusernameitiswaytoolongmorethan15characters';
         $result = $controller->go();
         //$this->debug($result);
-        $this->assertPattern( '/Your username must be 3\-15 characters and contain only numbers and/', $result );
+        $this->assertPattern( '/Your username must be between 3 - 15 unaccented numbers or letters./', $result );
         $this->assertNoPattern( '/Settings/', $result );
 
         //too short
         $_POST['username'] = 'ya';
         $result = $controller->go();
         //$this->debug($result);
-        $this->assertPattern( '/Your username must be 3\-15 characters and contain only numbers and/', $result );
+        $this->assertPattern( '/Your username must be between 3 - 15 unaccented numbers or letters./', $result );
         $this->assertNoPattern( '/Settings/', $result );
 
         //special char
         $_POST['username'] = 'y@a';
         $result = $controller->go();
         //$this->debug($result);
-        $this->assertPattern( '/Your username must be 3\-15 characters and contain only numbers and/', $result );
+        $this->assertPattern( '/Your username must be between 3 - 15 unaccented numbers or letters./', $result );
         $this->assertNoPattern( '/Settings/', $result );
 
         //dash
         $_POST['username'] = 'ydd-a';
         $result = $controller->go();
         //$this->debug($result);
-        $this->assertPattern( '/Your username must be 3\-15 characters and contain only numbers and/', $result );
+        $this->assertPattern( '/Your username must be between 3 - 15 unaccented numbers or letters./', $result );
         $this->assertNoPattern( '/Settings/', $result );
 
         //space
         $_POST['username'] = 'ydd a';
         $result = $controller->go();
         //$this->debug($result);
-        $this->assertPattern( '/Your username must be 3\-15 characters and contain only numbers and/', $result );
+        $this->assertPattern( '/Your username must be between 3 - 15 unaccented numbers or letters./', $result );
         $this->assertNoPattern( '/Settings/', $result );
     }
 }

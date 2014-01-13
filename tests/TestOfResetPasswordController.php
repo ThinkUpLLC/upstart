@@ -110,7 +110,7 @@ SQL;
         $result = $controller->go();
 
         $v_mgr = $controller->getViewManager();
-        $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), "Passwords didn't match.");
+        $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), "The passwords must match.");
     }
 
     public function testOfControllerGoodTokenInvalidPassword() {
@@ -131,7 +131,8 @@ SQL;
 
         $v_mgr = $controller->getViewManager();
         $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'),
-            "Password must be at least 8 characters and contain both numbers and letters.");
+            "Your password must be at least 8 characters, contain both numbers &amp; letters, and omit ".
+            "special characters.");
     }
 
     public function testOfControllerGoodTokenMatchedNewPasswordWithNoUniqueSalt() {

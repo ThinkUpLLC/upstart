@@ -3,7 +3,7 @@
   <footer class="footer">
       <div class="footer-container">
         <div class="copyright-privacy">
-          <div class="copyright">&copy;2013 ThinkUp, LLC</div>
+          <div class="copyright">&copy;2014 ThinkUp, LLC</div>
           <a class="privacy" href="https://github.com/ThinkUpLLC/policy">Privacy and stuff</a>
         </div>
         <div class="motto">It is nice to be nice.</div>

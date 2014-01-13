@@ -3,7 +3,8 @@ body_classes="settings account menu-off"}
 
   <div class="container">
     <header>
-      <h1>Recover your password</h1>
+      <h1>Reset your password</h1>
+      <h2>You'll get a password reset email.</h2>
     </header>
 
     <form action="{$site_root_path}user/forgot.php" method="POST" role="form" class="form-horizontal" id="form-forgot-password">
@@ -14,9 +15,9 @@ body_classes="settings account menu-off"}
         </div>
       </fieldset>
 
-      <input type="submit" name="Submit" value="Submit" class="btn btn-circle btn-submit">
+      <input type="submit" name="Submit" value="Send" class="btn btn-circle btn-submit">
 
-      <p class="form-note"><a href="{$site_root_path}user/">Back to Login</a></p>
+      <p class="form-note"><a href="{$site_root_path}user/">Back to login</a></p>
     </form>
 
 {include file="_appfooter.v2.tpl"}

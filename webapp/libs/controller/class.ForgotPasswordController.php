@@ -4,7 +4,7 @@ class ForgotPasswordController extends Controller {
     public function control() {
         $config = Config::getInstance();
 
-        if (isset($_POST['Submit']) && $_POST['Submit'] == 'Submit') {
+        if (isset($_POST['Submit']) && $_POST['Submit'] == 'Send') {
             $this->disableCaching();
 
             $subscriber_dao = new SubscriberMySQLDAO();
@@ -23,9 +23,9 @@ class ForgotPasswordController extends Controller {
 
                 Mailer::mail($_POST['email'], "ThinkUp Password Recovery", $message);
 
-                $this->addSuccessMessage('Check your email! Password recovery information has been sent.');
+                $this->addSuccessMessage('Check your email for a password reset link.');
             } else {
-                $this->addErrorMessage('Member does not exist.');
+                $this->addErrorMessage('Sorry, can\'t find that email address.');
             }
         }
         $this->setViewTemplate('user.forgot.tpl');

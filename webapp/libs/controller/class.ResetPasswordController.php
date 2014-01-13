@@ -28,8 +28,8 @@ class ResetPasswordController extends Controller {
             if ($_POST['password'] == $_POST['password_confirm']) {
                 $is_valid_password = UpstartHelper::validatePassword($_POST['password']);
                 if (!$is_valid_password) {
-                    $this->addErrorMessage('Password must be at least 8 characters and contain both numbers and '.
-                        'letters.');
+                    $this->addErrorMessage('Your password must be at least 8 characters, contain both numbers &amp; '.
+                        'letters, and omit special characters.');
                 } else {
                     $login_controller = new LoginController(true);
                     // Try to update the password
@@ -41,12 +41,12 @@ class ResetPasswordController extends Controller {
                         $subscriber_dao->clearAccountStatus($subscriber->email);
                         $subscriber_dao->resetFailedLogins($subscriber->email);
                         $subscriber_dao->updatePasswordToken($subscriber->email, '');
-                        $login_controller->addSuccessMessage('You have changed your password.');
+                        $login_controller->addSuccessMessage('Nice! You have changed your password.');
                     }
                     return $login_controller->go();
                 }
             } else {
-                $this->addErrorMessage("Passwords didn't match.");
+                $this->addErrorMessage("The passwords must match.");
             }
         } else if (isset($_POST['Submit'])) {
             $this->addErrorMessage('Please enter a new password.');

@@ -15,19 +15,18 @@ class ChooseUsernameController extends AuthController {
             $username = strtolower($_POST['username']);
             // Throw an error if there's an invalid character
             if (!UpstartHelper::isUsernameValid($username)) {
-                $this->addErrorMessage("Your username must be 3-15 characters and contain only numbers and ".
-                    "letters.");
+                $this->addErrorMessage("Your username must be between 3 - 15 unaccented numbers or letters.");
             } else {
                 try {
                     $set_username_result = $subscriber_dao->setUsername($subscriber->id, $username);
                     if ( $set_username_result ) {
-                        $this->addSuccessMessage("Saved username $username.");
+                        $this->addSuccessMessage("You got it. The username $username has been reserved.");
                         $subscriber->thinkup_username = $username;
                     } else {
-                        $this->addErrorMessage("Sorry, that username is already taken. Please try again.");
+                        $this->addErrorMessage("Sorry, someone already grabbed that name. Please try again.");
                     }
                 } catch (DuplicateSubscriberUsernameException $e) {
-                    $this->addErrorMessage("Sorry, that username is already taken. Please try again.");
+                    $this->addErrorMessage("Sorry, someone already grabbed that name. Please try again.");
                 }
             }
         }

@@ -1,18 +1,13 @@
 {include file="_appheader.v2.tpl"
 body_classes="settings account menu-off"}
-  
+
   <div class="container">
     <header>
-      <h1>Log in (please)</h1>
+      <h1>Welcome!</h1>
+      <h2>Please log in.</h2>
     </header>
 
-{if isset($logged_in_user)}
-    <form class="form-horizontal">
-      <p class="form-note">You’re already logged in as {$logged_in_user}.<br>
-      Do you want to <a href="{$site_root_path}user/logout.php">log out</a>?</p>
-    </form>
-{else}
-    <form action="index.php" method="POST" class="form-horizontal" id="form-signin">
+    <form action="index.php{if isset($smarty.get.usr) && isset($smarty.get.code)}?usr={$smarty.get.usr}&code={$smarty.get.code}{/if}" method="POST" class="form-horizontal" id="form-signin">
       <fieldset class="fieldset-no-header">
         <div class="form-group">
           <label class="control-label" for="email">Email</label>
@@ -26,8 +21,7 @@ body_classes="settings account menu-off"}
 
       <input type="Submit" name="Submit" value="Log In" class="btn btn-circle btn-submit">
 
-      <p class="form-note"><a href="{$site_root_path}user/forgot.php">Forgot Password?</a></p>
+      <p class="form-note"><a href="{$site_root_path}user/forgot.php">Forgot your password?</a></p>
     </form>
-{/if}
 
 {include file="_appfooter.v2.tpl"}
