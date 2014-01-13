@@ -26,18 +26,25 @@ class ResetPasswordController extends Controller {
 
         if (isset($_POST['password'])) {
             if ($_POST['password'] == $_POST['password_confirm']) {
-                $login_controller = new LoginController(true);
-                // Try to update the password
-                if ($subscriber_dao->updatePassword($subscriber->email, $_POST['password'] ) < 1 ) {
-                    $login_controller->addErrorMessage('Problem changing your password!');
+                $is_valid_password = UpstartHelper::validatePassword($_POST['password']);
+                if (!$is_valid_password) {
+                    $this->addErrorMessage('Password must be at least 8 characters and contain both numbers and '.
+                        'letters.');
                 } else {
-                    $subscriber_dao->activateSubscriber($subscriber->email);
-                    $subscriber_dao->clearAccountStatus($subscriber->email);
-                    $subscriber_dao->resetFailedLogins($subscriber->email);
-                    $subscriber_dao->updatePasswordToken($subscriber->email, '');
-                    $login_controller->addSuccessMessage('You have changed your password.');
+                    $login_controller = new LoginController(true);
+                    // Try to update the password
+                    if ($subscriber_dao->updatePassword($subscriber->email, $_POST['password'] ) < 1 ) {
+                        $login_controller->addErrorMessage('Oops! There was a problem changing your password.'.
+                            ' Please try again.');
+                    } else {
+                        $subscriber_dao->activateSubscriber($subscriber->email);
+                        $subscriber_dao->clearAccountStatus($subscriber->email);
+                        $subscriber_dao->resetFailedLogins($subscriber->email);
+                        $subscriber_dao->updatePasswordToken($subscriber->email, '');
+                        $login_controller->addSuccessMessage('You have changed your password.');
+                    }
+                    return $login_controller->go();
                 }
-                return $login_controller->go();
             } else {
                 $this->addErrorMessage("Passwords didn't match.");
             }

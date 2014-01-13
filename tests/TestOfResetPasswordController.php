@@ -113,6 +113,27 @@ SQL;
         $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), "Passwords didn't match.");
     }
 
+    public function testOfControllerGoodTokenInvalidPassword() {
+        $time = strtotime('-1 hour');
+        $q = <<<SQL
+UPDATE subscribers 
+SET password_token = '{$this->token}_{$time}'
+WHERE id = 1;
+SQL;
+        $this->testdb_helper->runSQL($q);
+
+        $_GET['token'] = $this->token;
+        $_POST['password'] = 'the same';
+        $_POST['password_confirm'] = 'the same';
+        $controller = new ResetPasswordController(true);
+        $result = $controller->go();
+        $this->debug($result);
+
+        $v_mgr = $controller->getViewManager();
+        $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'),
+            "Password must be at least 8 characters and contain both numbers and letters.");
+    }
+
     public function testOfControllerGoodTokenMatchedNewPasswordWithNoUniqueSalt() {
         $dao = new SubscriberMySQLDAO();
         $dao->setAccountStatus("me@example.com", "Deactivated account");
@@ -125,8 +146,8 @@ WHERE id = 1;
 SQL;
         $this->testdb_helper->runSQL($q);
 
-        $_POST['password'] = 'the same';
-        $_POST['password_confirm'] = 'the same';
+        $_POST['password'] = 'thesamepass21';
+        $_POST['password_confirm'] = 'thesamepass21';
         $_GET['token'] = $this->token;
         $controller = new ResetPasswordController(true);
         $result = $controller->go();
@@ -153,8 +174,8 @@ WHERE id = 2;
 SQL;
         $this->testdb_helper->runSQL($q);
 
-        $_POST['password'] = 'the same';
-        $_POST['password_confirm'] = 'the same';
+        $_POST['password'] = 'thesamepass21';
+        $_POST['password_confirm'] = 'thesamepass21';
         $_GET['token'] = $this->token_salt;
         $controller = new ResetPasswordController(true);
         $result = $controller->go();
@@ -173,8 +194,8 @@ SQL;
         $owner = $dao->getByEmail('zaphod@hog.com');
         $token = $owner->setPasswordRecoveryToken();
 
-        $_POST['password'] = 'trillian';
-        $_POST['password_confirm'] = 'trillian';
+        $_POST['password'] = 'trillian1010';
+        $_POST['password_confirm'] = 'trillian1010';
         $_GET['token'] = $token;
 
         $controller = new ResetPasswordController(true);
