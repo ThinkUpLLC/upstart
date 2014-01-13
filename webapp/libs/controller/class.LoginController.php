@@ -90,6 +90,7 @@ class LoginController extends UpstartController {
                         $this->addToView('logged_in_user', $logged_in_user);
                         $subscriber = $subscriber_dao->getByEmail($logged_in_user);
 
+/* TODO: Reimplement this later, when users actually have installations
                         if (isset($subscriber->thinkup_username) && isset($subscriber->date_installed)
                             && $subscriber->is_installation_active) {
                             $config = Config::getInstance();
@@ -119,6 +120,10 @@ class LoginController extends UpstartController {
                             $username_controller = new ChooseUsernameController(true);
                             return $username_controller->go();
                         }
+*/
+                        // No installation, show username screen
+                        $username_controller = new ChooseUsernameController(true);
+                        return $username_controller->go();
                     }
                 }
             } else  {
