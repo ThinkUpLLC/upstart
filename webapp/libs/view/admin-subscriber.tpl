@@ -7,7 +7,7 @@
 
       {include file="_adminusermessage.tpl"}
       {if $subscriber}
-      <h2 style="display: inline-block;">{if $subscriber->full_name neq ''}{$subscriber->full_name}{else}[No name]{/if}</h2>&nbsp;&nbsp;&nbsp;<span>Member since {$subscriber->creation_time}</span>
+      <h2 style="display: inline-block;">{if $subscriber->full_name neq ''}{$subscriber->full_name}{else}[No name]{/if}</h2>&nbsp;&nbsp;&nbsp;<span>{$subscriber->membership_level} since {$subscriber->creation_time}</span>
       <table class="table table-condensed table-hover">
       <tr>
         <td>Email</td>
