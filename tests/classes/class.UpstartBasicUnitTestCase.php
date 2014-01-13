@@ -120,4 +120,20 @@ Please try again.
 ");
         }
     }
+
+    /**
+     * Wrapper for logging in an Upstart user in a test
+     * @param str $email
+     * @param bool $is_admin Default to false
+     * @param bool $use_csrf_token Whether or not to put down valid CSRF token, default to false
+     */
+    protected function simulateLogin($email, $is_admin = false, $use_csrf_token = false) {
+        SessionCache::put('user', $email);
+        if ($is_admin) {
+            SessionCache::put('user_is_admin', true);
+        }
+        if ($use_csrf_token) {
+            SessionCache::put('csrf_token', self::CSRF_TOKEN);
+        }
+    }
 }

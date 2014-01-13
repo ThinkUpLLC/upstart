@@ -104,4 +104,17 @@ class UpstartHelper {
     public static function isTest() {
         return (isset($_SESSION["MODE"]) && $_SESSION["MODE"] == "TESTS") || getenv("MODE")=="TESTS";
     }
+
+    public static function isUsernameValid($username) {
+        $is_valid = true;
+        //between 3 and 15 chars long
+        if (strlen($username) < 3 || strlen($username) > 15) {
+            $is_valid = false;
+        }
+        //alphanumeric, no spaces, allow underscores but not dashes
+        if ($is_valid) {
+            return preg_match("/^[A-Za-z0-9_]+$/", $username, $matches);
+        }
+        return $is_valid;
+    }
 }

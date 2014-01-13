@@ -88,11 +88,11 @@
       <h2>Think carefully. You only pick this once.</h2>
     </header>
 
-    <form method="POST" role="form" class="form-horizontal" id="form-username">
+    <form method="POST" role="form" class="form-horizontal" id="form-username" action="{$site_root_path}user/choose.php">
       <fieldset class="fieldset-no-header">
         <div class="form-group">
           <label class="control-label" for="control-username">Username</label>
-          <input type="text" class="form-control" id="control-username">
+          <input type="text" class="form-control" id="control-username" name="username">
         </div>
       </fieldset>
 

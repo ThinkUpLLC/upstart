@@ -20,4 +20,29 @@ class TestOfUpstartHelper extends UpstartUnitTestCase {
         $this->debug($result);
         $this->assertEqual($result, 'http'.(empty($_SERVER['HTTPS'])?'':'s').'://'.$app_url.$site_root_path);
     }
+
+    public function testIsUsernameValid() {
+        //valid letters only
+        $this->assertTrue(UpstartHelper::isUsernameValid('valid'));
+        //valid numbers only
+        $this->assertTrue(UpstartHelper::isUsernameValid('1234567'));
+        //valid numbers and letters
+        $this->assertTrue(UpstartHelper::isUsernameValid('valid1456'));
+        //valid numbers and letters and underscores
+        $this->assertTrue(UpstartHelper::isUsernameValid('i_am_valid_yo'));
+        //too long
+        $this->assertFalse(UpstartHelper::isUsernameValid('validusernamebutitiswaytoolongmorethan15characters'));
+        //too short
+        $this->assertFalse(UpstartHelper::isUsernameValid('va'));
+        //special char
+        $this->assertFalse(UpstartHelper::isUsernameValid('%aesfa'));
+        //underscore
+        $this->assertTrue(UpstartHelper::isUsernameValid('a_a'));
+        //start with underscore
+        $this->assertTrue(UpstartHelper::isUsernameValid('_addafasdf'));
+        //dash
+        $this->assertFalse(UpstartHelper::isUsernameValid('a-a'));
+        //space
+        $this->assertFalse(UpstartHelper::isUsernameValid('aes fa'));
+    }
 }
