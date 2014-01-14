@@ -1,6 +1,7 @@
 <?php
 class CheckUsernameController extends Controller {
     public function control() {
+        $this->disableCaching();
     	$payload = array();
     	if (isset($_GET['un'])) {
     		$subscriber_dao = new SubscriberMySQLDAO();
