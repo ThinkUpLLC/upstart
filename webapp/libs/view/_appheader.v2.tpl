@@ -42,8 +42,8 @@
     <div id="menu">
       <ul class="list-unstyled menu-options">{if isset($subscriber)}
         <li><a href="{if isset($subscriber->thinkup_username)}{$thinkup_url}{else}{$site_root_path}{/if}">Home</a></li>
-        <li class="service {$facebook_connection_status}"><a href="{$site_root_path}account/?p=facebook" class="{if $smarty.get.p eq 'facebook'} active{/if}">Facebook<i class="fa fa-{if $facebook_connection_status eq 'active'}check-circle{elseif $facebook_connection_status eq 'error'}exclamation-triangle{else}facebook{/if} icon"></i></a></li>
-        <li class="service {$twitter_connection_status}"><a href="{$site_root_path}account/?p=twitter" class="service error{if $smarty.get.p eq 'twitter'} active{/if}">Twitter<i class="fa fa-{if $twitter_connection_status eq 'active'}check-circle{elseif $twitter_connection_status eq 'error'}exclamation-triangle{else}twitter{/if} icon"></i></a></li>
+        <li class="service {$facebook_connection_status}"><a href="{$thinkup_url}account/?p=facebook" class="{if $smarty.get.p eq 'facebook'} active{/if}">Facebook<i class="fa fa-{if $facebook_connection_status eq 'active'}check-circle{elseif $facebook_connection_status eq 'error'}exclamation-triangle{else}facebook{/if} icon"></i></a></li>
+        <li class="service {$twitter_connection_status}"><a href="{$thinkup_url}account/?p=twitter" class="service error{if $smarty.get.p eq 'twitter'} active{/if}">Twitter<i class="fa fa-{if $twitter_connection_status eq 'active'}check-circle{elseif $twitter_connection_status eq 'error'}exclamation-triangle{else}twitter{/if} icon"></i></a></li>
         <li><a href="{$site_root_path}user/membership.php"{if $controller_title eq "Membership Info"} class="active"{/if}>Membership</a></li>
         <li class="user-info logged-in">
           {if isset($subscriber->user_photo)}<img src="{$subscriber->user_photo}" class="user-photo img-circle" alt="{$subscriber->full_name}">{/if}

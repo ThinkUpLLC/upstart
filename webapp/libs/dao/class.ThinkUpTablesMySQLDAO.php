@@ -121,4 +121,32 @@ class ThinkUpTablesMySQLDAO extends PDODAO {
     private function hashPassword($password, $salt) {
         return hash('sha256', $password.$salt);
     }
+
+    public function getInstancesWithStatus($thinkup_username, $owner_id) {
+        self::switchToInstallationDatabase($thinkup_username);
+        $vars = array(
+            ':owner_id'=>$owner_id
+        );
+        $q  = "SELECT i.*, oi.auth_error FROM tu_instances i ";
+        $q .= "INNER JOIN tu_owner_instances AS oi ";
+        $q .= "ON i.id = oi.instance_id ";
+        $q .= "WHERE oi.owner_id = :owner_id  AND is_active = 1 ORDER BY id ASC;";
+        echo $q;
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        self::switchToUpstartDatabase();
+        return $this->getDataRowsAsArrays($ps);
+    }
+
+    private static function switchToUpstartDatabase() {
+        $cfg = Config::getInstance();
+        $q = "USE ". $cfg->getValue('db_name');
+        PDODAO::$PDO->exec($q);
+    }
+
+    private static function switchToInstallationDatabase($thinkup_username) {
+        $q = "USE ". 'thinkupstart_'.$thinkup_username;
+        echo $q;
+        PDODAO::$PDO->exec($q);
+    }
 }
