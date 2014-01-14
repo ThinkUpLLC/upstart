@@ -18,7 +18,7 @@
     <script type="text/javascript">{literal}try{Typekit.load();}catch(e){}{/literal}</script>
     <link href="{$site_root_path}assets/css/vendor/bootstrap.min.css" rel="stylesheet">
     <link href="{$site_root_path}assets/css/vendor/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic|' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic|' rel='stylesheet' type='text/css'>
     <link href="{$site_root_path}assets/css/thinkup.css" rel="stylesheet">
 {if isset($header_css)}
 {foreach from=$header_css item=css}
