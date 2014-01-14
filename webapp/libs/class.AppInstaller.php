@@ -360,8 +360,10 @@ class AppInstaller {
 
     protected function setUpServiceUser($owner_id, $subscriber) {
         $tu_tables_dao = new ThinkUpTablesMySQLDAO();
-        //insert Twitter user into instances
-        $instance_id = $tu_tables_dao->insertInstance($subscriber->network_user_id, $subscriber->network_user_name);
+        //insert Twitter or Facebook user into instances
+        $network_user_name = ($subscriber->network=='twitter')?$subscriber->network_user_name:$subscriber->full_name;
+        $instance_id = $tu_tables_dao->insertInstance($subscriber->network_user_id, $network_user_name,
+            $subscriber->network, $subscriber->network_user_id);
 
         //associate owner with Twitter user in owner_instances and add auth tokens
         $tu_tables_dao->insertOwnerInstance($owner_id, $instance_id, $subscriber->oauth_access_token,
