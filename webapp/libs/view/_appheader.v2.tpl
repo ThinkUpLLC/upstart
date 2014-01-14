@@ -41,18 +41,15 @@
     {if isset($include_menu) and $include_menu}
     <div id="menu">
       <ul class="list-unstyled menu-options">{if isset($subscriber)}
-        <li><a href="{if isset($subscriber->thinkup_username)}//{$subscriber->thinkup_username}.thinkup.com{else}{$site_root_path}{/if}">Home</a></li>
-        <li><a href="{$site_root_path}user/"{if 
-        $controller_title eq "Settings"} class="active"{/if}>Settings</a></li>
-        <li class="service{if isset($is_facebook_connected) and $is_facebook_connected} {if isset($facebook_error_state)}error{else}active{/if}{else} inactive{/if}"><a href="#">Facebook <i class="fa fa-{if isset($is_facebook_connected) and $is_facebook_connected}{if isset($facebook_error_state)}exclamation-triangle{else}check-circle{/if}{else}facebook-square{/if} icon"></i></a></li>
-        <li class="service{if isset($is_twitter_connected) and $is_twitter_connected} {if isset($twitter_error_state)}error{else}active{/if}{else} inactive{/if}"><a href="#">Twitter <i class="fa fa-{if isset($is_twitter_connected) and $is_twitter_connected}{if isset($twitter_error_state)}exclamation-triangle{else}check-circle{/if}{else}twitter{/if} icon"></i></a></li>
-        <li><a href="{$site_root_path}user/membership.php"{if $controller_title eq "Subscription Info"} class="active"{/if}>Subscription</a></li>
-        <li><a href="mailto:help@thinkup.com">Help</a></li>
+        <li><a href="{if isset($subscriber->thinkup_username)}{$thinkup_url}{else}{$site_root_path}{/if}">Home</a></li>
+        <li class="service {$facebook_connection_status}"><a href="{$site_root_path}account/?p=facebook" class="{if $smarty.get.p eq 'facebook'} active{/if}">Facebook<i class="fa fa-{if $facebook_connection_status eq 'active'}check-circle{elseif $facebook_connection_status eq 'error'}exclamation-triangle{else}facebook{/if} icon"></i></a></li>
+        <li class="service {$twitter_connection_status}"><a href="{$site_root_path}account/?p=twitter" class="service error{if $smarty.get.p eq 'twitter'} active{/if}">Twitter<i class="fa fa-{if $twitter_connection_status eq 'active'}check-circle{elseif $twitter_connection_status eq 'error'}exclamation-triangle{else}twitter{/if} icon"></i></a></li>
+        <li><a href="{$site_root_path}user/membership.php"{if $controller_title eq "Membership Info"} class="active"{/if}>Membership</a></li>
         <li class="user-info logged-in">
           {if isset($subscriber->user_photo)}<img src="{$subscriber->user_photo}" class="user-photo img-circle" alt="{$subscriber->full_name}">{/if}
           <div class="current-user">
             <div class="label">Logged in as</div>
-            {$subscriber->full_name}
+            {$subscriber->email}
           </div>
         </li>
         <li><a href="{$site_root_path}user/logout.php">Log out</a></li>

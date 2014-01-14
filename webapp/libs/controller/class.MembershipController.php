@@ -2,7 +2,7 @@
 class MembershipController extends AuthController {
 
     public function authControl() {
-        $this->setPageTitle('Subscription Info');
+        $this->setPageTitle('Membership Info');
         $this->setViewTemplate('user.membership.tpl');
 
         $logged_in_user = Session::getLoggedInUser();
