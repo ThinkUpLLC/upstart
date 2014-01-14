@@ -332,7 +332,19 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     public function getSubscribersNotInstalled($count=25) {
-        $q  = "SELECT id FROM subscribers WHERE date_installed IS null ";
+        $q  = "SELECT id FROM subscribers WHERE thinkup_username IS NOT NULL AND date_installed IS null ";
+        $q .= "AND membership_level != 'Waitlist' LIMIT :limit;";
+
+        $vars = array(
+            ':limit'=>$count
+        );
+        //echo self::mergeSQLVars($q, $vars);
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowsAsArrays($ps);
+    }
+
+    public function getSubscribersInstalled($count=25) {
+        $q  = "SELECT id FROM subscribers WHERE date_installed IS NOT NULL AND is_installation_active = 1 ";
         $q .= "LIMIT :limit;";
 
         $vars = array(

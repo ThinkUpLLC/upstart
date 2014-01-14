@@ -1,5 +1,6 @@
 <?php
 chdir('..');
+chdir('..');
 require_once 'init.php';
 
 $subscriber_dao = new SubscriberMySQLDAO();
