@@ -4,6 +4,7 @@ class ChooseUsernameController extends AuthController {
     public function authControl() {
         $this->setPageTitle('Choose your ThinkUp username');
         $this->setViewTemplate('user.username.tpl');
+        $this->disableCaching();
 
         $logged_in_user = Session::getLoggedInUser();
         $this->addToView('logged_in_user', $logged_in_user);
