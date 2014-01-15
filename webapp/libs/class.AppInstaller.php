@@ -92,6 +92,7 @@ class AppInstaller {
     }
 
     public function install($subscriber_id) {
+        $this->results_message = null;
         $commit_hash = self::getMasterInstallCommitHash();
 
         if (isset($this->app_source_path)
@@ -164,6 +165,7 @@ class AppInstaller {
     }
 
     public function uninstall($subscriber_id) {
+        $this->results_message = null;
         $subscriber = null;
         if (isset($subscriber_id)) {
             $subscriber_dao = new SubscriberMySQLDAO();

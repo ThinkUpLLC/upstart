@@ -4,23 +4,32 @@ chdir('..');
 require_once 'init.php';
 
 $subscriber_dao = new SubscriberMySQLDAO();
+
+$total_members_to_uninstall = $subscriber_dao->getTotalSubscribersToUninstall();
+echo "<h1>".$total_members_to_uninstall." ThinkUp members have installations</h1>";
+
+echo '<form method="post"><input type="hidden" name="go" value="yes"><input type="submit" value="Uninstall All" /></form>';
+
 $ids_to_uninstall = $subscriber_dao->getSubscribersInstalled($count=25);
 $installer = new AppInstaller();
 
-echo "Got ".sizeof($ids_to_uninstall)." members to uninstall.
-";
-while (sizeof($ids_to_uninstall) > 0) {
-    foreach ($ids_to_uninstall as $id_to_uninstall) {
-        echo "<ul>";
-        try {
-        	$results = $installer->uninstall($id_to_uninstall['id']);
-        } catch (Exception $e) {
-        	$results = '<li>' . $e->getMessage() . '</li>';
+$total_uninstalled = 0;
+if ($_POST['go'] == 'yes') {
+    while (sizeof($ids_to_uninstall) > 0) {
+        foreach ($ids_to_uninstall as $id_to_uninstall) {
+            echo "<ul>";
+            try {
+            	$results = $installer->uninstall($id_to_uninstall['id']);
+            } catch (Exception $e) {
+            	$results = '<li>' . $e->getMessage() . '</li>';
+            }
+            echo $results;
+            $results = null;
+            echo "</ul>";
         }
-        echo $results;
-        echo "</ul>";
+        $ids_to_uninstall = $subscriber_dao->getSubscribersInstalled($count=25);
+        $total_uninstalled += sizeof($ids_to_uninstall);
     }
-    $ids_to_uninstall = $subscriber_dao->getSubscribersInstalled($count=25);
+    echo "<br><br>Uninstalled ".$total_uninstalled." members";
 }
 
-echo "<br><br>Uninstallation complete.";
