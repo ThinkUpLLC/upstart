@@ -7,10 +7,14 @@ class Dispatcher {
         $result = self::getURLContents($api_call, $cfg->getValue('dispatch_http_username'),
         $cfg->getValue('dispatch_http_passwd'));
         //print_r($result);
-        $result_decoded = JSONDecoder::decode($result);
+        try {
+            $result_decoded = JSONDecoder::decode($result);
+        } catch (JSONDecoderException $e) {
+            throw new DispatchException("Error dispatching crawl job. Dispatch response: ". $result);
+        }
         //print_r($result_decoded);
         if (!isset($result_decoded->success)) {
-            throw new Exception("Error dispatching crawl job. Dispatch response: ". $result);
+            throw new DispatchException("Error dispatching crawl job. Dispatch response: ". $result);
         }
         return $result_decoded;
     }

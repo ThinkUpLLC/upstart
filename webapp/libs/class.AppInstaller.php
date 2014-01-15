@@ -110,7 +110,11 @@ class AppInstaller {
                     $subscriber_dao->intializeInstallation($subscriber_id, $subscriber->api_key_private,
                     $commit_hash);
                     self::logToUserMessage("Updated waitlist with link and db name");
-                    self::dispatchCrawlJob($subscriber->thinkup_username);
+                    try {
+                        self::dispatchCrawlJob($subscriber->thinkup_username);
+                    } catch (DispatchException $e) {
+                        self::logToUserMessage('Crawl job not dispatched due to malformed JSON.');
+                    }
                     $subscriber_dao->updateLastDispatchedTime($subscriber_id);
                     $install_log_dao->insertLogEntry($subscriber_id, $commit_hash, 1, "Installed");
 
@@ -360,16 +364,19 @@ class AppInstaller {
 
     protected function setUpServiceUser($owner_id, $subscriber) {
         $tu_tables_dao = new ThinkUpTablesMySQLDAO();
-        //insert Twitter or Facebook user into instances
-        $network_user_name = ($subscriber->network=='twitter')?$subscriber->network_user_name:$subscriber->full_name;
-        $instance_id = $tu_tables_dao->insertInstance($subscriber->network_user_id, $network_user_name,
-            $subscriber->network, $subscriber->network_user_id);
+        if ($subscriber->network_user_id != null) {
+            //insert Twitter or Facebook user into instances
+            $network_user_name =($subscriber->network=='twitter')?$subscriber->network_user_name:$subscriber->full_name;
+            $instance_id = $tu_tables_dao->insertInstance($subscriber->network_user_id, $network_user_name,
+                $subscriber->network, $subscriber->network_user_id);
 
-        //associate owner with Twitter user in owner_instances and add auth tokens
-        $tu_tables_dao->insertOwnerInstance($owner_id, $instance_id, $subscriber->oauth_access_token,
-        $subscriber->oauth_access_token_secret);
+            //associate owner with Twitter user in owner_instances and add auth tokens
+            $tu_tables_dao->insertOwnerInstance($owner_id, $instance_id, $subscriber->oauth_access_token,
+            $subscriber->oauth_access_token_secret);
 
-        self::logToUserMessage("Inserted Twitter account and associate with ".$subscriber->email."");
+            self::logToUserMessage("Inserted ".$subscriber->network." account and associated with ".
+                $subscriber->email."");
+        }
 
         // Add Twitter consumer key/secret info to options
         $cfg = Config::getInstance();
