@@ -53,7 +53,7 @@ class AppInstaller {
         'facebook_max_crawl_time',
         'dispatch_timezone',
         'db_host',
-        'dispatch_socket',
+        //'dispatch_socket',
         //'db_port',
         'db_name',
         'admin_session_api_key',
