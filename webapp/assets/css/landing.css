@@ -293,7 +293,7 @@ body {
 }
 #section-matters {
   background-image: url(../img/friends-online.png);
-  background-position-y: 70px;
+  background-position: center 80px;
 }
 #section-community {
   background-image: url(../img/crowd.png);
@@ -529,11 +529,11 @@ body {
     clear: both;
   }
   #section-doesnt ul {
-    width: 45%;
+    width: 48%;
     float: left;
   }
   #section-doesnt ul:first-of-type {
-    margin-right: 5%;
+    margin-right: 2%;
     width: 50%;
   }
 }
@@ -559,6 +559,9 @@ body {
     float: left;
     width: 48%;
     margin-top: 27px;
+  }
+  #section-signup-bottom .section-header br {
+    display: none;
   }
   #section-signup-bottom .action-links {
     float: right;
@@ -659,14 +662,14 @@ body {
   #section-devices br {
     display: block;
   }
+  #section-matters {
+    background-position: center 120px;
+  }
   #section-meaning {
     background-position: center 125px;
   }
   #section-goals {
     background-position: 46px 100px;
-  }
-  #section-matters {
-    background-position-y: 90px;
   }
   #section-meaning {
     height: 300px;

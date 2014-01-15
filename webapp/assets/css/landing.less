@@ -96,10 +96,11 @@ body {
 #section-companies { .section-color(#5B76C1); }
 #section-meaning   { .section-color(#D58E19); }
 #section-different { .section-color(#B97CC6); }
-#section-doesnt    { .section-color(#D77F6A); }
+#section-doesnt    { .section-color(#5fac1c); }
 
 #section-header {
   position: relative;
+  background: none;
 
   .logo {
     position: absolute;
@@ -254,6 +255,7 @@ body {
 
 #section-devices {
   background-image: url(../img/devices.png);
+  br {display: none; }
 }
 
 #section-goals {
@@ -264,7 +266,7 @@ body {
 
 #section-matters {
   background-image: url(../img/friends-online.png);
-  background-position-y: 70px;
+  background-position: center 80px;
 }
 
 #section-community {
@@ -504,11 +506,11 @@ body {
     .clearfix;
 
     ul {
-      width: 45%;
+      width: 48%;
       float: left;
 
       &:first-of-type {
-        margin-right: 5%;
+        margin-right: 2%;
         width: 50%;
       }
     }
@@ -527,7 +529,7 @@ body {
 
     .section-header {
       float: left;
-      width: 45%;
+      width: 48%;
       margin-top: 27px;
 
       br {
@@ -537,7 +539,7 @@ body {
 
     .action-links {
       float: right;
-      width: 50%;
+      width: 48%;
     }
 
     .newsletter-signup-form {
@@ -646,18 +648,24 @@ body {
   }
 
   #section-devices {
-    background-position: 35px 130px;
+    background-position: 35px 120px;
+
+    br { display: block; }
+  }
+
+  #section-matters {
+    background-position: center 120px;
+  }
+
+  #section-meaning {
+    background-position: center 125px;
   }
 
   #section-goals {
     background-position: 46px 100px;
   }
 
-  #section-matters {
-    background-position-y: 90px;
-  }
-
-  #section-different, #section-meaning {
+  #section-meaning {
     height: @section-height-fixed;
   }
 
@@ -684,6 +692,14 @@ body {
       }
     }
   }
+
+  #section-different, #section-doesnt {
+    height: 250px;
+
+    .headshots {
+      display: none;
+    }
+  }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
@@ -699,7 +715,7 @@ body {
 
   #section-devices {
     background-image: url(../img/devices@2x.png);
-    background-size: 258px 93px;
+    background-size: 270px 100px;
   }
 
   #section-matters {
@@ -719,7 +735,7 @@ body {
 
   #section-meaning {
     background-image: url(../img/photos-illustration@2x.png);
-    background-size: 177px 134px;
+    background-size: 204px 120px;
   }
 
 }
@@ -732,14 +748,4 @@ body {
       background-image: url(../img/hand-smartphone@2x.png);
     }
   }
-}
-@text-color: #000;
-@tablet-gothic-condensed: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
-@tablet-gothic: "tablet-gothic", helvetica, arial, sans-serif;
-
-body {
-  -webkit-font-smoothing: subpixel-antialiased;
-  color: @text-color;
-  font-size: 16px;
-  font-family: @tablet-gothic-condensed;
 }

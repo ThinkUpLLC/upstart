@@ -428,6 +428,16 @@ body.account .footer .footer-container a {
 body.account .footer .footer-container .follow-wrapper .follow-links li a {
   color: #2785d3;
 }
+body.error-page .container header h1 {
+  font-size: 180px;
+  line-height: 1;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+body.error-page .container header h1,
+body.error-page .container header h2 {
+  color: #2785d3;
+}
 .fa-override-before:before {
   font-family: FontAwesome;
   font-weight: normal;

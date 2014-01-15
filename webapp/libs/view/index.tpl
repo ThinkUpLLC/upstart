@@ -139,7 +139,7 @@ body_classes="landing" body_id="landing-home"}
     </section>
 
     <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-copyright">
-      <h3 class="section-header">&copy;2014 ThinkUp LLC. Made in New York City. <a href="help@thinkup.com">Contact us.</a> It is nice to be nice.</h3>
+      <h3 class="section-header">&copy;2014 ThinkUp LLC. Made in New York City. <a href="mailto:help@thinkup.com">Contact us.</a> It is nice to be nice.</h3>
     </section>
 
   </div>
