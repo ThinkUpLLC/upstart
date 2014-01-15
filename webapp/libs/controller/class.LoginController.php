@@ -104,14 +104,8 @@ class LoginController extends UpstartController {
                         $this->addToView('logged_in_user', $logged_in_user);
                         $subscriber = $subscriber_dao->getByEmail($logged_in_user);
 
-                        // Temporary tester whitelists
-                        // @TODO Delete this on launch
-                        $redirect_whitelist = array('ginatrapani', 'anildash', 'capndesign', 'ftrain');
                         if (isset($subscriber->thinkup_username) && isset($subscriber->date_installed)
-                            && $subscriber->is_installation_active
-                            // Temporarily enable redirect for whitelist
-                            // @TODO Delete this on launch
-                            && in_array($subscriber->thinkup_username, $redirect_whitelist)) {
+                            && $subscriber->is_installation_active ) {
                             $config = Config::getInstance();
                             $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
                             $config->getValue('user_installation_url'));
