@@ -41,7 +41,33 @@ class AppInstaller {
      */
     var $results_message = "";
 
+    var $required_config_values = array(
+        'app_source_path',
+        'master_app_source_path',
+        'chameleon_app_source_path',
+        'data_path',
+        'admin_email',
+        'admin_email',
+        'admin_password',
+        'user_installation_url',
+        'facebook_max_crawl_time',
+        'dispatch_timezone',
+        'db_host',
+        'dispatch_socket',
+        //'db_port',
+        'db_name',
+        'admin_session_api_key',
+        'oauth_consumer_key',
+        'oauth_consumer_secret',
+        'facebook_app_id',
+        'facebook_api_secret',
+        'facebook_max_crawl_time',
+        'mandrill_notifications_template',
+        'expandurls_links_to_expand_per_crawl',
+    );
+
     public function __construct() {
+        self::checkRequiredConfigValues();
         $cfg = Config::getInstance();
         // @TODO Verify all the directories exist, throw an Exception if not
         $this->app_source_path = $cfg->getValue('app_source_path');
@@ -53,6 +79,16 @@ class AppInstaller {
         $this->admin_password = $cfg->getValue('admin_password');
         // @TODO Verify this string includes {user} in it and is URLish
         $this->user_installation_url = $cfg->getValue('user_installation_url');
+    }
+
+    private function checkRequiredConfigValues() {
+        $cfg = Config::getInstance();
+        foreach ($this->required_config_values as $req_value) {
+            $value = $cfg->getValue($req_value);
+            if ($value == null) {
+                throw new InstallerMissingConfigValueException('Required value '.$req_value. ' is not set.');
+            }
+        }
     }
 
     public function install($subscriber_id) {
@@ -388,13 +424,21 @@ class AppInstaller {
         // Add Facebook API keys to options
         $facebook_app_id = $cfg->getValue('facebook_app_id');
         $facebook_api_secret = $cfg->getValue('facebook_api_secret');
+        $facebook_max_crawl_time = $cfg->getValue('facebook_max_crawl_time');
         $tu_tables_dao->insertOptionValue('plugin_options-2', 'facebook_app_id', $facebook_app_id);
         $tu_tables_dao->insertOptionValue('plugin_options-2', 'facebook_api_secret', $facebook_api_secret);
+        // Add Facebook crawl time cap to options
+        $tu_tables_dao->insertOptionValue('plugin_options-2', 'max_crawl_time', $facebook_max_crawl_time);
 
         // Add Mandrill template name to options
         $mandrill_notifications_template = $cfg->getValue('mandrill_notifications_template');
         $tu_tables_dao->insertOptionValue('plugin_options-6', 'mandrill_template',
         $mandrill_notifications_template);
+
+        // Add Expand URLs cap to options
+        $links_to_expand_per_crawl = $cfg->getValue('expandurls_links_to_expand_per_crawl');
+        $tu_tables_dao->insertOptionValue('plugin_options-5', 'links_to_expand',
+        $links_to_expand_per_crawl);
     }
 
     protected function dispatchCrawlJob($thinkup_username) {

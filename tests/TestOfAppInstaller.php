@@ -133,27 +133,33 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertFalse($subscriber->is_installation_active);
     }
 
-    public function testInstallTwitterAuth() {
+    public function testInstallNoServiceUserAuth() {
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'me@example.com',
-        'thinkup_username'=>$this->thinkup_username, 'date_installed'=> null, 'timezone'=>'UTC', 'network'=>'twitter',
-        'network_user_name'=>'TheFakeTweeter', 'network_user_id'=>'abcdefg101'));
+        'thinkup_username'=>$this->thinkup_username, 'date_installed'=> null, 'timezone'=>'UTC', 'network'=>null,
+        'network_user_name'=>'', 'network_user_id'=>null));
 
         $config = Config::getInstance();
         $config->setValue('user_installation_url', 'http://www.example.com/thinkup/{user}/');
         $app_installer = new AppInstaller();
         $install_results = $app_installer->install(6);
         $this->debug($install_results);
-        // @TODO add assertions
 
         // Assert Upstart user pass and salt match ThinkUp owner pass and salt
-        $stmt = PDODAO::$PDO->query('SELECT pwd, pwd_salt, api_key_private, timezone, membership_level '.
-            'FROM thinkupstart_'. $this->thinkup_username . '.tu_owners WHERE email = "me@example.com"');
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $thinkup_owner_pass = $row['pwd'];
-        $thinkup_owner_pass_salt = $row['pwd_salt'];
-        $thinkup_owner_membership_level = $row['membership_level'];
-        $thinkup_owner_timezone = $row['timezone'];
+        $stmt = PDODAO::$PDO->query('SELECT * FROM thinkupstart_'. $this->thinkup_username . '.tu_owners');
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        // Assert admin owner details are set
+        $this->assertEqual($rows[0]['email'],'admin@thinkup.com');
+        $this->assertEqual($rows[0]['is_admin'], 1);
+        $this->assertEqual($rows[0]['api_key_private'], $config->getValue('admin_session_api_key'));
+
+        // Assert user owner details are set
+        $thinkup_owner_pass = $rows[1]['pwd'];
+        $thinkup_owner_pass_salt = $rows[1]['pwd_salt'];
+        $thinkup_owner_membership_level = $rows[1]['membership_level'];
+        $thinkup_owner_timezone = $rows[1]['timezone'];
+
+        // Assert owner details matches subscriber details
         $subscriber_dao = new SubscriberMySQLDAO();
         $subscriber = $subscriber_dao->getByEmail('me@example.com');
 
@@ -165,13 +171,154 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertEqual($subscriber->membership_level, $thinkup_owner_membership_level);
 
         // Assert Upstart api_key_private = ThinkUp's owner api_key_private
-        $thinkup_owner_api_key_private = $row['api_key_private'];
+        $thinkup_owner_api_key_private = $rows[1]['api_key_private'];
         $this->assertEqual($subscriber->api_key_private, $thinkup_owner_api_key_private);
 
+        $rows = null;
+
+        // Assert application and plugin options are set
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
+            '.tu_options o');
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Assert ThinkUp application database_version option is correct/up-to-date
+        $this->assertEqual($rows[0]['namespace'], 'application_options');
+        $this->assertEqual($rows[0]['option_name'], 'database_version');
+        $this->assertEqual($rows[0]['option_value'], '2.0-beta.10');
+
         // Assert ThinkUp application option server name is correct
-        // Assert ThinkUp plugin option Facebook & Twitter API keys and Mandrill template is set
-        // Assert ThinkUp database_version option is correct/up-to-date
-        // Assert admin private API key is set
+        $this->assertEqual($rows[1]['namespace'], 'application_options');
+        $this->assertEqual($rows[1]['option_name'], 'server_name');
+        $this->assertEqual($rows[1]['option_value'], 'www.example.com');
+
+        // Assert Twitter API keys are set
+        $this->assertEqual($rows[2]['namespace'], 'plugin_options-1');
+        $this->assertEqual($rows[2]['option_name'], 'oauth_consumer_key');
+        $this->assertEqual($rows[2]['option_value'], $config->getValue('oauth_consumer_key'));
+
+        $this->assertEqual($rows[3]['namespace'], 'plugin_options-1');
+        $this->assertEqual($rows[3]['option_name'], 'oauth_consumer_secret');
+        $this->assertEqual($rows[3]['option_value'], $config->getValue('oauth_consumer_secret'));
+
+        // Facebook options
+        $this->assertEqual($rows[4]['namespace'], 'plugin_options-2');
+        $this->assertEqual($rows[4]['option_name'], 'facebook_app_id');
+        $this->assertEqual($rows[4]['option_value'], $config->getValue('facebook_app_id'));
+
+        $this->assertEqual($rows[5]['namespace'], 'plugin_options-2');
+        $this->assertEqual($rows[5]['option_name'], 'facebook_api_secret');
+        $this->assertEqual($rows[5]['option_value'], $config->getValue('facebook_api_secret'));
+
+        $this->assertEqual($rows[6]['namespace'], 'plugin_options-2');
+        $this->assertEqual($rows[6]['option_name'], 'max_crawl_time');
+        $this->assertEqual($rows[6]['option_value'], $config->getValue('facebook_max_crawl_time'));
+
+        // Mandrill template option
+        $this->assertEqual($rows[7]['namespace'], 'plugin_options-6');
+        $this->assertEqual($rows[7]['option_name'], 'mandrill_template');
+        $this->assertEqual($rows[7]['option_value'], $config->getValue('mandrill_notifications_template'));
+
+        // Expand URLs option is set
+        $this->assertEqual($rows[8]['namespace'], 'plugin_options-5');
+        $this->assertEqual($rows[8]['option_name'], 'links_to_expand');
+        $this->assertEqual($rows[8]['option_value'], $config->getValue('expandurls_links_to_expand_per_crawl'));
+
+        // Assert no owner instances are set because there's no service user connection
+        $stmt = PDODAO::$PDO->query('SELECT i.* FROM thinkupstart_'. $this->thinkup_username .
+            '.tu_instances i INNER JOIN thinkupstart_'. $this->thinkup_username . '.tu_owner_instances oi '.
+            'ON i.id = oi.instance_id INNER JOIN thinkupstart_'. $this->thinkup_username . '.tu_owners o '.
+            'WHERE o.email = "me@example.com"');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertFalse($row);
+    }
+
+    public function testInstallTwitterAuth() {
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'me@example.com',
+        'thinkup_username'=>$this->thinkup_username, 'date_installed'=> null, 'timezone'=>'UTC', 'network'=>'twitter',
+        'network_user_name'=>'TheFakeTweeter', 'network_user_id'=>'abcdefg101'));
+
+        $config = Config::getInstance();
+        $config->setValue('user_installation_url', 'http://www.example.com/thinkup/{user}/');
+        $app_installer = new AppInstaller();
+        $install_results = $app_installer->install(6);
+        $this->debug($install_results);
+
+        // Assert Upstart user pass and salt match ThinkUp owner pass and salt
+        $stmt = PDODAO::$PDO->query('SELECT * FROM thinkupstart_'. $this->thinkup_username . '.tu_owners');
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Assert admin owner details are set
+        $this->assertEqual($rows[0]['email'],'admin@thinkup.com');
+        $this->assertEqual($rows[0]['is_admin'], 1);
+        $this->assertEqual($rows[0]['api_key_private'], $config->getValue('admin_session_api_key'));
+
+        // Assert user owner details are set
+        $thinkup_owner_pass = $rows[1]['pwd'];
+        $thinkup_owner_pass_salt = $rows[1]['pwd_salt'];
+        $thinkup_owner_membership_level = $rows[1]['membership_level'];
+        $thinkup_owner_timezone = $rows[1]['timezone'];
+
+        // Assert owner details matches subscriber details
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber = $subscriber_dao->getByEmail('me@example.com');
+
+        $this->assertEqual($subscriber->pwd, $thinkup_owner_pass);
+        $this->assertEqual($subscriber->pwd_salt, $thinkup_owner_pass_salt);
+        $this->assertEqual($subscriber->is_installation_active, 1);
+        $this->assertNotNull($subscriber->date_installed);
+        $this->assertEqual($subscriber->timezone, $thinkup_owner_timezone);
+        $this->assertEqual($subscriber->membership_level, $thinkup_owner_membership_level);
+
+        // Assert Upstart api_key_private = ThinkUp's owner api_key_private
+        $thinkup_owner_api_key_private = $rows[1]['api_key_private'];
+        $this->assertEqual($subscriber->api_key_private, $thinkup_owner_api_key_private);
+
+        $rows = null;
+
+        // Assert application and plugin options are set
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
+            '.tu_options o');
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Assert ThinkUp application database_version option is correct/up-to-date
+        $this->assertEqual($rows[0]['namespace'], 'application_options');
+        $this->assertEqual($rows[0]['option_name'], 'database_version');
+        $this->assertEqual($rows[0]['option_value'], '2.0-beta.10');
+
+        // Assert ThinkUp application option server name is correct
+        $this->assertEqual($rows[1]['namespace'], 'application_options');
+        $this->assertEqual($rows[1]['option_name'], 'server_name');
+        $this->assertEqual($rows[1]['option_value'], 'www.example.com');
+
+        // Assert Twitter API keys are set
+        $this->assertEqual($rows[2]['namespace'], 'plugin_options-1');
+        $this->assertEqual($rows[2]['option_name'], 'oauth_consumer_key');
+        $this->assertEqual($rows[2]['option_value'], $config->getValue('oauth_consumer_key'));
+
+        $this->assertEqual($rows[3]['namespace'], 'plugin_options-1');
+        $this->assertEqual($rows[3]['option_name'], 'oauth_consumer_secret');
+        $this->assertEqual($rows[3]['option_value'], $config->getValue('oauth_consumer_secret'));
+
+        // Facebook options
+        $this->assertEqual($rows[4]['namespace'], 'plugin_options-2');
+        $this->assertEqual($rows[4]['option_name'], 'facebook_app_id');
+        $this->assertEqual($rows[4]['option_value'], $config->getValue('facebook_app_id'));
+
+        $this->assertEqual($rows[5]['namespace'], 'plugin_options-2');
+        $this->assertEqual($rows[5]['option_name'], 'facebook_api_secret');
+        $this->assertEqual($rows[5]['option_value'], $config->getValue('facebook_api_secret'));
+
+        $this->assertEqual($rows[6]['namespace'], 'plugin_options-2');
+        $this->assertEqual($rows[6]['option_name'], 'max_crawl_time');
+        $this->assertEqual($rows[6]['option_value'], $config->getValue('facebook_max_crawl_time'));
+
+        // Mandrill template option
+        $this->assertEqual($rows[7]['namespace'], 'plugin_options-6');
+        $this->assertEqual($rows[7]['option_name'], 'mandrill_template');
+        $this->assertEqual($rows[7]['option_value'], $config->getValue('mandrill_notifications_template'));
+
+        // Expand URLs option is set
+        $this->assertEqual($rows[8]['namespace'], 'plugin_options-5');
+        $this->assertEqual($rows[8]['option_name'], 'links_to_expand');
+        $this->assertEqual($rows[8]['option_value'], $config->getValue('expandurls_links_to_expand_per_crawl'));
 
         $stmt = PDODAO::$PDO->query('SELECT i.* FROM thinkupstart_'. $this->thinkup_username .
             '.tu_instances i INNER JOIN thinkupstart_'. $this->thinkup_username . '.tu_owner_instances oi '.
@@ -199,17 +346,23 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $app_installer = new AppInstaller();
         $install_results = $app_installer->install(6);
         $this->debug($install_results);
-        // @TODO add assertions
 
         // Assert Upstart user pass and salt match ThinkUp owner pass and salt
-        $stmt = PDODAO::$PDO->query('SELECT pwd, pwd_salt, api_key_private, timezone, membership_level '.
-            'FROM thinkupstart_'. $this->thinkup_username . '.tu_owners WHERE email = "me@example.com"');
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $thinkup_owner_pass = $row['pwd'];
-        $thinkup_owner_pass_salt = $row['pwd_salt'];
-        $thinkup_owner_membership_level = $row['membership_level'];
-        $thinkup_owner_timezone = $row['timezone'];
+        $stmt = PDODAO::$PDO->query('SELECT * FROM thinkupstart_'. $this->thinkup_username . '.tu_owners');
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        // Assert admin owner details are set
+        $this->assertEqual($rows[0]['email'],'admin@thinkup.com');
+        $this->assertEqual($rows[0]['is_admin'], 1);
+        $this->assertEqual($rows[0]['api_key_private'], $config->getValue('admin_session_api_key'));
+
+        // Assert user owner details are set
+        $thinkup_owner_pass = $rows[1]['pwd'];
+        $thinkup_owner_pass_salt = $rows[1]['pwd_salt'];
+        $thinkup_owner_membership_level = $rows[1]['membership_level'];
+        $thinkup_owner_timezone = $rows[1]['timezone'];
+
+        // Assert owner details matches subscriber details
         $subscriber_dao = new SubscriberMySQLDAO();
         $subscriber = $subscriber_dao->getByEmail('me@example.com');
 
@@ -221,13 +374,56 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertEqual($subscriber->membership_level, $thinkup_owner_membership_level);
 
         // Assert Upstart api_key_private = ThinkUp's owner api_key_private
-        $thinkup_owner_api_key_private = $row['api_key_private'];
+        $thinkup_owner_api_key_private = $rows[1]['api_key_private'];
         $this->assertEqual($subscriber->api_key_private, $thinkup_owner_api_key_private);
 
+        $rows = null;
+
+        // Assert application and plugin options are set
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
+            '.tu_options o');
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Assert ThinkUp application database_version option is correct/up-to-date
+        $this->assertEqual($rows[0]['namespace'], 'application_options');
+        $this->assertEqual($rows[0]['option_name'], 'database_version');
+        $this->assertEqual($rows[0]['option_value'], '2.0-beta.10');
+
         // Assert ThinkUp application option server name is correct
-        // Assert ThinkUp plugin option Facebook & Twitter API keys and Mandrill template is set
-        // Assert ThinkUp database_version option is correct/up-to-date
-        // Assert admin private API key is set
+        $this->assertEqual($rows[1]['namespace'], 'application_options');
+        $this->assertEqual($rows[1]['option_name'], 'server_name');
+        $this->assertEqual($rows[1]['option_value'], 'www.example.com');
+
+        // Assert Twitter API keys are set
+        $this->assertEqual($rows[2]['namespace'], 'plugin_options-1');
+        $this->assertEqual($rows[2]['option_name'], 'oauth_consumer_key');
+        $this->assertEqual($rows[2]['option_value'], $config->getValue('oauth_consumer_key'));
+
+        $this->assertEqual($rows[3]['namespace'], 'plugin_options-1');
+        $this->assertEqual($rows[3]['option_name'], 'oauth_consumer_secret');
+        $this->assertEqual($rows[3]['option_value'], $config->getValue('oauth_consumer_secret'));
+
+        // Facebook options
+        $this->assertEqual($rows[4]['namespace'], 'plugin_options-2');
+        $this->assertEqual($rows[4]['option_name'], 'facebook_app_id');
+        $this->assertEqual($rows[4]['option_value'], $config->getValue('facebook_app_id'));
+
+        $this->assertEqual($rows[5]['namespace'], 'plugin_options-2');
+        $this->assertEqual($rows[5]['option_name'], 'facebook_api_secret');
+        $this->assertEqual($rows[5]['option_value'], $config->getValue('facebook_api_secret'));
+
+        $this->assertEqual($rows[6]['namespace'], 'plugin_options-2');
+        $this->assertEqual($rows[6]['option_name'], 'max_crawl_time');
+        $this->assertEqual($rows[6]['option_value'], $config->getValue('facebook_max_crawl_time'));
+
+        // Mandrill template option
+        $this->assertEqual($rows[7]['namespace'], 'plugin_options-6');
+        $this->assertEqual($rows[7]['option_name'], 'mandrill_template');
+        $this->assertEqual($rows[7]['option_value'], $config->getValue('mandrill_notifications_template'));
+
+        // Expand URLs option is set
+        $this->assertEqual($rows[8]['namespace'], 'plugin_options-5');
+        $this->assertEqual($rows[8]['option_name'], 'links_to_expand');
+        $this->assertEqual($rows[8]['option_value'], $config->getValue('expandurls_links_to_expand_per_crawl'));
 
         $stmt = PDODAO::$PDO->query('SELECT i.* FROM thinkupstart_'. $this->thinkup_username .
             '.tu_instances i INNER JOIN thinkupstart_'. $this->thinkup_username . '.tu_owner_instances oi '.
