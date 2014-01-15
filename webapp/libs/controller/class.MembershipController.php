@@ -4,6 +4,7 @@ class MembershipController extends AuthController {
     public function authControl() {
         $this->setPageTitle('Membership Info');
         $this->setViewTemplate('user.membership.tpl');
+        $this->disableCaching();
 
         $logged_in_user = Session::getLoggedInUser();
         $this->addToView('logged_in_user', $logged_in_user);
