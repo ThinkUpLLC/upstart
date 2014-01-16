@@ -116,7 +116,7 @@ body_classes="landing" body_id="landing-home"}
           <header>Read <a href="http://blog.thinkup.com/" class="fa-override-before fa-tumblr-square">ThinkUp Blog</a></header>
         </li>
         <li class="social-item sm-no-border" id="social-item-github">
-          <header>Fork <a href="https://github.com/ThinkUpLLC/upstart/" class="fa-override-before fa-github-square">ThinkUp Code</a></header>
+          <header>Fork <a href="https://github.com/ginatrapani/ThinkUp" class="fa-override-before fa-github-square">ThinkUp Code</a></header>
         </li>
         <li class="social-item sm-border-top" id="social-item-facebook">
           <header>Like <a href="https://www.facebook.com/thinkupapp">Facebook</a></header>
