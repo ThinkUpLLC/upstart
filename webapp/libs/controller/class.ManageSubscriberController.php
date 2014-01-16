@@ -65,7 +65,9 @@ class ManageSubscriberController extends Controller {
                         }
                     } elseif ($_GET['action'] == 'charge') {
                         if (isset($_GET['token_id']) && isset($_GET['amount'])) {
-                            $ok = self::invokeAmazonPayAction($subscriber_id, $_GET['token_id'], $_GET['amount']);
+                            $fps_api_accessor = new AmazonFPSAPIAccessor();
+                            $ok = $fps_api_accessor->invokeAmazonPayAction($subscriber_id, $_GET['token_id'],
+                            $_GET['amount']);
                             if ($ok) {
                                 $this->addSuccessMessage("Payment successful!");
                             } else {
@@ -148,66 +150,5 @@ class ManageSubscriberController extends Controller {
             $username .= substr($unique, strlen($unique)-4, strlen($unique));
         }
         return $username;
-    }
-
-    /**
-     * Charge user, record transaction, and report success or error back.
-     * @param str $token_id
-     * @param int $amount
-     * @return bool Did the payment succeed?
-     */
-    private function invokeAmazonPayAction($subscriber_id, $token_id, $amount) {
-        $cfg = Config::getInstance();
-        $AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
-        $AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
-
-        $service = new Amazon_FPS_Client($AWS_ACCESS_KEY_ID, $AWS_SECRET_ACCESS_KEY);
-
-        $caller_reference = $subscriber_id.'_'.time();
-        $payment_dao = new PaymentMySQLDAO();
-        $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
-        try {
-            $params = array();
-            $amount_params = array('Value'=>$amount, 'CurrencyCode'=>'USD');
-            //REQUIRED PARAMS:
-            $params['CallerReference'] = $caller_reference;
-            $params['SenderTokenId'] = $token_id;
-            $params['TransactionAmount'] = $amount_params;
-
-            $request_object = new Amazon_FPS_Model_PayRequest($params);
-            $response = $service->pay($request_object);
-
-
-            $request_id = null;
-            if ($response->isSetResponseMetadata()) {
-                $responseMetadata = $response->getResponseMetadata();
-                $request_id = $responseMetadata->getRequestId();
-            }
-            if ($response->isSetPayResult()) {
-                $payResult = $response->getPayResult();
-                $transaction_id = $payResult->getTransactionId();
-                $status = $payResult->getTransactionStatus();
-                $payment_id = $payment_dao->insert($transaction_id, $request_id, $status, $amount, $caller_reference);
-                if ($payment_id) {
-                    $subscriber_payment_dao->insert($subscriber_id, $payment_id);
-                    return true;
-                }
-               $message = "Unable to store payment\n".$response->getXML();
-               $payment_id = $payment_dao->insert(0, $request_id, '', 0, $caller_reference, $message);
-               return false;
-            }
-
-            $message = "PayResult not returned\n".$response->getXML();
-            $payment_id = $payment_dao->insert(0, $request_id, '', 0, $caller_reference, $message);
-            return false;
-        } catch (Amazon_FPS_Exception $ex) {
-            $request_id = $ex->getRequestId();
-            $message = $ex->getMessage() ."\n" . $ex->getXML();
-            $payment_id = $payment_dao->insert(0, $request_id, '', 0, $caller_reference, $message);
-            if ($payment_id) {
-                $subscriber_payment_dao->insert($subscriber_id, $payment_id);
-            }
-        }
-        return false;
     }
 }
