@@ -16,12 +16,13 @@ body_classes="settings menu-open" body_id="settings-subscription"}
           <div class="list-group-item-value">{$subscriber->membership_level}</div>
         </li>
         <li class="list-group-item">
-          <div class="list-group-item-label">Paid through:</div>
-          <div class="list-group-item-value">{$subscription_end_date|date_format:"F jS, Y"}</div>
+          <div class="list-group-item-label">Member since:</div>
+          <div class="list-group-item-value">{$subscription_date|date_format:"F jS, Y"}</div>
         </li>
       </ul>
 
       <p class="form-note">Issues with your membership?<br>
+      <a href="//payments.amazon.com">View your payment information</a><br>
       <a href="mailto:help@thinkup.com" class="show-section btn btn-default" {* data-section-selector="#form-membership-contact" *}>Contact us</a></p>
 
       <form role="form" class="form-horizontal" id="form-membership-contact">
