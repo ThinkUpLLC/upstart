@@ -105,6 +105,10 @@ class ManageSubscriberController extends Controller {
                 $install_log_dao = new InstallLogMySQLDAO();
                 $install_log_entries = $install_log_dao->getLogEntriesBySubscriber($subscriber_id);
                 $this->addToView('install_log_entries', $install_log_entries);
+
+                $cfg = Config::getInstance();
+                $is_in_sandbox = $cfg->getValue('amazon_sandbox');
+                $this->addToView('is_in_sandbox', $is_in_sandbox);
             } else {
                 $this->addErrorMessage("Subscriber does not exist.");
             }

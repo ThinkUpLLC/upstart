@@ -639,4 +639,41 @@ class SubscriberMySQLDAO extends PDODAO {
         $ps = $this->execute($q, $vars);
         return $this->getDataIsReturned($ps);
     }
+
+    /**
+     * Get subscribers who have have never paid.
+     * @TODO: Make this work for second payments (a year from now)
+     * @param  int $count Default to 10
+     * @return bool  Whether or not it is in use
+     */
+    public function getSubscribersToCharge($count=10) {
+        $q = "SELECT s.id, s.email, a.token_id, a.amount, p.request_id FROM subscribers s ";
+        $q .= "INNER JOIN subscriber_authorizations sa ON sa.subscriber_id = s.id ";
+        $q .= "INNER JOIN authorizations a ON sa.authorization_id = a.id ";
+        $q .= "LEFT JOIN subscriber_payments sp ON sp.subscriber_id = s.id ";
+        $q .= "LEFT JOIN payments p ON p.id = sp.payment_id ";
+        $q .= "WHERE request_id IS NULL ";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+        return $this->getDataRowsAsArrays($ps);
+    }
+
+    /**
+     * Get total subscribers who have have never paid.
+     * @TODO: Make this work for second payments (a year from now)
+     * @return int  Number of subscribers to charge
+     */
+    public function getTotalSubscribersToCharge() {
+        $q = "SELECT count(s.id) as total FROM subscribers s ";
+        $q .= "INNER JOIN subscriber_authorizations sa ON sa.subscriber_id = s.id ";
+        $q .= "INNER JOIN authorizations a ON sa.authorization_id = a.id ";
+        $q .= "LEFT JOIN subscriber_payments sp ON sp.subscriber_id = s.id ";
+        $q .= "LEFT JOIN payments p ON p.id = sp.payment_id ";
+        $q .= "WHERE request_id IS NULL ";
+        //echo self::mergeSQLVars($q, $vars);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        $result = $this->getDataRowAsArray($ps);
+        return $result['total'];
+    }
 }

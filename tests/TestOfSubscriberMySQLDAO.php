@@ -297,4 +297,20 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $subscriber = $dao->getByEmail('ginatrapani@example.com');
         $this->assertEqual($subscriber->date_installed, null);
     }
+
+    public function testGetSubscribersToCharge() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique1', 'date_installed'=>null));
+
+        $builders[] = FixtureBuilder::build('authorizations', array('id'=>1));
+
+        $builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>1,
+            'authorization_id'=>1));
+
+        $dao = new SubscriberMySQLDAO();
+        $results = $dao->getSubscribersToCharge();
+        $this->assertEqual(sizeof($results), 1);
+    }
 }

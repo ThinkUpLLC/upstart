@@ -83,7 +83,7 @@
           {if $payment.transaction_status}
             <td>{$payment.transaction_status}</td>
             <td>${$payment.amount}</td>
-            <td>{$payment.transaction_id}</td>
+            <td><a href="https://payments{if $is_in_sandbox}-sandbox{/if}.amazon.com/sdui/sdui/txndetail?transactionId={$payment.transaction_id}" target="_new">{$payment.transaction_id}</a></td>
           {else}
             <td class="text-danger">ERROR</td>
             <td>${$payment.amount}</td>
