@@ -17,7 +17,7 @@ body_classes="landing" body_id="landing-home"}
           <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email">
           <button type="submit" value="Subscribe" name="subscribe" class="btn-submit"><i class="fa fa-envelope-o"></i></button>
         </form>
-        <div class="login-link">Pre-launch member? <a href="user/">Log in here</a></div>
+        <div class="login-link">Beta member? <a href="user/">Log in here</a></div>
       </div>
 
 {*
@@ -89,14 +89,14 @@ body_classes="landing" body_id="landing-home"}
 
     <section class="section col-md-2 col-lg-3 row-1 col-lg-right section-signup" id="section-signup-bottom">
 
-      <h3 class="section-header">Get on the list. We'll have your spot ready soon.</h3>
+      <h3 class="section-header">Get on the list. We'll have a spot for you soon.</h3>
 
       <div class="action-links">
         <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">
           <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email">
           <button type="submit" value="Subscribe" name="subscribe" class="btn-submit"><i class="fa fa-envelope-o"></i></button>
         </form>
-        <div class="login-link">Pre-launch member? <a href="{$site_root_path}join/user/">Log in here</a></div>
+        <div class="login-link">Beta member? <a href="{$site_root_path}join/user/">Log in here</a></div>
       </div>
 
 {*
@@ -139,7 +139,7 @@ body_classes="landing" body_id="landing-home"}
     </section>
 
     <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-copyright">
-      <h3 class="section-header">&copy;2014 ThinkUp LLC. Made in New York City. <a href="mailto:help@thinkup.com">Contact us.</a> It is nice to be nice.</h3>
+      <h3 class="section-header">&copy;2014 ThinkUp LLC. Made in New York City.  It is nice to be nice. <a href="mailto:help@thinkup.com">Contact us.</a></h3>
     </section>
 
   </div>
