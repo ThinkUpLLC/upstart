@@ -72,8 +72,7 @@ class LoginController extends UpstartController {
                     //     return $this->generateView();
                         // If the credentials supplied by the user are incorrect
                     } elseif ($subscriber->membership_level == 'Waitlist')  {
-                        $error_msg = "You're not a ThinkUp member yet. <a href=\"http://thinkup.com\">".
-                        "Join now!</a>";
+                        $error_msg = "Hey! We’ve got you on our waiting list and will email you soon with subscription info.";
                         $this->addErrorMessage($error_msg, null, $disable_xss=true);
                         return $this->generateView();
                     } elseif (!$subscriber_dao->isAuthorized($user_email, $_POST['pwd']) ) {

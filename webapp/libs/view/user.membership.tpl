@@ -21,7 +21,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
         </li>
       </ul>
 
-      <p><a href="https://payments.amazon.com">View your payment information at Amazon Payments.</a></p>
+      <p class="form-note"><a href="https://payments.amazon.com">View your payment information at Amazon Payments.</a></p>
       <p class="form-note">Issues with your membership?<br>
       <a href="mailto:help@thinkup.com" class="show-section btn btn-default" {* data-section-selector="#form-membership-contact" *}>Contact us</a></p>
 
