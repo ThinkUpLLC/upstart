@@ -77,7 +77,7 @@
       </tr>
       <tr>
         <td></td>
-        <td>{if !$paid && $smarty.now > $authorization->token_validity_start_date_ts}<a href="subscriber.php?id={$subscriber->id}&action=charge&token_id={$authorization->token_id}&amount={$authorization->amount|urlencode}" class="btn btn-success btn-mini">Charge</a>{/if}</td>
+        <td>{if !$paid && $smarty.now > $authorization->token_validity_start_date_ts & !$subscriber->is_membership_complimentary}<a href="subscriber.php?id={$subscriber->id}&action=charge&token_id={$authorization->token_id}&amount={$authorization->amount|urlencode}" class="btn btn-success btn-mini">Charge</a>{/if}</td>
       </tr>
       {if $subscriber->error_message}
       <tr class="danger">
