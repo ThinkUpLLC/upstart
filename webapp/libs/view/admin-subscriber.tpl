@@ -7,27 +7,49 @@
 
       {include file="_adminusermessage.tpl"}
       {if $subscriber}
-      <h2 style="display: inline-block;">{if $subscriber->full_name neq ''}{$subscriber->full_name}{else}[No name]{/if}</h2>&nbsp;&nbsp;&nbsp;<span>{$subscriber->membership_level} since {$subscriber->creation_time}</span>
+      <h2 style="display: inline-block;">{if $subscriber->full_name neq ''}{$subscriber->full_name}{else}[No name]{/if}</h2>&nbsp;&nbsp;&nbsp;<span>{$subscriber->membership_level} since {$subscriber->creation_time} &nbsp;&nbsp;&nbsp;<a href="subscriber.php?action=archive&id={$subscriber->id}" class="text-danger" onClick="return confirm('Do you really want to archive this subscriber?');">Archive</a>
+        </span>
       <table class="table table-condensed table-hover">
       <tr>
         <td>Email</td>
         <td>{$subscriber->email} {include file="_admin-confirm_email.tpl"}</td>
       </tr>
+      {if isset($subscriber->network) && isset($subscriber->network_user_name)}
       <tr>
         <td>{$subscriber->network|ucfirst}</td>
         <td>{include file="_admin-network_user.tpl"}</td>
       </tr>
+      {/if}
       <tr>
         <td>Username</td>
         <td>{include file="_admin-thinkup_username.tpl"} {if $install_results}<h5>Install log:</h5><ul>{$install_results}{/if}</td>
       </tr>
-      <tr>
-        <td></td>
-        <td><a href="subscriber.php?action=archive&id={$subscriber->id}" class="btn btn-danger btn-mini" onClick="return confirm('Do you really want to archive this subscriber?');">Archive</a>
-        </td>
-      </tr>
       </table>
-      {if $authorizations}
+{if $payments}
+<br>
+  <h4>Payments</h4>
+  <table class="table table-condensed table-hover">
+    <tr>
+      <th>Timestamp</th><th>Status</th><th>Amount</th><th>Transaction ID or Error</th>
+    {foreach from=$payments item=payment}
+       <tr>
+          <td>{$payment.timestamp}</td>
+          {if $payment.transaction_status}
+            <td>{$payment.transaction_status}</td>
+            <td>${$payment.amount}</td>
+            <td><a href="https://payments{if $is_in_sandbox}-sandbox{/if}.amazon.com/sdui/sdui/txndetail?transactionId={$payment.transaction_id}" target="_new">{$payment.transaction_id}</a></td>
+          {else}
+            <td class="text-danger">ERROR</td>
+            <td>${$payment.amount}</td>
+            <td>{$payment.error_message|filter_xss}</td>
+          {/if}
+       </tr>
+    {/foreach}
+  </table>
+{/if}
+
+{if $authorizations}
+<br >
       <h4>Authorization</h3>
       <table class="table table-condensed table-hover">
       {foreach $authorizations as $authorization}
@@ -38,10 +60,6 @@
       <tr>
         <td>Amount</td>
         <td>${$authorization->amount} every {$authorization->recurrence_period}</td>
-      </tr>
-      <tr>
-        <td>Status</td>
-        <td>{$authorization->description}</td>
       </tr>
       <tr>
         <td>Payment method expiry</td>
@@ -64,43 +82,9 @@
       {/foreach}
     </table>
     {/if}
-    {/if}
-  </div>
-  <div class="span3"></div>
-</div>
-
-{if $payments}
-<div class="row-fluid">
-<div class="span3"></div>
-  <div class="span6">
-  <h4>Payments</h4>
-  <table class="table table-condensed table-hover">
-    <tr>
-      <th>Timestamp</th><th>Status</th><th>Amount</th><th>Transaction ID or Error</th>
-    {foreach from=$payments item=payment}
-       <tr>
-          <td>{$payment.timestamp}</td>
-          {if $payment.transaction_status}
-            <td>{$payment.transaction_status}</td>
-            <td>${$payment.amount}</td>
-            <td><a href="https://payments{if $is_in_sandbox}-sandbox{/if}.amazon.com/sdui/sdui/txndetail?transactionId={$payment.transaction_id}" target="_new">{$payment.transaction_id}</a></td>
-          {else}
-            <td class="text-danger">ERROR</td>
-            <td>${$payment.amount}</td>
-            <td>{$payment.error_message|filter_xss}</td>
-          {/if}
-       </tr>
-    {/foreach}
-  </table>
-  </div>
-  <div class="span3"></div>
-</div>
 {/if}
-
 {if $install_log_entries}
-<div class="row-fluid">
-<div class="span3"></div>
-  <div class="span6">
+<br>
   <h4>Install Log</h4>
   <table class="table table-condensed table-hover">
     <tr>
@@ -119,10 +103,11 @@
        </tr>
     {/foreach}
   </table>
+{/if}
   </div>
   <div class="span3"></div>
 </div>
-{/if}
+
 
 </div>
 </body>

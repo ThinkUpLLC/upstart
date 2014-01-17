@@ -17,7 +17,7 @@ class InstallLogMySQLDAO extends PDODAO {
     }
 
     public function getLogEntriesBySubscriber($subscriber_id) {
-        $q = "SELECT * FROM install_log WHERE subscriber_id = :subscriber_id ORDER BY timestamp DESC";
+        $q = "SELECT * FROM install_log WHERE subscriber_id = :subscriber_id ORDER BY timestamp DESC LIMIT 3";
 
         $vars = array(
             ':subscriber_id'=>$subscriber_id
