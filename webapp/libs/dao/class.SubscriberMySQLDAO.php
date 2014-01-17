@@ -652,7 +652,7 @@ class SubscriberMySQLDAO extends PDODAO {
         $q .= "INNER JOIN authorizations a ON sa.authorization_id = a.id ";
         $q .= "LEFT JOIN subscriber_payments sp ON sp.subscriber_id = s.id ";
         $q .= "LEFT JOIN payments p ON p.id = sp.payment_id ";
-        $q .= "WHERE request_id IS NULL ";
+        $q .= "WHERE s.is_membership_complimentary = 0 AND request_id IS NULL ";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
         return $this->getDataRowsAsArrays($ps);
@@ -669,10 +669,10 @@ class SubscriberMySQLDAO extends PDODAO {
         $q .= "INNER JOIN authorizations a ON sa.authorization_id = a.id ";
         $q .= "LEFT JOIN subscriber_payments sp ON sp.subscriber_id = s.id ";
         $q .= "LEFT JOIN payments p ON p.id = sp.payment_id ";
-        $q .= "WHERE request_id IS NULL ";
+        $q .= "WHERE s.is_membership_complimentary = 0 AND request_id IS NULL ";
         //echo self::mergeSQLVars($q, $vars);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q, $vars);
+        $ps = $this->execute($q);
         $result = $this->getDataRowAsArray($ps);
         return $result['total'];
     }

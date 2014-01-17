@@ -300,18 +300,40 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
 
     public function testGetSubscribersToCharge() {
         $builders = array();
-        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani@example.com',
-            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
-            'thinkup_username'=>'unique1', 'date_installed'=>null));
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'buffy@btvs.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'buffy',
+            'full_name'=>'Buffy Summers', 'thinkup_username'=>'buffy', 'date_installed'=>null,
+            'is_membership_complimentary'=>1));
 
-        $builders[] = FixtureBuilder::build('authorizations', array('id'=>1));
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>2, 'email'=>'angel@btvs.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'angel', 'full_name'=>'Angelus',
+            'thinkup_username'=>'angel', 'date_installed'=>null, 'is_membership_complimentary'=>0));
 
-        $builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>1,
-            'authorization_id'=>1));
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>3, 'email'=>'spike@btvs.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'spike',
+            'full_name'=>'William the Bloddy', 'thinkup_username'=>'spike', 'date_installed'=>null,
+            'is_membership_complimentary'=>0));
+
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'email'=>'willow@btvs.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'willow',
+            'full_name'=>'Willow Rosenberg', 'thinkup_username'=>'willow', 'date_installed'=>null,
+            'is_membership_complimentary'=>1));
+
+        $i = 1;
+        while ($i <= 4) {
+            $builders[] = FixtureBuilder::build('authorizations', array('id'=>$i));
+            $builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>$i,
+                'authorization_id'=>$i));
+            $i++;
+        }
 
         $dao = new SubscriberMySQLDAO();
-        $results = $dao->getSubscribersToCharge();
-        $this->assertEqual(sizeof($results), 1);
+        $result = $dao->getTotalSubscribersToCharge();
+        $this->assertEqual($result, 2);
+
+        $result = $dao->getSubscribersToCharge();
+        $this->debug(Utils::varDumpToString($result));
+        $this->assertEqual(sizeof($result), 2);
     }
 
     public function testCompSubscription() {
