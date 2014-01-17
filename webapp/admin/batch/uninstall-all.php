@@ -1,4 +1,7 @@
 <?php
+/*
+Commented out to make sure this script isn't invoked by accident at any time
+
 chdir('..');
 chdir('..');
 require_once 'init.php';
@@ -36,3 +39,4 @@ try {
 } catch (Exception $e) {
     echo $e->getMessage();
 }
+*/
