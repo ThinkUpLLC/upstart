@@ -30,4 +30,13 @@ class PaymentMySQLDAO extends PDODAO {
         $ps = $this->execute($q, $vars);
         return $this->getInsertId($ps);
     }
+
+    public function getTotalPayments() {
+        $q  = "SELECT SUM(amount) as total FROM payments p ";
+        $q .= "INNER JOIN subscriber_payments sp ON sp.payment_id = p.id;";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+        $result = $this->getDataRowAsArray($ps);
+        return $result['total'];
+    }
 }

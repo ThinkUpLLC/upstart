@@ -19,9 +19,9 @@ class ListSubscriberController extends Controller {
         $this->addToView('subscribers', $subscribers);
         $total_subscribers = $subscriber_dao->getListTotal();
         $this->addToView('total_subscribers', $total_subscribers);
-        $authorization_dao = new AuthorizationMySQLDAO();
-        $total_authorizations = $authorization_dao->getTotalAuthorizations();
-        $this->addToView('total_authorizations', $total_authorizations);
+        $payment_dao = new PaymentMySQLDAO();
+        $total_payments = $payment_dao->getTotalPayments();
+        $this->addToView('total_payments', $total_payments);
         $this->addToView('application_url', UpstartHelper::getApplicationURL());
 
         /* Begin installation stats */
