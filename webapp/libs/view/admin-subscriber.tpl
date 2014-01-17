@@ -7,7 +7,7 @@
 
       {include file="_adminusermessage.tpl"}
       {if $subscriber}
-      <h2 style="display: inline-block;">{if $subscriber->full_name neq ''}{$subscriber->full_name}{else}[No name]{/if}</h2>&nbsp;&nbsp;&nbsp;<span>{$subscriber->membership_level} since {$subscriber->creation_time} &nbsp;&nbsp;&nbsp;<a href="subscriber.php?action=archive&id={$subscriber->id}" class="text-danger" onClick="return confirm('Do you really want to archive this subscriber?');">Archive</a>
+      <h2 style="display: inline-block;">{if $subscriber->full_name neq ''}{$subscriber->full_name}{else}[No name]{/if}</h2>&nbsp;&nbsp;&nbsp;<span>{$subscriber->membership_level} since {$subscriber->creation_time} &nbsp;&nbsp;&nbsp; {include file="_admin-comp.tpl"} &#8226; <a href="subscriber.php?action=archive&id={$subscriber->id}" class="text-danger" onClick="return confirm('Do you really want to archive this subscriber?');">Archive</a>
         </span>
       <table class="table table-condensed table-hover">
       <tr>
@@ -24,6 +24,12 @@
         <td>Username</td>
         <td>{include file="_admin-thinkup_username.tpl"} {if $install_results}<h5>Install log:</h5><ul>{$install_results}{/if}</td>
       </tr>
+      {if $subscriber->is_membership_complimentary}
+      <tr>
+        <td>Account status</td>
+        <td><span class="text-success">Complimentary membership</span></td>
+      </tr>
+      {/if}
       </table>
 {if $payments}
 <br>

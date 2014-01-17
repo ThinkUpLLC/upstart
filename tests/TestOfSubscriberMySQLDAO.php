@@ -313,4 +313,21 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $results = $dao->getSubscribersToCharge();
         $this->assertEqual(sizeof($results), 1);
     }
+
+    public function testCompSubscription() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique1', 'date_installed'=>null, 'is_membership_complimentary'=>0));
+
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByID(1);
+        $this->assertFalse($subscriber->is_membership_complimentary);
+
+        $result = $dao->compSubscription(1);
+        $this->assertEqual($result, 1);
+
+        $subscriber = $dao->getByID(1);
+        $this->assertTrue($subscriber->is_membership_complimentary);
+    }
 }

@@ -1,0 +1,1 @@
+ALTER TABLE subscribers ADD is_membership_complimentary INT(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not the membership is complimentary, ie, free/not paid for.' AFTER membership_level;

@@ -69,6 +69,10 @@ class Subscriber {
      */
     var $membership_level;
     /**
+     * @var bool Whether or not the membership is complimentary, ie, free/not paid for.
+     */
+    var $is_membership_complimentary = false;
+    /**
      * @var str ThinkUp username.
      */
     var $thinkup_username;
@@ -135,6 +139,7 @@ class Subscriber {
             $this->is_email_verified = PDODAO::convertDBToBool($row['is_email_verified']);
             $this->is_from_waitlist = PDODAO::convertDBToBool($row['is_from_waitlist']);
             $this->membership_level = $row['membership_level'];
+            $this->is_membership_complimentary = PDODAO::convertDBToBool($row['is_membership_complimentary']);
             $this->thinkup_username = $row['thinkup_username'];
             $this->date_installed = $row['date_installed'];
             $this->api_key_private = $row['api_key_private'];

@@ -121,6 +121,7 @@ CREATE TABLE subscribers (
   is_email_verified int(1) NOT NULL COMMENT 'Whether or not email address has been verified, 1 or 0.',
   is_from_waitlist int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not subscriber was on waitlist (1 if so, 0 if not).',
   membership_level varchar(20) NOT NULL DEFAULT '' COMMENT 'Subscriber''s membership level (Member, Pro, Exec, Early Bird, etc).',
+  is_membership_complimentary int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not the membership is complimentary, ie, free/not paid for.',
   thinkup_username varchar(50) DEFAULT NULL COMMENT 'ThinkUp username.',
   date_installed timestamp NULL DEFAULT NULL COMMENT 'Installation start time.',
   api_key_private varchar(32) DEFAULT NULL COMMENT 'API key for authorizing on installation.',

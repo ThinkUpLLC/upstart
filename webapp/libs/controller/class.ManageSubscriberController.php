@@ -63,6 +63,18 @@ class ManageSubscriberController extends Controller {
                         } catch (Exception $e) {
                             $this->addErrorMessage("Could not uninstall ThinkUp. ".$e->getMessage());
                         }
+                    } elseif ($_GET['action'] == 'comp') {
+                        $comped = $subscriber_dao->compSubscription($subscriber_id, $username);
+                        if ( $comped > 0 ) {
+                            $this->addSuccessMessage("Comped membership for ".$subscriber->email);
+                            $subscriber->is_membership_complimentary = true;
+                        }
+                    } elseif ($_GET['action'] == 'decomp') {
+                        $decomped = $subscriber_dao->decompSubscription($subscriber_id, $username);
+                        if ( $decomped > 0 ) {
+                            $this->addSuccessMessage("Decomped membership for ".$subscriber->email);
+                            $subscriber->is_membership_complimentary = false;
+                        }
                     } elseif ($_GET['action'] == 'charge') {
                         if (isset($_GET['token_id']) && isset($_GET['amount'])) {
                             $fps_api_accessor = new AmazonFPSAPIAccessor();

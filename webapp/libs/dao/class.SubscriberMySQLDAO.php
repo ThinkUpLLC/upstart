@@ -676,4 +676,24 @@ class SubscriberMySQLDAO extends PDODAO {
         $result = $this->getDataRowAsArray($ps);
         return $result['total'];
     }
+
+    public function compSubscription($subscriber_id) {
+        return $this->setIsComplimentary($subscriber_id, true);
+    }
+
+    public function decompSubscription($subscriber_id) {
+        return $this->setIsComplimentary($subscriber_id, false);
+    }
+
+    private function setIsComplimentary($subscriber_id, $is_complimentary) {
+        $q = "UPDATE subscribers SET is_membership_complimentary = :is_membership_complimentary ";
+        $q .="WHERE id = :subscriber_id;";
+        $vars = array(
+            ':subscriber_id'=>$subscriber_id,
+            'is_membership_complimentary'=>$is_complimentary
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
 }
