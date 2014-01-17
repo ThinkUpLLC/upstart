@@ -303,21 +303,32 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'buffy@btvs.com',
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'buffy',
             'full_name'=>'Buffy Summers', 'thinkup_username'=>'buffy', 'date_installed'=>null,
-            'is_membership_complimentary'=>1));
+            'is_membership_complimentary'=>1, 'membership_level'=>'Pro'));
 
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>2, 'email'=>'angel@btvs.com',
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'angel', 'full_name'=>'Angelus',
-            'thinkup_username'=>'angel', 'date_installed'=>null, 'is_membership_complimentary'=>0));
+            'thinkup_username'=>'angel', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'membership_level'=>'Pro'));
 
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>3, 'email'=>'spike@btvs.com',
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'spike',
             'full_name'=>'William the Bloddy', 'thinkup_username'=>'spike', 'date_installed'=>null,
-            'is_membership_complimentary'=>0));
+            'is_membership_complimentary'=>0, 'membership_level'=>'Member'));
 
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'email'=>'willow@btvs.com',
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'willow',
             'full_name'=>'Willow Rosenberg', 'thinkup_username'=>'willow', 'date_installed'=>null,
-            'is_membership_complimentary'=>1));
+            'is_membership_complimentary'=>1, 'membership_level'=>'Pro'));
+
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>5, 'email'=>'xander@btvs.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'xander',
+            'full_name'=>'Xander Harris', 'thinkup_username'=>'xander', 'date_installed'=>null,
+            'is_membership_complimentary'=>0, 'membership_level'=>'Waitlist'));
+
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'cordelia@btvs.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'cordeliachase',
+            'full_name'=>'Cordelia Chase', 'thinkup_username'=>'cordelia', 'date_installed'=>null,
+            'is_membership_complimentary'=>0, 'membership_level'=>'Waitlist'));
 
         $i = 1;
         while ($i <= 4) {
