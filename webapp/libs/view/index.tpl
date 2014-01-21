@@ -96,7 +96,7 @@ body_classes="landing" body_id="landing-home"}
           <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email">
           <button type="submit" value="Subscribe" name="subscribe" class="btn-submit"><i class="fa fa-envelope-o"></i></button>
         </form>
-        <div class="login-link">Beta member? <a href="{$site_root_path}join/user/">Log in here</a></div>
+        <div class="login-link">Beta member? <a href="{$site_root_path}user/">Log in here</a></div>
       </div>
 
 {*
