@@ -57,8 +57,6 @@ $ISOSCELES_CFG['expandurls_links_to_expand_per_crawl']         = 50;
 $ISOSCELES_CFG['amazon_sandbox']            = true;
 $ISOSCELES_CFG['AWS_ACCESS_KEY_ID']
 $ISOSCELES_CFG['AWS_SECRET_ACCESS_KEY']
-$ISOSCELES_CFG['amazon_payment_auth_validity_start']     = date("U", mktime(12, 0, 0, 10, 10, 2013));
-//To get payment tokens that are immediately valid and therefore chargeable, uncomment out next line
 //$ISOSCELES_CFG['amazon_payment_auth_validity_start']     = time();
 
 //Mandrill

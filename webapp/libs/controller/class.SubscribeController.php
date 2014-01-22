@@ -42,7 +42,8 @@ class SubscribeController extends Controller {
 
         //optional parameters
         $pipeline->addParameter("paymentReason", "ThinkUp yearly membership");
-        $pipeline->addParameter("validityStart", $amazon_payment_auth_validity_start);
+        // If validityStart is not specified, then it defaults to now
+        //$pipeline->addParameter("validityStart", $amazon_payment_auth_validity_start);
         $pipeline->addParameter("cobrandingUrl",
         UpstartHelper::getApplicationURL(false, false, false)."assets/img/thinkup-logo-transparent.png");
         $pipeline->addParameter("websiteDescription", "ThinkUp");
