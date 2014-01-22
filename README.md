@@ -43,10 +43,14 @@ $ISOSCELES_CFG['oauth_consumer_secret']
 //Facebook
 $ISOSCELES_CFG['facebook_app_id']
 $ISOSCELES_CFG['facebook_api_secret']
+$ISOSCELES_CFG['facebook_max_crawl_time']   = 5;
 
 //Mailchimp
 $ISOSCELES_CFG['mailchimp_api']
 $ISOSCELES_CFG['mailchimp_list_id']
+
+//Expand URLS
+$ISOSCELES_CFG['expandurls_links_to_expand_per_crawl']         = 50;
 
 //Amazon Payments
 //This next line ensures you're testing using the Amazon Payments sandbox, which simulates interactions but doesn't actually move money
@@ -59,6 +63,7 @@ $ISOSCELES_CFG['amazon_payment_auth_validity_start']     = date("U", mktime(12, 
 
 //Mandrill
 $ISOSCELES_CFG['mandrill_api_key']
+$ISOSCELES_CFG['mandrill_notifications_template']			= 'ThinkUp LLC Member Insight Notifications';
 
 //User installations -  - Don't worry about this unless you're working with installation
 $ISOSCELES_CFG['app_source_path']
