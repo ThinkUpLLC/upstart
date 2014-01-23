@@ -23,7 +23,7 @@
 /**
  *  @see Amazon_FPS_Model
  */
-require_once ('Amazon/FPS/Model.php');  
+//require_once ('Amazon/FPS/Model.php');  
 
     
 

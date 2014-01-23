@@ -47,7 +47,7 @@
           {else}
             <td class="text-danger">ERROR</td>
             <td>${$payment.amount}</td>
-            <td>{$payment.error_message|filter_xss}</td>
+            <td>{$payment.status_message|filter_xss}</td>
           {/if}
        </tr>
     {/foreach}

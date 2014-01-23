@@ -33,4 +33,31 @@ ROOT_PATH . 'webapp/libs/controller/',
 ROOT_PATH . 'webapp/libs/exceptions/'
 ));
 
+
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Interface.php';
+
+$config = Config::getInstance();
+if ($config->getValue('amazon_sandbox') === true) {
+    require_once WEBAPP_PATH.'extlibs/amazon/CBUI/CBUIPipeline.sandbox.php';
+    require_once WEBAPP_PATH.'extlibs/amazon/FPS/Client.sandbox.php';
+} else {
+    require_once WEBAPP_PATH.'extlibs/amazon/CBUI/CBUIPipeline.php';
+    require_once WEBAPP_PATH.'extlibs/amazon/FPS/Client.php';
+}
+
+require_once WEBAPP_PATH.'extlibs/amazon/CBUI/CBUIRecurringTokenPipeline.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Exception.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/VerifySignatureRequest.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/VerifySignatureResponse.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/VerifySignatureResult.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/ResponseMetadata.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/Amount.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/PayRequest.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/PayResponse.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/PayResult.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/GetTransactionStatusRequest.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/GetTransactionStatusResponse.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/GetTransactionStatusResult.php';
+
 require_once WEBAPP_PATH.'extlibs/mandrill/Mandrill.php';

@@ -500,10 +500,10 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     public function getTransactionStatus($request)
     {
         if (!$request instanceof Amazon_FPS_Model_GetTransactionStatusRequest) {
-            require_once ('Amazon/FPS/Model/GetTransactionStatusRequest.php');
+            //require_once ('Amazon/FPS/Model/GetTransactionStatusRequest.php');
             $request = new Amazon_FPS_Model_GetTransactionStatusRequest($request);
         }
-        require_once ('Amazon/FPS/Model/GetTransactionStatusResponse.php');
+        //require_once ('Amazon/FPS/Model/GetTransactionStatusResponse.php');
         return Amazon_FPS_Model_GetTransactionStatusResponse::fromXML($this->_invoke($this->_convertGetTransactionStatus($request)));
     }
 

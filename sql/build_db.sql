@@ -91,11 +91,12 @@ CREATE TABLE payments (
   transaction_id varchar(100) NOT NULL COMMENT 'Transaction ID of payment from Amazon.',
   request_id varchar(100) NOT NULL COMMENT 'Request ID of transaction, assigned by Amazon.',
   transaction_status varchar(20) NOT NULL COMMENT 'The status of the payment request.',
-  error_message varchar(255) DEFAULT NULL COMMENT 'Human readable message that specifies the reason for a request failure (optional).',
+  status_message varchar(255) DEFAULT NULL COMMENT 'Human readable message that specifies the reason for a request failure (optional).',
   amount int(11) DEFAULT NULL COMMENT 'Amount of payment in USD.',
   caller_reference varchar(24) DEFAULT NULL COMMENT 'Caller reference used for charge request.',
-  PRIMARY KEY (id)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Amazon FPS payment capture transacrions';
+  PRIMARY KEY (id),
+  KEY transaction_status (transaction_status)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Amazon FPS payment capture transactions';
 
 -- --------------------------------------------------------
 
@@ -208,3 +209,4 @@ CREATE TABLE subscriber_payments (
   PRIMARY KEY (id),
   KEY subscriber_id (subscriber_id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Payments by known subscribers.';
+

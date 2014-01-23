@@ -26,6 +26,9 @@ $all_tests->add(new TestOfSettingsController());
 $all_tests->add(new TestOfSessionCache());
 $all_tests->add(new TestOfUpstartHelper());
 $all_tests->add(new TestOfAppInstaller());
+$all_tests->add(new TestOfAmazonFPSAPIAccessor());
+$all_tests->add(new TestOfPaymentMySQLDAO());
+$all_tests->add(new TestOfSubscriberPaymentMySQLDAO());
 
 //$tr = new TextReporter();
 //$all_tests->run( $tr );

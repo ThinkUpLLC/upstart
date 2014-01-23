@@ -77,4 +77,33 @@ class AmazonFPSAPIAccessor {
         }
         return false;
     }
+
+    /**
+     * Get the status of a pending transaction.
+     * @param str $transaction_id
+     * @return arr status, status_message, caller_reference, transaction_id
+     */
+    public function getTransactionStatus($transaction_id) {
+        $service = new Amazon_FPS_Client($this->AWS_ACCESS_KEY_ID, $this->AWS_SECRET_ACCESS_KEY);
+
+        $payment_dao = new PaymentMySQLDAO();
+        $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
+        $params = array();
+        $params['TransactionId'] = $transaction_id;
+        $request_object = new Amazon_FPS_Model_GetTransactionStatusRequest($params);
+        $response = $service->getTransactionStatus($request_object);
+
+        if ($response->isSetGetTransactionStatusResult()) {
+            $status_result = $response->getGetTransactionStatusResult();
+            $status = $status_result->getTransactionStatus();
+            $status_message = $status_result->StatusMessage;
+            $caller_reference = $status_result->CallerReference;
+            $transaction_id_returned = $status_result->TransactionId;
+            return array('status'=>$status, 'status_message'=>$status_message, 'caller_reference'=>$caller_reference,
+            'transaction_id'=>$transaction_id_returned);
+        } else {
+            $message = "Transaction status not returned\n".$response->getXML();
+            throw new Exception($message);
+        }
+    }
 }

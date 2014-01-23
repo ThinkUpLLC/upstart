@@ -32,7 +32,7 @@ class TestOfPaymentMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($data['amount'], $amt);
         $this->assertEqual($data['id'], $result);
         $this->assertTrue(strtotime($data['timestamp']) > (time()-60));
-        $this->assertNull($data['error_message']);
+        $this->assertNull($data['status_message']);
     }
 
     public function testInsertWithError() {
@@ -50,6 +50,28 @@ class TestOfPaymentMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($data['caller_reference'], $ref);
         $this->assertEqual($data['id'], $result);
         $this->assertTrue(strtotime($data['timestamp']) > (time()-60));
-        $this->assertEqual($data['error_message'], $err);
+        $this->assertEqual($data['status_message'], $err);
+    }
+
+    public function testGetPayment() {
+        $valid_transaction_id = '213893Z22ZZ7483S3EVDZDFI95AZ1EOIRN8';
+        $valid_caller_reference = '252cf11bbd71e2';
+        $builders = array();
+        $builders[] = FixtureBuilder::build('payments', array('id'=>1,
+        'transaction_id'=>$valid_transaction_id, 'caller_reference'=>$valid_caller_reference));
+        $builders[] = FixtureBuilder::build('payments', array('id'=>2,
+        'transaction_id'=>'213893Z22ZZ7483S3EVDZDFI95AZ1EOIRN6', 'caller_reference'=>'252cf11bbd71e1'));
+        $dao = new PaymentMySQLDAO();
+        $result = $dao->getPayment($valid_transaction_id, $valid_caller_reference);
+        $this->assertEqual($result->id, 1);
+    }
+
+    public function testUpdateStatus() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('payments', array('id'=>1, 'status'=>'Not Updated',
+        'status_message'=>'Longer not updated message'));
+        $dao = new PaymentMySQLDAO();
+        $result = $dao->updateStatus(1, 'Updated!', 'Longer Updated! message');
+        $this->assertEqual($result, 1);
     }
 }
