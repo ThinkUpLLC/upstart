@@ -5,32 +5,10 @@ body_classes="settings menu-open" body_id="settings-main"}
     <header>
       <h1>Settings</h1>
     </header>
+    {include file="_usermessage.tpl" field="timezone"}
+        <form role="form" class="form-horizontal" method="post">
 
-        <form role="form" class="form-horizontal" id="form-settings">
-          <fieldset class="fieldset-personal">
-            <header>
-              <h2>Personal</h2>
-            </header>
-            <div class="form-group">
-              <label class="control-label" for="control-email">Email</label>
-              <input type="email" class="form-control" id="control-email"value="{$subscriber->email}">
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="control-name">Name</label>
-              <input type="text" class="form-control" id="control-name" value="{$subscriber->full_name}">
-            </div>
-            <div class="form-group">
-              {* The jstz javascript is in the footer, added via a boolean variable *}
-              <label class="control-label" for="control-timezone">Time Zone</label>
-              <div class="form-control picker">
-              <i class="fa fa-chevron-down icon"></i>
-              <select id="control-timezone">
-                <option value="">Select a timezone</option>
-              </select>
-            </div>
-
-          </fieldset>
-
+{*
           <fieldset class="fieldset-password">
             <header>
               <h2>Change Password</h2>
@@ -44,24 +22,44 @@ body_classes="settings menu-open" body_id="settings-main"}
               <input type="password" class="form-control" id="control-password-new">
             </div>
             <div class="form-group">
-              <label class="control-label" for="control-password-verify">Veryify New</label>
+              <label class="control-label" for="control-password-verify">Verify New</label>
               <input type="password" class="form-control" id="control-password-verify">
             </div>
           </fieldset>
-
-{* We're not going to have a privacy setting at launch
-          <fieldset class="fieldset-privacy">
-            <header>
-              <h2>Privacy</h2>
-              <div class="help-text">Who can view your stream and shared insights?</div>
-            </header>
-            <div class="form-group form-group-toggle">
-              <input type="checkbox" id="control-privacy" checked>
-              <label class="control-label" for="control-privacy">Anyone with a link can view</label>
-            </div>
-          </fieldset>
 *}
-          <input type="submit" value="Done" class="btn btn-circle btn-submit">
+          <fieldset class="fieldset-personal">
+            <header>
+              <h2>Personal</h2>
+            </header>
+            <div class="form-group">
+              {* The jstz javascript is in the footer, added via a boolean variable *}
+              <label class="control-label" for="control-timezone">Time Zone</label>
+              <div class="form-control picker">
+              <i class="fa fa-chevron-down icon"></i>
+              <select id="control-timezone" name="timezone">
+                <option value=""{if $current_tz eq ''} selected{/if}>Select a Time Zone:</option>
+                 {foreach from=$tz_list key=group_name item=group}
+                   <optgroup label='{$group_name}'>
+                     {foreach from=$group item=tz}
+                       <option id="tz-{$tz.display}" value='{$tz.val}'{if $current_tz eq $tz.val} selected{/if}>{$tz.display}</option>
+                     {/foreach}
+                   </optgroup>
+                 {/foreach}
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="control-timezone">Insights Email</label>
+              <div class="form-control picker">
+              <i class="fa fa-chevron-down icon"></i>
+              <select name="control-notification-frequency">
+             {foreach from=$notification_options item=description key=key}
+                 <option value="{$key}" {if $key eq $owner->email_notification_frequency}selected="selected"{/if}>{$description}</option>
+             {/foreach}
+             </select>
+            </div>
+               {insert name="csrf_token"}
+          </fieldset>
+          <input type="submit" value="Done" name="Done" class="btn btn-circle btn-submit">
         </form>
 
 {include file="_appfooter.v2.tpl" include_tz_js=true}

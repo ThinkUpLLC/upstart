@@ -29,8 +29,8 @@
     <script src="//platform.twitter.com/widgets.js"></script>
     <script src="{$site_root_path}assets/js/thinkup.js "></script>
 
-    {if isset($include_tz_js) and $include_tz_js}
-    {if $subscriber->timezone eq 'UTC'}
+    {if isset($include_tz_js) and $include_tz_js and isset($owner)}
+    {if $owner->timezone eq 'UTC'}
     <script type="text/javascript">
     {literal}
     var tz_info = jstz.determine();

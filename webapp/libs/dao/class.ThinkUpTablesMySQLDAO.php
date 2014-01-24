@@ -138,13 +138,13 @@ class ThinkUpTablesMySQLDAO extends PDODAO {
         return $this->getDataRowsAsArrays($ps);
     }
 
-    private static function switchToUpstartDatabase() {
+    public static function switchToUpstartDatabase() {
         $cfg = Config::getInstance();
         $q = "USE ". $cfg->getValue('db_name');
         PDODAO::$PDO->exec($q);
     }
 
-    private static function switchToInstallationDatabase($thinkup_username) {
+    public static function switchToInstallationDatabase($thinkup_username) {
         $q = "USE ". 'thinkupstart_'.$thinkup_username;
         // echo $q;
         PDODAO::$PDO->exec($q);

@@ -2,6 +2,10 @@
 require_once ROOT_PATH.'webapp/extlibs/isosceles/libs/model/class.Loader.php';
 
 class UpstartBasicUnitTestCase extends UnitTestCase {
+    /**
+     * Test CSRF Token
+     */
+    const CSRF_TOKEN = 'test_csrf_token_123';
 
     public function setUp() {
         parent::setUp();
