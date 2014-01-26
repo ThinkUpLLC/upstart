@@ -334,6 +334,14 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertEqual($instance_network_username, 'TheFakeTweeter');
         $this->assertEqual($instance_network_user_id, 'abcdefg101');
         $this->assertEqual($instance_network_viewer_id, 'abcdefg101');
+
+        //Try installing again
+        try {
+            $install_results = $app_installer->install(6);
+        } catch (Exception $e) {
+        }
+        $this->assertNotNull($e);
+        $this->assertEqual($e->getMessage(), "Installation already exists.");
     }
 
     public function testInstallFacebookAuth() {

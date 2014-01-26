@@ -114,7 +114,7 @@ class AppInstaller {
                     throw new Exception('No subscriber specified');
                 }
             } else {
-                if ($subscriber->date_installed != null && $subscrber->is_installation_active) {
+                if ($subscriber->date_installed != null && $subscriber->is_installation_active) {
                     throw new Exception('Installation already exists.');
                 } elseif ($subscriber->thinkup_username == null) {
                     throw new Exception("ThinkUp username is not set.");
