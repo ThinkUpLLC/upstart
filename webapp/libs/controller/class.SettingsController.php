@@ -10,7 +10,6 @@ class SettingsController extends AuthController {
         $this->enableCSRFToken();
         $this->setPageTitle('Settings');
         $this->setViewTemplate('user.settings.tpl');
-        $this->addHeaderJavaScript('assets/js/vendor/jstz-1.0.4.min.js');
 
         $logged_in_user = Session::getLoggedInUser();
         $this->addToView('logged_in_user', $logged_in_user);
