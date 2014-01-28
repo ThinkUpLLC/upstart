@@ -279,6 +279,38 @@ body.settings {
         border-bottom: 1px solid @blue-pale;
         position: relative;
 
+        &.list-group-item-warning, &.list-group-item-ok {
+          position: relative;
+          .fa-override-before;
+
+          &:before {
+            position: absolute;
+            right: 10px;
+            top: 11px;
+            font-size: 16px;
+          }
+        }
+
+
+        &.list-group-item-warning {
+          &:before {
+            content: "\f071";
+            color: @red-warning;
+          }
+
+          .list-group-item-label, .list-group-item-value {
+            color: @red-warning;
+          }
+        }
+
+        &.list-group-item-ok {
+          &:before {
+            content: "\f058";
+            color: darken(@green-success, 20%);
+          }
+        }
+
+
         .list-group-item-label {
           float: left;
 
@@ -351,6 +383,42 @@ body.settings {
       color: @gray-light;
     }
 
+    .form-message {
+      color: #222;
+      border: 1px solid darken(@yellow-info, 30%);
+      border-left: 0;
+      border-right: 0;
+      background: @yellow-info;
+      padding: 7px;
+      margin-bottom: 14px;
+      text-align: center;
+
+      .btn {
+        background: darken(@green-success, 15%);
+
+        &:hover {
+          background: darken(@green-success, 10%);
+        }
+      }
+    }
+
+    .form-warning {
+      color: darken(@red-warning, 10%);
+      border-color: mix(@red-warning, #fff, 40%);
+      background: mix(@red-warning, #fff, 20%);
+      padding: 7px;
+      margin-bottom: 14px;
+      text-align: center;
+
+      .btn {
+        background: darken(@red-warning, 10%);
+
+        &:hover {
+          background: darken(@red-warning, 5%);
+        }
+      }
+    }
+
     .accounts-privacy {
       color: @green-success-darker;
     }
@@ -363,6 +431,7 @@ body#settings-subscription {
       margin-top: 10px;
     }
   }
+
 // This is only shown when the user taps the contact link.
   #form-membership-contact {
     margin-top: 40px;

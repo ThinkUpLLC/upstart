@@ -54,4 +54,39 @@ class UpstartUnitTestCase extends UpstartBasicUnitTestCase {
         $xpath = new DOMXPath($doc);
         return $xpath->query("//*[@id='$id']")->item(0);
     }
+
+    /**
+     * Install TU for a given subscriber in a test context.
+     * @param Subscriber $subscriber
+     */
+    protected function setUpInstall($subscriber) {
+        $config = Config::getInstance();
+        $config->setValue('user_installation_url', 'http://www.example.com/thinkup/{user}/');
+        $app_source_path = $config->getValue('app_source_path');
+        $data_path = $config->getValue('data_path');
+
+        $app_installer = new AppInstaller();
+        $app_installer->install($subscriber->id);
+    }
+
+    /**
+     * Uninstall TU for a given subscriber.
+     * @param  Subscriber $subscriber
+     * @return void
+     */
+    protected function tearDownInstall($subscriber) {
+        $q = "DROP DATABASE IF EXISTS thinkupstart_$subscriber->thinkup_username;";
+        PDODAO::$PDO->exec($q);
+
+        // Unlink username installation folder
+        $config = Config::getInstance();
+        $app_source_path = $config->getValue('app_source_path');
+        $cmd = 'rm -rf '.$app_source_path.$subscriber->thinkup_username;
+        $cmd_result = exec($cmd, $output, $return_var);
+
+        // Unlink username installation data folder
+        $data_path = $config->getValue('data_path');
+        $cmd = 'rm -rf '.$data_path.$subscriber->thinkup_username;
+        $cmd_result = exec($cmd, $output, $return_var);
+    }
 }

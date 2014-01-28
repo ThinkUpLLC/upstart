@@ -104,4 +104,87 @@ class AmazonFPSAPIAccessor {
             throw new Exception($message);
         }
     }
+
+    /**
+     * Get a valid Amazon Flexible Payment System payment URL for a given amount.
+     * @param  str $caller_reference
+     * @param  str $callback_url
+     * @param  int $amount
+     * @return str URL
+     */
+    public static function getAmazonFPSURL($caller_reference, $callback_url, $amount) {
+        $cfg = Config::getInstance();
+        $AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
+        $AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
+
+        $pipeline = new Amazon_FPS_CBUIRecurringTokenPipeline($AWS_ACCESS_KEY_ID, $AWS_SECRET_ACCESS_KEY);
+
+        $pipeline->setMandatoryParameters($caller_reference, $callback_url, $amount, "12 Months");
+
+        //optional parameters
+        $pipeline->addParameter("paymentReason", "ThinkUp yearly membership");
+        // If validityStart is not specified, then it defaults to now
+        //$amazon_payment_auth_validity_start = $cfg->getValue('amazon_payment_auth_validity_start');
+        //$pipeline->addParameter("validityStart", $amazon_payment_auth_validity_start);
+        $pipeline->addParameter("cobrandingUrl",
+        UpstartHelper::getApplicationURL(false, false, false)."assets/img/thinkup-logo-transparent.png");
+        $pipeline->addParameter("websiteDescription", "ThinkUp");
+
+        return $pipeline->getUrl();
+    }
+
+    /**
+     * Return whether or not the Amazon redirect signature is valid.
+     * @param  str  $endpoint_url        The endpoint URL the Amazon request redirected to
+     * @param  arr  $endpoint_url_params Optional endpoint URL parameters
+     * @return bool
+     */
+    public static function isAmazonSignatureValid($endpoint_url, $endpoint_url_params = array()) {
+        $cfg = Config::getInstance();
+        $AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
+        $AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
+
+        $service = new Amazon_FPS_Client($AWS_ACCESS_KEY_ID, $AWS_SECRET_ACCESS_KEY);
+
+        try {
+            $request_params_array = array();
+            $endpoint_params_array = array();
+            foreach ($_GET as $key => $value) {
+                if (!in_array( $key, $endpoint_url_params)) {
+                    $request_params_array[$key] = $value;
+                } else {
+                    $endpoint_params_array[$key] = $value;
+                }
+            }
+            $request_params_str = http_build_query($request_params_array);
+            if (sizeof($endpoint_params_array) > 0) {
+                $endpoint_params_str = http_build_query($endpoint_params_array);
+                $endpoint_url = '?'.$endpoint_params_str;
+            }
+            $request_array = array('UrlEndPoint'=>$endpoint_url, 'HttpParameters'=>$request_params_str);
+            //print_r($request_array);
+            $request_object = new Amazon_FPS_Model_VerifySignatureRequest($request_array);
+            //            echo "<pre>";
+            //            print_r($request_object);
+            //            echo "</pre>";
+            $response = $service->verifySignature($request_object);
+
+            $verifySignatureResult = $response->getVerifySignatureResult();
+            $result = $verifySignatureResult->getVerificationStatus();
+            if ($result == 'Success') {
+                return true;
+            }
+        } catch (Amazon_FPS_Exception $ex) {
+            //@TODO Log these error details into error log table
+            /*
+             echo("Caught Exception: " . $ex->getMessage() . "\n");
+             echo("Response Status Code: " . $ex->getStatusCode() . "\n");
+             echo("Error Code: " . $ex->getErrorCode() . "\n");
+             echo("Error Type: " . $ex->getErrorType() . "\n");
+             echo("Request ID: " . $ex->getRequestId() . "\n");
+             echo("XML: " . $ex->getXML() . "\n");
+             */
+        }
+        return false;
+    }
 }
