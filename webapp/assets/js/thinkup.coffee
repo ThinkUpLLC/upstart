@@ -176,6 +176,24 @@ checkPasswordFormat = (value) ->
     wt.appMessage.create "Your password must be at least 8 characters, contain both numbers &amp; letters, and omit special characters.", "warning"
     false
 
+checkPasswordField = ($form) ->
+  if $form.find("#control-password-current").length
+    if $form.find("#control-password-current").val().length isnt 0
+      if $form.find("#control-password-new").val().length is 0 and
+      $form.find("#control-password-verify").val().length is 0
+        wt.appMessage.create "You didn't provide a new password.", "warning"
+        $form.find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning")
+        e.preventDefault()
+      else if !checkPasswordFormat($form.find("#control-password-new").val())
+        $form.find("#control-password-new").parent().addClass("form-group-warning")
+        e.preventDefault()
+      else if $form.find("#control-password-new").val() isnt $form.find("#control-password-verify").val()
+        e.preventDefault()
+        wt.appMessage.create "The passwords must match.", "warning"
+        $form.find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning")
+      else
+        wt.appMessage.destroy()
+
 $ ->
   setListOpenData(true)
   $(window).load -> setDateGroupData()
@@ -255,6 +273,13 @@ $ ->
   $(window).load ->
     if $("body").data "app-message-text"
       wt.appMessage.create $("body").data("app-message-text"), $("body").data("app-message-type")
+    if app_message? and app_message.msg? and app_message.type?
+      wt.appMessage.create app_message.msg, app_message.type
+
+  $("body").on "click", "#msg-action", (e) ->
+    e.preventDefault()
+    $this = $(@)
+    if $this.data("submit-target")? then $($this.data("submit-target")).find(".btn-submit").click()
 
   $("body").on "click", ".app-message .app-message-close", (e) ->
     e.preventDefault()
@@ -275,24 +300,7 @@ $ ->
       wt.appMessage.destroy()
 
   $("#form-settings").on "submit", (e) ->
-    $(@).find(".form-group").removeClass("form-group-warning")
-    e.preventDefault()
-    if $(@).find("#control-password-current").val().length isnt 0
-      if $(@).find("#control-password-new").val().length is 0 and
-      $(@).find("#control-password-verify").val().length is 0
-        wt.appMessage.create "You didn't provide a new password.", "warning"
-        $(@).find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning")
-        e.preventDefault()
-      else if !checkPasswordFormat($(@).find("#control-password-new").val())
-        $(@).find("#control-password-new").parent().addClass("form-group-warning")
-        e.preventDefault()
-      else if $(@).find("#control-password-new").val() isnt $(@).find("#control-password-verify").val()
-        e.preventDefault()
-        wt.appMessage.create "The passwords must match.", "warning"
-        $(@).find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning")
-      else
-        wt.appMessage.destroy()
-
+    # checkPasswordField $(@)
 
   $("body").on "click", ".show-section", (e) ->
     $el = $($(@).data("section-selector"))
