@@ -27,25 +27,30 @@
     <script src="{$site_root_path}assets/js/vendor/bootstrap.min.js"></script>
     <script src="{$site_root_path}assets/js/vendor/jpanelmenu.js"></script>
     <script src="//platform.twitter.com/widgets.js"></script>
-    <script src="{$site_root_path}assets/js/thinkup.js "></script>
-
     {if isset($include_tz_js) and $include_tz_js and isset($owner)}
     {if $owner->timezone eq 'UTC'}
-    <script type="text/javascript">
-    {literal}
-    var tz_info = jstz.determine();
-    var regionname = tz_info.name().split('/');
-    var tz_option_id = '#tz-' + regionname[1];
-    if( $('#control-timezone option[value="' + tz_info.name() + '"]').length > 0) {
-        if( $(tz_option_id) ) {
-            $('#control-timezone').val( tz_info.name());
-        }
-    }
-    {/literal}
-    </script>
+      <script type="text/javascript" src="{$site_root_path}assets/js/vendor/jstz-1.0.4.min.js"></script>
+      <script type="text/javascript" src="{$site_root_path}assets/js/vendor/chosen.jquery.min.js"></script>
+      <script type="text/javascript">
+      {literal}
+      var tz_info = jstz.determine();
+      var regionname = tz_info.name().split('/');
+      var tz_option_id = '#tz-' + regionname[1];
+      if( $('#control-timezone option[value="' + tz_info.name() + '"]').length > 0) {
+          if( $(tz_option_id) ) {
+              $('#control-timezone').val( tz_info.name());
+          }
+      }
+      var app_message = {};
+      app_message.msg = "There's no timezone set for your account. We think it's " + tz_info.name() + ". Is that right? <a id='msg-action' data-submit-target='#form-settings' href=\"#\">Yep, set it!</a>";
+      app_message.type = "info";
+      {/literal}
+      </script>
     {/if}
     {/if}
 {/if}
+
+    <script src="{$site_root_path}assets/js/thinkup.js "></script>
 
 {literal}<script>
   var _gaq=[['_setAccount','UA-76614-5'],['_trackPageview']];

@@ -6,7 +6,8 @@ body_classes="settings menu-open" body_id="settings-main"}
       <h1>Settings</h1>
     </header>
     {include file="_usermessage.tpl" field="timezone"}
-        <form role="form" class="form-horizontal" method="post">
+        <form role="form" id="form-settings" name="form-settings"
+        class="form-horizontal" method="post">
 
 {*
           <fieldset class="fieldset-password">
@@ -35,17 +36,16 @@ body_classes="settings menu-open" body_id="settings-main"}
               {* The jstz javascript is in the footer, added via a boolean variable *}
               <label class="control-label" for="control-timezone">Time Zone</label>
               <div class="form-control picker">
-              <i class="fa fa-chevron-down icon"></i>
-              <select id="control-timezone" name="timezone">
-                <option value=""{if $current_tz eq ''} selected{/if}>Select a Time Zone:</option>
-                 {foreach from=$tz_list key=group_name item=group}
-                   <optgroup label='{$group_name}'>
-                     {foreach from=$group item=tz}
-                       <option id="tz-{$tz.display}" value='{$tz.val}'{if $current_tz eq $tz.val} selected{/if}>{$tz.display}</option>
-                     {/foreach}
-                   </optgroup>
-                 {/foreach}
-              </select>
+                <i class="fa fa-chevron-down icon"></i>
+                <select id="control-timezone" name="timezone">
+                  <option value=""{if $current_tz eq ''} selected{/if}>Select a Time Zone:</option>
+                   {foreach from=$tz_list key=group_name item=group}
+                   {foreach from=$group item=tz}
+                     <option id="tz-{$tz.display}" value='{$tz.val}'{if $current_tz eq $tz.val} selected{/if}>{$group_name}/{$tz.display}</option>
+                   {/foreach}
+                   {/foreach}
+                </select>
+              </div>
             </div>
             <div class="form-group">
               <label class="control-label" for="control-timezone">Insights Email</label>

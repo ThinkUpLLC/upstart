@@ -54,9 +54,10 @@
     {/if}
 {/if}
 
-{if isset($msg) and isset($msg_type)}
-<div class="app-message app-message-{$msg_type}">
-    <div class="content {$msg_classes}">{$msg}</div>
-    <a href="#" class="app-message-close"><i class="fa fa-times-circle icon"></i></a>
-</div>
-{/if}
+{if isset($msg) and isset($msg_type)}{literal}
+<script>
+var app_message = {};
+app_message.msg = {/literal}"{$msg}"{literal};
+app_message.type = {/literal}"{$msg_type}"{literal};
+</script>
+{/literal}{/if}
