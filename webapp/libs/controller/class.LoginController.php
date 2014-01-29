@@ -119,7 +119,8 @@ class LoginController extends UpstartController {
                             $upstart_url = UpstartHelper::getApplicationURL() . $config->getValue('site_root_path');
 
                             if ($_POST['redirect_on_success'] != '') {
-                                $success_redir = $_POST['redirect_on_success'];
+                                $success_redir = 'http://'.UpstartHelper::getApplicationHostName().
+                                $_POST['redirect_on_success'];
                             } else {
                                 $success_redir = $user_installation_url;
                             }
