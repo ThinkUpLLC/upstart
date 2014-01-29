@@ -20,6 +20,13 @@ class LoginController extends UpstartController {
             if (isset($_GET['usr'])) {
                 $this->addToView('usr', rawurlencode($_GET['usr']));
             }
+            //@TODO De-crapify this redirection logic
+            if (strpos($_SERVER['REQUEST_URI'], 'membership.php') !== false
+                || strpos($_SERVER['REQUEST_URI'], 'settings.php') !== false) {
+                $this->addToView('redirect_on_success', $_SERVER['REQUEST_URI']);
+            } else {
+                $this->addToView('redirect_on_success', '');
+            }
 
             if (isset($_POST['Submit']) && $_POST['Submit']=='Log In' && isset($_POST['email']) &&
             isset($_POST['pwd']) ) {
@@ -72,7 +79,8 @@ class LoginController extends UpstartController {
                     //     return $this->generateView();
                         // If the credentials supplied by the user are incorrect
                     } elseif ($subscriber->membership_level == 'Waitlist')  {
-                        $error_msg = "Hey! We’ve got you on our waiting list and will email you soon with subscription info.";
+                        $error_msg = "Hey! We’ve got you on our waiting list and will email you soon with ".
+                        "subscription info.";
                         $this->addErrorMessage($error_msg, null, $disable_xss=true);
                         return $this->generateView();
                     } elseif (!$subscriber_dao->isAuthorized($user_email, $_POST['pwd']) ) {
@@ -110,8 +118,14 @@ class LoginController extends UpstartController {
                             $config->getValue('user_installation_url'));
                             $upstart_url = UpstartHelper::getApplicationURL() . $config->getValue('site_root_path');
 
+                            if ($_POST['redirect_on_success'] != '') {
+                                $success_redir = $_POST['redirect_on_success'];
+                            } else {
+                                $success_redir = $user_installation_url;
+                            }
+
                             $params = array("u"=>$logged_in_user, "k"=>$subscriber->api_key_private,
-                            'success_redir'=> $user_installation_url,
+                            'success_redir'=> $success_redir,
                             'failure_redir'=> $upstart_url . '');
 
                             $url = $user_installation_url.'api/v1/session/login.php?';

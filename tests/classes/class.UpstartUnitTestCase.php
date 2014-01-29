@@ -31,6 +31,7 @@ class UpstartUnitTestCase extends UpstartBasicUnitTestCase {
         $this->testdb_helper->create($ISOSCELES_CFG['source_root_path']."sql/build_db.sql");
 
         $this->table_prefix = $config->getValue('table_prefix');
+        $_SERVER['REQUEST_URI'] = null;
     }
 
     /**

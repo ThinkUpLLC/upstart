@@ -194,6 +194,7 @@ class TestOfLoginController extends UpstartUnitTestCase {
         $_POST['Submit'] = 'Log In';
         $_POST['email'] = 'me2@example.com';
         $_POST['pwd'] = 'blah';
+        $_POST['redirect_on_success'] = '';
         $controller = new LoginController(true);
         $results = $controller->go();
 
@@ -239,7 +240,7 @@ class TestOfLoginController extends UpstartUnitTestCase {
     }
 
     /**
-     * Wrapper for logging in a in a test
+     * Wrapper for logging in in a test
      * @param str $email
      * @param bool $is_admin Default to false
      * @param bool $use_csrf_token Whether or not to put down valid CSRF token, default to false
