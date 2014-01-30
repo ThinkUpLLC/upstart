@@ -34,6 +34,11 @@ class TestOfLoginController extends UpstartUnitTestCase {
         'pwd'=>$password, 'pwd_salt'=>$test_salt, 'is_email_verified'=>0, 'is_activated'=>0, 'is_admin'=>0,
         'thinkup_username'=>null, 'membership_level'=>'Waitlist'));
 
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>9, 'email'=>'activeinstall@example.com',
+        'pwd'=>$password, 'pwd_salt'=>$test_salt, 'is_email_verified'=>1, 'is_activated'=>0, 'is_admin'=>0,
+        'thinkup_username'=>'unique', 'membership_level'=>'Member', 'is_installation_active'=>1,
+        'date_installed'=>'-1d'));
+
         return $builders;
     }
 
@@ -133,6 +138,37 @@ class TestOfLoginController extends UpstartUnitTestCase {
         $this->assertPattern("/unverified@example.com/", $results);
         $subscriber = $dao->getByEmail('unverified@example.com');
         $this->assertTrue($subscriber->is_email_verified);
+    }
+
+    public function testLoginFormWithRedirect() {
+        $_GET['redirect'] = 'http://example.com/redirect/';
+        $controller = new LoginController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern( '/http\:\/\/example.com\/redirect/', $results);
+    }
+
+    public function testInvalidLoginWithCustomRedirect() {
+        $_POST['Submit'] = 'Log In';
+        $_POST['email'] = 'dontexist@example.com';
+        $_POST['pwd'] = 'secretpassword';
+        $_POST['redirect'] = 'http://example.com/redirect/';
+        $controller = new LoginController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern( '/http\:\/\/example.com\/redirect/', $results);
+    }
+
+    public function testValidLoginWithCustomRedirect() {
+        $_POST['Submit'] = 'Log In';
+        $_POST['email'] = 'activeinstall@example.com';
+        $_POST['pwd'] = 'secretpassword';
+        $_POST['redirect'] = 'http://example.com/redirect/';
+        $controller = new LoginController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern( '/success_redir\=http%3A%2F%2Fexample.com%2Fredirect%2F/',
+        $controller->redirect_destination);
     }
 
     public function testCleanXSS() {

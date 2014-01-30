@@ -1,6 +1,11 @@
 <?php
 
 abstract class UpstartController extends Controller {
+    /**
+     * Redirect destination
+     * @var str
+     */
+    var $redirect_destination;
     public function __construct($session_started=false) {
         parent::__construct($session_started);
     }

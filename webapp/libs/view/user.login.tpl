@@ -18,7 +18,9 @@ body_classes="settings account menu-off"}
           <input type="password" class="form-control" id="pwd" name="pwd" value=""
           placeholder="********">
         </div>
-        <input type="hidden" name="redirect_on_success" value="{$redirect_on_success}">
+        {if isset($redirect)}
+        <input type="hidden" name="redirect" value="{$redirect}">
+        {/if}
       </fieldset>
 
       <input type="Submit" name="Submit" value="Log In" class="btn btn-circle btn-submit">

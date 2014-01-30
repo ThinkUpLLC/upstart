@@ -20,12 +20,13 @@ class LoginController extends UpstartController {
             if (isset($_GET['usr'])) {
                 $this->addToView('usr', rawurlencode($_GET['usr']));
             }
-            //@TODO De-crapify this redirection logic
-            if (strpos($_SERVER['REQUEST_URI'], 'membership.php') !== false
-                || strpos($_SERVER['REQUEST_URI'], 'settings.php') !== false) {
-                $this->addToView('redirect_on_success', $_SERVER['REQUEST_URI']);
-            } else {
-                $this->addToView('redirect_on_success', '');
+            // Set successful login redirect destination
+            if (isset($_GET['redirect'])) {
+                $this->addToView('redirect', $_GET['redirect']);
+            }
+            // If form has been submitted
+            if (isset($_POST['redirect'])) {
+                $this->addToView('redirect', $_POST['redirect']);
             }
 
             if (isset($_POST['Submit']) && $_POST['Submit']=='Log In' && isset($_POST['email']) &&
@@ -118,9 +119,8 @@ class LoginController extends UpstartController {
                             $config->getValue('user_installation_url'));
                             $upstart_url = UpstartHelper::getApplicationURL() . $config->getValue('site_root_path');
 
-                            if ($_POST['redirect_on_success'] != '') {
-                                $success_redir = 'http://'.UpstartHelper::getApplicationHostName().
-                                $_POST['redirect_on_success'];
+                            if (isset($_POST['redirect']) && $_POST['redirect'] != '') {
+                                $success_redir = $_POST['redirect'];
                             } else {
                                 $success_redir = $user_installation_url;
                             }
