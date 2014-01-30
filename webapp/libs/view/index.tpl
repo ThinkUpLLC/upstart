@@ -1,4 +1,4 @@
-{include file="_appheader.v2.tpl" landing_page=true
+{include file="_appheader.v2.tpl" marketing_page=true
 body_classes="landing" body_id="landing-home"}
 
   <div class="container">
@@ -144,4 +144,4 @@ body_classes="landing" body_id="landing-home"}
 
   </div>
 
-{include file="_appfooter.v2.tpl" landing_page=true}
+{include file="_appfooter.v2.tpl" marketing_page=true}

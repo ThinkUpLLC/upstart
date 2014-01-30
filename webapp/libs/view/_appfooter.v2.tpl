@@ -1,4 +1,4 @@
-{if !isset($landing_page) or !$landing_page}
+{if !isset($marketing_page) or !$marketing_page}
   </div><!-- end container -->
 
   <footer class="footer">
@@ -23,10 +23,11 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="{$site_root_path}assets/js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
-{if !isset($landing_page) or !$landing_page}
+{if !isset($marketing_page) or !$marketing_page}
     <script src="{$site_root_path}assets/js/vendor/bootstrap.min.js"></script>
     <script src="{$site_root_path}assets/js/vendor/jpanelmenu.js"></script>
     <script src="//platform.twitter.com/widgets.js"></script>
+     <script src="{$site_root_path}assets/js/thinkup.js "></script>
     {if isset($include_tz_js) and $include_tz_js and isset($owner)}
     {if $owner->timezone eq 'UTC'}
       <script type="text/javascript" src="{$site_root_path}assets/js/vendor/jstz-1.0.4.min.js"></script>
@@ -47,9 +48,10 @@
       </script>
     {/if}
     {/if}
+{else}
+    <script src="{$site_root_path}assets/js/vendor/jquery.mobile.custom.min.js"></script>
+    <script src="{$site_root_path}assets/js/marketing.js "></script>
 {/if}
-
-    <script src="{$site_root_path}assets/js/thinkup.js "></script>
 
 {literal}<script>
   var _gaq=[['_setAccount','UA-76614-5'],['_trackPageview']];
