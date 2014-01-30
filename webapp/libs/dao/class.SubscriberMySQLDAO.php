@@ -172,6 +172,7 @@ class SubscriberMySQLDAO extends PDODAO {
         $start_on_record = ($page_number - 1) * $count;
         $q = "SELECT * FROM subscribers s ";
         $q .= "WHERE email LIKE :search_term OR network_user_name LIKE :search_term1 OR full_name LIKE :search_term2 ";
+        $q .= "OR thinkup_username LIKE :search_term ";
         $q .= "ORDER BY s.creation_time DESC ";
         $q .= "LIMIT :start_on_record, :limit;";
 

@@ -173,6 +173,12 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $result = $dao->getSearchResults('gena davis');
         $this->assertEqual(sizeof($result), 1);
 
+        //test match TU username
+        $result = $dao->getSearchResults('unique');
+        $this->assertEqual(sizeof($result), 4);
+        $result = $dao->getSearchResults('unique4');
+        $this->assertEqual(sizeof($result), 1);
+
         //test no matches
         $result = $dao->getSearchResults('yaya');
         $this->assertEqual(sizeof($result), 0);
