@@ -22,6 +22,20 @@ class MembershipController extends AuthController {
             $config->getValue('user_installation_url'));
         $this->addToView('thinkup_url', $user_installation_url);
 
+        //BEGIN populating membership_status
+        $membership_status = $subscriber->getAccountStatus();
+        //Conflate pending status for auths and payments into a single message
+        if ($membership_status == 'Authorization pending') {
+            $membership_status = 'Payment pending';
+        }
+        if ($membership_status == 'Authorization failed') {
+            $membership_status = 'Payment failed';
+        }
+        $this->addToView('membership_status', $membership_status);
+        //@TODO If status is "Payment failed" then send Amazon Payments URL to view and handle charge
+        //END populating membership_status
+
+        //BEGIN populating nav bar icons
         $tu_tables_dao = new ThinkUpTablesMySQLDAO();
         $instances = $tu_tables_dao->getInstancesWithStatus($subscriber->thinkup_username, 2);
 
@@ -36,6 +50,7 @@ class MembershipController extends AuthController {
         }
         $this->addToView('facebook_connection_status', $connection_status['facebook']);
         $this->addToView('twitter_connection_status', $connection_status['twitter']);
+        //END populating nav bar icons
 
         return $this->generateView();
 	}
