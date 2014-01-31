@@ -105,7 +105,8 @@ class TestOfLoginController extends UpstartUnitTestCase {
 
         $v_mgr = $controller->getViewManager();
         $this->assertEqual($v_mgr->getTemplateDataItem('controller_title'), 'Log in');
-        $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), "Hey! We’ve got you on our waiting list and will email you soon with subscription info.");
+        $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), "Hey! We’ve got you on our waiting list and ".
+        "will email you soon with subscription info.");
         $this->assertPattern("/Log in/", $results);
     }
 

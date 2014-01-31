@@ -11,7 +11,7 @@ class LoginController extends UpstartController {
         }
         // if already logged in, show username picker screen
         if ( Session::isLoggedIn()) {
-            $username_controller = new ChooseUsernameController(true);
+            $username_controller = new SettingsController(true);
             return $username_controller->go();
         } else  {
             $subscriber_dao = new SubscriberMySQLDAO();
@@ -144,7 +144,7 @@ class LoginController extends UpstartController {
                             }
                         } else {
                             // No installation, show username screen
-                            $username_controller = new ChooseUsernameController(true);
+                            $username_controller = new SettingsController(true);
                             return $username_controller->go();
                         }
                     }
