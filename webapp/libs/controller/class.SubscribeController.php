@@ -19,7 +19,7 @@ class SubscribeController extends Controller {
         foreach (SignUpController::$subscription_levels as $level=>$amount) {
             //Get Amazon URL
             $callback_url = UpstartHelper::getApplicationURL().'new.php?l='.$level;
-            $subscribe_url = self::getAmazonFPSURL($caller_reference, $callback_url, $amount);
+            $subscribe_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference, $callback_url, $amount);
             $this->addToView('subscribe_'.$level.'_url', $subscribe_url);
             if ($level == $selected_level) {
                 $this->addToView('selected_subscribe_url', $subscribe_url);
@@ -28,26 +28,5 @@ class SubscribeController extends Controller {
         $this->addToView('level', $selected_level);
 
         return $this->generateView();
-    }
-
-    private static function getAmazonFPSURL($caller_reference, $callback_url, $amount) {
-        $cfg = Config::getInstance();
-        $AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
-        $AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
-        $amazon_payment_auth_validity_start = $cfg->getValue('amazon_payment_auth_validity_start');
-
-        $pipeline = new Amazon_FPS_CBUIRecurringTokenPipeline($AWS_ACCESS_KEY_ID, $AWS_SECRET_ACCESS_KEY);
-
-        $pipeline->setMandatoryParameters($caller_reference, $callback_url, $amount, "12 Months");
-
-        //optional parameters
-        $pipeline->addParameter("paymentReason", "ThinkUp yearly membership");
-        // If validityStart is not specified, then it defaults to now
-        //$pipeline->addParameter("validityStart", $amazon_payment_auth_validity_start);
-        $pipeline->addParameter("cobrandingUrl",
-        UpstartHelper::getApplicationURL(false, false, false)."assets/img/thinkup-logo-transparent.png");
-        $pipeline->addParameter("websiteDescription", "ThinkUp");
-
-        return $pipeline->getUrl();
     }
 }
