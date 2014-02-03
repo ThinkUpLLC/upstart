@@ -9,13 +9,18 @@ class LoginController extends UpstartController {
         if (isset($_GET['msg'])) {
             $this->addSuccessMessage($_GET['msg']);
         }
-        // if already logged in, show username picker screen
+        // if already logged in, show settings or username picker screen
+        $subscriber_dao = new SubscriberMySQLDAO();
         if ( Session::isLoggedIn()) {
-            $username_controller = new SettingsController(true);
-            return $username_controller->go();
+            $subscriber = $subscriber_dao->getByEmail(Session::getLoggedInUser() );
+            if (isset($subscriber->thinkup_username) && isset($subscriber->date_installed)
+                && $subscriber->is_installation_active) {
+                $controller = new SettingsController(true);
+            } else {
+                $controller = new ChooseUsernameController(true);
+            }
+            return $controller->go();
         } else  {
-            $subscriber_dao = new SubscriberMySQLDAO();
-
             // If usr verification parameter is on the query string, add it to the view
             if (isset($_GET['usr'])) {
                 $this->addToView('usr', rawurlencode($_GET['usr']));
@@ -143,9 +148,9 @@ class LoginController extends UpstartController {
                                 $this->generateView(); //for testing
                             }
                         } else {
-                            // No installation, show username screen
-                            $username_controller = new SettingsController(true);
-                            return $username_controller->go();
+                            // Installation doesn't exist yet, can't show Settings
+                            $controller = new ChooseUsernameController(true);
+                            return $controller->go();
                         }
                     }
                 }

@@ -18,6 +18,32 @@ class TestOfLoginController extends UpstartUnitTestCase {
         parent::tearDown();
     }
 
+    private function setUpInstall($subscriber) {
+        $config = Config::getInstance();
+        $config->setValue('user_installation_url', 'http://www.example.com/thinkup/{user}/');
+        $app_source_path = $config->getValue('app_source_path');
+        $data_path = $config->getValue('data_path');
+
+        $app_installer = new AppInstaller();
+        $app_installer->install($subscriber->id);
+    }
+
+    private function tearDownInstall($subscriber) {
+        $q = "DROP DATABASE IF EXISTS thinkupstart_$subscriber->thinkup_username;";
+        PDODAO::$PDO->exec($q);
+
+        // Unlink username installation folder
+        $config = Config::getInstance();
+        $app_source_path = $config->getValue('app_source_path');
+        $cmd = 'rm -rf '.$app_source_path.$subscriber->thinkup_username;
+        $cmd_result = exec($cmd, $output, $return_var);
+
+        // Unlink username installation data folder
+        $data_path = $config->getValue('data_path');
+        $cmd = 'rm -rf '.$data_path.$subscriber->thinkup_username;
+        $cmd_result = exec($cmd, $output, $return_var);
+    }
+
     protected function buildData() {
         $builders = array();
         $test_salt = 'test_salt';
@@ -38,6 +64,16 @@ class TestOfLoginController extends UpstartUnitTestCase {
         'pwd'=>$password, 'pwd_salt'=>$test_salt, 'is_email_verified'=>1, 'is_activated'=>0, 'is_admin'=>0,
         'thinkup_username'=>'unique', 'membership_level'=>'Member', 'is_installation_active'=>1,
         'date_installed'=>'-1d'));
+
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>10, 'email'=>'usernamebutnoinstall@example.com',
+        'pwd'=>$password, 'pwd_salt'=>$test_salt, 'is_email_verified'=>1, 'is_activated'=>0, 'is_admin'=>0,
+        'thinkup_username'=>'unique10', 'membership_level'=>'Member', 'is_installation_active'=>0,
+        'date_installed'=>null));
+
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>11, 'email'=>'simulateactiveinstall@example.com',
+        'pwd'=>$password, 'pwd_salt'=>$test_salt, 'is_email_verified'=>1, 'is_activated'=>0, 'is_admin'=>0,
+        'thinkup_username'=>'unique11', 'membership_level'=>'Member', 'is_installation_active'=>0,
+        'date_installed'=>null));
 
         return $builders;
     }
@@ -139,6 +175,37 @@ class TestOfLoginController extends UpstartUnitTestCase {
         $this->assertPattern("/unverified@example.com/", $results);
         $subscriber = $dao->getByEmail('unverified@example.com');
         $this->assertTrue($subscriber->is_email_verified);
+    }
+
+    public function testUsernameChosenButNoInstallation() {
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('usernamebutnoinstall@example.com');
+
+        $_POST['Submit'] = 'Log In';
+        $_POST['email'] = 'usernamebutnoinstall@example.com';
+        $_POST['pwd'] = 'secretpassword';
+        $controller = new LoginController(true);
+        $results = $controller->go();
+
+        $this->debug($results);
+        $this->assertPattern("/You reserved unique10.thinkup.com/", $results);
+        $this->assertPattern("/You\'ll get an email shortly when ThinkUp is ready for you./", $results);
+    }
+
+    public function testLoggedInWithInstallation() {
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('simulateactiveinstall@example.com');
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin( 'simulateactiveinstall@example.com');
+        $controller = new LoginController(true);
+        $results = $controller->go();
+
+        $this->debug($results);
+        $this->assertNoPattern("/You reserved unique.thinkup.com/", $results);
+        $this->assertNoPattern("/You\'ll get an email shortly when ThinkUp is ready for you./", $results);
+        $this->assertPattern("/Settings/", $results);
+        $this->tearDownInstall($subscriber);
     }
 
     public function testLoginFormWithRedirect() {
