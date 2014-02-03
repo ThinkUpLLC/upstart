@@ -408,7 +408,7 @@ class SubscriberMySQLDAO extends PDODAO {
     public function getStaleInstalls1kTo10k($count=25) {
         $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 AND ";
         $q .= "(follower_count < 10000 AND follower_count >= 1000) ";
-        $q .= "AND last_dispatched < DATE_SUB(NOW(), INTERVAL 1 HOUR) ORDER BY last_dispatched ASC ";
+        $q .= "AND last_dispatched < DATE_SUB(NOW(), INTERVAL 3 HOUR) ORDER BY last_dispatched ASC ";
         $q .= "LIMIT :limit;";
 
         $vars = array(
