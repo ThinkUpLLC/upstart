@@ -341,7 +341,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         } catch (Exception $e) {
         }
         $this->assertNotNull($e);
-        $this->assertEqual($e->getMessage(), "Installation already exists.");
+        $this->assertEqual($e->getMessage(), "Installation for testerrific already exists.");
     }
 
     public function testInstallFacebookAuth() {

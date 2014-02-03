@@ -114,10 +114,10 @@ class AppInstaller {
                     throw new Exception('No subscriber specified');
                 }
             } else {
-                if ($subscriber->date_installed != null && $subscriber->is_installation_active) {
-                    throw new Exception('Installation already exists.');
-                } elseif ($subscriber->thinkup_username == null) {
+                if ($subscriber->thinkup_username == null) {
                     throw new Exception("ThinkUp username is not set.");
+                } elseif ($subscriber->date_installed != null && $subscriber->is_installation_active) {
+                    throw new Exception('Installation for '.$subscriber->thinkup_username.' already exists.');
                 } else {
                     session_write_close();
                     // Set up application files
