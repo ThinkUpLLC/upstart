@@ -1,0 +1,79 @@
+.section-sub(@color) {
+  .section-color(@color);
+
+  &:hover, &.is-active {
+    border-top-width: 5px;
+    padding-top: 11px;
+    background: fade(@color, 10%);
+  }
+}
+
+#section-subscription-member     { .section-sub(#B97CC6); }
+#section-subscription-pro        { .section-sub(#6BB93B); }
+#section-subscription-executive  { .section-sub(#B51B2E); }
+
+.section-subscription-level {
+  position: relative;
+  height: auto;
+
+  .section-header {
+    font-size: (24/16em);
+  }
+
+  .level-cost {
+    font-size: (14/16em);
+    line-height: (20/16);
+  }
+
+  .btn-subscribe {
+    position: absolute;
+    top: 16px;
+    right: 15px;
+    height: 30px;
+    padding: 5px 0;
+    font-weight: 400;
+  }
+
+  .level-benefits {
+    padding: 16px 0 16px 20px;
+    margin: 0
+  }
+
+  &.is-active {
+    .btn-subscribe {
+      top: 12px;
+    }
+  }
+}
+
+.subscription-levels.is-preselected {
+  .section-subscription-level {
+    cursor: pointer;
+    opacity: .5;
+
+    &.is-active {
+      opacity: 1;
+    }
+  }
+}
+
+@media (min-width: 31.875em) {
+  @section-height-fixed: 240px;
+
+  .section-subscription-level {
+    height: @section-height-fixed * 1.5;
+  }
+
+  #section-subscription-executive {
+    height: auto;
+  }
+}
+
+@media (min-width: 48em) {
+  @section-width: 255px;
+  @header-height: 228px;
+
+  .section-subscription-level {
+    height: @section-height-fixed * 1.5 !important;
+  }
+}

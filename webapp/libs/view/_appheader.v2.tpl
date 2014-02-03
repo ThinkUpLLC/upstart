@@ -18,9 +18,8 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>{/literal}
     <link href="{$site_root_path}assets/css/vendor/font-awesome.min.css" rel="stylesheet">
     <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic|' rel='stylesheet' type='text/css'>
-{if isset($landing_page) and $landing_page}
-    <link rel="stylesheet" href="{$site_root_path}assets/css/vendor/normalize.min.css">
-    <link href="{$site_root_path}assets/css/landing.css" rel="stylesheet">
+{if isset($marketing_page) and $marketing_page}
+    <link href="{$site_root_path}assets/css/marketing.css" rel="stylesheet">
 {else}
     <link href="{$site_root_path}assets/css/vendor/bootstrap.min.css" rel="stylesheet">
     <link href="{$site_root_path}assets/css/thinkup.css" rel="stylesheet">
@@ -42,8 +41,8 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
-<body {if isset($body_classes)}class="{$body_classes}"{/if}{if isset($body_id)}id="{$body_id}"{/if}>
-{if !isset($landing_page) or !$landing_page}
+<body{if isset($body_classes)} class="{$body_classes}"{/if}{if isset($body_id)} id="{$body_id}"{/if}>
+{if !isset($marketing_page) or !$marketing_page}
     {if isset($include_menu) and $include_menu}
     <div id="menu">
       <ul class="list-unstyled menu-options">{if isset($subscriber)}
