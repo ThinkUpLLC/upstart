@@ -1,0 +1,74 @@
+body#marketing-about {
+  #section-about-text {
+    .headshots {
+      text-align: center;
+
+      .headshot {
+        display: inline-block;
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        margin-left: 5px;
+
+        &:first-child {
+          margin: 0;
+        }
+      }
+    }
+
+    .investor-logos {
+      text-align: center;
+
+      .investor-logos-row {
+        margin-bottom: 10px;
+      }
+
+      .investor-logo {
+        height: 35px;
+        width: auto;
+        padding-left: 10px;
+      }
+    }
+  }
+
+  @media (min-width: 31.875em) {
+    #section-about-text {
+      .headshots {
+        float: right;
+        margin-left: 10px;
+
+        .headshot {
+          width: 100px;
+          height: 100px;
+        }
+      }
+
+      .investor-logos {
+        margin: 0 -20px;
+
+        .investor-logo {
+          height: 50px;
+          padding-left: 20px;
+
+        }
+      }
+    }
+  }
+
+  @media (min-width: 48em) {
+    #section-about-text {
+      .investor-logos {
+
+        .investor-logos-row {
+          display: inline;
+        }
+
+        .investor-logo {
+          &.is-first {
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+}

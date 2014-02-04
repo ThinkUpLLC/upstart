@@ -85,6 +85,7 @@ body {
 }
 #section-header,
 .section-signup,
+.section-marketing-text,
 #section-page-header,
 #section-legal,
 #section-social,
@@ -93,6 +94,7 @@ body {
 }
 #section-header .section-header,
 .section-signup .section-header,
+.section-marketing-text .section-header,
 #section-page-header .section-header,
 #section-legal .section-header,
 #section-social .section-header,
@@ -118,6 +120,11 @@ body {
   text-indent: 100%;
   font-size: 0;
   background: url(../img/thinkup-logo.png) 0 0 no-repeat;
+}
+#section-header .logo a {
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 #section-header .logo:before {
   content: "Beta";
@@ -191,6 +198,28 @@ body {
   padding: 8px;
   line-height: 0;
   font-size: 1.25em;
+}
+.section-marketing-text {
+  height: auto;
+  padding: 15px;
+}
+.section-marketing-text .text-header {
+  text-align: center;
+  font-size: 1.25em;
+  line-height: 1;
+  font-weight: 400;
+}
+.section-marketing-text p,
+.section-marketing-text li {
+  font-family: "tablet-gothic-wide", helvetica, arial, sans-serif;
+  font-size: 1em;
+  line-height: 1.2222222222222223;
+  font-weight: 300;
+  color: #222;
+}
+.section-marketing-text p a,
+.section-marketing-text li a {
+  color: #2785d3;
 }
 #section-signup-top {
   height: auto;
@@ -350,6 +379,19 @@ body.is-not-full-height #section-copyright {
   .section-group:after {
     clear: both;
   }
+  .section-marketing-text {
+    height: auto;
+    padding: 15px 30px;
+  }
+  .section-marketing-text .text-header {
+    font-size: 1.375em;
+    line-height: 1;
+  }
+  .section-marketing-text p,
+  .section-marketing-text li {
+    font-size: 1.125em;
+    line-height: 1.4444444444444444;
+  }
   #section-header {
     background: url(../img/chart-landscape.png) right 47px no-repeat;
     background-size: 354px 87.6px;
@@ -446,6 +488,19 @@ body.is-not-full-height #section-copyright {
   }
   .section.col-lg-offset-up {
     margin-top: -300px;
+  }
+  .section-marketing-text {
+    height: auto;
+    padding: 15px 60px;
+  }
+  .section-marketing-text .text-header {
+    font-size: 1.375em;
+    line-height: 1;
+  }
+  .section-marketing-text p,
+  .section-marketing-text li {
+    font-size: 1.125em;
+    line-height: 1.4444444444444444;
   }
   #section-header,
   #section-signup-top {
@@ -883,5 +938,54 @@ body.header-compressed #section-signup-top .login-link {
 @media (min-width: 48em) {
   .section-subscription-level {
     height: 450px !important;
+  }
+}
+body#marketing-about #section-about-text .headshots {
+  text-align: center;
+}
+body#marketing-about #section-about-text .headshots .headshot {
+  display: inline-block;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+body#marketing-about #section-about-text .headshots .headshot:first-child {
+  margin: 0;
+}
+body#marketing-about #section-about-text .investor-logos {
+  text-align: center;
+}
+body#marketing-about #section-about-text .investor-logos .investor-logos-row {
+  margin-bottom: 10px;
+}
+body#marketing-about #section-about-text .investor-logos .investor-logo {
+  height: 35px;
+  width: auto;
+  padding-left: 10px;
+}
+@media (min-width: 31.875em) {
+  body#marketing-about #section-about-text .headshots {
+    float: right;
+    margin-left: 10px;
+  }
+  body#marketing-about #section-about-text .headshots .headshot {
+    width: 100px;
+    height: 100px;
+  }
+  body#marketing-about #section-about-text .investor-logos {
+    margin: 0 -20px;
+  }
+  body#marketing-about #section-about-text .investor-logos .investor-logo {
+    height: 50px;
+    padding-left: 20px;
+  }
+}
+@media (min-width: 48em) {
+  body#marketing-about #section-about-text .investor-logos .investor-logos-row {
+    display: inline;
+  }
+  body#marketing-about #section-about-text .investor-logos .investor-logo.is-first {
+    padding: 0;
   }
 }
