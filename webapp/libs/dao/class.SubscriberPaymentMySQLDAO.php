@@ -31,20 +31,26 @@ class SubscriberPaymentMySQLDAO extends PDODAO {
     }
 
     /**
-     * Get payments for a given subscriber
-     * @param int subscriber_id
-     * @return array
+     * Get payments for a given subscriber.
+     * @param int $subscriber_id
+     * @param int $limit Default to null (no limit)
+     * @return arr
      */
-    public function getBySubscriber($subscriber_id) {
+    public function getBySubscriber($subscriber_id, $limit=null) {
         $q = 'SELECT p.timestamp, p.transaction_id, p.request_id, p.transaction_status, p.status_message, p.amount,  ';
         $q.= 'p.caller_reference ';
         $q.= 'FROM subscriber_payments sp LEFT JOIN payments p ON (p.id = sp.payment_id) ';
         $q.= 'WHERE sp.subscriber_id=:subscriber_id ';
-        $q.= 'ORDER BY timestamp ASC';
-        $vars = array(':subscriber_id' => $subscriber_id);
-
+        $q.= 'ORDER BY timestamp DESC ';
+        $vars = array(
+            ':subscriber_id' => $subscriber_id
+        );
+        if ($limit != null) {
+            $q .= "LIMIT :limit";
+            $vars[':limit'] = $limit;
+        }
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
-        return $this->fetchAllAndClose($ps);
+        return $this->getDataRowsAsArrays($ps);
     }
 }

@@ -252,6 +252,37 @@ body.settings .container .list-group .list-group-item {
   border-bottom: 1px solid #b9c7ce;
   position: relative;
 }
+body.settings .container .list-group .list-group-item.list-group-item-warning,
+body.settings .container .list-group .list-group-item.list-group-item-ok {
+  position: relative;
+}
+body.settings .container .list-group .list-group-item.list-group-item-warning:before,
+body.settings .container .list-group .list-group-item.list-group-item-ok:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+}
+body.settings .container .list-group .list-group-item.list-group-item-warning:before,
+body.settings .container .list-group .list-group-item.list-group-item-ok:before {
+  position: absolute;
+  right: 10px;
+  top: 11px;
+  font-size: 16px;
+}
+body.settings .container .list-group .list-group-item.list-group-item-warning:before {
+  content: "\f071";
+  color: #d0021b;
+}
+body.settings .container .list-group .list-group-item.list-group-item-warning .list-group-item-label,
+body.settings .container .list-group .list-group-item.list-group-item-warning .list-group-item-value {
+  color: #d0021b;
+}
+body.settings .container .list-group .list-group-item.list-group-item-ok:before {
+  content: "\f058";
+  color: #239a37;
+}
 body.settings .container .list-group .list-group-item .list-group-item-label {
   float: left;
   max-width: 130px;
@@ -306,6 +337,22 @@ body.settings .container .form-note {
   text-align: center;
   margin: 0 5% 20px;
   color: #999999;
+}
+body.settings .container .form-warning {
+  color: #9d0214;
+  border: 1px solid #ec9aa4;
+  border-left: 0;
+  border-right: 0;
+  background: #f6ccd1;
+  padding: 7px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+body.settings .container .form-warning .btn {
+  background: #9d0214;
+}
+body.settings .container .form-warning .btn:hover {
+  background: #b70218;
 }
 body.settings .container .accounts-privacy {
   color: #417505;

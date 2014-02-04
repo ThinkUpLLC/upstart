@@ -104,4 +104,32 @@ class AmazonFPSAPIAccessor {
             throw new Exception($message);
         }
     }
+
+    /**
+     * Get a valid Amazon Flexible Payment System payment URL for a given amount.
+     * @param  str $caller_reference
+     * @param  str $callback_url
+     * @param  int $amount
+     * @return str URL
+     */
+    public static function getAmazonFPSURL($caller_reference, $callback_url, $amount) {
+        $cfg = Config::getInstance();
+        $AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
+        $AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
+
+        $pipeline = new Amazon_FPS_CBUIRecurringTokenPipeline($AWS_ACCESS_KEY_ID, $AWS_SECRET_ACCESS_KEY);
+
+        $pipeline->setMandatoryParameters($caller_reference, $callback_url, $amount, "12 Months");
+
+        //optional parameters
+        $pipeline->addParameter("paymentReason", "ThinkUp yearly membership");
+        // If validityStart is not specified, then it defaults to now
+        //$amazon_payment_auth_validity_start = $cfg->getValue('amazon_payment_auth_validity_start');
+        //$pipeline->addParameter("validityStart", $amazon_payment_auth_validity_start);
+        $pipeline->addParameter("cobrandingUrl",
+        UpstartHelper::getApplicationURL(false, false, false)."assets/img/thinkup-logo-transparent.png");
+        $pipeline->addParameter("websiteDescription", "ThinkUp");
+
+        return $pipeline->getUrl();
+    }
 }

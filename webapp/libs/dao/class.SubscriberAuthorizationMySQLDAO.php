@@ -32,18 +32,28 @@ class SubscriberAuthorizationMySQLDAO extends PDODAO {
         return $this->getUpdateCount($ps);
     }
 
-    public function getBySubscriberID($subscriber_id) {
+    /**
+     * Get authorizations for a given subscriber.
+     * @param int $subscriber_id
+     * @param int $limit Default to null (no limit)
+     * @return arr
+     */
+    public function getBySubscriberID($subscriber_id, $limit=null) {
         $q  = "SELECT *, UNIX_TIMESTAMP(a.token_validity_start_date) as token_validity_start_date_ts ";
         $q .= "FROM authorizations a INNER JOIN subscriber_authorizations sa ON a.id = sa.authorization_id ";
         $q .= "LEFT JOIN authorization_status_codes sc ON sc.code = a.status_code ";
-        $q .= "WHERE subscriber_id = :subscriber_id";
+        $q .= "WHERE subscriber_id = :subscriber_id ";
+        $q .= "ORDER BY a.timestamp DESC ";
         $vars = array(
             ':subscriber_id'=>$subscriber_id
         );
+        if ($limit != null) {
+            $q .= "LIMIT :limit";
+            $vars[':limit'] = $limit;
+        }
         //echo self::mergeSQLVars($q, $vars);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
         return $this->getDataRowsAsObjects($ps, "Authorization");
     }
-
 }
