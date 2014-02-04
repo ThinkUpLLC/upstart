@@ -338,11 +338,25 @@ body.settings .container .form-note {
   margin: 0 5% 20px;
   color: #999999;
 }
-body.settings .container .form-warning {
-  color: #9d0214;
-  border: 1px solid #ec9aa4;
+body.settings .container .form-message {
+  color: #222;
+  border: 1px solid #ffee25;
   border-left: 0;
   border-right: 0;
+  background: #fffabe;
+  padding: 7px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+body.settings .container .form-message .btn {
+  background: #27af3f;
+}
+body.settings .container .form-message .btn:hover {
+  background: #2cc446;
+}
+body.settings .container .form-warning {
+  color: #9d0214;
+  border-color: #ec9aa4;
   background: #f6ccd1;
   padding: 7px;
   margin-bottom: 14px;
@@ -359,6 +373,9 @@ body.settings .container .accounts-privacy {
 }
 body#settings-subscription .form-note .show-section {
   margin-top: 10px;
+}
+body#settings-subscription .membership-status-ok .list-group-item-value {
+  color: #2cc446;
 }
 body#settings-subscription #form-membership-contact {
   margin-top: 40px;
@@ -663,7 +680,7 @@ body.menu-off .navbar-default .navbar-header .menu-trigger {
   width: 100%;
   top: 40px;
   left: 0;
-  background: #FFFABE;
+  background: #fffabe;
   border-bottom: 1px solid #BBC7CE;
   font-size: 13px;
   line-height: 1.23;

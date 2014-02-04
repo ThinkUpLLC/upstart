@@ -120,7 +120,7 @@ class TestOfSubscriber extends UpstartUnitTestCase {
         $result = $subscriber->getAccountStatus();
 
         $paid_through_year = intval(date('Y')) + 1;
-        $paid_through_date = date('M j ');
+        $paid_through_date = date('M j, ');
         $this->assertEqual($result, 'Paid through '.$paid_through_date.$paid_through_year);
     }
 }

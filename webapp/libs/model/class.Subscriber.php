@@ -219,7 +219,7 @@ class Subscriber {
             }
             if ($latest_payment !== null && $latest_payment['transaction_status'] == 'Success') {
                 $paid_through_year = intval(date('Y', strtotime($latest_payment['timestamp']))) + 1;
-                $paid_through_date = date('M j ', strtotime($latest_payment['timestamp']));
+                $paid_through_date = date('M j, ', strtotime($latest_payment['timestamp']));
                 $membership_status = "Paid through ".$paid_through_date.$paid_through_year;
             } elseif ($latest_payment !== null && $latest_payment['transaction_status'] == 'Pending') {
                 $membership_status = "Payment pending";
