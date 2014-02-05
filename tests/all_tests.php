@@ -23,12 +23,14 @@ $all_tests->add(new TestOfCheckUsernameController());
 $all_tests->add(new TestOfChooseUsernameController());
 $all_tests->add(new TestOfResetPasswordController());
 $all_tests->add(new TestOfSettingsController());
+$all_tests->add(new TestOfMembershipController());
 $all_tests->add(new TestOfSessionCache());
 $all_tests->add(new TestOfUpstartHelper());
 $all_tests->add(new TestOfAppInstaller());
 $all_tests->add(new TestOfAmazonFPSAPIAccessor());
 $all_tests->add(new TestOfPaymentMySQLDAO());
 $all_tests->add(new TestOfSubscriberPaymentMySQLDAO());
+$all_tests->add(new TestOfSubscriber());
 
 //$tr = new TextReporter();
 //$all_tests->run( $tr );

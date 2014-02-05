@@ -18,32 +18,6 @@ class TestOfLoginController extends UpstartUnitTestCase {
         parent::tearDown();
     }
 
-    private function setUpInstall($subscriber) {
-        $config = Config::getInstance();
-        $config->setValue('user_installation_url', 'http://www.example.com/thinkup/{user}/');
-        $app_source_path = $config->getValue('app_source_path');
-        $data_path = $config->getValue('data_path');
-
-        $app_installer = new AppInstaller();
-        $app_installer->install($subscriber->id);
-    }
-
-    private function tearDownInstall($subscriber) {
-        $q = "DROP DATABASE IF EXISTS thinkupstart_$subscriber->thinkup_username;";
-        PDODAO::$PDO->exec($q);
-
-        // Unlink username installation folder
-        $config = Config::getInstance();
-        $app_source_path = $config->getValue('app_source_path');
-        $cmd = 'rm -rf '.$app_source_path.$subscriber->thinkup_username;
-        $cmd_result = exec($cmd, $output, $return_var);
-
-        // Unlink username installation data folder
-        $data_path = $config->getValue('data_path');
-        $cmd = 'rm -rf '.$data_path.$subscriber->thinkup_username;
-        $cmd_result = exec($cmd, $output, $return_var);
-    }
-
     protected function buildData() {
         $builders = array();
         $test_salt = 'test_salt';

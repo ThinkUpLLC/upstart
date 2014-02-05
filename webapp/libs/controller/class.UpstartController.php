@@ -2,12 +2,22 @@
 
 abstract class UpstartController extends Controller {
     /**
-     * Redirect destination
+     * Redirect destination.
      * @var str
      */
     var $redirect_destination;
+
+    /**
+     * Generic application error message.
+     * @var str
+     */
+    var $generic_error_msg;
+
     public function __construct($session_started=false) {
         parent::__construct($session_started);
+        $this->generic_error_msg = '<strong>Oops!</strong> Something went wrong and our team is looking into it.<br> '.
+        'Sorry for the trouble. Please <a href="'.UpstartHelper::getApplicationURL().'">try again</a>, or '.
+        '<a href="mailto:help@thinkup.com">contact us</a> with questions.';
     }
     /**
      * Send Location header
@@ -25,5 +35,34 @@ abstract class UpstartController extends Controller {
         } else {
             return false;
         }
+    }
+    /**
+     * Log application error.
+     * @param  str $title
+     * @param  str $filename
+     * @param  str $line_number
+     * @param  str $method
+     * @return void
+     */
+    protected function logError($title, $filename, $line_number, $method) {
+        exec('git rev-parse --verify HEAD 2> /dev/null', $output);
+        $commit_hash = $output[0];
+        $debug = $title.'
+
+';
+        if (sizeof($_SESSION) > 0) {
+            $debug .= 'SESSION:
+'.Utils::varDumpToString($_SESSION);
+        }
+        if (sizeof($_GET) > 0) {
+            $debug .= 'GET:
+'.Utils::varDumpToString($_GET);
+        }
+        if (sizeof($_POST) > 0) {
+            $debug .= 'POST:
+'.Utils::varDumpToString($_POST);
+        }
+        $error_dao = new ErrorLogMySQLDAO();
+        $error_dao->insert($commit_hash, $filename, $line_number, $method, $debug);
     }
 }

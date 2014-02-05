@@ -8,22 +8,41 @@ body_classes="settings menu-open" body_id="settings-subscription"}
       </header>
       <ul class="list-group">
         <li class="list-group-item">
-          <div class="list-group-item-label">Username:</div>
-          <div class="list-group-item-value">{if isset($subscriber->thinkup_username)}<a href="{$thinkup_url}">{$subscriber->thinkup_username}</a>{else}<em>None set</em>{/if}</div>
+          <div class="list-group-item-label">Username</div>
+          <div class="list-group-item-value">{if isset($subscriber->thinkup_username)}
+            <a href="{$thinkup_url}">{$subscriber->thinkup_username}</a>{else}<em>None set</em>{/if}</div>
         </li>
         <li class="list-group-item">
-          <div class="list-group-item-label">Level:</div>
+          <div class="list-group-item-label">Level</div>
           <div class="list-group-item-value">{$subscriber->membership_level}</div>
         </li>
-        <li class="list-group-item">
-          <div class="list-group-item-label">Member since:</div>
-          <div class="list-group-item-value">{$subscription_date|date_format:"F jS, Y"}</div>
+{*
+  Potential values for $membership_status that the template expects:
+
+  * "Paid thru m/d/y" - Successful charge
+  * "Payment pending" - Authorized and not charged yet, charged and no success returned yet
+  * "Payment failed" - Charge failed
+  * "Complimentary membership" - Comped - @TODO: Handle this status
+*}
+        <li class="list-group-item{if $membership_status eq 'Payment failed'
+      } list-group-item-warning{/if}">
+          <div class="list-group-item-label">Status</div>
+          <div class="list-group-item-value">{$membership_status}</div>
         </li>
       </ul>
 
-      <p class="form-note"><a href="https://payments.amazon.com">View your payment information at Amazon Payments.</a></p>
+    {if $membership_status eq 'Payment failed'}
+      <div class="form-message">
+        <p>Your payment failed because your credit card changed or expired. But it's easy to fix!</p>
+        <a href="{$failed_cc_amazon_link}" class="btn btn-default">Pay via Amazon Payments</a>
+      </div>
+    {else}
+      <p class="form-note"><a href="https://payments.amazon.com">View your payment information
+        at Amazon Payments.</a></p>
+    {/if}
       <p class="form-note">Issues with your membership?<br>
-      <a href="mailto:help@thinkup.com" class="show-section btn btn-default" {* data-section-selector="#form-membership-contact" *}>Contact us</a></p>
+      <a href="mailto:help@thinkup.com" class="show-section btn btn-default"
+      {* data-section-selector="#form-membership-contact" *}>Contact us</a></p>
 
       <form role="form" class="form-horizontal" id="form-membership-contact">
         <fieldset>
