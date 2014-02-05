@@ -208,6 +208,10 @@ body {
   font-size: 1.25em;
   line-height: 1;
   font-weight: 400;
+  color: #ff7f00;
+}
+.section-marketing-text .text-header ~ .text-header {
+  color: #6bb93b;
 }
 .section-marketing-text p,
 .section-marketing-text li {
@@ -964,6 +968,18 @@ body#marketing-about #section-about-text .investor-logos .investor-logo {
   width: auto;
   padding-left: 10px;
 }
+body#marketing-about #section-about-text .download-our-logo {
+  text-align: center;
+  margin: 20px 0 10px;
+  font-size: 0.875em;
+}
+body#marketing-about #section-about-text .download-our-logo a {
+  color: #2785d3;
+}
+body#marketing-about #section-about-text .download-our-logo img {
+  width: 148px;
+  height: 40px;
+}
 @media (min-width: 31.875em) {
   body#marketing-about #section-about-text .headshots {
     float: right;
@@ -977,7 +993,7 @@ body#marketing-about #section-about-text .investor-logos .investor-logo {
     margin: 0 -20px;
   }
   body#marketing-about #section-about-text .investor-logos .investor-logo {
-    height: 50px;
+    height: 40px;
     padding-left: 20px;
   }
 }
