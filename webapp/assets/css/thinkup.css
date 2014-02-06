@@ -371,15 +371,23 @@ body.settings .container .form-warning .btn:hover {
 body.settings .container .accounts-privacy {
   color: #417505;
 }
-body#settings-subscription .form-note .show-section {
+body#settings-membership .form-note .show-section {
   margin-top: 10px;
 }
-body#settings-subscription .membership-status-ok .list-group-item-value {
-  color: #2cc446;
-}
-body#settings-subscription #form-membership-contact {
+body#settings-membership #form-membership-contact {
   margin-top: 40px;
   display: none;
+}
+body#settings-membership .list-group .list-group-item .list-group-item-label {
+  max-width: 90px;
+}
+body#settings-membership .list-group .list-group-item .list-group-item-value {
+  margin-left: 90px;
+}
+body#settings-membership .list-group .list-group-item .list-group-item-value .btn {
+  background: #2785d3;
+  font-size: 13px;
+  padding: 6px;
 }
 @media (min-width: 400px) {
   body.settings .container {
@@ -403,6 +411,17 @@ body#settings-subscription #form-membership-contact {
   }
   body.settings .container .form-horizontal textarea.form-control {
     width: 210px;
+  }
+  body#settings-membership .list-group .list-group-item .list-group-item-label {
+    max-width: 100px;
+  }
+  body#settings-membership .list-group .list-group-item .list-group-item-value {
+    margin-left: 100px;
+  }
+  body#settings-membership .list-group .list-group-item .list-group-item-value .btn {
+    background: #2785d3;
+    font-size: 14px;
+    padding: 6 12px;
   }
 }
 body.account {
