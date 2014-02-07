@@ -68,9 +68,11 @@ class MembershipController extends AuthController {
         //Conflate pending status for auths and payments into a single message
         if ($membership_status == 'Authorization pending') {
             $membership_status = 'Payment pending';
+            $this->addErrorMessage("There was a problem with your credit card, but it’s easy to fix!");
         }
         if ($membership_status == 'Authorization failed') {
             $membership_status = 'Payment failed';
+            $this->addErrorMessage("There was a problem with your credit card, but it’s easy to fix!");
         }
         $this->addToView('membership_status', $membership_status);
 
