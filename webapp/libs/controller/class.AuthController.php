@@ -42,8 +42,6 @@ abstract class AuthController extends UpstartController {
      */
     protected function bounce() {
         if ($this->url_mapping != null ) {
-            $cfg = Config::getInstance();
-            $site_root_path = $cfg->getValue('site_root_path');
             $this->redirect(UpstartHelper::getApplicationURL().'user/?redirect='.$this->url_mapping);
         } else {
             $controller = new LoginController(true);
