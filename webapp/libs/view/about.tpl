@@ -39,6 +39,10 @@ body_classes="marketing marketing-text" body_id="marketing-about"}
 
       <p>Given our company’s goals of making our time online more meaningful, and the values that we’ve documented, it’s only natural that our ThinkUp platform is open source. ThinkUp’s source code went public in 2009. Since then, ThinkUp’s become one of the most popular open source projects on GitHub, currently among the top 15 most active PHP projects. Ours is an inclusive and welcoming community, with a developer mailing list that has never had a flame war, as befits our company motto, “It is nice to be nice.”</p>
 
+      <h3 class="text-header">Our Investors</h3>
+
+      <p>ThinkUp is backed first and foremost by its customers, who funded our launch with a crowdfunding campaign in late 2013. We also have a number of extraordinary investors, including Bloomberg Beta, Quotidian Ventures, SK Ventures and 500 Startups. Our individual angel advisors are Amol Sarva and Jalak Jobanputra. We’ve <a href="http://blog.thinkup.com/post/64323671907/thank-you-to-everyone-whos-invested-in-our-success">publicly disclosed the structure of our funding</a>, for people who are interested in such things.</p>
+
       <div class="investor-logos">
         <div class="investor-logos-row">
           <img class="investor-logo is-first" src="{$site_root_path}assets/img/investor-logo-bloomberg.png" alt="Bloomberg Beta">
@@ -50,9 +54,13 @@ body_classes="marketing marketing-text" body_id="marketing-about"}
         </div>
       </div>
 
-      <p>ThinkUp is backed first and foremost by its customers, who funded our launch with a crowdfunding campaign in late 2013. We also have a number of extraordinary investors, including Bloomberg Beta, Quotidian Ventures, SK Ventures and 500 Startups. Our individual angel advisors are Amol Sarva and Jalak Jobanputra. We’ve <a href="http://blog.thinkup.com/post/64323671907/thank-you-to-everyone-whos-invested-in-our-success">publicly disclosed the structure of our funding</a>, for people who are interested in such things.</p>
-
       <p>Press inquiries and partnership requests should be directed to <a href="mailto:team@thinkup.com">team@thinkup.com</a>. If you are a ThinkUp member or user, please direct support requests to <a href="mailto:help@thinkup.com">help@thinkup.com</a>.</p>
+
+      <div class="download-our-logo">
+        <a href="{$site_root_path}assets/img/thinkup-logo-hires.png"><img src="{$site_root_path}assets/img/thinkup-logo@2x.png" alt="ThinkUp"><br>
+          Download our logo</a>
+      </div>
+
     </section>
 
 {include file="_appfooter.v2.tpl" marketing_page=true}
