@@ -51,9 +51,11 @@ abstract class SignUpController extends UpstartController {
 
     /**
      * Get link to connect your Twitter account to Upstart.
+     * @param str $redirect_location What page relative to the application root to redirect on return from Twitter,
+     *                               for example 'new.php?n=twitter'
      * @return str Twitter link
      */
-    protected function getTwitterAuthLink() {
+    protected function getTwitterAuthLink($redirect_location) {
         $twitter_auth_link = null;
         $cfg = Config::getInstance();
         $oauth_consumer_key = $cfg->getValue('oauth_consumer_key');
@@ -61,7 +63,7 @@ abstract class SignUpController extends UpstartController {
 
         $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret);
         //Add unique waitlisted user ID from previous DB operation to callback
-        $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().'new.php?n=twitter');
+        $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().$redirect_location);
 
         if (isset($tok['oauth_token'])) {
             $token = $tok['oauth_token'];
@@ -78,9 +80,11 @@ abstract class SignUpController extends UpstartController {
 
     /**
      * Get link to connect your Facebook account to Upstart.
+     * @param str $redirect_location What page relative to the application root to redirect on return from Twitter,
+     *                               for example 'new.php?n=facebook'
      * @return str Facebook Connect link
      */
-    protected function getFacebookConnectLink() {
+    protected function getFacebookConnectLink($redirect_location) {
         $fbconnect_link = null;
         $cfg = Config::getInstance();
         $facebook_app_id = $cfg->getValue('facebook_app_id');
@@ -99,7 +103,7 @@ abstract class SignUpController extends UpstartController {
             $params = array('scope'=>'read_stream,user_likes,user_location,user_website,'.
                 'read_friendlists,friends_location,manage_pages,read_insights,manage_pages',
                 'state'=>SessionCache::get('facebook_auth_csrf'),
-                'redirect_uri'=>UpstartHelper::getApplicationURL().'new.php?n=facebook');
+                'redirect_uri'=>UpstartHelper::getApplicationURL().$redirect_location);
 
             $fbconnect_link = $facebook_app->getLoginUrl($params);
         } catch (FacebookApiException $e) {
