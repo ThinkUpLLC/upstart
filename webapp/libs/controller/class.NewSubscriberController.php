@@ -54,12 +54,12 @@ class NewSubscriberController extends SignUpController {
 
                 if ($redirect_to_network) {
                     if ($_POST['n'] == 'twitter') {
-                        $twitter_auth_link = self::getTwitterAuthLink();
+                        $twitter_auth_link = self::getTwitterAuthLink('new.php?n=twitter');
                         //Go to Twitter
                         header('Location: '.$twitter_auth_link);
                     } elseif ($_POST['n'] == 'facebook') {
                         //Go to Facebook
-                        $fbconnect_link = self::getFacebookConnectLink();
+                        $fbconnect_link = self::getFacebookConnectLink('new.php?n=facebook');
                         header('Location: '.$fbconnect_link);
                     }
                 }
