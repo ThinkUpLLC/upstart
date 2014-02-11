@@ -250,58 +250,6 @@ class NewSubscriberController extends SignUpController {
         return $this->generateView();
     }
 
-    private function getTwitterAuthLink() {
-        $twitter_auth_link = null;
-        $cfg = Config::getInstance();
-        $oauth_consumer_key = $cfg->getValue('oauth_consumer_key');
-        $oauth_consumer_secret = $cfg->getValue('oauth_consumer_secret');
-
-        $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret);
-        //Add unique waitlisted user ID from previous DB operation to callback
-        $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().'new.php?n=twitter');
-
-        if (isset($tok['oauth_token'])) {
-            $token = $tok['oauth_token'];
-            SessionCache::put('oauth_request_token_secret', $tok['oauth_token_secret']);
-            // Build Twitter authorization URL
-            $twitter_auth_link = $to->getAuthorizeURL($token);
-        } else {
-            $this->addErrorMessage($generic_error_msg);
-            $this->logError('Twitter auth link failure, token not set '.(isset($tok))?Utils::varDumpToString($tok):'',
-            __FILE__,__LINE__,__METHOD__);
-        }
-        return $twitter_auth_link;
-    }
-
-    private function getFacebookConnectLink() {
-        $fbconnect_link = null;
-        $cfg = Config::getInstance();
-        $facebook_app_id = $cfg->getValue('facebook_app_id');
-        $facebook_api_secret = $cfg->getValue('facebook_api_secret');
-
-        // Create Facebook Application instance
-        $facebook_app = new Facebook(array('appId'  => $facebook_app_id, 'secret' => $facebook_api_secret ));
-
-        try {
-            //Plant unique token for CSRF protection during auth
-            //per https://developers.facebook.com/docs/authentication/
-            if (SessionCache::get('facebook_auth_csrf') == null) {
-                SessionCache::put('facebook_auth_csrf', md5(uniqid(rand(), true)));
-            }
-
-            $params = array('scope'=>'read_stream,user_likes,user_location,user_website,'.
-                'read_friendlists,friends_location,manage_pages,read_insights,manage_pages',
-                'state'=>SessionCache::get('facebook_auth_csrf'),
-                'redirect_uri'=>UpstartHelper::getApplicationURL().'new.php?n=facebook');
-
-            $fbconnect_link = $facebook_app->getLoginUrl($params);
-        } catch (FacebookApiException $e) {
-            $this->addErrorMessage($generic_error_msg);
-            $this->logError(get_class($e).': '.$e->getMessage(), __FILE__,__LINE__,__METHOD__);
-        }
-        return $fbconnect_link;
-    }
-
     private function hasUserPostedSignUpForm() {
         return (sizeof($_POST) > 0);
     }
