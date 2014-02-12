@@ -60,7 +60,7 @@ CREATE TABLE error_log (
   method varchar(100) NOT NULL COMMENT 'Method where the error was thrown.',
   debug text NOT NULL COMMENT 'Debugging info.',
   PRIMARY KEY (id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Log of user errors.';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Log of user errors.';
 
 -- --------------------------------------------------------
 
@@ -135,6 +135,7 @@ CREATE TABLE subscribers (
   is_activated int(1) NOT NULL DEFAULT '0' COMMENT 'If user is activated, 1 for true, 0 for false.',
   password_token varchar(64) DEFAULT NULL COMMENT 'Password reset token.',
   timezone varchar(50) NOT NULL DEFAULT 'UTC' COMMENT 'Subscriber timezone.',
+  subscription_status varchar(50) DEFAULT NULL COMMENT 'Status of subscription payment.',
   PRIMARY KEY (id),
   UNIQUE KEY email (email),
   UNIQUE KEY network_user_id (network_user_id,network),

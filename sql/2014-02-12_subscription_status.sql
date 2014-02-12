@@ -1,0 +1,1 @@
+ALTER TABLE subscribers ADD subscription_status VARCHAR(50) NULL COMMENT 'Status of subscription payment.';
