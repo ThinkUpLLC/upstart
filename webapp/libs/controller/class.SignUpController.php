@@ -101,7 +101,7 @@ abstract class SignUpController extends UpstartController {
             }
 
             $params = array('scope'=>'read_stream,user_likes,user_location,user_website,'.
-                'read_friendlists,friends_location,manage_pages,read_insights,manage_pages',
+                'read_friendlists,friends_location,manage_pages,read_insights,manage_pages,email',
                 'state'=>SessionCache::get('facebook_auth_csrf'),
                 'redirect_uri'=>UpstartHelper::getApplicationURL().$redirect_location);
 
@@ -111,5 +111,21 @@ abstract class SignUpController extends UpstartController {
             $this->logError(get_class($e).': '.$e->getMessage(), __FILE__,__LINE__,__METHOD__);
         }
         return $fbconnect_link;
+    }
+
+    /**
+     * Return whether or not user has returned from Facebook with necessary parameters.
+     * @return bool
+     */
+    protected function hasUserReturnedFromFacebook() {
+        return (isset($_GET['n']) && isset($_GET['code']) && isset($_GET['state']) && $_GET["n"] == 'facebook');
+    }
+
+    /**
+     * Return whether or not user has returned from Twitter with necessary parameters.
+     * @return bool
+     */
+    protected function hasUserReturnedFromTwitter() {
+        return (isset($_GET['n']) && isset($_GET['oauth_token']) && $_GET["n"] == 'twitter');
     }
 }
