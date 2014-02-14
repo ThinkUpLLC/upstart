@@ -254,14 +254,6 @@ class NewSubscriberController extends SignUpController {
         return (sizeof($_POST) > 0);
     }
 
-    private function hasUserReturnedFromFacebook() {
-        return (isset($_GET['n']) && isset($_GET['code']) && isset($_GET['state']) && $_GET["n"] == 'facebook');
-    }
-
-    private function hasUserReturnedFromTwitter() {
-        return (isset($_GET['n']) && isset($_GET['oauth_token']) && $_GET["n"] == 'twitter');
-    }
-
     private function hasUserReturnedFromAmazon() {
         return (isset($_GET['callerReference'])  && isset($_GET['tokenID']) && isset($_GET["l"])
         && isset($_GET['status']) && isset($_GET['certificateUrl']) && isset($_GET['signatureMethod'])
