@@ -38,25 +38,32 @@
   text-decoration: none;
   display: inline-block;
   background: #4A90E2;
-  height: 80px;
   color: #fff;
-  font-weight: 600;
+  font-weight: 400;
   text-align: center;
   font-size: (15/16em);
   line-height: (16/15);
   letter-spacing: .02em;
-  border-radius: 40px;
-  padding: 24px 0;
-  width: 80px;
   margin-bottom: 10px;
+  border: 0;
+  -webkit-appearance: initial;
+  font-family: @tablet-gothic-condensed;
 }
 
 .btn-circle{
   .btn;
+  height: 80px;
+  border-radius: 50%;
+  padding: 24px 0;
+  width: 80px;
   margin-bottom: 0;
-  border: 0;
-  -webkit-appearance: initial;
-  font-family: @tablet-gothic-condensed;
+}
+
+.btn-pill {
+  width: 120px;
+  height: 30px;
+  padding: 7px 0;
+  border-radius: 4px;
 }
 
 
@@ -179,6 +186,20 @@ body {
   .section-header {
     color: #000;
   }
+
+  a {
+    color: #4A90E2;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  a.btn {
+    color: #fff;
+    text-decoration: none;
+  }
+
   .action-links {
     text-align: center;
   }
@@ -187,71 +208,37 @@ body {
     font-size: (13/16em);
     line-height: (16/13);
     color: #4A4A4A;
-
-    a {
-      color: #4A90E2;
-
-      &:hover {
-        text-decoration: none;
-      }
-    }
   }
 
   .newsletter-signup-form {
+    position: relative;
+    padding-right: 40px;
+
     .email {
       border: 1px solid #46BCFF;
-      width: 75%;
+      width: 100%;
       display: inline-block;
       font-family: @tablet-gothic-condensed;
       padding: 3px 5px;
       font-size: 1em;
-      margin: 5px 3px 10px 0;
+      margin: 5px 0 10px 0;
       height: 36px;
     }
 
     .btn-submit{
-      display: inline-block;
+      position: absolute;
+      top: 5px;
+      right: 0;
       background: #4A90E2;
       color: #fff;
       font-family: @tablet-gothic-condensed;
       margin-bottom: 0;
       border: 0;
-      position: relative;
       vertical-align: baseline;
       -webkit-appearance: initial;
       padding: 8px;
       line-height: 0;
       font-size: (20/16em);
-    }
-  }
-
-}
-
-.section-marketing-text {
-  height: auto;
-  padding: 15px;
-
-  .text-header {
-    text-align: center;
-    font-size: (20/16em);
-    line-height: 1;
-    font-weight: 400;
-    color: #FF7F00
-  }
-
-  .text-header ~ .text-header {
-    color: #6bb93b;
-  }
-
-  p, li {
-    font-family: @tablet-gothic-wide;
-    font-size: 1em;
-    line-height: (22/18);
-    font-weight: 300;
-    color: #222;
-
-    a {
-      color: @link-color;
     }
   }
 
@@ -414,22 +401,6 @@ body.is-not-full-height {
     .clearfix;
   }
 
-  .section-marketing-text {
-    height: auto;
-    padding: 15px 30px;
-
-    .text-header {
-      font-size: (22/16em);
-      line-height: 1;
-    }
-
-    p, li {
-      font-size: (18/16em);
-      line-height: (26/18);
-    }
-
-  }
-
   #section-header {
     background: url(../img/chart-landscape.png) right 47px no-repeat;
     background-size: (.6*590px) (.6*146px);
@@ -532,22 +503,6 @@ body.is-not-full-height {
     }
   }
 
-  .section-marketing-text {
-    height: auto;
-    padding: 15px 60px;
-
-    .text-header {
-      font-size: (22/16em);
-      line-height: 1;
-    }
-
-    p, li {
-      font-size: (18/16em);
-      line-height: (26/18);
-    }
-  }
-
-
   #section-header, #section-signup-top {
     height: @header-height;
   }
@@ -570,10 +525,6 @@ body.is-not-full-height {
       float: none;
       width: auto;
       text-align: center;
-    }
-
-    .newsletter-signup-form {
-      display: inline-block;
     }
 
     .section-header {
@@ -651,5 +602,5 @@ body.header-compressed {
 }
 
 @import "landing.less";
-@import "subscribe.less";
 @import "marketing-pages.less";
+@import "subscribe.less";

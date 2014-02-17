@@ -4,7 +4,7 @@ body.settings .container {
   margin: 0 auto;
 }
 body.settings .container header {
-  margin-top: 20px;
+  margin: 20px 0;
 }
 body.settings .container header h1 {
   text-align: center;
@@ -120,12 +120,22 @@ body.settings .container .form-horizontal .btn-submit {
 @media (min-width: 540px) {
   body.settings .container .form-horizontal .btn-submit {
     position: static;
+    margin: 15px auto 0;
+    display: block;
+  }
+}
+@media (min-width: 540px) {
+  body.settings .container .form-horizontal .btn-circle {
     width: 74px;
     height: 74px;
     padding: 30px 0;
-    border-radius: 37px;
-    margin: 15px auto 0;
-    display: block;
+    border-radius: 50%;
+  }
+}
+@media (min-width: 540px) {
+  body.settings .container .form-horizontal .btn-pill {
+    width: 150px;
+    border-radius: 4px;
   }
 }
 body.settings .container .form-horizontal .control-label {
@@ -374,12 +384,12 @@ body.settings .container .accounts-privacy {
 body#settings-subscription .form-note .show-section {
   margin-top: 10px;
 }
-body#settings-subscription .membership-status-ok .list-group-item-value {
-  color: #2cc446;
-}
 body#settings-subscription #form-membership-contact {
   margin-top: 40px;
   display: none;
+}
+body#settings-registration header h1 {
+  font-size: 24px;
 }
 @media (min-width: 400px) {
   body.settings .container {
@@ -461,7 +471,7 @@ body.account .container .form-horizontal .help-block a {
 body.account .container .form-horizontal .help-block a:hover {
   text-decoration: underline;
 }
-body.account .container .form-horizontal .btn-submit {
+body.account .container .form-horizontal .btn-circle {
   position: static;
   width: 74px;
   height: 74px;
@@ -469,6 +479,9 @@ body.account .container .form-horizontal .btn-submit {
   border-radius: 37px;
   margin: 15px auto 0;
   display: block;
+}
+body.account .container .form-horizontal .picker .icon {
+  background: #46bcff;
 }
 body.account .container .form-note {
   margin-top: 40px;

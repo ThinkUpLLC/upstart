@@ -1,25 +1,16 @@
 {include file="_appheader.v2.tpl" marketing_page=true
-body_classes="marketing marketing-text" body_id="marketing-about"}
+body_classes="marketing marketing-page" body_id="marketing-about"}
 
   <div class="container">
-    <header class="section col-md-2 col-lg-2 row-1 col-lg-left" id="section-header">
+    <header class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-header">
       <h1 class="logo"><a href="{$site_root_path}">ThinkUp</a></h1>
-      <h2 class="headline">What if analytics were<br>for real people?</h2>
+
+      <nav class="navigation-main">
+        <a class="nav-link" href="{$site_root_path}login.php">Login</a>
+        <a class="nav-link" href="{$site_root_path}subscribe.php">Signup</a>
+        <a class="nav-link" href="{$site_root_path}about.php">About</a>
+      </nav>
     </header>
-
-    <section class="section col-md-2 col-lg-1 row-1 col-lg-right section-signup" id="section-signup-top">
-      <h3 class="section-header">Get on the list.<br>
-      We’ll have a spot ready<br>
-      for you soon.</h3>
-
-      <div class="action-links">
-        <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">
-          <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email">
-          <button type="submit" value="Subscribe" name="subscribe" class="btn-submit"><i class="fa fa-envelope-o"></i></button>
-        </form>
-        <div class="login-link">Beta member? <a href="user/">Log in here</a></div>
-      </div>
-    </section>
 
     <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-page-header">
       <h2 class="section-header">About ThinkUp</h2>

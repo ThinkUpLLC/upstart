@@ -3,9 +3,6 @@
 class LandingController extends SignUpController {
     public function control() {
         $this->setViewTemplate('landing.tpl');
-        echo "<pre>";
-        print_r($_SESSION);
-        echo "</pre>";
 
         //@TODO Confirm caching can stay on for this page
         $twitter_link = $this->getTwitterAuthLink('register.php?n=twitter');
