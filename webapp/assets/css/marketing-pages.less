@@ -1,3 +1,133 @@
+body.marketing-page {
+  .container {
+    margin: 0 auto;
+
+    @media (min-width: 48em) {
+      border: 0;
+    }
+  }
+
+  .section {
+    padding: 15px 15px 0;
+    min-height: 240px;
+    background-position: center 90px;
+    background-repeat: no-repeat;
+
+    .section-header {
+      font-weight: 600;
+      margin: 0;
+    }
+
+    p, li {
+      font-family: @tablet-gothic;
+      font-size: (14/16em);
+      line-height: (18/14);
+    }
+  }
+
+  .section-marketing-text {
+    height: auto;
+    padding: 15px;
+    border-top: 0;
+
+    .text-header {
+      text-align: center;
+      font-size: (20/16em);
+      line-height: 1;
+      font-weight: 400;
+      color: #FF7F00
+    }
+
+    .text-header ~ .text-header {
+      color: #6bb93b;
+    }
+
+    p, li {
+      font-family: @tablet-gothic-wide;
+      font-size: 1em;
+      line-height: (23/18);
+      font-weight: 300;
+      color: #444;
+
+      a {
+        color: @link-color;
+      }
+    }
+
+    @media (min-width: 31.875em) {
+      height: auto;
+      padding: 15px 30px;
+
+      .text-header {
+        font-size: (22/16em);
+        line-height: 1;
+      }
+
+      p, li {
+        font-size: (18/16em);
+        line-height: (26/18);
+      }
+    }
+
+    @media (min-width: 48em) {
+      height: auto;
+      padding: 15px 60px;
+
+      .text-header {
+        font-size: (22/16em);
+        line-height: 1;
+      }
+
+      p, li {
+        font-size: (18/16em);
+        line-height: (26/18);
+      }
+    }
+  }
+
+
+  #section-header {
+    background: none;
+    border: none;
+    height: auto;
+    margin-bottom: 15px;
+
+    .logo {
+      position: relative;
+      margin: 0 0 5px 0;
+      top: 0;
+      left: 0;
+    }
+
+    &:before {
+      display: none;
+    }
+
+    .navigation-main {
+      .nav-link {
+        color: @link-color;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0 5px;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      @media (min-width: 31.875em) {
+        position: absolute;
+        top: 20px;
+        right: 15px;
+      }
+    }
+  }
+
+  #section-page-header {
+    border: 0;
+  }
+}
+
 body#marketing-about {
   #section-about-text {
     .headshots {
@@ -59,7 +189,7 @@ body#marketing-about {
       }
 
       .investor-logos {
-        margin: 0 -20px;
+        margin: 20px -20px;
 
         .investor-logo {
           height: 40px;
