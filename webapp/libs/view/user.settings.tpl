@@ -63,4 +63,4 @@ body_classes="settings menu-open" body_id="settings-main"}
           <input type="submit" value="Save" name="Done" class="btn btn-circle btn-submit">
         </form>
 
-{include file="_appfooter.v2.tpl" include_tz_js=true}
+{include file="_appfooter.v2.tpl" include_tz_js=true show_tz_msg=true}
