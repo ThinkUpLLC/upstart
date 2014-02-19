@@ -179,6 +179,20 @@ body {
   .section-header {
     color: #000;
   }
+
+  a {
+    color: #4A90E2;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  a.btn {
+    color: #fff;
+    text-decoration: none;
+  }
+
   .action-links {
     text-align: center;
   }
@@ -187,14 +201,6 @@ body {
     font-size: (13/16em);
     line-height: (16/13);
     color: #4A4A4A;
-
-    a {
-      color: #4A90E2;
-
-      &:hover {
-        text-decoration: none;
-      }
-    }
   }
 
   .newsletter-signup-form {
@@ -222,36 +228,6 @@ body {
       padding: 8px;
       line-height: 0;
       font-size: (20/16em);
-    }
-  }
-
-}
-
-.section-marketing-text {
-  height: auto;
-  padding: 15px;
-
-  .text-header {
-    text-align: center;
-    font-size: (20/16em);
-    line-height: 1;
-    font-weight: 400;
-    color: #FF7F00
-  }
-
-  .text-header ~ .text-header {
-    color: #6bb93b;
-  }
-
-  p, li {
-    font-family: @tablet-gothic-wide;
-    font-size: 1em;
-    line-height: (22/18);
-    font-weight: 300;
-    color: #222;
-
-    a {
-      color: @link-color;
     }
   }
 
@@ -414,22 +390,6 @@ body.is-not-full-height {
     .clearfix;
   }
 
-  .section-marketing-text {
-    height: auto;
-    padding: 15px 30px;
-
-    .text-header {
-      font-size: (22/16em);
-      line-height: 1;
-    }
-
-    p, li {
-      font-size: (18/16em);
-      line-height: (26/18);
-    }
-
-  }
-
   #section-header {
     background: url(../img/chart-landscape.png) right 47px no-repeat;
     background-size: (.6*590px) (.6*146px);
@@ -531,22 +491,6 @@ body.is-not-full-height {
       margin-top: -1 * @section-height-fixed;
     }
   }
-
-  .section-marketing-text {
-    height: auto;
-    padding: 15px 60px;
-
-    .text-header {
-      font-size: (22/16em);
-      line-height: 1;
-    }
-
-    p, li {
-      font-size: (18/16em);
-      line-height: (26/18);
-    }
-  }
-
 
   #section-header, #section-signup-top {
     height: @header-height;

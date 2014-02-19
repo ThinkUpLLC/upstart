@@ -161,6 +161,16 @@ body {
 .section-signup .section-header {
   color: #000;
 }
+.section-signup a {
+  color: #4A90E2;
+}
+.section-signup a:hover {
+  text-decoration: none;
+}
+.section-signup a.btn {
+  color: #fff;
+  text-decoration: none;
+}
 .section-signup .action-links {
   text-align: center;
 }
@@ -168,12 +178,6 @@ body {
   font-size: 0.8125em;
   line-height: 1.2307692307692308;
   color: #4A4A4A;
-}
-.section-signup .login-link a {
-  color: #4A90E2;
-}
-.section-signup .login-link a:hover {
-  text-decoration: none;
 }
 .section-signup .newsletter-signup-form .email {
   border: 1px solid #46BCFF;
@@ -198,32 +202,6 @@ body {
   padding: 8px;
   line-height: 0;
   font-size: 1.25em;
-}
-.section-marketing-text {
-  height: auto;
-  padding: 15px;
-}
-.section-marketing-text .text-header {
-  text-align: center;
-  font-size: 1.25em;
-  line-height: 1;
-  font-weight: 400;
-  color: #ff7f00;
-}
-.section-marketing-text .text-header ~ .text-header {
-  color: #6bb93b;
-}
-.section-marketing-text p,
-.section-marketing-text li {
-  font-family: "tablet-gothic-wide", helvetica, arial, sans-serif;
-  font-size: 1em;
-  line-height: 1.2222222222222223;
-  font-weight: 300;
-  color: #222;
-}
-.section-marketing-text p a,
-.section-marketing-text li a {
-  color: #2785d3;
 }
 #section-signup-top {
   height: auto;
@@ -383,19 +361,6 @@ body.is-not-full-height #section-copyright {
   .section-group:after {
     clear: both;
   }
-  .section-marketing-text {
-    height: auto;
-    padding: 15px 30px;
-  }
-  .section-marketing-text .text-header {
-    font-size: 1.375em;
-    line-height: 1;
-  }
-  .section-marketing-text p,
-  .section-marketing-text li {
-    font-size: 1.125em;
-    line-height: 1.4444444444444444;
-  }
   #section-header {
     background: url(../img/chart-landscape.png) right 47px no-repeat;
     background-size: 354px 87.6px;
@@ -492,19 +457,6 @@ body.is-not-full-height #section-copyright {
   }
   .section.col-lg-offset-up {
     margin-top: -300px;
-  }
-  .section-marketing-text {
-    height: auto;
-    padding: 15px 60px;
-  }
-  .section-marketing-text .text-header {
-    font-size: 1.375em;
-    line-height: 1;
-  }
-  .section-marketing-text p,
-  .section-marketing-text li {
-    font-size: 1.125em;
-    line-height: 1.4444444444444444;
   }
   #section-header,
   #section-signup-top {
@@ -944,6 +896,121 @@ body.header-compressed #section-signup-top .login-link {
     height: 450px !important;
   }
 }
+body.marketing-page .container {
+  margin: 0 auto;
+}
+@media (min-width: 48em) {
+  body.marketing-page .container {
+    border: 0;
+  }
+}
+body.marketing-page .section {
+  padding: 15px 15px 0;
+  min-height: 240px;
+  background-position: center 90px;
+  background-repeat: no-repeat;
+}
+body.marketing-page .section .section-header {
+  font-weight: 600;
+  margin: 0;
+}
+body.marketing-page .section p,
+body.marketing-page .section li {
+  font-family: "tablet-gothic", helvetica, arial, sans-serif;
+  font-size: 0.875em;
+  line-height: 1.2857142857142858;
+}
+body.marketing-page .section-marketing-text {
+  height: auto;
+  padding: 15px;
+  border-top: 0;
+}
+body.marketing-page .section-marketing-text .text-header {
+  text-align: center;
+  font-size: 1.25em;
+  line-height: 1;
+  font-weight: 400;
+  color: #ff7f00;
+}
+body.marketing-page .section-marketing-text .text-header ~ .text-header {
+  color: #6bb93b;
+}
+body.marketing-page .section-marketing-text p,
+body.marketing-page .section-marketing-text li {
+  font-family: "tablet-gothic-wide", helvetica, arial, sans-serif;
+  font-size: 1em;
+  line-height: 1.2777777777777777;
+  font-weight: 300;
+  color: #444;
+}
+body.marketing-page .section-marketing-text p a,
+body.marketing-page .section-marketing-text li a {
+  color: #2785d3;
+}
+@media (min-width: 31.875em) {
+  body.marketing-page .section-marketing-text {
+    height: auto;
+    padding: 15px 30px;
+  }
+  body.marketing-page .section-marketing-text .text-header {
+    font-size: 1.375em;
+    line-height: 1;
+  }
+  body.marketing-page .section-marketing-text p,
+  body.marketing-page .section-marketing-text li {
+    font-size: 1.125em;
+    line-height: 1.4444444444444444;
+  }
+}
+@media (min-width: 48em) {
+  body.marketing-page .section-marketing-text {
+    height: auto;
+    padding: 15px 60px;
+  }
+  body.marketing-page .section-marketing-text .text-header {
+    font-size: 1.375em;
+    line-height: 1;
+  }
+  body.marketing-page .section-marketing-text p,
+  body.marketing-page .section-marketing-text li {
+    font-size: 1.125em;
+    line-height: 1.4444444444444444;
+  }
+}
+body.marketing-page #section-header {
+  background: none;
+  border: none;
+  height: auto;
+  margin-bottom: 15px;
+}
+body.marketing-page #section-header .logo {
+  position: relative;
+  margin: 0 0 5px 0;
+  top: 0;
+  left: 0;
+}
+body.marketing-page #section-header:before {
+  display: none;
+}
+body.marketing-page #section-header .navigation-main .nav-link {
+  color: #2785d3;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0 5px;
+}
+body.marketing-page #section-header .navigation-main .nav-link:hover {
+  text-decoration: underline;
+}
+@media (min-width: 31.875em) {
+  body.marketing-page #section-header .navigation-main {
+    position: absolute;
+    top: 20px;
+    right: 15px;
+  }
+}
+body.marketing-page #section-page-header {
+  border: 0;
+}
 body#marketing-about #section-about-text .headshots {
   text-align: center;
 }
@@ -990,7 +1057,7 @@ body#marketing-about #section-about-text .download-our-logo img {
     height: 100px;
   }
   body#marketing-about #section-about-text .investor-logos {
-    margin: 0 -20px;
+    margin: 20px -20px;
   }
   body#marketing-about #section-about-text .investor-logos .investor-logo {
     height: 40px;
