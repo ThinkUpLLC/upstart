@@ -26,6 +26,7 @@ class TestOfForgotPasswordController extends UpstartUnitTestCase {
     public function testOfControllerNoParams() {
         $controller = new ForgotPasswordController(true);
         $result = $controller->go();
+        $this->debug($result);
 
         $this->assertPattern('/Reset your password/', $result);
     }
@@ -80,8 +81,13 @@ class TestOfForgotPasswordController extends UpstartUnitTestCase {
         $actual_forgot_email = Mailer::getLastMail();
         $this->debug($actual_forgot_email);
 
+        $email_object = JSONDecoder::decode($actual_forgot_email);
+        $this->assertEqual($email_object->subject, "Recover your ThinkUp password");
+        $this->assertEqual($email_object->from_email, "help@thinkup.com");
+        $this->assertEqual($email_object->from_name, "ThinkUp");
+
         $expected_forgot_email_pattern = '/Looks like you forgot your ThinkUp.com password./';
-        $this->assertPattern($expected_forgot_email_pattern, $actual_forgot_email);
+        $this->assertPattern($expected_forgot_email_pattern, $email_object->text);
 
         $expected_forgot_email_pattern = 'http:\/\/mytestthinkup'.str_replace('/', '\/', $site_root_path).
         'user\/reset.php';
@@ -104,6 +110,11 @@ class TestOfForgotPasswordController extends UpstartUnitTestCase {
 
         $actual_forgot_email = Mailer::getLastMail();
         $this->debug($actual_forgot_email);
+
+        $email_object = JSONDecoder::decode($actual_forgot_email);
+        $this->assertEqual($email_object->subject, "Recover your ThinkUp password");
+        $this->assertEqual($email_object->from_email, "help@thinkup.com");
+        $this->assertEqual($email_object->from_name, "ThinkUp");
 
         $expected_forgot_email_pattern = '/Looks like you forgot your ThinkUp.com password./';
         $this->assertPattern($expected_forgot_email_pattern, $actual_forgot_email);

@@ -39,7 +39,7 @@ class Mailer {
 
         try {
             $mandrill = new Mandrill($mandrill_api_key);
-            $message = array('subject' => $subject, 'from_email' => "notifications@${host}",
+            $message = array('subject' => $subject, 'from_email' => "help@thinkup.com",
             'from_name' => $app_title, 'to' => array( array( 'email' => $to, 'name' => $to ) ),
             'global_merge_vars' => array());
 
@@ -135,7 +135,7 @@ class Mailer {
 
         try {
             $mandrill = new Mandrill($mandrill_api_key);
-            $message = array( 'text' => $message, 'subject' => $subject, 'from_email' => "notifications@${host}",
+            $message = array( 'text' => $message, 'subject' => $subject, 'from_email' => "help@thinkup.com",
             'from_name' => $app_title, 'to' => array( array( 'email' => $to, 'name' => $to ) ) );
 
             //don't send email when running tests, just write it to the filesystem for assertions

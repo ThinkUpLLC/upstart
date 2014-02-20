@@ -21,7 +21,7 @@ class ForgotPasswordController extends Controller {
                 $email_view_mgr->assign('site_root_path', $config->getValue('site_root_path') );
                 $message = $email_view_mgr->fetch('_email.forgotpassword.tpl');
 
-                Mailer::mail($_POST['email'], "ThinkUp Password Recovery", $message);
+                Mailer::mail($_POST['email'], "Recover your ThinkUp password", $message);
 
                 $this->addSuccessMessage('Check your email for a password reset link.');
             } else {
