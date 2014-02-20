@@ -38,25 +38,32 @@
   text-decoration: none;
   display: inline-block;
   background: #4A90E2;
-  height: 80px;
   color: #fff;
-  font-weight: 600;
+  font-weight: 400;
   text-align: center;
   font-size: (15/16em);
   line-height: (16/15);
   letter-spacing: .02em;
-  border-radius: 40px;
-  padding: 24px 0;
-  width: 80px;
   margin-bottom: 10px;
+  border: 0;
+  -webkit-appearance: initial;
+  font-family: @tablet-gothic-condensed;
 }
 
 .btn-circle{
   .btn;
+  height: 80px;
+  border-radius: 50%;
+  padding: 24px 0;
+  width: 80px;
   margin-bottom: 0;
-  border: 0;
-  -webkit-appearance: initial;
-  font-family: @tablet-gothic-condensed;
+}
+
+.btn-pill {
+  width: 120px;
+  height: 30px;
+  padding: 7px 0;
+  border-radius: 4px;
 }
 
 
@@ -204,25 +211,29 @@ body {
   }
 
   .newsletter-signup-form {
+    position: relative;
+    padding-right: 40px;
+
     .email {
       border: 1px solid #46BCFF;
-      width: 75%;
+      width: 100%;
       display: inline-block;
       font-family: @tablet-gothic-condensed;
       padding: 3px 5px;
       font-size: 1em;
-      margin: 5px 3px 10px 0;
+      margin: 5px 0 10px 0;
       height: 36px;
     }
 
     .btn-submit{
-      display: inline-block;
+      position: absolute;
+      top: 5px;
+      right: 0;
       background: #4A90E2;
       color: #fff;
       font-family: @tablet-gothic-condensed;
       margin-bottom: 0;
       border: 0;
-      position: relative;
       vertical-align: baseline;
       -webkit-appearance: initial;
       padding: 8px;
@@ -516,10 +527,6 @@ body.is-not-full-height {
       text-align: center;
     }
 
-    .newsletter-signup-form {
-      display: inline-block;
-    }
-
     .section-header {
       margin: 0 0 15px;
     }
@@ -595,5 +602,5 @@ body.header-compressed {
 }
 
 @import "landing.less";
-@import "subscribe.less";
 @import "marketing-pages.less";
+@import "subscribe.less";
