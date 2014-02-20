@@ -83,6 +83,22 @@ class ThinkUpTablesMySQLDAO extends PDODAO {
         return array($this->getInsertId($ps), $api_key);
     }
 
+    public function updateOwnerEmail($current_email, $new_email) {
+        $q = "UPDATE tu_owners SET email=:new_email WHERE email=:current_email ";
+
+        $vars = array(
+            ':new_email'=>$new_email,
+            ':current_email'=>$current_email
+        );
+        if ($this->profiler_enabled) Profiler::setDAOMethod(__METHOD__);
+        $ps = $this->execute($q, $vars);
+        if ( $this->getUpdateCount($ps) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Generate a password salt and hash it given an email address and password.
      * @param  str $email ThinkUp member email address

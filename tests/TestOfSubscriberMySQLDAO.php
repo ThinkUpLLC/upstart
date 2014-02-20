@@ -264,6 +264,35 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $result = $dao->setUsername(102, 'willowrosenberg');
     }
 
+    public function testSetEmail() {
+        //Subscriber doesn't exist
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->setEmail(1, 'willowrosenberg@buffy.com');
+        $this->assertFalse($result);
+
+        //Subscriber exists and has no username
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>101, 'email'=>'willow@buffy.com',
+        'network_user_name'=>'willowr', 'thinkup_username'=>null));
+
+        $result = $dao->setEmail(101, 'willowrosenberg@buffy.com');
+        $this->assertTrue($result);
+
+        $sql = "SELECT * FROM subscribers WHERE id=101";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertTrue($data);
+        $this->assertEqual('willowrosenberg@buffy.com', $data['email']);
+
+        //Try to set a duplicate username
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>102, 'email'=>'xander@buffy.com',
+        'network_user_name'=>'xanderh', 'thinkup_username'=>null));
+
+        //test inserting same token twice
+        $this->expectException('DuplicateSubscriberEmailException');
+        $result = $dao->setEmail(102, 'willowrosenberg@buffy.com');
+    }
+
     public function testIsUsernameTaken() {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('email'=>'ginatrapani@example.com',

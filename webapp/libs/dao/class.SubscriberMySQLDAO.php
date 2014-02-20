@@ -78,6 +78,28 @@ class SubscriberMySQLDAO extends PDODAO {
         }
     }
 
+    public function setEmail($subscriber_id, $email) {
+        $q = " UPDATE subscribers SET email = :email WHERE id=:id";
+        $vars = array(
+            ':id'=>$subscriber_id,
+            ':email'=>$email
+        );
+        try {
+            if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+            $ps = $this->execute($q, $vars);
+            if ($this->getUpdateCount($ps) == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (PDOException $e) {
+            $message = $e->getMessage();
+            if (strpos($message,'Duplicate entry') !== false && strpos($message,'email') !== false) {
+                throw new DuplicateSubscriberEmailException($message);
+            }
+        }
+    }
+
     public function getTotalSubscribers($amount = 0) {
         $q = "SELECT count(*) as total FROM subscribers s ";
         if ($amount > 0) {
