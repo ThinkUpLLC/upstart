@@ -28,11 +28,11 @@
           <div class="form-control picker">
             <i class="fa fa-chevron-down icon"></i>
             <select id="control-timezone" name="timezone">
-              <option value=""{if $current_tz eq ''} selected{/if}>Select a time zone:</option>
+              <option value=""{if isset($current_tz) && $current_tz eq ''} selected{/if}>Select a time zone:</option>
               {foreach from=$tz_list key=group_name item=group}
                 <optgroup label="{$group_name}">
                 {foreach from=$group item=tz}
-                  <option id="tz-{$tz.display}" value='{$tz.val}'{if $current_tz eq $tz.val} selected{/if}>{$tz.display}</option>
+                  <option id="tz-{$tz.display}" value='{$tz.val}'{if isset($current_tz) && $current_tz eq $tz.val} selected{/if}>{$tz.display}</option>
                 {/foreach}
                 </optgroup>
               {/foreach}
