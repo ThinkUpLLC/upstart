@@ -1,11 +1,11 @@
 {include file="_appheader.v2.tpl" body_classes="settings menu-off" body_id="settings-registration"}
   <div class="container">
     <header class="container-header">
-      <h1>Welcome!</h1>
+      <h1>Welcome{if isset($network_username)}, {$network_username}{/if}!</h1>
       <h2>Now we need a few personal details. If a field is empty, please fill it in. If it’s not, please check to make sure it’s correct.</h2>
     </header>
 
-    <form action="" method="POST" class="form-horizontal" id="form-signin">
+    <form method="POST" class="form-horizontal" id="form-signin">
       <fieldset class="fieldset-no-header">
         <div class="form-group">
           <label class="control-label" for="email">Email</label>
@@ -41,7 +41,7 @@
         </div>
       </fieldset>
 
-      <input type="Submit" name="Submit" value="Save and continue" class="btn btn-pill btn-submit">
+      <input type="Submit" name="Submit" value="Pay with Amazon" class="btn btn-pill btn-submit">
     </form>
 
 {include file="_appfooter.v2.tpl" include_tz_js=true}

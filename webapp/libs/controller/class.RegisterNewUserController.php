@@ -27,9 +27,7 @@ class RegisterNewUserController extends SignUpController {
                     try {
                         $authed_twitter_user = $api->verifyCredentials();
                         if (isset($authed_twitter_user['user_name'])) {
-                           echo "<pre>";
-                           print_r($authed_twitter_user);
-                           echo "</pre>";
+                            $this->addToView('network_username', '@'.$authed_twitter_user['user_name']);
                         } else {
                             $this->addErrorMessage($this->generic_error_msg);
                             $this->logError("Invalid Twitter user returned: ".
@@ -88,8 +86,36 @@ class RegisterNewUserController extends SignUpController {
                     $this->logError( "Facebook auth error: Invalid CSRF token", __FILE__,__LINE__,__METHOD__);
                 }
             }
-        }
+       }
+       if (self::hasFormBeenPosted()) {
+            $click_dao = new ClickMySQLDAO();
+            $caller_reference = $click_dao->insert();
+            $this->addToView('caller_reference', $caller_reference);
+            SessionCache::put('caller_reference', $caller_reference);
+
+            $selected_level = null;
+            if (isset($_GET['level']) && ($_GET['level'] == "member" || $_GET['level'] == "pro")) {
+                $selected_level = htmlspecialchars($_GET['level']);
+                //Get Amazon URL
+                $callback_url = UpstartHelper::getApplicationURL().'firstrun.php?';
+                $amount = SignUpController::$subscription_levels[$selected_level];
+                print_r(SignUpController::$subscription_levels);
+                $subscribe_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference, $callback_url, $amount);
+                header('Location: '.$subscribe_url);
+
+            } else {
+                $this->addErrorMessage('TODO REWRITE THIS ERROR Error: no level chosen');
+            }
+       }
+
         $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
         return $this->generateView();
+    }
+
+    /*
+    TODO: Complete writing this function
+     */
+    protected function hasFormBeenPosted() {
+        return (isset($_POST['timezone']));
     }
 }
