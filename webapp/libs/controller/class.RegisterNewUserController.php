@@ -90,7 +90,6 @@ class RegisterNewUserController extends SignUpController {
        if (self::hasFormBeenPosted()) {
             $click_dao = new ClickMySQLDAO();
             $caller_reference = $click_dao->insert();
-            $this->addToView('caller_reference', $caller_reference);
             SessionCache::put('caller_reference', $caller_reference);
 
             $selected_level = null;
@@ -99,9 +98,8 @@ class RegisterNewUserController extends SignUpController {
                 //Get Amazon URL
                 $callback_url = UpstartHelper::getApplicationURL().'firstrun.php?';
                 $amount = SignUpController::$subscription_levels[$selected_level];
-                print_r(SignUpController::$subscription_levels);
-                $subscribe_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference, $callback_url, $amount);
-                header('Location: '.$subscribe_url);
+                $pay_with_amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference, $callback_url, $amount);
+                header('Location: '.$pay_with_amazon_url);
 
             } else {
                 $this->addErrorMessage('TODO REWRITE THIS ERROR Error: no level chosen');
