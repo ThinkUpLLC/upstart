@@ -72,44 +72,9 @@ class SettingsController extends AuthController {
         $config->getValue('user_installation_url'));
         $this->addToView('thinkup_url', $user_installation_url);
 
-        $this->addToView('tz_list', self::getTimeZoneList());
+        $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
 
         $tu_tables_dao->switchToUpstartDatabase();
         return $this->generateView();
 	}
-
-    /**
-     * Returns an array of time zone options formatted for display in a select field.
-     *
-     * @return arr An associative array of options, ready for optgrouping.
-     */
-    public static function getTimeZoneList() {
-        $tz_options = timezone_identifiers_list();
-        $view_tzs = array();
-
-        foreach ($tz_options as $option) {
-            $option_data = explode('/', $option);
-
-            // don't allow user to select UTC
-            if ($option_data[0] == 'UTC') {
-                continue;
-            }
-
-            // handle things like the many Indianas
-            if (isset($option_data[2])) {
-                $option_data[1] = $option_data[1] . ': ' . $option_data[2];
-            }
-
-            // avoid undefined offset error
-            if (!isset($option_data[1])) {
-                $option_data[1] = $option_data[0];
-            }
-
-            $view_tzs[$option_data[0]][] = array(
-                'val' => $option,
-                'display' => str_replace('_', ' ', $option_data[1])
-            );
-        }
-        return $view_tzs;
-    }
 }
