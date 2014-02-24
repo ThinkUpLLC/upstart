@@ -17,10 +17,10 @@ body_classes="marketing marketing-page" body_id="marketing-subscribe"}
       <h3 class="section-subheader">Choose the level that’s right for you.</h3>
     </section>
 
-    <div class="section-group subscription-levels{if $level} is-preselected{/if}">
+    <div class="section-group subscription-levels">
 
       <section class="section section-subscription-level"
-      id="section-subscription-member" data-subscribe-url="{$subscribe_member_url}">
+      id="section-subscription-member">
         <h3 class="section-header">Member</h3>
         <div class="level-cost">
           <div class="annually">$60/year</div>
@@ -34,13 +34,13 @@ body_classes="marketing marketing-page" body_id="marketing-subscribe"}
 
         <div class="action-buttons">
           <div class="action-buttons-label">Join with:</div>
-          <a href="#" class="btn btn-pill btn-twitter"><i class="fa fa-twitter icon"></i> Twitter</a>
-          <a href="#" class="btn btn-pill btn-facebook"><i class="fa fa-facebook icon"></i> Facebook</a>
+          <a href="{$twitter_member_link}" class="btn btn-pill btn-twitter"><i class="fa fa-twitter icon"></i> Twitter</a>
+          <a href="{$facebook_member_link}" class="btn btn-pill btn-facebook"><i class="fa fa-facebook icon"></i> Facebook</a>
         </div>
       </section>
 
       <section class="section section-subscription-level"
-      id="section-subscription-pro" data-subscribe-url="{$subscribe_pro_url}">
+      id="section-subscription-pro">
         <h3 class="section-header">Pro</h3>
         <div class="level-cost">
           <div class="annually">$120/year</div>
@@ -54,8 +54,8 @@ body_classes="marketing marketing-page" body_id="marketing-subscribe"}
 
         <div class="action-buttons">
           <div class="action-buttons-label">Join with:</div>
-          <a href="#" class="btn btn-pill btn-twitter"><i class="fa fa-twitter icon"></i> Twitter</a>
-          <a href="#" class="btn btn-pill btn-facebook"><i class="fa fa-facebook icon"></i> Facebook</a>
+          <a href="{$twitter_pro_link}" class="btn btn-pill btn-twitter"><i class="fa fa-twitter icon"></i> Twitter</a>
+          <a href="{$facebook_pro_link}" class="btn btn-pill btn-facebook"><i class="fa fa-facebook icon"></i> Facebook</a>
         </div>
       </section>
 
@@ -73,7 +73,7 @@ body_classes="marketing marketing-page" body_id="marketing-subscribe"}
 
 
       <section class="section col-md-2 col-lg-3 col-lg-right"
-      id="section-subscription-executive" data-subscribe-url="{$subscribe_executive_url}">
+      id="section-subscription-executive">
         <h3 class="section-header">I am an executive!</h3>
 
         <div class="level-description">

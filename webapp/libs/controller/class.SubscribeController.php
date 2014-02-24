@@ -1,31 +1,20 @@
 <?php
 /**
- * Create interface to Amazon Flexible Payment System
+ * Create interface to Twitter and Facebook
  */
-class SubscribeController extends Controller {
+class SubscribeController extends SignUpController {
     public function control() {
         $this->disableCaching(); //Don't cache because click ID/Amazon caller reference must be unique per user
         $this->setViewTemplate('subscribe.tpl');
-        $click_dao = new ClickMySQLDAO();
-        $caller_reference = $click_dao->insert();
-        $this->addToView('caller_reference', $caller_reference);
-        SessionCache::put('caller_reference', $caller_reference);
+        $twitter_member_link = $this->getTwitterAuthLink('register.php?n=twitter&level=member');
+        $this->addToView('twitter_member_link', $twitter_member_link);
+        $facebook_member_link = $this->getFacebookConnectLink('register.php?n=facebook&level=member');
+        $this->addToView('facebook_member_link', $facebook_member_link);
 
-        $selected_level = null;
-        if (isset($_GET['level']) && ($_GET['level'] == "member" || $_GET['level'] == "pro"
-        || $_GET['level'] == "executive" || $_GET['level'] == "earlybird")) {
-            $selected_level = htmlspecialchars($_GET['level']);
-        }
-        foreach (SignUpController::$subscription_levels as $level=>$amount) {
-            //Get Amazon URL
-            $callback_url = UpstartHelper::getApplicationURL().'new.php?l='.$level;
-            $subscribe_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference, $callback_url, $amount);
-            $this->addToView('subscribe_'.$level.'_url', $subscribe_url);
-            if ($level == $selected_level) {
-                $this->addToView('selected_subscribe_url', $subscribe_url);
-            }
-        }
-        $this->addToView('level', $selected_level);
+        $twitter_pro_link = self::getTwitterAuthLink('register.php?n=twitter&level=pro');
+        $this->addToView('twitter_pro_link', $twitter_pro_link);
+        $facebook_pro_link = self::getFacebookConnectLink('register.php?n=facebook&level=pro');
+        $this->addToView('facebook_pro_link', $facebook_pro_link);
 
         return $this->generateView();
     }
