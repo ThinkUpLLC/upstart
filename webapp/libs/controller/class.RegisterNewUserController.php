@@ -140,7 +140,7 @@ class RegisterNewUserController extends SignUpController {
             if (isset($_GET['level']) && ($_GET['level'] == "member" || $_GET['level'] == "pro")) {
                 $selected_level = htmlspecialchars($_GET['level']);
                 //Get Amazon URL
-                $callback_url = UpstartHelper::getApplicationURL().'firstrun.php?';
+                $callback_url = UpstartHelper::getApplicationURL().'welcome.php?';
                 $amount = SignUpController::$subscription_levels[$selected_level];
                 $pay_with_amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference, $callback_url, $amount);
                 header('Location: '.$pay_with_amazon_url);
