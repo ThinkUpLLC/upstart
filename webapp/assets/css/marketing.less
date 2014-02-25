@@ -251,13 +251,23 @@ body {
   .section-header {
     color: #000;
     margin-top: 15px;
-    display: inline-block;
+    float: left;
+    width: 50%;
   }
 
   .action-links {
-    margin: 15px 0;
-    text-align: left;
+    margin: 0 0 15px;
+    text-align: middle;
+    float: right;
+    width: 50%;
 
+    .btn {
+      width: 132px;
+      font-size: (17/16em);
+      line-height: (18/17);
+      padding: 22px 0;
+      border-radius: 40px;
+    }
   }
 }
 
@@ -427,24 +437,12 @@ body.is-not-full-height {
       font-size: (17/16em);
       line-height: (18/17);
       padding: 22px 0;
+      border-radius: 40px;
     }
   }
 
   #section-signup-top {
-    .clearfix;
     height: 135px;
-
-    .section-header {
-      margin-top: 15px;
-      float: left;
-    }
-
-    .action-links {
-      margin: 15px 0;
-      text-align: left;
-      float: right;
-      width: 50%;
-    }
   }
 }
 

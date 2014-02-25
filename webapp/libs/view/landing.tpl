@@ -8,20 +8,6 @@ body_classes="landing" body_id="landing-home"}
     </header>
 
     <section class="section col-md-2 col-lg-1 row-1 col-lg-right section-signup" id="section-signup-top">
-{*
-      <h3 class="section-header">Get on the list.<br>
-      We’ll have a spot ready<br>
-      for you soon.</h3>
-
-      <div class="action-links">
-        <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">
-          <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email">
-          <button type="submit" value="Subscribe" name="subscribe" class="btn-submit"><i class="fa fa-envelope-o"></i></button>
-        </form>
-        <div class="login-link">Beta member? <a href="user/">Log in here</a></div>
-      </div>
-*}
-
       <h3 class="section-header">ThinkUp costs money.
       It’s worth it. <a href="{$site_root_path}subscribe.php#why">Find out why.</a></h3>
       <div class="action-links">
