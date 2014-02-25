@@ -625,7 +625,7 @@ a:hover {
   font-size: 22px;
   line-height: 20px;
   color: #2785d3;
-  top: 4px;
+  top: 7px;
   left: 10px;
   background: transparent;
   border: 0;
@@ -734,19 +734,29 @@ body.menu-off .navbar-default .navbar-header .menu-trigger {
   bottom: -25px;
   right: 10px;
 }
+#jPanelMenu-menu .menu-options li.user-info a,
+#menu .menu-options li.user-info a {
+  color: #3ea5cf;
+  padding: 0;
+  display: inline;
+}
+#jPanelMenu-menu .menu-options li.user-info a:hover,
+#menu .menu-options li.user-info a:hover {
+  background: inherit;
+}
 .app-message {
   position: fixed;
   width: 100%;
   top: 40px;
   left: 0;
-  background: #fffabe;
+  background: #FFFABE;
   border-bottom: 1px solid #BBC7CE;
   font-size: 13px;
   line-height: 1.23;
   padding: 7px 0;
   font-weight: 400;
   text-align: center;
-  z-index: 1000;
+  z-index: 100;
 }
 .app-message.app-message-warning {
   color: #9d0214;
@@ -863,6 +873,13 @@ body.app-message-visible .container {
 body.app-message-visible.account .container {
   padding-top: 160px;
 }
+.no-insights {
+  min-width: 310px;
+  max-width: 450px;
+  width: 100%;
+  margin: 40px auto;
+  text-align: center;
+}
 .stream {
   min-width: 320px;
   width: 100%;
@@ -924,6 +941,9 @@ body.app-message-visible.account .container {
 .insight .panel-heading {
   background: #fc939e;
 }
+.insight.insight-hero .panel-heading .panel-title {
+  color: #d0374b;
+}
 .insight .panel-body,
 .insight .panel-desktop-right,
 .insight .panel-footer {
@@ -937,10 +957,10 @@ body.app-message-visible.account .container {
   background-color: #ffffff;
 }
 .insight .insight-color-text {
-  color: #fc939e;
+  color: #d0374b !important;
 }
 .insight .insight-color-background {
-  background-color: #fc939e;
+  background-color: #fc939e !important;
 }
 .insight .panel-heading {
   border-radius: 0;
@@ -950,10 +970,11 @@ body.app-message-visible.account .container {
 }
 .insight .panel-heading .panel-title {
   font-family: "tablet-gothic-semi-condensed", sans-serif;
-  font-size: 18px;
-  line-height: 1.167;
-  margin-bottom: 6px;
   font-weight: 600;
+  font-size: 19px;
+  line-height: 1.105263157894737;
+  margin-bottom: 6px;
+  font-weight: 400;
   letter-spacing: .03em;
   color: white;
 }
@@ -982,6 +1003,18 @@ body.app-message-visible.account .container {
 .insight .panel-body .panel-body-inner {
   padding: 10px 2%;
   letter-spacing: .01em;
+}
+.insight .insight-hero-image {
+  position: relative;
+}
+.insight .insight-hero-image .insight-hero-credit {
+  color: #fff;
+  font-size: 12px;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  text-shadow: 1px 1px 1px #333;
+  opacity: .9;
 }
 .insight .panel-footer {
   border-radius: 0;
@@ -1043,8 +1076,8 @@ body.app-message-visible.account .container {
   right: 12px;
 }
 .insight .panel-footer .share-menu .share-services {
-  width: 247px;
-  padding: 0 30px;
+  width: 232px;
+  padding: 0 25px;
   margin: 0 auto;
 }
 .insight .panel-footer .share-menu .share-services:before,
@@ -1060,7 +1093,12 @@ body.app-message-visible.account .container {
 .insight .panel-footer .share-menu .share-services .share-service {
   list-style: none;
   float: left;
-  margin: 0 15px;
+  margin: 0 20px;
+}
+.insight .panel-footer .share-menu .share-services .share-service .fa-link {
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 .insight .panel-footer .share-menu.open {
   border: 0;
@@ -1074,43 +1112,147 @@ body.app-message-visible.account .container {
 }
 .insight-hero .panel-heading .panel-title {
   font-size: 24px;
-  line-height: 1;
+  line-height: 1.0833333333333333;
   letter-spacing: .01em;
   margin-bottom: 8px;
+  font-weight: 600;
 }
-.insight-historical {
+.insight-pea {
+  background: #9dd767;
+  border-top-color: #5fac1c;
+  border-bottom-color: #9dd767;
+}
+.insight-pea .panel-heading {
+  background: #9dd767;
+}
+.insight-pea.insight-hero .panel-heading .panel-title {
+  color: #417505;
+}
+.insight-pea .panel-body,
+.insight-pea .panel-desktop-right,
+.insight-pea .panel-footer {
+  background: #ffffff;
+}
+.insight-pea .panel-footer {
+  border-top-color: #dbdbdb;
+}
+.insight-pea .panel-footer .share-menu {
+  border-color: #dbdbdb;
+  background-color: #ffffff;
+}
+.insight-pea .insight-color-text {
+  color: #417505 !important;
+}
+.insight-pea .insight-color-background {
+  background-color: #9dd767 !important;
+}
+.insight-salmon {
+  background: #fc939e;
+  border-top-color: #da6070;
+  border-bottom-color: #fc939e;
+}
+.insight-salmon .panel-heading {
+  background: #fc939e;
+}
+.insight-salmon.insight-hero .panel-heading .panel-title {
+  color: #d0374b;
+}
+.insight-salmon .panel-body,
+.insight-salmon .panel-desktop-right,
+.insight-salmon .panel-footer {
+  background: #ffffff;
+}
+.insight-salmon .panel-footer {
+  border-top-color: #dbdbdb;
+}
+.insight-salmon .panel-footer .share-menu {
+  border-color: #dbdbdb;
+  background-color: #ffffff;
+}
+.insight-salmon .insight-color-text {
+  color: #d0374b !important;
+}
+.insight-salmon .insight-color-background {
+  background-color: #fc939e !important;
+}
+.insight-creamsicle {
+  background: #ffbb4e;
+  border-top-color: #ff8f41;
+  border-bottom-color: #ffbb4e;
+}
+.insight-creamsicle .panel-heading {
+  background: #ffbb4e;
+}
+.insight-creamsicle.insight-hero .panel-heading .panel-title {
+  color: #f36400;
+}
+.insight-creamsicle .panel-body,
+.insight-creamsicle .panel-desktop-right,
+.insight-creamsicle .panel-footer {
+  background: #ffffff;
+}
+.insight-creamsicle .panel-footer {
+  border-top-color: #dbdbdb;
+}
+.insight-creamsicle .panel-footer .share-menu {
+  border-color: #dbdbdb;
+  background-color: #ffffff;
+}
+.insight-creamsicle .insight-color-text {
+  color: #f36400 !important;
+}
+.insight-creamsicle .insight-color-background {
+  background-color: #ffbb4e !important;
+}
+.insight-historical,
+.insight-sepia {
   background: #c0bdaf;
   border-top-color: #a19f8b;
   border-bottom-color: #c0bdaf;
 }
-.insight-historical .panel-heading {
+.insight-historical .panel-heading,
+.insight-sepia .panel-heading {
   background: #c0bdaf;
 }
+.insight-historical.insight-hero .panel-heading .panel-title,
+.insight-sepia.insight-hero .panel-heading .panel-title {
+  color: #8a876f;
+}
 .insight-historical .panel-body,
+.insight-sepia .panel-body,
 .insight-historical .panel-desktop-right,
-.insight-historical .panel-footer {
+.insight-sepia .panel-desktop-right,
+.insight-historical .panel-footer,
+.insight-sepia .panel-footer {
   background: #e7e5d9;
 }
-.insight-historical .panel-footer {
+.insight-historical .panel-footer,
+.insight-sepia .panel-footer {
   border-top-color: #d7d6ce;
 }
-.insight-historical .panel-footer .share-menu {
+.insight-historical .panel-footer .share-menu,
+.insight-sepia .panel-footer .share-menu {
   border-color: #d7d6ce;
   background-color: #e7e5d9;
 }
-.insight-historical .insight-color-text {
-  color: #c0bdaf;
+.insight-historical .insight-color-text,
+.insight-sepia .insight-color-text {
+  color: #8a876f !important;
 }
-.insight-historical .insight-color-background {
-  background-color: #c0bdaf;
+.insight-historical .insight-color-background,
+.insight-sepia .insight-color-background {
+  background-color: #c0bdaf !important;
 }
 .insight-purple {
-  background: #b78ee4;
-  border-top-color: #6f36b7;
-  border-bottom-color: #b78ee4;
+  background: #b690e2;
+  border-top-color: #8e69c2;
+  border-bottom-color: #b690e2;
 }
 .insight-purple .panel-heading {
-  background: #b78ee4;
+  background: #b690e2;
+}
+.insight-purple.insight-hero .panel-heading .panel-title {
+  color: #7348b0;
 }
 .insight-purple .panel-body,
 .insight-purple .panel-desktop-right,
@@ -1125,88 +1267,10 @@ body.app-message-visible.account .container {
   background-color: #ffffff;
 }
 .insight-purple .insight-color-text {
-  color: #b78ee4;
+  color: #7348b0 !important;
 }
 .insight-purple .insight-color-background {
-  background-color: #b78ee4;
-}
-.insight-orange {
-  background: #ffbd54;
-  border-top-color: #ff9146;
-  border-bottom-color: #ffbd54;
-}
-.insight-orange .panel-heading {
-  background: #ffbd54;
-}
-.insight-orange .panel-body,
-.insight-orange .panel-desktop-right,
-.insight-orange .panel-footer {
-  background: #ffffff;
-}
-.insight-orange .panel-footer {
-  border-top-color: #dbdbdb;
-}
-.insight-orange .panel-footer .share-menu {
-  border-color: #dbdbdb;
-  background-color: #ffffff;
-}
-.insight-orange .insight-color-text {
-  color: #ffbd54;
-}
-.insight-orange .insight-color-background {
-  background-color: #ffbd54;
-}
-.insight-green {
-  background: #9dd767;
-  border-top-color: #5fac1c;
-  border-bottom-color: #9dd767;
-}
-.insight-green .panel-heading {
-  background: #9dd767;
-}
-.insight-green .panel-body,
-.insight-green .panel-desktop-right,
-.insight-green .panel-footer {
-  background: #ffffff;
-}
-.insight-green .panel-footer {
-  border-top-color: #dbdbdb;
-}
-.insight-green .panel-footer .share-menu {
-  border-color: #dbdbdb;
-  background-color: #ffffff;
-}
-.insight-green .insight-color-text {
-  color: #9dd767;
-}
-.insight-green .insight-color-background {
-  background-color: #9dd767;
-}
-.insight-red {
-  background: #fc939e;
-  border-top-color: #da6070;
-  border-bottom-color: #fc939e;
-}
-.insight-red .panel-heading {
-  background: #fc939e;
-}
-.insight-red .panel-body,
-.insight-red .panel-desktop-right,
-.insight-red .panel-footer {
-  background: #ffffff;
-}
-.insight-red .panel-footer {
-  border-top-color: #dbdbdb;
-}
-.insight-red .panel-footer .share-menu {
-  border-color: #dbdbdb;
-  background-color: #ffffff;
-}
-.insight-red .insight-color-text {
-  color: #fc939e;
-}
-.insight-red .insight-color-background {
-  background-color: #fc939e;
+  background-color: #b690e2 !important;
 }
 .insight-mint {
   background: #41dab3;
@@ -1215,6 +1279,9 @@ body.app-message-visible.account .container {
 }
 .insight-mint .panel-heading {
   background: #41dab3;
+}
+.insight-mint.insight-hero .panel-heading .panel-title {
+  color: #1c8e6e;
 }
 .insight-mint .panel-body,
 .insight-mint .panel-desktop-right,
@@ -1229,10 +1296,155 @@ body.app-message-visible.account .container {
   background-color: #ffffff;
 }
 .insight-mint .insight-color-text {
-  color: #41dab3;
+  color: #1c8e6e !important;
 }
 .insight-mint .insight-color-background {
-  background-color: #41dab3;
+  background-color: #41dab3 !important;
+}
+.insight-bubblegum {
+  background: #f576b5;
+  border-top-color: #b3487c;
+  border-bottom-color: #f576b5;
+}
+.insight-bubblegum .panel-heading {
+  background: #f576b5;
+}
+.insight-bubblegum.insight-hero .panel-heading .panel-title {
+  color: #8f3963;
+}
+.insight-bubblegum .panel-body,
+.insight-bubblegum .panel-desktop-right,
+.insight-bubblegum .panel-footer {
+  background: #ffffff;
+}
+.insight-bubblegum .panel-footer {
+  border-top-color: #dbdbdb;
+}
+.insight-bubblegum .panel-footer .share-menu {
+  border-color: #dbdbdb;
+  background-color: #ffffff;
+}
+.insight-bubblegum .insight-color-text {
+  color: #8f3963 !important;
+}
+.insight-bubblegum .insight-color-background {
+  background-color: #f576b5 !important;
+}
+.insight-seabreeze {
+  background: #44c9d7;
+  border-top-color: #198a9c;
+  border-bottom-color: #44c9d7;
+}
+.insight-seabreeze .panel-heading {
+  background: #44c9d7;
+}
+.insight-seabreeze.insight-hero .panel-heading .panel-title {
+  color: #126370;
+}
+.insight-seabreeze .panel-body,
+.insight-seabreeze .panel-desktop-right,
+.insight-seabreeze .panel-footer {
+  background: #ffffff;
+}
+.insight-seabreeze .panel-footer {
+  border-top-color: #dbdbdb;
+}
+.insight-seabreeze .panel-footer .share-menu {
+  border-color: #dbdbdb;
+  background-color: #ffffff;
+}
+.insight-seabreeze .insight-color-text {
+  color: #126370 !important;
+}
+.insight-seabreeze .insight-color-background {
+  background-color: #44c9d7 !important;
+}
+.insight-dijon {
+  background: #e4bf28;
+  border-top-color: #c59301;
+  border-bottom-color: #e4bf28;
+}
+.insight-dijon .panel-heading {
+  background: #e4bf28;
+}
+.insight-dijon.insight-hero .panel-heading .panel-title {
+  color: #926d01;
+}
+.insight-dijon .panel-body,
+.insight-dijon .panel-desktop-right,
+.insight-dijon .panel-footer {
+  background: #ffffff;
+}
+.insight-dijon .panel-footer {
+  border-top-color: #dbdbdb;
+}
+.insight-dijon .panel-footer .share-menu {
+  border-color: #dbdbdb;
+  background-color: #ffffff;
+}
+.insight-dijon .insight-color-text {
+  color: #926d01 !important;
+}
+.insight-dijon .insight-color-background {
+  background-color: #e4bf28 !important;
+}
+.insight-sandalwood {
+  background: #fd8560;
+  border-top-color: #d13a0a;
+  border-bottom-color: #fd8560;
+}
+.insight-sandalwood .panel-heading {
+  background: #fd8560;
+}
+.insight-sandalwood.insight-hero .panel-heading .panel-title {
+  color: #a02c08;
+}
+.insight-sandalwood .panel-body,
+.insight-sandalwood .panel-desktop-right,
+.insight-sandalwood .panel-footer {
+  background: #ffffff;
+}
+.insight-sandalwood .panel-footer {
+  border-top-color: #dbdbdb;
+}
+.insight-sandalwood .panel-footer .share-menu {
+  border-color: #dbdbdb;
+  background-color: #ffffff;
+}
+.insight-sandalwood .insight-color-text {
+  color: #a02c08 !important;
+}
+.insight-sandalwood .insight-color-background {
+  background-color: #fd8560 !important;
+}
+.insight-caramel {
+  background: #dd814b;
+  border-top-color: #9e5e14;
+  border-bottom-color: #dd814b;
+}
+.insight-caramel .panel-heading {
+  background: #dd814b;
+}
+.insight-caramel.insight-hero .panel-heading .panel-title {
+  color: #71430e;
+}
+.insight-caramel .panel-body,
+.insight-caramel .panel-desktop-right,
+.insight-caramel .panel-footer {
+  background: #ffffff;
+}
+.insight-caramel .panel-footer {
+  border-top-color: #dbdbdb;
+}
+.insight-caramel .panel-footer .share-menu {
+  border-color: #dbdbdb;
+  background-color: #ffffff;
+}
+.insight-caramel .insight-color-text {
+  color: #71430e !important;
+}
+.insight-caramel .insight-color-background {
+  background-color: #dd814b !important;
 }
 .panel-heading h2.lead {
   font-weight: 700;
@@ -1271,6 +1483,10 @@ body.app-message-visible.account .container {
 }
 .tweet .tweet-actions .tweet-action:hover {
   color: #46bcff;
+}
+.tweet .tweet-actions .tweet-action-permalink {
+  font-family: "tablet-gothic-wide", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 12px;
 }
 .tweet-without-photo .tweet-photo {
   display: none;
@@ -1409,6 +1625,15 @@ body.app-message-visible.account .container {
   background: #1777ca;
   color: #fff;
 }
+.btn-transparent {
+  background: transparent;
+  color: #2785d3;
+}
+.btn-transparent:hover,
+.btn-transparent:focus {
+  background: transparent;
+  color: #46bcff;
+}
 .btn-see-all {
   width: 102%;
   padding: 5px 5px 0;
@@ -1440,6 +1665,24 @@ body.app-message-visible.account .container {
 .btn-see-all:focus {
   outline: 0;
   color: #999999;
+}
+@media (min-width: 780px) {
+  body#welcome .stream .date-group {
+    width: 540px;
+    margin: 0 auto;
+  }
+  body#welcome .stream .date-group .date-marker {
+    display: none;
+  }
+  body#welcome .stream .date-group .insight {
+    margin-left: 0;
+  }
+}
+body#welcome .insight {
+  background: #fff;
+}
+body#welcome .insight .panel-heading {
+  background: #fff;
 }
 @media (max-width: 420px) {
   .insight .panel-body .panel-body-inner {
