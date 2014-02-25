@@ -96,6 +96,27 @@ body.marketing-page {
     min-height: 0;
   }
 
+  #section-signup-bottom {
+    .section-header, .action-links {
+      float: none;
+      width: 100%;
+      text-align: center;
+    }
+
+    .newsletter-signup-form {
+      text-align: center;
+    }
+  }
+
+  #section-subscription-executive {
+    text-align: center;
+    padding-bottom: 20px;
+
+    .section-header, .level-description {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
 
   @media (min-width: 31.875em) {
     @section-height-fixed: 240px;
@@ -105,7 +126,20 @@ body.marketing-page {
     }
 
     #section-subscription-executive, #section-signup-bottom {
-      height: 110px;
+      height: auto;
+    }
+
+    #section-signup-bottom {
+      .section-header {
+        margin-top: 0px;
+      }
+
+      .action-links {
+        .newsletter-signup-form {
+          max-width: 320px;
+          margin: 0 auto;
+        }
+      }
     }
   }
 
@@ -124,6 +158,12 @@ body.marketing-page {
 
     #section-subscription-executive, #section-signup-bottom {
       border: 0;
+    }
+
+    #section-signup-bottom {
+      .section-header {
+        margin-top: 27px;
+      }
     }
   }
 }

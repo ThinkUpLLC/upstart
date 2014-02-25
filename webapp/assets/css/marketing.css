@@ -229,11 +229,21 @@ body {
 #section-signup-top .section-header {
   color: #000;
   margin-top: 15px;
-  display: inline-block;
+  float: left;
+  width: 50%;
 }
 #section-signup-top .action-links {
-  margin: 15px 0;
-  text-align: left;
+  margin: 0 0 15px;
+  text-align: middle;
+  float: right;
+  width: 50%;
+}
+#section-signup-top .action-links .btn {
+  width: 132px;
+  font-size: 1.0625em;
+  line-height: 1.0588235294117647;
+  padding: 22px 0;
+  border-radius: 40px;
 }
 #section-social {
   padding: 0;
@@ -393,29 +403,10 @@ body.is-not-full-height #section-copyright {
     font-size: 1.0625em;
     line-height: 1.0588235294117647;
     padding: 22px 0;
+    border-radius: 40px;
   }
   #section-signup-top {
     height: 135px;
-  }
-  #section-signup-top:before,
-  #section-signup-top:after {
-    content: " ";
-    /* 1 */
-    display: table;
-    /* 2 */
-  }
-  #section-signup-top:after {
-    clear: both;
-  }
-  #section-signup-top .section-header {
-    margin-top: 15px;
-    float: left;
-  }
-  #section-signup-top .action-links {
-    margin: 15px 0;
-    text-align: left;
-    float: right;
-    width: 50%;
   }
 }
 @media (min-width: 48em) {
@@ -1101,6 +1092,24 @@ body.marketing-page #section-subscription-executive,
 body.marketing-page #section-signup-bottom {
   min-height: 0;
 }
+body.marketing-page #section-signup-bottom .section-header,
+body.marketing-page #section-signup-bottom .action-links {
+  float: none;
+  width: 100%;
+  text-align: center;
+}
+body.marketing-page #section-signup-bottom .newsletter-signup-form {
+  text-align: center;
+}
+body.marketing-page #section-subscription-executive {
+  text-align: center;
+  padding-bottom: 20px;
+}
+body.marketing-page #section-subscription-executive .section-header,
+body.marketing-page #section-subscription-executive .level-description {
+  max-width: 400px;
+  margin: 0 auto;
+}
 @media (min-width: 31.875em) {
   body.marketing-page .section-subscription-level,
   body.marketing-page .section-subscription-level.col-lg-1 {
@@ -1108,7 +1117,14 @@ body.marketing-page #section-signup-bottom {
   }
   body.marketing-page #section-subscription-executive,
   body.marketing-page #section-signup-bottom {
-    height: 110px;
+    height: auto;
+  }
+  body.marketing-page #section-signup-bottom .section-header {
+    margin-top: 0px;
+  }
+  body.marketing-page #section-signup-bottom .action-links .newsletter-signup-form {
+    max-width: 320px;
+    margin: 0 auto;
   }
 }
 @media (min-width: 48em) {
@@ -1125,5 +1141,8 @@ body.marketing-page #section-signup-bottom {
   body.marketing-page #section-subscription-executive,
   body.marketing-page #section-signup-bottom {
     border: 0;
+  }
+  body.marketing-page #section-signup-bottom .section-header {
+    margin-top: 27px;
   }
 }
