@@ -637,6 +637,10 @@ body.header-compressed #section-signup-top .login-link {
 #section-meaning {
   background-image: url(../img/photos-illustration.png);
 }
+#section-meaning,
+#section-community {
+  background-position: center 100px;
+}
 #section-different {
   min-height: 0;
 }
@@ -750,8 +754,9 @@ body.header-compressed #section-signup-top .login-link {
 }
 @media (min-width: 48em) {
   #section-community,
-  #section-companies {
-    background-position-y: 130px;
+  #section-companies,
+  #section-meaning {
+    background-position-y: 140px;
   }
   #section-stats {
     background-position: center 110px;
@@ -764,9 +769,6 @@ body.header-compressed #section-signup-top .login-link {
   }
   #section-matters {
     background-position: center 120px;
-  }
-  #section-meaning {
-    background-position: center 125px;
   }
   #section-goals {
     background-position: 46px 100px;
@@ -996,7 +998,7 @@ body.marketing-page #section-subscription-member .level-cost .monthly {
 }
 @media (min-width: 48em) {
   body.marketing-page #section-subscription-member {
-    border-color: #eedef1;
+    border-color: #dcbee3;
   }
 }
 body.marketing-page #section-subscription-pro {
@@ -1010,7 +1012,7 @@ body.marketing-page #section-subscription-pro .level-cost .monthly {
 }
 @media (min-width: 48em) {
   body.marketing-page #section-subscription-pro {
-    border-color: #daeece;
+    border-color: #b5dc9d;
   }
 }
 body.marketing-page #section-subscription-executive {
@@ -1024,7 +1026,7 @@ body.marketing-page #section-subscription-executive .level-cost .monthly {
 }
 @media (min-width: 48em) {
   body.marketing-page #section-subscription-executive {
-    border-color: #edc6cb;
+    border-color: #da8d97;
   }
 }
 body.marketing-page .section-subscription-level {
