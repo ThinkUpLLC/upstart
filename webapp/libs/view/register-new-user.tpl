@@ -39,9 +39,16 @@
             </select>
           </div>
         </div>
+        <div class="form-group form-group-radio">
+          <label class="control-label" for="terms">I agree to the <a href="https://github.com/ThinkUpLLC/policy">terms of service</a></label>
+          <div class="form-control">
+            <input type="checkbox" class="radio-control" id="terms">
+          </div>
+        </div>
+
       </fieldset>
 
-      <input type="Submit" name="Submit" value="Pay with Amazon" class="btn btn-pill btn-submit">
+      <input type="Submit" name="Submit" value="Pay with Amazon" class="btn btn-pill btn-submit is-static">
     </form>
 
 {include file="_appfooter.v2.tpl" include_tz_js=true}

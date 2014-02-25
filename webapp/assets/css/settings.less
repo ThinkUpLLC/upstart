@@ -107,6 +107,26 @@ body.settings {
           }
         }
 
+        &.form-group-radio {
+          .clearfix;
+          .control-label {
+            float: right;
+            width: 100%;
+            max-width: 340px;
+            min-width: 290px;
+            padding-left: 0;
+          }
+
+          .form-control {
+            float: left;
+            width: 30px;
+            min-width: 0;
+            margin: 10px 0 0 10px;
+            height: auto;
+            padding: 0;
+          }
+        }
+
         .help-block {
           margin: 0;
           text-align: left;
@@ -130,10 +150,17 @@ body.settings {
         line-height: 1;
         font-weight: 600;
 
-        @media (min-width: 540px) {
+        &.is-static {
           position: static;
           margin: 15px auto 0;
           display: block;
+          padding: 10px;
+          border-radius: 4px;
+          width: auto;
+        }
+
+        @media (min-width: 540px) {
+          .btn-submit.is-static;
         }
       }
 
@@ -456,6 +483,21 @@ body#settings-registration {
     h1 {
       font-size: 24px;
     }
+  }
+
+  .container {
+    .form-group-radio {
+      border-bottom: 0;
+      margin: 0 auto;
+      width: 255px;
+
+      .control-label {
+        min-width: 0;
+        max-width: none;
+        width: 215px;
+      }
+    }
+
   }
 }
 

@@ -6,15 +6,15 @@ body_classes="marketing marketing-page" body_id="marketing-subscribe"}
       <h1 class="logo"><a href="{$site_root_path}">ThinkUp</a></h1>
 
       <nav class="navigation-main">
-        <a class="nav-link" href="{$site_root_path}login.php">Login</a>
+        <a class="nav-link" href="{$site_root_path}user/">Login</a>
         <a class="nav-link" href="{$site_root_path}subscribe.php">Signup</a>
         <a class="nav-link" href="{$site_root_path}about.php">About</a>
       </nav>
     </header>
 
     <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-page-header">
-      <h2 class="section-header">ThinkUp costs money. Our members think it’s worth it.</h2>
-      <h3 class="section-subheader">Choose the level that’s right for you.</h3>
+      <h2 class="section-header">ThinkUp costs money. Because it’s worth it.</h2>
+      <h3 class="section-subheader">Choose a level based on how many social networking accounts you have.</h3>
     </section>
 
     <div class="section-group subscription-levels">
@@ -61,7 +61,7 @@ body_classes="marketing marketing-page" body_id="marketing-subscribe"}
 
           <section class="section col-md-2 col-lg-3 row-1 col-lg-right section-signup" id="section-signup-bottom">
 
-            <h3 class="section-header">Not ready to pay? Get on the list.</h3>
+            <h3 class="section-header">Not ready to subscribe? Get on the waiting list.</h3>
 
             <div class="action-links">
               <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">
@@ -74,10 +74,10 @@ body_classes="marketing marketing-page" body_id="marketing-subscribe"}
 
       <section class="section col-md-2 col-lg-3 col-lg-right"
       id="section-subscription-executive">
-        <h3 class="section-header">I am an executive!</h3>
+        <h3 class="section-header">Need more? There's an executive option.</h3>
 
         <div class="level-description">
-          <p>If you're a company, an organization, or want a stake in ThinkUp's future, please <a href="mailto:team@thinkup.com">email us</a>. We’d love to talk.</p>
+          <p>If you’re a company or organization with more advanced needs, <a href="mailto:team@thinkup.com">email us</a>. We'll fill you in on our roadmap.</p>
         </div>
       </section>
     </div>
