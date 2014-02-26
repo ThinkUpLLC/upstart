@@ -71,7 +71,8 @@ class UpgradeApplicationController extends Controller {
                 foreach ($installs_to_upgrade as $install_to_upgrade) {
                     // Call chameleon upgrader at the command line with appropriate JSON
                     $installation_name = $install_to_upgrade['thinkup_username'];
-                    $database_name = 'thinkupstart_' . $installation_name;
+                    $prefix = $cfg->getValue('user_installation_db_prefix');
+                    $database_name = $prefix . $installation_name;
                     $upgrade_params_array['installation_name'] = $installation_name;
                     $upgrade_params_array['db_name'] = $database_name;
                     $upgrade_params_json = json_encode($upgrade_params_array);

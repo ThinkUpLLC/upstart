@@ -240,11 +240,12 @@ class AppInstaller {
         * {"installation_name":"steveklabnik", "timezone":"America/Los_Angeles", "db_host":"localhost",
         * "db_name":"thinkupstart_steveklabnik", "db_socket":"/tmp/mysql.sock",  "db_port":""}
         */
+       $prefix = $cfg->getValue('user_installation_db_prefix');
         $upgrade_params_array = array(
             'installation_name'=>$subscriber->thinkup_username,
             'timezone'=>$cfg->getValue('dispatch_timezone'),
             'db_host'=>$cfg->getValue('db_host'),
-            'db_name'=>'thinkupstart_'.$subscriber->thinkup_username,
+            'db_name'=>$prefix.$subscriber->thinkup_username,
             'db_socket'=>$cfg->getValue('dispatch_socket'),
             'db_port'=>$cfg->getValue('db_port')
         );
@@ -288,7 +289,8 @@ class AppInstaller {
     }
 
     private static function switchToInstallationDatabase($thinkup_username) {
-        $q = "USE ". 'thinkupstart_'.$thinkup_username;
+        $prefix = Config::getInstance()->getValue('user_installation_db_prefix');
+        $q = "USE ". $prefix.$thinkup_username;
         PDODAO::$PDO->exec($q);
     }
 
@@ -328,9 +330,10 @@ class AppInstaller {
     }
 
     protected function dropDatabase($thinkup_username) {
-        $q = "DROP DATABASE IF EXISTS thinkupstart_".$thinkup_username;
+        $prefix = Config::getInstance()->getValue('user_installation_db_prefix');
+        $q = "DROP DATABASE IF EXISTS ".$prefix.$thinkup_username;
         PDODAO::$PDO->exec($q);
-        self::logToUserMessage("Dropped user database thinkupstart_".$thinkup_username);
+        self::logToUserMessage("Dropped user database ".$prefix.$thinkup_username);
     }
     /**
      * Create user installation database.
@@ -339,15 +342,16 @@ class AppInstaller {
      * @throws PDOException
      */
     protected function createDatabase($thinkup_username) {
-        $q = "CREATE DATABASE thinkupstart_$thinkup_username; USE thinkupstart_$thinkup_username;";
+        $prefix = Config::getInstance()->getValue('user_installation_db_prefix');
+        $q = "CREATE DATABASE ".$prefix.$thinkup_username."; USE ".$prefix.$thinkup_username.";";
         PDODAO::$PDO->exec($q);
 
         $query_file = $this->master_app_source_path . '/install/sql/build-db_mysql-upcoming-release.sql';
         $q = file_get_contents($query_file);
         PDODAO::$PDO->exec($q);
 
-        self::logToUserMessage("Created new database thinkupstart_$thinkup_username");
-        return "thinkupstart_$thinkup_username";
+        self::logToUserMessage("Created new database ".$prefix.$thinkup_username);
+        return $prefix.$thinkup_username;
     }
 
     /**
@@ -450,7 +454,7 @@ class AppInstaller {
             'installation_name'=>$thinkup_username,
             'timezone'=>$cfg->getValue('dispatch_timezone'),
             'db_host'=>$cfg->getValue('db_host'),
-            'db_name'=>'thinkupstart_'.$thinkup_username,
+            'db_name'=>$cfg->getValue('user_installation_db_prefix').$thinkup_username,
             'db_socket'=>$cfg->getValue('dispatch_socket'),
             'db_port'=>$cfg->getValue('db_port'),
             'high_priority'=>'true'

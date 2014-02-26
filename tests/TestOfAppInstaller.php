@@ -4,16 +4,20 @@ require_once ISOSCELES_PATH.'extlibs/simpletest/autorun.php';
 
 class TestOfAppInstaller extends UpstartUnitTestCase {
 
-    var $thinkup_username = 'testerrific';
+    public $thinkup_username = 'testerrific';
+
+    public $user_database;
 
     public function setUp() {
         parent::setUp();
+        $this->user_database = Config::getInstance()->getValue('user_installation_database_prefix').
+            $this->thinkup_username;
     }
 
     public function tearDown() {
         // Clean up
-        // Destroy thinkupstart_username database
-        $q = "DROP DATABASE IF EXISTS thinkupstart_$this->thinkup_username;";
+        // Destroy user installation database
+        $q = "DROP DATABASE IF EXISTS ".$this->user_database.";";
         PDODAO::$PDO->exec($q);
 
         // Unlink username installation folder
@@ -119,7 +123,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
 
         // Assert user database doesn't exist
         $stmt = PDODAO::$PDO->query('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME =  '
-            .' "thinkupstart_' . $this->thinkup_username . '";');
+            .' "'.$this->user_database . '";');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->debug(Utils::varDumpToString($row));
         $this->assertFalse($row);
@@ -145,7 +149,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->debug($install_results);
 
         // Assert Upstart user pass and salt match ThinkUp owner pass and salt
-        $stmt = PDODAO::$PDO->query('SELECT * FROM thinkupstart_'. $this->thinkup_username . '.tu_owners');
+        $stmt = PDODAO::$PDO->query('SELECT * FROM '. $this->user_database .'.tu_owners');
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Assert admin owner details are set
@@ -177,8 +181,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $rows = null;
 
         // Assert application and plugin options are set
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
-            '.tu_options o');
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '$this->user_database . '.tu_options o');
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         // Assert ThinkUp application database_version option is correct/up-to-date
         $this->assertEqual($rows[0]['namespace'], 'application_options');
@@ -223,10 +226,9 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertEqual($rows[8]['option_value'], $config->getValue('expandurls_links_to_expand_per_crawl'));
 
         // Assert no owner instances are set because there's no service user connection
-        $stmt = PDODAO::$PDO->query('SELECT i.* FROM thinkupstart_'. $this->thinkup_username .
-            '.tu_instances i INNER JOIN thinkupstart_'. $this->thinkup_username . '.tu_owner_instances oi '.
-            'ON i.id = oi.instance_id INNER JOIN thinkupstart_'. $this->thinkup_username . '.tu_owners o '.
-            'WHERE o.email = "me@example.com"');
+        $stmt = PDODAO::$PDO->query('SELECT i.* FROM '. $this->user_database . '.tu_instances i INNER JOIN '.
+            $this->user_database . '.tu_owner_instances oi ON i.id = oi.instance_id INNER JOIN '.
+            $this->user_database . '.tu_owners o WHERE o.email = "me@example.com"');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertFalse($row);
     }
@@ -243,7 +245,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->debug($install_results);
 
         // Assert Upstart user pass and salt match ThinkUp owner pass and salt
-        $stmt = PDODAO::$PDO->query('SELECT * FROM thinkupstart_'. $this->thinkup_username . '.tu_owners');
+        $stmt = PDODAO::$PDO->query('SELECT * FROM '$this->user_database . '.tu_owners');
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Assert admin owner details are set
@@ -275,8 +277,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $rows = null;
 
         // Assert application and plugin options are set
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
-            '.tu_options o');
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '$this->user_database . '.tu_options o');
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         // Assert ThinkUp application database_version option is correct/up-to-date
         $this->assertEqual($rows[0]['namespace'], 'application_options');
@@ -320,10 +321,10 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertEqual($rows[8]['option_name'], 'links_to_expand');
         $this->assertEqual($rows[8]['option_value'], $config->getValue('expandurls_links_to_expand_per_crawl'));
 
-        $stmt = PDODAO::$PDO->query('SELECT i.* FROM thinkupstart_'. $this->thinkup_username .
-            '.tu_instances i INNER JOIN thinkupstart_'. $this->thinkup_username . '.tu_owner_instances oi '.
-            'ON i.id = oi.instance_id INNER JOIN thinkupstart_'. $this->thinkup_username . '.tu_owners o '.
-            'WHERE o.email = "me@example.com"');
+        $stmt = PDODAO::$PDO->query('SELECT i.* FROM '. $this->user_database .
+            '.tu_instances i INNER JOIN '. $this->user_database .
+            '.tu_owner_instances oi ON i.id = oi.instance_id INNER JOIN '.
+             $this->user_database . '.tu_owners o WHERE o.email = "me@example.com"');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $instance_network = $row['network'];
         $instance_network_username = $row['network_username'];
@@ -356,7 +357,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->debug($install_results);
 
         // Assert Upstart user pass and salt match ThinkUp owner pass and salt
-        $stmt = PDODAO::$PDO->query('SELECT * FROM thinkupstart_'. $this->thinkup_username . '.tu_owners');
+        $stmt = PDODAO::$PDO->query('SELECT * FROM '. $this->user_database .'.tu_owners');
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Assert admin owner details are set
@@ -388,8 +389,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $rows = null;
 
         // Assert application and plugin options are set
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
-            '.tu_options o');
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database .'.tu_options o');
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         // Assert ThinkUp application database_version option is correct/up-to-date
         $this->assertEqual($rows[0]['namespace'], 'application_options');
@@ -433,10 +433,9 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertEqual($rows[8]['option_name'], 'links_to_expand');
         $this->assertEqual($rows[8]['option_value'], $config->getValue('expandurls_links_to_expand_per_crawl'));
 
-        $stmt = PDODAO::$PDO->query('SELECT i.* FROM thinkupstart_'. $this->thinkup_username .
-            '.tu_instances i INNER JOIN thinkupstart_'. $this->thinkup_username . '.tu_owner_instances oi '.
-            'ON i.id = oi.instance_id INNER JOIN thinkupstart_'. $this->thinkup_username . '.tu_owners o '.
-            'WHERE o.email = "me@example.com"');
+        $stmt = PDODAO::$PDO->query('SELECT i.* FROM '.$this->user_database .'.tu_instances i INNER JOIN '.
+            $this->user_database . '.tu_owner_instances oi ON i.id = oi.instance_id INNER JOIN '.
+            $this->user_database . '.tu_owners o WHERE o.email = "me@example.com"');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $instance_network = $row['network'];
         $instance_network_username = $row['network_username'];

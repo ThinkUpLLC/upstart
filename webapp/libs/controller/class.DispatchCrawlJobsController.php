@@ -28,7 +28,7 @@ class DispatchCrawlJobsController extends Controller {
                         'installation_name'=>$install['thinkup_username'],
                         'timezone'=>$cfg->getValue('dispatch_timezone'),
                         'db_host'=>$cfg->getValue('db_host'),
-                        'db_name'=>'thinkupstart_'.$install['thinkup_username'],
+                        'db_name'=>$cfg->getValue('user_installation_db_prefix').$install['thinkup_username'],
                         'db_socket'=>$cfg->getValue('dispatch_socket'),
                         'db_port'=>$cfg->getValue('db_port')
                         );

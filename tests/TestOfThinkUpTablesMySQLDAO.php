@@ -4,17 +4,21 @@ require_once ISOSCELES_PATH.'extlibs/simpletest/autorun.php';
 
 class TestOfThinkUpTablesMySQLDAO extends UpstartUnitTestCase {
 
-    var $thinkup_username = 'testify';
+    public $thinkup_username = 'testify';
+
+    public $user_database;
 
     public function setUp() {
         parent::setUp();
         $this->builders = self::buildData();
+        $this->user_database = Config::getInstance()->getValue('user_installation_database_prefix').
+            $this->thinkup_username.;
     }
 
     public function tearDown() {
         // Clean up
-        // Destroy thinkupstart_username database
-        $q = "DROP DATABASE IF EXISTS thinkupstart_$this->thinkup_username;";
+        // Destroy user database
+        $q = "DROP DATABASE IF EXISTS ".$this->user_database.";";
         PDODAO::$PDO->exec($q);
 
         // Unlink username installation folder
@@ -60,8 +64,7 @@ class TestOfThinkUpTablesMySQLDAO extends UpstartUnitTestCase {
 
     public function testOfUpdateOwnerEmailSuccess() {
         // Assert that email is me@example.com
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
-        '.tu_owners o WHERE o.id = 2');
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database. '.tu_owners o WHERE o.id = 2');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['email'], 'me@example.com');
 
@@ -71,8 +74,7 @@ class TestOfThinkUpTablesMySQLDAO extends UpstartUnitTestCase {
         $this->assertTrue($result);
 
         // Assert that email is me@example.com
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
-        '.tu_owners o WHERE o.id = 2');
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database. '.tu_owners o WHERE o.id = 2');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['email'], 'newme@example.com');
         $dao->switchToUpstartDatabase();
@@ -80,8 +82,7 @@ class TestOfThinkUpTablesMySQLDAO extends UpstartUnitTestCase {
 
     public function testOfUpdateOwnerEmailFailure() {
         // Assert that email is me@example.com
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
-        '.tu_owners o WHERE o.id = 2');
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database . '.tu_owners o WHERE o.id = 2');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['email'], 'me@example.com');
 
@@ -91,8 +92,7 @@ class TestOfThinkUpTablesMySQLDAO extends UpstartUnitTestCase {
         $this->assertFalse($result);
 
         // Assert that email is me@example.com
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
-        '.tu_owners o WHERE o.id = 2');
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database .'.tu_owners o WHERE o.id = 2');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['email'], 'me@example.com');
         $dao->switchToUpstartDatabase();

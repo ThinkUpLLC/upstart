@@ -4,17 +4,21 @@ require_once ISOSCELES_PATH.'extlibs/simpletest/autorun.php';
 
 class TestOfSettingsController extends UpstartUnitTestCase {
 
-    var $thinkup_username = 'testify';
+    public $thinkup_username = 'testify';
+
+    public $user_database;
 
     public function setUp() {
         parent::setUp();
         $this->builders = self::buildData();
+        $this->user_database = Config::getInstance()->getValue('user_installation_database_prefix').
+            $this->thinkup_username;
     }
 
     public function tearDown() {
         // Clean up
-        // Destroy thinkupstart_username database
-        $q = "DROP DATABASE IF EXISTS thinkupstart_$this->thinkup_username;";
+        // Destroy user database
+        $q = "DROP DATABASE IF EXISTS ". $this->user_database;
         PDODAO::$PDO->exec($q);
 
         // Unlink username installation folder
@@ -78,8 +82,8 @@ class TestOfSettingsController extends UpstartUnitTestCase {
 
     public function testLoggedInSubmittedChangesNoCSRFToken() {
         // Assert that timezone is America/New_York and frequency is daily
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
-        '.tu_owners o WHERE o.email = "me@example.com"');
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database .
+            '.tu_owners o WHERE o.email = "me@example.com"');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['timezone'], 'UTC');
         $this->assertEqual($row['email_notification_frequency'], 'daily');
@@ -100,7 +104,7 @@ class TestOfSettingsController extends UpstartUnitTestCase {
 
     public function testLoggedInSubmittedValidChanges() {
         // Assert that timezone is UTC and frequency is daily
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database .
         '.tu_owners o WHERE o.email = "me@example.com"');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['timezone'], 'UTC');
@@ -116,7 +120,7 @@ class TestOfSettingsController extends UpstartUnitTestCase {
         $results = $controller->go();
 
         // Assert that timezone is new values
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database .
         '.tu_owners o WHERE o.email = "me@example.com"');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['timezone'], 'America/Los_Angeles');
@@ -129,7 +133,7 @@ class TestOfSettingsController extends UpstartUnitTestCase {
 
     public function testInvalidTZ() {
         // Assert that timezone is UTC and frequency is daily
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database .
         '.tu_owners o WHERE o.email = "me@example.com"');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['timezone'], 'UTC');
@@ -145,7 +149,7 @@ class TestOfSettingsController extends UpstartUnitTestCase {
         $results = $controller->go();
 
         // Assert that timezone is NOT new value
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database .
         '.tu_owners o WHERE o.email = "me@example.com"');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['timezone'], 'UTC');
@@ -158,7 +162,7 @@ class TestOfSettingsController extends UpstartUnitTestCase {
 
     public function testInvalidFrequency() {
         // Assert that timezone is America/New_York and frequency is daily
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database .
         '.tu_owners o WHERE o.email = "me@example.com"');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['timezone'], 'UTC');
@@ -174,7 +178,7 @@ class TestOfSettingsController extends UpstartUnitTestCase {
         $results = $controller->go();
 
         // Assert that frequency is NOT new value
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $this->thinkup_username .
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database .
         '.tu_owners o WHERE o.email = "me@example.com"');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['timezone'], 'UTC');

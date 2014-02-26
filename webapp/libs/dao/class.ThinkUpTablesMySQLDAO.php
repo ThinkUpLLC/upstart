@@ -161,7 +161,8 @@ class ThinkUpTablesMySQLDAO extends PDODAO {
     }
 
     public static function switchToInstallationDatabase($thinkup_username) {
-        $q = "USE ". 'thinkupstart_'.$thinkup_username;
+        $prefix = Config::getInstance()->getValue('user_installation_db_prefix');
+        $q = "USE ". $prefix.$thinkup_username;
         // echo $q;
         PDODAO::$PDO->exec($q);
     }

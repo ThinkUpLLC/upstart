@@ -75,11 +75,12 @@ class UpstartUnitTestCase extends UpstartBasicUnitTestCase {
      * @return void
      */
     protected function tearDownInstall($subscriber) {
-        $q = "DROP DATABASE IF EXISTS thinkupstart_$subscriber->thinkup_username;";
+        $config = Config::getInstance();
+        $prefix = $config->getValue('user_installation_db_prefix');
+        $q = "DROP DATABASE IF EXISTS ". $prefix . $subscriber->thinkup_username;
         PDODAO::$PDO->exec($q);
 
         // Unlink username installation folder
-        $config = Config::getInstance();
         $app_source_path = $config->getValue('app_source_path');
         $cmd = 'rm -rf '.$app_source_path.$subscriber->thinkup_username;
         $cmd_result = exec($cmd, $output, $return_var);

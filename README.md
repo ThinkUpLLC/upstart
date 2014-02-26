@@ -72,6 +72,7 @@ $ISOSCELES_CFG['admin_email']
 $ISOSCELES_CFG['admin_password']
 $ISOSCELES_CFG['user_password']
 $ISOSCELES_CFG['user_installation_url']     = "http://{user}.upstart.com/sandbox/";
+$ISOSCELES_CFG['user_installation_db_prefix'] = "thinkupstart_";
 
 //Dispatch - Don't worry about this unless you're working with installation
 $ISOSCELES_CFG['dispatch_endpoint'] = 'https://www.thinkup.com/dispatch/';
