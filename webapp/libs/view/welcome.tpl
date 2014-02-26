@@ -1,4 +1,4 @@
-{include file="_appheader.v2.tpl" include_menu=true}
+{include file="_appheader.v2.tpl" include_menu=true body_id="welcome"}
 
   <div class="container">
     <div class="stream">
@@ -8,8 +8,8 @@
           </div>
 
           <div class="panel panel-default insight insight-default insight-purple insight-hero">
-            <div class="panel-heading ">
-              <h2 class="panel-title">Thank you for being a ThinkUp member!</h2>
+            <div class="panel-heading">
+              <h2 class="panel-title insight-color-text">Thank you for being a ThinkUp member!</h2>
             </div>
             <div class="panel-desktop-right">
               <div class="panel-body">
@@ -23,8 +23,8 @@
           </div>
 
           <div class="panel panel-default insight insight-default insight-mint">
-            <div class="panel-heading ">
-              <h2 class="panel-title">Got more social networking accounts?</h2>
+            <div class="panel-heading">
+              <h2 class="panel-title insight-color-text">Got more social networking accounts?</h2>
             </div>
             <div class="panel-desktop-right">
               <div class="panel-body">
@@ -37,8 +37,8 @@
           </div>
 
           <div class="panel panel-default insight insight-default insight-bubblegum">
-            <div class="panel-heading ">
-              <h2 class="panel-title">Need any help? Let us know.</h2>
+            <div class="panel-heading">
+              <h2 class="panel-title insight-color-text">Need any help? Let us know.</h2>
             </div>
             <div class="panel-desktop-right">
               <div class="panel-body">

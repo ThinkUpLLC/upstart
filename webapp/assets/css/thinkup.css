@@ -911,10 +911,10 @@ body.app-message-visible.account .container {
   background-color: #ffffff;
 }
 .insight .insight-color-text {
-  color: #fc939e;
+  color: #d0374b !important;
 }
 .insight .insight-color-background {
-  background-color: #fc939e;
+  background-color: #fc939e !important;
 }
 .insight .panel-heading {
   border-radius: 0;
@@ -1095,10 +1095,10 @@ body.app-message-visible.account .container {
   background-color: #ffffff;
 }
 .insight-pea .insight-color-text {
-  color: #9dd767;
+  color: #417505 !important;
 }
 .insight-pea .insight-color-background {
-  background-color: #9dd767;
+  background-color: #9dd767 !important;
 }
 .insight-salmon {
   background: #fc939e;
@@ -1124,10 +1124,10 @@ body.app-message-visible.account .container {
   background-color: #ffffff;
 }
 .insight-salmon .insight-color-text {
-  color: #fc939e;
+  color: #d0374b !important;
 }
 .insight-salmon .insight-color-background {
-  background-color: #fc939e;
+  background-color: #fc939e !important;
 }
 .insight-creamsicle {
   background: #ffbb4e;
@@ -1153,10 +1153,10 @@ body.app-message-visible.account .container {
   background-color: #ffffff;
 }
 .insight-creamsicle .insight-color-text {
-  color: #ffbb4e;
+  color: #f36400 !important;
 }
 .insight-creamsicle .insight-color-background {
-  background-color: #ffbb4e;
+  background-color: #ffbb4e !important;
 }
 .insight-historical,
 .insight-sepia {
@@ -1191,11 +1191,11 @@ body.app-message-visible.account .container {
 }
 .insight-historical .insight-color-text,
 .insight-sepia .insight-color-text {
-  color: #c0bdaf;
+  color: #8a876f !important;
 }
 .insight-historical .insight-color-background,
 .insight-sepia .insight-color-background {
-  background-color: #c0bdaf;
+  background-color: #c0bdaf !important;
 }
 .insight-purple {
   background: #b690e2;
@@ -1221,10 +1221,10 @@ body.app-message-visible.account .container {
   background-color: #ffffff;
 }
 .insight-purple .insight-color-text {
-  color: #b690e2;
+  color: #7348b0 !important;
 }
 .insight-purple .insight-color-background {
-  background-color: #b690e2;
+  background-color: #b690e2 !important;
 }
 .insight-mint {
   background: #41dab3;
@@ -1250,10 +1250,10 @@ body.app-message-visible.account .container {
   background-color: #ffffff;
 }
 .insight-mint .insight-color-text {
-  color: #41dab3;
+  color: #1c8e6e !important;
 }
 .insight-mint .insight-color-background {
-  background-color: #41dab3;
+  background-color: #41dab3 !important;
 }
 .insight-bubblegum {
   background: #f576b5;
@@ -1279,10 +1279,10 @@ body.app-message-visible.account .container {
   background-color: #ffffff;
 }
 .insight-bubblegum .insight-color-text {
-  color: #f576b5;
+  color: #8f3963 !important;
 }
 .insight-bubblegum .insight-color-background {
-  background-color: #f576b5;
+  background-color: #f576b5 !important;
 }
 .insight-seabreeze {
   background: #44c9d7;
@@ -1308,10 +1308,10 @@ body.app-message-visible.account .container {
   background-color: #ffffff;
 }
 .insight-seabreeze .insight-color-text {
-  color: #44c9d7;
+  color: #126370 !important;
 }
 .insight-seabreeze .insight-color-background {
-  background-color: #44c9d7;
+  background-color: #44c9d7 !important;
 }
 .insight-dijon {
   background: #e4bf28;
@@ -1337,10 +1337,10 @@ body.app-message-visible.account .container {
   background-color: #ffffff;
 }
 .insight-dijon .insight-color-text {
-  color: #e4bf28;
+  color: #926d01 !important;
 }
 .insight-dijon .insight-color-background {
-  background-color: #e4bf28;
+  background-color: #e4bf28 !important;
 }
 .insight-sandalwood {
   background: #fd8560;
@@ -1366,10 +1366,10 @@ body.app-message-visible.account .container {
   background-color: #ffffff;
 }
 .insight-sandalwood .insight-color-text {
-  color: #fd8560;
+  color: #a02c08 !important;
 }
 .insight-sandalwood .insight-color-background {
-  background-color: #fd8560;
+  background-color: #fd8560 !important;
 }
 .insight-caramel {
   background: #dd814b;
@@ -1395,10 +1395,10 @@ body.app-message-visible.account .container {
   background-color: #ffffff;
 }
 .insight-caramel .insight-color-text {
-  color: #dd814b;
+  color: #71430e !important;
 }
 .insight-caramel .insight-color-background {
-  background-color: #dd814b;
+  background-color: #dd814b !important;
 }
 .panel-heading h2.lead {
   font-weight: 700;
@@ -1619,6 +1619,24 @@ body.app-message-visible.account .container {
 .btn-see-all:focus {
   outline: 0;
   color: #999999;
+}
+@media (min-width: 780px) {
+  body#welcome .stream .date-group {
+    width: 540px;
+    margin: 0 auto;
+  }
+  body#welcome .stream .date-group .date-marker {
+    display: none;
+  }
+  body#welcome .stream .date-group .insight {
+    margin-left: 0;
+  }
+}
+body#welcome .insight {
+  background: #fff;
+}
+body#welcome .insight .panel-heading {
+  background: #fff;
 }
 @media (max-width: 420px) {
   .insight .panel-body .panel-body-inner {

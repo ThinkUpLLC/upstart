@@ -510,11 +510,11 @@ body.app-message-visible {
 @color-caramel-darker:      darken(@color-caramel-dark, 10%);
 
 .insight-colors(
-    @border-top: @color-salmon-dark,
-    @headline-bgd: @color-salmon,
-    @headline-color: @color-salmon-darker,
-    @body-bgd: #fff,
-    @footer-borders: @gray-lighter) {
+@border-top: @color-salmon-dark,
+@headline-bgd: @color-salmon,
+@headline-color: @color-salmon-darker,
+@body-bgd: #fff,
+@footer-borders: @gray-lighter) {
     background: @headline-bgd;
     border-top-color: @border-top;
     border-bottom-color: @headline-bgd;
@@ -545,11 +545,11 @@ body.app-message-visible {
     }
 
     .insight-color-text {
-        color: @headline-bgd;
+        color: @headline-color !important;
     }
 
     .insight-color-background {
-        background-color: @headline-bgd;
+        background-color: @headline-bgd !important;
     }
 }
 
@@ -1036,6 +1036,31 @@ body.app-message-visible {
     &:focus {
         outline: 0;
         color: @gray-light;
+    }
+}
+
+body#welcome {
+    .stream {
+        @media (min-width: 780px) {
+            .date-group {
+                width: 540px;
+                margin: 0 auto;
+
+                .date-marker {
+                    display: none;
+                }
+
+                .insight {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+    .insight {
+        background: #fff;
+        .panel-heading {
+            background: #fff;
+        }
     }
 }
 
