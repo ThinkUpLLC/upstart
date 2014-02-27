@@ -46,7 +46,8 @@ class RegisterNewUserController extends SignUpController {
                 if ($_GET["state"] == SessionCache::get('facebook_auth_csrf')) {
                     //Prepare API request
                     //First, prep redirect URI
-                    $redirect_uri = UpstartHelper::getApplicationURL().'register.php?n=facebook';
+                    $redirect_uri = urlencode(UpstartHelper::getApplicationURL().'register.php?n=facebook&level='
+                        .$_GET['level']);
 
                     $cfg = Config::getInstance();
                     $facebook_app_id = $cfg->getValue('facebook_app_id');
@@ -69,14 +70,14 @@ class RegisterNewUserController extends SignUpController {
                         print_r($fb_user_profile);
                         echo "</pre>";
                     } else {
-                        $error_msg = "Problem authorizing your Facebook account.";
+                        $error_msg = "Problem authorizing your Facebook account. ";
                         $error_object = JSONDecoder::decode($access_token_response);
                         if (isset($error_object) && isset($error_object->error->type)
                         && isset($error_object->error->message)) {
-                            $error_msg = $error_msg."<br>Facebook says: \"".$error_object->error->type.": "
+                            $error_msg = $error_msg." Facebook says: \"".$error_object->error->type.": "
                             .$error_object->error->message. "\"";
                         } else {
-                            $error_msg = $error_msg."<br>Facebook's response: \"".$access_token_response. "\"";
+                            $error_msg = $error_msg." Facebook's response: \"".$access_token_response. "\"";
                         }
                         $this->addErrorMessage($error_msg);
                         $this->logError( $error_msg, __FILE__,__LINE__,__METHOD__);
