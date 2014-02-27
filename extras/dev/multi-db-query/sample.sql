@@ -23,3 +23,12 @@ SELECT CONCAT (
 FROM information_schema.tables a 
 WHERE a.table_schema LIKE 'thinkupstart_%'
 GROUP BY a.table_schema;
+
+-- This example checks if the Olympics insight exists in a user database
+SELECT CONCAT (
+	"SELECT '", a.table_schema, "' as installation, count(*) as olympics_2014_total FROM ", a.table_schema,  
+	".tu_insights WHERE slug = 'olympics_2014' UNION "
+) 
+FROM information_schema.tables a 
+WHERE a.table_schema LIKE 'thinkupstart_%'
+GROUP BY a.table_schema;
