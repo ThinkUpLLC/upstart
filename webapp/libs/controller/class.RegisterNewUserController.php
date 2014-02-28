@@ -27,6 +27,7 @@ class RegisterNewUserController extends SignUpController {
                     try {
                         $authed_twitter_user = $api->verifyCredentials();
                         if (isset($authed_twitter_user['user_name'])) {
+                            //@TODO If Twitter user exists in subscribers table, tryAgain with error
                             $this->addToView('network_username', '@'.$authed_twitter_user['user_name']);
 
                             $network_auth_details = array(
@@ -84,6 +85,8 @@ class RegisterNewUserController extends SignUpController {
                         // echo "<pre>";
                         // print_r($fb_user_profile);
                         // echo "</pre>";
+
+                        //@TODO If Facebook user exists in subscribers table, tryAgain with error
                         $this->addToView('email', $fb_user_profile['email']);
 
                         $network_auth_details = array(
@@ -119,6 +122,16 @@ class RegisterNewUserController extends SignUpController {
             }
        }
        if (self::hasFormBeenPosted()) {
+            //@TODO Validate email
+            //@TODO Validate timezone
+            //@TODO Validate ThinkUp username
+            //@TODO Make sure SessionCache has 'network_auth_details', if not tryAgain()
+
+            //@TODO Insert subscriber details here
+            //@TODO Catch duplicate subscriber exception
+            //@TODO Catch duplicate username exception
+
+            //Begin Amazon redirect
             $click_dao = new ClickMySQLDAO();
             $caller_reference = $click_dao->insert();
             SessionCache::put('caller_reference', $caller_reference);
@@ -131,9 +144,9 @@ class RegisterNewUserController extends SignUpController {
                 $amount = SignUpController::$subscription_levels[$selected_level];
                 $pay_with_amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference, $callback_url, $amount);
                 header('Location: '.$pay_with_amazon_url);
-
             } else {
-                SessionCache::put('auth_error_message', 'TODO REWRITE THIS ERROR Error: no level chosen');
+                SessionCache::put('auth_error_message', 'Oops! Something went wrong. Please try again.');
+                return $this->tryAgain();
             }
        }
 
@@ -141,12 +154,15 @@ class RegisterNewUserController extends SignUpController {
         return $this->generateView();
     }
 
-    /*
-    TODO: Complete writing this function
+    /**
+     * Check whether or not all registration form values have been posted.
+     * @return bool
      */
     protected function hasFormBeenPosted() {
-        return (isset($_POST['timezone']));
+        return (isset($_POST['timezone']) && isset($_POST['username']) && isset($_POST['password']) 
+            && isset($_POST['email']));
     }
+
     /**
      * Send user back to subcribe page with error message in session.
      * @return str
