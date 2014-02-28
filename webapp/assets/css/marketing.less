@@ -9,6 +9,12 @@
 @link-color: #2785D3;
 @border-color-vertical: #D4D4D4;
 
+@red-warning: #D0021B;
+@green-success: #4CD764;
+@green-success-darker: #417505;
+@blue-action: #125C9C; // For buttons, primarily
+@yellow-info: #FFFABE;
+
 @container-max-width: 765px;
 @container-min-width: 320px;
 
@@ -66,6 +72,62 @@
   border-radius: 4px;
 }
 
+.app-message {
+    width: 100%;
+    background: @yellow-info;
+    border-radius: 4px;
+    position: relative;
+
+    font-size: 13px;
+    line-height: 1.23;
+    padding: 7px 0;
+    margin-top: 20px;
+    font-weight: 400;
+    text-align: center;
+    z-index: 1000;
+
+    .content {
+        padding: 0 40px;
+    }
+
+    .app-message-close {
+        position: absolute;
+        font-size: 20px;
+        line-height: 1;
+        top: 5px;
+        right: 5px;
+        color: #999;
+
+        .icon {
+            vertical-align: top;
+        }
+    }
+
+    &.app-message-warning {
+        color: @red-warning;
+        background: mix(@red-warning, #fff, 20%);
+
+        .content:before {
+            padding-right: 5px;
+        }
+        .app-message-close {
+            color: @red-warning;
+        }
+    }
+
+    &.app-message-success {
+        color: @green-success-darker;
+        background: mix(@green-success-darker, #fff, 20%);
+
+        .content:before {
+            padding-right: 5px;
+        }
+
+        .app-message-close {
+            color: @green-success-darker;
+        }
+    }
+}
 
 body {
   -webkit-font-smoothing: subpixel-antialiased;
