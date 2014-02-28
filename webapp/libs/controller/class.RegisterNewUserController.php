@@ -28,19 +28,34 @@ class RegisterNewUserController extends SignUpController {
                         $authed_twitter_user = $api->verifyCredentials();
                         if (isset($authed_twitter_user['user_name'])) {
                             $this->addToView('network_username', '@'.$authed_twitter_user['user_name']);
+
+                            $network_auth_details = array(
+                                'network_user_name'=>$authed_twitter_user['user_name'],
+                                'network_user_id'=>$authed_twitter_user['user_id'],
+                                'network'=>'twitter',
+                                'full_name'=>$authed_twitter_user['full_name'],
+                                'oauth_access_token'=>$tok['oauth_token'],
+                                'oauth_access_token_secret'=>$tok['oauth_token_secret'],
+                                'is_verified'=>$authed_twitter_user['is_verified'],
+                                'follower_count'=>$authed_twitter_user['follower_count']
+                            );
+                            SessionCache::put('network_auth_details', serialize($network_auth_details));
                         } else {
-                            $this->addErrorMessage($this->generic_error_msg);
+                            SessionCache::put('auth_error_message', $this->generic_error_msg);
                             $this->logError("Invalid Twitter user returned: ".
                             Utils::varDumpToString($authed_twitter_user),__FILE__,__LINE__,__METHOD__);
+                            return $this->tryAgain();
                         }
                     } catch (APIErrorException $e) {
-                        $this->addErrorMessage($this->generic_error_msg);
+                        SessionCache::put('auth_error_message', $this->generic_error_msg);
                         $this->logError(get_class($e).":".$e->getMessage(),__FILE__,__LINE__,__METHOD__);
+                        return $this->tryAgain();
                     }
                 } else {
-                    $this->addErrorMessage($this->generic_error_msg);
+                    SessionCache::put('auth_error_message', $this->generic_error_msg);
                     $this->logError('Twitter access tokens not set '. (isset($tok)?Utils::varDumpToString($tok):''),
                     __FILE__,__LINE__,__METHOD__);
+                    return $this->tryAgain();
                 }
             } elseif ($this->hasUserReturnedFromFacebook()) {
                 if ($_GET["state"] == SessionCache::get('facebook_auth_csrf')) {
@@ -66,9 +81,22 @@ class RegisterNewUserController extends SignUpController {
                         $facebook_app->setAccessToken($access_token);
                         $fb_user_profile = $facebook_app->api('/me');
 
-                        echo "<pre>";
-                        print_r($fb_user_profile);
-                        echo "</pre>";
+                        // echo "<pre>";
+                        // print_r($fb_user_profile);
+                        // echo "</pre>";
+                        $this->addToView('email', $fb_user_profile['email']);
+
+                        $network_auth_details = array(
+                            'network_user_name'=>$fb_user_profile['username'],
+                            'network_user_id'=>$fb_user_profile['id'],
+                            'network'=>'facebook',
+                            'full_name'=>$fb_user_profile['name'],
+                            'oauth_access_token'=>$access_token,
+                            'oauth_access_token_secret'=>'',
+                            'is_verified'=>0,
+                            'follower_count'=>0
+                        );
+                        SessionCache::put('network_auth_details', serialize($network_auth_details));
                     } else {
                         $error_msg = "Problem authorizing your Facebook account. ";
                         $error_object = JSONDecoder::decode($access_token_response);
@@ -79,12 +107,14 @@ class RegisterNewUserController extends SignUpController {
                         } else {
                             $error_msg = $error_msg." Facebook's response: \"".$access_token_response. "\"";
                         }
-                        $this->addErrorMessage($error_msg);
+                        SessionCache::put('auth_error_message', $error_msg);
                         $this->logError( $error_msg, __FILE__,__LINE__,__METHOD__);
+                        return $this->tryAgain();
                     }
                 } else {
-                    $this->addErrorMessage($this->generic_error_msg);
+                    SessionCache::put('auth_error_message', $this->generic_error_msg);
                     $this->logError( "Facebook auth error: Invalid CSRF token", __FILE__,__LINE__,__METHOD__);
+                    return $this->tryAgain();
                 }
             }
        }
@@ -103,7 +133,7 @@ class RegisterNewUserController extends SignUpController {
                 header('Location: '.$pay_with_amazon_url);
 
             } else {
-                $this->addErrorMessage('TODO REWRITE THIS ERROR Error: no level chosen');
+                SessionCache::put('auth_error_message', 'TODO REWRITE THIS ERROR Error: no level chosen');
             }
        }
 
@@ -116,5 +146,13 @@ class RegisterNewUserController extends SignUpController {
      */
     protected function hasFormBeenPosted() {
         return (isset($_POST['timezone']));
+    }
+    /**
+     * Send user back to subcribe page with error message in session.
+     * @return str
+     */
+    private function tryAgain() {
+        $controller = new SubscribeController(true);
+        return $controller->go();
     }
 }
