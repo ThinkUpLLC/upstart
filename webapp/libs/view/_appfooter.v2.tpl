@@ -63,8 +63,8 @@
     <script src="{$site_root_path}assets/js/vendor/jpanelmenu.js"></script>
     <script src="//platform.twitter.com/widgets.js"></script>
      <script src="{$site_root_path}assets/js/thinkup.js "></script>
-    {if isset($include_tz_js) and $include_tz_js and isset($owner)}
-    {if $owner->timezone eq 'UTC'}
+    {if isset($include_tz_js) and $include_tz_js}
+    {if not isset($owner) or $owner->timezone eq 'UTC'}
       <script type="text/javascript" src="{$site_root_path}assets/js/vendor/jstz-1.0.4.min.js"></script>
       <script type="text/javascript">
       {literal}
@@ -76,10 +76,12 @@
               $('#control-timezone').val( tz_info.name());
           }
       }
+      {/literal}
+      {if isset($show_tz_msg) and $show_tz_msg}{literal}
       var app_message = {};
       app_message.msg = "There's no time zone set for your account. We think it's " + $( "#control-timezone option:selected" ).text() + ". Is that right? <a id='msg-action' data-submit-target='#form-settings' href=\"#\">Yep, set it!</a>";
       app_message.type = "info";
-      {/literal}
+      {/literal}{/if}
       </script>
     {/if}
     {/if}

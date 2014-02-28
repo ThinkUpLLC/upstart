@@ -5,7 +5,7 @@ body.settings {
     margin: 0 auto;
 
     header {
-      margin-top: 20px;
+      margin: 20px 0;
 
       h1 {
         text-align: center;
@@ -132,12 +132,24 @@ body.settings {
 
         @media (min-width: 540px) {
           position: static;
+          margin: 15px auto 0;
+          display: block;
+        }
+      }
+
+      .btn-circle {
+        @media (min-width: 540px) {
           width: 74px;
           height: 74px;
           padding: 30px 0;
-          border-radius: 37px;
-          margin: 15px auto 0;
-          display: block;
+          border-radius: 50%;
+        }
+      }
+
+      .btn-pill {
+        @media (min-width: 540px) {
+          width: 150px;
+          border-radius: 4px;
         }
       }
 
@@ -436,6 +448,14 @@ body#settings-subscription {
   #form-membership-contact {
     margin-top: 40px;
     display: none;
+  }
+}
+
+body#settings-registration {
+  header {
+    h1 {
+      font-size: 24px;
+    }
   }
 }
 

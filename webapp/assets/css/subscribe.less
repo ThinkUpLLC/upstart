@@ -1,79 +1,129 @@
-.section-sub(@color) {
-  .section-color(@color);
+body.marketing-page {
+  .section-sub-color(@color) {
+    .section-color(@color);
+    .level-cost {
+      .monthly {
+        color: @color;
+      }
+    }
 
-  &:hover, &.is-active {
-    border-top-width: 5px;
-    padding-top: 11px;
-    background: fade(@color, 10%);
-  }
-}
-
-#section-subscription-member     { .section-sub(#B97CC6); }
-#section-subscription-pro        { .section-sub(#6BB93B); }
-#section-subscription-executive  { .section-sub(#B51B2E); }
-
-.section-subscription-level {
-  position: relative;
-  height: auto;
-
-  .section-header {
-    font-size: (24/16em);
-  }
-
-  .level-cost {
-    font-size: (14/16em);
-    line-height: (20/16);
-  }
-
-  .btn-subscribe {
-    position: absolute;
-    top: 16px;
-    right: 15px;
-    height: 30px;
-    padding: 5px 0;
-    font-weight: 400;
-  }
-
-  .level-benefits {
-    padding: 16px 0 16px 20px;
-    margin: 0
-  }
-
-  &.is-active {
-    .btn-subscribe {
-      top: 12px;
+    @media (min-width: 48em) {
+      border-color: mix(#fff, @color, 75%);
     }
   }
-}
 
-.subscription-levels.is-preselected {
-  .section-subscription-level {
-    cursor: pointer;
-    opacity: .5;
-
-    &.is-active {
-      opacity: 1;
-    }
-  }
-}
-
-@media (min-width: 31.875em) {
-  @section-height-fixed: 240px;
+  #section-subscription-member     { .section-sub-color(#B97CC6); }
+  #section-subscription-pro        { .section-sub-color(#6BB93B); }
+  #section-subscription-executive  { .section-sub-color(#B51B2E); }
 
   .section-subscription-level {
-    height: @section-height-fixed * 1.5;
-  }
-
-  #section-subscription-executive {
+    position: relative;
     height: auto;
+    padding-top: 20px;
+
+    &.col-lg-right {
+      border-right-style: solid;
+      border-width: 1px;
+    }
+
+    .section-header {
+      font-size: (24/16em);
+      margin-bottom: 15px;
+    }
+
+    .level-cost {
+      position: absolute;
+      top: 21px;
+      right: 15px;
+      font-size: (14/16em);
+      line-height: (20/16);
+      text-align: right;
+
+      .annually {
+        font-size: (22/16em);
+        font-weight: 600;
+      }
+    }
+
+    .level-description {
+      padding: 15px 0;
+      margin: 0;
+      text-align: center;
+
+      p {
+        margin: 0;
+        line-height: (20/16);
+
+        &.headline {
+          font-weight: 600;
+          font-size: (18/16em);
+          font-family: @tablet-gothic-condensed;
+        }
+      }
+    }
+
+    .action-buttons {
+      text-align: center;
+
+      .action-buttons-label {
+        margin-bottom: 5px;
+      }
+
+      .btn {
+        width: 100px;
+        margin: 0 5px;
+
+        .icon {
+          margin-right: 5px;
+        }
+      }
+
+      .btn-twitter {
+        background: #55acee;
+      }
+
+      .btn-facebook {
+        background: #3b5998;
+
+        .icon {
+          margin-right: 7px;
+        }
+      }
+    }
   }
-}
 
-@media (min-width: 48em) {
-  @section-width: 255px;
-  @header-height: 228px;
+  #section-subscription-executive, #section-signup-bottom {
+    min-height: 0;
+  }
 
-  .section-subscription-level {
-    height: @section-height-fixed * 1.5 !important;
+
+  @media (min-width: 31.875em) {
+    @section-height-fixed: 240px;
+
+    .section-subscription-level, .section-subscription-level.col-lg-1 {
+      height: @section-height-fixed;
+    }
+
+    #section-subscription-executive, #section-signup-bottom {
+      height: 110px;
+    }
+  }
+
+  @media (min-width: 48em) {
+    .section-subscription-level {
+      border-width: 1px;
+      border-style: solid;
+      border-radius: 15px;
+      width: 46%;
+      margin: 0 0 0 4%;
+
+      &:first-of-type {
+        margin: 0 4% 0 0;
+      }
+    }
+
+    #section-subscription-executive, #section-signup-bottom {
+      border: 0;
+    }
   }
 }
