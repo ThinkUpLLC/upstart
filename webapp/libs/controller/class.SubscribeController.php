@@ -16,6 +16,13 @@ class SubscribeController extends SignUpController {
         $facebook_pro_link = self::getFacebookConnectLink('register.php?n=facebook&level=pro');
         $this->addToView('facebook_pro_link', $facebook_pro_link);
 
+        if (SessionCache::isKeySet('auth_error_message')) {
+            $error_message = SessionCache::get('auth_error_message');
+            echo $error_message;
+            $this->addErrorMessage($error_message);
+            SessionCache::unsetKey('auth_error_message');
+        }
+
         return $this->generateView();
     }
 }
