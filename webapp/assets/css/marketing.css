@@ -54,6 +54,53 @@
   padding: 7px 0;
   border-radius: 4px;
 }
+.app-message {
+  width: 100%;
+  background: #fffabe;
+  border-radius: 4px;
+  position: relative;
+  font-size: 13px;
+  line-height: 1.23;
+  padding: 7px 0;
+  margin-top: 20px;
+  font-weight: 400;
+  text-align: center;
+  z-index: 1000;
+}
+.app-message .content {
+  padding: 0 40px;
+}
+.app-message .app-message-close {
+  position: absolute;
+  font-size: 20px;
+  line-height: 1;
+  top: 5px;
+  right: 5px;
+  color: #999;
+}
+.app-message .app-message-close .icon {
+  vertical-align: top;
+}
+.app-message.app-message-warning {
+  color: #d0021b;
+  background: #f6ccd1;
+}
+.app-message.app-message-warning .content:before {
+  padding-right: 5px;
+}
+.app-message.app-message-warning .app-message-close {
+  color: #d0021b;
+}
+.app-message.app-message-success {
+  color: #417505;
+  background: #d9e3cd;
+}
+.app-message.app-message-success .content:before {
+  padding-right: 5px;
+}
+.app-message.app-message-success .app-message-close {
+  color: #417505;
+}
 body {
   -webkit-font-smoothing: subpixel-antialiased;
   color: #000000;
