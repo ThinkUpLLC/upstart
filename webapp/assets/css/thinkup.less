@@ -246,6 +246,12 @@ body.menu-off {
         border-color: @red-warning;
         background: mix(@red-warning, #fff, 40%);
 
+        a {
+            color: darken(@red-warning, 10%);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
         .content:before {
             padding-right: 5px;
         }

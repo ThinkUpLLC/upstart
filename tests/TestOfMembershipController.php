@@ -221,7 +221,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertPattern('/easy to fix/', $results);
+        $this->assertPattern('/problem with your credit card/', $results);
         $this->assertNoPattern('/Payment pending/', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
@@ -252,8 +252,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertPattern('/easy to fix/', $results);
-        $this->assertPattern('/Oops! Something went wrong./', $results);
+        $this->assertPattern('/problem with your credit card/', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
         $this->assertNoPattern('/Paid through/', $results);
@@ -287,7 +286,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Complimentary membership/', $results);
         $this->assertNoPattern('/easy to fix/', $results);
         $this->assertPattern('/Success! Thanks for being a ThinkUp member./', $results);
-        $this->assertNoPattern('/Oops! Something went wrong and our team is looking into it./', $results);
+        $this->assertNoPattern('/problem with your credit card/', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
         $this->assertNoPattern('/Paid through/', $results);

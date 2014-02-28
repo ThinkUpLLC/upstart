@@ -82,6 +82,7 @@ class MembershipController extends AuthController {
             $amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL( $caller_reference, $callback_url, $amount );
             SessionCache::put('caller_reference', $caller_reference);
             $this->addToView('failed_cc_amazon_link', $amazon_url);
+            $this->addErrorMessage("There was a problem with your credit card. Please reauthorize your payment via <a href=\"$amazon_url\">Amazon Payments</a>.");
         }
         //END populating membership_status
 
