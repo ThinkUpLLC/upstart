@@ -122,6 +122,7 @@ class RegisterNewUserController extends SignUpController {
             }
        }
        if (self::hasFormBeenPosted()) {
+            //@TODO Make sure Terms of Service has been checked/agreed to
             //@TODO Validate email
             //@TODO Validate timezone
             //@TODO Validate ThinkUp username

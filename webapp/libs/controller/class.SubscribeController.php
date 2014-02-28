@@ -18,7 +18,6 @@ class SubscribeController extends SignUpController {
 
         if (SessionCache::isKeySet('auth_error_message')) {
             $error_message = SessionCache::get('auth_error_message');
-            echo $error_message;
             $this->addErrorMessage($error_message);
             SessionCache::unsetKey('auth_error_message');
         }
