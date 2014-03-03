@@ -1,5 +1,51 @@
 <?php
 class SubscriberMySQLDAO extends PDODAO {
+
+    public function insertCompleteSubscriber(Subscriber $subscriber) {
+        $verification_code = rand(1000, 9999);
+        $pwd_salt = $this->generateSalt($subscriber->email);
+        $hashed_pwd = $this->hashPassword($subscriber->pwd, $pwd_salt);
+
+        $q  = "INSERT INTO subscribers (email, pwd, pwd_salt, creation_time, verification_code, network_user_id, ";
+        $q .= "network_user_name, network, full_name, follower_count, is_verified, oauth_access_token, ";
+        $q .= "oauth_access_token_secret, membership_level, thinkup_username, timezone ) VALUES ";
+        $q .= "(:email, :pwd, :pwd_salt, CURRENT_TIMESTAMP, :verification_code, :network_user_id, ";
+        $q .= ":network_user_name, :network, :full_name, :follower_count, :is_verified, :oauth_access_token, ";
+        $q .= ":oauth_access_token_secret, :membership_level, :thinkup_username, :timezone); ";
+        $vars = array(
+            ':email'=>$subscriber->email,
+            ':pwd'=>$hashed_pwd,
+            ':pwd_salt'=>$pwd_salt,
+            ':verification_code'=>$verification_code,
+            ':network_user_id'=>$subscriber->network_user_id,
+            ':network_user_name'=>$subscriber->network_user_name,
+            ':network'=>$subscriber->network,
+            ':full_name'=>$subscriber->full_name,
+            ':follower_count'=>$subscriber->follower_count,
+            ':is_verified'=>$subscriber->is_verified,
+            ':oauth_access_token'=>$subscriber->oauth_access_token,
+            ':oauth_access_token_secret'=>$subscriber->oauth_access_token_secret,
+            ':membership_level'=>$subscriber->membership_level,
+            ':thinkup_username'=>$subscriber->thinkup_username,
+            ':timezone'=>$subscriber->timezone
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        try {
+            $ps = $this->execute($q, $vars);
+            return $this->getInsertId($ps);
+        } catch (PDOException $e) {
+            $message = $e->getMessage();
+            if (strpos($message,'Duplicate entry') !== false && strpos($message,'email') !== false) {
+                throw new DuplicateSubscriberEmailException($message);
+            } elseif (strpos($message,'Duplicate entry') !== false && strpos($message,'thinkup_username') !== false) {
+                throw new DuplicateSubscriberUsernameException($message);
+            } else {
+                throw new PDOException($message);
+            }
+        }
+
+    }
+
     public function insert($email, $pwd ) {
         $verification_code = rand(1000, 9999);
         $pwd_salt = $this->generateSalt($email);

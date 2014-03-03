@@ -28,6 +28,30 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual('ginatrapani@example.com', $data['email']);
     }
 
+    public function testInsertCompleteSubscriber() {
+        $subscriber = new Subscriber();
+        $subscriber->email = 'ginatrapani@example.com';
+        $subscriber->network_user_name = 'ginatrapani';
+        $subscriber->full_name = 'Gina Trapani';
+        $subscriber->oauth_access_token = 's3cr3tt0ken';
+        $subscriber->membership_level = 'Member';
+        $subscriber->timezone = 'America/New_York';
+
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->insertCompleteSubscriber($subscriber);
+        $this->assertEqual($result, 1);
+
+        $sql = "SELECT * FROM subscribers WHERE id = ".$result;
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual('ginatrapani@example.com', $data['email']);
+        $this->assertEqual('ginatrapani', $data['network_user_name']);
+        $this->assertEqual('Gina Trapani', $data['full_name']);
+        $this->assertEqual('s3cr3tt0ken', $data['oauth_access_token']);
+        $this->assertEqual('Member', $data['membership_level']);
+        $this->assertEqual('America/New_York', $data['timezone']);
+    }
+
     public function testInsertDuplicateEmail() {
         $dao = new SubscriberMySQLDAO();
         $result = $dao->insert('ginatrapani@example.com', 'secr3tpassword');

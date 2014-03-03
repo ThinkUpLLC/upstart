@@ -3,6 +3,10 @@
 class RegisterNewUserController extends SignUpController {
     public function control() {
         $this->setViewTemplate('register-new-user.tpl');
+        if ( !self::isLevelValid() ) {
+            return $this->tryAgain('Oops! Something went wrong. No level set. TODO: Rewrite Please try again.');
+        }
+
         if ($this->hasUserReturnedFromTwitter() || $this->hasUserReturnedFromFacebook()) {
             if ($this->hasUserReturnedFromTwitter()) {
                 $cfg = Config::getInstance();
@@ -112,7 +116,8 @@ class RegisterNewUserController extends SignUpController {
                         . " ".__METHOD__);
                 }
             }
-       }
+        }
+
        if (self::hasFormBeenPosted()) {
             // Validate email, password, and username
             if (self::isEmailInputValid() & self::isPasswordInputValid() & self::isUsernameValid()
@@ -122,10 +127,40 @@ class RegisterNewUserController extends SignUpController {
                 if (isset($network_auth_details) ) {
                     $unserialized_network_auth_details = unserialize($network_auth_details);
                     if ($unserialized_network_auth_details !== false) {
+                        print_r($unserialized_network_auth_details);
                         $has_user_been_created = false;
-                        //@TODO Insert subscriber details here
-                        //@TODO Catch duplicate subscriber exception
-                        //@TODO Catch duplicate username exception
+                        //Build subscriber object
+                        $subscriber = new Subscriber();
+                        $subscriber->email = $_POST['email'];
+                        $subscriber->pwd = $_POST['password'];
+                        $subscriber->network_user_name = $unserialized_network_auth_details['network_user_name'];
+                        $subscriber->full_name = $unserialized_network_auth_details['full_name'];
+                        $subscriber->oauth_access_token = $unserialized_network_auth_details['oauth_access_token'];
+                        $subscriber->oauth_access_token_secret = $unserialized_network_auth_details['oauth_access_token_secret'];
+                        $subscriber->is_verified = $unserialized_network_auth_details['is_verified'];
+                        $subscriber->membership_level = ucfirst($_GET['level']);
+                        $subscriber->timezone = $_POST['timezone'];
+                        $subscriber->thinkup_username = $_POST['username'];
+
+                        //Insert subscriber
+                        $subscriber_dao = new SubscriberMySQLDAO();
+                        try {
+                            $new_subscriber_id = $subscriber_dao->insertCompleteSubscriber($subscriber);
+                            $has_user_been_created = true;
+                        } catch (DuplicateSubscriberEmailException $e) {
+                            $this->addInfoMessage('That email address is already subscribed to ThinkUp. '.
+                                'Please try again.');
+                            $this->addToView('username', $_POST['username']);
+                            $this->addToView('current_tz', $_POST['timezone']);
+                            $this->addToView('password', $_POST['password']);
+                            return $this->generateView();
+                        } catch (DuplicateSubscriberUsernameException $e) {
+                            $this->addInfoMessage('That username is already in use. Please try again.');
+                            $this->addToView('email', $_POST['email']);
+                            $this->addToView('current_tz', $_POST['timezone']);
+                            $this->addToView('password', $_POST['password']);
+                            return $this->generateView();
+                        }
 
                         if ($has_user_been_created) {
                             //Begin Amazon redirect
@@ -150,7 +185,7 @@ class RegisterNewUserController extends SignUpController {
                         return $this->tryAgain('Oops! Something went wrong. Please try again.');
                     }
                 } else {
-                    self::tryAgain("Network auth details not set; please try again TODO: Rewrite this message");
+                    return $this->tryAgain("Network auth details not set; please try again TODO: Rewrite this");
                 }
             } else { //Populate form with the submitted values
                 $this->addToView('email', $_POST['email']);
@@ -185,6 +220,18 @@ class RegisterNewUserController extends SignUpController {
         SessionCache::put('auth_error_message', $error_message);
         $controller = new SubscribeController(true);
         return $controller->go();
+    }
+
+    /**
+     * Check if valid level is set in URL.
+     * @return bool
+     */
+    private function isLevelValid() {
+        if (isset($_GET["level"]) && ($_GET['level'] == 'member' || $_GET['level'] == 'pro' )) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

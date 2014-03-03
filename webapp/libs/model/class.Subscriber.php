@@ -39,7 +39,7 @@ class Subscriber {
     /**
      * @var int Follower or subscriber count of service user.
      */
-    var $follower_count;
+    var $follower_count = 0;
     /**
      * @var bool Whether or not the service user is verified.
      */
@@ -51,7 +51,7 @@ class Subscriber {
     /**
      * @var str OAuth secret access token for network authorization.
      */
-    var $oauth_access_token_secret;
+    var $oauth_access_token_secret = '';
     /**
      * @var int Code for verifying email address.
      */

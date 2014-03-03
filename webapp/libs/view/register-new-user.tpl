@@ -5,7 +5,7 @@
       <h2>Now we need a few personal details. If a field is empty, please fill it in. If it’s not, please check to make sure it’s correct.</h2>
     </header>
 
-    <form method="POST" class="form-horizontal" id="form-signin" action="register.php?level={$smarty.get.level}">
+    <form method="POST" class="form-horizontal" id="form-signin" action="register.php{if isset($smarty.get.level)}?level={$smarty.get.level}{/if}">
       <fieldset class="fieldset-no-header">
         <div class="form-group">
         {include file="_appusermessage.tpl" field="email"}
