@@ -5,22 +5,24 @@
       <h2>Now we need a few personal details. If a field is empty, please fill it in. If it’s not, please check to make sure it’s correct.</h2>
     </header>
 
-    <form method="POST" class="form-horizontal" id="form-signin">
+    <form method="POST" class="form-horizontal" id="form-signin" action="register.php?level={$smarty.get.level}">
       <fieldset class="fieldset-no-header">
         <div class="form-group">
+        {include file="_appusermessage.tpl" field="email"}
           <label class="control-label" for="email">Email</label>
           <input type="email" name="email" class="form-control" id="email"
           {if isset($email)}value="{$email|filter_xss}"{/if} placeholder="you@example.com">
         </div>
         <div class="form-group">
+          {include file="_appusermessage.tpl" field="username"}
           <label class="control-label" for="username">Username</label>
           <input type="text" class="form-control" id="username"
           {if isset($username)}value="{$username|filter_xss}"{/if} name="username" placeholder="catlady99">
         </div>
         <div class="form-group">
+          {include file="_appusermessage.tpl" field="password"}
           <label class="control-label" for="pwd">Password</label>
-          <input type="password" class="form-control" id="pwd" name="pwd" value=""
-          placeholder="********">
+          <input type="password" class="form-control" id="pwd" name="password" value="{if isset($password)}{$password|filter_xss}{/if}" placeholder="********">
         </div>
         <div class="form-group">
           {* The jstz javascript is in the footer, added via a boolean variable *}
@@ -40,9 +42,10 @@
           </div>
         </div>
         <div class="form-group form-group-radio">
+          {include file="_appusermessage.tpl" field="terms"}
           <label class="control-label" for="terms">I agree to the <a href="https://github.com/ThinkUpLLC/policy">terms of service</a></label>
           <div class="form-control">
-            <input type="checkbox" class="radio-control" id="terms">
+            <input type="checkbox" class="radio-control" id="terms" name="terms" value="agreed" {if isset($terms) && $terms eq 'agreed'}checked="true"{/if}>
           </div>
         </div>
 

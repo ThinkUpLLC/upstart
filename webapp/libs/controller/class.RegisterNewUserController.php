@@ -42,21 +42,15 @@ class RegisterNewUserController extends SignUpController {
                             );
                             SessionCache::put('network_auth_details', serialize($network_auth_details));
                         } else {
-                            SessionCache::put('auth_error_message', $this->generic_error_msg);
-                            $this->logError("Invalid Twitter user returned: ".
+                            return $this->tryAgain("Invalid Twitter user returned: ".
                             Utils::varDumpToString($authed_twitter_user),__FILE__,__LINE__,__METHOD__);
-                            return $this->tryAgain();
                         }
                     } catch (APIErrorException $e) {
-                        SessionCache::put('auth_error_message', $this->generic_error_msg);
-                        $this->logError(get_class($e).":".$e->getMessage(),__FILE__,__LINE__,__METHOD__);
-                        return $this->tryAgain();
+                        return $this->tryAgain(get_class($e).":".$e->getMessage(),__FILE__,__LINE__,__METHOD__);
                     }
                 } else {
-                    SessionCache::put('auth_error_message', $this->generic_error_msg);
-                    $this->logError('Twitter access tokens not set '. (isset($tok)?Utils::varDumpToString($tok):''),
-                    __FILE__,__LINE__,__METHOD__);
-                    return $this->tryAgain();
+                    return $this->tryAgain('Twitter access tokens not set '.
+                        (isset($tok)?Utils::varDumpToString($tok):''), __FILE__,__LINE__,__METHOD__);
                 }
             } elseif ($this->hasUserReturnedFromFacebook()) {
                 if ($_GET["state"] == SessionCache::get('facebook_auth_csrf')) {
@@ -88,6 +82,7 @@ class RegisterNewUserController extends SignUpController {
 
                         //@TODO If Facebook user exists in subscribers table, tryAgain with error
                         $this->addToView('email', $fb_user_profile['email']);
+                        $this->addToView('network_username', $fb_user_profile['name']);
 
                         $network_auth_details = array(
                             'network_user_name'=>$fb_user_profile['username'],
@@ -110,47 +105,63 @@ class RegisterNewUserController extends SignUpController {
                         } else {
                             $error_msg = $error_msg." Facebook's response: \"".$access_token_response. "\"";
                         }
-                        SessionCache::put('auth_error_message', $error_msg);
-                        $this->logError( $error_msg, __FILE__,__LINE__,__METHOD__);
-                        return $this->tryAgain();
+                        return $this->tryAgain( $error_msg ." ". __FILE__. " ".__LINE__. " ".__METHOD__);
                     }
                 } else {
-                    SessionCache::put('auth_error_message', $this->generic_error_msg);
-                    $this->logError( "Facebook auth error: Invalid CSRF token", __FILE__,__LINE__,__METHOD__);
-                    return $this->tryAgain();
+                    return $this->tryAgain("Facebook auth error: Invalid CSRF token ". __FILE__. " ".__LINE__
+                        . " ".__METHOD__);
                 }
             }
        }
        if (self::hasFormBeenPosted()) {
-            //@TODO Make sure Terms of Service has been checked/agreed to
-            //@TODO Validate email
-            //@TODO Validate timezone
-            //@TODO Validate ThinkUp username
-            //@TODO Make sure SessionCache has 'network_auth_details', if not tryAgain()
+            // Validate email, password, and username
+            if (self::isEmailInputValid() & self::isPasswordInputValid() & self::isUsernameValid()
+                & self::isTimeZoneValid() & self::hasAgreedToTerms()) {
+                // Make sure SessionCache has 'network_auth_details', if not tryAgain()
+                $network_auth_details = SessionCache::get('network_auth_details');
+                if (isset($network_auth_details) ) {
+                    $unserialized_network_auth_details = unserialize($network_auth_details);
+                    if ($unserialized_network_auth_details !== false) {
+                        $has_user_been_created = false;
+                        //@TODO Insert subscriber details here
+                        //@TODO Catch duplicate subscriber exception
+                        //@TODO Catch duplicate username exception
 
-            //@TODO Insert subscriber details here
-            //@TODO Catch duplicate subscriber exception
-            //@TODO Catch duplicate username exception
+                        if ($has_user_been_created) {
+                            //Begin Amazon redirect
+                            $click_dao = new ClickMySQLDAO();
+                            $caller_reference = $click_dao->insert();
+                            SessionCache::put('caller_reference', $caller_reference);
 
-            //Begin Amazon redirect
-            $click_dao = new ClickMySQLDAO();
-            $caller_reference = $click_dao->insert();
-            SessionCache::put('caller_reference', $caller_reference);
-
-            $selected_level = null;
-            if (isset($_GET['level']) && ($_GET['level'] == "member" || $_GET['level'] == "pro")) {
-                $selected_level = htmlspecialchars($_GET['level']);
-                //Get Amazon URL
-                $callback_url = UpstartHelper::getApplicationURL().'welcome.php?';
-                $amount = SignUpController::$subscription_levels[$selected_level];
-                $pay_with_amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference, $callback_url, $amount);
-                header('Location: '.$pay_with_amazon_url);
-            } else {
-                SessionCache::put('auth_error_message', 'Oops! Something went wrong. Please try again.');
-                return $this->tryAgain();
+                            $selected_level = null;
+                            if (isset($_GET['level']) && ($_GET['level'] == "member" || $_GET['level'] == "pro")) {
+                                $selected_level = htmlspecialchars($_GET['level']);
+                                //Get Amazon URL
+                                $callback_url = UpstartHelper::getApplicationURL().'welcome.php?';
+                                $amount = SignUpController::$subscription_levels[$selected_level];
+                                $pay_with_amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference,
+                                    $callback_url, $amount);
+                                header('Location: '.$pay_with_amazon_url);
+                            } else {
+                                return $this->tryAgain('Oops! Something went wrong. Please try again.');
+                            }
+                        }
+                    } else {
+                        return $this->tryAgain('Oops! Something went wrong. Please try again.');
+                    }
+                } else {
+                    self::tryAgain("Network auth details not set; please try again TODO: Rewrite this message");
+                }
+            } else { //Populate form with the submitted values
+                $this->addToView('email', $_POST['email']);
+                $this->addToView('username', $_POST['username']);
+                $this->addToView('current_tz', $_POST['timezone']);
+                $this->addToView('password', $_POST['password']);
+                if (isset($_POST['terms'])) {
+                    $this->addToView('terms', $_POST['terms']);
+                }
             }
-       }
-
+        }
         $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
         return $this->generateView();
     }
@@ -160,16 +171,54 @@ class RegisterNewUserController extends SignUpController {
      * @return bool
      */
     protected function hasFormBeenPosted() {
-        return (isset($_POST['timezone']) && isset($_POST['username']) && isset($_POST['password']) 
+        return (isset($_POST['timezone']) && isset($_POST['username']) && isset($_POST['password'])
             && isset($_POST['email']));
     }
 
     /**
      * Send user back to subcribe page with error message in session.
+     * @param str Error message
      * @return str
      */
-    private function tryAgain() {
+    private function tryAgain($error_message = '') {
+        //$this->addErrorMessage($error_message);
+        SessionCache::put('auth_error_message', $error_message);
         $controller = new SubscribeController(true);
         return $controller->go();
+    }
+
+    /**
+     * Verify time zone and add appropriate error message if not
+     * return bool
+     */
+    private function isTimeZoneValid() {
+        if (isset($_POST['timezone']) && empty($_POST['timezone'])) {
+            $this->addInfoMessage('Please enter a timezone.', 'timezone');
+        }
+        // Validate timezone
+        $is_timezone_valid = false;
+        if (isset($_POST['timezone']) && !empty($_POST['timezone'])) {
+            $possible_timezones = timezone_identifiers_list();
+            if (in_array($_POST['timezone'], $possible_timezones)) {
+                $is_timezone_valid = true;
+            }
+            if (!$is_timezone_valid) {
+                $this->addInfoMessage('Time zone must be chosen from this list.', 'timezone');
+            }
+        }
+        return (isset($_POST['timezone']) && $is_timezone_valid);
+    }
+
+    /**
+     * Verify user has agreed to TOS and add appropriate error message if not
+     * return bool
+     */
+    private function hasAgreedToTerms() {
+        if (isset($_POST['terms']) && $_POST['terms'] === 'agreed') {
+            return true;
+        } else {
+            $this->addInfoMessage("Please agree to ThinkUp's terms of service.", 'terms');
+            return false;
+        }
     }
 }

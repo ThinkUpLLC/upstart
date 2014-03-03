@@ -14,6 +14,24 @@ abstract class SignUpController extends UpstartController {
      */
     public static $membership_levels = array('60'=>'Member', '120'=>'Pro', '996'=>'Exec');
     /**
+     * Verify ThinkUp username and add appropriate error message if not
+     * return bool
+     */
+    protected function isUsernameValid() {
+        if (isset($_POST['username']) && empty($_POST['username'])) {
+            $this->addInfoMessage('Please enter a username.', 'username');
+        }
+        $is_valid_username = false;
+        if (isset($_POST['username']) && !empty($_POST['username'])) {
+            $is_valid_username = UpstartHelper::isUsernameValid($_POST["username"]);
+            if (!$is_valid_username) {
+                $this->addInfoMessage('Your username must be between 3 - 15 unaccented numbers or letters.',
+                    'username');
+            }
+        }
+        return (isset($_POST['username']) && $is_valid_username);
+    }
+    /**
      * Verify posted email address input and add appropriate error message if not
      * return bool
      */
