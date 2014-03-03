@@ -43,7 +43,7 @@ class UpgradeApplicationController extends Controller {
 
             // Get in the right directory to exec the upgrade
             $cfg = Config::getInstance();
-            $master_app_source_path = $cfg->getValue('master_app_source_path');
+            $master_app_source_path = $cfg->getValue('chameleon_app_source_path');
             if (!chdir($master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader') ) {
                 throw new Exception("Could not chdir to ".
                 $master_app_source_path.'/install/cli/thinkupllc-chameleon-upgrader');
