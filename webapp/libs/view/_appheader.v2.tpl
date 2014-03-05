@@ -67,7 +67,7 @@
     </div>
     {/if}
     <div id="page-content">
-{include file="_appusermessage-v2.tpl"}
+{include file="_appusermessage.tpl"}
 
 <nav class="navbar navbar-default" role="navigation">
   <div class="navbar-header">

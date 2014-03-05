@@ -48,15 +48,15 @@
 
           <form method="post" action="">
             <fieldset class="credentials">
-              <div class="field-group">
-                {include file="_appusermessage.tpl" field="email"}
+              <div class="field-group{if isset($error_msgs.email)} form-group-warning{/if}">
                 <label for="email">Email</label>
                 <input type="email" class="input-text" placeholder="yourname@example.com" name="email" value="{if isset($prefill_email)}{$prefill_email}{/if}">
+                {include file="_appusermessage.tpl" field="email"}
               </div>
-              <div class="field-group">
-                {include file="_appusermessage.tpl" field="password"}
+              <div class="field-group{if isset($error_msgs.password)} form-group-warning{/if}">
                 <label for="password">Password</label>
                 <input type="password" class="input-text" placeholder="(At least 8 characters)" name="password" value="">
+                {include file="_appusermessage.tpl" field="password"}
             </fieldset>
 
             <fieldset class="buttons">
@@ -77,7 +77,7 @@
           </form>
           </div>
         {/if}
-        </div> 
+        </div>
 
       </div><!-- end left column -->
     </div>

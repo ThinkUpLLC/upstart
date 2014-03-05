@@ -81,14 +81,15 @@ body.settings .container .form-horizontal .form-group.form-group-ok:before {
   font-size: 16px;
 }
 body.settings .container .form-horizontal .form-group.form-group-warning .form-control[type=text],
-body.settings .container .form-horizontal .form-group.form-group-ok .form-control[type=text] {
+body.settings .container .form-horizontal .form-group.form-group-ok .form-control[type=text],
+body.settings .container .form-horizontal .form-group.form-group-warning .form-control[type=email],
+body.settings .container .form-horizontal .form-group.form-group-ok .form-control[type=email] {
   padding-right: 35px;
 }
 body.settings .container .form-horizontal .form-group.form-group-warning:before {
   content: "\f071";
   color: #d0021b;
 }
-body.settings .container .form-horizontal .form-group.form-group-warning .control-label,
 body.settings .container .form-horizontal .form-group.form-group-warning .help-block {
   color: #d0021b;
 }
@@ -124,7 +125,10 @@ body.settings .container .form-horizontal .form-group.form-group-radio .form-con
 body.settings .container .form-horizontal .form-group .help-block {
   margin: 0;
   text-align: left;
-  border-bottom: 1px solid #dbdbdb;
+  padding: 4px 10px 0;
+  position: relative;
+  top: -5px;
+  clear: both;
 }
 body.settings .container .form-horizontal .btn-submit {
   position: fixed;
