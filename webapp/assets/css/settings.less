@@ -83,7 +83,7 @@ body.settings {
             font-size: 16px;
           }
 
-          .form-control[type=text] {
+          .form-control[type=text], .form-control[type=email] {
             padding-right: 35px;
           }
         }
@@ -95,7 +95,7 @@ body.settings {
             color: @red-warning;
           }
 
-          .control-label, .help-block {
+          .help-block {
             color: @red-warning;
           }
         }
@@ -130,7 +130,10 @@ body.settings {
         .help-block {
           margin: 0;
           text-align: left;
-          border-bottom: 1px solid @gray-lighter;
+          padding: 4px 10px 0;
+          position: relative;
+          top: -5px;
+          clear: both;
         }
       }
 

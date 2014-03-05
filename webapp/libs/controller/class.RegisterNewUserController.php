@@ -148,14 +148,14 @@ class RegisterNewUserController extends SignUpController {
                             $new_subscriber_id = $subscriber_dao->insertCompleteSubscriber($subscriber);
                             $has_user_been_created = true;
                         } catch (DuplicateSubscriberEmailException $e) {
-                            $this->addInfoMessage('That email address is already subscribed to ThinkUp. '.
+                            $this->addErrorMessage('That email address is already subscribed to ThinkUp. '.
                                 'Please try again.');
                             $this->addToView('username', $_POST['username']);
                             $this->addToView('current_tz', $_POST['timezone']);
                             $this->addToView('password', $_POST['password']);
                             return $this->generateView();
                         } catch (DuplicateSubscriberUsernameException $e) {
-                            $this->addInfoMessage('That username is already in use. Please try again.');
+                            $this->addErrorMessage('That username is already in use. Please try again.');
                             $this->addToView('email', $_POST['email']);
                             $this->addToView('current_tz', $_POST['timezone']);
                             $this->addToView('password', $_POST['password']);
@@ -240,7 +240,7 @@ class RegisterNewUserController extends SignUpController {
      */
     private function isTimeZoneValid() {
         if (isset($_POST['timezone']) && empty($_POST['timezone'])) {
-            $this->addInfoMessage('Please enter a timezone.', 'timezone');
+            $this->addErrorMessage('Please enter a timezone.', 'timezone');
         }
         // Validate timezone
         $is_timezone_valid = false;
@@ -250,7 +250,7 @@ class RegisterNewUserController extends SignUpController {
                 $is_timezone_valid = true;
             }
             if (!$is_timezone_valid) {
-                $this->addInfoMessage('Time zone must be chosen from this list.', 'timezone');
+                $this->addErrorMessage('Time zone must be chosen from this list.', 'timezone');
             }
         }
         return (isset($_POST['timezone']) && $is_timezone_valid);
@@ -264,7 +264,7 @@ class RegisterNewUserController extends SignUpController {
         if (isset($_POST['terms']) && $_POST['terms'] === 'agreed') {
             return true;
         } else {
-            $this->addInfoMessage("Please agree to ThinkUp's terms of service.", 'terms');
+            $this->addErrorMessage("Please agree to ThinkUp's terms of service.", 'terms');
             return false;
         }
     }

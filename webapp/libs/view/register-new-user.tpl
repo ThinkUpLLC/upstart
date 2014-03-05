@@ -5,26 +5,26 @@
       <h2>Now we need a few personal details. If a field is empty, please fill it in. If it’s not, please check to make sure it’s correct.</h2>
     </header>
 
-    <form method="POST" class="form-horizontal" id="form-signin" action="register.php{if isset($smarty.get.level)}?level={$smarty.get.level}{/if}">
+    <form method="POST" class="form-horizontal" id="form-register" action="register.php{if isset($smarty.get.level)}?level={$smarty.get.level}{/if}">
       <fieldset class="fieldset-no-header">
-        <div class="form-group">
-        {include file="_appusermessage.tpl" field="email"}
+        <div class="form-group{if isset($error_msgs.email)} form-group-warning{/if}">
           <label class="control-label" for="email">Email</label>
           <input type="email" name="email" class="form-control" id="email"
           {if isset($email)}value="{$email|filter_xss}"{/if} placeholder="you@example.com">
+          {include file="_appusermessage.tpl" field="email"}
         </div>
-        <div class="form-group">
-          {include file="_appusermessage.tpl" field="username"}
+        <div class="form-group{if isset($error_msgs.username)} form-group-warning{/if}">
           <label class="control-label" for="username">Username</label>
           <input type="text" class="form-control" id="username"
           {if isset($username)}value="{$username|filter_xss}"{/if} name="username" placeholder="catlady99">
+          {include file="_appusermessage.tpl" field="username"}
         </div>
-        <div class="form-group">
-          {include file="_appusermessage.tpl" field="password"}
+        <div class="form-group{if isset($error_msgs.password)} form-group-warning{/if}" id="form-group-password">
           <label class="control-label" for="pwd">Password</label>
           <input type="password" class="form-control" id="pwd" name="password" value="{if isset($password)}{$password|filter_xss}{/if}" placeholder="********">
+          {include file="_appusermessage.tpl" field="password"}
         </div>
-        <div class="form-group">
+        <div class="form-group{if isset($error_msgs.timezone)} form-group-warning{/if}">
           {* The jstz javascript is in the footer, added via a boolean variable *}
           <label class="control-label" for="control-timezone">Time zone</label>
           <div class="form-control picker">
@@ -40,13 +40,14 @@
               {/foreach}
             </select>
           </div>
+          {include file="_appusermessage.tpl" field="timezone"}
         </div>
-        <div class="form-group form-group-radio">
-          {include file="_appusermessage.tpl" field="terms"}
-          <label class="control-label" for="terms">I agree to the <a href="https://github.com/ThinkUpLLC/policy">terms of service</a></label>
+        <div class="form-group form-group-radio{if isset($error_msgs.terms)} form-group-warning{/if}">
+          <label class="control-label" for="terms">I’ll follow the <a href="https://github.com/ThinkUpLLC/policy">terms of service</a></label>
           <div class="form-control">
             <input type="checkbox" class="radio-control" id="terms" name="terms" value="agreed" {if isset($terms) && $terms eq 'agreed'}checked="true"{/if}>
           </div>
+          {include file="_appusermessage.tpl" field="terms"}
         </div>
 
       </fieldset>

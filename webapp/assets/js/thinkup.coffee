@@ -107,33 +107,38 @@ animateContentShift = (state) ->
 wt.appMessage =
   paddingChange: wt.navHeight - $(".navbar-default").outerHeight(true)
   create: (message, type = "info") ->
-    wt.appMessage.destroy()
-    msgClass = "content"
-    if type is "warning" then msgClass += " fa-override-before fa-exclamation-triangle"
-    if type is "success" then msgClass += " fa-override-before fa-check-circle"
-    $el = $("""<div class="app-message app-message-#{type}" style="display: none">
-      <div class="#{msgClass}">#{message}</div>
-      <a href="#" class="app-message-close"><i class="fa fa-times-circle icon"></i></a>
-    </div>""")
-    $("#page-content").append($el)
-    $(".container").animate({
-        paddingTop: "+=#{wt.appMessage.paddingChange}"
-      }
-      , 150
-      , ->
-        $(".app-message").fadeIn(
-          150
-        )
-        $("body").addClass "app-message-visible"
-        setNavHeight(true) if not $("body").hasClass "account"
-    )
+    console.log $('<div/>').html(message).text()
+    console.log $(".app-message").text().trim()
+    if $(".app-message").text().trim() isnt $('<div/>').html(message).text()
+      wt.appMessage.destroy()
+      msgClass = "content"
+      if type is "warning" then msgClass += " fa-override-before fa-exclamation-triangle"
+      if type is "success" then msgClass += " fa-override-before fa-check-circle"
+      $el = $("""<div class="app-message app-message-#{type}" style="display: none">
+        <div class="#{msgClass}">#{message}</div>
+        <a href="#" class="app-message-close"><i class="fa fa-times-circle icon"></i></a>
+      </div>""")
+      $("#page-content").append($el)
+      $(".container").animate({
+          paddingTop: "+=#{wt.appMessage.paddingChange}"
+        }
+        , 150
+        , ->
+          $(".app-message").fadeIn(
+            150
+          )
+          $("body").addClass "app-message-visible"
+          setNavHeight(true) if not $("body").hasClass "account"
+      )
   destroy: ->
-    $(".app-message").fadeOut(150)
+    $appMessage = $(".app-message")
+    $appMessage.fadeOut(150)
     $(".container").animate({
         paddingTop: "+=-#{wt.appMessage.paddingChange}"
       }
       , 150
       , ->
+        $appMessage.remove()
         $("body").removeClass "app-message-visible"
         setNavHeight(true) if not $("body").hasClass "account"
     )
@@ -152,47 +157,65 @@ setFixedPadding = ->
 
 timerUsername = null
 checkUsername = ($el) ->
-  if timerUsername then clearTimeout timerUsername
-  timerUsername = setTimeout(->
-    $group = $el.parent()
-    if $el.val().match(/^[\w]{3,15}$/gi)?.length isnt 1
-      $group.removeClass("form-group-ok").addClass("form-group-warning")
-      wt.appMessage.create "Your username must be between 3 - 15 unaccented numbers or letters.", "warning"
-    else
-      $.getJSON "/user/check.php?un=#{encodeURIComponent $el.val()}", (data) ->
-        if not data.available
-          $group.removeClass("form-group-ok").addClass("form-group-warning")
-          wt.appMessage.create "Sorry, someone already grabbed that name. Please try again.", "warning"
-        else
-          $group.addClass("form-group-ok").removeClass("form-group-warning")
-          wt.appMessage.destroy()
-  , 500
-  )
-
-checkPasswordFormat = (value) ->
-  if value.match(/^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*).{8,}$/gi)?.length is 1
-    true
-  else
-    wt.appMessage.create "Your password must be at least 8 characters, contain both numbers &amp; letters, and omit special characters.", "warning"
-    false
-
-checkPasswordField = ($form) ->
-  if $form.find("#control-password-current").length
-    if $form.find("#control-password-current").val().length isnt 0
-      if $form.find("#control-password-new").val().length is 0 and
-      $form.find("#control-password-verify").val().length is 0
-        wt.appMessage.create "You didn't provide a new password.", "warning"
-        $form.find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning")
-        e.preventDefault()
-      else if !checkPasswordFormat($form.find("#control-password-new").val())
-        $form.find("#control-password-new").parent().addClass("form-group-warning")
-        e.preventDefault()
-      else if $form.find("#control-password-new").val() isnt $form.find("#control-password-verify").val()
-        e.preventDefault()
-        wt.appMessage.create "The passwords must match.", "warning"
-        $form.find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning")
+  if $el.val() isnt ""
+    if timerUsername then clearTimeout timerUsername
+    timerUsername = setTimeout(->
+      $group = $el.parent()
+      if $el.val().match(/^[\w]{3,15}$/gi)?.length isnt 1
+        $group.removeClass("form-group-ok").addClass("form-group-warning")
+        wt.appMessage.create "Your username must be between 3 - 15 unaccented numbers or letters.", "warning"
       else
+        $.getJSON "/user/check.php?un=#{encodeURIComponent $el.val()}", (data) ->
+          if not data.available
+            $group.removeClass("form-group-ok").addClass("form-group-warning")
+            wt.appMessage.create "Sorry, someone already grabbed that name. Please try again.", "warning"
+          else
+            $group.addClass("form-group-ok").removeClass("form-group-warning")
+            $group.find(".help-block").remove()
+            wt.appMessage.destroy()
+    , 500
+    )
+
+checkPasswordFormat = (value) -> value.match(/^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*).{8,}$/gi)?
+checkEmailFormat    = (value) -> value.match(/^([a-z0-9_\.\+-]+)@([\da-z\.-]+)\.([a-z\.]{2,8})$/)?
+
+timerPassword = null
+checkPasswordField = ($el) ->
+  if $el.val() isnt ""
+    if timerPassword then clearTimeout timerPassword
+    timerPassword = setTimeout(->
+      $group = $el.parent()
+      if checkPasswordFormat $el.val()
+        $group.addClass("form-group-ok").removeClass("form-group-warning")
+        $group.find(".help-block").remove()
         wt.appMessage.destroy()
+      else
+        $group.removeClass("form-group-ok").addClass("form-group-warning")
+        wt.appMessage.create "Your password must be at least 8 characters and contain both numbers &amp; letters.", "warning"
+    , 500
+    )
+
+timerEmail = null
+checkEmailField = ($el) ->
+  if $el.val() isnt ""
+    if timerEmail then clearTimeout timerEmail
+    timerEmail = setTimeout(->
+      $group = $el.parent()
+      if checkEmailFormat $el.val()
+        $group.addClass("form-group-ok").removeClass("form-group-warning")
+        $group.find(".help-block").remove()
+        wt.appMessage.destroy()
+      else
+        $group.removeClass("form-group-ok").addClass("form-group-warning")
+        wt.appMessage.create "Please enter a valid email address.", "warning"
+    , 500
+    )
+
+checkTermsField = ($el) ->
+  if $el.is ":checked"
+    $el.parent().next(".help-block").remove()
+  else
+    wt.appMessage.create "Please review and agree to the terms of service.", "warning"
 
 $ ->
   setListOpenData(true)
@@ -285,22 +308,24 @@ $ ->
     e.preventDefault()
     wt.appMessage.destroy()
 
-  $("#username").on "keyup", -> checkUsername($(@))
+  $("#username").on "keyup", -> checkUsername $(@)
+  $("#pwd").on "keyup",      -> checkPasswordField $(@)
+  $("#email").on "keyup",    -> checkEmailField $(@)
+  $("#terms").on "click",   -> checkTermsField $(@)
 
   $("#form-reset").on "submit", (e) ->
     if $(@).find("#password").val().length is 0 or  $(@).find("#password_confirm").val().length is 0
       wt.appMessage.create "You must fill in both fields", "warning"
       e.preventDefault()
     else if !checkPasswordFormat($(@).find("#password").val())
+      wt.appMessage.create "Your password must be at least 8 characters, contain both numbers &amp; letters, " +
+        "and omit special characters.", "warning"
       e.preventDefault()
     else if $(@).find("#password").val() isnt $(@).find("#password_confirm").val()
       e.preventDefault()
       wt.appMessage.create "Passwords must match", "warning"
     else
       wt.appMessage.destroy()
-
-  $("#form-settings").on "submit", (e) ->
-    # checkPasswordField $(@)
 
   $("body").on "click", ".show-section", (e) ->
     $el = $($(@).data("section-selector"))

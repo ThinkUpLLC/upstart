@@ -8,4 +8,4 @@
   </nav>
 </header>
 
-{include file="_appusermessage-v2.tpl"}
+{include file="_appusermessage.tpl"}
