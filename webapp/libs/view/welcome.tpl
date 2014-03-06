@@ -14,7 +14,7 @@
             <div class="panel-desktop-right">
               <div class="panel-body">
                 <div class="panel-body-inner">
-                  <p>Your account is all set up: <a href="https://{$subscriber->thinkup_username}.thinkup.com/">https://{$subscriber->thinkup_username}.thinkup.com/</a></p>
+                  <p>Your account is all set up: <a href="{$subscriber->installation_url}">{$subscriber->installation_url}</a></p>
 
                   <p>Keep your eyes peeled for an email from us with your first set of ThinkUp insights.</p>
                 </div>

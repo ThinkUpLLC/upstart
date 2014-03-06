@@ -13,7 +13,6 @@ class WelcomeController extends SignUpController {
         $new_subscriber_id = SessionCache::get('new_subscriber_id');
         $subscriber_dao = new SubscriberMySQLDAO();
         $subscriber = $subscriber_dao->getByID($new_subscriber_id);
-        $this->addToView('subscriber', $subscriber);
 
         if ($this->hasUserReturnedFromAmazon()) {
             $internal_caller_reference = SessionCache::get('caller_reference');
@@ -45,7 +44,6 @@ class WelcomeController extends SignUpController {
                     $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
                     "subscription.  Did you refresh the page?");
                 }
-
             } else {
                 $this->addErrorMessage($this->generic_error_msg);
                 if (!isset($internal_caller_reference)) {
@@ -55,6 +53,11 @@ class WelcomeController extends SignUpController {
                 }
             }
         }
+        $cfg = Config::getInstance();
+        $user_installation_url = $cfg->getValue('user_installation_url');
+        $subscriber->installation_url = str_replace ("{user}", $subscriber->thinkup_username,
+            $user_installation_url);
+        $this->addToView('subscriber', $subscriber);
         return $this->generateView();
     }
 

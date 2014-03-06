@@ -164,6 +164,8 @@ class RegisterNewUserController extends SignUpController {
                         }
 
                         if ($has_user_been_created) {
+                            $installer = new AppInstaller();
+                            $install_results = $installer->install($new_subscriber_id);
                             //Begin Amazon redirect
                             $click_dao = new ClickMySQLDAO();
                             $caller_reference = $click_dao->insert();

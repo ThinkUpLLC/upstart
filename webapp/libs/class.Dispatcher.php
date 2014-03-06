@@ -1,6 +1,6 @@
 <?php
 class Dispatcher {
-    public function dispatch($jobs) {
+    public static function dispatch($jobs) {
         $cfg = Config::getInstance();
         $api_call = self::buildAPICallURL($jobs);
         //echo $api_call;
@@ -56,7 +56,7 @@ class Dispatcher {
         }
     }
 
-    private function buildAPICallURL($jobs_array) {
+    private static function buildAPICallURL($jobs_array) {
         $cfg = Config::getInstance();
         $base_url = $cfg->getValue('dispatch_endpoint');
         $auth_token = $cfg->getValue('dispatch_auth_token');
