@@ -1,5 +1,5 @@
 {include file="_appheader.v2.tpl" include_menu=true body_id="welcome"}
-
+{include file="_appusermessage.tpl"}
   <div class="container">
     <div class="stream">
       <div class="date-group today">
@@ -14,7 +14,7 @@
             <div class="panel-desktop-right">
               <div class="panel-body">
                 <div class="panel-body-inner">
-                  <p>Your account is all set up: <a href="https://example.thinkup.com/">https://example.thinkup.com/</a></p>
+                  <p>Your account is all set up: <a href="https://{$subscriber->thinkup_username}.thinkup.com/">https://{$subscriber->thinkup_username}.thinkup.com/</a></p>
 
                   <p>Keep your eyes peeled for an email from us with your first set of ThinkUp insights.</p>
                 </div>
@@ -22,6 +22,7 @@
             </div>
           </div>
 
+          {if $subscriber->membership_level eq "Pro"}
           <div class="panel panel-default insight insight-default insight-mint">
             <div class="panel-heading">
               <h2 class="panel-title insight-color-text">Got more social networking accounts?</h2>
@@ -30,11 +31,11 @@
               <div class="panel-body">
                 <div class="panel-body-inner">
                   <p>As a Pro member, you can add up to ten accounts. Connect another <a href="#">Facebook</a> or <a href="#">Twitter</a> account with a click.</p>
-
                 </div>
               </div>
             </div>
           </div>
+          {/if}
 
           <div class="panel panel-default insight insight-default insight-bubblegum">
             <div class="panel-heading">

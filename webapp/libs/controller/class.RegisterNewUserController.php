@@ -147,6 +147,7 @@ class RegisterNewUserController extends SignUpController {
                         try {
                             $new_subscriber_id = $subscriber_dao->insertCompleteSubscriber($subscriber);
                             $has_user_been_created = true;
+                            SessionCache::put('new_subscriber_id', $new_subscriber_id);
                         } catch (DuplicateSubscriberEmailException $e) {
                             $this->addErrorMessage('That email address is already subscribed to ThinkUp. '.
                                 'Please try again.');
@@ -172,7 +173,7 @@ class RegisterNewUserController extends SignUpController {
                             if (isset($_GET['level']) && ($_GET['level'] == "member" || $_GET['level'] == "pro")) {
                                 $selected_level = htmlspecialchars($_GET['level']);
                                 //Get Amazon URL
-                                $callback_url = UpstartHelper::getApplicationURL().'welcome.php?';
+                                $callback_url = UpstartHelper::getApplicationURL().'welcome.php?level='.$_GET['level'];
                                 $amount = SignUpController::$subscription_levels[$selected_level];
                                 $pay_with_amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference,
                                     $callback_url, $amount);
