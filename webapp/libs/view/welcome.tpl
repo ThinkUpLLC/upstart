@@ -30,7 +30,7 @@
             <div class="panel-desktop-right">
               <div class="panel-body">
                 <div class="panel-body-inner">
-                  <p>As a Pro member, you can add up to ten accounts. Connect another <a href="#">Facebook</a> or <a href="#">Twitter</a> account with a click.</p>
+                  <p>As a Pro member, you can add up to ten accounts. Connect another <a href="{$new_subscriber->installation_url}account/?p=facebook">Facebook</a> or <a href="{$new_subscriber->installation_url}account/?p=twitter">Twitter</a> account with a click.</p>
                 </div>
               </div>
             </div>
