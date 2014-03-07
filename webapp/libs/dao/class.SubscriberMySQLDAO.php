@@ -368,6 +368,18 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getUpdateCount($ps);
     }
 
+    public function doesSubscriberConnectionExist($network_user_id, $network) {
+        $q  = "SELECT id FROM subscribers WHERE network_user_id = :network_user_id AND network = :network ";
+        $vars = array(
+            ':network_user_id'=>$network_user_id,
+            ':network'=>$network
+        );
+        //echo self::mergeSQLVars($q, $vars);
+        $ps = $this->execute($q, $vars);
+        $returned_subscribers = $this->getDataRowsAsArrays($ps);
+        return (count($returned_subscribers) > 0);
+    }
+
     public function getTotalInstallsToUpgrade($commit_hash) {
         $q  = "SELECT count(*) as total FROM subscribers WHERE is_installation_active = 1 ";
         $q .= "AND commit_hash != :commit_hash;";

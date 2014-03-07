@@ -31,7 +31,15 @@ class RegisterNewUserController extends SignUpHelperController {
                     try {
                         $authed_twitter_user = $api->verifyCredentials();
                         if (isset($authed_twitter_user['user_name'])) {
-                            //@TODO If Twitter user exists in subscribers table, tryAgain with error
+                            //If Twitter user exists in subscribers table, tryAgain with error
+                            $subscriber_dao = new SubscriberMySQLDAO();
+                            if ($subscriber_dao->doesSubscriberConnectionExist($authed_twitter_user['user_id'],
+                                'twitter')) {
+                                return $this->tryAgain( "Whoa! We love your enthusiasm, but @".
+                                $authed_twitter_user['user_name'] . " on Twitter has already joined ThinkUp. ".
+                                "Please connect another Facebook or Twitter account.");
+                            }
+
                             $this->addToView('network_username', '@'.$authed_twitter_user['user_name']);
 
                             $network_auth_details = array(
@@ -84,7 +92,16 @@ class RegisterNewUserController extends SignUpHelperController {
                         // print_r($fb_user_profile);
                         // echo "</pre>";
 
-                        //@TODO If Facebook user exists in subscribers table, tryAgain with error
+                        //If Facebook user exists in subscribers table, tryAgain with error
+                        if (!isset($subscriber_dao)) {
+                            $subscriber_dao = new SubscriberMySQLDAO();
+                        }
+                        if ($subscriber_dao->doesSubscriberConnectionExist($fb_user_profile['id'], 'facebook')) {
+                            return $this->tryAgain( "Whoa! We love your enthusiasm, but ".
+                            $fb_user_profile['name'] . " on Facebook has already joined ThinkUp. ".
+                            "Connect another Facebook or Twitter account to ThinkUp.");
+                        }
+
                         $this->addToView('email', $fb_user_profile['email']);
                         $this->addToView('network_username', $fb_user_profile['name']);
 
@@ -145,7 +162,9 @@ class RegisterNewUserController extends SignUpHelperController {
                         $subscriber->follower_count = $network_auth_details['follower_count'];
 
                         //Insert subscriber
-                        $subscriber_dao = new SubscriberMySQLDAO();
+                        if (!isset($subscriber_dao)) {
+                            $subscriber_dao = new SubscriberMySQLDAO();
+                        }
                         try {
                             $new_subscriber_id = $subscriber_dao->insertCompleteSubscriber($subscriber);
                             $has_user_been_created = true;
@@ -166,9 +185,9 @@ class RegisterNewUserController extends SignUpHelperController {
                             $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
                             return $this->generateView();
                         } catch (DuplicateSubscriberConnectionException $e) {
-                            $this->tryAgain( "Whoa! We love your enthusiasm, but ".
+                            return $this->tryAgain( "Whoa! We love your enthusiasm, but ".
                             $subscriber->network_user_name . " on " . $subscriber->network .
-                            " has already joined ThinkUp.  Connect another Facebook or Twitter account to ThinkUp.");
+                            " has already joined ThinkUp.  Please connect another Facebook or Twitter account.");
                         }
 
                         if ($has_user_been_created) {
