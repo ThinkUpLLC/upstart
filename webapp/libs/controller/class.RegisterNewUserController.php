@@ -4,7 +4,7 @@ class RegisterNewUserController extends SignUpHelperController {
     public function control() {
         $this->setViewTemplate('register.tpl');
         if ( !self::isLevelValid() ) {
-            return $this->tryAgain('Oops! Something went wrong. No level set. TODO: Rewrite Please try again.');
+            return $this->tryAgain($this->generic_error_msg);
         }
 
         if ($this->hasUserReturnedFromTwitter() || $this->hasUserReturnedFromFacebook()) {
@@ -165,6 +165,10 @@ class RegisterNewUserController extends SignUpHelperController {
                             $this->addToView('password', $_POST['password']);
                             $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
                             return $this->generateView();
+                        } catch (DuplicateSubscriberConnectionException $e) {
+                            $this->tryAgain( "Whoa! We love your enthusiasm, but ".
+                            $subscriber->network_user_name . " on " . $subscriber->network .
+                            " has already joined ThinkUp.  Connect another Facebook or Twitter account to ThinkUp.");
                         }
 
                         if ($has_user_been_created) {
@@ -182,10 +186,10 @@ class RegisterNewUserController extends SignUpHelperController {
                             header('Location: '.$pay_with_amazon_url);
                         }
                     } else {
-                        return $this->tryAgain('Oops! Something went wrong. Please try again.');
+                        return $this->tryAgain($this->generic_error_msg);
                     }
                 } else {
-                    return $this->tryAgain("Network auth details not set; please try again TODO: Rewrite this");
+                    return $this->tryAgain($this->generic_error_msg);
                 }
             } else { //Populate form with the submitted values
                 $this->addToView('email', $_POST['email']);
