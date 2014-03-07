@@ -1,8 +1,8 @@
 <?php
 
-class RegisterNewUserController extends SignUpController {
+class RegisterNewUserController extends SignUpHelperController {
     public function control() {
-        $this->setViewTemplate('register-new-user.tpl');
+        $this->setViewTemplate('register.tpl');
         if ( !self::isLevelValid() ) {
             return $this->tryAgain('Oops! Something went wrong. No level set. TODO: Rewrite Please try again.');
         }
@@ -171,13 +171,12 @@ class RegisterNewUserController extends SignUpController {
                             $installer = new AppInstaller();
                             $install_results = $installer->install($new_subscriber_id);
                             //Begin Amazon redirect
-                            $click_dao = new ClickMySQLDAO();
-                            $caller_reference = $click_dao->insert();
+                            $caller_reference = $new_subscriber_id.'_'.time();
 
                             $selected_level = htmlspecialchars($_GET['level']);
                             //Get Amazon URL
                             $callback_url = UpstartHelper::getApplicationURL().'welcome.php?level='.$_GET['level'];
-                            $amount = SignUpController::$subscription_levels[$selected_level];
+                            $amount = SignUpHelperController::$subscription_levels[$selected_level];
                             $pay_with_amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference,
                                 $callback_url, $amount);
                             header('Location: '.$pay_with_amazon_url);

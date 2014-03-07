@@ -1,5 +1,5 @@
 <?php
 require_once 'init.php';
 
-$controller = new PledgeController();
+$controller = new LandingController();
 echo $controller->go();

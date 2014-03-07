@@ -2,7 +2,7 @@
 /**
  * Create interface to Twitter and Facebook
  */
-class SubscribeController extends SignUpController {
+class SubscribeController extends SignUpHelperController {
     public function control() {
         $this->disableCaching(); //Don't cache because click ID/Amazon caller reference must be unique per user
         $this->setViewTemplate('subscribe.tpl');

@@ -1,6 +1,6 @@
 <?php
 /**
- * Parent controller for signing up for a new ThinkUp account.
+ * Parent controller for signing up for ThinkUp via waiting list or subscribing.
  * @author gina
  *
  */

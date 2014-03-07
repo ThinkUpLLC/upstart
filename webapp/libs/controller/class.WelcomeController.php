@@ -1,5 +1,5 @@
 <?php
-class WelcomeController extends SignUpController {
+class WelcomeController extends SignUpHelperController {
     /**
      * @var array Options for notification frequency
      */
@@ -28,7 +28,7 @@ class WelcomeController extends SignUpController {
 
                 //Record authorization
                 $authorization_dao = new AuthorizationMySQLDAO();
-                $amount = SignUpController::$subscription_levels[$_GET['level']];
+                $amount = SignUpHelperController::$subscription_levels[$_GET['level']];
                 $payment_expiry_date = (isset($_GET['expiry']))?$_GET['expiry']:null;
 
                 try {

@@ -140,10 +140,10 @@ class MembershipController extends AuthController {
             ($normalized_membership_level == 'early bird')?'earlybird':$normalized_membership_level;
         $normalized_membership_level =
             ($normalized_membership_level == 'exec')?'executive':$normalized_membership_level;
-        if (!in_array( $normalized_membership_level, array_keys(SignUpController::$subscription_levels))) {
+        if (!in_array( $normalized_membership_level, array_keys(SignUpHelperController::$subscription_levels))) {
             throw new Exception('No amount found for '.$normalized_membership_level);
         } else {
-            return SignUpController::$subscription_levels[$normalized_membership_level];
+            return SignUpHelperController::$subscription_levels[$normalized_membership_level];
         }
     }
 }
