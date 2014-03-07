@@ -15,10 +15,8 @@ class WelcomeController extends SignUpController {
         $subscriber = $subscriber_dao->getByID($new_subscriber_id);
 
         if ($this->hasUserReturnedFromAmazon()) {
-            $internal_caller_reference = SessionCache::get('caller_reference');
-            if (isset($internal_caller_reference) && $this->isAmazonResponseValid($internal_caller_reference)) {
+            if ($this->isAmazonResponseValid()) {
                 $amazon_caller_reference = $_GET['callerReference'];
-                $this->addToView('amazon_caller_reference', $amazon_caller_reference);
 
                 $error_message = isset($_GET["errorMessage"])?$_GET["errorMessage"]:null;
                 if ($error_message === null ) {
@@ -35,7 +33,7 @@ class WelcomeController extends SignUpController {
 
                 try {
                     $authorization_id = $authorization_dao->insert($_GET['tokenID'], $amount, $_GET["status"],
-                        $internal_caller_reference, $error_message, $payment_expiry_date);
+                        $amazon_caller_reference, $error_message, $payment_expiry_date);
 
                     //Save authorization ID and subscriber ID in subscriber_authorizations table.
                     $subscriber_authorization_dao = new SubscriberAuthorizationMySQLDAO();
@@ -46,18 +44,15 @@ class WelcomeController extends SignUpController {
                 }
             } else {
                 $this->addErrorMessage($this->generic_error_msg);
-                if (!isset($internal_caller_reference)) {
-                    $this->logError('Internal caller reference not set', __FILE__,__LINE__, __METHOD__);
-                } else {
-                    $this->logError('Amazon response invalid', __FILE__,__LINE__, __METHOD__);
-                }
+                $this->logError('Amazon response invalid', __FILE__,__LINE__, __METHOD__);
             }
         }
         $cfg = Config::getInstance();
         $user_installation_url = $cfg->getValue('user_installation_url');
         $subscriber->installation_url = str_replace ("{user}", $subscriber->thinkup_username,
             $user_installation_url);
-        $this->addToView('subscriber', $subscriber);
+        $this->addToView('new_subscriber', $subscriber);
+
         return $this->generateView();
     }
 
@@ -73,14 +68,12 @@ class WelcomeController extends SignUpController {
 
     /**
      * Return whether or not Amazon signature is valid.
-     * @param str $internal_caller_reference
      * @return bool
      */
-    protected function isAmazonResponseValid($internal_caller_reference) {
+    protected function isAmazonResponseValid() {
         //Check inputs match internal rules
         $endpoint_url = UpstartHelper::getApplicationURL().'welcome.php?level='.$_GET['level'];
         $endpoint_url_params = array();
-        return ($internal_caller_reference == $_GET['callerReference']
-        && AmazonFPSAPIAccessor::isAmazonSignatureValid($endpoint_url, $endpoint_url_params));
+        return AmazonFPSAPIAccessor::isAmazonSignatureValid($endpoint_url, $endpoint_url_params);
     }
 }

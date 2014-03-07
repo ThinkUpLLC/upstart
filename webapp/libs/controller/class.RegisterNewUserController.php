@@ -125,22 +125,24 @@ class RegisterNewUserController extends SignUpController {
                 // Make sure SessionCache has 'network_auth_details', if not tryAgain()
                 $network_auth_details = SessionCache::get('network_auth_details');
                 if (isset($network_auth_details) ) {
-                    $unserialized_network_auth_details = unserialize($network_auth_details);
-                    if ($unserialized_network_auth_details !== false) {
-                        print_r($unserialized_network_auth_details);
+                    $network_auth_details = unserialize($network_auth_details);
+                    if ($network_auth_details !== false) {
                         $has_user_been_created = false;
                         //Build subscriber object
                         $subscriber = new Subscriber();
                         $subscriber->email = $_POST['email'];
                         $subscriber->pwd = $_POST['password'];
-                        $subscriber->network_user_name = $unserialized_network_auth_details['network_user_name'];
-                        $subscriber->full_name = $unserialized_network_auth_details['full_name'];
-                        $subscriber->oauth_access_token = $unserialized_network_auth_details['oauth_access_token'];
-                        $subscriber->oauth_access_token_secret = $unserialized_network_auth_details['oauth_access_token_secret'];
-                        $subscriber->is_verified = $unserialized_network_auth_details['is_verified'];
+                        $subscriber->network_user_name = $network_auth_details['network_user_name'];
+                        $subscriber->network_user_id = $network_auth_details['network_user_id'];
+                        $subscriber->network = $network_auth_details['network'];
+                        $subscriber->full_name = $network_auth_details['full_name'];
+                        $subscriber->oauth_access_token = $network_auth_details['oauth_access_token'];
+                        $subscriber->oauth_access_token_secret = $network_auth_details['oauth_access_token_secret'];
+                        $subscriber->is_verified = $network_auth_details['is_verified'];
                         $subscriber->membership_level = ucfirst($_GET['level']);
                         $subscriber->timezone = $_POST['timezone'];
                         $subscriber->thinkup_username = $_POST['username'];
+                        $subscriber->follower_count = $network_auth_details['follower_count'];
 
                         //Insert subscriber
                         $subscriber_dao = new SubscriberMySQLDAO();
@@ -154,12 +156,14 @@ class RegisterNewUserController extends SignUpController {
                             $this->addToView('username', $_POST['username']);
                             $this->addToView('current_tz', $_POST['timezone']);
                             $this->addToView('password', $_POST['password']);
+                            $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
                             return $this->generateView();
                         } catch (DuplicateSubscriberUsernameException $e) {
                             $this->addErrorMessage('That username is already in use. Please try again.');
                             $this->addToView('email', $_POST['email']);
                             $this->addToView('current_tz', $_POST['timezone']);
                             $this->addToView('password', $_POST['password']);
+                            $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
                             return $this->generateView();
                         }
 
@@ -169,20 +173,14 @@ class RegisterNewUserController extends SignUpController {
                             //Begin Amazon redirect
                             $click_dao = new ClickMySQLDAO();
                             $caller_reference = $click_dao->insert();
-                            SessionCache::put('caller_reference', $caller_reference);
 
-                            $selected_level = null;
-                            if (isset($_GET['level']) && ($_GET['level'] == "member" || $_GET['level'] == "pro")) {
-                                $selected_level = htmlspecialchars($_GET['level']);
-                                //Get Amazon URL
-                                $callback_url = UpstartHelper::getApplicationURL().'welcome.php?level='.$_GET['level'];
-                                $amount = SignUpController::$subscription_levels[$selected_level];
-                                $pay_with_amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference,
-                                    $callback_url, $amount);
-                                header('Location: '.$pay_with_amazon_url);
-                            } else {
-                                return $this->tryAgain('Oops! Something went wrong. Please try again.');
-                            }
+                            $selected_level = htmlspecialchars($_GET['level']);
+                            //Get Amazon URL
+                            $callback_url = UpstartHelper::getApplicationURL().'welcome.php?level='.$_GET['level'];
+                            $amount = SignUpController::$subscription_levels[$selected_level];
+                            $pay_with_amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference,
+                                $callback_url, $amount);
+                            header('Location: '.$pay_with_amazon_url);
                         }
                     } else {
                         return $this->tryAgain('Oops! Something went wrong. Please try again.');

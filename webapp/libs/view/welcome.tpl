@@ -14,7 +14,7 @@
             <div class="panel-desktop-right">
               <div class="panel-body">
                 <div class="panel-body-inner">
-                  <p>Your account is all set up: <a href="{$subscriber->installation_url}">{$subscriber->installation_url}</a></p>
+                  <p>Your account is all set up: <a href="{$new_subscriber->installation_url}">{$new_subscriber->installation_url}</a></p>
 
                   <p>Keep your eyes peeled for an email from us with your first set of ThinkUp insights.</p>
                 </div>
@@ -22,7 +22,7 @@
             </div>
           </div>
 
-          {if $subscriber->membership_level eq "Pro"}
+          {if $new_subscriber->membership_level eq "Pro"}
           <div class="panel panel-default insight insight-default insight-mint">
             <div class="panel-heading">
               <h2 class="panel-title insight-color-text">Got more social networking accounts?</h2>
