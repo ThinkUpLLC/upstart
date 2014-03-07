@@ -35,10 +35,14 @@ class SubscriberMySQLDAO extends PDODAO {
             return $this->getInsertId($ps);
         } catch (PDOException $e) {
             $message = $e->getMessage();
-            if (strpos($message,'Duplicate entry') !== false && strpos($message,'email') !== false) {
+            if (strpos($message,'Duplicate entry') !== false && strpos($message, "for key 'email'") !== false) {
                 throw new DuplicateSubscriberEmailException($message);
-            } elseif (strpos($message,'Duplicate entry') !== false && strpos($message,'thinkup_username') !== false) {
+            } elseif (strpos($message,'Duplicate entry') !== false
+                && strpos($message,"for key 'thinkup_username'") !== false) {
                 throw new DuplicateSubscriberUsernameException($message);
+            } elseif (strpos($message,'Duplicate entry') !== false
+                && strpos($message,"for key 'network_user_id'") !== false) {
+                throw new DuplicateSubscriberConnectionException($message);
             } else {
                 throw new PDOException($message);
             }
@@ -96,7 +100,8 @@ class SubscriberMySQLDAO extends PDODAO {
             return $this->getUpdateCount($ps);
         } catch (PDOException $e) {
             $message = $e->getMessage();
-            if (strpos($message,'Duplicate entry') !== false && strpos($message,'network_user_id') !== false) {
+            if (strpos($message,'Duplicate entry') !== false
+                && strpos($message,"for key 'network_user_id'") !== false) {
                 throw new DuplicateSubscriberConnectionException($message);
             }
         }

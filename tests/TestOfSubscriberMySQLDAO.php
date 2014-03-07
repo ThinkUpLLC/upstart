@@ -29,9 +29,12 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
     }
 
     public function testInsertCompleteSubscriber() {
+        //Valid, unique new subscriber
         $subscriber = new Subscriber();
         $subscriber->email = 'ginatrapani@example.com';
         $subscriber->network_user_name = 'ginatrapani';
+        $subscriber->network_user_id = '930061';
+        $subscriber->network = 'twitter';
         $subscriber->full_name = 'Gina Trapani';
         $subscriber->oauth_access_token = 's3cr3tt0ken';
         $subscriber->membership_level = 'Member';
@@ -50,6 +53,21 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual('s3cr3tt0ken', $data['oauth_access_token']);
         $this->assertEqual('Member', $data['membership_level']);
         $this->assertEqual('America/New_York', $data['timezone']);
+
+
+        //Try inserting new subscriber with same network credentials
+        $subscriber = new Subscriber();
+        $subscriber->email = 'ginatrapani2@example.com';
+        $subscriber->network_user_name = 'ginatrapani';
+        $subscriber->network_user_id = '930061';
+        $subscriber->network = 'twitter';
+        $subscriber->full_name = 'Gina 2 Trapani';
+        $subscriber->oauth_access_token = 's3cr3tt0ken';
+        $subscriber->membership_level = 'Member';
+        $subscriber->timezone = 'America/New_York';
+
+        $this->expectException('DuplicateSubscriberConnectionException');
+        $result = $dao->insertCompleteSubscriber($subscriber);
     }
 
     public function testInsertDuplicateEmail() {
