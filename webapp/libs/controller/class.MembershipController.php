@@ -30,7 +30,7 @@ class MembershipController extends AuthController {
 
                 $error_message = isset($_GET["errorMessage"])?$_GET["errorMessage"]:null;
                 if ($error_message !== null ) {
-                    $this->addErrorMessage($generic_error_msg);
+                    $this->addErrorMessage($this->generic_error_msg);
                     $this->logError("Amazon returned error: ".$error_message, __FILE__,__LINE__,__METHOD__);
                 } else {
                     //Record authorization

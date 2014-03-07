@@ -16,7 +16,7 @@ abstract class UpstartController extends Controller {
     public function __construct($session_started=false) {
         parent::__construct($session_started);
         $this->generic_error_msg = 'Oops! Something went wrong and our team is looking into it. '.
-        'Please try again or send us an email to help@thinkup.com with questions.';
+        'Please try again or contact us at help@thinkup.com to get help.';
     }
     /**
      * Send Location header

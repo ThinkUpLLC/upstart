@@ -14,12 +14,6 @@ abstract class SignUpHelperController extends UpstartController {
      */
     public static $membership_levels = array('60'=>'Member', '120'=>'Pro', '996'=>'Exec');
     /**
-     * When the error is so arcane and technical, use this general message.
-     * @var string
-     */
-    public static $generic_error_msg = "Oops! Something went wrong and our team is looking into it. Please try again".
-        "or contact us as help@thinkup.com to get help";
-    /**
      * Verify ThinkUp username and add appropriate error message if not
      * return bool
      */
