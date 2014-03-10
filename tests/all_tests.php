@@ -20,6 +20,7 @@ $all_tests->add(new TestOfSubscriberMySQLDAO());
 $all_tests->add(new TestOfLoginController());
 $all_tests->add(new TestOfForgotPasswordController());
 $all_tests->add(new TestOfCheckUsernameController());
+$all_tests->add(new TestOfCheckEmailController());
 $all_tests->add(new TestOfChooseUsernameController());
 $all_tests->add(new TestOfResetPasswordController());
 $all_tests->add(new TestOfSettingsController());
