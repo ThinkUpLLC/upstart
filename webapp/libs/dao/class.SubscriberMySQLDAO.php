@@ -380,6 +380,17 @@ class SubscriberMySQLDAO extends PDODAO {
         return (count($returned_subscribers) > 0);
     }
 
+    public function doesSubscriberEmailExist($email) {
+        $q  = "SELECT id FROM subscribers WHERE email = :email ";
+        $vars = array(
+            ':email'=>$email
+        );
+        //echo self::mergeSQLVars($q, $vars);
+        $ps = $this->execute($q, $vars);
+        $returned_subscribers = $this->getDataRowsAsArrays($ps);
+        return (count($returned_subscribers) > 0);
+    }
+
     public function getTotalInstallsToUpgrade($commit_hash) {
         $q  = "SELECT count(*) as total FROM subscribers WHERE is_installation_active = 1 ";
         $q .= "AND commit_hash != :commit_hash;";

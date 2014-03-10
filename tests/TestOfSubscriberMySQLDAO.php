@@ -78,6 +78,14 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertTrue($dao->doesSubscriberConnectionExist('930061', 'twitter'));
     }
 
+    public function testDoesSubscriberEmailExist() {
+        $dao = new SubscriberMySQLDAO();
+        $this->assertFalse($dao->doesSubscriberEmailExist('thinkuptest@gmail.com'));
+
+        $builder = FixtureBuilder::build('subscribers', array('email'=>'thinkuptest@gmail.com'));
+        $this->assertTrue($dao->doesSubscriberEmailExist('thinkuptest@gmail.com'));
+    }
+
     public function testInsertDuplicateEmail() {
         $dao = new SubscriberMySQLDAO();
         $result = $dao->insert('ginatrapani@example.com', 'secr3tpassword');

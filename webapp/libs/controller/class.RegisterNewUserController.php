@@ -102,7 +102,10 @@ class RegisterNewUserController extends SignUpHelperController {
                             "Connect another Facebook or Twitter account to ThinkUp.");
                         }
 
-                        $this->addToView('email', $fb_user_profile['email']);
+                        if (!$subscriber_dao->doesSubscriberEmailExist($fb_user_profile['email'])) {
+                            $this->addToView('email', $fb_user_profile['email']);
+                        }
+
                         $this->addToView('network_username', $fb_user_profile['name']);
 
                         $network_auth_details = array(
