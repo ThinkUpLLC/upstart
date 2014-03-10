@@ -37,7 +37,7 @@ abstract class SignUpHelperController extends UpstartController {
      */
     protected function isEmailInputValid() {
         if (isset($_POST['email']) && empty($_POST['email'])) {
-            $this->addErrorMessage('Please enter your email address.', 'email');
+            $this->addErrorMessage('Please enter an email address.', 'email');
         }
         $is_valid_address = false;
         if (isset($_POST['email']) && !empty($_POST['email'])) {
