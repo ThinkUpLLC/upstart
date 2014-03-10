@@ -43,7 +43,7 @@
           {include file="_appusermessage.tpl" field="timezone"}
         </div>
         <div class="form-group form-group-radio{if isset($error_msgs.terms)} form-group-warning{/if}">
-          <label class="control-label" for="terms">I’ll follow the <a href="https://github.com/ThinkUpLLC/policy">terms of service</a></label>
+          <label class="control-label" for="terms">I’ll follow the <a href="https://github.com/ThinkUpLLC/policy" target="_blank">terms of service</a></label>
           <div class="form-control">
             <input type="checkbox" class="radio-control" id="terms" name="terms" value="agreed" {if isset($terms) && $terms eq 'agreed'}checked{/if}>
           </div>
