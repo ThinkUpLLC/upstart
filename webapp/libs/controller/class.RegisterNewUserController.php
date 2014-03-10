@@ -41,6 +41,10 @@ class RegisterNewUserController extends SignUpHelperController {
                             }
 
                             $this->addToView('network_username', '@'.$authed_twitter_user['user_name']);
+                            if (UpstartHelper::isUsernameValid($authed_twitter_user['user_name'])
+                                && !$subscriber_dao->isUsernameTaken($authed_twitter_user['user_name'])) {
+                                $this->addToView('username', $authed_twitter_user['user_name']);
+                            }
 
                             $network_auth_details = array(
                                 'network_user_name'=>$authed_twitter_user['user_name'],
@@ -104,6 +108,11 @@ class RegisterNewUserController extends SignUpHelperController {
 
                         if (!$subscriber_dao->doesSubscriberEmailExist($fb_user_profile['email'])) {
                             $this->addToView('email', $fb_user_profile['email']);
+                        }
+                        if (isset($fb_user_profile['username'])
+                            && UpstartHelper::isUsernameValid($fb_user_profile['username'])
+                            && !$subscriber_dao->isUsernameTaken($fb_user_profile['username'])) {
+                            $this->addToView('username', $fb_user_profile['username']);
                         }
 
                         $this->addToView('network_username', $fb_user_profile['name']);
