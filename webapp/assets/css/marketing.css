@@ -153,6 +153,15 @@ body {
 #section-copyright .section-header {
   color: #46bcff;
 }
+#section-header .section-header .color,
+.section-signup .section-header .color,
+.section-marketing-text .section-header .color,
+#section-page-header .section-header .color,
+#section-legal .section-header .color,
+#section-social .section-header .color,
+#section-copyright .section-header .color {
+  color: #46bcff;
+}
 #section-header,
 #section-signup-top {
   min-height: 0;
@@ -165,7 +174,7 @@ body {
 #section-header .logo {
   position: absolute;
   top: 17px;
-  left: 27px;
+  left: 15px;
   margin: 0;
   width: 148px;
   height: 40px;
@@ -204,7 +213,7 @@ body {
 #section-header .headline {
   margin: 0;
   position: absolute;
-  left: 27px;
+  left: 15px;
   top: 57px;
   font-size: 1.5em;
   line-height: 0.9166666666666666;
@@ -222,6 +231,13 @@ body {
 .section-signup a.btn {
   color: #fff;
   text-decoration: none;
+}
+.section-signup .btn-signup {
+  width: 132px;
+  font-size: 1.0625em;
+  line-height: 1.0588235294117647;
+  padding: 22px 0;
+  border-radius: 40px;
 }
 .section-signup .action-links {
   text-align: center;
@@ -284,13 +300,6 @@ body {
   text-align: middle;
   float: right;
   width: 50%;
-}
-#section-signup-top .action-links .btn {
-  width: 132px;
-  font-size: 1.0625em;
-  line-height: 1.0588235294117647;
-  padding: 22px 0;
-  border-radius: 40px;
 }
 #section-social {
   padding: 0;
@@ -514,6 +523,10 @@ body.is-not-full-height #section-copyright {
     background-size: 590px 146px;
     background-position: -76px 81px;
   }
+  #section-header .headline,
+  #section-header .logo {
+    left: 27px;
+  }
   #section-header:before {
     width: 208px;
     height: 247px;
@@ -596,10 +609,16 @@ body.header-compressed #section-signup-top .login-link {
 #section-networks .section-header {
   color: #ff7f00;
 }
+#section-networks .section-header .color {
+  color: #ff7f00;
+}
 #section-stats {
   border-top-color: #008bd6;
 }
 #section-stats .section-header {
+  color: #008bd6;
+}
+#section-stats .section-header .color {
   color: #008bd6;
 }
 #section-devices {
@@ -608,10 +627,16 @@ body.header-compressed #section-signup-top .login-link {
 #section-devices .section-header {
   color: #7e57d1;
 }
+#section-devices .section-header .color {
+  color: #7e57d1;
+}
 #section-goals {
   border-top-color: #6bb93b;
 }
 #section-goals .section-header {
+  color: #6bb93b;
+}
+#section-goals .section-header .color {
   color: #6bb93b;
 }
 #section-matters {
@@ -620,10 +645,16 @@ body.header-compressed #section-signup-top .login-link {
 #section-matters .section-header {
   color: #ff39ea;
 }
+#section-matters .section-header .color {
+  color: #ff39ea;
+}
 #section-community {
   border-top-color: #b51b2e;
 }
 #section-community .section-header {
+  color: #b51b2e;
+}
+#section-community .section-header .color {
   color: #b51b2e;
 }
 #section-companies {
@@ -632,10 +663,16 @@ body.header-compressed #section-signup-top .login-link {
 #section-companies .section-header {
   color: #5b76c1;
 }
+#section-companies .section-header .color {
+  color: #5b76c1;
+}
 #section-meaning {
   border-top-color: #d58e19;
 }
 #section-meaning .section-header {
+  color: #d58e19;
+}
+#section-meaning .section-header .color {
   color: #d58e19;
 }
 #section-different {
@@ -644,10 +681,16 @@ body.header-compressed #section-signup-top .login-link {
 #section-different .section-header {
   color: #b97cc6;
 }
+#section-different .section-header .color {
+  color: #b97cc6;
+}
 #section-doesnt {
   border-top-color: #5fac1c;
 }
 #section-doesnt .section-header {
+  color: #5fac1c;
+}
+#section-doesnt .section-header .color {
   color: #5fac1c;
 }
 #section-networks {
@@ -741,6 +784,26 @@ body.header-compressed #section-signup-top .login-link {
   margin: 15px 0;
   text-align: left;
 }
+#section-signup-bottom .subsection-signup:before,
+#section-signup-bottom .subsection-signup:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+#section-signup-bottom .subsection-signup:after {
+  clear: both;
+}
+#section-signup-bottom .subsection-signup .section-header,
+#section-signup-bottom .subsection-signup .action-links {
+  float: left;
+  width: 50%;
+  margin-top: 15px;
+}
+#section-signup-bottom .subsection-signup .action-links {
+  margin-top: 0;
+  text-align: right;
+}
 @media (min-width: 31.875em) {
   #section-different,
   #section-meaning {
@@ -783,20 +846,24 @@ body.header-compressed #section-signup-top .login-link {
   #section-signup-bottom:after {
     clear: both;
   }
-  #section-signup-bottom .section-header {
+  #section-signup-bottom .subsection-newsletter,
+  #section-signup-bottom .subsection-signup {
     float: left;
-    width: 48%;
-    margin-top: 27px;
+    width: 50%;
+    text-align: center;
   }
-  #section-signup-bottom .section-header br {
-    display: none;
+  #section-signup-bottom .subsection-signup .section-header,
+  #section-signup-bottom .subsection-signup .action-links {
+    float: none;
+    margin-top: 0;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: center;
   }
-  #section-signup-bottom .action-links {
-    float: right;
-    width: 48%;
-  }
-  #section-signup-bottom .newsletter-signup-form {
-    text-align: right;
+  #section-signup-bottom .subsection-newsletter .action-links {
+    margin: 15px auto;
+    width: 75%;
+    text-align: center;
   }
 }
 @media (min-width: 48em) {
@@ -1040,6 +1107,9 @@ body.marketing-page #section-subscription-member {
 body.marketing-page #section-subscription-member .section-header {
   color: #b97cc6;
 }
+body.marketing-page #section-subscription-member .section-header .color {
+  color: #b97cc6;
+}
 body.marketing-page #section-subscription-member .level-cost .monthly {
   color: #b97cc6;
 }
@@ -1054,6 +1124,9 @@ body.marketing-page #section-subscription-pro {
 body.marketing-page #section-subscription-pro .section-header {
   color: #6bb93b;
 }
+body.marketing-page #section-subscription-pro .section-header .color {
+  color: #6bb93b;
+}
 body.marketing-page #section-subscription-pro .level-cost .monthly {
   color: #6bb93b;
 }
@@ -1066,6 +1139,9 @@ body.marketing-page #section-subscription-executive {
   border-top-color: #b51b2e;
 }
 body.marketing-page #section-subscription-executive .section-header {
+  color: #b51b2e;
+}
+body.marketing-page #section-subscription-executive .section-header .color {
   color: #b51b2e;
 }
 body.marketing-page #section-subscription-executive .level-cost .monthly {
