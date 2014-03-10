@@ -107,8 +107,6 @@ animateContentShift = (state) ->
 wt.appMessage =
   paddingChange: wt.navHeight - $(".navbar-default").outerHeight(true)
   create: (message, type = "info") ->
-    console.log $('<div/>').html(message).text()
-    console.log $(".app-message").text().trim()
     if $(".app-message").text().trim() isnt $('<div/>').html(message).text()
       wt.appMessage.destroy()
       msgClass = "content"
@@ -214,6 +212,8 @@ checkEmailField = ($el) ->
 checkTermsField = ($el) ->
   if $el.is ":checked"
     $el.parent().next(".help-block").remove()
+    if $(".app-message").text().trim() is "Please review and agree to the terms of service."
+      wt.appMessage.destroy()
   else
     wt.appMessage.create "Please review and agree to the terms of service.", "warning"
 

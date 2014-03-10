@@ -127,8 +127,6 @@
     create: function(message, type) {
       var $el, msgClass;
       if (type == null) type = "info";
-      console.log($('<div/>').html(message).text());
-      console.log($(".app-message").text().trim());
       if ($(".app-message").text().trim() !== $('<div/>').html(message).text()) {
         wt.appMessage.destroy();
         msgClass = "content";
@@ -255,7 +253,10 @@
 
   checkTermsField = function($el) {
     if ($el.is(":checked")) {
-      return $el.parent().next(".help-block").remove();
+      $el.parent().next(".help-block").remove();
+      if ($(".app-message").text().trim() === "Please review and agree to the terms of service.") {
+        return wt.appMessage.destroy();
+      }
     } else {
       return wt.appMessage.create("Please review and agree to the terms of service.", "warning");
     }
