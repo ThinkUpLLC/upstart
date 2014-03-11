@@ -9,25 +9,23 @@ body_classes="settings menu-open" body_id="settings-main"}
         <form role="form" id="form-settings" name="form-settings"
         class="form-horizontal" method="post">
 
-{*
           <fieldset class="fieldset-password">
             <header>
               <h2>Change Password</h2>
             </header>
             <div class="form-group">
               <label class="control-label" for="control-password-current">Current</label>
-              <input type="password" class="form-control" id="control-password-current">
+              <input type="password" class="form-control" id="control-password-current" name="current_password">
             </div>
             <div class="form-group">
               <label class="control-label" for="control-password-new">New</label>
-              <input type="password" class="form-control" id="control-password-new">
+              <input type="password" class="form-control" id="control-password-new" name="new_password1">
             </div>
             <div class="form-group">
               <label class="control-label" for="control-password-verify">Verify New</label>
-              <input type="password" class="form-control" id="control-password-verify">
+              <input type="password" class="form-control" id="control-password-verify" name="new_password2">
             </div>
           </fieldset>
-*}
           <fieldset class="fieldset-personal">
             <header>
             </header>
