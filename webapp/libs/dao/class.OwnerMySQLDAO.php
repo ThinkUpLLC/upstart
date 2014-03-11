@@ -336,7 +336,7 @@ SQL;
              SET email_notification_frequency=:email_notification_frequency
              WHERE email=:email";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $stmt = $this->execute($q, array(':email_notification_frequency' => $email_notification_frequency, 
+        $stmt = $this->execute($q, array(':email_notification_frequency' => $email_notification_frequency,
         ':email' => $email));
         return $this->getUpdateCount($stmt);
     }

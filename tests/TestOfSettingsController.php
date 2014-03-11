@@ -189,4 +189,50 @@ class TestOfSettingsController extends UpstartUnitTestCase {
         $this->assertPattern("/Settings/", $results);
         $this->assertNoPattern("/Saved your changes/", $results);
     }
+
+    public function testSetPassword() {
+        $this->simulateLogin('me@example.com', false, true);
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $owner_dao = new OwnerMySQLDAO();
+
+        // Set $_POST vars
+        $_POST['Done'] = 'Done';
+        $_POST['current_password'] = 'not a real password';
+        $_POST['new_password1'] = 'bbbbbb';
+        $_POST['new_password2'] = 'aaaaaa';
+        $_POST['csrf_token'] = parent::CSRF_TOKEN;
+        $controller = new SettingsController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Your current password doesn&#39;t look right./', $results);
+
+        $_POST['current_password'] = 'secretpassword';
+        $controller = new SettingsController(true);
+        $results = $controller->go();
+        $this->assertNoPattern('/Your current password doesn&#39;t look right./', $results);
+        $this->assertPattern('/did not match/', $results);
+
+        $_POST['new_password2'] = 'bbbbbb';
+        $controller = new SettingsController(true);
+        $results = $controller->go();
+        $this->assertNoPattern('/Your current password doesn&#39;t look right./', $results);
+        $this->assertNoPattern('/did not match/', $results);
+        $this->assertPattern('/at least 8 characters and contain/', $results);
+
+        $this->assertFalse($subscriber_dao->isAuthorized('me@example.com', 'Bbbbbb66'));
+        $this->assertFalse($owner_dao->isOwnerAuthorized('me@example.com', 'Bbbbbb66'));
+
+        $_POST['new_password1'] = 'Bbbbbb66';
+        $_POST['new_password2'] = 'Bbbbbb66';
+        $controller = new SettingsController(true);
+        $results = $controller->go();
+        $this->assertNoPattern('/Your current password doesn&#39;t look right./', $results);
+        $this->assertNoPattern('/did not match/', $results);
+        $this->assertNoPattern('/at least 8 characters and contain/', $results);
+        $this->assertPattern('/Saved your changes./', $results);
+
+        $this->assertTrue($subscriber_dao->isAuthorized('me@example.com', 'Bbbbbb66'));
+
+        $this->assertTrue($owner_dao->isOwnerAuthorized('me@example.com', 'Bbbbbb66'));
+    }
 }

@@ -41,6 +41,26 @@ class SettingsController extends AuthController {
                     $updates += $owner_dao->setEmailNotificationFrequency( $logged_in_user, $new_email_frequency);
                 }
             }
+
+            // Only update if they supply the old password
+            if (!empty($_POST['current_password'])) {
+                $current_pwd = $_POST['current_password'];
+                $new_pwd1 = $_POST['new_password1'];
+                $new_pwd2 = $_POST['new_password2'];
+                if (!$subscriber_dao->isAuthorized($logged_in_user, $current_pwd)) {
+                    $this->addErrorMessage("Oops! Your current password doesn't look right.");
+                } else if ($new_pwd1 !== $new_pwd2) {
+                    $this->addErrorMessage('Oops! Your new passwords did not match.');
+                } else if (!UpstartHelper::validatePassword($new_pwd1)) {
+                    $this->addErrorMessage('Oops! Your new password must be at least 8 characters '.
+                        'and contain both numbers and letters.');
+                } else {
+                    // We are good to update.  Update both the Upstart and ThinkUp password
+                    $subscriber_dao->updatePassword($logged_in_user, $new_pwd1);
+                    $updates += $owner_dao->updatePassword($logged_in_user, $new_pwd1);
+                }
+            }
+
             if ($updates > 0) {
                 $this->addSuccessMessage('Saved your changes.');
             }
