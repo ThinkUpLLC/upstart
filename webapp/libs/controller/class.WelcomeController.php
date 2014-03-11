@@ -20,7 +20,6 @@ class WelcomeController extends SignUpHelperController {
 
                 $error_message = isset($_GET["errorMessage"])?$_GET["errorMessage"]:null;
                 if ($error_message === null ) {
-                    $this->addSuccessMessage("Thank you for joining ThinkUp!");
                 } else {
                     $this->addErrorMessage($this->generic_error_msg);
                     $this->logError("Amazon returned error: ".$error_message, __FILE__,__LINE__,__METHOD__);
