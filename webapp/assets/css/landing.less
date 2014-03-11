@@ -107,6 +107,21 @@
     margin: 15px 0;
     text-align: left;
   }
+
+  .subsection-signup {
+    .clearfix;
+
+    .section-header, .action-links {
+      float: left;
+      width: 50%;
+      margin-top: 15px;
+    }
+
+    .action-links {
+      margin-top: 0;
+      text-align: right;
+    }
+  }
 }
 
 @media (min-width: 31.875em) {
@@ -140,23 +155,28 @@
     .clearfix;
     height: 135px;
 
-    .section-header {
+    .subsection-newsletter, .subsection-signup {
       float: left;
-      width: 48%;
-      margin-top: 27px;
+      width: 50%;
+      text-align: center;
+    }
 
-      br {
-        display: none;
+    .subsection-signup {
+      .section-header, .action-links {
+        float: none;
+        margin-top: 0;
+        margin-bottom: 10px;
+        width: 100%;
+        text-align: center;
       }
     }
 
-    .action-links {
-      float: right;
-      width: 48%;
-    }
-
-    .newsletter-signup-form {
-      text-align: right;
+    .subsection-newsletter {
+      .action-links {
+        margin: 15px auto;
+        width: 75%;
+        text-align: center;
+      }
     }
   }
 }

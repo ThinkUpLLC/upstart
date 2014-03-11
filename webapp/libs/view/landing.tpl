@@ -8,10 +8,10 @@ body_classes="landing" body_id="landing-home"}
     </header>
 
     <section class="section col-md-2 col-lg-1 row-1 col-lg-right section-signup" id="section-signup-top">
-      <h3 class="section-header">ThinkUp subscriptions are <strong>now open</strong>.
-      <span class="color">Be one of the first.</span></h3>
+      <h3 class="section-header">Become a member.<br>
+      Subscriptions are now open.</h3>
       <div class="action-links">
-        <a href="{$site_root_path}subscribe.php" class="btn signup-link">Become a<br>member</a>
+        <a href="{$site_root_path}subscribe.php" class="btn btn-signup signup-link">Join<br>Now</a>
         <div class="login-link">Or <a href="{$site_root_path}user/">log in here</a></div>
       </div>
     </section>
@@ -73,26 +73,23 @@ body_classes="landing" body_id="landing-home"}
     </section>
 
     <section class="section col-md-2 col-lg-3 row-1 col-lg-right section-signup" id="section-signup-bottom">
-
-      <h3 class="section-header">Not ready to subscribe? Get on the waiting list.</h3>
-
-      <div class="action-links">
-        <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">
-          <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email">
-          <button type="submit" value="Subscribe" name="subscribe" class="btn-submit"><i class="fa fa-envelope-o"></i></button>
-        </form>
-        <div class="login-link">Already a member? <a href="{$site_root_path}user/">Log in here</a></div>
-      </div>
-
-{*
-      <div class="section-container">
-        <h3 class="section-header">Get started now. Choose the level that’s right for you.</h3>
+      <div class="subsection-signup">
+        <h3 class="section-header">Ready to become a member?</h3>
         <div class="action-links">
-          <a href="#" class="btn signup-link">Sign Up<br>Now!</a>
-          <div class="login-link">Or <a href="#">log in here</a></div>
+          <a href="{$site_root_path}subscribe.php" class="btn btn-signup signup-link">Join now</a>
         </div>
       </div>
-*}
+
+      <div class="subsection-newsletter">
+        <h3 class="section-header">Or get on the waiting list.</h3>
+
+        <div class="action-links">
+          <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">
+            <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email">
+            <button type="submit" value="Subscribe" name="subscribe" class="btn-submit"><i class="fa fa-envelope-o"></i></button>
+          </form>
+        </div>
+      </div>
     </section>
 
 {include file="_appfooter.v2.tpl" marketing_page=true}
