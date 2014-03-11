@@ -217,6 +217,13 @@ checkTermsField = ($el) ->
   else
     wt.appMessage.create "Please review and agree to the terms of service.", "warning"
 
+# Focus on the first form field without an empty value or error.
+focusField = ($el_array) ->
+  for $el in $el_array
+    if $el.val() is "" or $el.parent().hasClass "form-group-warning"
+      $el.focus()
+      break
+
 $ ->
   setListOpenData(true)
   $(window).load -> setDateGroupData()
@@ -312,6 +319,7 @@ $ ->
   $("#pwd").on "keyup",      -> checkPasswordField $(@)
   $("#email").on "keyup",    -> checkEmailField $(@)
   $("#terms").on "click",   -> checkTermsField $(@)
+  if $("#form-register")? then focusField [$("#email"),$("#username"),$("#pwd")]
 
   $("#form-reset").on "submit", (e) ->
     if $(@).find("#password").val().length is 0 or  $(@).find("#password_confirm").val().length is 0
