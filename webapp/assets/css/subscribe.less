@@ -1,8 +1,10 @@
 body.marketing-page {
   .section-sub-color(@color) {
     .section-color(@color);
+    background: fade(@color, 10%);
+
     .level-cost {
-      .monthly {
+      .annually {
         color: @color;
       }
     }
@@ -10,6 +12,10 @@ body.marketing-page {
     @media (min-width: 48em) {
       border-color: mix(#fff, @color, 50%);
     }
+  }
+
+  #section-page-header .section-header {
+    font-size: 2em;
   }
 
   #section-subscription-member     { .section-sub-color(#B97CC6); }
@@ -29,6 +35,13 @@ body.marketing-page {
     .section-header {
       font-size: (24/16em);
       margin-bottom: 15px;
+
+      .descriptor {
+        display: block;
+        font-size: .625em;
+        color: #222;
+        font-weight: 400;
+      }
     }
 
     .level-cost {
@@ -63,10 +76,19 @@ body.marketing-page {
     }
 
     .action-buttons {
-      text-align: center;
+      .clearfix;
+      position: absolute;
+      width: 93%;
+      bottom: 30px;
 
       .action-buttons-label {
         margin-bottom: 5px;
+        line-height: 28px;
+        float: left;
+      }
+
+      .actual-buttons {
+        float: right;
       }
 
       .btn {
@@ -111,6 +133,7 @@ body.marketing-page {
   #section-subscription-executive {
     text-align: center;
     padding-bottom: 20px;
+    background-color: transparent;
 
     .section-header, .level-description {
       max-width: 400px;
@@ -123,6 +146,15 @@ body.marketing-page {
 
     .section-subscription-level, .section-subscription-level.col-lg-1 {
       height: @section-height-fixed;
+
+      .action-buttons {
+        margin-top: 0;
+        text-align: center;
+
+        .action-buttons-label, .actual-buttons {
+          float: none;
+        }
+      }
     }
 
     #section-subscription-executive, #section-signup-bottom {
@@ -154,13 +186,27 @@ body.marketing-page {
       &:first-of-type {
         margin: 0 4% 0 0;
       }
+
+      .action-buttons {
+        margin-top: 15px;
+
+        .action-buttons-label {
+          float: left;
+        }
+
+        .actual-buttons {
+          float: right;
+        }
+
+      }
+
     }
 
     #section-subscription-executive, #section-signup-bottom {
       border: 0;
     }
 
-    #section-signup-bottom {
+    #section-subscription-executive {
       .section-header {
         margin-top: 27px;
       }

@@ -400,6 +400,13 @@ body {
 body.is-not-full-height #section-copyright {
   border-bottom: 1px solid #46BCFF;
 }
+body.hide-social #section-social {
+  display: none;
+}
+body.hide-social #section-copyright {
+  border: 0;
+  padding-top: 0;
+}
 #section-page-header {
   height: auto;
   min-height: 0;
@@ -1101,8 +1108,12 @@ body#marketing-about #section-about-text .download-our-logo img {
     padding: 0;
   }
 }
+body.marketing-page #section-page-header .section-header {
+  font-size: 2em;
+}
 body.marketing-page #section-subscription-member {
   border-top-color: #b97cc6;
+  background: rgba(185, 124, 198, 0.1);
 }
 body.marketing-page #section-subscription-member .section-header {
   color: #b97cc6;
@@ -1110,7 +1121,7 @@ body.marketing-page #section-subscription-member .section-header {
 body.marketing-page #section-subscription-member .section-header .color {
   color: #b97cc6;
 }
-body.marketing-page #section-subscription-member .level-cost .monthly {
+body.marketing-page #section-subscription-member .level-cost .annually {
   color: #b97cc6;
 }
 @media (min-width: 48em) {
@@ -1120,6 +1131,7 @@ body.marketing-page #section-subscription-member .level-cost .monthly {
 }
 body.marketing-page #section-subscription-pro {
   border-top-color: #6bb93b;
+  background: rgba(107, 185, 59, 0.1);
 }
 body.marketing-page #section-subscription-pro .section-header {
   color: #6bb93b;
@@ -1127,7 +1139,7 @@ body.marketing-page #section-subscription-pro .section-header {
 body.marketing-page #section-subscription-pro .section-header .color {
   color: #6bb93b;
 }
-body.marketing-page #section-subscription-pro .level-cost .monthly {
+body.marketing-page #section-subscription-pro .level-cost .annually {
   color: #6bb93b;
 }
 @media (min-width: 48em) {
@@ -1137,6 +1149,7 @@ body.marketing-page #section-subscription-pro .level-cost .monthly {
 }
 body.marketing-page #section-subscription-executive {
   border-top-color: #b51b2e;
+  background: rgba(181, 27, 46, 0.1);
 }
 body.marketing-page #section-subscription-executive .section-header {
   color: #b51b2e;
@@ -1144,7 +1157,7 @@ body.marketing-page #section-subscription-executive .section-header {
 body.marketing-page #section-subscription-executive .section-header .color {
   color: #b51b2e;
 }
-body.marketing-page #section-subscription-executive .level-cost .monthly {
+body.marketing-page #section-subscription-executive .level-cost .annually {
   color: #b51b2e;
 }
 @media (min-width: 48em) {
@@ -1164,6 +1177,12 @@ body.marketing-page .section-subscription-level.col-lg-right {
 body.marketing-page .section-subscription-level .section-header {
   font-size: 1.5em;
   margin-bottom: 15px;
+}
+body.marketing-page .section-subscription-level .section-header .descriptor {
+  display: block;
+  font-size: .625em;
+  color: #222;
+  font-weight: 400;
 }
 body.marketing-page .section-subscription-level .level-cost {
   position: absolute;
@@ -1192,10 +1211,27 @@ body.marketing-page .section-subscription-level .level-description p.headline {
   font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
 }
 body.marketing-page .section-subscription-level .action-buttons {
-  text-align: center;
+  position: absolute;
+  width: 93%;
+  bottom: 30px;
+}
+body.marketing-page .section-subscription-level .action-buttons:before,
+body.marketing-page .section-subscription-level .action-buttons:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+body.marketing-page .section-subscription-level .action-buttons:after {
+  clear: both;
 }
 body.marketing-page .section-subscription-level .action-buttons .action-buttons-label {
   margin-bottom: 5px;
+  line-height: 28px;
+  float: left;
+}
+body.marketing-page .section-subscription-level .action-buttons .actual-buttons {
+  float: right;
 }
 body.marketing-page .section-subscription-level .action-buttons .btn {
   width: 100px;
@@ -1229,6 +1265,7 @@ body.marketing-page #section-signup-bottom .newsletter-signup-form {
 body.marketing-page #section-subscription-executive {
   text-align: center;
   padding-bottom: 20px;
+  background-color: transparent;
 }
 body.marketing-page #section-subscription-executive .section-header,
 body.marketing-page #section-subscription-executive .level-description {
@@ -1239,6 +1276,17 @@ body.marketing-page #section-subscription-executive .level-description {
   body.marketing-page .section-subscription-level,
   body.marketing-page .section-subscription-level.col-lg-1 {
     height: 240px;
+  }
+  body.marketing-page .section-subscription-level .action-buttons,
+  body.marketing-page .section-subscription-level.col-lg-1 .action-buttons {
+    margin-top: 0;
+    text-align: center;
+  }
+  body.marketing-page .section-subscription-level .action-buttons .action-buttons-label,
+  body.marketing-page .section-subscription-level.col-lg-1 .action-buttons .action-buttons-label,
+  body.marketing-page .section-subscription-level .action-buttons .actual-buttons,
+  body.marketing-page .section-subscription-level.col-lg-1 .action-buttons .actual-buttons {
+    float: none;
   }
   body.marketing-page #section-subscription-executive,
   body.marketing-page #section-signup-bottom {
@@ -1263,11 +1311,20 @@ body.marketing-page #section-subscription-executive .level-description {
   body.marketing-page .section-subscription-level:first-of-type {
     margin: 0 4% 0 0;
   }
+  body.marketing-page .section-subscription-level .action-buttons {
+    margin-top: 15px;
+  }
+  body.marketing-page .section-subscription-level .action-buttons .action-buttons-label {
+    float: left;
+  }
+  body.marketing-page .section-subscription-level .action-buttons .actual-buttons {
+    float: right;
+  }
   body.marketing-page #section-subscription-executive,
   body.marketing-page #section-signup-bottom {
     border: 0;
   }
-  body.marketing-page #section-signup-bottom .section-header {
+  body.marketing-page #section-subscription-executive .section-header {
     margin-top: 27px;
   }
 }
