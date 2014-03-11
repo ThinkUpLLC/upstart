@@ -1007,6 +1007,7 @@ body.app-message-visible.account .container {
 .insight .panel-body .panel-body-inner {
   padding: 10px 2%;
   letter-spacing: .01em;
+  overflow: hidden;
 }
 .insight .insight-hero-image {
   position: relative;
