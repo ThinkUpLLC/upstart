@@ -176,7 +176,7 @@ checkPasswordFormat = (value) ->
     wt.appMessage.create "Your password must be at least 8 characters, contain both numbers &amp; letters, and omit special characters.", "warning"
     false
 
-checkPasswordField = ($form) ->
+checkPasswordField = ($form, e) ->
   if $form.find("#control-password-current").length
     if $form.find("#control-password-current").val().length isnt 0
       if $form.find("#control-password-new").val().length is 0 and
@@ -300,7 +300,7 @@ $ ->
       wt.appMessage.destroy()
 
   $("#form-settings").on "submit", (e) ->
-    # checkPasswordField $(@)
+    checkPasswordField $(@), e
 
   $("body").on "click", ".show-section", (e) ->
     $el = $($(@).data("section-selector"))
