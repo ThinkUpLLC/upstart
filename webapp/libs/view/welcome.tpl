@@ -9,7 +9,7 @@
 
           <div class="panel panel-default insight insight-default insight-purple insight-hero">
             <div class="panel-heading">
-              <h2 class="panel-title insight-color-text">Thank you for being a ThinkUp member!</h2>
+              <h2 class="panel-title insight-color-text">Thanks for joining ThinkUp!</h2>
             </div>
             <div class="panel-desktop-right">
               <div class="panel-body">
