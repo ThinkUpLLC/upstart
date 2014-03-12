@@ -8,8 +8,7 @@ body_classes="landing" body_id="landing-home"}
     </header>
 
     <section class="section col-md-2 col-lg-1 row-1 col-lg-right section-signup" id="section-signup-top">
-      <h3 class="section-header">Become a member.<br>
-      Subscriptions are now open.</h3>
+      <h3 class="section-header">Membership is now open.</h3>
       <div class="action-links">
         <a href="{$site_root_path}join.php" class="btn btn-signup signup-link">Join<br>Now</a>
         <div class="login-link">Or <a href="{$site_root_path}user/">log in here</a></div>
