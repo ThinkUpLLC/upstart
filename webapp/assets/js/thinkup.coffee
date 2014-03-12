@@ -163,7 +163,7 @@ checkUsername = ($el) ->
         $group.removeClass("form-group-ok").addClass("form-group-warning")
         wt.appMessage.create "Your username must be between 3 - 15 unaccented numbers or letters.", "warning"
       else
-        $.getJSON "../../user/check.php?un=#{encodeURIComponent $el.val()}", (data) ->
+        $.getJSON "user/check.php?un=#{encodeURIComponent $el.val()}", (data) ->
           if not data.available
             $group.removeClass("form-group-ok").addClass("form-group-warning")
             wt.appMessage.create "Sorry, someone already grabbed that name. Please try again.", "warning"
