@@ -22,7 +22,7 @@
             </div>
           </div>
 
-          {if $new_subscriber->membership_level eq "Pro" or $new_subscriber->membership_level eq "Executive"}
+          {if $new_subscriber->membership_level eq "Pro"}
           <div class="panel panel-default insight insight-default insight-mint">
             <div class="panel-heading">
               <h2 class="panel-title insight-color-text">Got more social networking accounts?</h2>
@@ -38,12 +38,12 @@
           {else}
           <div class="panel panel-default insight insight-default insight-mint">
             <div class="panel-heading">
-              <h2 class="panel-title insight-color-text">Got a {if isset($has_fb_instance) and $has_fb_instance}Twitter{else}Facebook{/if} account?</h2>
+              <h2 class="panel-title insight-color-text">Got a {if $new_subscriber->network eq 'facebook'}Twitter{else}Facebook{/if} account?</h2>
             </div>
             <div class="panel-desktop-right">
               <div class="panel-body">
                 <div class="panel-body-inner">
-                  <p>You can <a href="{$new_subscriber->installation_url}account/?p={if isset($has_fb_instance) and $has_fb_instance}twitter{else}facebook{/if}">connect your account</a> to ThinkUp and get insights from both Facebook and Twitter in one place.</p>
+                  <p>You can <a href="{$new_subscriber->installation_url}account/?p={if $new_subscriber->network eq 'facebook'}twitter{else}facebook{/if}">connect your account</a> to ThinkUp and get insights from both Facebook and Twitter in one place.</p>
                 </div>
               </div>
             </div>
