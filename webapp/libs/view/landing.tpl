@@ -11,7 +11,7 @@ body_classes="landing" body_id="landing-home"}
       <h3 class="section-header">Become a member.<br>
       Subscriptions are now open.</h3>
       <div class="action-links">
-        <a href="{$site_root_path}subscribe.php" class="btn btn-signup signup-link">Join<br>Now</a>
+        <a href="{$site_root_path}join.php" class="btn btn-signup signup-link">Join<br>Now</a>
         <div class="login-link">Or <a href="{$site_root_path}user/">log in here</a></div>
       </div>
     </section>
@@ -76,7 +76,7 @@ body_classes="landing" body_id="landing-home"}
       <div class="subsection-signup">
         <h3 class="section-header">Ready to become a member?</h3>
         <div class="action-links">
-          <a href="{$site_root_path}subscribe.php" class="btn btn-signup signup-link">Join now</a>
+          <a href="{$site_root_path}join.php" class="btn btn-signup signup-link">Join now</a>
         </div>
       </div>
 

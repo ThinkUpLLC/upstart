@@ -3,7 +3,7 @@
 
   <nav class="navigation-main">
     <a class="nav-link" href="{$site_root_path}user/">Login</a>
-    <a class="nav-link" href="{$site_root_path}subscribe.php">Signup</a>
+    <a class="nav-link" href="{$site_root_path}join.php">Signup</a>
     <a class="nav-link" href="{$site_root_path}about.php">About</a>
   </nav>
 </header>
