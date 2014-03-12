@@ -36,6 +36,10 @@ class WelcomeController extends SignUpHelperController {
                     //Save authorization ID and subscriber ID in subscriber_authorizations table.
                     $subscriber_authorization_dao = new SubscriberAuthorizationMySQLDAO();
                     $subscriber_authorization_dao->insert($new_subscriber_id, $authorization_id);
+
+                    //Charge user
+                    $api_accessor = new AmazonFPSAPIAccessor();
+                    $api_accessor->invokeAmazonPayAction($new_subscriber_id, $_GET['tokenID'], $amount);
                 } catch (DuplicateAuthorizationException $e) {
                     $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
                     "subscription. Maybe you refreshed the page in your browser?");
