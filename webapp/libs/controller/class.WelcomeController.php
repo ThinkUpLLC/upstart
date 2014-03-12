@@ -38,7 +38,7 @@ class WelcomeController extends SignUpHelperController {
                     $subscriber_authorization_dao->insert($new_subscriber_id, $authorization_id);
                 } catch (DuplicateAuthorizationException $e) {
                     $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
-                    "subscription.  Did you refresh the page?");
+                    "subscription. Maybe you refreshed the page in your browser?");
                 }
             } else {
                 $this->addErrorMessage($this->generic_error_msg);

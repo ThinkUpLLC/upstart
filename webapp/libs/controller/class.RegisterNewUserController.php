@@ -58,15 +58,21 @@ class RegisterNewUserController extends SignUpHelperController {
                             );
                             SessionCache::put('network_auth_details', serialize($network_auth_details));
                         } else {
-                            return $this->tryAgain("Invalid Twitter user returned: ".
-                            Utils::varDumpToString($authed_twitter_user),__FILE__,__LINE__,__METHOD__);
+                            return $this->tryAgain("Hmm, we got a technical error from Twitter: ".
+                                Utils::varDumpToString($authed_twitter_user).
+                                " Please try again, or contact us at help@thinkup.com if you're stuck.");
+
                         }
                     } catch (APIErrorException $e) {
-                        return $this->tryAgain(get_class($e).":".$e->getMessage(),__FILE__,__LINE__,__METHOD__);
+                        return $this->tryAgain("Hmm, we got a technical error from Twitter: ".
+                            get_class($e)." - ".$e->getMessage().
+                            " Please try again, or contact us at help@thinkup.com if you're stuck.");
                     }
                 } else {
-                    return $this->tryAgain('Twitter access tokens not set '.
-                        (isset($tok)?Utils::varDumpToString($tok):''), __FILE__,__LINE__,__METHOD__);
+                    return $this->tryAgain("Hmm, we got a technical error from Twitter: ".
+                        'the access tokens were not set. '.
+                        (isset($tok)?Utils::varDumpToString($tok):'').
+                        " Please try again, or contact us at help@thinkup.com if you're stuck.");
                 }
             } elseif ($this->hasUserReturnedFromFacebook()) {
                 if ($_GET["state"] == SessionCache::get('facebook_auth_csrf')) {
@@ -103,7 +109,7 @@ class RegisterNewUserController extends SignUpHelperController {
                         if ($subscriber_dao->doesSubscriberConnectionExist($fb_user_profile['id'], 'facebook')) {
                             return $this->tryAgain( "Whoa! We love your enthusiasm, but ".
                             $fb_user_profile['name'] . " on Facebook has already joined ThinkUp. ".
-                            "Connect another Facebook or Twitter account to ThinkUp.");
+                            "If you have an account, try logging in.");
                         }
 
                         if (!$subscriber_dao->doesSubscriberEmailExist($fb_user_profile['email'])) {
@@ -129,20 +135,20 @@ class RegisterNewUserController extends SignUpHelperController {
                         );
                         SessionCache::put('network_auth_details', serialize($network_auth_details));
                     } else {
-                        $error_msg = "Problem authorizing your Facebook account. ";
+                        $error_msg = "Uh oh, we got a technical error from Facebook when connecting to your account:  ";
                         $error_object = JSONDecoder::decode($access_token_response);
                         if (isset($error_object) && isset($error_object->error->type)
-                        && isset($error_object->error->message)) {
-                            $error_msg = $error_msg." Facebook says: \"".$error_object->error->type.": "
-                            .$error_object->error->message. "\"";
+                            && isset($error_object->error->message)) {
+                            $error_msg = $error_msg . $error_object->error->type.": " .$error_object->error->message." ";
                         } else {
-                            $error_msg = $error_msg." Facebook's response: \"".$access_token_response. "\"";
+                            $error_msg = $error_msg . " access token ".$access_token_response. " ";
                         }
-                        return $this->tryAgain( $error_msg ." ". __FILE__. " ".__LINE__. " ".__METHOD__);
+                        $error_msg = $error_msg . "Please try again, or contact us at help@thinkup.com if you're stuck.";
+                        return $this->tryAgain($error_msg);
                     }
                 } else {
-                    return $this->tryAgain("Facebook auth error: Invalid CSRF token ". __FILE__. " ".__LINE__
-                        . " ".__METHOD__);
+                    return $this->tryAgain("Uh oh! We got a technical error from Facebook about an invalid CSRF ".
+                        "token. That's not your fault, so contact us at help@thinkup.com if you're stuck.");
                 }
             }
         }
@@ -251,7 +257,7 @@ class RegisterNewUserController extends SignUpHelperController {
      * @return str
      */
     private function tryAgain($error_message = '') {
-        //$this->addErrorMessage($error_message);
+        $this->logError($error_message, __FILE__,__LINE__,__METHOD__);
         SessionCache::put('auth_error_message', $error_message);
         $controller = new SubscribeController(true);
         return $controller->go();
