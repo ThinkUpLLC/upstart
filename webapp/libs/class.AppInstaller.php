@@ -346,7 +346,7 @@ class AppInstaller {
         $q = "CREATE DATABASE ".$prefix.$thinkup_username."; USE ".$prefix.$thinkup_username.";";
         PDODAO::$PDO->exec($q);
 
-        $query_file = $this->master_app_source_path . '/install/sql/build-db_mysql-upcoming-release.sql';
+        $query_file = $this->master_app_source_path . '/install/sql/build-db_mysql.sql';
         $q = file_get_contents($query_file);
         PDODAO::$PDO->exec($q);
 
