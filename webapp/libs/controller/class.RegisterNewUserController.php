@@ -4,7 +4,7 @@ class RegisterNewUserController extends SignUpHelperController {
     public function control() {
         $this->setViewTemplate('register.tpl');
         if ( !self::isLevelValid() ) {
-            return $this->tryAgain($this->generic_error_msg);
+            return $this->tryAgain($this->generic_error_msg, "Invalid level", __FILE__, __METHOD__, __LINE__);
         }
 
         if ($this->hasUserReturnedFromTwitter() || $this->hasUserReturnedFromFacebook()) {
@@ -35,9 +35,11 @@ class RegisterNewUserController extends SignUpHelperController {
                             $subscriber_dao = new SubscriberMySQLDAO();
                             if ($subscriber_dao->doesSubscriberConnectionExist($authed_twitter_user['user_id'],
                                 'twitter')) {
-                                return $this->tryAgain( "Whoa! We love your enthusiasm, but @".
-                                $authed_twitter_user['user_name'] . " on Twitter has already joined ThinkUp. ".
-                                "Please connect another Facebook or Twitter account.");
+                                $user_error = "Whoa! We love your enthusiasm, but @".
+                                    $authed_twitter_user['user_name'] . " on Twitter has already joined ThinkUp. ".
+                                    "Please connect another Facebook or Twitter account.";
+                                $tech_error = "Twitter user exists ". Utils::varDumpToString($authed_twitter_user);
+                                return $this->tryAgain( $user_error, $tech_error, __FILE__, __METHOD__, __LINE__ );
                             }
 
                             if (UpstartHelper::isUsernameValid($authed_twitter_user['user_name'])
@@ -57,21 +59,25 @@ class RegisterNewUserController extends SignUpHelperController {
                             );
                             SessionCache::put('network_auth_details', serialize($network_auth_details));
                         } else {
-                            return $this->tryAgain("Hmm, we got a technical error from Twitter: ".
+                            $user_error = "Hmm, we got a technical error from Twitter: ".
                                 Utils::varDumpToString($authed_twitter_user).
-                                " Please try again, or contact us at help@thinkup.com if you're stuck.");
+                                " Please try again, or contact us at help@thinkup.com if you're stuck.";
+                            return $this->tryAgain($user_error, $user_error, __FILE__, __METHOD__, __LINE__);
 
                         }
                     } catch (APIErrorException $e) {
-                        return $this->tryAgain("Hmm, we got a technical error from Twitter: ".
+                        $user_error = "Hmm, we got a technical error from Twitter: ".
                             get_class($e)." - ".$e->getMessage().
-                            " Please try again, or contact us at help@thinkup.com if you're stuck.");
+                            " Please try again, or contact us at help@thinkup.com if you're stuck.";
+                        return $this->tryAgain($user_error, $user_error, __FILE__, __METHOD__, __LINE__);
                     }
                 } else {
-                    return $this->tryAgain("Hmm, we got a technical error from Twitter: ".
+                    $user_error = "Hmm, we got a technical error from Twitter: ".
                         'the access tokens were not set. '.
                         (isset($tok)?Utils::varDumpToString($tok):'').
-                        " Please try again, or contact us at help@thinkup.com if you're stuck.");
+                        " Please try again, or contact us at help@thinkup.com if you're stuck.";
+                    $tech_error = 'Access tokens not set. '. (isset($tok)?Utils::varDumpToString($tok):'');
+                    return $this->tryAgain($user_error, $tech_error, __FILE__, __METHOD__, __LINE__);
                 }
             } elseif ($this->hasUserReturnedFromFacebook()) {
                 if ($_GET["state"] == SessionCache::get('facebook_auth_csrf')) {
@@ -106,9 +112,11 @@ class RegisterNewUserController extends SignUpHelperController {
                             $subscriber_dao = new SubscriberMySQLDAO();
                         }
                         if ($subscriber_dao->doesSubscriberConnectionExist($fb_user_profile['id'], 'facebook')) {
-                            return $this->tryAgain( "Whoa! We love your enthusiasm, but ".
-                            $fb_user_profile['name'] . " on Facebook has already joined ThinkUp. ".
-                            "If you have an account, try logging in.");
+                            $user_error =  "Whoa! We love your enthusiasm, but ".
+                                $fb_user_profile['name'] . " on Facebook has already joined ThinkUp. ".
+                                "If you have an account, try logging in.";
+                            $tech_error = "Facebook user exists ". Utils::varDumpToString($fb_user_profile);
+                            return $this->tryAgain($user_error, $tech_error, __FILE__, __METHOD__, __LINE__);
                         }
 
                         if (!$subscriber_dao->doesSubscriberEmailExist($fb_user_profile['email'])) {
@@ -136,16 +144,19 @@ class RegisterNewUserController extends SignUpHelperController {
                         $error_object = JSONDecoder::decode($access_token_response);
                         if (isset($error_object) && isset($error_object->error->type)
                             && isset($error_object->error->message)) {
-                            $error_msg = $error_msg . $error_object->error->type.": " .$error_object->error->message." ";
+                            $error_msg = $error_msg .$error_object->error->type.": " .$error_object->error->message." ";
                         } else {
                             $error_msg = $error_msg . " access token ".$access_token_response. " ";
                         }
-                        $error_msg = $error_msg . "Please try again, or contact us at help@thinkup.com if you're stuck.";
-                        return $this->tryAgain($error_msg);
+                        $error_msg = $error_msg ."Please try again, or contact us at help@thinkup.com if you're stuck.";
+                        $tech_error_msg = "Access token response parse_str failed: ". $access_token_response;
+                        return $this->tryAgain($error_msg, $tech_error_msg, __FILE__, __METHOD__, __LINE__);
                     }
                 } else {
-                    return $this->tryAgain("Uh oh! We got a technical error from Facebook about an invalid CSRF ".
-                        "token. That's not your fault, so contact us at help@thinkup.com if you're stuck.");
+                    $user_error = "Uh oh! We got a technical error from Facebook about an invalid CSRF ".
+                        "token. That's not your fault, so contact us at help@thinkup.com if you're stuck.";
+                    $tech_error = "Invalid Facebook CSRF token, GET['state'] != Session facebook_auth_csrf";
+                    return $this->tryAgain($user_error, $tech_error, __FILE__, __METHOD__, __LINE__);
                 }
             }
         }
@@ -198,9 +209,11 @@ class RegisterNewUserController extends SignUpHelperController {
                         $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
                         return $this->generateView();
                     } catch (DuplicateSubscriberConnectionException $e) {
-                        return $this->tryAgain( "Whoa! We love your enthusiasm, but ".
-                        $subscriber->network_user_name . " on " . $subscriber->network .
-                        " has already joined ThinkUp.  Please connect another Facebook or Twitter account.");
+                        $user_error =  "Whoa! We love your enthusiasm, but ".
+                            $subscriber->network_user_name . " on " . $subscriber->network .
+                            " has already joined ThinkUp.  Please connect another Facebook or Twitter account.";
+                        $tech_error = "DuplicateSubscriberConnectionException ". Utils::varDumpToString($subscriber);
+                        return $this->tryAgain($user_error, $tech_error, __FILE__, __METHOD__, __LINE__);
                     }
 
                     if ($has_user_been_created) {
@@ -220,7 +233,8 @@ class RegisterNewUserController extends SignUpHelperController {
                         return $this->tryAgain($this->generic_error_msg);
                     }
                 } else {
-                    return $this->tryAgain($this->generic_error_msg);
+                    return $this->tryAgain($this->generic_error_msg, "SubscriberDAO insertion failed", __FILE__, 
+                        __METHOD__, __LINE__);
                 }
             } else { //Populate form with the submitted values
                 $this->addToView('email', $_POST['email']);
@@ -273,12 +287,16 @@ class RegisterNewUserController extends SignUpHelperController {
 
     /**
      * Send user back to subcribe page with error message in session.
-     * @param str Error message
+     * @param str $user_error_message User-facing error message
+     * @param str $technical_error_message Technical internal error message
+     * @param str $file Filename of calling script
+     * @param str $method Method name where error occurred
+     * @param str $line Line where error occurred
      * @return str
      */
-    private function tryAgain($error_message = '') {
-        $this->logError($error_message, __FILE__,__LINE__,__METHOD__);
-        SessionCache::put('auth_error_message', $error_message);
+    private function tryAgain($user_error_message, $technical_error_message, $file, $method, $line) {
+        $this->logError($technical_error_message, $file, $line, $method);
+        SessionCache::put('auth_error_message', $user_error_message);
         $controller = new SubscribeController(true);
         return $controller->go();
     }
