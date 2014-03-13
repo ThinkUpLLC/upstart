@@ -40,7 +40,6 @@ class RegisterNewUserController extends SignUpHelperController {
                                 "Please connect another Facebook or Twitter account.");
                             }
 
-                            $this->addToView('network_username', '@'.$authed_twitter_user['user_name']);
                             if (UpstartHelper::isUsernameValid($authed_twitter_user['user_name'])
                                 && !$subscriber_dao->isUsernameTaken($authed_twitter_user['user_name'])) {
                                 $this->addToView('username', $authed_twitter_user['user_name']);
@@ -121,8 +120,6 @@ class RegisterNewUserController extends SignUpHelperController {
                             $this->addToView('username', $fb_user_profile['username']);
                         }
 
-                        $this->addToView('network_username', $fb_user_profile['name']);
-
                         $network_auth_details = array(
                             'network_user_name'=>$fb_user_profile['username'],
                             'network_user_id'=>$fb_user_profile['id'],
@@ -135,7 +132,7 @@ class RegisterNewUserController extends SignUpHelperController {
                         );
                         SessionCache::put('network_auth_details', serialize($network_auth_details));
                     } else {
-                        $error_msg = "Uh oh, we got a technical error from Facebook when connecting to your account:  ";
+                        $error_msg = "Uh oh, we got a technical error from Facebook when connecting to your account.  ";
                         $error_object = JSONDecoder::decode($access_token_response);
                         if (isset($error_object) && isset($error_object->error->type)
                             && isset($error_object->error->message)) {
@@ -158,70 +155,67 @@ class RegisterNewUserController extends SignUpHelperController {
             if (self::isEmailInputValid() & self::isPasswordInputValid() & self::isUsernameValid()
                 & self::isTimeZoneValid() & self::hasAgreedToTerms()) {
                 // Make sure SessionCache has 'network_auth_details', if not tryAgain()
-                $network_auth_details = SessionCache::get('network_auth_details');
+                $network_auth_details = $this->getCachedAuthedUserDetails();
                 if (isset($network_auth_details) ) {
-                    $network_auth_details = unserialize($network_auth_details);
-                    if ($network_auth_details !== false) {
-                        $has_user_been_created = false;
-                        //Build subscriber object
-                        $subscriber = new Subscriber();
-                        $subscriber->email = $_POST['email'];
-                        $subscriber->pwd = $_POST['password'];
-                        $subscriber->network_user_name = $network_auth_details['network_user_name'];
-                        $subscriber->network_user_id = $network_auth_details['network_user_id'];
-                        $subscriber->network = $network_auth_details['network'];
-                        $subscriber->full_name = $network_auth_details['full_name'];
-                        $subscriber->oauth_access_token = $network_auth_details['oauth_access_token'];
-                        $subscriber->oauth_access_token_secret = $network_auth_details['oauth_access_token_secret'];
-                        $subscriber->is_verified = $network_auth_details['is_verified'];
-                        $subscriber->membership_level = ucfirst($_GET['level']);
-                        $subscriber->timezone = $_POST['timezone'];
-                        $subscriber->thinkup_username = $_POST['username'];
-                        $subscriber->follower_count = $network_auth_details['follower_count'];
+                    $has_user_been_created = false;
+                    //Build subscriber object
+                    $subscriber = new Subscriber();
+                    $subscriber->email = $_POST['email'];
+                    $subscriber->pwd = $_POST['password'];
+                    $subscriber->network_user_name = $network_auth_details['network_user_name'];
+                    $subscriber->network_user_id = $network_auth_details['network_user_id'];
+                    $subscriber->network = $network_auth_details['network'];
+                    $subscriber->full_name = $network_auth_details['full_name'];
+                    $subscriber->oauth_access_token = $network_auth_details['oauth_access_token'];
+                    $subscriber->oauth_access_token_secret = $network_auth_details['oauth_access_token_secret'];
+                    $subscriber->is_verified = $network_auth_details['is_verified'];
+                    $subscriber->membership_level = ucfirst($_GET['level']);
+                    $subscriber->timezone = $_POST['timezone'];
+                    $subscriber->thinkup_username = $_POST['username'];
+                    $subscriber->follower_count = $network_auth_details['follower_count'];
 
-                        //Insert subscriber
-                        if (!isset($subscriber_dao)) {
-                            $subscriber_dao = new SubscriberMySQLDAO();
-                        }
-                        try {
-                            $new_subscriber_id = $subscriber_dao->insertCompleteSubscriber($subscriber);
-                            $has_user_been_created = true;
-                            SessionCache::put('new_subscriber_id', $new_subscriber_id);
-                        } catch (DuplicateSubscriberEmailException $e) {
-                            $this->addErrorMessage('That email address is already subscribed to ThinkUp. '.
-                                'Please try again.');
-                            $this->addToView('username', $_POST['username']);
-                            $this->addToView('current_tz', $_POST['timezone']);
-                            $this->addToView('password', $_POST['password']);
-                            $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
-                            return $this->generateView();
-                        } catch (DuplicateSubscriberUsernameException $e) {
-                            $this->addErrorMessage('That username is already in use. Please try again.');
-                            $this->addToView('email', $_POST['email']);
-                            $this->addToView('current_tz', $_POST['timezone']);
-                            $this->addToView('password', $_POST['password']);
-                            $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
-                            return $this->generateView();
-                        } catch (DuplicateSubscriberConnectionException $e) {
-                            return $this->tryAgain( "Whoa! We love your enthusiasm, but ".
-                            $subscriber->network_user_name . " on " . $subscriber->network .
-                            " has already joined ThinkUp.  Please connect another Facebook or Twitter account.");
-                        }
+                    //Insert subscriber
+                    if (!isset($subscriber_dao)) {
+                        $subscriber_dao = new SubscriberMySQLDAO();
+                    }
+                    try {
+                        $new_subscriber_id = $subscriber_dao->insertCompleteSubscriber($subscriber);
+                        $has_user_been_created = true;
+                        SessionCache::put('new_subscriber_id', $new_subscriber_id);
+                    } catch (DuplicateSubscriberEmailException $e) {
+                        $this->addErrorMessage('That email address is already subscribed to ThinkUp. '.
+                            'Please try again.');
+                        $this->addToView('username', $_POST['username']);
+                        $this->addToView('current_tz', $_POST['timezone']);
+                        $this->addToView('password', $_POST['password']);
+                        $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
+                        return $this->generateView();
+                    } catch (DuplicateSubscriberUsernameException $e) {
+                        $this->addErrorMessage('That username is already in use. Please try again.');
+                        $this->addToView('email', $_POST['email']);
+                        $this->addToView('current_tz', $_POST['timezone']);
+                        $this->addToView('password', $_POST['password']);
+                        $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
+                        return $this->generateView();
+                    } catch (DuplicateSubscriberConnectionException $e) {
+                        return $this->tryAgain( "Whoa! We love your enthusiasm, but ".
+                        $subscriber->network_user_name . " on " . $subscriber->network .
+                        " has already joined ThinkUp.  Please connect another Facebook or Twitter account.");
+                    }
 
-                        if ($has_user_been_created) {
-                            $installer = new AppInstaller();
-                            $install_results = $installer->install($new_subscriber_id);
-                            //Begin Amazon redirect
-                            $caller_reference = $new_subscriber_id.'_'.time();
+                    if ($has_user_been_created) {
+                        $installer = new AppInstaller();
+                        $install_results = $installer->install($new_subscriber_id);
+                        //Begin Amazon redirect
+                        $caller_reference = $new_subscriber_id.'_'.time();
 
-                            $selected_level = htmlspecialchars($_GET['level']);
-                            //Get Amazon URL
-                            $callback_url = UpstartHelper::getApplicationURL().'welcome.php?level='.$_GET['level'];
-                            $amount = SignUpHelperController::$subscription_levels[$selected_level];
-                            $pay_with_amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference,
-                                $callback_url, $amount);
-                            header('Location: '.$pay_with_amazon_url);
-                        }
+                        $selected_level = htmlspecialchars($_GET['level']);
+                        //Get Amazon URL
+                        $callback_url = UpstartHelper::getApplicationURL().'welcome.php?level='.$_GET['level'];
+                        $amount = SignUpHelperController::$subscription_levels[$selected_level];
+                        $pay_with_amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference,
+                            $callback_url, $amount);
+                        header('Location: '.$pay_with_amazon_url);
                     } else {
                         return $this->tryAgain($this->generic_error_msg);
                     }
@@ -238,8 +232,34 @@ class RegisterNewUserController extends SignUpHelperController {
                 }
             }
         }
+
+        $authed_user = $this->getCachedAuthedUserDetails();
+        if (isset($authed_user) && isset($authed_user['network_user_name']) && isset($authed_user['network'])) {
+            if ($authed_user['network'] == 'twitter') {
+                $this->addToView('network_username', '@'.$authed_user['network_user_name']);
+            } else {
+                $this->addToView('network_username', $authed_user['full_name']);
+            }
+            $this->addToView('network', $authed_user['network']);
+        }
+
         $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
         return $this->generateView();
+    }
+
+
+    /**
+     * Get the cached social network user details from Session, and unserialize them.
+     * @return array Details array
+     */
+    private function getCachedAuthedUserDetails() {
+        $authed_user = SessionCache::get('network_auth_details');
+        try {
+            $authed_user_array = Serializer::unserializeString($authed_user);
+            return $authed_user_array;
+        } catch (SerializerException $e) {
+            return null;
+        }
     }
 
     /**
