@@ -381,20 +381,20 @@
       e.preventDefault();
       return wt.appMessage.destroy();
     });
-    $("#username").on("keyup", function() {
-      return checkUsername($(this));
-    });
-    $("#pwd").on("keyup", function() {
-      return checkPasswordField($(this));
-    });
-    $("#email").on("keyup", function() {
-      return checkEmailField($(this));
-    });
-    $("#terms").on("click", function() {
-      return checkTermsField($(this));
-    });
-    if ($("#form-register") != null) {
+    if ($("#form-register").length) {
       focusField([$("#email"), $("#username"), $("#pwd")]);
+      $("#username").on("keyup", function() {
+        return checkUsername($(this));
+      });
+      $("#pwd").on("keyup", function() {
+        return checkPasswordField($(this));
+      });
+      $("#email").on("keyup", function() {
+        return checkEmailField($(this));
+      });
+      $("#terms").on("click", function() {
+        return checkTermsField($(this));
+      });
     }
     $("#form-reset").on("submit", function(e) {
       if ($(this).find("#password").val().length === 0 || $(this).find("#password_confirm").val().length === 0) {
