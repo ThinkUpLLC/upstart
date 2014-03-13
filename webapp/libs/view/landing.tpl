@@ -8,7 +8,8 @@ body_classes="landing" body_id="landing-home"}
     </header>
 
     <section class="section col-md-2 col-lg-1 row-1 col-lg-right section-signup" id="section-signup-top">
-      <h3 class="section-header">Membership is now open.</h3>
+      <h3 class="section-header">Now accepting new members.<br>
+        Be one of the first!</h3>
       <div class="action-links">
         <a href="{$site_root_path}join.php" class="btn btn-signup signup-link">Join<br>Now</a>
         <div class="login-link">Or <a href="{$site_root_path}user/">log in here</a></div>
@@ -80,7 +81,7 @@ body_classes="landing" body_id="landing-home"}
       </div>
 
       <div class="subsection-newsletter">
-        <h3 class="section-header">Or get on the waiting list.</h3>
+        <h3 class="section-header">Or get on the updates list.</h3>
 
         <div class="action-links">
           <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">

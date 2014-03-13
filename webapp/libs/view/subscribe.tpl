@@ -68,7 +68,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
 
       <section class="section col-md-2 col-lg-3 row-1 col-lg-right section-signup" id="section-signup-bottom">
 
-        <h3 class="section-header">Not ready to pay yet? Get on the waiting list.</h3>
+        <h3 class="section-header">Not ready to join yet? Get on the updates list.</h3>
 
         <div class="action-links">
           <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">
