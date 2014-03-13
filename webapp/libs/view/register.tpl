@@ -1,7 +1,7 @@
 {include file="_appheader.v2.tpl" body_classes="settings menu-off" body_id="settings-registration"}
   <div class="container">
     <header class="container-header">
-      <h1>Hi{if isset($network_username)}, {$network_username}{/if}!</h1>
+      <h1>Hi{if isset($network_username)} {$network_username}{/if}!</h1>
       <h2>If you don’t mind, please provide a few personal details.</h2>
     </header>
 
@@ -60,7 +60,7 @@
           {include file="_appusermessage.tpl" field="timezone"}
         </div>
         <div class="form-group form-group-radio{if isset($error_msgs.terms)} form-group-warning{/if}">
-          <label class="control-label" for="terms">I’ll follow the <a href="https://github.com/ThinkUpLLC/policy" target="_blank">terms of service</a></label>
+          <label class="control-label" for="terms">I’ll follow the <a href="https://github.com/ThinkUpLLC/policy/blob/master/terms-of-service.md" target="_blank">terms of service</a></label>
           <div class="form-control">
             <input type="checkbox" class="radio-control" id="terms" name="terms" value="agreed" {if isset($terms) && $terms eq 'agreed'}checked{/if}>
           </div>
