@@ -1,8 +1,8 @@
 {include file="_appheader.v2.tpl" body_classes="settings menu-off" body_id="settings-registration"}
   <div class="container">
     <header class="container-header">
-      <h1>Hi{if isset($network_username)} {$network_username}{/if}!</h1>
-      <h2>If you don’t mind, please provide a few personal details.</h2>
+      <h1>Hi{if isset($network_username)}{if $network eq 'facebook'},{/if} {$network_username}{/if}!</h1>
+      <h2>We just need a few personal details.</h2>
     </header>
 
     {assign var="missing_fields" value="false"}
