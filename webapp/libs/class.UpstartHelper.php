@@ -105,15 +105,21 @@ class UpstartHelper {
         return (isset($_SESSION["MODE"]) && $_SESSION["MODE"] == "TESTS") || getenv("MODE")=="TESTS";
     }
 
+    /**
+     * Return whether or not a ThinkUp username is valid - between 3 and 15 chars, alphanumeric, no spaces,
+     * lowercase, allow underscores but not dashes.
+     * @param  str  $username Username to test
+     * @return bool
+     */
     public static function isUsernameValid($username) {
         $is_valid = true;
         //between 3 and 15 chars long
         if (strlen($username) < 3 || strlen($username) > 15) {
             $is_valid = false;
         }
-        //alphanumeric, no spaces, allow underscores but not dashes
+        //alphanumeric, no spaces, no uppercase, allow underscores but not dashes
         if ($is_valid) {
-            return preg_match("/^[A-Za-z0-9_]+$/", $username, $matches);
+            return preg_match("/^[a-z0-9_]+$/", $username, $matches);
         }
         return $is_valid;
     }

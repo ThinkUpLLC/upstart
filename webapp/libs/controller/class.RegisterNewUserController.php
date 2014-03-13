@@ -42,9 +42,10 @@ class RegisterNewUserController extends SignUpHelperController {
                                 return $this->tryAgain( $user_error, $tech_error, __FILE__, __METHOD__, __LINE__ );
                             }
 
-                            if (UpstartHelper::isUsernameValid($authed_twitter_user['user_name'])
-                                && !$subscriber_dao->isUsernameTaken($authed_twitter_user['user_name'])) {
-                                $this->addToView('username', $authed_twitter_user['user_name']);
+                            $potential_username = strtolower($authed_twitter_user['user_name']);
+                            if (UpstartHelper::isUsernameValid($potential_username)
+                                && !$subscriber_dao->isUsernameTaken($potential_username)) {
+                                $this->addToView('username', $potential_username);
                             }
 
                             $network_auth_details = array(
@@ -122,10 +123,13 @@ class RegisterNewUserController extends SignUpHelperController {
                         if (!$subscriber_dao->doesSubscriberEmailExist($fb_user_profile['email'])) {
                             $this->addToView('email', $fb_user_profile['email']);
                         }
-                        if (isset($fb_user_profile['username'])
-                            && UpstartHelper::isUsernameValid($fb_user_profile['username'])
-                            && !$subscriber_dao->isUsernameTaken($fb_user_profile['username'])) {
-                            $this->addToView('username', $fb_user_profile['username']);
+
+                        if (isset($fb_user_profile['username'])) {
+                            $potential_username = strtolower($fb_user_profile['username']);
+                            if (UpstartHelper::isUsernameValid($potential_username)
+                                && !$subscriber_dao->isUsernameTaken($potential_username)) {
+                                $this->addToView('username', $potential_username);
+                            }
                         }
 
                         $network_auth_details = array(
