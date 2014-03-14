@@ -758,7 +758,8 @@ class SubscriberMySQLDAO extends PDODAO {
     public function isUsernameTaken($thinkup_username) {
         $q = "SELECT thinkup_username FROM subscribers WHERE thinkup_username=:thinkup_username";
         $vars = array(
-            ':thinkup_username'=>$thinkup_username
+            //The username is always lowercase
+            ':thinkup_username'=>strtolower($thinkup_username)
         );
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);

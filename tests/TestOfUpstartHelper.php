@@ -44,7 +44,5 @@ class TestOfUpstartHelper extends UpstartUnitTestCase {
         $this->assertFalse(UpstartHelper::isUsernameValid('a-a'));
         //space
         $this->assertFalse(UpstartHelper::isUsernameValid('aes fa'));
-        //no uppercase
-        $this->assertFalse(UpstartHelper::isUsernameValid('Abc'));
     }
 }

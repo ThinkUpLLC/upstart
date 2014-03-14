@@ -188,7 +188,7 @@ class RegisterNewUserController extends SignUpHelperController {
                     $subscriber->is_verified = $network_auth_details['is_verified'];
                     $subscriber->membership_level = ucfirst($_GET['level']);
                     $subscriber->timezone = $_POST['timezone'];
-                    $subscriber->thinkup_username = $_POST['username'];
+                    $subscriber->thinkup_username = strtolower($_POST['username']);
                     $subscriber->follower_count = $network_auth_details['follower_count'];
 
                     //Insert subscriber

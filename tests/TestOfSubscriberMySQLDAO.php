@@ -362,7 +362,8 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique3'));
         $builders[] = FixtureBuilder::build('subscribers', array('email'=>'willowrosenberg@willow.com',
         'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique4'));
-
+        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'buffysummers@willow.com',
+        'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'UniQue5'));
         $dao = new SubscriberMySQLDAO();
        //Username not taken
         $this->assertFalse($dao->isUsernameTaken('cordeliachase'));
@@ -372,6 +373,9 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertTrue($dao->isUsernameTaken('unique2'));
         $this->assertTrue($dao->isUsernameTaken('unique3'));
         $this->assertTrue($dao->isUsernameTaken('unique4'));
+        //Is the check case-insensitive?
+        $this->assertTrue($dao->isUsernameTaken('UniquE4'));
+        $this->assertTrue($dao->isUsernameTaken('unique5'));
     }
 
     public function testUpdateDateInstalled() {
