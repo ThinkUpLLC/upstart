@@ -3,6 +3,8 @@
 class RegisterNewUserController extends SignUpHelperController {
     public function control() {
         $this->setViewTemplate('register.tpl');
+        //Avoid "unable to write file [really long file]" errors
+        $this->disableCaching();
         if ( !self::isLevelValid() ) {
             return $this->tryAgain($this->generic_error_msg, "Invalid level", __FILE__, __METHOD__, __LINE__);
         }

@@ -4,8 +4,9 @@
  */
 class SubscribeController extends SignUpHelperController {
     public function control() {
-        // $this->disableCaching(); //Don't cache because click ID/Amazon caller reference must be unique per user
         $this->setViewTemplate('subscribe.tpl');
+        //Don't cache network auth links
+        $this->disableCaching();
         $twitter_member_link = $this->getTwitterAuthLink('register.php?n=twitter&level=member');
         $this->addToView('twitter_member_link', $twitter_member_link);
         $facebook_member_link = $this->getFacebookConnectLink('register.php?n=facebook&level=member');
