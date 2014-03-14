@@ -240,6 +240,8 @@ class Subscriber {
                     } else {
                         $membership_status = 'Authorization failed';
                     }
+                } else { //no auth, no payment
+                    $membership_status = "Payment failed";
                 }
             }
         }

@@ -55,7 +55,7 @@ class TestOfSubscriber extends UpstartUnitTestCase {
         $subscriber = new Subscriber();
         $subscriber->id = 6;
         $result = $subscriber->getAccountStatus();
-        $this->assertEqual($result, '');
+        $this->assertEqual($result, 'Payment failed');
     }
 
     public function testGetAccountStatusAuthPending() {

@@ -33,7 +33,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
 
     {if $membership_status eq 'Payment failed'}
       <div class="form-message">
-        <p>Your payment failed because your credit card changed or expired. But it's easy to fix!</p>
+        <p>There was a problem with your payment. But it's easy to fix!</p>
         <a href="{$failed_cc_amazon_link}" class="btn btn-default">Pay via Amazon Payments</a>
       </div>
     {else}
