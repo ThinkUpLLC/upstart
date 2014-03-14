@@ -11,7 +11,7 @@ class TestOfSettingsController extends UpstartUnitTestCase {
     public function setUp() {
         parent::setUp();
         $this->builders = self::buildData();
-        $this->user_database = Config::getInstance()->getValue('user_installation_database_prefix').
+        $this->user_database = Config::getInstance()->getValue('user_installation_db_prefix').
             $this->thinkup_username;
     }
 
@@ -65,6 +65,7 @@ class TestOfSettingsController extends UpstartUnitTestCase {
     public function testNotLoggedIn() {
         $controller = new SettingsController(true);
         $results = $controller->go();
+        $this->debug($results);
 
         $this->assertPattern("/Log in/", $results);
         $this->assertNoPattern("/Settings/", $results);

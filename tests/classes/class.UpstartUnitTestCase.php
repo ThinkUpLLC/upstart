@@ -18,6 +18,8 @@ class UpstartUnitTestCase extends UpstartBasicUnitTestCase {
      */
     public function setUp() {
         parent::setUp();
+        ThinkUpPDODAO::$PDO = null;
+
         require ROOT_PATH .'tests/config.tests.inc.php';
         $this->test_database_name = $TEST_DATABASE;
         //Override default CFG values
@@ -60,13 +62,8 @@ class UpstartUnitTestCase extends UpstartBasicUnitTestCase {
      * @param Subscriber $subscriber
      */
     protected function setUpInstall($subscriber) {
-        $config = Config::getInstance();
-        $config->setValue('user_installation_url', 'http://www.example.com/thinkup/{user}/');
-        $app_source_path = $config->getValue('app_source_path');
-        $data_path = $config->getValue('data_path');
-
         $app_installer = new AppInstaller();
-        $app_installer->install($subscriber->id);
+        $results = $app_installer->install($subscriber->id);
     }
 
     /**
@@ -75,19 +72,7 @@ class UpstartUnitTestCase extends UpstartBasicUnitTestCase {
      * @return void
      */
     protected function tearDownInstall($subscriber) {
-        $config = Config::getInstance();
-        $prefix = $config->getValue('user_installation_db_prefix');
-        $q = "DROP DATABASE IF EXISTS ". $prefix . $subscriber->thinkup_username;
-        PDODAO::$PDO->exec($q);
-
-        // Unlink username installation folder
-        $app_source_path = $config->getValue('app_source_path');
-        $cmd = 'rm -rf '.$app_source_path.$subscriber->thinkup_username;
-        $cmd_result = exec($cmd, $output, $return_var);
-
-        // Unlink username installation data folder
-        $data_path = $config->getValue('data_path');
-        $cmd = 'rm -rf '.$data_path.$subscriber->thinkup_username;
-        $cmd_result = exec($cmd, $output, $return_var);
+        $app_installer = new AppInstaller();
+        $app_installer->uninstall($subscriber->id);
     }
 }

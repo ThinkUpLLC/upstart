@@ -12,7 +12,6 @@ $all_tests->add(new TestOfClickMySQLDAO());
 $all_tests->add(new TestOfErrorLogMySQLDAO());
 $all_tests->add(new TestOfInstallLogMySQLDAO());
 $all_tests->add(new TestOfThinkUpTablesMySQLDAO());
-$all_tests->add(new TestOfNewSubscriberController());
 $all_tests->add(new TestOfSubscribeController());
 $all_tests->add(new TestOfSubscriberAuthorizationMySQLDAO());
 $all_tests->add(new TestOfAuthorizationMySQLDAO());

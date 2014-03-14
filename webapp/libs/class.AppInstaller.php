@@ -133,7 +133,6 @@ class AppInstaller {
                     $api_key_private = hash('sha256', rand(). $subscriber->email);
                     $subscriber->api_key_private = substr($api_key_private, 0, 32);
 
-                    self::switchToInstallationDatabase($subscriber->thinkup_username);
                     self::setUpApplicationOptions($subscriber->thinkup_username);
 
                     list($admin_id, $admin_api_key, $owner_id, $owner_api_key) =
@@ -141,8 +140,6 @@ class AppInstaller {
                     self::setUpServiceUser($owner_id, $subscriber);
 
                     $url = str_replace ("{user}", $subscriber->thinkup_username, $this->user_installation_url);
-
-                    self::switchToUpstartDatabase();
 
                     $subscriber_dao->intializeInstallation($subscriber_id, $subscriber->api_key_private,
                     $commit_hash);
@@ -244,10 +241,10 @@ class AppInstaller {
         $upgrade_params_array = array(
             'installation_name'=>$subscriber->thinkup_username,
             'timezone'=>$cfg->getValue('dispatch_timezone'),
-            'db_host'=>$cfg->getValue('db_host'),
+            'db_host'=>$cfg->getValue('tu_db_host'),
             'db_name'=>$prefix.$subscriber->thinkup_username,
-            'db_socket'=>$cfg->getValue('dispatch_socket'),
-            'db_port'=>$cfg->getValue('db_port')
+            'db_socket'=>$cfg->getValue('tu_db_socket'),
+            'db_port'=>$cfg->getValue('tu_db_port')
         );
         $upgrade_params_json = json_encode($upgrade_params_array);
 
@@ -265,8 +262,6 @@ class AppInstaller {
         // print_r($upgrade_status_array);
         // DEBUG end
 
-        self::switchToUpstartDatabase();
-
         if ($upgrade_status_array['migration_success'] === true) {
             $install_log_dao->insertLogEntry($subscriber->id, $commit_hash, 1,
             $upgrade_status_array['migration_message']);
@@ -280,18 +275,6 @@ class AppInstaller {
 
     protected function logToUserMessage($message) {
         $this->results_message .= "<li>".$message."</li>";
-    }
-
-    private static function switchToUpstartDatabase() {
-        $cfg = Config::getInstance();
-        $q = "USE ". $cfg->getValue('db_name');
-        PDODAO::$PDO->exec($q);
-    }
-
-    private static function switchToInstallationDatabase($thinkup_username) {
-        $prefix = Config::getInstance()->getValue('user_installation_db_prefix');
-        $q = "USE ". $prefix.$thinkup_username;
-        PDODAO::$PDO->exec($q);
     }
 
     /**
@@ -330,9 +313,12 @@ class AppInstaller {
     }
 
     protected function dropDatabase($thinkup_username) {
+        $install_pdo = self::getInstallPDO();
         $prefix = Config::getInstance()->getValue('user_installation_db_prefix');
         $q = "DROP DATABASE IF EXISTS ".$prefix.$thinkup_username;
-        PDODAO::$PDO->exec($q);
+        $install_pdo->exec($q);
+        //explicitly close this connection
+        $install_pdo = null;
         self::logToUserMessage("Dropped user database ".$prefix.$thinkup_username);
     }
     /**
@@ -342,16 +328,62 @@ class AppInstaller {
      * @throws PDOException
      */
     protected function createDatabase($thinkup_username) {
+        $install_pdo = self::getInstallPDO();
         $prefix = Config::getInstance()->getValue('user_installation_db_prefix');
-        $q = "CREATE DATABASE ".$prefix.$thinkup_username."; USE ".$prefix.$thinkup_username.";";
-        PDODAO::$PDO->exec($q);
+        $q = "CREATE DATABASE ".$prefix.$thinkup_username.";";
+        $install_pdo->exec($q);
+        //explicitly close this connection
+        $install_pdo = null;
 
+        $dao = new ThinkUpTablesMySQLDAO($thinkup_username);
         $query_file = $this->master_app_source_path . '/install/sql/build-db_mysql.sql';
         $q = file_get_contents($query_file);
-        PDODAO::$PDO->exec($q);
+        ThinkUpPDODAO::$PDO->exec($q);
 
         self::logToUserMessage("Created new database ".$prefix.$thinkup_username);
         return $prefix.$thinkup_username;
+    }
+    /**
+     * Get PDO connection to installation server without choosing a database because it hasn't been created yet.
+     * @return PDO
+     */
+    private function getInstallPDO() {
+        $config = Config::getInstance();
+        $install_pdo = new PDO(
+            self::getConnectString(),
+            $config->getValue('tu_db_user'),
+            $config->getValue('tu_db_password') );
+        $install_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $install_pdo->setAttribute(PDO::ATTR_PERSISTENT, false);
+        return $install_pdo;
+    }
+    /**
+     * Generates a connect string without an existing database name to use when creating a database.
+     * @return string PDO connect string
+     */
+    protected static function getConnectString() {
+        $config = Config::getInstance();
+        //set default db type to mysql if not set
+        $db_type = $config->getValue('db_type');
+        if (! $db_type) { $db_type = 'mysql'; }
+        $db_socket = $config->getValue('tu_db_socket');
+        if ( !$db_socket) {
+            $db_port = $config->getValue('tu_db_port');
+            if (!$db_port) {
+                $db_socket = '';
+            } else {
+                $db_socket = ";port=".$config->getValue('tu_db_port');
+            }
+        } else {
+            $db_socket=";unix_socket=".$db_socket;
+        }
+        $db_string = sprintf(
+            "%s:host=%s%s",
+        $db_type,
+        $config->getValue('tu_db_host'),
+        $db_socket
+        );
+        return $db_string;
     }
 
     /**
@@ -361,7 +393,7 @@ class AppInstaller {
      */
     protected function setUpApplicationOptions($thinkup_username) {
         $server_name = self::getInstallationServerName($thinkup_username);
-        $tu_tables_dao = new ThinkUpTablesMySQLDAO();
+        $tu_tables_dao = new ThinkUpTablesMySQLDAO($thinkup_username);
         $tu_tables_dao->insertOptionValue( 'application_options', 'server_name', $server_name);
         self::logToUserMessage("Added server_name application option (".$server_name.")");
     }
@@ -385,7 +417,7 @@ class AppInstaller {
     }
 
     protected function createOwners(Subscriber $subscriber) {
-        $tu_tables_dao = new ThinkUpTablesMySQLDAO();
+        $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
         //insert admin into owners
         list($admin_pwd_salt, $admin_hashed_pwd) = $tu_tables_dao->saltAndHashPwd($this->admin_email,
             $this->admin_password);
@@ -405,7 +437,7 @@ class AppInstaller {
     }
 
     protected function setUpServiceUser($owner_id, $subscriber) {
-        $tu_tables_dao = new ThinkUpTablesMySQLDAO();
+        $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
         if ($subscriber->network_user_id != null) {
             //insert Twitter or Facebook user into instances
             $network_user_name =($subscriber->network=='twitter')?$subscriber->network_user_name:$subscriber->full_name;
@@ -453,10 +485,10 @@ class AppInstaller {
         $jobs_array[] = array(
             'installation_name'=>$thinkup_username,
             'timezone'=>$cfg->getValue('dispatch_timezone'),
-            'db_host'=>$cfg->getValue('db_host'),
+            'db_host'=>$cfg->getValue('tu_db_host'),
             'db_name'=>$cfg->getValue('user_installation_db_prefix').$thinkup_username,
-            'db_socket'=>$cfg->getValue('dispatch_socket'),
-            'db_port'=>$cfg->getValue('db_port'),
+            'db_socket'=>$cfg->getValue('tu_db_socket'),
+            'db_port'=>$cfg->getValue('tu_db_port'),
             'high_priority'=>'true'
         );
         if (!UpstartHelper::isTest()) {

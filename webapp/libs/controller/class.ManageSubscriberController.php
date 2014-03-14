@@ -51,15 +51,13 @@ class ManageSubscriberController extends Controller {
                                 try {
                                     $subscriber_dao->setEmail($subscriber_id, $email);
                                     //Change email in TU installation
-                                    $tu_dao = new ThinkUpTablesMySQLDAO();
-                                    $tu_dao->switchToInstallationDatabase( $subscriber->thinkup_username);
+                                    $tu_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
                                     if ($tu_dao->updateOwnerEmail( $subscriber->email, $email)) {
                                         $this->addSuccessMessage("Saved email $email.");
                                     } else {
                                         $this->addErrorMessage("Changed email in Upstart but not in ThinkUp. ".
                                         "To resolve, check $subscriber->thinkup_username's database manually.");
                                     }
-                                    $tu_dao->switchToUpstartDatabase();
                                     $subscriber = $subscriber_dao->getByID($subscriber_id);
                                 } catch (DuplicateSubscriberEmailException $e) {
                                     $this->addErrorMessage("$email is already in use by another subscriber.");

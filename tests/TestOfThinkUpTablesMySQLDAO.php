@@ -10,9 +10,9 @@ class TestOfThinkUpTablesMySQLDAO extends UpstartUnitTestCase {
 
     public function setUp() {
         parent::setUp();
+        $this->user_database = Config::getInstance()->getValue('user_installation_db_prefix').
+            $this->thinkup_username;
         $this->builders = self::buildData();
-        $this->user_database = Config::getInstance()->getValue('user_installation_database_prefix').
-            $this->thinkup_username.;
     }
 
     public function tearDown() {
@@ -52,49 +52,48 @@ class TestOfThinkUpTablesMySQLDAO extends UpstartUnitTestCase {
         $data_path = $config->getValue('data_path');
 
         $app_installer = new AppInstaller();
-        $app_installer->install(6);
+        $results = $app_installer->install(6);
+        $this->debug($results);
 
         return $builders;
     }
 
     public function testConstructor() {
-        $dao = new ThinkUpTablesMySQLDAO();
+        $dao = new ThinkUpTablesMySQLDAO($this->thinkup_username);
         $this->assertIsA($dao, 'ThinkUpTablesMySQLDAO');
     }
 
     public function testOfUpdateOwnerEmailSuccess() {
+        $this->debug(Utils::varDumpToString(ThinkUpPDODAO::$PDO));
         // Assert that email is me@example.com
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database. '.tu_owners o WHERE o.id = 2');
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database. '.tu_owners o WHERE o.id = 2');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['email'], 'me@example.com');
 
-        $dao = new ThinkUpTablesMySQLDAO();
-        $dao->switchToInstallationDatabase( $this->thinkup_username );
+        $this->debug('About to update owner email');
+        $dao = new ThinkUpTablesMySQLDAO($this->thinkup_username);
         $result = $dao->updateOwnerEmail('me@example.com', 'newme@example.com');
         $this->assertTrue($result);
 
         // Assert that email is me@example.com
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database. '.tu_owners o WHERE o.id = 2');
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database. '.tu_owners o WHERE o.id = 2');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['email'], 'newme@example.com');
-        $dao->switchToUpstartDatabase();
     }
 
     public function testOfUpdateOwnerEmailFailure() {
         // Assert that email is me@example.com
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database . '.tu_owners o WHERE o.id = 2');
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database . '.tu_owners o WHERE o.id = 2');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['email'], 'me@example.com');
 
-        $dao = new ThinkUpTablesMySQLDAO();
-        $dao->switchToInstallationDatabase( $this->thinkup_username );
+        $dao = new ThinkUpTablesMySQLDAO($this->thinkup_username);
         $result = $dao->updateOwnerEmail('me@example.com', 'me@example.com');
         $this->assertFalse($result);
 
         // Assert that email is me@example.com
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database .'.tu_owners o WHERE o.id = 2');
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database .'.tu_owners o WHERE o.id = 2');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['email'], 'me@example.com');
-        $dao->switchToUpstartDatabase();
     }
 }

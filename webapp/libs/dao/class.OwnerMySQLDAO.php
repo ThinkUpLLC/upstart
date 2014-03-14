@@ -27,7 +27,7 @@
  * @copyright 2009-2013 Gina Trapani
  * @author Gina Trapani <ginatrapani[at]gmail[dot]com>
  */
-class OwnerMySQLDAO extends PDODAO {
+class OwnerMySQLDAO extends ThinkUpPDODAO {
     /**
      *
      * @var str

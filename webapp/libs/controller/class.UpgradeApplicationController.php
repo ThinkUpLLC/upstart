@@ -57,10 +57,10 @@ class UpgradeApplicationController extends Controller {
             $upgrade_params_array = array(
             'installation_name'=>null,
             'timezone'=>$cfg->getValue('dispatch_timezone'),
-            'db_host'=>$cfg->getValue('db_host'),
+            'db_host'=>$cfg->getValue('tu_db_host'),
             'db_name'=>null,
-            'db_socket'=>$cfg->getValue('dispatch_socket'),
-            'db_port'=>$cfg->getValue('db_port')
+            'db_socket'=>$cfg->getValue('tu_db_socket'),
+            'db_port'=>$cfg->getValue('tu_db_port')
             );
 
             // Get 10 installations that are active but haven't been upgraded to latest hash

@@ -19,13 +19,12 @@ class SettingsController extends AuthController {
         $this->addToView('subscriber', $subscriber);
 
         // get owner object
-        $tu_tables_dao = new ThinkUpTablesMySQLDAO();
-        $owner_dao = new OwnerMySQLDAO();
+        $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
+        $owner_dao = new OwnerMySQLDAO($subscriber->thinkup_username);
 
         //process submitted edits
         if (isset($_POST['Done'])) {
             $this->validateCSRFToken();
-            $tu_tables_dao->switchToInstallationDatabase($subscriber->thinkup_username);
             $new_tz = isset($_POST['timezone']) ? $_POST['timezone'] : null;
             $updates = 0;
             if (isset($new_tz)) {
@@ -45,8 +44,6 @@ class SettingsController extends AuthController {
             if ($updates > 0) {
                 $this->addSuccessMessage('Saved your changes.');
             }
-        } else {
-            $tu_tables_dao->switchToInstallationDatabase($subscriber->thinkup_username);
         }
         $owner = $owner_dao->getByEmail($logged_in_user);
         $this->addToView('owner', $owner);
@@ -73,8 +70,6 @@ class SettingsController extends AuthController {
         $this->addToView('thinkup_url', $user_installation_url);
 
         $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
-
-        $tu_tables_dao->switchToUpstartDatabase();
         return $this->generateView();
 	}
 }

@@ -86,7 +86,7 @@ class MembershipController extends AuthController {
         //END populating membership_status
 
         //BEGIN populating nav bar icons
-        $tu_tables_dao = new ThinkUpTablesMySQLDAO();
+        $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
         $instances = $tu_tables_dao->getInstancesWithStatus($subscriber->thinkup_username, 2);
 
         //Start off assuming connection doesn't exist

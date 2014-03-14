@@ -10,7 +10,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
 
     public function setUp() {
         parent::setUp();
-        $this->user_database = Config::getInstance()->getValue('user_installation_database_prefix').
+        $this->user_database = Config::getInstance()->getValue('user_installation_db_prefix').
             $this->thinkup_username;
     }
 
@@ -103,8 +103,10 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $app_source_path = $config->getValue('app_source_path');
         $data_path = $config->getValue('data_path');
 
+        $this->debug('About to install app');
         $app_installer = new AppInstaller();
         $app_installer->install(6);
+        $this->debug('App installed');
 
         // Assert installation completed
         $this->assertTrue(file_exists($app_source_path.$this->thinkup_username ) );
@@ -181,7 +183,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $rows = null;
 
         // Assert application and plugin options are set
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '$this->user_database . '.tu_options o');
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '.$this->user_database . '.tu_options o');
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         // Assert ThinkUp application database_version option is correct/up-to-date
         $this->assertEqual($rows[0]['namespace'], 'application_options');
@@ -245,7 +247,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->debug($install_results);
 
         // Assert Upstart user pass and salt match ThinkUp owner pass and salt
-        $stmt = PDODAO::$PDO->query('SELECT * FROM '$this->user_database . '.tu_owners');
+        $stmt = PDODAO::$PDO->query('SELECT * FROM '.$this->user_database . '.tu_owners');
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Assert admin owner details are set
@@ -277,7 +279,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $rows = null;
 
         // Assert application and plugin options are set
-        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '$this->user_database . '.tu_options o');
+        $stmt = PDODAO::$PDO->query('SELECT o.* FROM '.$this->user_database . '.tu_options o');
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         // Assert ThinkUp application database_version option is correct/up-to-date
         $this->assertEqual($rows[0]['namespace'], 'application_options');

@@ -1,6 +1,6 @@
 <?php
 
-class ThinkUpTablesMySQLDAO extends PDODAO {
+class ThinkUpTablesMySQLDAO extends ThinkUpPDODAO {
 
     public function insertInstance($network_user_id, $network_username, $network = "twitter", $viewer_id = false) {
         $q  = "INSERT INTO tu_instances ";
@@ -139,7 +139,6 @@ class ThinkUpTablesMySQLDAO extends PDODAO {
     }
 
     public function getInstancesWithStatus($thinkup_username, $owner_id) {
-        self::switchToInstallationDatabase($thinkup_username);
         $vars = array(
             ':owner_id'=>$owner_id
         );
@@ -150,20 +149,6 @@ class ThinkUpTablesMySQLDAO extends PDODAO {
         // echo $q;
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
-        self::switchToUpstartDatabase();
         return $this->getDataRowsAsArrays($ps);
-    }
-
-    public static function switchToUpstartDatabase() {
-        $cfg = Config::getInstance();
-        $q = "USE ". $cfg->getValue('db_name');
-        PDODAO::$PDO->exec($q);
-    }
-
-    public static function switchToInstallationDatabase($thinkup_username) {
-        $prefix = Config::getInstance()->getValue('user_installation_db_prefix');
-        $q = "USE ". $prefix.$thinkup_username;
-        // echo $q;
-        PDODAO::$PDO->exec($q);
     }
 }

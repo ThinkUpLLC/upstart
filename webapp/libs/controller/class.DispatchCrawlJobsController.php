@@ -27,10 +27,10 @@ class DispatchCrawlJobsController extends Controller {
                         $jobs_array[] = array(
                         'installation_name'=>$install['thinkup_username'],
                         'timezone'=>$cfg->getValue('dispatch_timezone'),
-                        'db_host'=>$cfg->getValue('db_host'),
+                        'db_host'=>$cfg->getValue('tu_db_host'),
                         'db_name'=>$cfg->getValue('user_installation_db_prefix').$install['thinkup_username'],
-                        'db_socket'=>$cfg->getValue('dispatch_socket'),
-                        'db_port'=>$cfg->getValue('db_port')
+                        'db_socket'=>$cfg->getValue('tu_db_socket'),
+                        'db_port'=>$cfg->getValue('tu_db_port')
                         );
                     }
                     // call Dispatcher
