@@ -565,6 +565,31 @@ body.error-page .container header h1,
 body.error-page .container header h2 {
   color: #2785d3;
 }
+body#maintenance-page .container header {
+  margin-top: 0;
+}
+body#maintenance-page .container header h1 .fa-cog {
+  font-size: 240px;
+  -webkit-animation: spin 16s linear infinite;
+  -moz-animation: spin 16s linear infinite;
+  animation: spin 16s linear infinite;
+}
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
 .fa-override-before:before {
   font-family: FontAwesome;
   font-weight: normal;

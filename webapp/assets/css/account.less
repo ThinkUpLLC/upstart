@@ -135,3 +135,24 @@ body.error-page {
     }
   }
 }
+
+body#maintenance-page {
+  .container {
+    header {
+      margin-top: 0;
+
+      h1 {
+        .fa-cog {
+          font-size: 240px;
+          -webkit-animation:spin 16s linear infinite;
+          -moz-animation:spin 16s linear infinite;
+          animation:spin 16s linear infinite;
+        }
+      }
+    }
+  }
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
