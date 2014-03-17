@@ -193,7 +193,28 @@ checkPasswordField = ($el) ->
     , 500
     )
 
-timerEmail = null
+checkSettingsPasswordField = ($form,e) ->
+  $form.find('#control-password-new, #control-password-verify').parent().removeClass('form-group-warning')
+  wt.appMessage.destroy()
+  if $form.find("#control-password-current").length
+    if $form.find("#control-password-current").val().length isnt 0
+      if $form.find("#control-password-new").val().length is 0 and
+         $form.find("#control-password-verify").val().length is 0
+        wt.appMessage.create "You didn't provide a new password in both fields.", "warning"
+        $form.find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning")
+        e.preventDefault()
+       else if !checkPasswordFormat($form.find("#control-password-new").val())
+         wt.appMessage.create "Your password must be at least 8 characters, contain both numbers &amp; letters, " +
+           "and omit special characters.", "warning"
+         $form.find("#control-password-new").parent().addClass("form-group-warning")
+         e.preventDefault()
+       else if $form.find("#control-password-new").val() isnt $form.find("#control-password-verify").val()
+         e.preventDefault()
+         wt.appMessage.create "The passwords must match.", "warning"
+         $form.find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning")
+
+
+mimerEmail = null
 checkEmailField = ($el) ->
   if $el.val() isnt ""
     if timerEmail then clearTimeout timerEmail
@@ -335,6 +356,9 @@ $ ->
       wt.appMessage.create "Passwords must match", "warning"
     else
       wt.appMessage.destroy()
+
+  $("#form-settings").on "submit", (e) ->
+    checkSettingsPasswordField $(@), e
 
   $("body").on "click", ".show-section", (e) ->
     $el = $($(@).data("section-selector"))
