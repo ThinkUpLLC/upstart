@@ -301,6 +301,9 @@ body {
   float: right;
   width: 50%;
 }
+#section-signup-top .action-links.has-newsletter-signup {
+  margin: 15px 0 30px;
+}
 #section-social {
   padding: 0;
   height: 200px;
