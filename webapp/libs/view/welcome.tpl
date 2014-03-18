@@ -59,7 +59,7 @@
                 <div class="panel-body-inner">
                   <p>Email us any time at <a href="mailto:help@thinkup.com">help@thinkup.com</a> if you get stuck, and we’ll help you out.</p>
 
-                  <p>You might want to follow us at <a href="https://twitter.com/thinkup">@thinkup</a> on Twitter, too.</p>
+                  <p>You might want to follow us at <a href="https://twitter.com/intent/user?screen_name=thinkup">@thinkup</a> on Twitter, too.</p>
                 </div>
               </div>
             </div>
