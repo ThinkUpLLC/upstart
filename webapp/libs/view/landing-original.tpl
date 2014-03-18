@@ -12,7 +12,7 @@ body_classes="landing" body_id="landing-home"}
       We’ll have a spot ready<br>
       for you soon.</h3>
 
-      <div class="action-links">
+      <div class="action-links has-newsletter-signup">
         <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">
           <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email">
           <button type="submit" value="Subscribe" name="subscribe" class="btn-submit"><i class="fa fa-envelope-o"></i></button>
