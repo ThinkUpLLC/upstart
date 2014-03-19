@@ -6,6 +6,7 @@ body_classes="marketing marketing-page" body_id="marketing-about"}
 
     <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-page-header">
       <h2 class="section-header">About ThinkUp</h2>
+      {include file="_about.nav.tpl" active="about"}
     </section>
 
     <section class="section col-md-2 col-lg-3 col-lg-right section-marketing-text" id="section-about-text">

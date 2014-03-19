@@ -28,3 +28,13 @@ wt.appMessage =
       wt.appMessage.destroy()
     if app_message? and app_message.msg? and app_message.type?
       wt.appMessage.create app_message.msg, app_message.type
+
+$ ->
+  $("#form-contact").submit (e) ->
+    e.preventDefault()
+    $form = $(@)
+    subject = $form.find("#control-subject option:selected").text()
+    if subject is "Choose…" then subject = "ThinkUp Help"
+    body = $form.find("#control-body").val()
+
+    window.location.href = "mailto:help@thinkup.com?subject=#{encodeURI subject}&body=#{encodeURI body}"

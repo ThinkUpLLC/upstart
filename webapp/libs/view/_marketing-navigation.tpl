@@ -4,7 +4,7 @@
   <nav class="navigation-main">
     <a class="nav-link" href="{$site_root_path}user/">Log in</a>
     <a class="nav-link" href="{$site_root_path}join.php">Join</a>
-    <a class="nav-link" href="{$site_root_path}about.php">About</a>
+    <a class="nav-link" href="{$site_root_path}about/">About</a>
   </nav>
 </header>
 
