@@ -1,7 +1,8 @@
 <?php
-class AboutController extends Controller {
+class PrivacyController extends Controller {
     public function control() {
-        $this->setViewTemplate('about.index.tpl');
+        $this->setPageTitle('Privacy Policy');
+        $this->setViewTemplate('about.privacy.tpl');
         if ($this->shouldRefreshCache() ) {
             $today = date('z');
             $deadline = date('z', mktime(12, 0, 0, 11, 16, 2013));

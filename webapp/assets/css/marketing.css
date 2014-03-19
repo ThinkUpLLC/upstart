@@ -21,7 +21,7 @@
   font-weight: 400;
   text-align: center;
   font-size: 0.9375em;
-  line-height: 1.0666666666666667;
+  line-height: 1.06666667;
   letter-spacing: .02em;
   margin-bottom: 10px;
   border: 0;
@@ -36,7 +36,7 @@
   font-weight: 400;
   text-align: center;
   font-size: 0.9375em;
-  line-height: 1.0666666666666667;
+  line-height: 1.06666667;
   letter-spacing: .02em;
   margin-bottom: 10px;
   border: 0;
@@ -133,7 +133,7 @@ body {
 .section li {
   font-family: "tablet-gothic", helvetica, arial, sans-serif;
   font-size: 0.875em;
-  line-height: 1.2857142857142858;
+  line-height: 1.28571429;
 }
 #section-header,
 .section-signup,
@@ -216,7 +216,7 @@ body {
   left: 15px;
   top: 57px;
   font-size: 1.5em;
-  line-height: 0.9166666666666666;
+  line-height: 0.91666667;
   font-weight: 600;
 }
 .section-signup .section-header {
@@ -235,7 +235,7 @@ body {
 .section-signup .btn-signup {
   width: 132px;
   font-size: 1.0625em;
-  line-height: 1.0588235294117647;
+  line-height: 1.05882353;
   padding: 22px 0;
   border-radius: 40px;
 }
@@ -244,7 +244,7 @@ body {
 }
 .section-signup .login-link {
   font-size: 0.8125em;
-  line-height: 1.2307692307692308;
+  line-height: 1.23076923;
   color: #4A4A4A;
 }
 .section-signup .newsletter-signup-form {
@@ -345,7 +345,7 @@ body {
   font-weight: 600;
 }
 #section-social .social-items .social-item header {
-  line-height: 1.1428571428571428;
+  line-height: 1.14285714;
   margin-bottom: 8px;
 }
 #section-social .social-items .social-item header a {
@@ -467,7 +467,7 @@ body.hide-social #section-copyright {
   .section-signup .btn {
     width: 132px;
     font-size: 1.0625em;
-    line-height: 1.0588235294117647;
+    line-height: 1.05882353;
     padding: 22px 0;
     border-radius: 40px;
   }
@@ -774,7 +774,7 @@ body.header-compressed #section-signup-top .login-link {
   margin: 0;
 }
 #section-doesnt ul li {
-  margin-bottom: 1.2857142857142858em;
+  margin-bottom: 1.28571429em;
 }
 #section-signup-bottom {
   min-height: 0;
@@ -957,63 +957,208 @@ body.marketing-page .section p,
 body.marketing-page .section li {
   font-family: "tablet-gothic", helvetica, arial, sans-serif;
   font-size: 0.875em;
-  line-height: 1.2857142857142858;
+  line-height: 1.28571429;
 }
-body.marketing-page .section-marketing-text {
+body.marketing-page .section-marketing-text,
+body.marketing-page .section-legal-text {
   height: auto;
   padding: 15px;
   border-top: 0;
+  color: #444;
 }
-body.marketing-page .section-marketing-text .text-header {
+body.marketing-page .section-marketing-text .text-header,
+body.marketing-page .section-legal-text .text-header {
   text-align: center;
   font-size: 1.25em;
   line-height: 1;
   font-weight: 400;
   color: #ff7f00;
 }
-body.marketing-page .section-marketing-text .text-header ~ .text-header {
+body.marketing-page .section-marketing-text .text-header ~ .text-header,
+body.marketing-page .section-legal-text .text-header ~ .text-header {
   color: #6bb93b;
 }
 body.marketing-page .section-marketing-text p,
-body.marketing-page .section-marketing-text li {
+body.marketing-page .section-legal-text p,
+body.marketing-page .section-marketing-text li,
+body.marketing-page .section-legal-text li,
+body.marketing-page .section-marketing-text blockquote,
+body.marketing-page .section-legal-text blockquote {
   font-family: "tablet-gothic-wide", helvetica, arial, sans-serif;
   font-size: 1em;
-  line-height: 1.2777777777777777;
+  line-height: 1.27777778;
   font-weight: 300;
-  color: #444;
+  margin-bottom: 1em;
 }
 body.marketing-page .section-marketing-text p a,
-body.marketing-page .section-marketing-text li a {
+body.marketing-page .section-legal-text p a,
+body.marketing-page .section-marketing-text li a,
+body.marketing-page .section-legal-text li a,
+body.marketing-page .section-marketing-text blockquote a,
+body.marketing-page .section-legal-text blockquote a {
+  color: #2785d3;
+}
+body.marketing-page .section-marketing-text .list-values,
+body.marketing-page .section-legal-text .list-values {
+  counter-reset: values;
+  list-style: none;
+  padding-left: 30px;
+}
+body.marketing-page .section-marketing-text .list-values li,
+body.marketing-page .section-legal-text .list-values li {
+  font-size: 1.125em;
+  position: relative;
+}
+body.marketing-page .section-marketing-text .list-values li:before,
+body.marketing-page .section-legal-text .list-values li:before {
+  position: absolute;
+  left: -30px;
+  width: 30px;
+  padding-right: 15px;
+  counter-increment: values;
+  content: counter(values) ".";
+  font-weight: 400;
   color: #2785d3;
 }
 @media (min-width: 31.875em) {
-  body.marketing-page .section-marketing-text {
+  body.marketing-page .section-marketing-text,
+  body.marketing-page .section-legal-text {
     height: auto;
     padding: 15px 30px;
   }
-  body.marketing-page .section-marketing-text .text-header {
+  body.marketing-page .section-marketing-text .text-header,
+  body.marketing-page .section-legal-text .text-header,
+  body.marketing-page .section-marketing-text h3,
+  body.marketing-page .section-legal-text h3 {
     font-size: 1.375em;
     line-height: 1;
   }
   body.marketing-page .section-marketing-text p,
-  body.marketing-page .section-marketing-text li {
+  body.marketing-page .section-legal-text p,
+  body.marketing-page .section-marketing-text li,
+  body.marketing-page .section-legal-text li,
+  body.marketing-page .section-marketing-text blockquote,
+  body.marketing-page .section-legal-text blockquote {
     font-size: 1.125em;
-    line-height: 1.4444444444444444;
+    line-height: 1.44444444;
+  }
+  body.marketing-page .section-marketing-text .list-values,
+  body.marketing-page .section-legal-text .list-values {
+    padding-left: 40px;
+  }
+  body.marketing-page .section-marketing-text .list-values li,
+  body.marketing-page .section-legal-text .list-values li {
+    font-size: 1.25em;
+    line-height: 1.5;
+  }
+  body.marketing-page .section-marketing-text .list-values li:before,
+  body.marketing-page .section-legal-text .list-values li:before {
+    left: -40px;
+    width: 40px;
   }
 }
 @media (min-width: 48em) {
-  body.marketing-page .section-marketing-text {
+  body.marketing-page .section-marketing-text,
+  body.marketing-page .section-legal-text {
     height: auto;
     padding: 15px 60px;
   }
-  body.marketing-page .section-marketing-text .text-header {
+  body.marketing-page .section-marketing-text .text-header,
+  body.marketing-page .section-legal-text .text-header,
+  body.marketing-page .section-marketing-text h3,
+  body.marketing-page .section-legal-text h3 {
     font-size: 1.375em;
     line-height: 1;
   }
-  body.marketing-page .section-marketing-text p,
-  body.marketing-page .section-marketing-text li {
-    font-size: 1.125em;
-    line-height: 1.4444444444444444;
+  body.marketing-page .section-marketing-text .list-values,
+  body.marketing-page .section-legal-text .list-values {
+    padding-left: 0;
+  }
+  body.marketing-page .section-marketing-text .list-values li:before,
+  body.marketing-page .section-legal-text .list-values li:before {
+    text-align: right;
+  }
+}
+body.marketing-page .section-nav {
+  list-style: none;
+  padding: 0;
+  margin: .5em 0;
+}
+body.marketing-page .section-nav li {
+  display: inline-block;
+  padding: 0 5px;
+}
+body.marketing-page .section-nav a {
+  color: #2785d3;
+  font-weight: 400;
+  text-decoration: none;
+}
+body.marketing-page .section-nav a:hover {
+  text-decoration: underline;
+}
+body.marketing-page .section-nav a.active {
+  color: #aaa;
+}
+body.marketing-page .section-nav a.active:hover {
+  text-decoration: none;
+  cursor: default;
+}
+body.marketing-page .section-legal-text h3 {
+  text-align: left;
+  font-size: 1.25em;
+  line-height: 1.1;
+  font-weight: 400;
+}
+body.marketing-page .section-legal-text h4 {
+  font-size: 1.125em;
+  font-weight: 400;
+}
+body.marketing-page .section-legal-text p,
+body.marketing-page .section-legal-text li {
+  font-size: 1em;
+  line-height: 1.5;
+}
+body.marketing-page .section-legal-text .mod-date {
+  font-size: 0.875em;
+  line-height: 1.71428571;
+  color: #999;
+  margin-bottom: .5em;
+}
+body.marketing-page .section-legal-text blockquote {
+  font-size: 1.125em;
+  background: #f3f3f3;
+  border-left: 2px solid #46BCFF;
+  margin: 0;
+  padding: .25em .25em .5em .75em;
+  position: relative;
+}
+body.marketing-page .section-legal-text blockquote:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+}
+body.marketing-page .section-legal-text blockquote:before {
+  float: right;
+  content: "\f05a";
+  font-size: 0.875em;
+  color: rgba(39, 133, 211, 0.5);
+  line-height: 1;
+  padding: 0 0 .5em .5em;
+}
+body.marketing-page .section-legal-text blockquote p {
+  margin: 0;
+}
+@media (min-width: 31.875em) {
+  body.marketing-page .section-legal-text .text-header,
+  body.marketing-page .section-legal-text h3 {
+    font-size: 1.375em;
+    line-height: 1.09090909;
+  }
+  body.marketing-page .section-legal-text h4 {
+    font-size: 1.25em;
+    line-height: 1.1;
   }
 }
 body.marketing-page #section-header {
@@ -1049,6 +1194,14 @@ body.marketing-page #section-header .navigation-main .nav-link:hover {
 }
 body.marketing-page #section-page-header {
   border: 0;
+  padding: 24px 15px 0;
+  text-align: left;
+}
+@media (min-width: 31.875em) {
+  body.marketing-page #section-page-header {
+    text-align: center;
+    padding: 24px 30px;
+  }
 }
 body#marketing-about #section-about-text .headshots {
   text-align: center;
@@ -1110,6 +1263,72 @@ body#marketing-about #section-about-text .download-our-logo img {
   body#marketing-about #section-about-text .investor-logos .investor-logo.is-first {
     padding: 0;
   }
+}
+.hc {
+  color: #ff7f00;
+}
+.hc ~ .hc {
+  color: #008bd6;
+}
+.hc ~ .hc ~ .hc {
+  color: #6bb93b;
+}
+.hc ~ .hc ~ .hc ~ .hc {
+  color: #7e57d1;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #6bb93b;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #ff39ea;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #b51b2e;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #5b76c1;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #d58e19;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #b97cc6;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #5fac1c;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #ff7f00;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #008bd6;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #6bb93b;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #7e57d1;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #6bb93b;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #ff39ea;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #b51b2e;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #5b76c1;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #d58e19;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #b97cc6;
+}
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: #5fac1c;
 }
 body.marketing-page #section-page-header .section-header {
   font-size: 2em;

@@ -17,7 +17,7 @@ body.settings .container header h1 {
 body.settings .container header h2 {
   font-family: "tablet-gothic-wide", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 14px;
-  line-height: 1.5714285714285714;
+  line-height: 1.57142857;
   font-weight: 300;
   text-align: center;
   margin: 0;
@@ -552,7 +552,8 @@ body.account .footer .footer-container {
 body.account .footer .footer-container a {
   color: #fff;
 }
-body.account .footer .footer-container .follow-wrapper .follow-links li a {
+body.account .footer .footer-container .follow-wrapper .follow-links li a,
+body.account .footer .footer-container .copyright-privacy .privacy {
   color: #2785d3;
 }
 body.error-page .container header h1 {
@@ -1001,7 +1002,7 @@ body.app-message-visible.account .container {
   font-family: "tablet-gothic-semi-condensed", sans-serif;
   font-weight: 600;
   font-size: 19px;
-  line-height: 1.105263157894737;
+  line-height: 1.10526316;
   margin-bottom: 6px;
   font-weight: 400;
   letter-spacing: .03em;
@@ -1142,7 +1143,7 @@ body.app-message-visible.account .container {
 }
 .insight-hero .panel-heading .panel-title {
   font-size: 24px;
-  line-height: 1.0833333333333333;
+  line-height: 1.08333333;
   letter-spacing: .01em;
   margin-bottom: 8px;
   font-weight: 600;
