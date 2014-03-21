@@ -42,4 +42,16 @@
     }
   };
 
+  $(function() {
+    return $("#form-contact").submit(function(e) {
+      var $form, body, subject;
+      e.preventDefault();
+      $form = $(this);
+      subject = $form.find("#control-subject option:selected").text();
+      if (subject === "Choose…") subject = "ThinkUp Help";
+      body = $form.find("#control-body").val();
+      return window.location.href = "mailto:help@thinkup.com?subject=" + (encodeURI(subject)) + "&body=" + (encodeURI(body));
+    });
+  });
+
 }).call(this);
