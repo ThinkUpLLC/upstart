@@ -5,7 +5,7 @@
       <div class="footer-container">
         <div class="copyright-privacy">
           <div class="copyright">&copy;2014 ThinkUp, LLC</div>
-          <a class="privacy" href="https://github.com/ThinkUpLLC/policy">Privacy and stuff</a>
+          <div class="privacy"><a href="{$site_root_path}about/privacy.php">Privacy</a> and <a href="{$site_root_path}about/terms.php">Terms</a></div>
         </div>
         <div class="motto">It is nice to be nice.</div>
         <div class="follow-wrapper">
@@ -45,11 +45,11 @@
   </section>
 
   <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-legal">
-    <h3 class="section-header">Our <a href="https://github.com/ThinkUpLLC/policy">privacy policy and terms of service</a> are actually worth reading. If you don't like them, <a href="mailto:help@thinkup.com">let us know</a>.</h3>
+    <h3 class="section-header">Our <a href="{$site_root_path}about/privacy.php">privacy policy</a> and <a href="{$site_root_path}about/terms.php">terms of service</a> are actually worth reading. If you don't like them, <a href="mailto:help@thinkup.com">let us know</a>.</h3>
   </section>
 
   <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-copyright">
-    <h3 class="section-header">&copy;2014 ThinkUp LLC. Made in New York City.  It is nice to be nice. <a href="mailto:help@thinkup.com">Contact us</a> or learn <a href="{$site_root_path}about.php">about us</a>.</h3>
+    <h3 class="section-header">&copy;2014 ThinkUp LLC. Made in New York City.  It is nice to be nice. <a href="mailto:help@thinkup.com">Contact us</a> or learn <a href="{$site_root_path}about/">about us</a>.</h3>
   </section>
 
 

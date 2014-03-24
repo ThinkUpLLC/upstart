@@ -25,10 +25,11 @@ body.marketing-page {
     }
   }
 
-  .section-marketing-text {
+  .section-marketing-text, .section-legal-text {
     height: auto;
     padding: 15px;
     border-top: 0;
+    color: #444;
 
     .text-header {
       text-align: center;
@@ -42,15 +43,37 @@ body.marketing-page {
       color: #6bb93b;
     }
 
-    p, li {
+    p, li, blockquote {
       font-family: @tablet-gothic-wide;
       font-size: 1em;
       line-height: (23/18);
       font-weight: 300;
-      color: #444;
+      margin-bottom: 1em;
 
       a {
         color: @link-color;
+      }
+    }
+
+    .list-values {
+      counter-reset: values;
+      list-style: none;
+      padding-left: 30px;
+
+      li {
+        font-size: (18/16em);
+        position: relative;
+
+        &:before {
+          position: absolute;
+          left: -30px;
+          width: 30px;
+          padding-right: 15px;
+          counter-increment: values;
+          content: counter(values) ".";
+          font-weight: 400;
+          color: @link-color;
+        }
       }
     }
 
@@ -58,14 +81,28 @@ body.marketing-page {
       height: auto;
       padding: 15px 30px;
 
-      .text-header {
+      .text-header, h3 {
         font-size: (22/16em);
         line-height: 1;
       }
 
-      p, li {
+      p, li, blockquote {
         font-size: (18/16em);
         line-height: (26/18);
+      }
+
+      .list-values {
+        padding-left: 40px;
+
+        li {
+          font-size: (20/16em);
+          line-height: (24/16);
+
+          &:before {
+            left: -40px;
+            width: 40px;
+          }
+        }
       }
     }
 
@@ -73,18 +110,121 @@ body.marketing-page {
       height: auto;
       padding: 15px 60px;
 
-      .text-header {
+      .text-header, h3 {
         font-size: (22/16em);
         line-height: 1;
       }
 
-      p, li {
-        font-size: (18/16em);
-        line-height: (26/18);
+      .list-values {
+        padding-left: 0;
+
+        li {
+          &:before {
+            text-align: right;
+          }
+        }
+      }
+
+    }
+  }
+
+  .section-nav {
+    list-style: none;
+    padding: 0;
+    margin: .5em 0;
+
+    li {
+      display: inline-block;
+      padding: 0 5px;
+    }
+
+    a {
+      color: @link-color;
+      font-weight: 400;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &.active {
+        color: #aaa;
+
+        &:hover {
+          text-decoration: none;
+          cursor: default;
+        }
       }
     }
   }
 
+  .section-legal-text {
+    // Section head
+    h3 {
+     text-align: left;
+     font-size: (20/16em);
+     line-height: (22/20);
+     font-weight: 400;
+    }
+
+    // Subsection head
+    h4 {
+      font-size: (18/16em);
+      font-weight: 400;
+    }
+
+    p, li {
+      font-size: 1em;
+      line-height: 1.5;
+    }
+
+    .mod-date {
+      font-size: (14/16em);
+      line-height: (24/14);
+      color: #999;
+      margin-bottom: .5em;
+    }
+
+    // An annotation, describing a section in plain English
+    blockquote {
+      font-size: (18/16em);
+      background: #f3f3f3;
+      border-left: 2px solid #46BCFF;
+      margin: 0;
+      padding: .25em .25em .5em .75em;
+      position: relative;
+      .fa-override-before;
+
+      &:before {
+        float: right;
+        content: "\f05a";
+        font-size: (14/16em);
+        color: fade(@link-color, 50%);
+        line-height: 1;
+        padding: 0 0 .5em .5em;
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+
+    @media (min-width: 31.875em) {
+      .text-header, h3 {
+        font-size: (22/16em);
+        line-height: (24/22);
+      }
+
+      h4 {
+        font-size: (20/16em);
+        line-height: (22/20);
+      }
+    }
+  }
+
+  .form {
+    margin-bottom: 30px;
+  }
 
   #section-header {
     background: none;
@@ -125,6 +265,14 @@ body.marketing-page {
 
   #section-page-header {
     border: 0;
+
+    padding: 24px 15px 0;
+    text-align: left;
+
+    @media (min-width: 31.875em) {
+      text-align: center;
+      padding: 24px 30px;
+    }
   }
 }
 
@@ -216,4 +364,105 @@ body#marketing-about {
       }
     }
   }
+}
+
+// For colored headers
+@colors: #FF7F00, #008BD6, #6bb93b, #7E57D1, #6BB93B, #FF39EA, #B51B2E, #5B76C1, #D58E19, #B97CC6, #5fac1c;
+
+.hc {
+  color: extract(@colors, 1);
+}
+
+.hc ~ .hc {
+  color: extract(@colors, 2);
+}
+
+.hc ~ .hc ~.hc {
+  color: extract(@colors, 3);
+}
+
+.hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 4);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 5);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 6);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 7);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 8);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 9);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 10);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 11);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 1);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~
+.hc {
+  color: extract(@colors, 2);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~
+.hc ~ .hc {
+  color: extract(@colors, 3);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~
+.hc ~ .hc ~.hc {
+  color: extract(@colors, 4);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~
+.hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 5);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~
+.hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 6);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 7);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 8);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 9);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 10);
+}
+
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~
+.hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
+  color: extract(@colors, 11);
 }
