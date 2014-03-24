@@ -1,5 +1,5 @@
 <?php
 require_once 'init.php';
 
-$controller = new LandingOriginalController();
+$controller = new LandingController();
 echo $controller->go();
