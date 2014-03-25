@@ -11,7 +11,7 @@ body_classes="marketing marketing-page" body_id="marketing-values"}
 
     <section class="section col-md-2 col-lg-3 col-lg-right section-marketing-text" id="section-about-text">
 
-      <p>These are only some of the issues we care about as a company. We articulate them as an incentive to pursue them.</p>
+      <p>These are some of the issues we care about as a company. We articulate them as an incentive to pursue them.</p>
 
       <ol class="list-values">
         <li><span>It is nice to be nice.</span></li>
@@ -53,6 +53,9 @@ body_classes="marketing marketing-page" body_id="marketing-values"}
         <li><span>We are going to have a sense of humor. Because hell, we&rsquo;re gonna need it.</span></li>
 
       </ol>
+
+
+      <p>Did we miss any? <a href="./contact.php">Let us know</a>.</p>
 
     </section>
 
