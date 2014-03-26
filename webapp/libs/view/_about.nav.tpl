@@ -5,5 +5,5 @@
   <li><a {if $active eq 'terms'}class="active" {/if}  href="{$site_root_path}about/terms.php">Terms</a></li>
   <li><a {if $active eq 'privacy'}class="active" {/if}href="{$site_root_path}about/privacy.php">Privacy</a></li>
   <li><a {if $active eq 'faq'}class="active" {/if}href="{$site_root_path}about/faq.php">FAQ</a></li>
-  <li><a {if $active eq 'contact'}class="active" {/if}href="{$site_root_path}contact">Contact</a></li>
+  <li><a {if $active eq 'contact'}class="active" {/if}href="{$site_root_path}about/contact.php">Contact</a></li>
 </ul>

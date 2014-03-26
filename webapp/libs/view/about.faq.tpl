@@ -37,7 +37,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <p>If you have more than one account on each social network, a Pro ThinkUp Membership costs $120 per year and gathers insights from a total of 10 Twitter and/or Facebook accounts.</p>
 
-      <p>We also have custom Executive Memberships for larger companies or institutions that are more personalized. These start at $1000/year and you can <a href="{$site_root_path}contact/">contact us</a> for more information.</p>
+      <p>We also have custom Executive Memberships for larger companies or institutions that are more personalized. These start at $1000/year and you can <a href="{$site_root_path}about/contact.php">contact us</a> for more information.</p>
 
       <h4 id="why-does-it-cost-money">Why does ThinkUp cost money? Is there a free trial?</h4>
 
@@ -95,7 +95,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="press-inquiry">I'm press and interested in reviewing ThinkUp, or interviewing Gina or Anil. Or can they speak at my event?</h4>
 
-      <p>We try to say yes to every reasonable request possible. Please send details to <a href="mailto:team@thinkup.com">team@thinkup.com</a> or use our <a href="{$site_root_path}contact">contact form</a>  and we’ll do everything we can to hook you up.</p>
+      <p>We try to say yes to every reasonable request possible. Please send details to <a href="mailto:team@thinkup.com">team@thinkup.com</a> or use our <a href="{$site_root_path}about/contact.php">contact form</a>  and we’ll do everything we can to hook you up.</p>
 
     </section>
 
