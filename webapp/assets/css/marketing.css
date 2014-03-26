@@ -1261,8 +1261,8 @@ body#marketing-about #section-about-text .investor-logos .investor-logo {
   padding-left: 10px;
 }
 body#marketing-about #section-about-text .download-our-logo {
-  text-align: center;
-  margin: 20px 0 10px;
+  float: right;
+  margin: 20px 0 10px 20px;
   font-size: 0.875em;
 }
 body#marketing-about #section-about-text .download-our-logo a {
