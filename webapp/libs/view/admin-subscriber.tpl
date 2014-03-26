@@ -12,7 +12,7 @@
       <table class="table table-condensed table-hover">
       <tr>
         <td>Email</td>
-        <td>{$subscriber->email} {include file="_admin-confirm_email.tpl"}</td>
+        <td>{$subscriber->email}</td>
       </tr>
       {if isset($subscriber->network) && isset($subscriber->network_user_name)}
       <tr>
