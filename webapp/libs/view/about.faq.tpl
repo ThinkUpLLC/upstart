@@ -15,7 +15,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="what-is">What is ThinkUp?</h4>
 
-      <p>ThinkUp is a simple new service that offers you a <strong>completely unique set of analytics</strong> about the way you use Twitter and Facebook. We wrote a <a href="http://blog.thinkup.com/post/80605166551/welcome-everyone-to-thinkup">blog post welcoming everyone to ThinkUp</a> which explains things pretty well.</p>
+      <p>ThinkUp is a simple new service that offers you a <strong>completely unique set of analytics</strong> about the way you use Twitter and Facebook.</p>
 
       <p>Basically, ThinkUp is a smart new way to get more meaning out of all the time you spend online, offering little insights that help you no matter what your goals are online. And it’s built by a company and community that aim to respect you more than any other tech company.</p>
 
@@ -87,7 +87,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="who-is-thinkup">Who's behind all of this?</h4>
 
-      <p>ThinkUp is cofounded by <a href="http://ginatrapani.org/">Gina Trapani</a> and <a href="http://anildash.com/">Anil Dash</a>, and is based in New York City. You can find out information about our investors on <a href="http://localhost/join/about/">our about page</a>. ThinkUp's launch was crowdfunded by our members in a very successful campaign in the autumn of 2013. (You can check out our <a href="https://www.youtube.com/watch?v=TeqeSmBwpcw">launch video</a> to see how we got started.)</p>
+      <p>ThinkUp is cofounded by <a href="http://ginatrapani.org/">Gina Trapani</a> and <a href="http://anildash.com/">Anil Dash</a>, and is based in New York City. You can find out information about our investors on <a href="/join/about/">our about page</a>. ThinkUp's launch was crowdfunded by our members in a very successful campaign in the autumn of 2013. (You can check out our <a href="https://www.youtube.com/watch?v=TeqeSmBwpcw">launch video</a> to see how we got started.)</p>
 
       <p>At a more technical level, ThinkUp is open source (free) software. From the start, we've been built by an incredibly inclusive and inventive community. If you're a developer, <a href="https://github.com/ginatrapani/ThinkUp">join us on GitHub</a> &mdash; we'd love to have you.</p>
 
@@ -97,7 +97,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="press-inquiry">I'm press and interested in trying ThinkUp, or interviewing Gina or Anil. Or can they speak at my event?</h4>
 
-      <p>We try to say yes to every reasonable request possible. Please send details to <a href="mailto:team@thinkup.com">team@thinkup.com</a> or use our <a href="/join/about/contact">contact form</a>  and we’ll do everything we can to hook you up.</p>
+      <p>We try to say yes to every reasonable request possible. Please send details to <a href="mailto:team@thinkup.com">team@thinkup.com</a> or use our <a href="/join/contact">contact form</a>  and we’ll do everything we can to hook you up.</p>
 
     </section>
 

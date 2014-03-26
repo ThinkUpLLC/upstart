@@ -45,11 +45,11 @@
   </section>
 
   <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-legal">
-    <h3 class="section-header">Our <a href="{$site_root_path}about/privacy.php">privacy policy</a> and <a href="{$site_root_path}about/terms.php">terms of service</a> are actually worth reading. If you don't like them, <a href="/join/about/contact">let us know</a>.</h3>
+    <h3 class="section-header">Our <a href="{$site_root_path}about/privacy.php">privacy policy</a> and <a href="{$site_root_path}about/terms.php">terms of service</a> are actually worth reading. If you don't like them, <a href="/join/contact">let us know</a>.</h3>
   </section>
 
   <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-copyright">
-    <h3 class="section-header">&copy;2014 ThinkUp LLC. <a href="http://nytm.org/made-in-nyc">Made in New York City</a>.  It is nice to be nice. <a href="/join/about/contact">Contact us</a> or learn <a href="{$site_root_path}about/">about us</a>.</h3>
+    <h3 class="section-header">&copy;2014 ThinkUp LLC. <a href="http://nytm.org/made-in-nyc">Made in New York City</a>.  It is nice to be nice. <a href="/join/contact">Contact us</a> or learn <a href="{$site_root_path}about/">about us</a>.</h3>
   </section>
 
 
