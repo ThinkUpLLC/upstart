@@ -19,7 +19,13 @@ body_classes="marketing marketing-page" body_id="marketing-about"}
         <img class="headshot" src="{$site_root_path}assets/img/anil-headshot@2x.jpg" alt="Anil Dash">
       </div>
 
-      <p>ThinkUp is also the name of the small company based in New York City that makes ThinkUp. Our cofounders are Gina Trapani and Anil Dash. We are working to make ThinkUp the company that treats its customers and community better than any other company in the technology industry. To that end, we’ve posted our <a href="https://github.com/ThinkUpLLC/policy/blob/master/values.md">Company Values</a>, and eagerly solicit public feedback and response to them.</p>
+      <p>ThinkUp is also the name of the small company based in New York City that makes ThinkUp. Our cofounders are Gina Trapani and Anil Dash. We are working to make ThinkUp the company that treats its customers and community better than any other company in the technology industry. To that end, we’ve posted our <a href="/join/about/values.php">Company Values</a>, and eagerly solicit public feedback and response to them.</p>
+
+
+      <div class="download-our-logo">
+        <a href="{$site_root_path}assets/img/thinkup-logo-hires.png"><img src="{$site_root_path}assets/img/thinkup-logo@2x.png" alt="ThinkUp"><br>
+          Download our logo</a>
+      </div>
 
       <p>Given our company’s goals of making our time online more meaningful, and the values that we’ve documented, it’s only natural that our ThinkUp platform is open source. ThinkUp’s source code went public in 2009. Since then, ThinkUp’s become one of the most popular open source projects on GitHub, currently among the top 15 most active PHP projects. Ours is an inclusive and welcoming community, with a developer mailing list that has never had a flame war, as befits our company motto, “It is nice to be nice.”</p>
 
@@ -36,13 +42,6 @@ body_classes="marketing marketing-page" body_id="marketing-about"}
           <img class="investor-logo" src="{$site_root_path}assets/img/investor-logo-500-startups.png" alt="500 Startups">
           <img class="investor-logo" src="{$site_root_path}assets/img/investor-logo-quotidian.png" alt="Quotidian Ventures">
         </div>
-      </div>
-
-      <p>Press inquiries and partnership requests should be directed to <a href="mailto:team@thinkup.com">team@thinkup.com</a>. If you are a ThinkUp member or user, please direct support requests to <a href="mailto:help@thinkup.com">help@thinkup.com</a>.</p>
-
-      <div class="download-our-logo">
-        <a href="{$site_root_path}assets/img/thinkup-logo-hires.png"><img src="{$site_root_path}assets/img/thinkup-logo@2x.png" alt="ThinkUp"><br>
-          Download our logo</a>
       </div>
 
     </section>
