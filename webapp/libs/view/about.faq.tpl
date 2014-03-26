@@ -25,7 +25,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="what-is-beta">What does it mean that ThinkUp is in beta?</h4>
 
-      <p>That's our way of saying that there are core ThinkUp features that are still works in progress. We've made ThinkUp available already because lots of people told us they wanted to use it!</p>
+      <p>That's our way of saying that core ThinkUp features are still works in progress. We've made ThinkUp available already because lots of people told us they wanted to use it!</p>
 
       <p>Because we’re still in beta, we're hard at work making the insights in ThinkUp that you see today even more interesting in the future.</p>
 
@@ -49,7 +49,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="which-networks">Which social networks will ThinkUp give me insights about?</h4>
 
-      <p>Currently, ThinkUp works with Twitter and with personal Facebook accounts. We're working to add support for Facebook Pages, Instagram, YouTube, Google+ and possibly other networks, based on the feedback we hear from our members. If you join ThinkUp now, we'll let you know as soon as those new networks are added in the future.</p>
+      <p>Currently, ThinkUp works with Twitter and with personal Facebook accounts. We're working to add support for Facebook Pages, Instagram, YouTube, Google+ and possibly other networks, based on the feedback we hear from our members. If you join ThinkUp now, we'll let you know as soon as we add those new networks in the future.</p>
 
       <h4>How can ThinkUp help me?</h4>
 
@@ -79,7 +79,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="self-hosted">Where can I get support for self-hosted installations of ThinkUp?</h4>
 
-      <p>For issues with self-hosted installations of ThinkUp the best place to get help is from the developer community. There is an active <a href="https://groups.google.com/forum/#!forum/thinkupapp">mailing list</a> where you can search for the issue you’re having and ask questions.</p>
+      <p>The best place to get help with your self-hosted ThinkUp is from the developer community. There is an active <a href="https://groups.google.com/forum/#!forum/thinkupapp">mailing list</a> where you can search for the issue you’re having and post questions.</p>
 
       <h3 class="hc text-header">About our Company</h2>
 
