@@ -21,7 +21,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <p>When you <a href="https://thinkup.com/join/">join ThinkUp</a>, you get a simple stream showing you those insights about your Twitter and Facebook accounts. If you want, those insights can come to you in a handy email digest.</p>
 
-      <p>You can see it in action on our cofounder <a href="https://ginatrapani.thinkup.com/">Gina’s ThinkUp</a>. Or read more in our <a href="http://blog.thinkup.com/post/80605166551/welcome-everyone-to-thinkup">blog post welcoming everyone to ThinkUp</a>.</p>
+      <p>You can see it in action on our cofounder <a href="https://ginatrapani.thinkup.com/">Gina’s ThinkUp</a>, or read more in our <a href="http://blog.thinkup.com/post/80605166551/welcome-everyone-to-thinkup">blog post welcoming everyone to ThinkUp</a>.</p>
 
       <h4 id="what-is-beta">What does it mean that ThinkUp is in beta?</h4>
 
