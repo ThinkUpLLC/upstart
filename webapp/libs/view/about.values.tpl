@@ -55,7 +55,7 @@ body_classes="marketing marketing-page" body_id="marketing-values"}
       </ol>
 
 
-      <p>Did we miss any? <a href="./contact.php">Let us know</a>.</p>
+      <p>Did we miss any? <a href="{$site_root_path}about/contact.php">Let us know</a>.</p>
 
     </section>
 

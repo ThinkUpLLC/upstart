@@ -19,7 +19,7 @@ body_classes="marketing marketing-page" body_id="marketing-about"}
         <img class="headshot" src="{$site_root_path}assets/img/anil-headshot@2x.jpg" alt="Anil Dash">
       </div>
 
-      <p>ThinkUp is also the name of the small company based in New York City that makes ThinkUp. Our cofounders are Gina Trapani and Anil Dash. We are working to make ThinkUp the company that treats its customers and community better than any other company in the technology industry. To that end, we’ve posted our <a href="/join/about/values.php">Company Values</a>, and eagerly solicit public feedback and response to them.</p>
+      <p>ThinkUp is also the name of the small company based in New York City that makes ThinkUp. Our cofounders are Gina Trapani and Anil Dash. We are working to make ThinkUp the company that treats its customers and community better than any other company in the technology industry. To that end, we’ve posted our <a href="{$site_root_path}about/values.php">Company Values</a>, and eagerly solicit public feedback and response to them.</p>
 
 
       <div class="download-our-logo">
