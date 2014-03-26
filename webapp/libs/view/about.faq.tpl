@@ -35,7 +35,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <p>A ThinkUp Membership costs $60 per year and gathers insights from one Twitter account and one personal Facebook account.</p>
 
-      <p>If you have more than one account a social network, a Pro ThinkUp Membership costs $120 per year and gathers insights from a total of 10 Twitter and/or Facebook accounts.</p>
+      <p>If you have more than one account on each social network, a Pro ThinkUp Membership costs $120 per year and gathers insights from a total of 10 Twitter and/or Facebook accounts.</p>
 
       <p>We also have custom Executive Memberships for larger companies or institutions that are more personalized. These start at $1000/year and you can <a href="{$site_root_path}contact/">contact us</a> for more information.</p>
 
