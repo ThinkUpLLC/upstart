@@ -1143,6 +1143,11 @@ body.marketing-page .section-legal-text h4 {
   font-size: 1.125em;
   font-weight: 400;
 }
+body.marketing-page .section-legal-text h4 a,
+body.marketing-page .section-legal-text h4 a:visited {
+  text-decoration: none;
+  color: black;
+}
 body.marketing-page .section-legal-text p,
 body.marketing-page .section-legal-text li {
   font-size: 1em;
