@@ -71,11 +71,11 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
       <p>As an added security measure, Facebook asks users to explicitly reconnect apps like ThinkUp from time to time. We're working on ways to make the reconnection process smoother and less disruptive for our members.</p>
 
       <h4 id="change-username-email"><a href="#change-username-email">How can I change my ThinkUp username or email address?</a></h4>
-      <p><a href="{$site_root_path}contact">Just contact us</a> with the change you’d like made and we’ll take care of it for you.</p>
+      <p><a href="{$site_root_path}about/contact.php">Just contact us</a> with the change you’d like made and we’ll take care of it for you.</p>
 
       <h4 id="pro-upgrade"><a href="#pro-upgrade">How can I upgrade to a Pro membership?</a></h4>
 
-      <p>We're so glad you want to take your relationship with ThinkUp to the next level! Just <a href="{$site_root_path}contact">contact us</a> and we'll take care of the upgrade for you.</p>
+      <p>We're so glad you want to take your relationship with ThinkUp to the next level! Just <a href="{$site_root_path}about/contact.php">contact us</a> and we'll take care of the upgrade for you.</p>
 
       <h4 id="self-hosted"><a href="#self-hosted"> Where can I get support for self-hosted installations of ThinkUp?</a></h4>
 
