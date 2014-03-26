@@ -30,13 +30,11 @@
         <td><span class="text-success">Complimentary membership</span></td>
       </tr>
       {/if}
-      {if $subscriber->is_email_verified eq 0 && $subscriber->installation_url neq null}
       <tr>
         <td>Change email</td>
         <td><form action="subscriber.php?action=updateemail&id={$subscriber->id}" method="get"><input type="text" width="10" value="" placeholder="" name="email"> <input type="hidden" name="id" value="{$subscriber->id}"> <input type="hidden" name="action" value="setemail"><input type="submit" value="Save" class="btn btn-default"></form>
         </td>
       </tr>
-      {/if}
       </table>
 {if $payments}
 <br>
