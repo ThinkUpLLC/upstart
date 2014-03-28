@@ -225,6 +225,8 @@ class Subscriber {
                 $membership_status = "Payment pending";
             } elseif ($latest_payment !== null && $latest_payment['transaction_status'] == 'Failure') {
                 $membership_status = "Payment failed";
+            } elseif ($latest_payment !== null && $latest_payment['transaction_status'] == '' ) {
+                $membership_status = "Payment failed";
             } else {
                 //Get latest authorization
                 $subscriber_auth_dao = new SubscriberAuthorizationMySQLDAO();

@@ -106,6 +106,20 @@ class TestOfSubscriber extends UpstartUnitTestCase {
         $this->assertEqual($result, 'Payment failed');
     }
 
+    public function testGetAccountStatusPaymentFailedWithoutStatus() {
+        $this->builders[] = FixtureBuilder::build('authorizations', array('id'=>1, 'error_message'=>null));
+        $this->builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>6,
+            'authorization_id'=>1));
+        $this->builders[] = FixtureBuilder::build('payments', array('id'=>1, 'transaction_status'=>''));
+        $this->builders[] = FixtureBuilder::build('subscriber_payments', array('subscriber_id'=>6,
+            'payment_id'=>1));
+
+        $subscriber = new Subscriber();
+        $subscriber->id = 6;
+        $result = $subscriber->getAccountStatus();
+        $this->assertEqual($result, 'Payment failed');
+    }
+
     public function testGetAccountStatusPaymentSucceeded() {
         $this->builders[] = FixtureBuilder::build('authorizations', array('id'=>1, 'error_message'=>null));
         $this->builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>6,
