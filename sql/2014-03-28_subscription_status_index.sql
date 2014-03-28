@@ -1,0 +1,1 @@
+ALTER TABLE subscribers ADD INDEX(subscription_status);

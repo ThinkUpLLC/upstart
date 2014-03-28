@@ -139,7 +139,8 @@ CREATE TABLE subscribers (
   PRIMARY KEY (id),
   UNIQUE KEY email (email),
   UNIQUE KEY network_user_id (network_user_id,network),
-  UNIQUE KEY thinkup_username (thinkup_username)
+  UNIQUE KEY thinkup_username (thinkup_username),
+  KEY subscription_status (subscription_status)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Paid subscribers who have authorized their social network ac';
 
 -- --------------------------------------------------------

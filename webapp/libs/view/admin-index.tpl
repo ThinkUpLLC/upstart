@@ -10,7 +10,7 @@
     <h3>Showing search results for <span style="background-color:yellow">{$search_term}</span>. <a href="?p={$page}">Show all.</a></h3>
 {else}
 <h2>${$total_payments|number_format} paid. {$total_subscribers|number_format} subscribers. {$total_active_installs|number_format} installations.</h2>
-<p>Stalest dispatched: 10k+ followers: {$stalest_dispatch_time_10k_up|relative_datetime} ago,  1k to 10k followers: {$stalest_dispatch_time_1k_to_10k|relative_datetime} ago,  < 1k: {$stalest_dispatch_time|relative_datetime} ago</p>
+<p>Stalest paid installation dispatched {$stalest_dispatch_time_paid|relative_datetime} ago, not paid {$stalest_dispatch_not_paid|relative_datetime} ago.</p>
 <p {if !$workers_ok} class="alert alert-danger"{/if}>Dispatch status: <b>{$worker_status}</b></p>
 {/if}
 

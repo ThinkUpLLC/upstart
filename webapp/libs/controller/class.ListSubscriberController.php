@@ -28,12 +28,10 @@ class ListSubscriberController extends Controller {
         $active_total = $subscriber_dao->getTotalActiveInstalls();
         $this->addToView('total_active_installs', $active_total);
 
-        $stalest_dispatch_time_10k_up = $subscriber_dao->getStalestInstall10kAndUpLastDispatchTime();
-        $this->addToView('stalest_dispatch_time_10k_up', $stalest_dispatch_time_10k_up);
-        $stalest_dispatch_time_1k_to_10k = $subscriber_dao->getStalestInstall1kTo10kLastDispatchTime();
-        $this->addToView('stalest_dispatch_time_1k_to_10k', $stalest_dispatch_time_1k_to_10k);
-        $stalest_dispatch_time = $subscriber_dao->getStalestInstallLastDispatchTime();
-        $this->addToView('stalest_dispatch_time', $stalest_dispatch_time);
+        $stalest_dispatch_time_paid = $subscriber_dao->getPaidStalestInstallLastDispatchTime();
+        $this->addToView('stalest_dispatch_time_paid', $stalest_dispatch_time_paid);
+        $stalest_dispatch_time_not_paid = $subscriber_dao->getNotPaidStalestInstallLastDispatchTime();
+        $this->addToView('stalest_dispatch_not_paid', $stalest_dispatch_time_not_paid);
 
         try {
             $worker_status = Dispatcher::getNagiosCheckStatus();

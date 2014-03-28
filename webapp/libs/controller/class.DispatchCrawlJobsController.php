@@ -12,12 +12,9 @@ class DispatchCrawlJobsController extends Controller {
             $number_of_calls = $jobs_to_dispatch / 25;
             while ($number_of_calls > 0) {
 
-                $stale_installs = $subscriber_dao->getStaleInstalls10kAndUp();
+                $stale_installs = $subscriber_dao->getPaidStaleInstalls();
                 if (count($stale_installs) == 0) {
-                    $stale_installs = $subscriber_dao->getStaleInstalls1kTo10k();
-                }
-                if (count($stale_installs) == 0) {
-                    $stale_installs = $subscriber_dao->getStaleInstalls();
+                    $stale_installs = $subscriber_dao->getNotYetPaidStaleInstalls();
                 }
 
                 if (count($stale_installs) > 0 ) {

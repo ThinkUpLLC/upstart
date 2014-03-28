@@ -461,29 +461,64 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertTrue($subscriber->is_membership_complimentary);
     }
 
-    public function testGetStaleInstalls() {
+    public function testGetPaidStaleInstalls() {
         $builders = array();
         //Should get returned
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani+1@example.com',
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
             'thinkup_username'=>'unique1', 'date_installed'=>null, 'is_membership_complimentary'=>0,
-            'is_installation_active'=>1, 'last_dispatched'=>'-1d'));
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid through Jan 15 2015'));
         //Should get returned
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>2, 'email'=>'ginatrapani+2@example.com',
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
             'thinkup_username'=>'unique2', 'date_installed'=>null, 'is_membership_complimentary'=>0,
-            'is_installation_active'=>1, 'last_dispatched'=>null));
+            'is_installation_active'=>1, 'last_dispatched'=>null, 'subscription_status'=>'Paid through Jan 15 2015'));
         //Should not get returned because installation is not active
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>3, 'email'=>'ginatrapani+3@example.com',
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
             'thinkup_username'=>'unique3', 'date_installed'=>null, 'is_membership_complimentary'=>0,
-            'is_installation_active'=>0, 'last_dispatched'=>'-1d'));
+            'is_installation_active'=>0, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid through Jan 15 2015'));
+        //Should not get returned because not paid
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'email'=>'ginatrapani+4@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique4', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment failed'));
 
         $dao = new SubscriberMySQLDAO();
-        $result = $dao->getStaleInstalls();
+        $result = $dao->getPaidStaleInstalls();
 
         $this->assertEqual(sizeof($result), 2);
         $this->assertEqual($result[0]['thinkup_username'], 'unique2');
         $this->assertEqual($result[1]['thinkup_username'], 'unique1');
+    }
+
+    public function testGetNotPaidStaleInstalls() {
+        $builders = array();
+        //Should not get returned because paid
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani+1@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique1', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid through Jan 15 2015'));
+        //Should not get returned because piad
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>2, 'email'=>'ginatrapani+2@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique2', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>null, 'subscription_status'=>'Paid through Jan 15 2015'));
+        //Should not get returned because installation is not active
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>3, 'email'=>'ginatrapani+3@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique3', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>0, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid through Jan 15 2015'));
+        //Should get returned because not paid
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'email'=>'ginatrapani+4@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique4', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment failed'));
+
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->getNotYetPaidStaleInstalls();
+
+        $this->assertEqual(sizeof($result), 1);
+        $this->assertEqual($result[0]['thinkup_username'], 'unique4');
     }
 }

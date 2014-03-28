@@ -487,8 +487,9 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getDataRowsAsArrays($ps);
     }
 
-    public function getStaleInstalls($count=25) {
+    public function getPaidStaleInstalls($count=25) {
         $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 ";
+        $q .= "AND subscription_status LIKE 'Paid through%' ";
         $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL 1 HOUR) OR last_dispatched IS NULL) ";
         $q .= "ORDER BY last_dispatched ASC ";
         $q .= "LIMIT :limit;";
@@ -501,9 +502,11 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getDataRowsAsArrays($ps);
     }
 
-    public function getStaleInstalls10kAndUp($count=25) {
-        $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 AND follower_count >= 10000 ";
-        $q .= "AND last_dispatched < DATE_SUB(NOW(), INTERVAL 1 HOUR) ORDER BY last_dispatched ASC ";
+    public function getNotYetPaidStaleInstalls($count=25) {
+        $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 ";
+        $q .= "AND subscription_status NOT LIKE 'Paid through%' ";
+        $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL 3 HOUR) OR last_dispatched IS NULL) ";
+        $q .= "ORDER BY last_dispatched ASC ";
         $q .= "LIMIT :limit;";
 
         $vars = array(
@@ -514,23 +517,9 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getDataRowsAsArrays($ps);
     }
 
-    public function getStaleInstalls1kTo10k($count=25) {
-        $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 AND ";
-        $q .= "(follower_count < 10000 AND follower_count >= 1000) ";
-        $q .= "AND last_dispatched < DATE_SUB(NOW(), INTERVAL 3 HOUR) ORDER BY last_dispatched ASC ";
-        $q .= "LIMIT :limit;";
-
-        $vars = array(
-            ':limit'=>$count
-        );
-        //echo self::mergeSQLVars($q, $vars);
-        $ps = $this->execute($q, $vars);
-        return $this->getDataRowsAsArrays($ps);
-    }
-
-    public function getStalestInstall1kTo10kLastDispatchTime() {
+    public function getPaidStalestInstallLastDispatchTime() {
         $q  = "SELECT last_dispatched FROM subscribers WHERE is_installation_active=1 ";
-        $q .= "AND (follower_count < 10000 AND follower_count >= 1000) ";
+        $q .= "AND subscription_status LIKE 'Paid through%' ";
         $q .= "ORDER BY last_dispatched ASC LIMIT 1";
         //echo self::mergeSQLVars($q, $vars);
         $ps = $this->execute($q);
@@ -538,17 +527,9 @@ class SubscriberMySQLDAO extends PDODAO {
         return $result['last_dispatched'];
     }
 
-    public function getStalestInstall10kAndUpLastDispatchTime() {
-        $q  = "SELECT last_dispatched FROM subscribers WHERE is_installation_active=1  AND follower_count >= 10000 ";
-        $q .= "ORDER BY last_dispatched ASC LIMIT 1";
-        //echo self::mergeSQLVars($q, $vars);
-        $ps = $this->execute($q);
-        $result = $this->getDataRowAsArray($ps);
-        return $result['last_dispatched'];
-    }
-
-    public function getStalestInstallLastDispatchTime() {
-        $q  = "SELECT last_dispatched FROM subscribers WHERE is_installation_active=1 AND follower_count < 1000 ";
+    public function getNotPaidStalestInstallLastDispatchTime() {
+        $q  = "SELECT last_dispatched FROM subscribers WHERE is_installation_active=1 ";
+        $q .= "AND subscription_status NOT LIKE 'Paid through%' ";
         $q .= "ORDER BY last_dispatched ASC LIMIT 1";
         //echo self::mergeSQLVars($q, $vars);
         $ps = $this->execute($q);
