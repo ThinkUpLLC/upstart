@@ -3,11 +3,19 @@ chdir('..');
 chdir('..');
 require_once 'init.php';
 
-/*
-Get subscribers who are not on waitlist and whose subscription_status is null
-For each subscriber, getAccountStatus and save it in subscription_status
-*/
 $subscriber_dao = new SubscriberMySQLDAO();
+/**
+ * Clear subscription_status for all subscribers.
+ * TODO: Do this more gracefully; rather than clear everyone's status and repopulate, only update the ones who need
+ * an update.
+ */
+$total_subscribers_cleared = $subscriber_dao->clearSubscriptionStatus();
+echo "Cleared ".$total_subscribers_cleared." subscribers' subscription_status.
+";
+/**
+ * Get subscribers who are not on waitlist and whose subscription_status is null
+ * For each subscriber, getAccountStatus and save it in subscription_status.
+ */
 $subscribers_to_update = $subscriber_dao->getSubscribersWithoutSubscriptionStatus();
 $updated_subscribers = 0;
 while (sizeof($subscribers_to_update) > 0 ) {
@@ -16,6 +24,6 @@ while (sizeof($subscribers_to_update) > 0 ) {
 		$updated_subscribers += $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
 		$subscription_status = null;
 	}
-	echo "Updated ".$updated_subscribers." subscription_status<br>";
 	$subscribers_to_update = $subscriber_dao->getSubscribersWithoutSubscriptionStatus();
 }
+echo "Updated ".$updated_subscribers." subscribers' subscription_status.";

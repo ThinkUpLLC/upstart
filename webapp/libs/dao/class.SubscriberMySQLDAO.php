@@ -107,6 +107,14 @@ class SubscriberMySQLDAO extends PDODAO {
         }
     }
 
+    public function clearSubscriptionStatus() {
+        $q = "UPDATE subscribers SET subscription_status = NULL ";
+        $q .= "WHERE membership_level != 'Waitlist' ";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+        return $this->getUpdateCount($ps);
+    }
+
     public function setUsername($subscriber_id, $username) {
         $q = " UPDATE subscribers SET thinkup_username = :thinkup_username WHERE id=:id";
         $vars = array(
