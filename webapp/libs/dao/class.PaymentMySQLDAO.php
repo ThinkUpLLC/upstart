@@ -106,4 +106,18 @@ class PaymentMySQLDAO extends PDODAO {
         $ps = $this->execute($q, $vars);
         return $this->getUpdateCount($ps);
     }
+
+    /**
+     * Get last three days worth of successful payments - total, sum, and date.
+     * @return array
+     */
+    public function getDailyRevenue() {
+        $q = "SELECT count(id) as successful_payments, CONCAT('$', FORMAT(SUM(amount), 0)) as revenue, ";
+        $q .= "DATE(timestamp) AS date  FROM payments WHERE transaction_status = 'Success' ";
+        $q .= "GROUP BY DATE(timestamp) ORDER BY timestamp DESC LIMIT 3;";
+        $ps = $this->execute($q);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+        return $this->getDataRowsAsArrays($ps);
+    }
 }

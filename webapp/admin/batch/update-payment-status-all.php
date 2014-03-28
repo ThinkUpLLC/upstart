@@ -54,7 +54,18 @@ try {
         $transactions_to_update = $payment_dao->getPaymentsToUpdate($UPDATE_CAP);
     }
 
-    echo "Updated ".$total_updated." transactions.";
+    echo "Updated ".$total_updated." transactions.
+";
+    $daily_revenue = $payment_dao->getDailyRevenue();
+    echo $daily_revenue[0]['successful_payments']. " successful payments today totaling ".$daily_revenue[0]['revenue'];
+    if ($daily_revenue[0]['revenue'] > $daily_revenue[1]['revenue']) {
+        echo " up from ";
+    } else {
+        echo " down from ";
+    }
+    echo $daily_revenue[1]['revenue']. " yesterday. Day before was ".$daily_revenue[2]['revenue'] . ".
+";
+
 } catch (Exception $e) {
     echo $e->getMessage();
 }
