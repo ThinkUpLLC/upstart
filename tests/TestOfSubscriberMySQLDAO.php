@@ -483,11 +483,26 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
             'thinkup_username'=>'unique4', 'date_installed'=>null, 'is_membership_complimentary'=>0,
             'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment failed'));
+        //Should get returned because complimentary
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>5, 'email'=>'ginatrapani+5@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique5', 'date_installed'=>null, 'is_membership_complimentary'=>1,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment failed'));
+        //Should not get returned because less than 3 hours old
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'ginatrapani+6@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique6', 'date_installed'=>null, 'is_membership_complimentary'=>1,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1h', 'subscription_status'=>'Payment failed'));
+        //Should get returned because more than 3 hours old
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>7, 'email'=>'ginatrapani+7@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique7', 'date_installed'=>null, 'is_membership_complimentary'=>1,
+            'is_installation_active'=>1, 'last_dispatched'=>'-4h', 'subscription_status'=>'Payment failed'));
 
         $dao = new SubscriberMySQLDAO();
         $result = $dao->getPaidStaleInstalls();
 
-        $this->assertEqual(sizeof($result), 2);
+        $this->assertEqual(sizeof($result), 4);
         $this->assertEqual($result[0]['thinkup_username'], 'unique2');
         $this->assertEqual($result[1]['thinkup_username'], 'unique1');
     }
