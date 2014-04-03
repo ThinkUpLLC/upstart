@@ -11,7 +11,7 @@ $UPDATE_CAP = 50;
 
 $payment_dao = new PaymentMySQLDAO();
 $total_payments_to_update = $payment_dao->getTotalPaymentsToUpdate();
-echo $total_payments_to_update." payments are in Pending status
+echo $total_payments_to_update." payments are pending.
 ";
 
 try {
@@ -19,9 +19,9 @@ try {
     // Retrieve subscribers (with authorization info) who have authorizations but who do NOT have payments
     $transactions_to_update = $payment_dao->getPaymentsToUpdate($UPDATE_CAP);
     $total_updated = 0;
-    echo 'Updating '.
-    (($UPDATE_CAP > $total_payments_to_update)?$total_payments_to_update:$UPDATE_CAP).' transactions...
-';
+//     echo 'Updating '.
+//     (($UPDATE_CAP > $total_payments_to_update)?$total_payments_to_update:$UPDATE_CAP).' transactions...
+// ';
 
     while ($total_updated < $UPDATE_CAP && sizeof($transactions_to_update) > 0 ) {
         $updated_payment = null;
@@ -35,9 +35,7 @@ try {
                     // Update payment status using the PaymentDAO
                     $updated_payment = $payment_dao->updateStatus($payment->id, $status['status'],
                     $status['status_message']);
-                    if ($updated_payment > 0) {
-                        echo 'Success updating '.$transaction_to_update['transaction_id'];
-                    } else {
+                    if ($updated_payment == 0) {
                         echo 'Failure updating '.$transaction_to_update['transaction_id'];
                     }
                 } else {
@@ -54,16 +52,18 @@ try {
         $transactions_to_update = $payment_dao->getPaymentsToUpdate($UPDATE_CAP);
     }
 
-    echo "Updated ".$total_updated." transactions.
-";
+//     echo "Updated ".$total_updated." transactions.
+// ";
     $daily_revenue = $payment_dao->getDailyRevenue();
-    echo $daily_revenue[0]['successful_payments']. " successful payments today totaling ".$daily_revenue[0]['revenue'];
+    echo $daily_revenue[0]['successful_payments']. " successful payments today totaling $".
+        number_format($daily_revenue[0]['revenue']) . " in revenue ";
     if ($daily_revenue[0]['revenue'] > $daily_revenue[1]['revenue']) {
-        echo " up from ";
+        echo "up";
     } else {
-        echo " down from ";
+        echo "down";
     }
-    echo $daily_revenue[1]['revenue']. " yesterday. Day before was ".$daily_revenue[2]['revenue'] . ".
+    echo " from $". number_format($daily_revenue[1]['revenue']). " yesterday. Day before was $".
+        number_format($daily_revenue[2]['revenue']) . ".
 ";
 
 } catch (Exception $e) {
