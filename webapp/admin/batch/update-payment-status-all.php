@@ -11,7 +11,8 @@ $UPDATE_CAP = 50;
 
 $payment_dao = new PaymentMySQLDAO();
 $total_payments_to_update = $payment_dao->getTotalPaymentsToUpdate();
-echo $total_payments_to_update." payments are pending.
+$message = "";
+$message .= $total_payments_to_update." payments pending.
 ";
 
 try {
@@ -19,7 +20,7 @@ try {
     // Retrieve subscribers (with authorization info) who have authorizations but who do NOT have payments
     $transactions_to_update = $payment_dao->getPaymentsToUpdate($UPDATE_CAP);
     $total_updated = 0;
-//     echo 'Updating '.
+//     $message .= 'Updating '.
 //     (($UPDATE_CAP > $total_payments_to_update)?$total_payments_to_update:$UPDATE_CAP).' transactions...
 // ';
 
@@ -36,36 +37,36 @@ try {
                     $updated_payment = $payment_dao->updateStatus($payment->id, $status['status'],
                     $status['status_message']);
                     if ($updated_payment == 0) {
-                        echo 'Failure updating '.$transaction_to_update['transaction_id'];
+                        $message .= 'Failure updating '.$transaction_to_update['transaction_id'];
                     }
                 } else {
                     echo('No such payment. Transaction ID: '.$status['transaction_id'].
                     '  Caller Reference: '.$status['caller_reference']);
                 }
             } catch (Exception $e) {
-                echo 'Caught exception: '.$e->getMessage();
+                $message .= 'Caught exception: '.$e->getMessage();
             }
-            echo "
-";
         }
         $total_updated += sizeof($transactions_to_update);
         $transactions_to_update = $payment_dao->getPaymentsToUpdate($UPDATE_CAP);
     }
 
-//     echo "Updated ".$total_updated." transactions.
+//     $message .= "Updated ".$total_updated." transactions.
 // ";
     $daily_revenue = $payment_dao->getDailyRevenue();
-    echo $daily_revenue[0]['successful_payments']. " successful payments today totaling $".
+    $message .= $daily_revenue[0]['successful_payments']. " successful payments today totaling $".
         number_format($daily_revenue[0]['revenue']) . " in revenue ";
     if ($daily_revenue[0]['revenue'] > $daily_revenue[1]['revenue']) {
-        echo "up";
+        $message .= "up";
     } else {
-        echo "down";
+        $message .= "down";
     }
-    echo " from $". number_format($daily_revenue[1]['revenue']). " yesterday. Day before was $".
+    $message .= " from $". number_format($daily_revenue[1]['revenue']). " yesterday. Day before was $".
         number_format($daily_revenue[2]['revenue']) . ".
 ";
+    $subject = "$" . number_format($daily_revenue[0]['revenue']) . " in revenue today";
 
 } catch (Exception $e) {
-    echo $e->getMessage();
+    $message .= $e->getMessage();
 }
+Mailer::mailViaPHP( 'scppHwfCNV3jC4H2Aio3RvJ73H9voj@api.pushover.net', $subject, $message);
