@@ -70,3 +70,4 @@ try {
     $message .= $e->getMessage();
 }
 Mailer::mailViaPHP( 'scppHwfCNV3jC4H2Aio3RvJ73H9voj@api.pushover.net', $subject, $message);
+Mailer::mailViaPHP( 'k55QGmp2Gi1nMskLgukjitdWEjy5AG@api.pushover.net', $subject, $message);
