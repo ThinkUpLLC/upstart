@@ -107,14 +107,6 @@ class SubscriberMySQLDAO extends PDODAO {
         }
     }
 
-    public function clearSubscriptionStatus() {
-        $q = "UPDATE subscribers SET subscription_status = NULL ";
-        $q .= "WHERE membership_level != 'Waitlist' ";
-        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q);
-        return $this->getUpdateCount($ps);
-    }
-
     public function setUsername($subscriber_id, $username) {
         $q = " UPDATE subscribers SET thinkup_username = :thinkup_username WHERE id=:id";
         $vars = array(
@@ -233,20 +225,6 @@ class SubscriberMySQLDAO extends PDODAO {
         $vars = array(
             ':start_on_record'=>$start_on_record,
             ':limit'=>$count
-        );
-        //echo self::mergeSQLVars($q, $vars);
-        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q, $vars);
-        return $this->getDataRowsAsObjects($ps, 'Subscriber');
-    }
-
-    public function getSubscribersWithoutSubscriptionStatus($limit=50) {
-        $start_on_record = ($page_number - 1) * $count;
-        $q  = "SELECT * FROM subscribers s WHERE membership_level != 'Waitlist' AND subscription_status IS null ";
-        $q .= "LIMIT :limit;";
-
-        $vars = array(
-            ':limit'=>$limit
         );
         //echo self::mergeSQLVars($q, $vars);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
