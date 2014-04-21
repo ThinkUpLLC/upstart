@@ -46,6 +46,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'comp@example.com',
             'is_membership_complimentary'=>1, 'thinkup_username'=>'xanderharris',
+            'subscription_status'=>'Complimentary membership',
             'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>'Late Bird'));
         return $builders;
     }
@@ -95,6 +96,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
             'error_message'=>null));
         $builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>1,
             'authorization_id'=>100));
+
+        $this->updateSubscriptionStatus(1);
         return $builders;
     }
 
@@ -191,7 +194,15 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $builders[] = FixtureBuilder::build('payments', array('id'=>100, 'transaction_status'=>$payment_status,
             'timestamp'=>'-10s'));
         $builders[] = FixtureBuilder::build('subscriber_payments', array('subscriber_id'=>1, 'payment_id'=>100));
+
+        $this->updateSubscriptionStatus(1);
         return $builders;
+    }
+
+    private function updateSubscriptionStatus($subscriber_id) {
+        //tests shouldn't instantiate the DAO, but in the interest of expedience...
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber_dao->updateSubscriptionStatus( $subscriber_id);
     }
 
     private function buildSubscriberPaymentDue() {

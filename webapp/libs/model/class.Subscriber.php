@@ -120,6 +120,10 @@ class Subscriber {
      * @var str Subscriber timezone.
      */
     var $timezone;
+    /**
+     * @var str Subscription payment status.
+     */
+    var $subscription_status;
     public function __construct($row = false) {
         if ($row) {
             $this->id = $row['id'];
@@ -152,6 +156,7 @@ class Subscriber {
             $this->is_activated = PDODAO::convertDBToBool($row['is_activated']);
             $this->password_token = $row['password_token'];
             $this->timezone = $row['timezone'];
+            $this->subscription_status = $row['subscription_status'];
         }
     }
 

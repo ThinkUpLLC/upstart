@@ -683,7 +683,11 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getUpdateCount($ps);
     }
 
-    public function updateSubscriptionStatus($id, $status) {
+    public function updateSubscriptionStatus($id, $status=null) {
+        if (!isset($status)) {
+            $subscriber = $this->getByID($id);
+            $status = $subscriber->getSubscriptionStatus();
+        }
         $q = "UPDATE subscribers
               SET subscription_status=:status
               WHERE id=:id";

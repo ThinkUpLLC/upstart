@@ -26,6 +26,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $stmt = SubscriberMySQLDAO::$PDO->query($sql);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual('ginatrapani@example.com', $data['email']);
+        $this->assertEqual('Payment due', $data['subscription_status']);
     }
 
     public function testInsertCompleteSubscriber() {
@@ -53,7 +54,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual('s3cr3tt0ken', $data['oauth_access_token']);
         $this->assertEqual('Member', $data['membership_level']);
         $this->assertEqual('America/New_York', $data['timezone']);
-
+        $this->assertEqual('Payment due', $data['subscription_status']);
 
         //Try inserting new subscriber with same network credentials
         $subscriber = new Subscriber();
@@ -106,6 +107,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($subscriber->full_name, '');
         $this->assertEqual($subscriber->follower_count, 0);
         $this->assertEqual($subscriber->is_verified, 0);
+        $this->assertEqual($subscriber->subscription_status, 'Payment due');
 
         $subscriber = $dao->getByEmail('yoyo@example.com');
         $this->assertNull($subscriber);
@@ -461,6 +463,27 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertTrue($subscriber->is_membership_complimentary);
     }
 
+    public function testUpdateSubscriptionStatus() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique1', 'date_installed'=>null, 'is_membership_complimentary'=>1, 
+            'subscription_status'=>'Payment due'));
+
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByID(1);
+        $this->assertEqual($subscriber->subscription_status, 'Payment due');
+        //test without specifying status
+        $subscriber = $dao->updateSubscriptionStatus(1);
+        $subscriber = $dao->getByID(1);
+        $this->assertEqual($subscriber->subscription_status, 'Complimentary membership');
+
+        //test with specifying status
+        $subscriber = $dao->updateSubscriptionStatus(1, 'Test status');
+        $subscriber = $dao->getByID(1);
+        $this->assertEqual($subscriber->subscription_status, 'Test status');
+    }
+
     public function testGetPaidStaleInstalls() {
         $builders = array();
         //Should get returned
@@ -535,37 +558,5 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
 
         $this->assertEqual(sizeof($result), 1);
         $this->assertEqual($result[0]['thinkup_username'], 'unique4');
-    }
-
-    public function testClearSubscriptionStatus() {
-        $builders = array();
-        //Should get cleared
-        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani+1@example.com',
-            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
-            'thinkup_username'=>'unique1', 'date_installed'=>null, 'is_membership_complimentary'=>0,
-            'membership_level'=>'Pro',
-            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid through Jan 15 2015'));
-        //Should not get returned because Waitlist
-        $builders[] = FixtureBuilder::build('subscribers', array('id'=>2, 'email'=>'ginatrapani+2@example.com',
-            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
-            'thinkup_username'=>'unique2', 'date_installed'=>null, 'is_membership_complimentary'=>0,
-            'membership_level'=>'Waitlist',
-            'is_installation_active'=>1, 'last_dispatched'=>null, 'subscription_status'=>'Paid through Jan 15 2015'));
-        //Should get cleared
-        $builders[] = FixtureBuilder::build('subscribers', array('id'=>3, 'email'=>'ginatrapani+3@example.com',
-            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
-            'membership_level'=>'Member',
-            'thinkup_username'=>'unique3', 'date_installed'=>null, 'is_membership_complimentary'=>0,
-            'is_installation_active'=>0, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid through Jan 15 2015'));
-        //Should get cleared
-        $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'email'=>'ginatrapani+4@example.com',
-            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
-            'membership_level'=>'Member',
-            'thinkup_username'=>'unique4', 'date_installed'=>null, 'is_membership_complimentary'=>0,
-            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment failed'));
-
-        $dao = new SubscriberMySQLDAO();
-        $result = $dao->clearSubscriptionStatus();
-        $this->assertEqual($result, 3);
     }
 }

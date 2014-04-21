@@ -91,12 +91,14 @@ class ManageSubscriberController extends Controller {
                     } elseif ($_GET['action'] == 'comp') {
                         $comped = $subscriber_dao->compSubscription($subscriber_id, $username);
                         if ( $comped > 0 ) {
+                            $subscriber_dao->updateSubscriptionStatus($subscriber_id);
                             $this->addSuccessMessage("Comped membership for ".$subscriber->email);
                             $subscriber->is_membership_complimentary = true;
                         }
                     } elseif ($_GET['action'] == 'decomp') {
                         $decomped = $subscriber_dao->decompSubscription($subscriber_id, $username);
                         if ( $decomped > 0 ) {
+                            $subscriber_dao->updateSubscriptionStatus($subscriber_id);
                             $this->addSuccessMessage("Decomped membership for ".$subscriber->email);
                             $subscriber->is_membership_complimentary = false;
                         }

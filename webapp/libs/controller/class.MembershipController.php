@@ -55,6 +55,12 @@ class MembershipController extends AuthController {
                         $this->addErrorMessage("Oops! Something went wrong. Please try again or contact us for help.");
                         $this->logError('Amazon charge was unsuccessful', __FILE__,__LINE__, __METHOD__);
                     }
+                    //Now that user has authed and paid, get current subscription_status
+                    $subscription_status = $subscriber->getSubscriptionStatus();
+                    //Update subscription_status in the subscriber object
+                    $subscriber->subscription_status = $subscription_status;
+                    //Update subscription_status in the data store
+                    $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
                 }
             } else {
                 $this->addErrorMessage("Oops! Something went wrong. Please try again or contact us for help.");
@@ -63,8 +69,8 @@ class MembershipController extends AuthController {
             }
         }
 
-        //BEGIN populating membership_status
-        $membership_status = $subscriber->getSubscriptionStatus();
+        //BEGIN populating membership_status for view
+        $membership_status = $subscriber->subscription_status;
         //Conflate pending status for auths and payments into a single message
         if ($membership_status == 'Authorization pending') {
             $membership_status = 'Payment pending';
