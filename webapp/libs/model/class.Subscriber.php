@@ -185,29 +185,21 @@ class Subscriber {
     }
 
     /**
-     * Get a simple string indicating the payment status of a subscriber's membership.
+     * Get a simple string indicating the payment status of a subscriber's subscription payment.
+     * Possible values:
+     * - Payment due
+     * - Paid through [date]
+     * - Complimentary membership
+     * - Payment pending
+     * - Payment failed
+     * - Authorization pending
+     * - Authorization failed
      * @return str
      */
-    public function getAccountStatus() {
-        /**
-         * At some point, to optimize this page, we could de-normalize this data into 2 new fields:
-         * subscribers.account_status and subscribers.last_successful_payment_timestamp.
-         *
-         * subscribers.account_status possible values:
-         * - [empty string]
-         * - Complimentary membership
-         * - Paid through [date]
-         * - Payment pending
-         * - Payment failed
-         * - Authorization pending
-         * - Authorization failed
-         *
-         * For subscribers who do have a successful payment, we could populate:
-         * subscribers.latest_successful_payment_timestamp
-         */
-        $membership_status = "";
+    public function getSubscriptionStatus() {
+        $subscription_status = "";
         if ($this->is_membership_complimentary) {
-            $membership_status = "Complimentary membership";
+            $subscription_status = "Complimentary membership";
         } else {
             //Get latest payment
             $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
@@ -217,16 +209,18 @@ class Subscriber {
             } else {
                 $latest_payment = null;
             }
-            if ($latest_payment !== null && $latest_payment['transaction_status'] == 'Success') {
-                $paid_through_year = intval(date('Y', strtotime($latest_payment['timestamp']))) + 1;
-                $paid_through_date = date('M j, ', strtotime($latest_payment['timestamp']));
-                $membership_status = "Paid through ".$paid_through_date.$paid_through_year;
-            } elseif ($latest_payment !== null && $latest_payment['transaction_status'] == 'Pending') {
-                $membership_status = "Payment pending";
-            } elseif ($latest_payment !== null && $latest_payment['transaction_status'] == 'Failure') {
-                $membership_status = "Payment failed";
-            } elseif ($latest_payment !== null && $latest_payment['transaction_status'] == '' ) {
-                $membership_status = "Payment failed";
+            if ( $latest_payment !== null ) {
+                if ( $latest_payment['transaction_status'] == 'Success') {
+                    $paid_through_year = intval(date('Y', strtotime($latest_payment['timestamp']))) + 1;
+                    $paid_through_date = date('M j, ', strtotime($latest_payment['timestamp']));
+                    $subscription_status = "Paid through ".$paid_through_date.$paid_through_year;
+                } elseif ( $latest_payment['transaction_status'] == 'Pending') {
+                    $subscription_status = "Payment pending";
+                } elseif ( $latest_payment['transaction_status'] == 'Failure') {
+                    $subscription_status = "Payment failed";
+                } else {
+                    $subscription_status = "Payment failed";
+                } 
             } else {
                 //Get latest authorization
                 $subscriber_auth_dao = new SubscriberAuthorizationMySQLDAO();
@@ -238,15 +232,15 @@ class Subscriber {
                 }
                 if ($latest_auth !== null ) {
                     if ($latest_auth->error_message === null) {
-                        $membership_status = 'Authorization pending';
+                        $subscription_status = 'Authorization pending';
                     } else {
-                        $membership_status = 'Authorization failed';
+                        $subscription_status = 'Authorization failed';
                     }
                 } else { //no auth, no payment
-                    $membership_status = "Payment failed";
+                    $subscription_status = "Payment due";
                 }
             }
         }
-        return $membership_status;
+        return $subscription_status;
     }
 }

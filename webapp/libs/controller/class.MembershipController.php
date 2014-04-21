@@ -64,12 +64,15 @@ class MembershipController extends AuthController {
         }
 
         //BEGIN populating membership_status
-        $membership_status = $subscriber->getAccountStatus();
+        $membership_status = $subscriber->getSubscriptionStatus();
         //Conflate pending status for auths and payments into a single message
         if ($membership_status == 'Authorization pending') {
             $membership_status = 'Payment pending';
         }
         if ($membership_status == 'Authorization failed') {
+            $membership_status = 'Payment failed';
+        }
+        if ($membership_status == 'Payment due') {
             $membership_status = 'Payment failed';
         }
         $this->addToView('membership_status', $membership_status);

@@ -43,42 +43,42 @@ class TestOfSubscriber extends UpstartUnitTestCase {
         $this->assertIsA($subscriber, 'Subscriber');
     }
 
-    public function testGetAccountStatusComplimentary() {
+    public function testGetSubscriptionStatusComplimentary() {
         $subscriber = new Subscriber();
         $subscriber->id = 6;
         $subscriber->is_membership_complimentary = true;
-        $result = $subscriber->getAccountStatus();
+        $result = $subscriber->getSubscriptionStatus();
         $this->assertEqual($result, 'Complimentary membership');
     }
 
-    public function testGetAccountStatusNoPaymentNoAuth() {
+    public function testGetSubscriptionStatusNoPaymentNoAuth() {
         $subscriber = new Subscriber();
         $subscriber->id = 6;
-        $result = $subscriber->getAccountStatus();
-        $this->assertEqual($result, 'Payment failed');
+        $result = $subscriber->getSubscriptionStatus();
+        $this->assertEqual($result, 'Payment due');
     }
 
-    public function testGetAccountStatusAuthPending() {
+    public function testGetSubscriptionStatusAuthPending() {
         $this->builders[] = FixtureBuilder::build('authorizations', array('id'=>1, 'error_message'=>null));
         $this->builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>6,
             'authorization_id'=>1));
         $subscriber = new Subscriber();
         $subscriber->id = 6;
-        $result = $subscriber->getAccountStatus();
+        $result = $subscriber->getSubscriptionStatus();
         $this->assertEqual($result, 'Authorization pending');
     }
 
-    public function testGetAccountStatusAuthFailed() {
+    public function testGetSubscriptionStatusAuthFailed() {
         $this->builders[] = FixtureBuilder::build('authorizations', array('id'=>1, 'error_message'=>'An error'));
         $this->builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>6,
             'authorization_id'=>1));
         $subscriber = new Subscriber();
         $subscriber->id = 6;
-        $result = $subscriber->getAccountStatus();
+        $result = $subscriber->getSubscriptionStatus();
         $this->assertEqual($result, 'Authorization failed');
     }
 
-    public function testGetAccountStatusPaymentPending() {
+    public function testGetSubscriptionStatusPaymentPending() {
         $this->builders[] = FixtureBuilder::build('authorizations', array('id'=>1, 'error_message'=>null));
         $this->builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>6,
             'authorization_id'=>1));
@@ -88,11 +88,11 @@ class TestOfSubscriber extends UpstartUnitTestCase {
 
         $subscriber = new Subscriber();
         $subscriber->id = 6;
-        $result = $subscriber->getAccountStatus();
+        $result = $subscriber->getSubscriptionStatus();
         $this->assertEqual($result, 'Payment pending');
     }
 
-    public function testGetAccountStatusPaymentFailed() {
+    public function testGetSubscriptionStatusPaymentFailed() {
         $this->builders[] = FixtureBuilder::build('authorizations', array('id'=>1, 'error_message'=>null));
         $this->builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>6,
             'authorization_id'=>1));
@@ -102,11 +102,11 @@ class TestOfSubscriber extends UpstartUnitTestCase {
 
         $subscriber = new Subscriber();
         $subscriber->id = 6;
-        $result = $subscriber->getAccountStatus();
+        $result = $subscriber->getSubscriptionStatus();
         $this->assertEqual($result, 'Payment failed');
     }
 
-    public function testGetAccountStatusPaymentFailedWithoutStatus() {
+    public function testGetSubscriptionStatusPaymentFailedWithoutStatus() {
         $this->builders[] = FixtureBuilder::build('authorizations', array('id'=>1, 'error_message'=>null));
         $this->builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>6,
             'authorization_id'=>1));
@@ -116,11 +116,11 @@ class TestOfSubscriber extends UpstartUnitTestCase {
 
         $subscriber = new Subscriber();
         $subscriber->id = 6;
-        $result = $subscriber->getAccountStatus();
+        $result = $subscriber->getSubscriptionStatus();
         $this->assertEqual($result, 'Payment failed');
     }
 
-    public function testGetAccountStatusPaymentSucceeded() {
+    public function testGetSubscriptionStatusPaymentSucceeded() {
         $this->builders[] = FixtureBuilder::build('authorizations', array('id'=>1, 'error_message'=>null));
         $this->builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>6,
             'authorization_id'=>1));
@@ -131,7 +131,7 @@ class TestOfSubscriber extends UpstartUnitTestCase {
 
         $subscriber = new Subscriber();
         $subscriber->id = 6;
-        $result = $subscriber->getAccountStatus();
+        $result = $subscriber->getSubscriptionStatus();
 
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j, ');

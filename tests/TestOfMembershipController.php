@@ -4,12 +4,26 @@ require_once ISOSCELES_PATH.'extlibs/simpletest/autorun.php';
 require_once dirname(__FILE__) . '/classes/mock.AmazonFPSAPIAccessor.php';
 
 class TestOfMembershipController extends UpstartUnitTestCase {
+    /**
+     * Persist the subscriber object so that teardown can uninstall/remove the database.
+     * @var Subscriber
+     */
+    protected $subscriber;
+    /**
+     * Persist the fixture builders so that teardown can uninstall/remove the database.
+     * @var arr
+     */
+    protected $builders;
 
     public function setUp() {
         parent::setUp();
     }
 
     public function tearDown() {
+        if (isset($this->subscriber)) {
+            $this->tearDownInstall($this->subscriber);
+        }
+        $this->builders = null;
         parent::tearDown();
     }
 
@@ -37,9 +51,10 @@ class TestOfMembershipController extends UpstartUnitTestCase {
     }
 
     public function testComped() {
-        $builders = $this->buildSubscriberWithComplimentaryMembership();
+        $this->builders = $this->buildSubscriberWithComplimentaryMembership();
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('comp@example.com');
+        $this->subscriber = $subscriber;
         $this->setUpInstall($subscriber);
 
         $this->simulateLogin('comp@example.com');
@@ -49,14 +64,13 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertPattern('/Complimentary membership/', $results);
-
-        $this->tearDownInstall($subscriber);
     }
 
     public function testPaidSuccessfully() {
-        $builders = $this->buildSubscriberPaid('Success');
+        $this->builders = $this->buildSubscriberPaid('Success');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
         $this->setUpInstall($subscriber);
 
         $this->simulateLogin('paid@example.com');
@@ -69,8 +83,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j, ');
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
-
-        $this->tearDownInstall($subscriber);
     }
 
     private function buildSubscriberAuthorizationPending($level) {
@@ -87,9 +99,10 @@ class TestOfMembershipController extends UpstartUnitTestCase {
     }
 
     public function testAuthorizationPendingEarlyBird() {
-        $builders = $this->buildSubscriberAuthorizationPending('Early Bird');
+        $this->builders = $this->buildSubscriberAuthorizationPending('Early Bird');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('authed@example.com');
+        $this->subscriber = $subscriber;
         $this->setUpInstall($subscriber);
 
         $this->simulateLogin('authed@example.com');
@@ -104,14 +117,13 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
         $this->assertNoPattern('/Paid through/', $results);
-
-        $this->tearDownInstall($subscriber);
     }
 
     public function testAuthorizationPendingLateBird() {
-        $builders = $this->buildSubscriberAuthorizationPending('Late Bird');
+        $this->builders = $this->buildSubscriberAuthorizationPending('Late Bird');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('authed@example.com');
+        $this->subscriber = $subscriber;
         $this->setUpInstall($subscriber);
 
         $this->simulateLogin('authed@example.com');
@@ -126,14 +138,13 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
         $this->assertNoPattern('/Paid through/', $results);
-
-        $this->tearDownInstall($subscriber);
     }
 
     public function testAuthorizationPendingPro() {
-        $builders = $this->buildSubscriberAuthorizationPending('Pro');
+        $this->builders = $this->buildSubscriberAuthorizationPending('Pro');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('authed@example.com');
+        $this->subscriber = $subscriber;
         $this->setUpInstall($subscriber);
 
         $this->simulateLogin('authed@example.com');
@@ -148,14 +159,13 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
         $this->assertNoPattern('/Paid through/', $results);
-
-        $this->tearDownInstall($subscriber);
     }
 
     public function testAuthorizationPendingExec() {
-        $builders = $this->buildSubscriberAuthorizationPending('Executive');
+        $this->builders = $this->buildSubscriberAuthorizationPending('Executive');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('authed@example.com');
+        $this->subscriber = $subscriber;
         $this->setUpInstall($subscriber);
 
         $this->simulateLogin('authed@example.com');
@@ -170,8 +180,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
         $this->assertNoPattern('/Paid through/', $results);
-
-        $this->tearDownInstall($subscriber);
     }
 
     private function buildSubscriberPaid($payment_status) {
@@ -186,10 +194,19 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         return $builders;
     }
 
+    private function buildSubscriberPaymentDue() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'due@example.com',
+            'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
+            'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>'Member'));
+        return $builders;
+    }
+
     public function testPaymentPending() {
-        $builders = $this->buildSubscriberPaid('Pending');
+        $this->builders = $this->buildSubscriberPaid('Pending');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
         $this->setUpInstall($subscriber);
 
         $this->simulateLogin('paid@example.com');
@@ -204,14 +221,13 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
         $this->assertNoPattern('/Paid through/', $results);
-
-        $this->tearDownInstall($subscriber);
     }
 
     public function testPaymentFailed() {
-        $builders = $this->buildSubscriberPaid('Failure');
+        $this->builders = $this->buildSubscriberPaid('Failure');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
         $this->setUpInstall($subscriber);
 
         $this->simulateLogin('paid@example.com');
@@ -226,14 +242,35 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
         $this->assertNoPattern('/Paid through/', $results);
+    }
 
-        $this->tearDownInstall($subscriber);
+    public function testPaymentDue() {
+        $this->builders = $this->buildSubscriberPaymentDue();
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('due@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('due@example.com');
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Membership Info/', $results);
+        $this->assertPattern('/This is what our database knows./', $results);
+        $this->assertNoPattern('/Complimentary membership/', $results);
+        $this->assertPattern('/easy to fix/', $results);
+        $this->assertPattern('/Payment failed/', $results);
+        $this->assertNoPattern('/Payment pending/', $results);
+        $paid_through_year = intval(date('Y')) + 1;
+        $paid_through_date = date('M j ');
+        $this->assertNoPattern('/Paid through/', $results);
     }
 
     public function testInvalidReturnFromAmazonRetriedPayment() {
-        $builders = $this->buildSubscriberPaid('Failure');
+        $this->builders = $this->buildSubscriberPaid('Failure');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
         $this->setUpInstall($subscriber);
 
         $this->simulateLogin('paid@example.com');
@@ -257,14 +294,13 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
         $this->assertNoPattern('/Paid through/', $results);
-
-        $this->tearDownInstall($subscriber);
     }
 
     public function testSuccessfulReturnFromAmazonRetriedPayment() {
-        $builders = $this->buildSubscriberPaid('Failure');
+        $this->builders = $this->buildSubscriberPaid('Failure');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
         $this->setUpInstall($subscriber);
 
         $this->simulateLogin('paid@example.com');
@@ -291,7 +327,5 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
         $this->assertNoPattern('/Paid through/', $results);
-
-        $this->tearDownInstall($subscriber);
     }
 }

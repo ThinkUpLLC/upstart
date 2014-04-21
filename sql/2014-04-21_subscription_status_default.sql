@@ -1,0 +1,1 @@
+ALTER TABLE subscribers CHANGE subscription_status subscription_status VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'Payment due' COMMENT 'Status of subscription payment.';
