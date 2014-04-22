@@ -6,7 +6,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
 
     <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-page-header">
       <h2 class="section-header">Join thousands of happy ThinkUp members.</h2>
-      <h3 class="section-subheader">100% money-back guarantee (though only 3 people have ever asked)</h3>
+      <h3 class="section-subheader">100% money-back guarantee (but almost nobody ever asks)</h3>
     </section>
 
     <div class="section-group subscription-levels">
@@ -62,7 +62,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
         <h3 class="section-header">For bigger organizations: ThinkUp Executive</h3>
 
         <div class="level-description">
-          <p>If you’re a company or institution with more advanced needs, <a href="mailto:team@thinkup.com?subject=ThinkUp+Executive">email us</a>. We’ve got just the thing.</p>
+          <p>If you’re a company or institution with more advanced needs, <a style="color:#2785d3;" href="mailto:team@thinkup.com?subject=ThinkUp+Executive">email us</a>. We’ve got just the thing.</p>
         </div>
       </section>
 
