@@ -786,7 +786,40 @@ class SubscriberMySQLDAO extends PDODAO {
         $q .="WHERE id = :subscriber_id;";
         $vars = array(
             ':subscriber_id'=>$subscriber_id,
-            'is_membership_complimentary'=>$is_complimentary
+            ':is_membership_complimentary'=>$is_complimentary
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+    /**
+     * Get subscribers with a payment due who should get an email reminder.
+     * @param  int $total_reminders_sent How many reminders already sent to these subscribers
+     * @param  int $hours_past_time      How many hours past signup or last reminder time.
+     * @return arr                       Array of Subscriber objects
+     */
+    public function getSubscribersDueReminder($total_reminders_sent, $hours_past_time) {       
+        $q = "SELECT * FROM subscribers WHERE membership_level != 'Waitlist' AND subscription_status = 'Payment due' ";
+        $q .= "AND total_payment_reminders_sent = :total_reminders_sent AND (";
+        //If total_reminders_sent = 0, use creation_time to compare. Otherwise, use payment_reminder_last_sent.
+        if ($total_reminders_sent == 0) {
+            $q .= "creation_time ";
+        } else {
+            $q .= "payment_reminder_last_sent ";
+        }
+        $q .= "< DATE_SUB(NOW(), INTERVAL :hours_past_time HOUR )) ORDER BY creation_time ASC ";
+        $vars = array(':total_reminders_sent' => $total_reminders_sent, ':hours_past_time' => $hours_past_time);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowsAsObjects($ps, 'Subscriber');
+    }
+
+    public function setTotalPaymentRemindersSent($subscriber_id, $total_payment_reminders_sent) {
+        $q = "UPDATE subscribers SET total_payment_reminders_sent = :total_payment_reminders_sent ";
+        $q .="WHERE id = :subscriber_id;";
+        $vars = array(
+            ':subscriber_id'=>$subscriber_id,
+            ':total_payment_reminders_sent'=>$total_payment_reminders_sent
         );
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);

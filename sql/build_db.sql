@@ -18,7 +18,7 @@ CREATE TABLE authorizations (
   PRIMARY KEY (id),
   UNIQUE KEY token_id (token_id),
   KEY status_code (status_code)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Amazon FPS recurring-use payment authorizations.';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Amazon FPS recurring-use payment authorizations.';
 
 -- --------------------------------------------------------
 
@@ -77,7 +77,7 @@ CREATE TABLE install_log (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time of log entry.',
   PRIMARY KEY (id),
   KEY `timestamp` (`timestamp`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Installation upgrade log.';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Installation upgrade log.';
 
 -- --------------------------------------------------------
 
@@ -96,7 +96,7 @@ CREATE TABLE payments (
   caller_reference varchar(24) DEFAULT NULL COMMENT 'Caller reference used for charge request.',
   PRIMARY KEY (id),
   KEY transaction_status (transaction_status)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Amazon FPS payment capture transactions';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Amazon FPS payment capture transactions';
 
 -- --------------------------------------------------------
 
@@ -136,12 +136,15 @@ CREATE TABLE subscribers (
   password_token varchar(64) DEFAULT NULL COMMENT 'Password reset token.',
   timezone varchar(50) NOT NULL DEFAULT 'UTC' COMMENT 'Subscriber timezone.',
   subscription_status varchar(50) DEFAULT 'Payment due' COMMENT 'Status of subscription payment.',
+  total_payment_reminders_sent int(11) NOT NULL DEFAULT '0' COMMENT 'The number of payment reminder emails sent to this subscriber.',
+  payment_reminder_last_sent timestamp NULL DEFAULT NULL COMMENT 'Last time a payment reminder was sent to this subscriber.',
   PRIMARY KEY (id),
   UNIQUE KEY email (email),
   UNIQUE KEY network_user_id (network_user_id,network),
   UNIQUE KEY thinkup_username (thinkup_username),
-  KEY subscription_status (subscription_status)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Paid subscribers who have authorized their social network ac';
+  KEY subscription_status (subscription_status),
+  KEY payment_reminder_last_sent (payment_reminder_last_sent)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Paid subscribers who have authorized their social network ac';
 
 -- --------------------------------------------------------
 
@@ -195,7 +198,7 @@ CREATE TABLE subscriber_authorizations (
   authorization_id int(11) NOT NULL COMMENT 'Authorization ID keyed to authorizations.',
   PRIMARY KEY (id),
   UNIQUE KEY subscriber_id (subscriber_id,authorization_id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Payment authorizations by known subscribers.';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Payment authorizations by known subscribers.';
 
 -- --------------------------------------------------------
 
@@ -210,4 +213,4 @@ CREATE TABLE subscriber_payments (
   payment_id int(11) NOT NULL COMMENT 'Payment ID keyed to payments.',
   PRIMARY KEY (id),
   KEY subscriber_id (subscriber_id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Payments by known subscribers.';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Payments by known subscribers.';

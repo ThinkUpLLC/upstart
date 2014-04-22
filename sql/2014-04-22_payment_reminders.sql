@@ -1,0 +1,2 @@
+ALTER TABLE subscribers ADD total_payment_reminders_sent INT NOT NULL DEFAULT '0' COMMENT 'The number of payment reminder emails sent to this subscriber.' ,
+ADD payment_reminder_last_sent TIMESTAMP NULL COMMENT 'Last time a payment reminder was sent to this subscriber.' , ADD INDEX (payment_reminder_last_sent) ;
