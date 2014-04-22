@@ -24,18 +24,23 @@ class Mailer {
         }
     }
     /**
-     * Send an HTML email from ThinkUp installation. Will only be sent if a Mandrill API key is set, as it makes use of
-     * Mandrill's HTML templating system and API.
+     * Send an HTML email from ThinkUp installation. Will only be sent if a Mandrill API key is specified as a parameter
+     * or set in the config file, as it makes use of Mandrill's HTML templating system and API.
      * @param str $to A valid email address
      * @param str $subject Subject of the email
      * @param str $template_name Name of a template in the mandrill system
      * @param arr $template_params Associative array of parameters
+     * @param str $api_key Optional custom Mandrill API key, defaults to whatever is defined in config otherwise
      */
-    public static function mailHTMLViaMandrillTemplate($to, $subject, $template_name, $template_params) {
+    public static function mailHTMLViaMandrillTemplate($to, $subject, $template_name, $template_params, $api_key=null) {
         $config = Config::getInstance();
         $host = UpstartHelper::getApplicationHostName();
         $app_title = $config->getValue('app_title_prefix'). "ThinkUp";
-        $mandrill_api_key = $config->getValue('mandrill_api_key');
+        if (!isset($api_key)) {
+            $mandrill_api_key = $config->getValue('mandrill_api_key');
+        } else {
+            $mandrill_api_key = $api_key;
+        }
 
         try {
             $mandrill = new Mandrill($mandrill_api_key);
