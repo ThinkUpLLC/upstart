@@ -33,6 +33,7 @@ $all_tests->add(new TestOfSubscriberPaymentMySQLDAO());
 $all_tests->add(new TestOfSubscriber());
 $all_tests->add(new TestOfLandingController());
 $all_tests->add(new TestOfRegisterNewUserController());
+$all_tests->add(new TestOfPaymentReminderController());
 
 //$tr = new TextReporter();
 //$all_tests->run( $tr );
