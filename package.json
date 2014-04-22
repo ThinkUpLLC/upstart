@@ -1,0 +1,16 @@
+{
+  "name": "upstart",
+  "homepage": "https://thinkup.com",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-premailer": "~0.2.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ThinkUpLLC/upstart/"
+  }
+}
