@@ -793,7 +793,7 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getUpdateCount($ps);
     }
     /**
-     * Get subscribers with a payment due who should get an email reminder.
+     * Get 25 subscribers with a payment due who should get an email reminder.
      * @param  int $total_reminders_sent How many reminders already sent to these subscribers
      * @param  int $hours_past_time      How many hours past signup or last reminder time.
      * @return arr                       Array of Subscriber objects
@@ -807,7 +807,7 @@ class SubscriberMySQLDAO extends PDODAO {
         } else {
             $q .= "payment_reminder_last_sent ";
         }
-        $q .= "< DATE_SUB(NOW(), INTERVAL :hours_past_time HOUR )) ORDER BY creation_time ASC ";
+        $q .= "< DATE_SUB(NOW(), INTERVAL :hours_past_time HOUR )) ORDER BY creation_time ASC LIMIT 25";
         $vars = array(':total_reminders_sent' => $total_reminders_sent, ':hours_past_time' => $hours_past_time);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
