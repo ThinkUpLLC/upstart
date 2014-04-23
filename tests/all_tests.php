@@ -34,6 +34,7 @@ $all_tests->add(new TestOfSubscriber());
 $all_tests->add(new TestOfLandingController());
 $all_tests->add(new TestOfRegisterNewUserController());
 $all_tests->add(new TestOfPaymentReminderController());
+$all_tests->add(new TestOfMailer());
 
 //$tr = new TextReporter();
 //$all_tests->run( $tr );

@@ -156,4 +156,18 @@ class Mailer {
             ': ' . $e->getMessage());
         }
     }
+
+    /**
+     * Get HTML to render generic system message.
+     * @param  str $body_html
+     * @param  str $headline
+     * @return str
+     */
+    public static function getSystemMessageHTML($body_html, $headline) {
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $email_view_mgr->assign('body_html', $body_html );
+        $email_view_mgr->assign('headline', $headline );
+        return $email_view_mgr->fetch('_email.system_message.tpl');
+    }
 }

@@ -25,9 +25,11 @@ class PaymentReminderController extends Controller {
         //Send first payment reminder 24 hours after signup time
         $subscribers = $subscriber_dao->getSubscribersDueReminder(0, 24);
         $subject_line = "Hey, did you forget something?";
+        $headline = "Complete your ThinkUp membership";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
-            $message = $email_view_mgr->fetch('_email.payment-reminder-first.tpl');
+            $body_html = $email_view_mgr->fetch('_email.payment-reminder-first.tpl');
+            $message = Mailer::getSystemMessageHTML($body_html, $headline);
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name, 
                 array('html_body'=>$message), $api_key);
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 1);
@@ -36,9 +38,11 @@ class PaymentReminderController extends Controller {
         //Send second payment reminder 48 hours after first reminder
         $subscribers = $subscriber_dao->getSubscribersDueReminder(1, 48);
         $subject_line = "Don’t forget to finalize your ThinkUp membership";
+        $headline = "One quick step needed to keep your ThinkUp account";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
-            $message = $email_view_mgr->fetch('_email.payment-reminder-second.tpl');
+            $body_html = $email_view_mgr->fetch('_email.payment-reminder-second.tpl');
+            $message = Mailer::getSystemMessageHTML($body_html, $headline);
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name, 
                 array('html_body'=>$message), $api_key);
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 2);
@@ -46,10 +50,12 @@ class PaymentReminderController extends Controller {
 
         //Send final payment reminder 96 hours after second reminder
         $subscribers = $subscriber_dao->getSubscribersDueReminder(2, 96);
+        $headline = "We don’t want to say goodbye so soon!";
         foreach ($subscribers as $subscriber) {
             $subject_line = "Last chance to keep ".$subscriber->thinkup_username.".thinkup.com!";
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
-            $message = $email_view_mgr->fetch('_email.payment-reminder-third.tpl');
+            $body_html = $email_view_mgr->fetch('_email.payment-reminder-third.tpl');
+            $message = Mailer::getSystemMessageHTML($body_html, $headline);
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name, 
                 array('html_body'=>$message), $api_key);
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 3);
