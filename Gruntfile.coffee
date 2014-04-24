@@ -7,13 +7,17 @@ module.exports = (grunt) ->
       prod_emails: '<%= project.app %>/libs/view'
       test_emails: '<%= project.app %>'
     premailer:
+      options:
+        css: [
+          '<%= project.app %>/assets/css/vendor/zurb-ink.css'
+          '<%= project.app %>/assets/css/email-system-messages.css'
+        ]
       system:
         files:
           '<%= project.prod_emails %>/_email.system_message.tpl': ['<%= project.premails %>/_email.system_message.tpl']
       email_dev:
         files:
           '<%= project.app %>/email_system_message.html': ['<%= project.premails %>/_email.system_message.tpl']
-
     watch:
       email:
         files: '<%= project.premails %>/*'
