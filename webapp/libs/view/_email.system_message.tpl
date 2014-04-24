@@ -3,8 +3,6 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width"/>
-  
-  
 
 <style type="text/css">{literal}
 body {
@@ -371,7 +369,7 @@ color: #417505 !important;
                         <table class="twelve columns" align="center" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
                           <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
                               <td class="center" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0px 0px 10px;" align="center" valign="top">
-                                  <center style="width: 100%; min-width: 580px;"><a href="https://www.thinkup.com/" style="text-decoration: none; color: #2ba6cb;"><img class="center" src="https://www.thinkup.com/join/assets/img/thinkup-logo-header.png" alt="ThinkUp" width="70" height="19" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: none; clear: both; display: block; margin: 0 auto; border: none;" align="none" /></a></center>
+                                  <center style="width: 100%; min-width: 580px;"><a href="https://thinkup.com" style="text-decoration: none; color: #2ba6cb;"><img class="center" src="https://www.thinkup.com/join/assets/img/thinkup-logo-header.png" alt="ThinkUp" width="70" height="19" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: none; clear: both; display: block; margin: 0 auto; border: none;" align="none" /></a></center>
                             </td>
                             <td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;" align="left" valign="top"></td>
                           </tr>
@@ -406,27 +404,12 @@ color: #417505 !important;
 
       <table class="twelve columns insight-body" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; background: #fff; margin: 0 auto; padding: 0;">
         <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-            <td class="text-pad" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; color: #222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 18px; font-size: 14px; margin: 0; padding: 10px;" align="left" valign="top">{$body_html}
+            <td class="text-pad" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; color: #222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 18px; font-size: 14px; margin: 0; padding: 10px;" align="left" valign="top">
+              {$body_html}
             </td>
             <td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 18px; font-size: 14px; margin: 0; padding: 0;" align="left" valign="top"></td>
         </tr>
       </table>
-    </td>
-  </tr>
-</table>
-
-<table class="row email-settings" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
-  <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-    <td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 10px 0px 0px;" align="left" valign="top">
-      <table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
-        <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-          <td class="center" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0px 0px 10px;" align="center" valign="top">
-              <small class="center" style="font-size: 11px; color: #999;">If you reply to this email, an actual human will read it.</small>
-          </td>
-          <td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;" align="left" valign="top"></td>
-        </tr>
-      </table>
-
     </td>
   </tr>
 </table>
@@ -453,7 +436,7 @@ color: #417505 !important;
                                   <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
                                       <td class="three sub-columns privacy" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; min-width: 0px; width: 25%; color: #999; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 16px; font-size: 12px; margin: 0; padding: 0px 0 0 0px;" align="left" valign="top">
                                     &copy;2014 ThinkUp, LLC<br>
-                                        <a class="privacy" href="https://github.com/ThinkUpLLC/policy" style="color: #46bcff; text-decoration: none;">Privacy and stuff</a>
+                                        <a class="privacy" href="https://www.thinkup.com/join/about/privacy.php" style="color: #46bcff; text-decoration: none;">Privacy</a> and <a href="https://www.thinkup.com/join/about/terms.php" style="color: #46bcff; text-decoration: none;">terms</a>
                                       </td>
                                       <td class="six sub-columns links" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: middle; text-align: center; min-width: 0px; width: 50%; color: #999; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 16px; font-size: 12px; margin: 0; padding: 0px 0 0 0px;" align="center" valign="middle">
                                           <a href="https://twitter.com/thinkup" style="color: #46bcff; text-decoration: none;"><img src="https://www.thinkup.com/join/assets/img/icons/twitter-blue.png" width="20" height="20" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: none; clear: both; display: inline; height: 20px; padding: 0 10px; border: none;" align="none" /></a><a href="https://facebook.com/thinkupapp" style="color: #46bcff; text-decoration: none;"><img src="https://www.thinkup.com/join/assets/img/icons/facebook-blue.png" width="20" height="20" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: none; clear: both; display: inline; height: 20px; padding: 0 10px; border: none;" align="none" /></a><a href="https://plus.google.com/109397312975756759279" style="color: #46bcff; text-decoration: none;"><img src="https://www.thinkup.com/join/assets/img/icons/google-plus-blue.png" width="20" height="20" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: none; clear: both; display: inline; height: 20px; padding: 0 10px; border: none;" align="none" /></a><a href="https://github.com/ginatrapani/ThinkUp" style="color: #46bcff; text-decoration: none;"><img src="https://www.thinkup.com/join/assets/img/icons/github-blue.png" width="20" height="20" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: none; clear: both; display: inline; height: 20px; padding: 0 10px; border: none;" align="none" /></a>
