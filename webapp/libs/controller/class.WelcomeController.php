@@ -44,6 +44,12 @@ class WelcomeController extends SignUpHelperController {
                     $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
                     "subscription. Maybe you refreshed the page in your browser?");
                 }
+                //Now that user has authed and paid, get current subscription_status
+                $subscription_status = $subscriber->getSubscriptionStatus();
+                //Update subscription_status in the subscriber object
+                $subscriber->subscription_status = $subscription_status;
+                //Update subscription_status in the data store
+                $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
             } else {
                 $this->addErrorMessage($this->generic_error_msg);
                 $this->logError('Amazon response invalid', __FILE__,__LINE__, __METHOD__);
