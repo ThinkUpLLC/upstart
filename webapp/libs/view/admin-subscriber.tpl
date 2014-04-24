@@ -24,12 +24,10 @@
         <td>Username</td>
         <td>{include file="_admin-thinkup_username.tpl"} {if $install_results}<h5>Install log:</h5><ul>{$install_results}{/if}</td>
       </tr>
-      {if $subscriber->is_membership_complimentary}
       <tr>
-        <td>Account status</td>
-        <td><span class="text-success">Complimentary membership</span></td>
+        <td>Status</td>
+        <td>{$subscriber->subscription_status}</td>
       </tr>
-      {/if}
       <tr>
         <td>Change email</td>
         <td><form action="subscriber.php?action=updateemail&id={$subscriber->id}" method="get"><input type="text" width="10" value="" placeholder="" name="email"> <input type="hidden" name="id" value="{$subscriber->id}"> <input type="hidden" name="action" value="setemail"><input type="submit" value="Save" class="btn btn-default"></form>
