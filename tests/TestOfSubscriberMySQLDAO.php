@@ -615,7 +615,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual(sizeof($result), 0);
     }
 
-    public function testTotalPaymentRemindersSent() {
+    public function testSetTotalPaymentRemindersSent() {
         //Subscriber doesn't exist
         $dao = new SubscriberMySQLDAO();
         $result = $dao->setTotalPaymentRemindersSent(1, 2);
@@ -624,7 +624,8 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         //Subscriber exists and has no username
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>101, 'email'=>'willow@buffy.com',
-        'network_user_name'=>'willowr', 'thinkup_username'=>null, 'total_payment_reminders_sent'=>0));
+        'network_user_name'=>'willowr', 'thinkup_username'=>null, 'total_payment_reminders_sent'=>0,
+        'payment_reminder_last_sent'=>null));
 
         $result = $dao->setTotalPaymentRemindersSent(101, 2);
         $this->assertEqual($result, 1);
@@ -634,5 +635,6 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertTrue($data);
         $this->assertEqual(2, $data['total_payment_reminders_sent']);
+        $this->assertNotNull($data['payment_reminder_last_sent']);
     }
 }

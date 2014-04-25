@@ -815,8 +815,8 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     public function setTotalPaymentRemindersSent($subscriber_id, $total_payment_reminders_sent) {
-        $q = "UPDATE subscribers SET total_payment_reminders_sent = :total_payment_reminders_sent ";
-        $q .="WHERE id = :subscriber_id;";
+        $q = "UPDATE subscribers SET total_payment_reminders_sent = :total_payment_reminders_sent, ";
+        $q .="payment_reminder_last_sent =  NOW() WHERE id = :subscriber_id;";
         $vars = array(
             ':subscriber_id'=>$subscriber_id,
             ':total_payment_reminders_sent'=>$total_payment_reminders_sent
