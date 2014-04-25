@@ -13,7 +13,7 @@ class TestOfMailer extends UpstartUnitTestCase {
     }
 
     public function testGetSystemMessageHTMLPaymentReminder1() {
-        $headline = "Complete your ThinkUp membership";
+        $headline = "Lock in your ThinkUp membership";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('thinkup_username', 'username' );

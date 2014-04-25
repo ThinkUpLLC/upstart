@@ -22,18 +22,19 @@ body_classes="settings menu-open" body_id="settings-subscription"}
   * "Paid throuh Mon dd, YYYY" - Successful charge
   * "Payment pending" - Authorized and not charged yet, charged and no success returned yet
   * "Payment failed" - Charge failed
+  * "Payment due" - User has not attempted payment
   * "Complimentary membership" - Comped
 *}
-        <li class="list-group-item{if $membership_status eq 'Payment failed'
+        <li class="list-group-item{if $membership_status eq 'Payment failed' or $membership_status eq 'Payment due'
       } list-group-item-warning{/if}">
           <div class="list-group-item-label">Status</div>
           <div class="list-group-item-value">{$membership_status}</div>
         </li>
       </ul>
 
-    {if $membership_status eq 'Payment failed'}
+    {if $membership_status eq 'Payment failed' or $membership_status eq 'Payment due'}
       <div class="form-message">
-        <p>There was a problem with your payment. But it's easy to fix!</p>
+        <p>{if $membership_status eq 'Payment failed'}There was a problem with your payment. But it's easy to fix!{else}One last step to complete your ThinkUp membership!{/if}</p>
         <a href="{$failed_cc_amazon_link}" class="btn btn-default">Pay via Amazon Payments</a>
       </div>
     {else}

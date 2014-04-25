@@ -78,13 +78,10 @@ class MembershipController extends AuthController {
         if ($membership_status == 'Authorization failed') {
             $membership_status = 'Payment failed';
         }
-        if ($membership_status == 'Payment due') {
-            $membership_status = 'Payment failed';
-        }
         $this->addToView('membership_status', $membership_status);
 
-        // If status is "Payment failed" then send Amazon Payments URL to view and handle charge
-        if ($membership_status == 'Payment failed') {
+        // If status is "Payment failed" or "Payment due" then send Amazon Payments URL to view and handle charge
+        if ($membership_status == 'Payment failed' || $membership_status == 'Payment due') {
             $callback_url = UpstartHelper::getApplicationURL().'user/membership.php';
             $caller_reference = $subscriber->id.'_'.time();
             $amount = self::getSubscriptionAmount($subscriber->membership_level);

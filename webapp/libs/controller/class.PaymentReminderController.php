@@ -25,7 +25,7 @@ class PaymentReminderController extends Controller {
         //Send first payment reminder 24 hours after signup time
         $subscribers = $subscriber_dao->getSubscribersDueReminder(0, 24);
         $subject_line = "Hey, did you forget something?";
-        $headline = "Complete your ThinkUp membership";
+        $headline = "Lock in your ThinkUp membership";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
             $body_html = $email_view_mgr->fetch('_email.payment-reminder-first.tpl');
