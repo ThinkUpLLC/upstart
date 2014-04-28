@@ -11,11 +11,17 @@ class ListSubscriberController extends Controller {
         $search_term = (isset($_GET['q']))?$_GET['q']:null;
         $subscriber_dao = new SubscriberMySQLDAO();
         if ($search_term != null ) {
+            $this->addToView('search_term', $search_term);
             $subscribers = $subscriber_dao->getSearchResults($search_term, $page, 51);
         } else {
-            $subscribers = $subscriber_dao->getSubscriberList($page, 51);
+            $status_filter = (isset($_GET['status']))?$_GET['status']:null;
+            if ($status_filter != null ) {
+                $this->addToView('search_term', $status_filter);
+                $subscribers = $subscriber_dao->getSubscriberListWithPaymentStatus($status_filter, $page, 51);
+            } else {
+                $subscribers = $subscriber_dao->getSubscriberList($page, 51);
+            }
         }
-        $this->addToView('search_term', $search_term);
         $this->addToView('subscribers', $subscribers);
         $total_subscribers = $subscriber_dao->getListTotal();
         $this->addToView('total_subscribers', $total_subscribers);
