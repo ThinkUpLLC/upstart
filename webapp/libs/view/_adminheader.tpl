@@ -66,7 +66,7 @@
     </ul>
     <form class="navbar-form navbar-left" role="search" action="index.php">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Email or name" name="q">
+        <input type="text" class="form-control" placeholder="Email, name or status" name="q">
       </div>
       <button type="submit" class="btn btn-default">Search</button>
     </form>
