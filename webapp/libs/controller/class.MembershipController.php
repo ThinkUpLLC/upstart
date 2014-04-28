@@ -40,7 +40,11 @@ class MembershipController extends AuthController {
                     $token_id = (isset($_GET['tokenID']))?$_GET['tokenID']:null;
                     try {
                         $authorization_id = $authorization_dao->insert($token_id, $amount, $_GET["status"],
-                        $internal_caller_reference, $error_message, $payment_expiry_date);
+                            $internal_caller_reference, $error_message, $payment_expiry_date);
+
+                        //Save authorization ID and subscriber ID in subscriber_authorizations table.
+                        $subscriber_authorization_dao = new SubscriberAuthorizationMySQLDAO();
+                        $subscriber_authorization_dao->insert($subscriber->id, $authorization_id);
                     } catch (DuplicateAuthorizationException $e) {
                         $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
                         "membership.  Did you refresh the page?");
@@ -49,6 +53,7 @@ class MembershipController extends AuthController {
                     $api_accessor = new AmazonFPSAPIAccessor();
                     $is_charge_successful = $api_accessor->invokeAmazonPayAction($subscriber->id, $token_id,
                         $amount);
+
                     if ($is_charge_successful) {
                         $this->addSuccessMessage("Success! Thanks for being a ThinkUp member.");
                     } else {
