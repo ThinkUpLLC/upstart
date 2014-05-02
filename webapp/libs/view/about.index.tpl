@@ -10,7 +10,7 @@ body_classes="marketing marketing-page" body_id="marketing-about"}
     </section>
 
     <section class="section col-md-2 col-lg-3 col-lg-right section-marketing-text" id="section-about-text">
-      <p>ThinkUp is a simple new app that gives you information about the way you use social networks like Twitter and Facebook. In contrast to regular analytics or statistics apps, it uses plain, human language to explain how you’re doing and to help you achieve your goals, whatever they are. ThinkUp is a more fun way to make the most out of the time we spend online.</p>
+      <p>ThinkUp is a simple new app that gives you insights into the way you use social networks like Twitter and Facebook. In contrast to regular analytics or statistics apps, ThinkUp uses plain English to explain how you’re doing and to help you achieve your goals, whatever they are. ThinkUp is a fun way to get more out of the time we spend online.</p>
 
       <h3 class="text-header">Our Company</h3>
 
@@ -19,7 +19,7 @@ body_classes="marketing marketing-page" body_id="marketing-about"}
         <img class="headshot" src="{$site_root_path}assets/img/anil-headshot@2x.jpg" alt="Anil Dash">
       </div>
 
-      <p>ThinkUp is also the name of the small company based in New York City that makes ThinkUp. Our cofounders are Gina Trapani and Anil Dash. We are working to make ThinkUp the company that treats its customers and community better than any other company in the technology industry. To that end, we’ve posted our <a href="{$site_root_path}about/values.php">Company Values</a>, and eagerly solicit public feedback and response to them.</p>
+      <p>ThinkUp is also the name of a small company based in New York City. Gina Trapani and Anil Dash cofounded ThinkUp, and are working to make ThinkUp the company that treats its customers and community better than any other in the technology industry. To that end, we’ve posted our <a href="{$site_root_path}about/values.php">Company Values</a>, and we'd love to hear your feedback on them.</p>
 
 
       <div class="download-our-logo">
@@ -27,7 +27,7 @@ body_classes="marketing marketing-page" body_id="marketing-about"}
           Download our logo</a>
       </div>
 
-      <p>Given our company’s goals of making our time online more meaningful, and the values that we’ve documented, it’s only natural that our ThinkUp platform is open source. ThinkUp’s source code went public in 2009. Since then, ThinkUp’s become one of the most popular open source projects on GitHub, currently among the top 15 most active PHP projects. Ours is an inclusive and welcoming community, with a developer mailing list that has never had a flame war, as befits our company motto, “It is nice to be nice.”</p>
+      <p>Given our company's goals and values, it’s only natural that the ThinkUp software is open source. ThinkUp’s source code went public in 2009, and since then, has become one of the most popular open source projects on GitHub, currently among the top 15 most active PHP projects. Our community is inclusive and welcoming, and our mailing list has never had a flame war. It really is nice to be nice.</p>
 
       <h3 class="text-header">Our Investors</h3>
 
