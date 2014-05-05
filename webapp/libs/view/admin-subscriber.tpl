@@ -37,7 +37,7 @@
       <tr>
         <td>Payment reminders</td>
         <td>
-        {$subscriber->total_payment_reminders_sent} reminders sent, last one went out {$subscriber->payment_reminder_last_sent}
+        {$subscriber->total_payment_reminders_sent} sent, last one {$subscriber->payment_reminder_last_sent}
         </td>
       </tr>
       {/if}
