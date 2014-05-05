@@ -22,7 +22,7 @@
       {/if}
       <tr>
         <td>Username</td>
-        <td>{include file="_admin-thinkup_username.tpl"} {if $install_results}<h5>Install log:</h5><ul>{$install_results}{/if}</td>
+        <td>{include file="_admin-thinkup_username.tpl"}  <a href="{$subscriber->installation_url}/api/v1/session/login.php?u={$subscriber->email}&k={$subscriber->api_key_private}&success_redir={$subscriber->installation_url|urlencode}&failure_redir=https%3A%2F%2Fwww.thinkup.com%2Fjoin%2F%2Fjoin%2F">&rarr;</a> {if $install_results}<h5>Install log:</h5><ul>{$install_results}{/if}</td>
       </tr>
       <tr>
         <td>Status</td>
@@ -33,7 +33,16 @@
         <td><form action="subscriber.php?action=updateemail&id={$subscriber->id}" method="get"><input type="text" width="10" value="" placeholder="" name="email"> <input type="hidden" name="id" value="{$subscriber->id}"> <input type="hidden" name="action" value="setemail"><input type="submit" value="Save" class="btn btn-default"></form>
         </td>
       </tr>
+      {if $subscriber->total_payment_reminders_sent > 0}
+      <tr>
+        <td>Payment reminders</td>
+        <td>
+        {$subscriber->total_payment_reminders_sent} reminders sent, last one went out {$subscriber->payment_reminder_last_sent}
+        </td>
+      </tr>
+      {/if}
       </table>
+
 {if $payments}
 <br>
   <h4>Payments</h4>
