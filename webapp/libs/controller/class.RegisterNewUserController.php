@@ -104,7 +104,8 @@ class RegisterNewUserController extends SignUpHelperController {
                     parse_str($access_token_response);
                     if (isset($access_token)) {
                         $facebook_app->setAccessToken($access_token);
-                        $fb_user_profile = $facebook_app->api('/me');
+                        $fb_user_profile = $facebook_app->api('/me?fields='.
+                            'is_verified,username,id,name,subscribers,email');
 
                         // echo "<pre>";
                         // print_r($fb_user_profile);
@@ -134,6 +135,11 @@ class RegisterNewUserController extends SignUpHelperController {
                             }
                         }
 
+                        if (isset($fb_user_profile['subscribers']['summary']['total_count'])) {
+                            $follower_count = $fb_user_profile['subscribers']['summary']['total_count'];
+                        } else {
+                            $follower_count = 0;
+                        }
                         $network_auth_details = array(
                             'network_user_name'=>$fb_user_profile['username'],
                             'network_user_id'=>$fb_user_profile['id'],
@@ -141,8 +147,8 @@ class RegisterNewUserController extends SignUpHelperController {
                             'full_name'=>$fb_user_profile['name'],
                             'oauth_access_token'=>$access_token,
                             'oauth_access_token_secret'=>'',
-                            'is_verified'=>0,
-                            'follower_count'=>0
+                            'is_verified'=>$fb_user_profile['is_verified'],
+                            'follower_count'=>$follower_count
                         );
                         SessionCache::put('network_auth_details', serialize($network_auth_details));
                     } else {
