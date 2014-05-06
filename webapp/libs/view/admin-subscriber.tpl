@@ -22,22 +22,28 @@
       {/if}
       <tr>
         <td>Username</td>
-        <td>{include file="_admin-thinkup_username.tpl"}  <a href="https://www.thinkup.com/phpyouradmin/index.php?server=2&db=thinkupstart_{$subscriber->thinkup_username}">db</a> <a href="{$subscriber->installation_url}/api/v1/session/login.php?u={$subscriber->email}&k={$subscriber->api_key_private}&success_redir={$subscriber->installation_url|urlencode}&failure_redir=https%3A%2F%2Fwww.thinkup.com%2Fjoin%2F%2Fjoin%2F">&rarr;</a> {if $install_results}<h5>Install log:</h5><ul>{$install_results}{/if}</td>
+        <td>{include file="_admin-thinkup_username.tpl"} {if $install_results}<h5>Install log:</h5><ul>{$install_results}{/if}</td>
       </tr>
+      {if $subscriber->last_dispatched}
       <tr>
-        <td>Status</td>
-        <td>{$subscriber->subscription_status}</td>
+        <td>Crawled</td>
+        <td>{$subscriber->last_dispatched|relative_datetime} ago</td>
       </tr>
+      {/if}
       <tr>
         <td>Change email</td>
         <td><form action="subscriber.php?action=updateemail&id={$subscriber->id}" method="get"><input type="text" width="10" value="" placeholder="" name="email"> <input type="hidden" name="id" value="{$subscriber->id}"> <input type="hidden" name="action" value="setemail"><input type="submit" value="Save" class="btn btn-default"></form>
         </td>
       </tr>
+      <tr>
+        <td>Status</td>
+        <td>{$subscriber->subscription_status}</td>
+      </tr>
       {if $subscriber->total_payment_reminders_sent > 0}
       <tr>
-        <td>Payment reminders</td>
+        <td>Reminders</td>
         <td>
-        {$subscriber->total_payment_reminders_sent} sent, last one {$subscriber->payment_reminder_last_sent}
+        {$subscriber->total_payment_reminders_sent} sent, last one {$subscriber->payment_reminder_last_sent|relative_datetime} ago
         </td>
       </tr>
       {/if}
