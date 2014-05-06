@@ -21,8 +21,8 @@ class ListSubscriberController extends Controller {
                 $subscribers = $subscriber_dao->getSubscriberList($page, 51);
         }
         $this->addToView('subscribers', $subscribers);
-        $total_subscribers = $subscriber_dao->getListTotal();
-        $this->addToView('total_subscribers', $total_subscribers);
+        $total_paid_subscribers = $subscriber_dao->getPaidTotal();
+        $this->addToView('total_paid_subscribers', $total_paid_subscribers);
         $payment_dao = new PaymentMySQLDAO();
         $total_payments = $payment_dao->getTotalPayments();
         $this->addToView('total_payments', $total_payments);

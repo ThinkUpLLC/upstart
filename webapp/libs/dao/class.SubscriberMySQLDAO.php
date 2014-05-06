@@ -249,8 +249,8 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getDataRowsAsObjects($ps, 'Subscriber');
     }
 
-    public function getListTotal() {
-        $q  = "SELECT count(*) as total FROM subscribers s WHERE membership_level != 'Waitlist' ";
+    public function getPaidTotal() {
+        $q  = "SELECT count(*) as total FROM subscribers s WHERE subscription_status LIKE 'Paid through%' ";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
         $result = $this->getDataRowAsArray($ps);
