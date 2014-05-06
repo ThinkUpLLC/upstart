@@ -22,7 +22,7 @@
       {/if}
       <tr>
         <td>Username</td>
-        <td>{include file="_admin-thinkup_username.tpl"}  <a href="{$subscriber->installation_url}/api/v1/session/login.php?u={$subscriber->email}&k={$subscriber->api_key_private}&success_redir={$subscriber->installation_url|urlencode}&failure_redir=https%3A%2F%2Fwww.thinkup.com%2Fjoin%2F%2Fjoin%2F">&rarr;</a> {if $install_results}<h5>Install log:</h5><ul>{$install_results}{/if}</td>
+        <td>{include file="_admin-thinkup_username.tpl"}  <a href="https://www.thinkup.com/phpyouradmin/index.php?server=2&db=thinkupstart_{$subscriber->thinkup_username}">db</a> <a href="{$subscriber->installation_url}/api/v1/session/login.php?u={$subscriber->email}&k={$subscriber->api_key_private}&success_redir={$subscriber->installation_url|urlencode}&failure_redir=https%3A%2F%2Fwww.thinkup.com%2Fjoin%2F%2Fjoin%2F">&rarr;</a> {if $install_results}<h5>Install log:</h5><ul>{$install_results}{/if}</td>
       </tr>
       <tr>
         <td>Status</td>
