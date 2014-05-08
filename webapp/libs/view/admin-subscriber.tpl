@@ -54,14 +54,14 @@
   <h4>Payments</h4>
   <table class="table table-condensed table-hover">
     <tr>
-      <th>Timestamp</th><th>Status</th><th>Amount</th><th>Transaction ID or Error</th>
+      <th>Timestamp</th><th>Status</th><th>Amount</th><th>Transaction ID and Message</th>
     {foreach from=$payments item=payment}
        <tr>
           <td>{$payment.timestamp}</td>
           {if $payment.transaction_status}
             <td>{$payment.transaction_status}</td>
             <td>${$payment.amount}</td>
-            <td><a href="https://payments{if $is_in_sandbox}-sandbox{/if}.amazon.com/sdui/sdui/txndetail?transactionId={$payment.transaction_id}" target="_new">{$payment.transaction_id}</a></td>
+            <td> <a href="https://payments{if $is_in_sandbox}-sandbox{/if}.amazon.com/sdui/sdui/txndetail?transactionId={$payment.transaction_id}" target="_new">{$payment.transaction_id}</a><br/>{if $payment.status_message}{$payment.status_message|filter_xss}{/if}</td>
           {else}
             <td class="text-danger">ERROR</td>
             <td>${$payment.amount}</td>
