@@ -18,5 +18,5 @@ $message .= " $". number_format($daily_revenue[1]['revenue']). " yesterday. Day 
 ";
 $subject = "$" . number_format($daily_revenue[0]['revenue']) . " in revenue today";
 
-Mailer::mailViaPHP( 'scppHwfCNV3jC4H2Aio3RvJ73H9voj@api.pushover.net', $subject, $message);
+Mailer::mailViaPHP( 'gina@thinkup.com', $subject, $message);
 Mailer::mailViaPHP( 'k55QGmp2Gi1nMskLgukjitdWEjy5AG@api.pushover.net', $subject, $message);
