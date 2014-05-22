@@ -45,27 +45,29 @@ class MembershipController extends AuthController {
                         //Save authorization ID and subscriber ID in subscriber_authorizations table.
                         $subscriber_authorization_dao = new SubscriberAuthorizationMySQLDAO();
                         $subscriber_authorization_dao->insert($subscriber->id, $authorization_id);
+
+                        //Charge for authorization
+                        $api_accessor = new AmazonFPSAPIAccessor();
+                        $is_charge_successful = $api_accessor->invokeAmazonPayAction($subscriber->id, $token_id,
+                            $amount);
+
+                        if ($is_charge_successful) {
+                            $this->addSuccessMessage("Success! Thanks for being a ThinkUp member.");
+                        } else {
+                            $this->addErrorMessage("Oops! Something went wrong. ".
+                                "Please try again or contact us for help.");
+                            $this->logError('Amazon charge was unsuccessful', __FILE__,__LINE__, __METHOD__);
+                        }
+                        //Now that user has authed and paid, get current subscription_status
+                        $subscription_status = $subscriber->getSubscriptionStatus();
+                        //Update subscription_status in the subscriber object
+                        $subscriber->subscription_status = $subscription_status;
+                        //Update subscription_status in the data store
+                        $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
                     } catch (DuplicateAuthorizationException $e) {
                         $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
                         "membership.  Did you refresh the page?");
                     }
-                    //Charge for authorization
-                    $api_accessor = new AmazonFPSAPIAccessor();
-                    $is_charge_successful = $api_accessor->invokeAmazonPayAction($subscriber->id, $token_id,
-                        $amount);
-
-                    if ($is_charge_successful) {
-                        $this->addSuccessMessage("Success! Thanks for being a ThinkUp member.");
-                    } else {
-                        $this->addErrorMessage("Oops! Something went wrong. Please try again or contact us for help.");
-                        $this->logError('Amazon charge was unsuccessful', __FILE__,__LINE__, __METHOD__);
-                    }
-                    //Now that user has authed and paid, get current subscription_status
-                    $subscription_status = $subscriber->getSubscriptionStatus();
-                    //Update subscription_status in the subscriber object
-                    $subscriber->subscription_status = $subscription_status;
-                    //Update subscription_status in the data store
-                    $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
                 }
             } else {
                 $this->addErrorMessage("Oops! Something went wrong. Please try again or contact us for help.");
