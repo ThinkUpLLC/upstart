@@ -1,4 +1,4 @@
-{include file="_appheader.v2.tpl" include_menu=true body_id="welcome"}
+{include file="_appheader.tpl" include_menu=true body_id="welcome"}
 {include file="_appusermessage.tpl"}
   <div class="container">
     <div class="stream">
@@ -68,4 +68,4 @@
       </div>
     </div>
 
-{include file="_appfooter.v2.tpl"}
+{include file="_appfooter.tpl"}

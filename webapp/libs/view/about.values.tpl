@@ -1,4 +1,4 @@
-{include file="_appheader.v2.tpl" marketing_page=true
+{include file="_appheader.tpl" marketing_page=true
 body_classes="marketing marketing-page" body_id="marketing-values"}
 
   <div class="container">
@@ -59,4 +59,4 @@ body_classes="marketing marketing-page" body_id="marketing-values"}
 
     </section>
 
-{include file="_appfooter.v2.tpl" marketing_page=true}
+{include file="_appfooter.tpl" marketing_page=true}
