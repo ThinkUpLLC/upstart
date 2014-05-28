@@ -3,9 +3,31 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON('package.json')
     project:
       app: 'webapp'
+      css_path: '<%= project.app%>/assets/css'
+      js_path: '<%= project.app%>/assets/js'
       premails: 'extras/dev/precompiled-emails'
       prod_emails: '<%= project.app %>/libs/view'
       test_emails: '<%= project.app %>'
+    less:
+      marketing:
+        options:
+          paths: ['../']
+        files:
+          '<%= project.css_path %>/marketing.css': '<%= project.css_path %>/src/marketing.less'
+      app:
+        options:
+          paths: ['../']
+        files:
+          '<%= project.css_path %>/thinkup.css': '<%= project.css_path %>/src/thinkup.less'
+    coffee:
+      app:
+        files: [
+          '<%= project.js_path %>/thinkup.js':'<%= project.js_path %>/src/thinkup.coffee'
+        ]
+      marketing:
+        files: [
+          '<%= project.js_path %>/marketing.js':'<%= project.js_path %>/src/marketing.coffee'
+        ]
     premailer:
       options:
         css: [
@@ -25,9 +47,14 @@ module.exports = (grunt) ->
       email_dev:
         files: '<%= project.premails %>/*'
         tasks: ['email', 'email_dev']
+      css:
+        files: '<%= project.css_path %>/src/*'
+        tasks: ['less']
 
   )
   grunt.loadNpmTasks('grunt-contrib-watch')
+  grunt.loadNpmTasks('grunt-contrib-less')
+  grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-premailer')
 
   grunt.registerTask('fix_styles', 'This fixes the stuff premailer breaks', ->
