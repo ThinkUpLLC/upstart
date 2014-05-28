@@ -1,0 +1,199 @@
+body#marketing-subscribe {
+  .section-sub-color(@color) {
+    border-top-color: @color;
+    background: fade(@color, 10%);
+
+    .subsection-header {
+      color: @color;
+
+      .color {
+        color: @color;
+      }
+    }
+
+    .level-cost {
+      .annually {
+        color: @color;
+      }
+    }
+
+    @media (min-width: 52em) {
+      border-color: mix(#fff, @color, 50%);
+    }
+  }
+
+  #section-page-header {
+    margin-bottom: 40px;
+
+    .section-header {
+      font-size: 2em;
+    }
+
+    .section-subheader {
+      text-align: center;
+      font-size: 1rem;
+    }
+  }
+
+  #section-subscription-member     { .section-sub-color(#B97CC6); }
+  #section-subscription-pro        { .section-sub-color(#6BB93B); }
+  #section-subscription-executive  { .section-sub-color(#B51B2E); }
+
+  .subscription-levels {
+    .clearfix;
+
+    @media (min-width: 52em) {
+      padding: 0;
+      width: 840px;
+    }
+  }
+
+  .section-subscription-level {
+    position: relative;
+    height: auto;
+    padding: 20px;
+
+    @media (min-width: 40em) {
+      height: 240px;
+      float: left;
+      width: 50%;
+    }
+
+    @media (min-width: 52em) {
+      border-width: 1px;
+      border-style: solid;
+      border-radius: 15px;
+      width: 400px;
+      margin-bottom: 40px;
+
+      &:first-of-type {
+        margin-right: 40px;
+      }
+    }
+  }
+
+  .subsection-header {
+    font-size: (24/16em);
+    margin: 0 0 15px;
+    font-weight: normal;
+
+    .descriptor {
+      display: block;
+      font-size: .625em;
+      color: #222;
+      font-weight: 400;
+    }
+  }
+
+  .level-cost {
+    position: absolute;
+    top: 21px;
+    right: 15px;
+    font-size: (14/16em);
+    line-height: (20/16);
+    text-align: right;
+
+    .annually {
+      font-size: (22/16em);
+      font-weight: 600;
+    }
+  }
+
+  .level-description {
+    padding: 15px 0 75px;
+    margin: 0;
+    text-align: center;
+
+    p {
+      margin: 0;
+      line-height: (20/16);
+
+      &.headline {
+        font-weight: 600;
+        font-size: (18/16em);
+        font-family: @tablet-gothic-condensed;
+      }
+    }
+  }
+
+  .action-buttons {
+    .clearfix;
+    position: absolute;
+    width: 93%;
+    bottom: 30px;
+
+    .action-buttons-label {
+      margin-bottom: 5px;
+      line-height: 28px;
+      float: left;
+    }
+
+    .actual-buttons {
+      float: right;
+    }
+
+    .btn {
+      width: 100px;
+      margin: 0 5px;
+      font-size: (15/16rem);
+      padding: 10px 0;
+      border-radius: 5px;
+      height: auto;
+
+      .icon {
+        margin-right: 5px;
+      }
+    }
+
+    .btn-twitter {
+      background: #55acee;
+    }
+
+    .btn-facebook {
+      background: #3b5998;
+
+      .icon {
+        margin-right: 7px;
+      }
+    }
+
+    @media (min-width: 40em) {
+      margin-top: 0;
+      text-align: center;
+
+      .action-buttons-label, .actual-buttons {
+        float: none;
+      }
+    }
+
+    @media (min-width: 52em) {
+      margin-top: 15px;
+
+      .action-buttons-label {
+        float: left;
+      }
+
+      .actual-buttons {
+        float: right;
+      }
+    }
+
+  }
+
+  #section-subscription-executive {
+    text-align: center;
+    padding-bottom: 20px;
+    background-color: transparent;
+    margin-top: 40px;
+
+    .section-header, .level-description {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 52em) {
+      margin-top: 0;
+    }
+
+  }
+}

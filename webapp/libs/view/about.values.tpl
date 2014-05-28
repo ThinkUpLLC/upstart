@@ -1,15 +1,10 @@
-{include file="_appheader.v2.tpl" marketing_page=true
+{include file="_header.marketing.tpl" marketing_page=true
 body_classes="marketing marketing-page" body_id="marketing-values"}
 
   <div class="container">
-    {include file="_marketing-navigation.tpl"}
-
-    <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-page-header">
+    <section class="section section-marketing-text" id="section-about-text">
       <h2 class="section-header">ThinkUp Values</h2>
       {include file="_about.nav.tpl" active="values"}
-    </section>
-
-    <section class="section col-md-2 col-lg-3 col-lg-right section-marketing-text" id="section-about-text">
 
       <p>These are some of the issues we care about as a company. We articulate them as an incentive to pursue them.</p>
 
@@ -59,4 +54,4 @@ body_classes="marketing marketing-page" body_id="marketing-values"}
 
     </section>
 
-{include file="_appfooter.v2.tpl" marketing_page=true}
+{include file="_footer.marketing.tpl"}

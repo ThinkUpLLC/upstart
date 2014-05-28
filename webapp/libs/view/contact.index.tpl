@@ -1,15 +1,11 @@
-{include file="_appheader.v2.tpl" marketing_page=true
+{include file="_header.marketing.tpl" marketing_page=true
 body_classes="marketing marketing-page" body_id="marketing-contact"}
 
   <div class="container">
-    {include file="_marketing-navigation.tpl"}
-
-    <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-page-header">
+    <section class="section section-marketing-text">
       <h2 class="section-header">Contact</h2>
       {include file="_about.nav.tpl" active="contact"}
-    </section>
 
-    <section class="section col-md-2 col-lg-3 col-lg-right section-marketing-text">
       <form role="form" class="form" id="form-contact">
         <header>
           <h3 class="text-header">We’d love to hear from you.</h3>
@@ -37,4 +33,4 @@ body_classes="marketing marketing-page" body_id="marketing-contact"}
       </form>
     </section>
 
-{include file="_appfooter.v2.tpl" marketing_page=true}
+{include file="_footer.marketing.tpl"}

@@ -1,0 +1,672 @@
+.container {
+  overflow: hidden;
+}
+
+.section {
+  padding: 0 10px;
+
+  a {
+    text-decoration: none;
+    color: @link-color;
+
+    &:hover {
+      color: @link-hover-color;
+      text-decoration: underline;
+    }
+
+    &.btn, &.btn:hover {
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+
+
+  .section-copy {
+    position: relative;
+    font-family: @tablet-gothic-wide;
+    font-weight: 300;
+    padding: 10px 0 0;
+    font-size: .9375rem;
+    line-height: (20/15);
+    text-align: left;
+
+    @media (min-width: 760px) {
+      font-size: 1.125rem;
+      line-height: 1.25;
+    }
+
+    @media (min-width: 960px) {
+      font-size: 1.375rem;
+      line-height: (30/22);
+    }
+
+    p {
+      padding: 0 10px;
+      margin: 0;
+
+     @media (min-width: 760px) {
+      padding: 0;
+     }
+
+     strong {
+       font-weight: 600;
+     }
+    }
+  }
+}
+
+.section-screenshot {
+  .section-copy {
+    .illustration {
+      box-shadow: 0 4px 8px rgba(0,0,0,.2);
+      display: block;
+      margin: 20px auto 0;
+      text-indent: 100%;
+      font: 0/0 a;
+      position: relative;
+
+      @media (min-width: 760px) {
+        position: absolute;
+        left: 0;
+        top: 5px;
+        margin: 0;
+      }
+    }
+
+  }
+}
+
+.section-colors(@bgd, @copy: darken(@bgd, 35%), @headline: #fff) {
+  background-color: @bgd;
+
+  .section-header {
+    color: @headline;
+  }
+
+  .section-copy {
+    color: @copy;
+  }
+}
+
+.section-header {
+  font-size: 1.375rem; // 22px
+  line-height: (30/22);
+  color: #fff;
+  text-align: center;
+  font-weight: 400;
+  padding: 20px 0;
+  margin: 0;
+
+  @media (min-width: @bp-tablet) {
+    font-size: 2rem;
+    line-height: 1.25;
+    padding: 36px 0;
+  }
+}
+
+.newsletter-signup-form {
+  text-align: center;
+
+  @media (min-width: 640px) {
+    text-align: left;
+  }
+
+  label {
+    display: block;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1;
+    color: @gray;
+    margin-bottom: 10px;
+
+    @media (min-width: 640px) {
+      text-align: left;
+    }
+
+    @media (min-width: 960px) {
+      display: inline-block;
+      width: 160px;
+      padding-right: 60px;
+      font-size: .875rem;
+      line-height: 1.25;
+      margin-bottom: 0;
+      vertical-align: top;
+      position: relative;
+      top: 4px;
+    }
+  }
+
+  .email {
+    border: 1px solid @gray-light;
+    background: #E5E2E2;
+    width: 230px;
+    display: inline-block;
+    font-family: @tablet-gothic-condensed;
+    padding: 3px 5px;
+    font-size: 1em;
+    margin: 5px 10px 10px 0;
+    height: 36px;
+    -webkit-appearance: initial;
+    outline: 0;
+    border-radius: 0;
+  }
+
+  .btn-submit{
+    display: inline-block;
+    background: #4A90E2;
+    color: #fff;
+    font-family: @tablet-gothic-condensed;
+    margin-top: 0;
+    margin-bottom: 0;
+    border: 0;
+    vertical-align: baseline;
+    -webkit-appearance: initial;
+    padding: 8px;
+    line-height: 0;
+    font-size: (20/16em);
+  }
+}
+
+#container-analytics {
+  .section-colors(@color-mint);
+  height: auto;
+
+  @media (min-width: 760px) {
+    height: 300px;
+  }
+
+  .section-copy {
+    @media (min-width: 760px) {
+      padding: 15px 0 0 560px;
+      max-width: none;
+    }
+
+    .illustration {
+      width: 300px;
+      height: 208px;
+      background: url(../img/landing/insight-mint-mobile@2x.png) top left no-repeat;
+      background-size: 300px 211px;
+      margin-bottom: 20px;
+
+      @media (min-width: 760px) {
+        width: 540px;
+        height: 146px;
+        background: url(../img/landing/insight-mint-desktop@2x.png) top left no-repeat;
+        background-size: 540px 146px;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+#container-signup-top {
+  .section-colors(#fff, #444, @blue-darker);
+  height: 640px;
+
+  @media (min-width: 760px) {
+    height: 400px;
+  }
+
+  .section-header {
+    font-size: 2rem;
+    line-height: 1.25;
+
+    @media (min-width: 760px) {
+      text-align: left;
+    }
+  }
+
+  .section-copy {
+    font-style: normal;
+
+    p {
+      margin-bottom: 30px;
+
+      @media (min-width: 760px) {
+        margin-bottom: 40px;
+        padding-right: 5 * @col-full;
+      }
+    }
+
+    .btn {
+      display: block;
+      margin: 0 auto 35px;
+
+      @media (min-width: 760px) {
+        margin: 0;
+      }
+    }
+
+    .illustration {
+      a {
+        text-indent: 0;
+        display: block;
+        font: 1.25rem/1.3 @tablet-gothic-wide;
+        font-weight: 400;
+        text-align: center;
+      }
+
+      width: 303px;
+      height: 616px;
+      background: url(../img/landing/phone-screenshot.png) 0 40px no-repeat;
+      box-shadow: 0 0 0;
+
+      @media (min-width: 760px) {
+        left: auto;
+        right: 0;
+        top: -62px;
+      }
+
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+        background-image: url(../img/landing/phone-screenshot@2x.png);
+        background-size: 303px 616px;
+      }
+    }
+
+  }
+}
+
+#container-what {
+  .section-colors(@color-creamsicle, #fff);
+
+  height: 580px;
+
+  @media (min-width: 760px) {
+    height: 450px;
+  }
+
+  .section-copy {
+    font-size: 1rem;
+    line-height: (26/20);
+
+    @media (min-width: 760px) {
+      padding: 24px 600px 0 0;
+      max-width: none;
+      text-align: right;
+    }
+
+    @media (min-width: 800px) {
+      font-size: 1.25rem;
+    }
+
+    .section-insights-carousel {
+      width: 100%;
+      position: relative;
+      text-align: center;
+      padding: 20px 0 30px;
+
+      @media (min-width: 760px) {
+        text-align: left;
+        position: absolute;
+        top: 10px;
+        right: 0;
+        width: 540px;
+        height: 300px;
+      }
+
+      figcaption {
+        color: darken(@color-creamsicle, 30%);
+        font-size: 1rem;
+        line-height: 1.25;
+      }
+    }
+
+    .carousel-indicators {
+      margin: 0;
+      padding: 0 0 15px;
+
+      @media (min-width: 760px) {
+        position: absolute;
+        left: -52px;
+        top: 10px;
+        padding: 0;
+      }
+
+      li {
+        list-style: none;
+        padding: 10px;
+        margin: 0;
+        display: inline-block;
+
+        @media (min-width: 760px) {
+          display: block;
+        }
+
+        a {
+          display: block;
+          color: mix(@color-creamsicle, #fff, 25%);
+          background: darken(@color-creamsicle, 20%);
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          font-weight: 300;
+          font-size: .875rem;
+          line-height: (24/14);
+          text-align: center;
+        }
+
+        a:hover, &.active a {
+          color: #fff;
+          background: darken(@color-creamsicle, 30%);
+          text-decoration: none;
+        }
+
+      }
+    }
+
+    .sample-insights {
+      figure {
+        display: none;
+        width: 100%;
+
+        &.active {
+          display: block;
+        }
+      }
+    }
+
+    .sample-insight {
+      box-shadow: 0 4px 8px rgba(0,0,0,.2);
+      display: block;
+      margin: 0 auto 10px;
+      text-indent: 100%;
+      font: 0/0 a;
+      width: 300px;
+      height: 193px;
+      background: url(../img/landing/insight-creamsicle-mobile-1@2x.png) top left no-repeat;
+      background-size: 300px 193px;
+
+      @media (min-width: 760px) {
+        width: 540px;
+        height: 128px;
+        background: url(../img/landing/insight-creamsicle-desktop-1@2x.png) top left no-repeat;
+        background-size: 540px 128px;
+      }
+    }
+
+    #sample-2 .sample-insight {
+      height: 245px;
+      background: url(../img/landing/insight-creamsicle-mobile-2@2x.png) top left no-repeat;
+      background-size: 300px 245px;
+
+      @media (min-width: 760px) {
+        height: 187px;
+        background-image: url(../img/landing/insight-creamsicle-desktop-2@2x.png);
+        background-size: 540px 187px;
+      }
+    }
+
+    #sample-3 .sample-insight {
+      height: 320px;
+      background: url(../img/landing/insight-sepia-mobile@2x.png) top left no-repeat;
+      background-size: 300px 320px;
+
+      @media (min-width: 760px) {
+        height: 240px;
+        background-image: url(../img/landing/insight-sepia-desktop@2x.png);
+        background-size: 540px 240px;
+      }
+    }
+
+    #sample-4 .sample-insight {
+      height: 136px;
+      background: url(../img/landing/insight-creamsicle-mobile-3@2x.png) top left no-repeat;
+      background-size: 300px 136px;
+
+      @media (min-width: 760px) {
+        height: 92px;
+        background-image: url(../img/landing/insight-creamsicle-desktop-3@2x.png);
+        background-size: 540px 92px;
+      }
+    }
+
+  }
+}
+
+#container-specs {
+  .section-colors(@color-purple, @color-purple-darker);
+
+  .section-copy {
+    font-style: normal;
+    font-size: 1rem;
+    line-height: (22/16);
+    text-align: left;
+
+    @media (min-width: 760px) {
+      font-size: 1.25rem;
+      line-height: (26/20);
+      padding-left: 51%;
+    }
+  }
+
+  .illustration {
+    box-shadow: 0 0 0;
+    width: 340px;
+    height: 122px;
+    background: url(../img/landing/devices.png) top left no-repeat;
+    background-size: 340px 122px;
+    position: relative;
+    left: -50px;
+
+    @media (min-width: 400px) {
+      left: 0;
+    }
+
+    @media (min-width: 760px) {
+      position: absolute;
+      width: 540px;
+      height: 200px;
+      background-size: 540px 200px;
+      left: auto;
+      right: 49%;
+    }
+
+    @media (min-width: 760px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+      background: url(../img/landing/devices@2x.png) top left no-repeat;
+      background-size: 340px 122px;
+    }
+  }
+}
+
+#container-company {
+  .section-colors(@color-salmon, #fff);
+  height: auto;
+
+  @media (min-width: 760px) {
+    height: 500px;
+  }
+
+  .section-header {
+    position: relative;
+    text-align: left;
+    padding-left: 90px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      width: 66px;
+      height: 64px;
+      background: url(../img/landing/crowd.png) top left no-repeat;
+      background-size: 66px 64px;
+      top: 14px;
+      left: 10px;
+    }
+
+    @media (min-width: 560px) {
+      padding-left: 100px;
+      &:before {
+        width: (160px / 2.1);
+        height: (154px / 2.1);
+        background-size: (160px / 2.1) (154px / 2.1);
+        top: 38px;
+      }
+    }
+
+    @media (min-width: 760px) {
+      text-align: center;
+      padding-left: 0;
+
+      br {
+        display: none;
+      }
+
+      &:before {
+        width: (160px / 1.5);
+        height: (154px / 1.5);
+        background-size: (160px / 1.5) (154px / 1.5);
+        top: 115px;
+        left: auto;
+        right: 560px;
+      }
+    }
+
+    @media (min-width: 960px) {
+      &:before {
+        top: 100px;
+        width: 160px;
+        height: 154px;
+        background-size: 160px 154px;
+      }
+    }
+
+  }
+
+  .section-copy {
+    font-size: 1rem;
+    line-height: (22/16);
+
+    a {
+      color: @color-salmon-darker;
+
+      &:hover {
+        color: @color-salmon-dark;
+      }
+    }
+
+    @media (min-width: 760px) {
+      padding: 115px 560px 0 0;
+      max-width: none;
+      text-align: right;
+    }
+
+    @media (min-width: 960px) {
+      font-size: 1.25rem;
+      line-height: (26/20);
+      padding-top: 150px;
+    }
+
+    p {
+      padding: 0 10px;
+      margin: 0;
+
+     @media (min-width: 760px) {
+      padding: 0;
+     }
+    }
+  }
+
+  .illustration {
+    width: 300px;
+    height: 413px;
+    background: url(../img/landing/insight-salmon-mobile@2x.png) top left no-repeat;
+    background-size: 300px 413px;
+    margin-bottom: 20px;
+
+    @media (min-width: 760px) {
+      top: 0;
+      left: auto;
+      right: 0;
+      width: 540px;
+      height: 338px;
+      background: url(../img/landing/insight-salmon-desktop@2x.png) top left no-repeat;
+      background-size: 540px 338px;
+    }
+  }
+}
+
+#container-not-thinkup {
+  .section-colors(@color-seabreeze);
+  height: auto;
+
+  @media (min-width: 760px) {
+    height: 400px;
+  }
+
+  .section-header {
+    padding-bottom: 0;
+    @media (min-width: 760px) {
+      padding-bottom: 36px;
+    }
+  }
+
+  .section-copy {
+    li {
+      margin-bottom: .25rem;
+    }
+    @media (min-width: 760px) {
+      font-size: 1.25rem;
+      line-height: (26/20);
+      padding: 0 0 0 560px;
+      max-width: none;
+    }
+
+    .illustration {
+      width: 300px;
+      height: 193px;
+      background: url(../img/landing/insight-seabreeze-mobile@2x.png) top left no-repeat;
+      background-size: 300px 193px;
+      margin-bottom: 20px;
+
+      @media (min-width: 760px) {
+        width: 540px;
+        height: 128px;
+        background: url(../img/landing/insight-seabreeze-desktop@2x.png) top left no-repeat;
+        background-size: 540px 128px;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+#container-signup-bottom {
+  .section-colors(#fff, @blue-darker, @blue-darker);
+  height: 200px;
+
+  @media (min-width: 840px) {
+    .clearfix;
+    height: 100px;
+    text-align: right;
+  }
+
+  .section-header {
+    font-size: 1.5rem;
+    line-height: 1.33;
+
+    em {
+      font-weight: 600;
+    }
+
+    @media (min-width: 640px) {
+      font-size: 1.75rem;
+      line-height: 1.214;
+    }
+
+    @media (min-width: 840px) {
+      float: left;
+      text-align: left;
+      max-width: 700px;
+      margin-right: 20px;
+      padding: 30px 0;
+    }
+  }
+
+  .section-copy {
+    text-align: center;
+
+    @media (min-width: 840px) {
+      float: right;
+      width: 220px;
+      padding-top: 20px;
+    }
+  }
+}

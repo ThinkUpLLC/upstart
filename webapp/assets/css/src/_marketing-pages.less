@@ -1,6 +1,7 @@
 body.marketing-page {
   .container {
     margin: 0 auto;
+    height: auto;
 
     @media (min-width: 48em) {
       border: 0;
@@ -8,16 +9,6 @@ body.marketing-page {
   }
 
   .section {
-    padding: 15px 15px 0;
-    min-height: 240px;
-    background-position: center 90px;
-    background-repeat: no-repeat;
-
-    .section-header {
-      font-weight: 600;
-      margin: 0;
-    }
-
     p, li {
       font-family: @tablet-gothic;
       font-size: (14/16em);
@@ -25,9 +16,22 @@ body.marketing-page {
     }
   }
 
+  .section-header {
+    color: #222;
+    font-weight: 600;
+    padding: 10px 0 0;
+  }
+
+  .section-subheader {
+    color: @gray-light;
+    font-weight: normal;
+    margin: .25em 0 0;
+  }
+
   .section-marketing-text, .section-legal-text {
     height: auto;
     padding: 15px;
+    margin-bottom: 60px;
     border-top: 0;
     color: #444;
 
@@ -36,55 +40,6 @@ body.marketing-page {
       font-size: (20/16em);
       line-height: 1;
       font-weight: 400;
-      color: #FF7F00
-    }
-
-    .text-header ~ .text-header {
-      color: #6bb93b;
-    }
-
-    .text-header ~ .text-header {
-      color: #008BD6;
-    }
-
-    .text-header ~ .text-header ~ .text-header {
-      color: #6bb93b;
-    }
-
-    .text-header ~ .text-header ~ .text-header ~ .text-header {
-      color: #7E57D1;
-    }
-
-    .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header {
-      color: #6BB93B;
-    }
-
-    .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header {
-      color: #FF39EA;
-    }
-
-    .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header {
-      color: #B51B2E;
-    }
-
-    .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header
-    ~ .text-header {
-      color: #5B76C1;
-    }
-
-    .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header
-    ~ .text-header ~ .text-header {
-      color: #D58E19;
-    }
-
-    .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header
-    ~ .text-header ~ .text-header ~ .text-header {
-      color: #B97CC6;
-    }
-
-    .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header
-    ~ .text-header ~ .text-header ~ .text-header ~ .text-header {
-      color: #5fac1c;
     }
 
     p, li {
@@ -123,7 +78,7 @@ body.marketing-page {
 
     @media (min-width: 31.875em) {
       height: auto;
-      padding: 15px 30px;
+      padding: 15px 60px;
 
       .text-header, h3 {
         font-size: (22/16em);
@@ -152,7 +107,7 @@ body.marketing-page {
 
     @media (min-width: 48em) {
       height: auto;
-      padding: 15px 60px;
+      padding: 15px 140px;
 
       .text-header, h3 {
         font-size: (22/16em);
@@ -169,36 +124,6 @@ body.marketing-page {
         }
       }
 
-    }
-  }
-
-  .section-nav {
-    list-style: none;
-    padding: 0;
-    margin: .5em 0;
-
-    li {
-      display: inline-block;
-      padding: 0 5px;
-    }
-
-    a {
-      color: @link-color;
-      font-weight: 400;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-
-      &.active {
-        color: #aaa;
-
-        &:hover {
-          text-decoration: none;
-          cursor: default;
-        }
-      }
     }
   }
 
@@ -268,6 +193,41 @@ body.marketing-page {
       h4 {
         font-size: (20/16em);
         line-height: (22/20);
+      }
+    }
+  }
+
+  .section-nav {
+    list-style: none;
+    padding: 0;
+    margin: .5em 0;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+
+    li {
+      display: inline-block;
+      padding: 0 5px;
+      font-size: .875rem;
+      line-height: (18/14);
+    }
+
+    a {
+      color: @link-color;
+      font-weight: 400;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &.active {
+        color: #aaa;
+
+        &:hover {
+          text-decoration: none;
+          cursor: default;
+        }
       }
     }
   }

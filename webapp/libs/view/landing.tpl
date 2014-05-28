@@ -1,95 +1,103 @@
-{include file="_appheader.v2.tpl" marketing_page=true
-body_classes="landing" body_id="landing-home"}
+{include file="_header.marketing.tpl" body_classes="landing" body_id="landing-home"}
 
-  <div class="container">
-    <header class="section col-md-2 col-lg-2 row-1 col-lg-left" id="section-header">
-      <h1 class="logo">ThinkUp</h1>
-      <h2 class="headline">What if analytics were<br>for real people?</h2>
-    </header>
+<div class="container" id="container-analytics">
+  <div class="section section-screenshot" id="section-analytics">
+    <h3 class="section-header">There’s buried treasure in your social networks.</h3>
+    <div class="section-copy">
+      <p>ThinkUp uncovers fun and fascinating insights about your Facebook and Twitter activity.</p>
+      <div class="illustration">An insight</div>
+    </div>
+  </div>
+</div>
 
-    <section class="section col-md-2 col-lg-1 row-1 col-lg-right section-signup" id="section-signup-top">
-      <h3 class="section-header">Now accepting new members.<br>
-        Be one of the first!</h3>
-      <div class="action-links">
-        <a href="{$site_root_path}join.php" class="btn btn-signup signup-link">Join<br>Now</a>
-        <div class="login-link">Or <a href="{$site_root_path}user/">log in here</a></div>
+<div class="container" id="container-signup-top">
+  <div class="section section-screenshot" id="section-signup-top">
+    <h3 class="section-header">Get started right now.</h3>
+    <div class="section-copy">
+      <p>ThinkUp offers a full money-back guarantee so you can try it out risk-free. Right from the start, you’ll get insights you’ve never seen before.</p>
+      <a href="{$site_root_path}join.php" class="btn btn-pill-large">Choose your plan</a>
+      <div class="illustration">
+        <a href="https://ginatrapani.thinkup.com">See a live demo</a>
       </div>
-    </section>
+    </div>
+  </div>
+</div>
 
-    <section class="section col-lg-1 row-1 col-lg-left" id="section-networks">
-      <h3 class="section-header">ThinkUp makes your experiences on Facebook and Twitter richer.</h3>
-    </section>
-
-    <section class="section col-lg-1 row-1 col-lg-right" id="section-devices">
-      <h3 class="section-header">Use ThinkUp on your phone, tablet, or computer.</h3>
-    </section>
-
-    <section class="section col-lg-1 row-2 col-lg-none col-lg-offset-down" id="section-stats">
-      <h3 class="section-header">More than statistics! ThinkUp makes you feel good about the time you spend online.</h3>
-    </section>
-
-    <section class="section col-lg-1 row-1 col-lg-left col-lg-offset-up" id="section-goals">
-      <h3 class="section-header">You’ll get social network superpowers from ThinkUp’s customized insights.</h3>
-    </section>
-
-    <section class="section col-lg-1 row-1 col-lg-right col-lg-offset-up" id="section-matters">
-      <h3 class="section-header">Understand what matters most to your friends, followers, and fans.</h3>
-    </section>
-
-    <section class="section col-lg-1 row-1 col-lg-left" id="section-community">
-      <h3 class="section-header">ThinkUp is built by you. We listen carefully to our members and collaborate with our open source community every day.</h3>
-    </section>
-
-    <section class="section col-lg-1 row-1 col-lg-left" id="section-companies">
-      <h3 class="section-header">With ThinkUp, you can know just as much about your social activity as the big companies do.</h3>
-    </section>
-
-    <section class="section col-lg-1 row-1 col-lg-right" id="section-meaning">
-      <h3 class="section-header">ThinkUp doesn't just show you what's popular &mdash; it tells you if you really connected with people.</h3>
-    </section>
-
-    <section class="section col-lg-1 row-1 col-lg-left" id="section-different">
-      <h3 class="section-header">ThinkUp is a better kind of technology company.</h3>
-
-      <div class="headshots">
-        <img class="headshot" src="{$site_root_path}assets/img/gina-headshot@2x.jpg" alt="Gina Trapani">
-        <img class="headshot" src="{$site_root_path}assets/img/anil-headshot@2x.jpg" alt="Anil Dash">
-      </div>
-
-      <p>We want to build a great tech company that’s focused on doing the right thing for our users, our community, and the web. To do it right, we’re building a company that respects users more than any other tech company.</p>
-    </section>
-
-    <section class="section col-md-2 col-lg-2 row-1 col-lg-right" id="section-doesnt">
-      <h3 class="section-header">ThinkUp is just as amazing for what it <em>doesn’t</em> do.</h3>
-
-      <ul>
-        <li>ThinkUp does NOT try to turn your social network into a popularity contest. Life is about meaningful connections, whether you have five followers or five million.</li>
-        <li>ThinkUp does NOT do things with your personal data without your permission.</li>
-      </ul>
-      <ul>
-        <li>ThinkUp does NOT lock up your data. We keep your info secure, but we also make it easy to download. Our code is open-source, too. No proprietary lock-in, just great service.</li>
-        <li>ThinkUp does NOT change its terms of service without consulting with the community.</li>
-      </ul>
-    </section>
-
-    <section class="section col-md-2 col-lg-3 row-1 col-lg-right section-signup" id="section-signup-bottom">
-      <div class="subsection-signup">
-        <h3 class="section-header">Ready to become a member?</h3>
-        <div class="action-links">
-          <a href="{$site_root_path}join.php" class="btn btn-signup signup-link">Join now</a>
+<div class="container" id="container-what">
+  <div class="section section-screenshot" id="section-what">
+    <h3 class="section-header">What is ThinkUp?</h3>
+    <div class="section-copy">
+      <p>ThinkUp is a smart, simple app that analyzes your activity on Facebook and Twitter. Each day, ThinkUp offers you fun and surprising insights your social networks don’t give you.</p>
+      <div class="section-insights-carousel carousel" id="sample-insights-carousel"
+        data-ride="carousel" data-interval="2500">
+        <ul class="carousel-indicators">
+          <li data-target="#sample-insights-carousel" data-slide-to="0" class="active"><a href="#">1</a></li>
+          <li data-target="#sample-insights-carousel" data-slide-to="1"><a href="#">2</a></li>
+          <li data-target="#sample-insights-carousel" data-slide-to="2"><a href="#">3</a></li>
+          <li data-target="#sample-insights-carousel" data-slide-to="3"><a href="#">4</a></li>
+        </ul>
+        <div class="sample-insights carousel-inner">
+          <figure class="item active" id="sample-1">
+            <div class="sample-insight"></div>
+          </figure>
+          <figure class="item" id="sample-2">
+            <div class="sample-insight"></div>
+          </figure>
+          <figure class="item" id="sample-3">
+            <div class="sample-insight"></div>
+          </figure>
+          <figure class="item" id="sample-4">
+            <div class="sample-insight"></div>
+          </figure>
         </div>
       </div>
+    </div>
+  </div>
+</div>
 
-      <div class="subsection-newsletter">
-        <h3 class="section-header">Or get on the updates list.</h3>
+<div class="container" id="container-specs">
+  <div class="section section-screenshot" id="section-specs">
+    <h3 class="section-header">ThinkUp works the way that you do.</h3>
+    <div class="section-copy">
+      <p>ThinkUp’s insights come any way you want them. Check them any time on your smartphone, tablet, or computer. And each day (or once a week, or never!), get a personalized email telling you what's up with your friends, followers, and fans.</p>
+      <div class="illustration">An image of three devices</div>
+    </div>
+  </div>
+</div>
 
-        <div class="action-links">
-          <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">
-            <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email">
-            <button type="submit" value="Subscribe" name="subscribe" class="btn-submit"><i class="fa fa-envelope-o"></i></button>
-          </form>
-        </div>
-      </div>
-    </section>
+<div class="container" id="container-company">
+  <div class="section section-screenshot" id="section-company">
+    <h3 class="section-header">A tech company that<br>
+      treats you with respect.</h3>
+    <div class="section-copy">
+      <p>ThinkUp is a different kind of company. We make products for regular people, we collaborate with an <a href="https://github.com/ginatrapani/ThinkUp">open source community</a> and we live by <a href="{$site_root_path}about/values.php">our values</a>.</p>
+      <div class="illustration">An insight</div>
+    </div>
+  </div>
+</div>
 
-{include file="_appfooter.v2.tpl" marketing_page=true}
+<div class="container" id="container-not-thinkup">
+  <div class="section section-screenshot" id="section-not-thinkup">
+    <h3 class="section-header">You’ll love what ThinkUp <em>doesn’t</em> do.</h3>
+    <div class="section-copy">
+      <ul>
+        <li>No popularity contests about how many friends you have.</li>
+        <li>No creepy tracking of your behavior.</li>
+        <li>No ugly surprises about how your data is used.</li>
+        <li>No hassle if you want to cancel your subscription.</li>
+      </ul>
+      <div class="illustration">An insight</div>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="container-signup-bottom">
+  <div class="section" id="section-signup-bottom">
+    <h3 class="section-header">We’ve got a 100% risk-free money-back guarantee</h3>
+    <div class="section-copy">
+      <a href="{$site_root_path}join.php" class="btn btn-pill-medium">Join now</a>
+    </div>
+  </div>
+</div>
+
+{include file="_footer.marketing.tpl"}

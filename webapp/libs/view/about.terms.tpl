@@ -1,15 +1,11 @@
-{include file="_appheader.v2.tpl" marketing_page=true
+{include file="_header.marketing.tpl" marketing_page=true
 body_classes="marketing marketing-page" body_id="marketing-terms"}
 
   <div class="container">
-    {include file="_marketing-navigation.tpl"}
-
-    <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-page-header">
+    <section class="section section-legal-text">
       <h2 class="section-header">Terms of Service</h2>
       {include file="_about.nav.tpl" active="terms"}
-    </section>
 
-    <section class="section col-md-2 col-lg-3 col-lg-right section-legal-text">
       <p class="mod-date">Last Modified: 2014-02-13</p>
       <p><strong>Hi and welcome! You are now reading ThinkUp&#39;s Terms of Service.</strong> This is the
       legal contract between you and ThinkUp when you use ThinkUp&#39;s site, services,
@@ -472,4 +468,4 @@ body_classes="marketing marketing-page" body_id="marketing-terms"}
 
     </section>
 
-{include file="_appfooter.v2.tpl" marketing_page=true}
+{include file="_footer.marketing.tpl"}

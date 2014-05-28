@@ -16,7 +16,7 @@ wt.appMessage =
       <a href="#" class="app-message-close"><i class="fa fa-times-circle icon"></i></a>
     </div>""")
     $el.addClass "app-message-#{type}" if type? and type isnt ""
-    $("#section-header").append($el)
+    $("#section-header, #section-navbar").append($el)
     $(".app-message").fadeIn(150)
     $("body").addClass "app-message-visible"
   destroy: ->
@@ -30,6 +30,29 @@ wt.appMessage =
       wt.appMessage.create app_message.msg, app_message.type
 
 $ ->
+  $.getJSON "https://api.tumblr.com/v2/blog/thinkupapp.tumblr.com/posts/text?api_key=IQYCrVox6Ltyy4IqbbJWoIM9Czw0WzPGgzKWPg69WEFIa5mTtm&limit=3&callback=?", (data) ->
+      if data?.response?.posts.length
+        mo = [
+          'January'
+          'February'
+          'March'
+          'April'
+          'May'
+          'June'
+          'July'
+          'August'
+          'September'
+          'October'
+          'November'
+          'December'
+        ]
+        $posts = $("#subsection-blog .blog-posts")
+        for post in data.response.posts
+          d = new Date(post['timestamp']*1000)
+          dateStr = "#{mo[d.getMonth()]} #{d.getDate()}, #{d.getFullYear()}"
+          $posts.append """<li class="blog-post"><div class="date">#{dateStr}</div>
+            <a href="#{post['post_url']}" class="permalink">#{post['title']}</a></li>"""
+
   $("#form-contact").submit (e) ->
     e.preventDefault()
     $form = $(@)

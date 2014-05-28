@@ -614,345 +614,14 @@ body.header-compressed #section-signup-top .login-link {
     margin: 0;
   }
 }
-#section-networks {
-  border-top-color: #ff7f00;
-}
-#section-networks .section-header {
-  color: #ff7f00;
-}
-#section-networks .section-header .color {
-  color: #ff7f00;
-}
-#section-stats {
-  border-top-color: #008bd6;
-}
-#section-stats .section-header {
-  color: #008bd6;
-}
-#section-stats .section-header .color {
-  color: #008bd6;
-}
-#section-devices {
-  border-top-color: #7e57d1;
-}
-#section-devices .section-header {
-  color: #7e57d1;
-}
-#section-devices .section-header .color {
-  color: #7e57d1;
-}
-#section-goals {
-  border-top-color: #6bb93b;
-}
-#section-goals .section-header {
-  color: #6bb93b;
-}
-#section-goals .section-header .color {
-  color: #6bb93b;
-}
-#section-matters {
-  border-top-color: #ff39ea;
-}
-#section-matters .section-header {
-  color: #ff39ea;
-}
-#section-matters .section-header .color {
-  color: #ff39ea;
-}
-#section-community {
-  border-top-color: #b51b2e;
-}
-#section-community .section-header {
-  color: #b51b2e;
-}
-#section-community .section-header .color {
-  color: #b51b2e;
-}
-#section-companies {
-  border-top-color: #5b76c1;
-}
-#section-companies .section-header {
-  color: #5b76c1;
-}
-#section-companies .section-header .color {
-  color: #5b76c1;
-}
-#section-meaning {
-  border-top-color: #d58e19;
-}
-#section-meaning .section-header {
-  color: #d58e19;
-}
-#section-meaning .section-header .color {
-  color: #d58e19;
-}
-#section-different {
-  border-top-color: #b97cc6;
-}
-#section-different .section-header {
-  color: #b97cc6;
-}
-#section-different .section-header .color {
-  color: #b97cc6;
-}
-#section-doesnt {
-  border-top-color: #5fac1c;
-}
-#section-doesnt .section-header {
-  color: #5fac1c;
-}
-#section-doesnt .section-header .color {
-  color: #5fac1c;
-}
-#section-networks {
-  background-image: url(../img/fan-cards.png);
-}
-#section-stats {
-  background-image: url(../img/thinkup-stream.png);
-  min-height: 480px;
-  background-position-y: 100px;
-  background-size: 185px 622.5px;
-}
-#section-devices {
-  background-image: url(../img/devices.png);
-}
-#section-devices br {
-  display: none;
-}
-#section-goals {
-  background-image: url(../img/sample-insight.png);
-  background-size: 272px 166px;
-  background-position: center 115px;
-}
-#section-matters {
-  background-image: url(../img/friends-online.png);
-  background-position: center 80px;
-}
-#section-community {
-  background-image: url(../img/crowd.png);
-}
-#section-companies {
-  background-image: url(../img/files.png);
-  background-position-y: 100px;
-}
-#section-meaning {
-  background-image: url(../img/photos-illustration.png);
-}
-#section-meaning,
-#section-community {
-  background-position: center 100px;
-}
-#section-different {
-  min-height: 0;
-}
-#section-different .section-header {
-  margin-bottom: 15px;
-}
-#section-different .headshots {
-  text-align: center;
-}
-#section-different .headshots .headshot {
-  display: inline-block;
-  width: 75px;
-  height: 75px;
-  border-radius: 50%;
-  margin-left: 5px;
-}
-#section-different .headshots .headshot:first-child {
-  margin: 0;
-}
-#section-different p {
-  margin-bottom: 1.5em;
-}
-#section-doesnt {
-  height: auto;
-}
-#section-doesnt .section-header {
-  margin-bottom: 15px;
-}
-#section-doesnt ul {
-  padding: 0 0 0 20px;
-  margin: 0;
-}
-#section-doesnt ul li {
-  margin-bottom: 1.28571429em;
-}
-#section-signup-bottom {
-  min-height: 0;
-  height: auto;
-}
-#section-signup-bottom:before,
-#section-signup-bottom:after {
-  content: " ";
-  /* 1 */
-  display: table;
-  /* 2 */
-}
-#section-signup-bottom:after {
-  clear: both;
-}
-#section-signup-bottom .action-links {
-  margin: 15px 0;
-  text-align: left;
-}
-#section-signup-bottom .subsection-signup:before,
-#section-signup-bottom .subsection-signup:after {
-  content: " ";
-  /* 1 */
-  display: table;
-  /* 2 */
-}
-#section-signup-bottom .subsection-signup:after {
-  clear: both;
-}
-#section-signup-bottom .subsection-signup .section-header,
-#section-signup-bottom .subsection-signup .action-links {
-  float: left;
-  width: 50%;
-  margin-top: 15px;
-}
-#section-signup-bottom .subsection-signup .action-links {
-  margin-top: 0;
-  text-align: right;
-}
-@media (min-width: 31.875em) {
-  #section-different,
-  #section-meaning {
-    height: 310px;
-  }
-  #section-doesnt:before,
-  #section-doesnt:after {
-    content: " ";
-    /* 1 */
-    display: table;
-    /* 2 */
-  }
-  #section-doesnt:after {
-    clear: both;
-  }
-  #section-doesnt ul {
-    width: 48%;
-    float: left;
-  }
-  #section-doesnt ul:first-of-type {
-    margin-right: 2%;
-    width: 50%;
-  }
-}
-@media (min-width: 34.375em) {
-  #section-different,
-  #section-meaning {
-    height: 290px;
-  }
-  #section-signup-bottom {
-    height: 135px;
-  }
-  #section-signup-bottom:before,
-  #section-signup-bottom:after {
-    content: " ";
-    /* 1 */
-    display: table;
-    /* 2 */
-  }
-  #section-signup-bottom:after {
-    clear: both;
-  }
-  #section-signup-bottom .subsection-newsletter,
-  #section-signup-bottom .subsection-signup {
-    float: left;
-    width: 50%;
-    text-align: center;
-  }
-  #section-signup-bottom .subsection-signup .section-header,
-  #section-signup-bottom .subsection-signup .action-links {
-    float: none;
-    margin-top: 0;
-    margin-bottom: 10px;
-    width: 100%;
-    text-align: center;
-  }
-  #section-signup-bottom .subsection-newsletter .action-links {
-    margin: 15px auto;
-    width: 75%;
-    text-align: center;
-  }
-}
-@media (min-width: 48em) {
-  #section-community,
-  #section-companies,
-  #section-meaning {
-    background-position-y: 140px;
-  }
-  #section-stats {
-    background-position: center 110px;
-  }
-  #section-devices {
-    background-position: 35px 120px;
-  }
-  #section-devices br {
-    display: block;
-  }
-  #section-matters {
-    background-position: center 120px;
-  }
-  #section-goals {
-    background-position: 46px 100px;
-  }
-  #section-meaning {
-    height: 300px;
-  }
-  #section-different,
-  #section-doesnt {
-    height: 250px;
-  }
-  #section-different .headshots,
-  #section-doesnt .headshots {
-    display: none;
-  }
-}
-@media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-  #section-networks {
-    background-image: url(../img/fan-cards@2x.png);
-    background-size: 97px 123px;
-  }
-  #section-devices {
-    background-image: url(../img/devices@2x.png);
-    background-size: 270px 100px;
-  }
-  #section-matters {
-    background-image: url(../img/friends-online@2x.png);
-    background-size: 183px 148px;
-  }
-  #section-community {
-    background-image: url(../img/crowd@2x.png);
-    background-size: 125px 120px;
-  }
-  #section-companies {
-    background-image: url(../img/files@2x.png);
-    background-size: 149px 123px;
-  }
-  #section-meaning {
-    background-image: url(../img/photos-illustration@2x.png);
-    background-size: 204px 120px;
-  }
-}
 body.marketing-page .container {
   margin: 0 auto;
+  height: auto;
 }
 @media (min-width: 48em) {
   body.marketing-page .container {
     border: 0;
   }
-}
-body.marketing-page .section {
-  padding: 15px 15px 0;
-  min-height: 240px;
-  background-position: center 90px;
-  background-repeat: no-repeat;
-}
-body.marketing-page .section .section-header {
-  font-weight: 600;
-  margin: 0;
 }
 body.marketing-page .section p,
 body.marketing-page .section li {
@@ -960,10 +629,21 @@ body.marketing-page .section li {
   font-size: 0.875em;
   line-height: 1.28571429;
 }
+body.marketing-page .section-header {
+  color: #222;
+  font-weight: 600;
+  padding: 10px 0 0;
+}
+body.marketing-page .section-subheader {
+  color: #999999;
+  font-weight: normal;
+  margin: .25em 0 0;
+}
 body.marketing-page .section-marketing-text,
 body.marketing-page .section-legal-text {
   height: auto;
   padding: 15px;
+  margin-bottom: 60px;
   border-top: 0;
   color: #444;
 }
@@ -973,51 +653,6 @@ body.marketing-page .section-legal-text .text-header {
   font-size: 1.25em;
   line-height: 1;
   font-weight: 400;
-  color: #ff7f00;
-}
-body.marketing-page .section-marketing-text .text-header ~ .text-header,
-body.marketing-page .section-legal-text .text-header ~ .text-header {
-  color: #6bb93b;
-}
-body.marketing-page .section-marketing-text .text-header ~ .text-header,
-body.marketing-page .section-legal-text .text-header ~ .text-header {
-  color: #008BD6;
-}
-body.marketing-page .section-marketing-text .text-header ~ .text-header ~ .text-header,
-body.marketing-page .section-legal-text .text-header ~ .text-header ~ .text-header {
-  color: #6bb93b;
-}
-body.marketing-page .section-marketing-text .text-header ~ .text-header ~ .text-header ~ .text-header,
-body.marketing-page .section-legal-text .text-header ~ .text-header ~ .text-header ~ .text-header {
-  color: #7E57D1;
-}
-body.marketing-page .section-marketing-text .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header,
-body.marketing-page .section-legal-text .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header {
-  color: #6BB93B;
-}
-body.marketing-page .section-marketing-text .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header,
-body.marketing-page .section-legal-text .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header {
-  color: #FF39EA;
-}
-body.marketing-page .section-marketing-text .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header,
-body.marketing-page .section-legal-text .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header {
-  color: #B51B2E;
-}
-body.marketing-page .section-marketing-text .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header,
-body.marketing-page .section-legal-text .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header {
-  color: #5B76C1;
-}
-body.marketing-page .section-marketing-text .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header,
-body.marketing-page .section-legal-text .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header {
-  color: #D58E19;
-}
-body.marketing-page .section-marketing-text .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header,
-body.marketing-page .section-legal-text .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header {
-  color: #B97CC6;
-}
-body.marketing-page .section-marketing-text .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header,
-body.marketing-page .section-legal-text .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header ~ .text-header {
-  color: #5fac1c;
 }
 body.marketing-page .section-marketing-text p,
 body.marketing-page .section-legal-text p,
@@ -1061,7 +696,7 @@ body.marketing-page .section-legal-text .list-values li:before {
   body.marketing-page .section-marketing-text,
   body.marketing-page .section-legal-text {
     height: auto;
-    padding: 15px 30px;
+    padding: 15px 60px;
   }
   body.marketing-page .section-marketing-text .text-header,
   body.marketing-page .section-legal-text .text-header,
@@ -1098,7 +733,7 @@ body.marketing-page .section-legal-text .list-values li:before {
   body.marketing-page .section-marketing-text,
   body.marketing-page .section-legal-text {
     height: auto;
-    padding: 15px 60px;
+    padding: 15px 140px;
   }
   body.marketing-page .section-marketing-text .text-header,
   body.marketing-page .section-legal-text .text-header,
@@ -1115,30 +750,6 @@ body.marketing-page .section-legal-text .list-values li:before {
   body.marketing-page .section-legal-text .list-values li:before {
     text-align: right;
   }
-}
-body.marketing-page .section-nav {
-  list-style: none;
-  padding: 0;
-  margin: .5em 0;
-}
-body.marketing-page .section-nav li {
-  display: inline-block;
-  padding: 0 5px;
-}
-body.marketing-page .section-nav a {
-  color: #2785d3;
-  font-weight: 400;
-  text-decoration: none;
-}
-body.marketing-page .section-nav a:hover {
-  text-decoration: underline;
-}
-body.marketing-page .section-nav a.active {
-  color: #aaa;
-}
-body.marketing-page .section-nav a.active:hover {
-  text-decoration: none;
-  cursor: default;
 }
 body.marketing-page .section-legal-text h3 {
   text-align: left;
@@ -1202,6 +813,35 @@ body.marketing-page .section-legal-text blockquote p {
     font-size: 1.25em;
     line-height: 1.1;
   }
+}
+body.marketing-page .section-nav {
+  list-style: none;
+  padding: 0;
+  margin: .5em 0;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+body.marketing-page .section-nav li {
+  display: inline-block;
+  padding: 0 5px;
+  font-size: .875rem;
+  line-height: 1.28571429;
+}
+body.marketing-page .section-nav a {
+  color: #2785d3;
+  font-weight: 400;
+  text-decoration: none;
+}
+body.marketing-page .section-nav a:hover {
+  text-decoration: underline;
+}
+body.marketing-page .section-nav a.active {
+  color: #aaa;
+}
+body.marketing-page .section-nav a.active:hover {
+  text-decoration: none;
+  cursor: default;
 }
 body.marketing-page .form {
   margin-bottom: 30px;
@@ -1375,83 +1015,122 @@ body#marketing-about #section-about-text .download-our-logo img {
 .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc ~ .hc {
   color: #5fac1c;
 }
-body.marketing-page #section-page-header .section-header {
+body#marketing-subscribe #section-page-header {
+  margin-bottom: 40px;
+}
+body#marketing-subscribe #section-page-header .section-header {
   font-size: 2em;
 }
-body.marketing-page #section-subscription-member {
+body#marketing-subscribe #section-page-header .section-subheader {
+  text-align: center;
+  font-size: 1rem;
+}
+body#marketing-subscribe #section-subscription-member {
   border-top-color: #b97cc6;
   background: rgba(185, 124, 198, 0.1);
 }
-body.marketing-page #section-subscription-member .section-header {
+body#marketing-subscribe #section-subscription-member .subsection-header {
   color: #b97cc6;
 }
-body.marketing-page #section-subscription-member .section-header .color {
+body#marketing-subscribe #section-subscription-member .subsection-header .color {
   color: #b97cc6;
 }
-body.marketing-page #section-subscription-member .level-cost .annually {
+body#marketing-subscribe #section-subscription-member .level-cost .annually {
   color: #b97cc6;
 }
-@media (min-width: 48em) {
-  body.marketing-page #section-subscription-member {
+@media (min-width: 52em) {
+  body#marketing-subscribe #section-subscription-member {
     border-color: #dcbee3;
   }
 }
-body.marketing-page #section-subscription-pro {
+body#marketing-subscribe #section-subscription-pro {
   border-top-color: #6bb93b;
   background: rgba(107, 185, 59, 0.1);
 }
-body.marketing-page #section-subscription-pro .section-header {
+body#marketing-subscribe #section-subscription-pro .subsection-header {
   color: #6bb93b;
 }
-body.marketing-page #section-subscription-pro .section-header .color {
+body#marketing-subscribe #section-subscription-pro .subsection-header .color {
   color: #6bb93b;
 }
-body.marketing-page #section-subscription-pro .level-cost .annually {
+body#marketing-subscribe #section-subscription-pro .level-cost .annually {
   color: #6bb93b;
 }
-@media (min-width: 48em) {
-  body.marketing-page #section-subscription-pro {
+@media (min-width: 52em) {
+  body#marketing-subscribe #section-subscription-pro {
     border-color: #b5dc9d;
   }
 }
-body.marketing-page #section-subscription-executive {
+body#marketing-subscribe #section-subscription-executive {
   border-top-color: #b51b2e;
   background: rgba(181, 27, 46, 0.1);
 }
-body.marketing-page #section-subscription-executive .section-header {
+body#marketing-subscribe #section-subscription-executive .subsection-header {
   color: #b51b2e;
 }
-body.marketing-page #section-subscription-executive .section-header .color {
+body#marketing-subscribe #section-subscription-executive .subsection-header .color {
   color: #b51b2e;
 }
-body.marketing-page #section-subscription-executive .level-cost .annually {
+body#marketing-subscribe #section-subscription-executive .level-cost .annually {
   color: #b51b2e;
 }
-@media (min-width: 48em) {
-  body.marketing-page #section-subscription-executive {
+@media (min-width: 52em) {
+  body#marketing-subscribe #section-subscription-executive {
     border-color: #da8d97;
   }
 }
-body.marketing-page .section-subscription-level {
+body#marketing-subscribe .subscription-levels:before,
+body#marketing-subscribe .subscription-levels:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+body#marketing-subscribe .subscription-levels:after {
+  clear: both;
+}
+@media (min-width: 52em) {
+  body#marketing-subscribe .subscription-levels {
+    padding: 0;
+    width: 840px;
+  }
+}
+body#marketing-subscribe .section-subscription-level {
   position: relative;
   height: auto;
-  padding-top: 20px;
+  padding: 20px;
 }
-body.marketing-page .section-subscription-level.col-lg-right {
-  border-right-style: solid;
-  border-width: 1px;
+@media (min-width: 40em) {
+  body#marketing-subscribe .section-subscription-level {
+    height: 240px;
+    float: left;
+    width: 50%;
+  }
 }
-body.marketing-page .section-subscription-level .section-header {
+@media (min-width: 52em) {
+  body#marketing-subscribe .section-subscription-level {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 15px;
+    width: 400px;
+    margin-bottom: 40px;
+  }
+  body#marketing-subscribe .section-subscription-level:first-of-type {
+    margin-right: 40px;
+  }
+}
+body#marketing-subscribe .subsection-header {
   font-size: 1.5em;
-  margin-bottom: 15px;
+  margin: 0 0 15px;
+  font-weight: normal;
 }
-body.marketing-page .section-subscription-level .section-header .descriptor {
+body#marketing-subscribe .subsection-header .descriptor {
   display: block;
   font-size: .625em;
   color: #222;
   font-weight: 400;
 }
-body.marketing-page .section-subscription-level .level-cost {
+body#marketing-subscribe .level-cost {
   position: absolute;
   top: 21px;
   right: 15px;
@@ -1459,140 +1138,102 @@ body.marketing-page .section-subscription-level .level-cost {
   line-height: 1.25;
   text-align: right;
 }
-body.marketing-page .section-subscription-level .level-cost .annually {
+body#marketing-subscribe .level-cost .annually {
   font-size: 1.375em;
   font-weight: 600;
 }
-body.marketing-page .section-subscription-level .level-description {
-  padding: 15px 0;
+body#marketing-subscribe .level-description {
+  padding: 15px 0 75px;
   margin: 0;
   text-align: center;
 }
-body.marketing-page .section-subscription-level .level-description p {
+body#marketing-subscribe .level-description p {
   margin: 0;
   line-height: 1.25;
 }
-body.marketing-page .section-subscription-level .level-description p.headline {
+body#marketing-subscribe .level-description p.headline {
   font-weight: 600;
   font-size: 1.125em;
   font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
 }
-body.marketing-page .section-subscription-level .action-buttons {
+body#marketing-subscribe .action-buttons {
   position: absolute;
   width: 93%;
   bottom: 30px;
 }
-body.marketing-page .section-subscription-level .action-buttons:before,
-body.marketing-page .section-subscription-level .action-buttons:after {
+body#marketing-subscribe .action-buttons:before,
+body#marketing-subscribe .action-buttons:after {
   content: " ";
   /* 1 */
   display: table;
   /* 2 */
 }
-body.marketing-page .section-subscription-level .action-buttons:after {
+body#marketing-subscribe .action-buttons:after {
   clear: both;
 }
-body.marketing-page .section-subscription-level .action-buttons .action-buttons-label {
+body#marketing-subscribe .action-buttons .action-buttons-label {
   margin-bottom: 5px;
   line-height: 28px;
   float: left;
 }
-body.marketing-page .section-subscription-level .action-buttons .actual-buttons {
+body#marketing-subscribe .action-buttons .actual-buttons {
   float: right;
 }
-body.marketing-page .section-subscription-level .action-buttons .btn {
+body#marketing-subscribe .action-buttons .btn {
   width: 100px;
   margin: 0 5px;
+  font-size: 0.9375rem;
+  padding: 10px 0;
+  border-radius: 5px;
+  height: auto;
 }
-body.marketing-page .section-subscription-level .action-buttons .btn .icon {
+body#marketing-subscribe .action-buttons .btn .icon {
   margin-right: 5px;
 }
-body.marketing-page .section-subscription-level .action-buttons .btn-twitter {
+body#marketing-subscribe .action-buttons .btn-twitter {
   background: #55acee;
 }
-body.marketing-page .section-subscription-level .action-buttons .btn-facebook {
+body#marketing-subscribe .action-buttons .btn-facebook {
   background: #3b5998;
 }
-body.marketing-page .section-subscription-level .action-buttons .btn-facebook .icon {
+body#marketing-subscribe .action-buttons .btn-facebook .icon {
   margin-right: 7px;
 }
-body.marketing-page #section-subscription-executive,
-body.marketing-page #section-signup-bottom {
-  min-height: 0;
-}
-body.marketing-page #section-signup-bottom .section-header,
-body.marketing-page #section-signup-bottom .action-links {
-  float: none;
-  width: 100%;
-  text-align: center;
-}
-body.marketing-page #section-signup-bottom .newsletter-signup-form {
-  text-align: center;
-}
-body.marketing-page #section-subscription-executive {
-  text-align: center;
-  padding-bottom: 20px;
-  background-color: transparent;
-}
-body.marketing-page #section-subscription-executive .section-header,
-body.marketing-page #section-subscription-executive .level-description {
-  max-width: 400px;
-  margin: 0 auto;
-}
-@media (min-width: 31.875em) {
-  body.marketing-page .section-subscription-level,
-  body.marketing-page .section-subscription-level.col-lg-1 {
-    height: 240px;
-  }
-  body.marketing-page .section-subscription-level .action-buttons,
-  body.marketing-page .section-subscription-level.col-lg-1 .action-buttons {
+@media (min-width: 40em) {
+  body#marketing-subscribe .action-buttons {
     margin-top: 0;
     text-align: center;
   }
-  body.marketing-page .section-subscription-level .action-buttons .action-buttons-label,
-  body.marketing-page .section-subscription-level.col-lg-1 .action-buttons .action-buttons-label,
-  body.marketing-page .section-subscription-level .action-buttons .actual-buttons,
-  body.marketing-page .section-subscription-level.col-lg-1 .action-buttons .actual-buttons {
+  body#marketing-subscribe .action-buttons .action-buttons-label,
+  body#marketing-subscribe .action-buttons .actual-buttons {
     float: none;
   }
-  body.marketing-page #section-subscription-executive,
-  body.marketing-page #section-signup-bottom {
-    height: auto;
-  }
-  body.marketing-page #section-signup-bottom .section-header {
-    margin-top: 0px;
-  }
-  body.marketing-page #section-signup-bottom .action-links .newsletter-signup-form {
-    max-width: 320px;
-    margin: 0 auto;
-  }
 }
-@media (min-width: 48em) {
-  body.marketing-page .section-subscription-level {
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 15px;
-    width: 46%;
-    margin: 0 0 0 4%;
-  }
-  body.marketing-page .section-subscription-level:first-of-type {
-    margin: 0 4% 0 0;
-  }
-  body.marketing-page .section-subscription-level .action-buttons {
+@media (min-width: 52em) {
+  body#marketing-subscribe .action-buttons {
     margin-top: 15px;
   }
-  body.marketing-page .section-subscription-level .action-buttons .action-buttons-label {
+  body#marketing-subscribe .action-buttons .action-buttons-label {
     float: left;
   }
-  body.marketing-page .section-subscription-level .action-buttons .actual-buttons {
+  body#marketing-subscribe .action-buttons .actual-buttons {
     float: right;
   }
-  body.marketing-page #section-subscription-executive,
-  body.marketing-page #section-signup-bottom {
-    border: 0;
-  }
-  body.marketing-page #section-subscription-executive .section-header {
-    margin-top: 27px;
+}
+body#marketing-subscribe #section-subscription-executive {
+  text-align: center;
+  padding-bottom: 20px;
+  background-color: transparent;
+  margin-top: 40px;
+}
+body#marketing-subscribe #section-subscription-executive .section-header,
+body#marketing-subscribe #section-subscription-executive .level-description {
+  max-width: 400px;
+  margin: 0 auto;
+}
+@media (min-width: 52em) {
+  body#marketing-subscribe #section-subscription-executive {
+    margin-top: 0;
   }
 }
 .form {
@@ -1867,3 +1508,4 @@ textarea.form-control {
     width: 220px;
   }
 }
+/*# sourceMappingURL=marketing.css.map */

@@ -1,15 +1,10 @@
-{include file="_appheader.v2.tpl" marketing_page=true
+{include file="_header.marketing.tpl" marketing_page=true
 body_classes="marketing marketing-page" body_id="marketing-faq"}
 
   <div class="container">
-    {include file="_marketing-navigation.tpl"}
-
-    <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-page-header">
+    <section class="section section-legal-text" id="section-legal-text">
       <h2 class="section-header">Frequently Asked Questions</h2>
       {include file="_about.nav.tpl" active="faq"}
-    </section>
-
-    <section class="section col-md-2 col-lg-3 col-lg-right section-legal-text" id="section-legal-text">
 
       <h3 class="hc text-header">The Basics</h3>
 
@@ -63,9 +58,9 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
       </ul>
 
       <p>ThinkUp is a great tool to sit alongside conventional analytics and metrics services. While other platforms are far better at tracking conversion funnels, or focused on purely financial metrics, ThinkUp aims to show how well you’re using your social networks at a more <em>human</em> level.</p>
-      
+
       <h4 id="language-support"><a href="#language-support">What languages does ThinkUp support?</a></h4>
-      
+
       <p>While we plan to support multiple languages in the future, ThinkUp currently has several insights that work best for users who primarily use English for Facebook and Twitter activity.</p>
 
       <h3 class="hc text-header">Current Members</h2>
@@ -104,4 +99,4 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
     </section>
 
 
-{include file="_appfooter.v2.tpl" marketing_page=true}
+{include file="_footer.marketing.tpl"}

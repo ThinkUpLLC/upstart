@@ -1,19 +1,19 @@
-{include file="_appheader.v2.tpl" marketing_page=true
+{include file="_header.marketing.tpl" marketing_page=true
 body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe"}
 
   <div class="container">
-    {include file="_marketing-navigation.tpl"}
 
-    <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-page-header">
+    <section class="section" id="section-page-header">
       <h2 class="section-header">Join thousands of happy ThinkUp members.</h2>
       <h3 class="section-subheader">100% money-back guarantee (but almost nobody ever asks)</h3>
     </section>
+  </div>
+  <div class="container">
 
-    <div class="section-group subscription-levels">
-
-      <section class="section section-subscription-level"
+    <div class="section subscription-levels">
+      <section class="subsection section-subscription-level"
       id="section-subscription-member">
-        <h3 class="section-header">1 account
+        <h3 class="subsection-header">1 account
           <span class="descriptor">per social network</span></h3>
         <div class="level-cost">
           <div class="annually">$60/year</div>
@@ -34,9 +34,9 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
         </div>
       </section>
 
-      <section class="section section-subscription-level"
+      <section class="subsection section-subscription-level"
       id="section-subscription-pro">
-        <h3 class="section-header">5 accounts
+        <h3 class="subsection-header">5 accounts
           <span class="descriptor">per social network</span></h3>
         <div class="level-cost">
           <div class="annually">$120/year</div>
@@ -56,27 +56,15 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
           </div>
         </div>
       </section>
-
-      <section class="section col-md-2 col-lg-3 col-lg-right"
-      id="section-subscription-executive">
-        <h3 class="section-header">For bigger organizations: ThinkUp Executive</h3>
-
-        <div class="level-description">
-          <p>If you’re a company or institution with more advanced needs, <a style="color:#2785d3;" href="mailto:team@thinkup.com?subject=ThinkUp+Executive">email us</a>. We’ve got just the thing.</p>
-        </div>
-      </section>
-
-      <section class="section col-md-2 col-lg-3 row-1 col-lg-right section-signup" id="section-signup-bottom">
-
-        <h3 class="section-header">Not ready to join yet? Get on the updates list.</h3>
-
-        <div class="action-links">
-          <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">
-            <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email">
-            <button type="submit" value="Subscribe" name="subscribe" class="btn-submit"><i class="fa fa-envelope-o"></i></button>
-          </form>
-        </div>
-      </section>
     </div>
+  </div>
+  <div class="container">
+    <section class="section" id="section-subscription-executive">
+      <h3 class="subsection-header">For bigger organizations: ThinkUp Executive</h3>
 
-{include file="_appfooter.v2.tpl" marketing_page=true}
+      <div class="level-description">
+        <p>If you’re a company or institution with more advanced needs, <a style="color:#2785d3;" href="mailto:team@thinkup.com?subject=ThinkUp+Executive">email us</a>. We’ve got just the thing.</p>
+      </div>
+    </section>
+  </div>
+{include file="_footer.marketing.tpl"}

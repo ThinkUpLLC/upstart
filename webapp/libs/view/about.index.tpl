@@ -1,15 +1,11 @@
-{include file="_appheader.v2.tpl" marketing_page=true
+{include file="_header.marketing.tpl" marketing_page=true
 body_classes="marketing marketing-page" body_id="marketing-about"}
 
   <div class="container">
-    {include file="_marketing-navigation.tpl"}
-
-    <section class="section col-md-2 col-lg-3 row-1 col-lg-right" id="section-page-header">
+    <section class="section section-marketing-text" id="section-about-text">
       <h2 class="section-header">About ThinkUp</h2>
       {include file="_about.nav.tpl" active="about"}
-    </section>
 
-    <section class="section col-md-2 col-lg-3 col-lg-right section-marketing-text" id="section-about-text">
       <p>ThinkUp is a simple new app that gives you insights into the way you use social networks like Twitter and Facebook. In contrast to regular analytics or statistics apps, ThinkUp uses plain English to explain how you’re doing and to help you achieve your goals, whatever they are. ThinkUp is a fun way to get more out of the time we spend online.</p>
 
       <h3 class="text-header">Our Company</h3>
@@ -46,4 +42,4 @@ body_classes="marketing marketing-page" body_id="marketing-about"}
 
     </section>
 
-{include file="_appfooter.v2.tpl" marketing_page=true}
+{include file="_footer.marketing.tpl"}
