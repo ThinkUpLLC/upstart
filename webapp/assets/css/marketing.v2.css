@@ -1,0 +1,298 @@
+@import "vendor/normalize.min.css";
+/******
+
+This was copied from the ThinkUp repository.
+I’ll be adding bits here and there and try to keep them in sync.
+– MBJ 2014/05/29
+
+******/
+.fa-override-before:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+}
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.app-message {
+  width: 100%;
+  background: #fffabe;
+  border-radius: 4px;
+  position: relative;
+  font-size: 13px;
+  line-height: 1.23;
+  padding: 7px 0;
+  margin-top: 20px;
+  font-weight: 400;
+  text-align: center;
+  z-index: 1000;
+}
+.app-message .content {
+  padding: 0 40px;
+}
+.app-message .app-message-close {
+  position: absolute;
+  font-size: 20px;
+  line-height: 1;
+  top: 5px;
+  right: 5px;
+  color: #999;
+}
+.app-message .app-message-close .icon {
+  vertical-align: top;
+}
+.app-message.app-message-warning {
+  color: #d0021b;
+  background: #f6ccd1;
+}
+.app-message.app-message-warning .content:before {
+  padding-right: 5px;
+}
+.app-message.app-message-warning .app-message-close {
+  color: #d0021b;
+}
+.app-message.app-message-success {
+  color: #417505;
+  background: #d9e3cd;
+}
+.app-message.app-message-success .content:before {
+  padding-right: 5px;
+}
+.app-message.app-message-success .app-message-close {
+  color: #417505;
+}
+body {
+  -webkit-font-smoothing: subpixel-antialiased;
+  color: #222222;
+  font-size: 16px;
+  line-height: 1.125;
+  font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
+  background-color: #fff;
+}
+.container {
+  width: 100%;
+  height: 400px;
+}
+.section {
+  width: 100%;
+  max-width: 960px;
+  min-width: 320px;
+  padding: 10px;
+  margin: 0 auto;
+}
+#container-navbar {
+  height: 120px;
+}
+#section-navbar {
+  padding: 20px 10px;
+}
+#section-navbar:before,
+#section-navbar:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+#section-navbar:after {
+  clear: both;
+}
+#section-navbar .navbar-brand {
+  position: relative;
+  float: left;
+}
+#section-navbar .navbar-brand .logo {
+  margin: 0;
+  text-indent: 100%;
+  font-size: 0;
+  width: 140px;
+  height: 39px;
+  background: url(../img/thinkup-logo@2x.png) 0 0 no-repeat;
+  background-size: 140px 39px;
+}
+#section-navbar .navbar-brand .logo a {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+@media (min-width: 560px) {
+  #section-navbar .navbar-brand .logo {
+    width: 196px;
+    height: 54px;
+    background: url(../img/thinkup-logo@2x.png) 0 0 no-repeat;
+    background-size: 196px 54px;
+  }
+}
+#section-navbar .navbar-brand .tagline {
+  position: relative;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 600;
+  color: #444;
+  margin: 0;
+  top: -5px;
+  left: 8px;
+}
+@media (min-width: 560px) {
+  #section-navbar .navbar-brand .tagline {
+    font-size: 18px;
+    top: -7px;
+    left: 11px;
+  }
+}
+#section-navbar .navbar-brand .beta-tag {
+  display: none;
+}
+@media (min-width: 560px) {
+  #section-navbar .navbar-brand .beta-tag {
+    display: block;
+    position: absolute;
+    top: -70px;
+    left: 190px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #7CB8EC;
+    font: 14px/1 "tablet-gothic-wide", helvetica, arial, sans-serif;
+    font-weight: 300;
+    color: #fff;
+    padding-top: 55px;
+    text-align: center;
+  }
+}
+#section-navbar .navbar-nav {
+  position: relative;
+  top: -10px;
+}
+@media (min-width: 540px) {
+  #section-navbar .navbar-nav {
+    top: 0;
+    float: right;
+    width: 220px;
+    text-align: center;
+  }
+}
+.nav {
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+.nav li {
+  list-style: none;
+}
+.nav .nav-link {
+  text-align: right;
+  margin-bottom: 10px;
+}
+.nav .nav-link a {
+  color: #2785d3;
+  text-decoration: none;
+}
+.nav .nav-link a:hover {
+  color: #46bcff;
+}
+@media (min-width: 540px) {
+  .nav .nav-link {
+    margin-bottom: 20px;
+    line-height: 1;
+    padding: 0 12px;
+    display: inline-block;
+    text-align: center;
+  }
+}
+.nav .nav-button {
+  clear: both;
+  text-align: center;
+}
+.btn {
+  text-decoration: none;
+  display: inline-block;
+  background: #2785d3;
+  color: #fff;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: .02em;
+  border: 0;
+  -webkit-appearance: initial;
+  font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
+}
+.btn-pill {
+  width: 140px;
+  height: 48px;
+  padding: 12px 0;
+  border-radius: 24px;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.container {
+  overflow: hidden;
+}
+.section {
+  padding: 0 10px;
+}
+.section-header {
+  font-size: 1.375rem;
+  line-height: 1.36363636;
+  color: #fff;
+  text-align: center;
+  font-weight: 400;
+  padding: 20px 0;
+}
+@media (min-width: 560px) {
+  .section-header {
+    font-size: 2rem;
+    line-height: 1.25;
+    padding: 36px 0;
+  }
+}
+#container-analytics {
+  background-color: #41dab3;
+}
+#container-analytics .section-header {
+  color: #ffffff;
+}
+#container-analytics .section-copy {
+  color: #12654e;
+}
+#container-analytics .section-copy a {
+  color: #030e0b;
+}
+#container-analytics .section-copy a:hover {
+  color: #06241c;
+}
+#container-signup-top {
+  background-color: #ffffff;
+}
+#container-signup-top .section-header {
+  color: #2785d3;
+}
+#container-signup-top .section-copy {
+  color: #444444;
+}
+#container-signup-top .section-copy a {
+  color: #111111;
+}
+#container-signup-top .section-copy a:hover {
+  color: #1e1e1e;
+}
+#container-specs {
+  background-color: #b690e2;
+}
+#container-specs .section-header {
+  color: #ffffff;
+}
+#container-specs .section-copy {
+  color: #7348b0;
+}
+#container-specs .section-copy a {
+  color: #442a68;
+}
+#container-specs .section-copy a:hover {
+  color: #50327a;
+}
+/*# sourceMappingURL=marketing.css.map */

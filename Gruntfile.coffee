@@ -12,11 +12,18 @@ module.exports = (grunt) ->
       marketing:
         options:
           paths: ['../']
+          sourceMap: true
+          sourceMapFilename: '<%= project.css_path %>/marketing.css.map'
+          sourceMapURL: 'marketing.css.map'
         files:
           '<%= project.css_path %>/marketing.css': '<%= project.css_path %>/src/marketing.less'
+          '<%= project.css_path %>/marketing.v2.css': '<%= project.css_path %>/src/marketing.v2.less'
       app:
         options:
           paths: ['../']
+          sourceMap: true
+          sourceMapFilename: '<%= project.css_path %>/thinkup.css.map'
+          sourceMapURL: 'thinkup.css.map'
         files:
           '<%= project.css_path %>/thinkup.css': '<%= project.css_path %>/src/thinkup.less'
     coffee:
