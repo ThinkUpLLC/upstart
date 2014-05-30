@@ -59,4 +59,4 @@ body_classes="marketing marketing-page" body_id="marketing-values"}
 
     </section>
 
-{include file="_appfooter.tpl" marketing_page=true}
+{include file="_footer.marketing.tpl"}

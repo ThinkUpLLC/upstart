@@ -19,7 +19,7 @@
     <link href="{$site_root_path}assets/css/vendor/font-awesome.min.css" rel="stylesheet">
     <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic|' rel='stylesheet' type='text/css'>
 {if isset($marketing_page) and $marketing_page}
-    <link href="{$site_root_path}assets/css/marketing.css" rel="stylesheet">
+    <link href="{$site_root_path}assets/css/marketing.v2.css" rel="stylesheet">
 {else}
     <link href="{$site_root_path}assets/css/vendor/bootstrap.min.css" rel="stylesheet">
     <link href="{$site_root_path}assets/css/thinkup.css" rel="stylesheet">
