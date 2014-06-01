@@ -4,9 +4,13 @@
 
 .section {
   padding: 0 10px;
+
+  a {
+    text-decoration: none;
+  }
 }
 
-.section-colors(@bgd, @copy, @headline: #fff, @links: darken(@copy, 20%), @linksHover: lighten(@links, 5%)) {
+.section-colors(@bgd, @copy: darken(@bgd, 35%), @headline: #fff) {
   background-color: @bgd;
 
   .section-header {
@@ -15,12 +19,6 @@
 
   .section-copy {
     color: @copy;
-
-    a {
-      color: @links;
-
-      &:hover { color: @linksHover; }
-    }
   }
 }
 
@@ -31,6 +29,7 @@
   text-align: center;
   font-weight: 400;
   padding: 20px 0;
+  margin: 0;
 
   @media (min-width: @bp-tablet) {
     font-size: 2rem;
@@ -40,7 +39,52 @@
 }
 
 #container-analytics {
-  .section-colors(@color-mint, #12654E);
+  .section-colors(@color-mint);
+
+  height: auto;
+
+  @media (min-width: 760px) {
+    height: 400px;
+  }
+
+  .section-copy {
+    position: relative;
+    font-family: @tablet-gothic-wide;
+    font-weight: 300;
+    font-style: italic;
+    padding-top: 15px;
+    font-size: 1.375rem;
+    line-height: (30/22);
+    text-align: center;
+
+
+    @media (min-width: 760px) {
+      padding-left: 560px;
+      font-size: 1.125rem;
+      line-height: 1.25;
+      text-align: left;
+      max-width: none;
+    }
+
+    @media (min-width: 960px) {
+      font-size: 1.375rem;
+      line-height: (30/22);
+    }
+
+    .illustration {
+      width: 540px;
+      box-shadow: 0 4px 8px rgba(0,0,0,.2);
+      display: block;
+      margin: 20px auto 0;
+
+      @media (min-width: 760px) {
+        position: absolute;
+        left: 0;
+        top: 5px;
+        margin: 0;
+      }
+    }
+  }
 }
 
 #container-signup-top {
@@ -49,4 +93,22 @@
 
 #container-specs {
   .section-colors(@color-purple, @color-purple-darker);
+}
+
+#container-company {
+  .section-colors(@color-salmon, #fff);
+
+  .section-copy {
+    a {
+      color: @color-salmon-darker;
+
+      &:hover {
+        color: @color-salmon-dark;
+      }
+    }
+  }
+}
+
+#container-not-thinkup {
+  .section-colors(@color-seabreeze);
 }

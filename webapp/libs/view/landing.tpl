@@ -5,6 +5,7 @@
     <h3 class="section-header">&ldquo;Analytics&rdquo; is for giant companies. ThinkUp is for people.</h3>
     <div class="section-copy">
       “I don’t know what the heck an ‘analytics platform’ is, but ThinkUp tells me in plain English how I’m doing on Twitter and Facebook. I am getting better at using my social networks thanks to ThinkUp.”  — @twitterUser
+      <img class="illustration" src="/assets/img/landing-holders/insight-green-desktop.png">
     </div>
   </div>
 </div>
