@@ -87,10 +87,11 @@ body {
   margin: 0 auto;
 }
 #container-navbar {
-  height: 120px;
+  height: auto;
+  min-height: 120px;
 }
 #section-navbar {
-  padding: 20px 10px;
+  padding: 20px 10px 10px;
 }
 #section-navbar:before,
 #section-navbar:after {
@@ -126,6 +127,7 @@ body {
     height: 54px;
     background: url(../img/thinkup-logo@2x.png) 0 0 no-repeat;
     background-size: 196px 54px;
+    margin-top: 5px;
   }
 }
 #section-navbar .navbar-brand .tagline {
@@ -169,9 +171,8 @@ body {
   position: relative;
   top: -10px;
 }
-@media (min-width: 540px) {
+@media (min-width: 560px) {
   #section-navbar .navbar-nav {
-    top: 0;
     float: right;
     width: 220px;
     text-align: center;
@@ -196,7 +197,7 @@ body {
 .nav .nav-link a:hover {
   color: #46bcff;
 }
-@media (min-width: 540px) {
+@media (min-width: 560px) {
   .nav .nav-link {
     margin-bottom: 20px;
     line-height: 1;
@@ -235,6 +236,9 @@ body {
 .section {
   padding: 0 10px;
 }
+.section a {
+  text-decoration: none;
+}
 .section-header {
   font-size: 1.375rem;
   line-height: 1.36363636;
@@ -242,6 +246,7 @@ body {
   text-align: center;
   font-weight: 400;
   padding: 20px 0;
+  margin: 0;
 }
 @media (min-width: 560px) {
   .section-header {
@@ -252,18 +257,57 @@ body {
 }
 #container-analytics {
   background-color: #41dab3;
+  height: auto;
 }
 #container-analytics .section-header {
   color: #ffffff;
 }
 #container-analytics .section-copy {
-  color: #12654e;
+  color: #115746;
 }
-#container-analytics .section-copy a {
-  color: #030e0b;
+@media (min-width: 760px) {
+  #container-analytics {
+    height: 400px;
+  }
 }
-#container-analytics .section-copy a:hover {
-  color: #06241c;
+#container-analytics .section-copy {
+  position: relative;
+  font-family: "tablet-gothic-wide", helvetica, arial, sans-serif;
+  font-weight: 300;
+  font-style: italic;
+  padding-top: 15px;
+  font-size: 1.375rem;
+  line-height: 1.36363636;
+  text-align: center;
+}
+@media (min-width: 760px) {
+  #container-analytics .section-copy {
+    padding-left: 560px;
+    font-size: 1.125rem;
+    line-height: 1.25;
+    text-align: left;
+    max-width: none;
+  }
+}
+@media (min-width: 960px) {
+  #container-analytics .section-copy {
+    font-size: 1.375rem;
+    line-height: 1.36363636;
+  }
+}
+#container-analytics .section-copy .illustration {
+  width: 540px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: block;
+  margin: 20px auto 0;
+}
+@media (min-width: 760px) {
+  #container-analytics .section-copy .illustration {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    margin: 0;
+  }
 }
 #container-signup-top {
   background-color: #ffffff;
@@ -274,12 +318,6 @@ body {
 #container-signup-top .section-copy {
   color: #444444;
 }
-#container-signup-top .section-copy a {
-  color: #111111;
-}
-#container-signup-top .section-copy a:hover {
-  color: #1e1e1e;
-}
 #container-specs {
   background-color: #b690e2;
 }
@@ -289,10 +327,28 @@ body {
 #container-specs .section-copy {
   color: #7348b0;
 }
-#container-specs .section-copy a {
-  color: #442a68;
+#container-company {
+  background-color: #fc939e;
 }
-#container-specs .section-copy a:hover {
-  color: #50327a;
+#container-company .section-header {
+  color: #ffffff;
+}
+#container-company .section-copy {
+  color: #ffffff;
+}
+#container-company .section-copy a {
+  color: #d0374b;
+}
+#container-company .section-copy a:hover {
+  color: #da6070;
+}
+#container-not-thinkup {
+  background-color: #44c9d7;
+}
+#container-not-thinkup .section-header {
+  color: #ffffff;
+}
+#container-not-thinkup .section-copy {
+  color: #125056;
 }
 /*# sourceMappingURL=marketing.css.map */
