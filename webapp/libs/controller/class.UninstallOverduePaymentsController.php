@@ -19,6 +19,7 @@ class UninstallOverduePaymentsController extends Controller {
             foreach ($subscribers_to_uninstall as $subscriber) {
                 $app_installer->uninstall($subscriber->id);
                 $subscriber_dao->archiveSubscriber($subscriber->id);
+                $subscriber_dao->deleteBySubscriberID($subscriber->id);
             }
             $subscribers_to_uninstall = $subscriber_dao->getSubscribersToUninstallDueToNonPayment();
         }
