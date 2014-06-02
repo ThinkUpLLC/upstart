@@ -248,7 +248,8 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('email'=>'ginatrapani@example.com',
         'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
-        'thinkup_username'=>'unique1'));
+        'thinkup_username'=>'unique1', 'subscription_status'=>'About to be archived', 'total_payment_reminders_sent'=>3,
+        'payment_reminder_last_sent'=>'2001-01-01 11:55:05'));
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>2, 'email'=>'lexluther@evilmail.com',
         'network_user_name'=>'lexluther', 'verification_code'=>1234, 'is_email_verified'=>0,
         'thinkup_username'=>'unique2'));
@@ -269,6 +270,9 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual('gtra', $data['network_user_name']);
         $this->assertEqual('', $data['token_id']);
+        $this->assertEqual('About to be archived', $data['subscription_status']);
+        $this->assertEqual(3, $data['total_payment_reminders_sent']);
+        $this->assertEqual('2001-01-01 11:55:05', $data['payment_reminder_last_sent']);
 
         $result = $dao->archiveSubscriber(2);
         $this->assertEqual($result, 1);
@@ -278,6 +282,8 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual('lexluther', $data['network_user_name']);
         $this->assertEqual('aabbccdd', $data['token_id']);
+        $this->assertEqual('Payment due', $data['subscription_status']);
+        $this->assertEqual(0, $data['total_payment_reminders_sent']);
     }
 
     public function testDeleteBySubscriberID() {

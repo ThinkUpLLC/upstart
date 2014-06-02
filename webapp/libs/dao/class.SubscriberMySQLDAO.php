@@ -285,7 +285,8 @@ class SubscriberMySQLDAO extends PDODAO {
         $q .= "s.membership_level, s.thinkup_username, s.date_installed, s.api_key_private, s.last_dispatched, ";
         $q .= "s.commit_hash, s.is_installation_active, a.token_id, a.amount, ";
         $q .= "a.status_code, a.error_message, a.payment_method_expiry, a.caller_reference, a.recurrence_period, ";
-        $q .= "a.token_validity_start_date FROM subscribers s LEFT JOIN subscriber_authorizations sa ";
+        $q .= "a.token_validity_start_date, s.subscription_status, s.total_payment_reminders_sent, ";
+        $q .= "s.payment_reminder_last_sent FROM subscribers s LEFT JOIN subscriber_authorizations sa ";
         $q .= "ON s.id = sa.subscriber_id LEFT JOIN authorizations a ON a.id = sa.authorization_id ";
         $q .= "WHERE s.id = :subscriber_id";
 
