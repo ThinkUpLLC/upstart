@@ -73,6 +73,6 @@ class UpstartUnitTestCase extends UpstartBasicUnitTestCase {
      */
     protected function tearDownInstall($subscriber) {
         $app_installer = new AppInstaller();
-        $app_installer->uninstall($subscriber->id);
+        $app_installer->uninstall($subscriber->id, false);
     }
 }

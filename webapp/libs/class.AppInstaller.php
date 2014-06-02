@@ -40,6 +40,11 @@ class AppInstaller {
      * @var str
      */
     var $results_message = "";
+    /**
+     * Prefix for archived installations
+     * @var str
+     */
+    const ARCHIVED_DB_PREFIX = 'thinkupstop_';
 
     var $required_config_values = array(
         'app_source_path',
@@ -161,7 +166,7 @@ class AppInstaller {
         }
     }
 
-    public function uninstall($subscriber_id) {
+    public function uninstall($subscriber_id, $do_archive_db = true) {
         $this->results_message = null;
         $subscriber = null;
         if (isset($subscriber_id)) {
@@ -191,8 +196,8 @@ class AppInstaller {
                 $cmd_result = exec($cmd, $output, $return_var);
                 self::logToUserMessage("Deleted user data directory - ". $cmd);
 
-                // Drop database
-                self::dropDatabase($subscriber->thinkup_username);
+                // Move database to archive
+                self::dropDatabase($subscriber->thinkup_username, $do_archive_db);
 
                 // Set subscriber commit_hash, date_installed, is_installation_active, last_dispatched to null
                 $subscriber_dao->updateDateInstalled($subscriber_id, null);
@@ -312,15 +317,45 @@ class AppInstaller {
         }
     }
 
-    protected function dropDatabase($thinkup_username) {
+    private function getMoveQueries($thinkup_username) {
         $install_pdo = self::getInstallPDO();
         $prefix = Config::getInstance()->getValue('user_installation_db_prefix');
-        $q = "DROP DATABASE IF EXISTS ".$prefix.$thinkup_username;
-        $install_pdo->exec($q);
-        //explicitly close this connection
+        $q = "SELECT concat('RENAME TABLE ".$prefix.$thinkup_username.".',table_name, ' TO ".
+            self::ARCHIVED_DB_PREFIX.$thinkup_username. ".',table_name, ';') as move_command ";
+        $q .= "FROM information_schema.TABLES WHERE table_schema='".
+            $prefix.$thinkup_username."';";
+        $ps = $install_pdo->query($q);
+        $ps->setFetchMode(PDO::FETCH_ASSOC);
+        $rows = $ps->fetchAll();
+        $ps->closeCursor();
+        $ps = null;
         $install_pdo = null;
+        return $rows;
+    }
+
+    public function dropDatabase($thinkup_username, $do_keep_copy = true) {
+        $prefix = Config::getInstance()->getValue('user_installation_db_prefix');
+        $install_pdo = self::getInstallPDO();
+        if ($do_keep_copy) {
+            $queries = self::getMoveQueries($thinkup_username);
+
+            //create database to archive tables to
+            $install_pdo->exec('CREATE DATABASE '.self::ARCHIVED_DB_PREFIX.$thinkup_username);
+
+            foreach ($queries as $q) {
+                $install_pdo->exec($q['move_command']);
+            }
+            self::logToUserMessage("Moved user database ".$prefix.$thinkup_username." to ".
+                self::ARCHIVED_DB_PREFIX.$thinkup_username);
+        }
+        //drop original database
+        $install_pdo->exec('DROP DATABASE '.$prefix.$thinkup_username);
+
+        //explicitly close this connection
+        $uninstall_pdo = null;
         self::logToUserMessage("Dropped user database ".$prefix.$thinkup_username);
     }
+
     /**
      * Create user installation database.
      * @param  str $thinkup_username Name of database (usually the user's ThinkUp username)

@@ -20,6 +20,10 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $q = "DROP DATABASE IF EXISTS ".$this->user_database.";";
         PDODAO::$PDO->exec($q);
 
+        // Destroy archived user installation database
+        $q = "DROP DATABASE IF EXISTS ".AppInstaller::ARCHIVED_DB_PREFIX. $this->thinkup_username .";";
+        PDODAO::$PDO->exec($q);
+
         // Unlink username installation folder
         $config = Config::getInstance();
         $app_source_path = $config->getValue('app_source_path');
@@ -449,4 +453,36 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertEqual($instance_network_user_id, 'abcdefg101');
         $this->assertEqual($instance_network_viewer_id, 'abcdefg101');
     }
+
+    public function testDropDatabase() {
+         $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'me@example.com',
+        'thinkup_username'=>$this->thinkup_username, 'date_installed'=> null, 'timezone'=>'UTC'));
+
+        $config = Config::getInstance();
+        $config->setValue('user_installation_url', 'http://www.example.com/thinkup/{user}/');
+        $app_source_path = $config->getValue('app_source_path');
+        $data_path = $config->getValue('data_path');
+
+        $this->debug('About to install app');
+        $app_installer = new AppInstaller();
+        $app_installer->install(6);
+        $this->debug('App installed');
+
+        $app_installer = new AppInstaller();
+        $app_installer->dropDatabase($this->thinkup_username);
+
+         // Assert user database doesn't exist
+        $stmt = PDODAO::$PDO->query('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME =  '
+            .' "'.$this->user_database . '";');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->debug(Utils::varDumpToString($row));
+        $this->assertFalse($row);
+
+         // Assert archived database does exist
+        $stmt = PDODAO::$PDO->query('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME =  '
+            .' "'. AppInstaller::ARCHIVED_DB_PREFIX . $this->thinkup_username . '";');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->debug(Utils::varDumpToString($row));
+        $this->assertTrue($row);
+   }
 }
