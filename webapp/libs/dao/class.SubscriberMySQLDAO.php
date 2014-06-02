@@ -816,7 +816,7 @@ class SubscriberMySQLDAO extends PDODAO {
      * @param  int $hours_past_time      How many hours past signup or last reminder time.
      * @return arr                       Array of Subscriber objects
      */
-    public function getSubscribersDueReminder($total_reminders_sent, $hours_past_time) {       
+    public function getSubscribersDueReminder($total_reminders_sent, $hours_past_time) {
         $q = "SELECT * FROM subscribers WHERE membership_level != 'Waitlist' AND subscription_status = 'Payment due' ";
         $q .= "AND total_payment_reminders_sent = :total_reminders_sent AND (";
         //If total_reminders_sent = 0, use creation_time to compare. Otherwise, use payment_reminder_last_sent.
@@ -829,6 +829,20 @@ class SubscriberMySQLDAO extends PDODAO {
         $vars = array(':total_reminders_sent' => $total_reminders_sent, ':hours_past_time' => $hours_past_time);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
+        return $this->getDataRowsAsObjects($ps, 'Subscriber');
+    }
+
+    /**
+     * Get 25 subscribers to uninstall because payment has been due 14 days past the third reminder email.
+     * @return arr Array of Subscriber objects
+     */
+    public function getSubscribersToUninstallDueToNonPayment() {
+        $q = "SELECT * FROM subscribers WHERE membership_level != 'Waitlist' AND subscription_status = 'Payment due' ";
+        $q .= "AND total_payment_reminders_sent = 3 AND ";
+        $q .= "(payment_reminder_last_sent < DATE_SUB(NOW(), INTERVAL 14 DAY )) ";
+        $q .= "ORDER BY creation_time ASC LIMIT 25";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
         return $this->getDataRowsAsObjects($ps, 'Subscriber');
     }
 
