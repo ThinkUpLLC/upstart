@@ -545,6 +545,10 @@ class SubscriberMySQLDAO extends PDODAO {
     public function getNotPaidStalestInstallLastDispatchTime() {
         $q  = "SELECT last_dispatched FROM subscribers WHERE is_installation_active=1 ";
         $q .= "AND subscription_status NOT LIKE 'Paid through%' ";
+        // Upstart isn't sending payment reminders or isn't finished sending them
+        $q .= "AND (total_payment_reminders_sent < 3  OR ";
+        // Upstart's sent all the payment reminders but the last one was sent within the last 12 days
+        $q .= "(total_payment_reminders_sent = 3 AND payment_reminder_last_sent > DATE_SUB(NOW(), INTERVAL 12 DAY ))) ";
         $q .= "ORDER BY last_dispatched ASC LIMIT 1";
         //echo self::mergeSQLVars($q, $vars);
         $ps = $this->execute($q);
