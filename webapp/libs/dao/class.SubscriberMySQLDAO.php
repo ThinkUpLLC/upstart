@@ -506,17 +506,28 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getDataRowsAsArrays($ps);
     }
 
+    /**
+     * Get installations for members who have not paid.
+     * This function does not return members who have received 3 email reminders to pay, and 12 days have passed since
+     * last reminder was sent. That's so they're not being crawled when they are uninstalled automatically at the 
+     * 14-day threshold.
+     * @param  integer $count How many installs to retrieve; defaults to 25
+     * @return arr Array of installation information
+     */
     public function getNotYetPaidStaleInstalls($count=25) {
         $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 ";
         $q .= "AND subscription_status NOT LIKE 'Paid through%' ";
-        $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL 3 HOUR) OR last_dispatched IS NULL) ";
+        $q .= "AND ((last_dispatched < DATE_SUB(NOW(), INTERVAL 3 HOUR) OR last_dispatched IS NULL)) ";
+        // Upstart isn't sending payment reminders or isn't finished sending them
+        $q .= "AND (total_payment_reminders_sent < 3  OR ";
+        // Upstart's sent all the payment reminders but the last one was sent within the last 12 days
+        $q .= "(total_payment_reminders_sent = 3 AND payment_reminder_last_sent > DATE_SUB(NOW(), INTERVAL 12 DAY ))) ";
         $q .= "ORDER BY last_dispatched ASC ";
         $q .= "LIMIT :limit;";
 
         $vars = array(
             ':limit'=>$count
         );
-        //echo self::mergeSQLVars($q, $vars);
         $ps = $this->execute($q, $vars);
         return $this->getDataRowsAsArrays($ps);
     }

@@ -558,12 +558,32 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
             'thinkup_username'=>'unique4', 'date_installed'=>null, 'is_membership_complimentary'=>0,
             'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment failed'));
+        //Should get returned because not paid and only 1 reminder was sent
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>5, 'email'=>'ginatrapani+5@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra5', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique5', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment failed',
+            'total_payment_reminders_sent'=>1, 'payment_reminder_last_sent'=>'-3d'));
+        //Should not get returned because not paid and 3 reminders sent, last one more than 12 days ago
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'ginatrapani+6@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra6', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique6', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment due',
+            'total_payment_reminders_sent'=>3, 'payment_reminder_last_sent'=>'-14d'));
+        //Should get returned because not paid and 3 reminders sent, last one less than 12 days ago
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>7, 'email'=>'ginatrapani+7@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra6', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique7', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment due',
+            'total_payment_reminders_sent'=>3, 'payment_reminder_last_sent'=>'-10d'));
 
         $dao = new SubscriberMySQLDAO();
         $result = $dao->getNotYetPaidStaleInstalls();
 
-        $this->assertEqual(sizeof($result), 1);
+        $this->assertEqual(sizeof($result), 3);
         $this->assertEqual($result[0]['thinkup_username'], 'unique4');
+        $this->assertEqual($result[1]['thinkup_username'], 'unique5');
+        $this->assertEqual($result[2]['thinkup_username'], 'unique7');
     }
 
     public function testGetSubscribersDueReminder() {
