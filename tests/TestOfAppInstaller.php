@@ -80,7 +80,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $app_installer = new AppInstaller();
         try {
             $app_installer->uninstall(6);
-        } catch (Exception $e) {
+        } catch (NonExistentInstallationException $e) {
         }
         $this->assertNotNull($e);
         $this->assertEqual($e->getMessage(), 'ThinkUp username is not set.');
@@ -92,10 +92,24 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $app_installer = new AppInstaller();
         try {
             $app_installer->uninstall(6);
-        } catch (Exception $e) {
+        } catch (NonExistentInstallationException $e) {
         }
         $this->assertNotNull($e);
-        $this->assertEqual($e->getMessage(), 'Installation does not exist.');
+        $this->assertEqual($e->getMessage(), 'testerrific installation date_installed is not set.');
+    }
+
+    public function testUninstallInstallationNotActive() {
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'me@example.com',
+        'thinkup_username'=>$this->thinkup_username, 'date_installed'=> '2014-01-15', 'timezone'=>'UTC',
+        'is_installation_active'=>0));
+        $app_installer = new AppInstaller();
+        try {
+            $app_installer->uninstall(6);
+        } catch (InactiveInstallationException $e) {
+        }
+        $this->assertNotNull($e);
+        $this->assertEqual($e->getMessage(), 
+            'testerrific installation is not active (is_installation_active is set to false).');
     }
 
     public function testUninstall() {

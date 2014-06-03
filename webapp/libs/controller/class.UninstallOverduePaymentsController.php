@@ -17,7 +17,13 @@ class UninstallOverduePaymentsController extends Controller {
 
         while (sizeof($subscribers_to_uninstall) > 0) {
             foreach ($subscribers_to_uninstall as $subscriber) {
-                $app_installer->uninstall($subscriber->id);
+                try {
+                    $app_installer->uninstall($subscriber->id);
+                } catch (InactiveInstallationException $e) {
+                    //this shouldn't happen but when/if it does, ignore and move on
+                } catch (NonExistentInstallationException $e) {
+                    //this shouldn't happen but when/if it does, ignore and move on
+                }
                 $subscriber_dao->archiveSubscriber($subscriber->id);
                 $subscriber_dao->deleteBySubscriberID($subscriber->id);
             }

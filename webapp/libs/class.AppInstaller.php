@@ -166,6 +166,19 @@ class AppInstaller {
         }
     }
 
+    /**
+     * Uninstall a member's installation.
+     * * Remove symlink and data directory
+     * * Archive or drop database (depending on $do_archive_db)
+     * 
+     * @param  int  $subscriber_id
+     * @param  boolean $do_archive_db Whether or not to archive (vs delete) the database
+     * @return str Log of uninstallation activity
+     * @throws Exception If subscriber doesn't exist 
+     * @throws PDOException If there's a problem archiving or dropping the database
+     * @throws InactiveInstallationException If is_installation_active is false
+     * @throws NonExistentInstallationException If date_installed is null or ThinkUp username is not set
+     */
     public function uninstall($subscriber_id, $do_archive_db = true) {
         $this->results_message = null;
         $subscriber = null;
@@ -180,11 +193,15 @@ class AppInstaller {
                 throw new Exception('No subscriber specified.');
             }
         } else {
-            // Check if installation exists
-            if ($subscriber->date_installed == null || !$subscriber->is_installation_active) {
-                throw new Exception('Installation does not exist.');
-            } elseif ($subscriber->thinkup_username == null) {
-                throw new Exception("ThinkUp username is not set.");
+            // Check if installation exists and is active
+            if ($subscriber->thinkup_username == null) {
+                throw new NonExistentInstallationException("ThinkUp username is not set.");
+            } elseif ($subscriber->date_installed == null) {
+                throw new NonExistentInstallationException($subscriber->thinkup_username .
+                    ' installation date_installed is not set.');
+            } elseif (!$subscriber->is_installation_active) {
+                throw new InactiveInstallationException($subscriber->thinkup_username .
+                    ' installation is not active (is_installation_active is set to false).');
             } else {
                 // De-symlink directory
                 $cmd = 'rm -rf '.$this->app_source_path.$subscriber->thinkup_username;
@@ -333,6 +350,14 @@ class AppInstaller {
         return $rows;
     }
 
+    /**
+     * Drop or archive a member's database.
+     * 
+     * @param  str  $thinkup_username Member's username
+     * @param  boolean $do_keep_copy  Whether or not to keep a copy of the database
+     * @return void
+     * @throws PDOException If there's a problem creating or dropping the database
+     */
     public function dropDatabase($thinkup_username, $do_keep_copy = true) {
         $prefix = Config::getInstance()->getValue('user_installation_db_prefix');
         $install_pdo = self::getInstallPDO();
