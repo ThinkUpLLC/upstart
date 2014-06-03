@@ -57,6 +57,9 @@ module.exports = (grunt) ->
       css:
         files: '<%= project.css_path %>/src/*'
         tasks: ['less']
+      js:
+        files: '<%= project.js_path %>/src/*'
+        tasks: ['coffee']
 
   )
   grunt.loadNpmTasks('grunt-contrib-watch')

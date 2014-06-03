@@ -48,6 +48,19 @@
   };
 
   $(function() {
+    var $posts, d, dateStr, mo, post, _i, _len, _ref;
+    if ((typeof tumblr_api_read !== "undefined" && tumblr_api_read !== null) && tumblr_api_read.posts.length) {
+      mo = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      $posts = $("#subsection-blog .blog-posts");
+      _ref = tumblr_api_read.posts.slice(0, 3);
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        post = _ref[_i];
+        console.log(post);
+        d = new Date(post['date']);
+        dateStr = "" + mo[d.getMonth()] + " " + (d.getDate()) + ", " + (d.getFullYear());
+        $posts.append("<li class=\"blog-post\"><div class=\"date\">" + dateStr + "</div>\n<a href=\"" + post['url-with-slug'] + "\" class=\"permalink\">" + post['regular-title'] + "</a></li>");
+      }
+    }
     return $("#form-contact").submit(function(e) {
       var $form, body, subject;
       e.preventDefault();

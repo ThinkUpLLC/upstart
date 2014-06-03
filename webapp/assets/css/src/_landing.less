@@ -7,13 +7,24 @@
 
   a {
     text-decoration: none;
+    color: @link-color;
+
+    &:hover {
+      color: @link-hover-color;
+      text-decoration: underline;
+    }
+
+    &.btn, &.btn:hover {
+      color: #fff;
+      text-decoration: none;
+    }
   }
+
 
   .section-copy {
     position: relative;
     font-family: @tablet-gothic-wide;
     font-weight: 300;
-    font-style: italic;
     padding: 10px 0 0;
     font-size: .9375rem;
     line-height: (20/15);
@@ -93,6 +104,66 @@
   }
 }
 
+.newsletter-signup-form {
+  text-align: center;
+
+  @media (min-width: 640px) {
+    text-align: left;
+  }
+
+  label {
+    display: block;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1;
+    color: @gray;
+    margin-bottom: 10px;
+
+    @media (min-width: 640px) {
+      text-align: left;
+    }
+
+    @media (min-width: 960px) {
+      display: inline-block;
+      width: 160px;
+      padding-right: 60px;
+      line-height: 1.25;
+      margin-bottom: 0;
+      vertical-align: top;
+    }
+  }
+
+  .email {
+    border: 1px solid @gray-light;
+    background: #E5E2E2;
+    width: 230px;
+    display: inline-block;
+    font-family: @tablet-gothic-condensed;
+    padding: 3px 5px;
+    font-size: 1em;
+    margin: 5px 10px 10px 0;
+    height: 36px;
+    -webkit-appearance: initial;
+    outline: 0;
+    border-radius: 0;
+  }
+
+  .btn-submit{
+    display: inline-block;
+    background: #4A90E2;
+    color: #fff;
+    font-family: @tablet-gothic-condensed;
+    margin-top: 0;
+    margin-bottom: 0;
+    border: 0;
+    vertical-align: baseline;
+    -webkit-appearance: initial;
+    padding: 8px;
+    line-height: 0;
+    font-size: (20/16em);
+  }
+}
+
 #container-analytics {
   .section-colors(@color-mint);
 
@@ -103,6 +174,8 @@
   }
 
   .section-copy {
+    font-style: italic;
+
     @media (min-width: 760px) {
       padding: 15px 0 0 560px;
       max-width: none;
@@ -173,11 +246,6 @@
         font: 1.25rem/1.3 @tablet-gothic-wide;
         font-weight: 400;
         text-align: center;
-        color: @link-color;
-
-        &:hover {
-          color: @link-hover-color;
-        }
       }
 
       width: 303px;
@@ -241,7 +309,6 @@
       background: url(/assets/img/landing-holders/devices@2x.png) top left no-repeat;
     }
   }
-
 }
 
 #container-company {
@@ -349,13 +416,7 @@
       height: 301px;
       background: url(/assets/img/landing-holders/insight-red-desktop.png) top left no-repeat;
     }
-
-    // @media (min-width: 760px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-    //   background: url(/assets/img/landing-holders/insight-red-desktop@2x.png) top left no-repeat;
-    //   background-size: 541px 301;
-    // }
   }
-
 }
 
 #container-not-thinkup {
@@ -372,7 +433,6 @@
     @media (min-width: 760px) {
       padding-bottom: 36px;
     }
-
   }
 
   .section-copy {
@@ -400,6 +460,205 @@
         margin-bottom: 0;
       }
     }
+  }
+}
 
+#container-signup-bottom {
+  .section-colors(#fff, @blue-darker, @blue-darker);
+  height: 200px;
+
+  @media (min-width: 840px) {
+    .clearfix;
+    height: 100px;
+    text-align: right;
+  }
+
+  .section-header {
+    font-size: 1.5rem;
+    line-height: 1.33;
+
+    em {
+      font-weight: 600;
+    }
+
+    @media (min-width: 640px) {
+      font-size: 1.75rem;
+      line-height: 1.214;
+    }
+
+    @media (min-width: 840px) {
+      float: left;
+      text-align: left;
+      max-width: 700px;
+      margin-right: 20px;
+      padding: 30px 0;
+    }
+  }
+
+  .section-copy {
+    text-align: center;
+
+    @media (min-width: 840px) {
+      float: right;
+      width: 220px;
+      padding-top: 20px;
+    }
+  }
+}
+
+#container-footer {
+  .clearfix;
+  background: @gray-lightest;
+  text-align: center;
+  height: auto;
+
+  .subsection {
+    padding: 20px 10px;
+    vertical-align: top;
+    font-family: @tablet-gothic-wide;
+    font-weight: 300;
+    text-align: left;
+    margin: 0 auto;
+
+
+    @media (min-width: 640px) {
+      display: inline-block;
+      width: 300px;
+      padding: 40px 0;
+
+      &:first-child {
+        width: 320px;
+        padding-right: 20px;
+      }
+    }
+
+    @media (min-width: 960px) {
+      float: left;
+      width: 460px;
+      padding: 40px 0;
+
+      &:first-child {
+        width: 480px;
+        padding-right: 20px;
+      }
+    }
+  }
+
+  .subsection-header {
+    font-family: @tablet-gothic-condensed;
+    font-size: 1.375rem;
+    line-height: (30/22);
+    margin: 0 0 20px;
+    text-align: center;
+    color: @gray;
+    font-weight: 400;
+
+    @media (min-width: 640px) {
+      text-align: left;
+      font-size: 1.625rem;
+      line-height: (34/26);
+    }
+  }
+
+  #subsection-links {
+    background: #D0D0D0;
+
+    @media (min-width: 640px) {
+      background: @gray-lightest;
+    }
+  }
+
+  .blog-posts, .important-links {
+    padding: 0;
+    margin: 0;
+    max-width: 320px;
+
+    @media (min-width: 960px) {
+      max-width: none;
+    }
+  }
+
+  .blog-post {
+    list-style: none;
+    margin-bottom: .75rem;
+
+    .date {
+      color: @gray-light;
+      font-size: .75rem;
+      line-height: 2;
+
+      @media (min-width: 640px) {
+        font-size: .875rem;
+        line-height: (24/14);
+      }
+    }
+
+    .permalink {
+      color: @gray;
+      font-size: 1rem;
+      line-height: 1.25;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      @media (min-width: 640px) {
+        font-size: 1.125rem;
+        line-height: 1.33;
+      }
+    }
+  }
+
+  .blog-link {
+    font-size: .875rem;
+  }
+
+  .important-links {
+    .clearfix;
+    width: 300px;
+    margin: 0 auto;
+
+    @media (min-width: 960px) {
+      width: 460px;
+    }
+
+
+    li {
+      list-style: none;
+      width: 140px;
+      margin: 0 20px 1rem 0;
+      float: left;
+      line-height: 1;
+
+      &:nth-of-type(even) {
+        margin-right: 0;
+      }
+
+      @media (min-width: 960px) {
+        &:nth-of-type(even) {
+          margin-right: 20px;
+        }
+
+        &:nth-of-type(3) {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .copy-tagline {
+    color: @gray-light;
+    font-size: .875rem;
+    line-height: 1.5;
+    text-align: center;
+
+    @media (min-width: 640px) {
+      font-size: 1;
+      text-align: left;
+
+      br {
+        display: none;
+      }
+    }
   }
 }
