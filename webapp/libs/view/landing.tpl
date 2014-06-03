@@ -24,25 +24,28 @@
 </div>
 
 <div class="container" id="container-specs">
-  <div class="section" id="section-specs">
+  <div class="section section-screenshot" id="section-specs">
     <h3 class="section-header">ThinkUp works the way that you do.</h3>
     <div class="section-copy">
-      ThinkUp’s insights about Twitter and Facebook accounts show up on your smartphone, tablet, or computer. You also get a personalized email each day so you can start your day knowing what’s working.
+      <p>ThinkUp’s insights about Twitter and Facebook accounts show up on your smartphone, tablet, or computer. You also get a personalized email each day so you can start your day knowing what’s working.</p>
+      <div class="illustration">An image of three devices</div>
     </div>
   </div>
 </div>
 
 <div class="container" id="container-company">
-  <div class="section" id="section-company">
-    <h3 class="section-header">A tech company that treats you with respect.</h3>
+  <div class="section section-screenshot" id="section-company">
+    <h3 class="section-header">A tech company that<br>
+      treats you with respect.</h3>
     <div class="section-copy">
-      ThinkUp is a different kind of company. We make products for regular people, we collaborate with an <a href="https://github.com/ginatrapani/ThinkUp">open source community</a> and we live by <a href="{$site_root_path}about/values.php">our values</a>.
+      <p>ThinkUp is a different kind of company. We make products for regular people, we collaborate with an <a href="https://github.com/ginatrapani/ThinkUp">open source community</a> and we live by <a href="{$site_root_path}about/values.php">our values</a>.</p>
+      <div class="illustration">An insight</div>
     </div>
   </div>
 </div>
 
 <div class="container" id="container-not-thinkup">
-  <div class="section" id="section-not-thinkup">
+  <div class="section section-screenshot" id="section-not-thinkup">
     <h3 class="section-header">You’ll love what ThinkUp doesn’t do.</h3>
     <div class="section-copy">
       <ul>
@@ -52,6 +55,7 @@
         <li>No ugly surprises about how your data is used.</li>
         <li>No hassle if you want to cancel your subscription.</li>
       </ul>
+      <div class="illustration">An insight</div>
     </div>
   </div>
 </div>

@@ -334,21 +334,6 @@ body {
     max-width: none;
   }
 }
-@media (min-width: 960px) {
-  #container-analytics .section-copy {
-    font-size: 1.375rem;
-    line-height: 1.36363636;
-  }
-}
-#container-analytics .section-copy p {
-  padding: 0 10px;
-  margin: 0;
-}
-@media (min-width: 760px) {
-  #container-analytics .section-copy p {
-    padding: 0;
-  }
-}
 #container-analytics .section-copy .illustration {
   width: 300px;
   height: 208px;
@@ -451,6 +436,48 @@ body {
 #container-specs .section-copy {
   color: #7348b0;
 }
+#container-specs .section-copy {
+  font-style: normal;
+  font-size: 1rem;
+  line-height: 1.375;
+  text-align: left;
+}
+@media (min-width: 760px) {
+  #container-specs .section-copy {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    padding-left: 51%;
+  }
+}
+#container-specs .illustration {
+  box-shadow: 0 0 0;
+  width: 340px;
+  height: 122px;
+  background: url(/assets/img/landing-holders/devices.png) top left no-repeat;
+  background-size: 340px 122px;
+  position: relative;
+  left: -50px;
+}
+@media (min-width: 400px) {
+  #container-specs .illustration {
+    left: 0;
+  }
+}
+@media (min-width: 760px) {
+  #container-specs .illustration {
+    position: absolute;
+    width: 540px;
+    height: 200px;
+    background-size: 540px 200px;
+    left: auto;
+    right: 49%;
+  }
+}
+@media (min-width: 760px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  #container-specs .illustration {
+    background: url(/assets/img/landing-holders/devices@2x.png) top left no-repeat;
+  }
+}
 #container-company {
   background-color: #fc939e;
 }
@@ -460,19 +487,152 @@ body {
 #container-company .section-copy {
   color: #ffffff;
 }
+#container-company .section-header {
+  position: relative;
+  text-align: left;
+  padding-left: 90px;
+}
+#container-company .section-header:before {
+  content: "";
+  position: absolute;
+  width: 66px;
+  height: 64px;
+  background: url(/assets/img/landing-holders/crowd.png) top left no-repeat;
+  background-size: 66px 64px;
+  top: 14px;
+  left: 10px;
+}
+@media (min-width: 560px) {
+  #container-company .section-header {
+    padding-left: 100px;
+  }
+  #container-company .section-header:before {
+    width: 76.19047619px;
+    height: 73.33333333px;
+    background-size: 76.19047619px 73.33333333px;
+    top: 38px;
+  }
+}
+@media (min-width: 760px) {
+  #container-company .section-header {
+    text-align: center;
+    padding-left: 0;
+  }
+  #container-company .section-header br {
+    display: none;
+  }
+  #container-company .section-header:before {
+    width: 106.66666667px;
+    height: 102.66666667px;
+    background-size: 106.66666667px 102.66666667px;
+    top: 115px;
+    left: auto;
+    right: 560px;
+  }
+}
+@media (min-width: 960px) {
+  #container-company .section-header:before {
+    top: 100px;
+    width: 160px;
+    height: 154px;
+    background-size: 160px 154px;
+  }
+}
+#container-company .section-copy {
+  font-size: 1rem;
+  line-height: 1.375;
+}
 #container-company .section-copy a {
   color: #d0374b;
 }
 #container-company .section-copy a:hover {
   color: #da6070;
 }
+@media (min-width: 760px) {
+  #container-company .section-copy {
+    padding: 115px 560px 0 0;
+    max-width: none;
+    text-align: right;
+  }
+}
+@media (min-width: 960px) {
+  #container-company .section-copy {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    padding-top: 150px;
+  }
+}
+#container-company .section-copy p {
+  padding: 0 10px;
+  margin: 0;
+}
+@media (min-width: 760px) {
+  #container-company .section-copy p {
+    padding: 0;
+  }
+}
+#container-company .illustration {
+  width: 300px;
+  height: 337px;
+  background: url(/assets/img/landing-holders/insight-red-mobile@2x.png) top left no-repeat;
+  background-size: 300px 337px;
+}
+@media (min-width: 760px) {
+  #container-company .illustration {
+    left: auto;
+    right: 0;
+    width: 541px;
+    height: 301px;
+    background: url(/assets/img/landing-holders/insight-red-desktop.png) top left no-repeat;
+  }
+}
 #container-not-thinkup {
   background-color: #44c9d7;
+  height: auto;
 }
 #container-not-thinkup .section-header {
   color: #ffffff;
 }
 #container-not-thinkup .section-copy {
   color: #125056;
+}
+@media (min-width: 760px) {
+  #container-not-thinkup {
+    height: 400px;
+  }
+}
+#container-not-thinkup .section-header {
+  padding-bottom: 0;
+}
+@media (min-width: 760px) {
+  #container-not-thinkup .section-header {
+    padding-bottom: 36px;
+  }
+}
+#container-not-thinkup .section-copy li {
+  margin-bottom: .25rem;
+}
+@media (min-width: 760px) {
+  #container-not-thinkup .section-copy {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    padding: 0 0 0 560px;
+    max-width: none;
+  }
+}
+#container-not-thinkup .section-copy .illustration {
+  width: 300px;
+  height: 193px;
+  background: url(/assets/img/landing-holders/insight-seabreeze-mobile@2x.png) top left no-repeat;
+  background-size: 300px 193px;
+  margin-bottom: 20px;
+}
+@media (min-width: 760px) {
+  #container-not-thinkup .section-copy .illustration {
+    width: 540px;
+    height: 146px;
+    background: url(/assets/img/landing-holders/insight-seabreeze-desktop.png) 0 -1px no-repeat;
+    margin-bottom: 0;
+  }
 }
 /*# sourceMappingURL=marketing.css.map */

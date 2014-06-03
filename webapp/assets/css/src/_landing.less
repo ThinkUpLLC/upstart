@@ -108,20 +108,6 @@
       max-width: none;
     }
 
-    @media (min-width: 960px) {
-      font-size: 1.375rem;
-      line-height: (30/22);
-    }
-
-    p {
-      padding: 0 10px;
-      margin: 0;
-
-     @media (min-width: 760px) {
-      padding: 0;
-     }
-    }
-
     .illustration {
       width: 300px;
       height: 208px;
@@ -215,12 +201,111 @@
 
 #container-specs {
   .section-colors(@color-purple, @color-purple-darker);
+
+  .section-copy {
+    font-style: normal;
+    font-size: 1rem;
+    line-height: (22/16);
+    text-align: left;
+
+    @media (min-width: 760px) {
+      font-size: 1.25rem;
+      line-height: (26/20);
+      padding-left: 51%;
+    }
+  }
+
+  .illustration {
+    box-shadow: 0 0 0;
+    width: 340px;
+    height: 122px;
+    background: url(/assets/img/landing-holders/devices.png) top left no-repeat;
+    background-size: 340px 122px;
+    position: relative;
+    left: -50px;
+
+    @media (min-width: 400px) {
+      left: 0;
+    }
+
+    @media (min-width: 760px) {
+      position: absolute;
+      width: 540px;
+      height: 200px;
+      background-size: 540px 200px;
+      left: auto;
+      right: 49%;
+    }
+
+    @media (min-width: 760px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+      background: url(/assets/img/landing-holders/devices@2x.png) top left no-repeat;
+    }
+  }
+
 }
 
 #container-company {
   .section-colors(@color-salmon, #fff);
 
+  .section-header {
+    position: relative;
+    text-align: left;
+    padding-left: 90px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      width: 66px;
+      height: 64px;
+      background: url(/assets/img/landing-holders/crowd.png) top left no-repeat;
+      background-size: 66px 64px;
+      top: 14px;
+      left: 10px;
+    }
+
+    @media (min-width: 560px) {
+      padding-left: 100px;
+      &:before {
+        width: (160px / 2.1);
+        height: (154px / 2.1);
+        background-size: (160px / 2.1) (154px / 2.1);
+        top: 38px;
+      }
+    }
+
+    @media (min-width: 760px) {
+      text-align: center;
+      padding-left: 0;
+
+      br {
+        display: none;
+      }
+
+      &:before {
+        width: (160px / 1.5);
+        height: (154px / 1.5);
+        background-size: (160px / 1.5) (154px / 1.5);
+        top: 115px;
+        left: auto;
+        right: 560px;
+      }
+    }
+
+    @media (min-width: 960px) {
+      &:before {
+        top: 100px;
+        width: 160px;
+        height: 154px;
+        background-size: 160px 154px;
+      }
+    }
+
+  }
+
   .section-copy {
+    font-size: 1rem;
+    line-height: (22/16);
+
     a {
       color: @color-salmon-darker;
 
@@ -228,9 +313,93 @@
         color: @color-salmon-dark;
       }
     }
+
+    @media (min-width: 760px) {
+      padding: 115px 560px 0 0;
+      max-width: none;
+      text-align: right;
+    }
+
+    @media (min-width: 960px) {
+      font-size: 1.25rem;
+      line-height: (26/20);
+      padding-top: 150px;
+    }
+
+    p {
+      padding: 0 10px;
+      margin: 0;
+
+     @media (min-width: 760px) {
+      padding: 0;
+     }
+    }
   }
+
+  .illustration {
+    width: 300px;
+    height: 337px;
+    background: url(/assets/img/landing-holders/insight-red-mobile@2x.png) top left no-repeat;
+    background-size: 300px 337px;
+
+    @media (min-width: 760px) {
+      left: auto;
+      right: 0;
+      width: 541px;
+      height: 301px;
+      background: url(/assets/img/landing-holders/insight-red-desktop.png) top left no-repeat;
+    }
+
+    // @media (min-width: 760px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+    //   background: url(/assets/img/landing-holders/insight-red-desktop@2x.png) top left no-repeat;
+    //   background-size: 541px 301;
+    // }
+  }
+
 }
 
 #container-not-thinkup {
   .section-colors(@color-seabreeze);
+
+  height: auto;
+
+  @media (min-width: 760px) {
+    height: 400px;
+  }
+
+  .section-header {
+    padding-bottom: 0;
+    @media (min-width: 760px) {
+      padding-bottom: 36px;
+    }
+
+  }
+
+  .section-copy {
+    li {
+      margin-bottom: .25rem;
+    }
+    @media (min-width: 760px) {
+      font-size: 1.25rem;
+      line-height: (26/20);
+      padding: 0 0 0 560px;
+      max-width: none;
+    }
+
+    .illustration {
+      width: 300px;
+      height: 193px;
+      background: url(/assets/img/landing-holders/insight-seabreeze-mobile@2x.png) top left no-repeat;
+      background-size: 300px 193px;
+      margin-bottom: 20px;
+
+      @media (min-width: 760px) {
+        width: 540px;
+        height: 146px;
+        background: url(/assets/img/landing-holders/insight-seabreeze-desktop.png) 0 -1px no-repeat;
+        margin-bottom: 0;
+      }
+    }
+
+  }
 }
