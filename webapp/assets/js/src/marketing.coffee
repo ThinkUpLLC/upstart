@@ -30,6 +30,30 @@ wt.appMessage =
       wt.appMessage.create app_message.msg, app_message.type
 
 $ ->
+  if tumblr_api_read? and tumblr_api_read.posts.length
+    mo = [
+      'January'
+      'February'
+      'March'
+      'April'
+      'May'
+      'June'
+      'July'
+      'August'
+      'September'
+      'October'
+      'November'
+      'December'
+    ]
+    $posts = $("#subsection-blog .blog-posts")
+    for post in tumblr_api_read.posts[0..2]
+      console.log post
+      d = new Date(post['date'])
+      dateStr = "#{mo[d.getMonth()]} #{d.getDate()}, #{d.getFullYear()}"
+      $posts.append """<li class="blog-post"><div class="date">#{dateStr}</div>
+        <a href="#{post['url-with-slug']}" class="permalink">#{post['regular-title']}</a></li>"""
+
+
   $("#form-contact").submit (e) ->
     e.preventDefault()
     $form = $(@)

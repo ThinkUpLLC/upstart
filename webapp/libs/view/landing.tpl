@@ -60,5 +60,43 @@
   </div>
 </div>
 
+<div class="container" id="container-signup-bottom">
+  <div class="section" id="section-signup-bottom">
+    <h3 class="section-header">Start your <em>100% free</em> trial and get insights immediately</h3>
+    <div class="section-copy">
+      <a href="#" class="btn btn-pill-medium">Join now</a>
+    </div>
+  </div>
+</div>
+
+<script src="http://blog.thinkup.com/api/read/json?type=text&num=5"></script>
+<div class="container" id="container-footer">
+  <div class="section" id="section-footer">
+    <div class="subsection" id="subsection-blog">
+      <h4 class="subsection-header">The latest from the ThinkUp blog</h4>
+      <ul class="blog-posts"></ul>
+      <a href="http://blog.thinkup.com" class="blog-link">Go to the blog &raquo;</a>
+    </div>
+    <div class="subsection" id="subsection-links">
+      <h4 class="subsection-header">Important, Etc.</h4>
+      <ul class="important-links">
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Developers</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+
+      <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">
+        <label for="EMAIL">Get updates from ThinkUp</label>
+        <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email">
+        <button type="submit" value="Subscribe" name="subscribe" class="btn-submit"><i class="fa fa-envelope-o"></i></button>
+      </form>
+
+      <div class="copy-tagline">&copy;2014 ThinkUp LLC.<br>
+        It is nice to be nice.</div>
+    </div>
+  </div>
+</div>
 
 {include file="_footer.marketing.tpl"}
