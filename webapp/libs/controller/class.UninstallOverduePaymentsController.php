@@ -15,8 +15,14 @@ class UninstallOverduePaymentsController extends Controller {
 
         $subscribers_to_uninstall = $subscriber_dao->getSubscribersToUninstallDueToNonPayment();
 
+        if (sizeof($subscribers_to_uninstall) == 0) {
+            echo "No overdue memberships to uninstall.
+";
+        }
         while (sizeof($subscribers_to_uninstall) > 0) {
             foreach ($subscribers_to_uninstall as $subscriber) {
+                echo "Uninstalling ".$subscriber->thinkup_username."...
+";
                 try {
                     $app_installer->uninstall($subscriber->id);
                 } catch (InactiveInstallationException $e) {
