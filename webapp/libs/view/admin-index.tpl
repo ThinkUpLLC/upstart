@@ -9,7 +9,7 @@
 {if $search_term}
     <h3>Showing search results for <span style="background-color:yellow">{$search_term}</span>. <a href="?p={$page}">Show all.</a></h3>
 {else}
-<h2>${$total_payments|number_format} paid. {$total_paid_subscribers|number_format} paid members. {$total_active_installs|number_format} installations.</h2>
+<h2>${$total_payments|number_format} paid by {$total_paid_subscribers|number_format} members. {$total_active_installs|number_format} active installations.</h2>
 <p>Stalest paid installation dispatched {$stalest_dispatch_time_paid|relative_datetime} ago, not paid {$stalest_dispatch_not_paid|relative_datetime} ago.</p>
 <p {if !$workers_ok} class="alert alert-danger"{/if}>Dispatch status: <b>{$worker_status}</b></p>
 {/if}
