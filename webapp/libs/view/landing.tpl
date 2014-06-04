@@ -15,9 +15,9 @@
     <h3 class="section-header">Get started for free.</h3>
     <div class="section-copy">
       <p>Sign up for our <strong>Free 14-Day Trial</strong> to see exactly what ThinkUp can do for you. We bet your very first email will be full of insights you’ve never seen before.</p>
-      <a href="#" class="btn btn-pill-large">Start your free trial</a>
+      <a href="{$site_root_path}join.php" class="btn btn-pill-large">Start your free trial</a>
       <div class="illustration">
-        <a href="#">See a live demo</a>
+        <a href="https://ginatrapani.thinkup.com">See a live demo</a>
       </div>
     </div>
   </div>
@@ -64,7 +64,7 @@
   <div class="section" id="section-signup-bottom">
     <h3 class="section-header">Start your <em>100% free</em> trial and get insights immediately</h3>
     <div class="section-copy">
-      <a href="#" class="btn btn-pill-medium">Join now</a>
+      <a href="{$site_root_path}join.php" class="btn btn-pill-medium">Join now</a>
     </div>
   </div>
 </div>
@@ -80,11 +80,11 @@
     <div class="subsection" id="subsection-links">
       <h4 class="subsection-header">Important, Etc.</h4>
       <ul class="important-links">
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Developers</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Terms of Service</a></li>
-        <li><a href="#">FAQ</a></li>
+        <li><a href="{$site_root_path}about/privacy.php">Privacy Policy</a></li>
+        <li><a href="https://github.com/ginatrapani/ThinkUp">Developers</a></li>
+        <li><a href="{$site_root_path}about/contact.php">Contact</a></li>
+        <li><a href="{$site_root_path}about/terms.php">Terms of Service</a></li>
+        <li><a href="{$site_root_path}about/faq.php">FAQ</a></li>
       </ul>
 
       <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">

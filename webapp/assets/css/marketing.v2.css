@@ -416,19 +416,19 @@ body {
 #container-analytics .section-copy .illustration {
   width: 300px;
   height: 208px;
-  background: url(/assets/img/landing-holders/insight-green-mobile@2x.png) top left no-repeat;
+  background: url(../img/landing-holders/insight-green-mobile@2x.png) top left no-repeat;
   background-size: 300px 339px;
 }
 @media (min-width: 760px) {
   #container-analytics .section-copy .illustration {
     width: 540px;
     height: 284px;
-    background: url(/assets/img/landing-holders/insight-green-desktop.png) top left no-repeat;
+    background: url(../img/landing-holders/insight-green-desktop.png) top left no-repeat;
   }
 }
 @media (min-width: 760px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   #container-analytics .section-copy .illustration {
-    background: url(/assets/img/landing-holders/insight-green-desktop@2x.png) top left no-repeat;
+    background: url(../img/landing-holders/insight-green-desktop@2x.png) top left no-repeat;
     background-size: 540px 335px;
   }
 }
@@ -480,7 +480,7 @@ body {
 #container-signup-top .section-copy .illustration {
   width: 303px;
   height: 616px;
-  background: url(/assets/img/landing-holders/phone-screenshot.png) 0 40px no-repeat;
+  background: url(../img/landing-holders/phone-screenshot.png) 0 40px no-repeat;
   box-shadow: 0 0 0;
 }
 #container-signup-top .section-copy .illustration a {
@@ -498,8 +498,51 @@ body {
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   #container-signup-top .section-copy .illustration {
-    background-image: url(/assets/img/landing-holders/phone-screenshot@2x.png);
+    background-image: url(../img/landing-holders/phone-screenshot@2x.png);
     background-size: 303px 616px;
+  }
+}
+#container-what {
+  background-color: #ffbb4e;
+  height: auto;
+}
+#container-what .section-header {
+  color: #ffffff;
+}
+#container-what .section-copy {
+  color: #9b5f00;
+}
+@media (min-width: 760px) {
+  #container-what {
+    height: 400px;
+  }
+}
+#container-what .section-copy {
+  font-style: italic;
+}
+@media (min-width: 760px) {
+  #container-what .section-copy {
+    padding: 15px 0 0 560px;
+    max-width: none;
+  }
+}
+#container-what .section-copy .illustration {
+  width: 300px;
+  height: 208px;
+  background: url(../img/landing-holders/insight-green-mobile@2x.png) top left no-repeat;
+  background-size: 300px 339px;
+}
+@media (min-width: 760px) {
+  #container-what .section-copy .illustration {
+    width: 540px;
+    height: 284px;
+    background: url(../img/landing-holders/insight-green-desktop.png) top left no-repeat;
+  }
+}
+@media (min-width: 760px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  #container-what .section-copy .illustration {
+    background: url(../img/landing-holders/insight-green-desktop@2x.png) top left no-repeat;
+    background-size: 540px 335px;
   }
 }
 #container-specs {
@@ -528,7 +571,7 @@ body {
   box-shadow: 0 0 0;
   width: 340px;
   height: 122px;
-  background: url(/assets/img/landing-holders/devices.png) top left no-repeat;
+  background: url(../img/landing-holders/devices.png) top left no-repeat;
   background-size: 340px 122px;
   position: relative;
   left: -50px;
@@ -550,7 +593,7 @@ body {
 }
 @media (min-width: 760px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   #container-specs .illustration {
-    background: url(/assets/img/landing-holders/devices@2x.png) top left no-repeat;
+    background: url(../img/landing-holders/devices@2x.png) top left no-repeat;
   }
 }
 #container-company {
@@ -572,7 +615,7 @@ body {
   position: absolute;
   width: 66px;
   height: 64px;
-  background: url(/assets/img/landing-holders/crowd.png) top left no-repeat;
+  background: url(../img/landing-holders/crowd.png) top left no-repeat;
   background-size: 66px 64px;
   top: 14px;
   left: 10px;
@@ -649,7 +692,7 @@ body {
 #container-company .illustration {
   width: 300px;
   height: 337px;
-  background: url(/assets/img/landing-holders/insight-red-mobile@2x.png) top left no-repeat;
+  background: url(../img/landing-holders/insight-red-mobile@2x.png) top left no-repeat;
   background-size: 300px 337px;
 }
 @media (min-width: 760px) {
@@ -658,7 +701,7 @@ body {
     right: 0;
     width: 541px;
     height: 301px;
-    background: url(/assets/img/landing-holders/insight-red-desktop.png) top left no-repeat;
+    background: url(../img/landing-holders/insight-red-desktop.png) top left no-repeat;
   }
 }
 #container-not-thinkup {
@@ -698,7 +741,7 @@ body {
 #container-not-thinkup .section-copy .illustration {
   width: 300px;
   height: 193px;
-  background: url(/assets/img/landing-holders/insight-seabreeze-mobile@2x.png) top left no-repeat;
+  background: url(../img/landing-holders/insight-seabreeze-mobile@2x.png) top left no-repeat;
   background-size: 300px 193px;
   margin-bottom: 20px;
 }
@@ -706,7 +749,7 @@ body {
   #container-not-thinkup .section-copy .illustration {
     width: 540px;
     height: 146px;
-    background: url(/assets/img/landing-holders/insight-seabreeze-desktop.png) 0 -1px no-repeat;
+    background: url(../img/landing-holders/insight-seabreeze-desktop.png) 0 -1px no-repeat;
     margin-bottom: 0;
   }
 }
