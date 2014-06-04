@@ -1,4 +1,4 @@
-{include file="_appheader.v2.tpl" body_classes="settings menu-off" body_id="settings-registration"}
+{include file="_appheader.tpl" body_classes="settings menu-off" body_id="settings-registration"}
   <div class="container">
     <header class="container-header">
       <h1>Hi{if isset($network_username)}{if $network eq 'facebook'},{/if} {$network_username}{/if}!</h1>
@@ -72,4 +72,4 @@
       <input type="Submit" name="Submit" value="Pay with Amazon" class="btn btn-pill btn-submit is-static">
     </form>
 
-{include file="_appfooter.v2.tpl" include_tz_js=true}
+{include file="_appfooter.tpl" include_tz_js=true}

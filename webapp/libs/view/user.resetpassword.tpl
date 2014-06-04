@@ -1,4 +1,4 @@
-{include file="_appheader.v2.tpl"
+{include file="_appheader.tpl"
 body_classes="settings account menu-off"}
 
   <div class="container">
@@ -25,4 +25,4 @@ body_classes="settings account menu-off"}
   <p class="form-note"><a href="{$site_root_path}user/">Back to Login</a></p>
 </form>
 
-{include file="_appfooter.v2.tpl"}
+{include file="_appfooter.tpl"}

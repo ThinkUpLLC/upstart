@@ -1,4 +1,4 @@
-{include file="_appheader.v2.tpl" body_classes="settings account menu-off"}
+{include file="_appheader.tpl" body_classes="settings account menu-off"}
 
   <div class="container">
 {if isset($subscriber->thinkup_username)}
@@ -27,4 +27,4 @@
       <input type="submit" value="Gimme" class="btn btn-circle btn-submit">
     </form>
 {/if}
-{include file="_appfooter.v2.tpl"}
+{include file="_appfooter.tpl"}

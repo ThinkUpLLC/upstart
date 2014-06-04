@@ -1,4 +1,4 @@
-{include file="_appheader.v2.tpl" include_menu=true
+{include file="_appheader.tpl" include_menu=true
 body_classes="settings menu-open" body_id="settings-main"}
 
   <div class="container">
@@ -61,4 +61,4 @@ body_classes="settings menu-open" body_id="settings-main"}
           <input type="submit" value="Save" name="Done" class="btn btn-circle btn-submit">
         </form>
 
-{include file="_appfooter.v2.tpl" include_tz_js=true show_tz_msg=true}
+{include file="_appfooter.tpl" include_tz_js=true show_tz_msg=true}

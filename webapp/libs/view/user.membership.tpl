@@ -1,4 +1,4 @@
-{include file="_appheader.v2.tpl" include_menu=true
+{include file="_appheader.tpl" include_menu=true
 body_classes="settings menu-open" body_id="settings-subscription"}
 
   <div class="container">
@@ -72,4 +72,4 @@ body_classes="settings menu-open" body_id="settings-subscription"}
         <input type="submit" value="Send it" class="btn btn-circle btn-submit">
       </form>
 
-{include file="_appfooter.v2.tpl"}
+{include file="_appfooter.tpl"}

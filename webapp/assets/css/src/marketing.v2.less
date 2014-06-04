@@ -1,0 +1,218 @@
+@import "vendor/normalize.min.css";
+@import "../vendor/bootstrap-less/mixins.less";
+@import "_variables.less";
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+// TODO: Make this a skin of the app-message from the app
+.app-message {
+    width: 100%;
+    background: @yellow-info;
+    border-radius: 4px;
+    position: relative;
+
+    font-size: 13px;
+    line-height: 1.23;
+    padding: 7px 0;
+    margin-top: 20px;
+    font-weight: 400;
+    text-align: center;
+    z-index: 1000;
+
+    .content {
+        padding: 0 40px;
+    }
+
+    .app-message-close {
+        position: absolute;
+        font-size: 20px;
+        line-height: 1;
+        top: 5px;
+        right: 5px;
+        color: #999;
+
+        .icon {
+            vertical-align: top;
+        }
+    }
+
+    &.app-message-warning {
+        color: @red-warning;
+        background: mix(@red-warning, #fff, 20%);
+
+        .content:before {
+            padding-right: 5px;
+        }
+        .app-message-close {
+            color: @red-warning;
+        }
+    }
+
+    &.app-message-success {
+        color: @green-success-darker;
+        background: mix(@green-success-darker, #fff, 20%);
+
+        .content:before {
+            padding-right: 5px;
+        }
+
+        .app-message-close {
+            color: @green-success-darker;
+        }
+    }
+}
+
+body {
+  -webkit-font-smoothing: subpixel-antialiased;
+  color: @text-color;
+  font-size: @text-size;
+  line-height: @line-height;
+  font-family: @tablet-gothic-condensed;
+  background-color: #fff;
+}
+
+.container {
+  width: 100%;
+  height: 400px;
+}
+
+.section {
+  width: 100%;
+  max-width: 960px;
+  min-width: 320px;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+#container-navbar {
+  height: auto;
+  min-height: 120px;
+}
+
+#section-navbar {
+  .clearfix;
+  padding: 20px 10px 10px;
+
+  .navbar-brand {
+    position: relative;
+    float: left;
+
+    .logo {
+      margin: 0;
+      text-indent: 100%;
+      font-size: 0;
+      width: 140px;
+      height: 39px;
+      background: url(../img/thinkup-logo@2x.png) 0 0 no-repeat;
+      background-size: 140px 39px;
+
+      a {
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+
+      @media (min-width: 560px) {
+        width: 196px;
+        height: 54px;
+        background: url(../img/thinkup-logo@2x.png) 0 0 no-repeat;
+        background-size: 196px 54px;
+        margin-top: 5px;
+      }
+    }
+
+    .tagline {
+      position: relative;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 600;
+      color: #444;
+      margin: 0;
+      top: -5px;
+      left: 8px;
+
+      @media (min-width: 560px) {
+        font-size: 18px;
+        top: -7px;
+        left: 11px;
+      }
+    }
+
+    .beta-tag {
+      display: none;
+
+      @media (min-width: 560px) {
+        display: block;
+        position: absolute;
+        top: -70px;
+        left: 190px;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: #7CB8EC;
+        font: 14px/1 @tablet-gothic-wide;
+        font-weight: 300;
+        color: #fff;
+        padding-top: 55px;
+        text-align: center;
+      }
+    }
+  }
+
+  .navbar-nav {
+    position: relative;
+    top: -10px;
+
+    @media (min-width: 560px) {
+      float: right;
+      width: 220px;
+      text-align: center;
+    }
+  }
+}
+
+.nav {
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+
+  li {
+    list-style: none;
+  }
+
+  .nav-link {
+    text-align: right;
+    margin-bottom: 10px;
+
+    a {
+      color: @link-color;
+      text-decoration: none;
+
+      &:hover {
+        color: @link-hover-color;
+      }
+    }
+
+    @media (min-width: 560px) {
+      margin-bottom: 20px;
+      line-height: 1;
+      padding: 0 12px;
+      display: inline-block;
+      text-align: center;
+    }
+  }
+
+  .nav-button {
+    clear: both;
+    text-align: center;
+  }
+}
+
+@import "_buttons.less";
+@import "_landing.less";
