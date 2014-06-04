@@ -4,7 +4,7 @@
   <div class="section section-screenshot" id="section-analytics">
     <h3 class="section-header">&ldquo;Analytics&rdquo; is for giant companies. ThinkUp is for people.</h3>
     <div class="section-copy">
-      <p>“I don’t know what the heck an ‘analytics platform’ is, but ThinkUp tells me in plain English how I’m doing on Twitter and Facebook. I am getting better at using my social networks thanks to ThinkUp.”  — @twitterUser</p>
+      <p>ThinkUp tells you what's fun and interesting about your social networking activity in a way that even Facebook or Twitter's analytics can't.</p>
       <div class="illustration">An insight</div>
     </div>
   </div>
@@ -14,7 +14,7 @@
   <div class="section section-screenshot" id="section-signup-top">
     <h3 class="section-header">Get started for free.</h3>
     <div class="section-copy">
-      <p>Sign up for our <strong>Free 14-Day Trial</strong> to see exactly what ThinkUp can do for you. We bet your very first email will be full of insights you’ve never seen before.</p>
+      <p>Sign up for our <strong>Free 14-Day Trial</strong> to see exactly what ThinkUp can do for you. Right from the start, you'll get insights you’ve never seen before.</p>
       <a href="{$site_root_path}join.php" class="btn btn-pill-large">Start your free trial</a>
       <div class="illustration">
         <a href="https://ginatrapani.thinkup.com">See a live demo</a>
@@ -27,7 +27,7 @@
   <div class="section section-screenshot" id="section-specs">
     <h3 class="section-header">ThinkUp works the way that you do.</h3>
     <div class="section-copy">
-      <p>ThinkUp’s insights about Twitter and Facebook accounts show up on your smartphone, tablet, or computer. You also get a personalized email each day so you can start your day knowing what’s working.</p>
+      <p>ThinkUp’s insights come any way you want them: Check them any time on your smartphone, tablet, or computer. And each day, get a personalized email telling you what's up with your friends, followers and fans.</p>
       <div class="illustration">An image of three devices</div>
     </div>
   </div>
@@ -50,7 +50,6 @@
     <div class="section-copy">
       <ul>
         <li>No popularity contests about how many friends you have.</li>
-        <li>No ads.</li>
         <li>No creepy tracking of your behavior.</li>
         <li>No ugly surprises about how your data is used.</li>
         <li>No hassle if you want to cancel your subscription.</li>
