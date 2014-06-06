@@ -872,4 +872,18 @@ class SubscriberMySQLDAO extends PDODAO {
         $ps = $this->execute($q, $vars);
         return $this->getUpdateCount($ps);
     }
+
+    /**
+     * Get last three days worth of member signups.
+     * @return array
+     */
+    public function getDailySignups() {
+        $q = "SELECT count(id) as new_members, ";
+        $q .= "DATE(creation_time) AS date  FROM subscribers WHERE membership_level != 'Waitlist' ";
+        $q .= "GROUP BY DATE(creation_time) ORDER BY creation_time DESC LIMIT 3;";
+        $ps = $this->execute($q);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+        return $this->getDataRowsAsArrays($ps);
+    }
 }

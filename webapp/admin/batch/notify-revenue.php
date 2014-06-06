@@ -3,6 +3,42 @@ chdir('..');
 chdir('..');
 require_once 'init.php';
 
+/**
+ * Post signups and revenue numbers to ThinkUp's Slack #signups room.
+ */
+
+$url = 'https://thinkup.slack.com/services/hooks/incoming-webhook?token=mPEOeIpng7h2EIskwtNd9hNF';
+
+// New signups
+$subscriber_dao = new SubscriberMySQLDAO();
+$daily_signups = $subscriber_dao->getDailySignups();
+$message .= "";
+if ($daily_signups[0]['new_members'] > $daily_signups[1]['new_members']) {
+    $message .= "up from";
+} elseif ($daily_signups[0]['new_members'] < $daily_signups[1]['new_members']) {
+    $message .= "down from";
+} else {
+    $message .= "the same as";
+}
+$subject = number_format($daily_signups[0]['new_members']) . " new member". 
+	(($daily_signups[0]['new_members'] > 1)?'s':'') ." joined ThinkUp today.";
+
+$message = "That's ". $message. " ".number_format($daily_signups[1]['new_members']). 
+	" signup". (($daily_signups[1]['new_members'] > 1)?'s':'') ." yesterday. Day before was ".
+    number_format($daily_signups[2]['new_members']) . " signup" .(($daily_signups[1]['new_members'] > 1)?'s':'').
+    ".";
+
+$payload = '{"channel": "#signups", "username": "upstartbot", "text": "'. $subject.'\n'.
+	$message. '", "icon_emoji": ":cubimal_chick:"}';
+
+$fields = array('payload'=>$payload);
+
+$result = postToURL($url, $fields);
+$message = null;
+$subject = null;
+
+
+// Revenue
 $payment_dao = new PaymentMySQLDAO();
 $daily_revenue = $payment_dao->getDailyRevenue();
 $message .= "";
@@ -14,9 +50,48 @@ if ($daily_revenue[0]['revenue'] > $daily_revenue[1]['revenue']) {
     $message .= "Same as";
 }
 $message .= " $". number_format($daily_revenue[1]['revenue']). " yesterday. Day before was $".
-    number_format($daily_revenue[2]['revenue']) . ".
-";
+    number_format($daily_revenue[2]['revenue']) . ".";
 $subject = "$" . number_format($daily_revenue[0]['revenue']) . " in revenue today";
 
-Mailer::mailViaPHP( 'scppHwfCNV3jC4H2Aio3RvJ73H9voj+p-1@api.pushover.net', $subject, $message);
-Mailer::mailViaPHP( 'k55QGmp2Gi1nMskLgukjitdWEjy5AG@api.pushover.net', $subject, $message);
+
+$payload = '{"channel": "#signups", "username": "upstartbot", "text": "'. $subject.'\n'.
+	$message. '", "icon_emoji": ":cubimal_chick:"}';
+
+$fields = array('payload'=>$payload);
+
+$result = postToURL($url, $fields);
+
+/**
+ * Post fields to a URL.
+ * @param str $URL
+ * @param array $fields
+ * @return str contents
+ */
+function postToURL($URL, array $fields) {
+    $fields_string = '';
+    //url-ify the data for the POST
+    foreach($fields as $key=>$value) {
+        $fields_string .= $key.'='.$value.'&';
+    }
+    rtrim($fields_string,'&');
+
+    //open connection
+    $ch = curl_init();
+
+    //set the url, number of POST vars, POST data
+    curl_setopt($ch,CURLOPT_URL,$URL);
+    curl_setopt($ch,CURLOPT_POST,count($fields));
+    curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 0);
+
+    //execute post
+    $contents = curl_exec($ch);
+
+    //close connection
+    curl_close($ch);
+    if (isset($contents)) {
+        return $contents;
+    } else {
+        return null;
+    }
+}
