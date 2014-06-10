@@ -27,6 +27,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual('ginatrapani@example.com', $data['email']);
         $this->assertEqual('Payment due', $data['subscription_status']);
+        $this->assertEqual(0, $data['is_account_closed']);
     }
 
     public function testInsertCompleteSubscriber() {
@@ -55,6 +56,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual('Member', $data['membership_level']);
         $this->assertEqual('America/New_York', $data['timezone']);
         $this->assertEqual('Payment due', $data['subscription_status']);
+        $this->assertEqual(0, $data['is_account_closed']);
 
         //Try inserting new subscriber with same network credentials
         $subscriber = new Subscriber();
@@ -108,6 +110,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($subscriber->follower_count, 0);
         $this->assertEqual($subscriber->is_verified, 0);
         $this->assertEqual($subscriber->subscription_status, 'Payment due');
+        $this->assertFalse($subscriber->is_account_closed);
 
         $subscriber = $dao->getByEmail('yoyo@example.com');
         $this->assertNull($subscriber);
@@ -128,6 +131,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($subscriber->full_name, 'Gina Trapani');
         $this->assertEqual($subscriber->follower_count, 649);
         $this->assertEqual($subscriber->is_verified, 1);
+        $this->assertFalse($subscriber->is_account_closed);
     }
 
     public function testUpdateDuplicateConnection() {
