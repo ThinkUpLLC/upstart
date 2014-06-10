@@ -1,15 +1,11 @@
 <?php
-class WelcomeController extends SignUpHelperController {
+class ConfirmPaymentController extends SignUpHelperController {
     /**
-     * @var array Options for notification frequency
+     * Detect Amazon Payment state, record authorization, charge, and thank member.
+     * @return str HTML page
      */
-    protected $notification_frequencies = array('daily'=>'Daily','weekly'=>'Weekly', 'never'=>'Never');
-
     public function control() {
-        $this->disableCaching();
-        $this->setPageTitle('Welcome');
-        $this->setViewTemplate('welcome.tpl');
-
+        $this->setViewTemplate('confirm-payment.tpl');
         $new_subscriber_id = SessionCache::get('new_subscriber_id');
         $subscriber_dao = new SubscriberMySQLDAO();
         $subscriber = $subscriber_dao->getByID($new_subscriber_id);
@@ -50,17 +46,18 @@ class WelcomeController extends SignUpHelperController {
                 $subscriber->subscription_status = $subscription_status;
                 //Update subscription_status in the data store
                 $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
+                $this->addToView('subscriber', $subscriber);
+                $cfg = Config::getInstance();
+                $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
+                    $cfg->getValue('user_installation_url'));
+                $this->addToView('thinkup_url', $user_installation_url);
             } else {
                 $this->addErrorMessage($this->generic_error_msg);
                 $this->logError('Amazon response invalid', __FILE__,__LINE__, __METHOD__);
             }
+        } else {
+        	$this->addErrorMessage($this->generic_error_msg);
         }
-        $cfg = Config::getInstance();
-        $user_installation_url = $cfg->getValue('user_installation_url');
-        $subscriber->installation_url = str_replace ("{user}", $subscriber->thinkup_username,
-            $user_installation_url);
-        $this->addToView('new_subscriber', $subscriber);
-
         return $this->generateView();
     }
 
@@ -80,7 +77,7 @@ class WelcomeController extends SignUpHelperController {
      */
     protected function isAmazonResponseValid() {
         //Check inputs match internal rules
-        $endpoint_url = UpstartHelper::getApplicationURL().'welcome.php?level='.$_GET['level'];
+        $endpoint_url = UpstartHelper::getApplicationURL().'confirm-payment.php?level='.$_GET['level'];
         $endpoint_url_params = array();
         return AmazonFPSAPIAccessor::isAmazonSignatureValid($endpoint_url, $endpoint_url_params);
     }

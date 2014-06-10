@@ -60,7 +60,7 @@
           {include file="_appusermessage.tpl" field="timezone"}
         </div>
         <div class="form-group form-group-radio{if isset($error_msgs.terms)} form-group-warning{/if}">
-          <label class="control-label" for="terms">I’ll follow the <a href="https://github.com/ThinkUpLLC/policy/blob/master/terms-of-service.md" target="_blank">terms of service</a></label>
+          <label class="control-label" for="terms">I’ll follow the <a href="{$site_root_path}about/terms.php" tabindex="-1" target="_blank">terms of service</a></label>
           <div class="form-control">
             <input type="checkbox" class="radio-control" id="terms" name="terms" value="agreed" {if isset($terms) && $terms eq 'agreed'}checked{/if}>
           </div>
@@ -69,7 +69,7 @@
 
       </fieldset>
 
-      <input type="Submit" name="Submit" value="Pay with Amazon" class="btn btn-pill btn-submit is-static">
+      <input type="Submit" name="Submit" value="Create Account" class="btn btn-pill btn-submit is-static">
     </form>
 
 {include file="_appfooter.tpl" include_tz_js=true}

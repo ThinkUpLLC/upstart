@@ -25,7 +25,7 @@
           <th>Level</th>
       </tr>
       {foreach $subscribers as $subscriber}
-      <tr onclick="document.location = 'subscriber.php?id={$subscriber->id}';">
+      <tr onclick="document.location = 'subscriber.php?id={$subscriber->id}';"{if $subscriber->is_account_closed} class="text-danger"{/if}>
         <td style="cursor:pointer"> {if $subscriber->is_verified}<img src="../assets/img/twitter_verified_icon.png" />{/if}</td>
         <td style="cursor:pointer">{include file="_admin-network_user.tpl" link_to_network="false"}</td>
         <td style="cursor:pointer">{$subscriber->email}</th>

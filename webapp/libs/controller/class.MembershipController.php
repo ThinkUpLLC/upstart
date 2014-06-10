@@ -5,6 +5,7 @@ class MembershipController extends AuthController {
         $this->setPageTitle('Membership Info');
         $this->setViewTemplate('user.membership.tpl');
         $this->disableCaching();
+        $this->enableCSRFToken();
 
         $logged_in_user = Session::getLoggedInUser();
         $this->addToView('logged_in_user', $logged_in_user);
@@ -76,6 +77,29 @@ class MembershipController extends AuthController {
             }
         }
 
+        try {
+            if (self::hasUserRequestedAccountClosure() && $this->validateCSRFToken()) {
+                $result = $subscriber_dao->closeAccount($subscriber->id);
+                if ($result > 0) {
+                    $this->addSuccessMessage("Your ThinkUp account has been closed. ".
+                        "But there's still time to change your mind!");
+                    $subscriber->is_account_closed = true;
+                    $this->addToView('subscriber', $subscriber);
+                }
+            }
+
+            if (self::hasUserRequestedAccountReopening() && $this->validateCSRFToken()) {
+                $result = $subscriber_dao->openAccount($subscriber->id);
+                if ($result > 0) {
+                    $this->addSuccessMessage("Your ThinkUp account has been re-opened!");
+                    $subscriber->is_account_closed = false;
+                    $this->addToView('subscriber', $subscriber);
+                }
+            }
+        } catch (InvalidCSRFTokenException $e) {
+            $this->addErrorMessage("There was a problem processing your request. Please try again.");
+        }
+
         //BEGIN populating membership_status for view
         $membership_status = $subscriber->subscription_status;
         //Conflate pending status for auths and payments into a single message
@@ -87,14 +111,46 @@ class MembershipController extends AuthController {
         }
         $this->addToView('membership_status', $membership_status);
 
+        // Add ebook download link (this is just a stub for now)
+        if ($membership_status != 'Payment failed' && $membership_status != 'Payment due'
+            && $membership_status != 'Payment pending' && $membership_status != 'Free trial') {
+            $this->addToView('show_ebook_links', true);
+        }
+
+        //Add Free trial status (including if expired, and how many days left)
+        if ($membership_status == 'Free trial') {
+            $creation_date = new DateTime($subscriber->creation_time);
+            $now = new DateTime();
+            $end_of_trial = $creation_date->add(new DateInterval('P14D'));
+            if ($end_of_trial < $now) {
+                $this->addToView('trial_status', 'Expired!');
+            } else {
+                $datetime1 = new DateTime('2009-10-11');
+                $datetime2 = new DateTime('2009-10-13');
+                $interval = $now->diff($end_of_trial);
+                $this->addToView('trial_status', 'expires in <strong>'.$interval->format('%a days').'</strong>');
+            }
+        }
+
         // If status is "Payment failed" or "Payment due" then send Amazon Payments URL to view and handle charge
-        if ($membership_status == 'Payment failed' || $membership_status == 'Payment due') {
+        if ($membership_status == 'Payment failed' || $membership_status == 'Payment due'
+            || $membership_status == 'Free trial') {
             $callback_url = UpstartHelper::getApplicationURL().'user/membership.php';
             $caller_reference = $subscriber->id.'_'.time();
             $amount = self::getSubscriptionAmount($subscriber->membership_level);
             $amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL( $caller_reference, $callback_url, $amount );
             SessionCache::put('caller_reference', $caller_reference);
-            $this->addToView('failed_cc_amazon_link', $amazon_url);
+            if ($membership_status == 'Free trial') {
+                $this->addToView('amazon_link', $amazon_url);
+            } else {
+                $this->addToView('failed_cc_amazon_link', $amazon_url);
+            }
+
+            if ($membership_status == 'Payment failed') {
+                $this->addToView('failed_cc_amazon_text', "There was a problem with your payment. But it's easy to fix!");
+            } else {
+                $this->addToView('failed_cc_amazon_text', "One last step to complete your ThinkUp membership!");
+            }
         }
         //END populating membership_status
 
@@ -124,6 +180,22 @@ class MembershipController extends AuthController {
 
         return $this->generateView();
 	}
+
+    /**
+     * Whether or not user has requested account closure.
+     * @return bool
+     */
+    private function hasUserRequestedAccountClosure() {
+        return (isset($_GET['close'])  && $_GET['close'] == 'true');
+    }
+
+    /**
+     * Whether or not user has requested account re-opening.
+     * @return bool
+     */
+    private function hasUserRequestedAccountReopening() {
+        return (isset($_GET['reopen'])  && $_GET['reopen'] == 'true');
+    }
 
     /**
      * Whether or not user has returned from paying at Amazon.

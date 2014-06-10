@@ -172,7 +172,8 @@ body {
 
     @media (min-width: 560px) {
       float: right;
-      width: 220px;
+      min-width: 220px;
+      max-width: 300px;
       text-align: center;
     }
   }
@@ -271,9 +272,11 @@ body {
 
   #subsection-links {
     background: #D0D0D0;
+    margin-bottom: 10px;
 
     @media (min-width: 640px) {
       background: @gray-lightest;
+      margin-bottom: 0;
     }
   }
 
