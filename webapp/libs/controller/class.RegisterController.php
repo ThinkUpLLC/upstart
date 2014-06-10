@@ -231,16 +231,8 @@ class RegisterController extends SignUpHelperController {
                     if ($has_user_been_created) {
                         $installer = new AppInstaller();
                         $install_results = $installer->install($new_subscriber_id);
-                        //Begin Amazon redirect
-                        $caller_reference = $new_subscriber_id.'_'.time();
-
-                        $selected_level = htmlspecialchars($_GET['level']);
-                        //Get Amazon URL
-                        $callback_url = UpstartHelper::getApplicationURL().'welcome.php?level='.$_GET['level'];
-                        $amount = SignUpHelperController::$subscription_levels[$selected_level];
-                        $pay_with_amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference,
-                            $callback_url, $amount);
-                        header('Location: '.$pay_with_amazon_url);
+                        $controller = new PayNowController();
+                        return $controller->control();
                     } else {
                         return $this->tryAgain($this->generic_error_msg);
                     }

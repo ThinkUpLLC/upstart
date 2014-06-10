@@ -49,9 +49,23 @@ body.marketing-page {
       font-weight: 300;
       margin-bottom: 1em;
 
+      &.break-word {
+        word-wrap: break-word;
+        overflow: hidden;
+      }
+
       a {
         color: @link-color;
+
+        &[class^=btn] {
+          color: #fff;
+          text-decoration: none;
+        }
       }
+    }
+
+    .center {
+      text-align: center;
     }
 
     .list-values {
@@ -73,6 +87,18 @@ body.marketing-page {
           font-weight: 400;
           color: @link-color;
         }
+      }
+    }
+
+    .illustration {
+      margin: 20px 0 60px 20px;
+      float: right;
+      min-width: 100px;
+      max-width: 200px;
+      width: 33%;
+
+      @media (min-width: 31.875em) {
+        margin-left: 30px;
       }
     }
 
@@ -112,6 +138,10 @@ body.marketing-page {
       .text-header, h3 {
         font-size: (22/16em);
         line-height: 1;
+
+        &.lil-margin {
+          margin: .25em 0;
+        }
       }
 
       .list-values {
@@ -286,94 +316,127 @@ body.marketing-page {
   }
 }
 
-body#marketing-about {
-  #section-about-text {
-    .headshots {
-      text-align: center;
+#section-about-text {
+  .headshots {
+    text-align: center;
 
-      .headshot {
-        display: inline-block;
-        width: 75px;
-        height: 75px;
-        border-radius: 50%;
-        margin-left: 5px;
+    .headshot {
+      display: inline-block;
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      margin-left: 5px;
 
-        &:first-child {
-          margin: 0;
-        }
-      }
-    }
-
-    .investor-logos {
-      text-align: center;
-
-      .investor-logos-row {
-        margin-bottom: 10px;
-      }
-
-      .investor-logo {
-        height: 35px;
-        width: auto;
-        padding-left: 10px;
-      }
-    }
-
-    .download-our-logo {
-      float: right;
-      margin: 20px 0 10px 20px;
-      font-size: (14/16em);
-
-      a {
-        color: @link-color;
-      }
-
-      img {
-        width: 148px;
-        height: 40px;
+      &:first-child {
+        margin: 0;
       }
     }
   }
 
+  .investor-logos {
+    text-align: center;
+
+    .investor-logos-row {
+      margin-bottom: 10px;
+    }
+
+    .investor-logo {
+      height: 35px;
+      width: auto;
+      padding-left: 10px;
+    }
+  }
+
+  .download-our-logo {
+    float: right;
+    margin: 20px 0 10px 20px;
+    font-size: (14/16em);
+
+    a {
+      color: @link-color;
+    }
+
+    img {
+      width: 148px;
+      height: 40px;
+    }
+  }
+
   @media (min-width: 31.875em) {
-    #section-about-text {
-      .headshots {
-        float: right;
-        margin-left: 10px;
+    .headshots {
+      float: right;
+      margin-left: 10px;
 
-        .headshot {
-          width: 100px;
-          height: 100px;
-        }
+      .headshot {
+        width: 100px;
+        height: 100px;
       }
+    }
 
-      .investor-logos {
-        margin: 20px -20px;
+    .investor-logos {
+      margin: 20px -20px;
 
-        .investor-logo {
-          height: 40px;
-          padding-left: 20px;
+      .investor-logo {
+        height: 40px;
+        padding-left: 20px;
 
-        }
       }
     }
   }
 
   @media (min-width: 48em) {
-    #section-about-text {
-      .investor-logos {
+    .investor-logos {
+      .investor-logos-row {
+        display: inline;
+      }
 
-        .investor-logos-row {
-          display: inline;
-        }
-
-        .investor-logo {
-          &.is-first {
-            padding: 0;
-          }
+      .investor-logo {
+        &.is-first {
+          padding: 0;
         }
       }
     }
   }
+}
+
+#section-pay-now {
+  padding: 15px;
+
+  .section-header {
+    text-align: left;
+    width: 100%;
+
+    @media (min-width: 31.875em) {
+      width: 66%;
+    }
+  }
+
+  .book-cover {
+    @media (min-width: 31.875em) {
+      margin-left: 100px;
+      margin-top: -30px;
+      margin-right: 10px;
+      @y:   #f5ee30;
+      @yd:  darken(@y, 10%);
+      @ydr: darken(@y, 15%);
+      @yp:  mix(@y, #fff, 20%);
+      @g:   mix(@y, #000, 90%);
+      border: 1px solid @yd;
+      box-shadow: 4px 4px 0 @yp, 5px 5px 0 @g, 8px 8px @yp, 9px 9px @g, 12px 12px @yp, 13px 13px @ydr;
+    }
+  }
+
+  .btn-wrapper {
+    clear: both;
+    text-align: center;
+
+    @media (min-width: 31.875em) {
+      clear: none;
+      text-align: left;
+    }
+  }
+
+
 }
 
 // For colored headers

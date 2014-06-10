@@ -81,7 +81,7 @@ abstract class SignUpHelperController extends UpstartController {
 
         $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret);
         //Add unique waitlisted user ID from previous DB operation to callback
-        $tok = $to->getRequestToken(UpstartHelper::getApplicationURL().$redirect_location);
+        $tok = $to->getRequestToken(UpstartHelper::getApplicationURL(false, false).$redirect_location);
 
         if (isset($tok['oauth_token'])) {
             $token = $tok['oauth_token'];
@@ -121,7 +121,7 @@ abstract class SignUpHelperController extends UpstartController {
             $params = array('scope'=>'read_stream,user_likes,user_location,user_website,'.
                 'read_friendlists,friends_location,manage_pages,read_insights,manage_pages,email',
                 'state'=>SessionCache::get('facebook_auth_csrf'),
-                'redirect_uri'=>UpstartHelper::getApplicationURL().$redirect_location);
+                'redirect_uri'=>UpstartHelper::getApplicationURL(false, false).$redirect_location);
 
             $fbconnect_link = $facebook_app->getLoginUrl($params);
         } catch (FacebookApiException $e) {

@@ -174,6 +174,15 @@ checkUsername = ($el) ->
     , 500
     )
 
+checkEmailAvailability = (email, cb) ->
+  isGood = false
+  if email? and email isnt ""
+    $.getJSON "user/check-email.php?em=#{encodeURIComponent email}", (data) ->
+      if data.available then isGood = true
+      cb isGood
+  else
+    cb isGood
+
 checkPasswordFormat = (value) -> value.match(/^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*).{8,}$/gi)?
 checkEmailFormat    = (value) -> value.match(/^([a-z0-9_\.\+-]+)@([\da-z\.-]+)\.([a-z\.]{2,8})$/)?
 
@@ -214,16 +223,22 @@ checkSettingsPasswordField = ($form,e) ->
          $form.find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning")
 
 
-mimerEmail = null
+timerEmail = null
 checkEmailField = ($el) ->
+  val = $el.val()
   if $el.val() isnt ""
     if timerEmail then clearTimeout timerEmail
     timerEmail = setTimeout(->
       $group = $el.parent()
       if checkEmailFormat $el.val()
-        $group.addClass("form-group-ok").removeClass("form-group-warning")
-        $group.find(".help-block").remove()
-        wt.appMessage.destroy()
+        checkEmailAvailability $el.val(), (isGood) ->
+          if isGood
+            $group.addClass("form-group-ok").removeClass("form-group-warning")
+            $group.find(".help-block").remove()
+            wt.appMessage.destroy()
+          else
+            $group.removeClass("form-group-ok").addClass("form-group-warning")
+            wt.appMessage.create "An existing account is using this email address.", "warning"
       else
         $group.removeClass("form-group-ok").addClass("form-group-warning")
         wt.appMessage.create "Please enter a valid email address.", "warning"

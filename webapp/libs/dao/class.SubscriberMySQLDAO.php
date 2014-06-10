@@ -426,6 +426,27 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getUpdateCount($ps);
     }
 
+    public function closeAccount($id) {
+        return self::setIsAccountClosed($id, 1);
+    }
+
+    public function openAccount($id) {
+        return self::setIsAccountClosed($id, 0);
+    }
+
+    private function setIsAccountClosed($id, $is_account_closed) {
+        $q  = "UPDATE subscribers SET is_account_closed = :is_account_closed ";
+        $q .= "WHERE id = :id ";
+
+        $vars = array(
+            ':is_account_closed'=> (int) $is_account_closed,
+            ':id'=>(int) $id
+        );
+        //echo self::mergeSQLVars($q, $vars)."\n";
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
     public function setMembershipLevel($id, $membership_level) {
         $q  = "UPDATE subscribers SET membership_level = :membership_level ";
         $q .= "WHERE id = :id ";
@@ -451,8 +472,13 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getDataRowsAsArrays($ps);
     }
 
+    /**
+     * Get installations to crawl for members who have paid or are complimentary.
+     * @param  integer $count How many installs to retrieve; defaults to 25
+     * @return arr Array of installation information
+     */
     public function getPaidStaleInstalls($count=25) {
-        $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 ";
+        $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0 ";
         $q .= "AND (subscription_status LIKE 'Paid through%' OR is_membership_complimentary = 1) ";
         $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL 90 MINUTE) OR last_dispatched IS NULL) ";
         $q .= "ORDER BY last_dispatched ASC ";
@@ -467,15 +493,16 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     /**
-     * Get installations for members who have not paid.
-     * This function does not return members who have received 3 email reminders to pay, and 12 days have passed since
+     * Get installations to crawl for members who have not paid.
+     * This function does not return members who have closed their account.
+     * This function does not return members who have received 3 payment reminders and 12 days have passed since
      * last reminder was sent. That's so they're not being crawled when they are uninstalled automatically at the
      * 14-day threshold.
      * @param  integer $count How many installs to retrieve; defaults to 25
      * @return arr Array of installation information
      */
     public function getNotYetPaidStaleInstalls($count=25) {
-        $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 ";
+        $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0 ";
         $q .= "AND subscription_status NOT LIKE 'Paid through%' ";
         $q .= "AND ((last_dispatched < DATE_SUB(NOW(), INTERVAL 3 HOUR) OR last_dispatched IS NULL)) ";
         // Upstart isn't sending payment reminders or isn't finished sending them
@@ -517,7 +544,7 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     public function getTotalActiveInstalls() {
-        $q  = "SELECT count(*) AS total FROM subscribers WHERE is_installation_active = 1;";
+        $q  = "SELECT count(*) AS total FROM subscribers WHERE is_installation_active = 1 and is_account_closed = 0;";
         //echo self::mergeSQLVars($q, $vars);
         $ps = $this->execute($q);
         $result = $this->getDataRowAsArray($ps);
@@ -780,8 +807,32 @@ class SubscriberMySQLDAO extends PDODAO {
      * @param  int $hours_past_time      How many hours past signup or last reminder time.
      * @return arr                       Array of Subscriber objects
      */
-    public function getSubscribersDueReminder($total_reminders_sent, $hours_past_time) {
+    public function getSubscribersPaymentDueReminder($total_reminders_sent, $hours_past_time) {
         $q = "SELECT * FROM subscribers WHERE membership_level != 'Waitlist' AND subscription_status = 'Payment due' ";
+        $q .= "AND is_account_closed = 0 ";
+        $q .= "AND total_payment_reminders_sent = :total_reminders_sent AND (";
+        //If total_reminders_sent = 0, use creation_time to compare. Otherwise, use payment_reminder_last_sent.
+        if ($total_reminders_sent == 0) {
+            $q .= "creation_time ";
+        } else {
+            $q .= "payment_reminder_last_sent ";
+        }
+        $q .= "< DATE_SUB(NOW(), INTERVAL :hours_past_time HOUR )) ORDER BY creation_time ASC LIMIT 25";
+        $vars = array(':total_reminders_sent' => $total_reminders_sent, ':hours_past_time' => $hours_past_time);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowsAsObjects($ps, 'Subscriber');
+    }
+
+    /**
+     * Get 25 free trial subscribers who are due a payment reminder email.
+     * @param  int $total_reminders_sent How many reminders already sent to these subscribers
+     * @param  int $hours_past_time      How many hours past signup or last reminder time.
+     * @return arr                       Array of Subscriber objects
+     */
+    public function getSubscribersFreeTrialPaymentReminder($total_reminders_sent, $hours_past_time) {
+        $q = "SELECT * FROM subscribers WHERE membership_level != 'Waitlist' AND subscription_status = 'Free Trial' ";
+        $q .= "AND is_account_closed = 0 ";
         $q .= "AND total_payment_reminders_sent = :total_reminders_sent AND (";
         //If total_reminders_sent = 0, use creation_time to compare. Otherwise, use payment_reminder_last_sent.
         if ($total_reminders_sent == 0) {
@@ -804,6 +855,21 @@ class SubscriberMySQLDAO extends PDODAO {
         $q = "SELECT * FROM subscribers WHERE membership_level != 'Waitlist' AND subscription_status = 'Payment due' ";
         $q .= "AND total_payment_reminders_sent = 3 AND ";
         $q .= "(payment_reminder_last_sent < DATE_SUB(NOW(), INTERVAL 14 DAY )) ";
+        $q .= "ORDER BY creation_time ASC LIMIT 25";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+        return $this->getDataRowsAsObjects($ps, 'Subscriber');
+    }
+
+    /**
+     * Get 25 subscribers to uninstall because free trial has expired and it's been 30 hours since last dispatch time.
+     * @return arr Array of Subscriber objects
+     */
+    public function getSubscribersToUninstallDueToExpiredTrial() {
+        $q = "SELECT * FROM subscribers WHERE membership_level != 'Waitlist' AND subscription_status = 'Free trial' ";
+        //AND trial is more than 15 days old, and last dispatched is over 30 hours ago.
+        $q .= "AND (creation_time < DATE_SUB(NOW(), INTERVAL 15 DAY )) ";
+        $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL 30 HOUR )) ";
         $q .= "ORDER BY creation_time ASC LIMIT 25";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);

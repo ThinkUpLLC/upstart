@@ -1,11 +1,11 @@
-{include file="_header.marketing.tpl" marketing_page=true
+{include file="_header.marketing.tpl" marketing_page=true hide_join=true
 body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe"}
 
   <div class="container">
 
     <section class="section" id="section-page-header">
-      <h2 class="section-header">Join thousands of happy ThinkUp members.</h2>
-      <h3 class="section-subheader">100% money-back guarantee (but almost nobody ever asks)</h3>
+      <h2 class="section-header">Start Your 14-day Free Trial.</h2>
+      <h3 class="section-subheader">First, pick the level that’s right for you.</h3>
     </section>
   </div>
   <div class="container">
@@ -26,7 +26,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
         </div>
 
         <div class="action-buttons">
-          <div class="action-buttons-label">Sign up with:</div>
+          <div class="action-buttons-label">Get started with:</div>
           <div class="actual-buttons">
             <a href="{$twitter_member_link}" class="btn btn-pill btn-twitter"><i class="fa fa-twitter icon"></i> Twitter</a>
             <a href="{$facebook_member_link}" class="btn btn-pill btn-facebook"><i class="fa fa-facebook icon"></i> Facebook</a>
@@ -36,7 +36,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
 
       <section class="subsection section-subscription-level"
       id="section-subscription-pro">
-        <h3 class="subsection-header">5 accounts
+        <h3 class="subsection-header">More than 1 account
           <span class="descriptor">per social network</span></h3>
         <div class="level-cost">
           <div class="annually">$120/year</div>
@@ -49,7 +49,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
         </div>
 
         <div class="action-buttons">
-          <div class="action-buttons-label">Sign up with:</div>
+          <div class="action-buttons-label">Get started with:</div>
           <div class="actual-buttons">
             <a href="{$twitter_pro_link}" class="btn btn-pill btn-twitter"><i class="fa fa-twitter icon"></i> Twitter</a>
             <a href="{$facebook_pro_link}" class="btn btn-pill btn-facebook"><i class="fa fa-facebook icon"></i> Facebook</a>

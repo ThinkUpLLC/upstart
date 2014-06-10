@@ -37,7 +37,8 @@
       </tr>
       <tr>
         <td>Status</td>
-        <td>{$subscriber->subscription_status}</td>
+        <td>{$subscriber->subscription_status}{if $subscriber->is_account_closed} - <span class="text-danger">Account closed</span>{/if}
+</td>
       </tr>
       {if $subscriber->total_payment_reminders_sent > 0}
       <tr>

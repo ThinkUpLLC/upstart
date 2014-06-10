@@ -1,6 +1,8 @@
 <?php
 require_once dirname(__FILE__) . '/init.tests.php';
 require_once ISOSCELES_PATH.'extlibs/simpletest/autorun.php';
+require_once dirname(__FILE__) . '/classes/mock.TwitterOAuth.php';
+require_once dirname(__FILE__) . '/classes/mock.facebook.php';
 
 class TestOfLandingController extends UpstartUnitTestCase {
 
@@ -15,5 +17,13 @@ class TestOfLandingController extends UpstartUnitTestCase {
     public function testConstructor() {
         $controller = new LandingController(true);
         $this->assertIsA($controller, 'LandingController');
+    }
+
+    public function testControl() {
+        $controller = new LandingController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Sign in with<\/small><br>Twitter/', $results);
+        $this->assertPattern('/Sign in with<\/small><br>Facebook/', $results);
     }
 }

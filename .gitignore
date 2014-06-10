@@ -4,3 +4,6 @@ tests/config.tests.inc.php
 data/*
 webapp/sandbox/*
 node_modules/*
+*.sublime-project
+*.sublime-workspace
+webapp/assets/css/*.css.map

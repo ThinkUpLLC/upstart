@@ -1,23 +1,13 @@
-{include file="_header.marketing.tpl" body_classes="landing" body_id="landing-home"}
-
-<div class="container" id="container-analytics">
-  <div class="section section-screenshot" id="section-analytics">
-    <h3 class="section-header">There’s buried treasure in your social networks.</h3>
-    <div class="section-copy">
-      <p>ThinkUp uncovers fun and fascinating insights about your Facebook and Twitter activity.</p>
-      <div class="illustration">An insight</div>
-    </div>
-  </div>
-</div>
+{include file="_header.marketing.tpl" body_classes="landing" body_id="landing-home" hide_join="1"}
 
 <div class="container" id="container-signup-top">
   <div class="section section-screenshot" id="section-signup-top">
-    <h3 class="section-header">Get started right now.</h3>
+    <h3 class="section-header">There are things Facebook &amp; Twitter don't tell you.</h3>
     <div class="section-copy">
-      <p>ThinkUp offers a full money-back guarantee so you can try it out risk-free. Right from the start, you’ll get insights you’ve never seen before.</p>
-      <a href="{$site_root_path}join.php" class="btn btn-pill-large">Choose your plan</a>
-      <div class="illustration">
-        <a href="https://ginatrapani.thinkup.com">See a live demo</a>
+      <p>ThinkUp gives you insights about your social networks that you can't find anywhere else. Sign up for our Free 14-Day Trial and see what you've been missing.</p>
+      <div class="signup-buttons">
+        <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign in with</small><br>Twitter</a>
+        <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign in with</small><br>Facebook</a>
       </div>
     </div>
   </div>
@@ -35,6 +25,8 @@
           <li data-target="#sample-insights-carousel" data-slide-to="1"><a href="#">2</a></li>
           <li data-target="#sample-insights-carousel" data-slide-to="2"><a href="#">3</a></li>
           <li data-target="#sample-insights-carousel" data-slide-to="3"><a href="#">4</a></li>
+          <li data-target="#sample-insights-carousel" data-slide-to="4"><a href="#">5</a></li>
+
         </ul>
         <div class="sample-insights carousel-inner">
           <figure class="item active" id="sample-1">
@@ -49,6 +41,9 @@
           <figure class="item" id="sample-4">
             <div class="sample-insight"></div>
           </figure>
+          <figure class="item" id="sample-5">
+            <div class="sample-insight"></div>
+          </figure>
         </div>
       </div>
     </div>
@@ -61,17 +56,6 @@
     <div class="section-copy">
       <p>ThinkUp’s insights come any way you want them. Check them any time on your smartphone, tablet, or computer. And each day (or once a week, or never!), get a personalized email telling you what's up with your friends, followers, and fans.</p>
       <div class="illustration">An image of three devices</div>
-    </div>
-  </div>
-</div>
-
-<div class="container" id="container-company">
-  <div class="section section-screenshot" id="section-company">
-    <h3 class="section-header">A tech company that<br>
-      treats you with respect.</h3>
-    <div class="section-copy">
-      <p>ThinkUp is a different kind of company. We make products for regular people, we collaborate with an <a href="https://github.com/ginatrapani/ThinkUp">open source community</a> and we live by <a href="{$site_root_path}about/values.php">our values</a>.</p>
-      <div class="illustration">An insight</div>
     </div>
   </div>
 </div>
@@ -91,11 +75,26 @@
   </div>
 </div>
 
+<div class="container" id="container-company">
+  <div class="section section-screenshot" id="section-company">
+    <h3 class="section-header">A tech company that<br>
+      treats you with respect.</h3>
+    <div class="section-copy">
+      <p>ThinkUp is a different kind of company. We make products for regular people, we collaborate with an <a href="https://github.com/ginatrapani/ThinkUp">open source community</a> and we live by <a href="{$site_root_path}about/values.php">our values</a>.</p>
+      <div class="illustration">An insight</div>
+    </div>
+  </div>
+</div>
+
+
 <div class="container" id="container-signup-bottom">
   <div class="section" id="section-signup-bottom">
-    <h3 class="section-header">We’ve got a 100% risk-free money-back guarantee</h3>
+    <h3 class="section-header">Start your <em>100% free</em> trial and get insights immediately</h3>
     <div class="section-copy">
-      <a href="{$site_root_path}join.php" class="btn btn-pill-medium">Join now</a>
+      <div class="signup-buttons">
+        <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign in with</small><br>Twitter</a>
+        <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign in with</small><br>Facebook</a>
+      </div>
     </div>
   </div>
 </div>

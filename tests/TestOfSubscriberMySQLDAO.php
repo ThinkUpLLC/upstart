@@ -508,6 +508,12 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
             'thinkup_username'=>'unique7', 'date_installed'=>null, 'is_membership_complimentary'=>1,
             'is_installation_active'=>1, 'last_dispatched'=>'-4h', 'subscription_status'=>'Payment failed'));
+        //Should not get returned because account is closed
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>8, 'email'=>'ginatrapani+8@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique8', 'date_installed'=>null, 'is_membership_complimentary'=>1,
+            'is_installation_active'=>1, 'last_dispatched'=>'-4h', 'subscription_status'=>'Payment failed',
+            'is_account_closed'=>1));
 
         $dao = new SubscriberMySQLDAO();
         $result = $dao->getPaidStaleInstalls();
@@ -557,6 +563,12 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
             'thinkup_username'=>'unique7', 'date_installed'=>null, 'is_membership_complimentary'=>0,
             'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment due',
             'total_payment_reminders_sent'=>3, 'payment_reminder_last_sent'=>'-10d'));
+        //Should not get returned because account is closed
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>8, 'email'=>'ginatrapani+8@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra6', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique8', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment due',
+            'total_payment_reminders_sent'=>3, 'payment_reminder_last_sent'=>'-10d', 'is_account_closed'=>1));
 
         $dao = new SubscriberMySQLDAO();
         $result = $dao->getNotYetPaidStaleInstalls();
@@ -567,7 +579,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($result[2]['thinkup_username'], 'unique7');
     }
 
-    public function testGetSubscribersDueReminder() {
+    public function testGetSubscribersPaymentDueReminder() {
         $builders = array();
         //Payment due, 0 reminders sent, signed up 2 days ago
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani+1@example.com',
@@ -599,25 +611,92 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
             'thinkup_username'=>'unique5', 'date_installed'=>null, 'is_membership_complimentary'=>0,
             'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid through April 1, 2015',
             'total_payment_reminders_sent'=>2, 'creation_time'=>'-7d', 'payment_reminder_last_sent'=>'-60h'));
+        //Payment due, 0 reminders sent, signed up 3 days ago - should not get returned b/c account is closed
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'ginatrapani+6@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique6', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>0, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment due',
+            'total_payment_reminders_sent'=>0, 'creation_time'=>'-3d', 'is_account_closed'=>1));
 
         $dao = new SubscriberMySQLDAO();
         //sleep(1000);
 
         //Get subscribers with no reminders, due one 24 hours later
-        $result = $dao->getSubscribersDueReminder( 0, 24);
+        $result = $dao->getSubscribersPaymentDueReminder( 0, 24);
         $this->debug(Utils::varDumpToString($result));
         $this->assertEqual(sizeof($result), 2);
         $this->assertEqual($result[0]->thinkup_username, 'unique3');
         $this->assertEqual($result[1]->thinkup_username, 'unique1');
 
         //Get subscribers with 1 reminder, due one 24 hours later
-        $result = $dao->getSubscribersDueReminder(1, 24);
+        $result = $dao->getSubscribersPaymentDueReminder(1, 24);
         $this->debug(Utils::varDumpToString($result));
         $this->assertEqual(sizeof($result), 1);
         $this->assertEqual($result[0]->thinkup_username, 'unique4');
 
         //Get subscribers with 1 reminder, due one 70 hours later
-        $result = $dao->getSubscribersDueReminder(1, 70);
+        $result = $dao->getSubscribersPaymentDueReminder(1, 70);
+        $this->debug(Utils::varDumpToString($result));
+        $this->assertEqual(sizeof($result), 0);
+    }
+
+    public function testGetSubscribersFreeTrialPaymentReminder() {
+        $builders = array();
+        //Free trial, 0 reminders sent, signed up 2 days ago
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani+1@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique1', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Free trial',
+            'total_payment_reminders_sent'=>0, 'creation_time'=>'-2d'));
+        //Free trial, 0 reminders sent, signed up 6 hours ago
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>2, 'email'=>'ginatrapani+2@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique2', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>null, 'subscription_status'=>'Free trial',
+            'total_payment_reminders_sent'=>0, 'creation_time'=>'-6h'));
+        //Free trial, 0 reminders sent, signed up 3 days ago
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>3, 'email'=>'ginatrapani+3@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique3', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>0, 'last_dispatched'=>'-1d', 'subscription_status'=>'Free trial',
+            'total_payment_reminders_sent'=>0, 'creation_time'=>'-3d'));
+        //Free trial, 1 reminder sent, signed up 7 days ago, last sent 60 hours ago
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'email'=>'ginatrapani+4@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique4', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Free trial',
+            'total_payment_reminders_sent'=>1, 'creation_time'=>'-7d', 'payment_reminder_last_sent'=>'-60h'));
+        //Paid, 2 reminders sent, signed up 7 days ago, last sent 60 hours ago
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>5, 'email'=>'ginatrapani+5@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique5', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid through April 1, 2015',
+            'total_payment_reminders_sent'=>2, 'creation_time'=>'-7d', 'payment_reminder_last_sent'=>'-60h'));
+        //Free trial, 0 reminders sent, signed up 3 days ago - should not get returned b/c account is closed
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'ginatrapani+6@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique6', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>0, 'last_dispatched'=>'-1d', 'subscription_status'=>'Free trial',
+            'total_payment_reminders_sent'=>0, 'creation_time'=>'-3d', 'is_account_closed'=>1));
+
+        $dao = new SubscriberMySQLDAO();
+        //sleep(1000);
+
+        //Get subscribers with no reminders, due one 24 hours later
+        $result = $dao->getSubscribersFreeTrialPaymentReminder( 0, 24);
+        $this->debug(Utils::varDumpToString($result));
+        $this->assertEqual(sizeof($result), 2);
+        $this->assertEqual($result[0]->thinkup_username, 'unique3');
+        $this->assertEqual($result[1]->thinkup_username, 'unique1');
+
+        //Get subscribers with 1 reminder, due one 24 hours later
+        $result = $dao->getSubscribersFreeTrialPaymentReminder(1, 24);
+        $this->debug(Utils::varDumpToString($result));
+        $this->assertEqual(sizeof($result), 1);
+        $this->assertEqual($result[0]->thinkup_username, 'unique4');
+
+        //Get subscribers with 1 reminder, due one 70 hours later
+        $result = $dao->getSubscribersFreeTrialPaymentReminder(1, 70);
         $this->debug(Utils::varDumpToString($result));
         $this->assertEqual(sizeof($result), 0);
     }
@@ -643,5 +722,79 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertTrue($data);
         $this->assertEqual(2, $data['total_payment_reminders_sent']);
         $this->assertNotNull($data['payment_reminder_last_sent']);
+    }
+
+    public function testCloseAndOpenAccount() {
+        //Subscriber doesn't exist
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->closeAccount(1);
+        $this->assertEqual($result, 0);
+
+        //Subscriber exists and account is open
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>101, 'email'=>'willow@buffy.com',
+        'network_user_name'=>'willowr', 'thinkup_username'=>'myusername', 'total_payment_reminders_sent'=>0,
+        'payment_reminder_last_sent'=>null, 'is_account_closed'=>0));
+
+        $result = $dao->closeAccount(101);
+        $this->assertEqual($result, 1);
+
+        $sql = "SELECT * FROM subscribers WHERE id=101";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertTrue($data);
+        $this->assertEqual(1, $data['is_account_closed']);
+
+        $result = $dao->openAccount(101);
+        $this->assertEqual($result, 1);
+
+        $sql = "SELECT * FROM subscribers WHERE id=101";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertTrue($data);
+        $this->assertEqual(0, $data['is_account_closed']);
+    }
+
+    public function testGetSubscribersToUninstallDueToExpiredTrial() {
+        $builders = array();
+         //Should not get returned - Free trial, 0 reminders sent, signed up 2 days ago
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani+1@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique1', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Free trial',
+            'total_payment_reminders_sent'=>0, 'creation_time'=>'-2d'));
+        //Should not get returned - Free trial, 0 reminders sent, signed up 6 hours ago
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>2, 'email'=>'ginatrapani+2@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique2', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>null, 'subscription_status'=>'Free trial',
+            'total_payment_reminders_sent'=>0, 'creation_time'=>'-6h'));
+        //Should get returned - Free trial, 0 reminders sent, signed up 16 days ago
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>3, 'email'=>'ginatrapani+3@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique3', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>0, 'subscription_status'=>'Free trial',
+            'total_payment_reminders_sent'=>0, 'creation_time'=>'-16d', 'last_dispatched'=>'-31h'));
+        //Should not get returned - Free trial, 1 reminder sent, signed up 16 days ago, dispatched 12 hours ago
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'email'=>'ginatrapani+4@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique4', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Free trial',
+            'total_payment_reminders_sent'=>1, 'creation_time'=>'-16d', 'payment_reminder_last_sent'=>'-60h',
+            'last_dispatched'=>'-12h'));
+        //Should get returned - Free trial, 2 reminders sent, signed up 18 days ago
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>5, 'email'=>'ginatrapani+5@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique5', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Free trial',
+            'total_payment_reminders_sent'=>2, 'creation_time'=>'-18d', 'payment_reminder_last_sent'=>'-60h',
+            'is_account_closed'=>0, 'last_dispatched'=>'-34h'));
+
+        $dao = new SubscriberMySQLDAO();
+        $subscribers_to_uninstall = $dao->getSubscribersToUninstallDueToExpiredTrial();
+        $this->assertEqual(sizeof($subscribers_to_uninstall), 2);
+        $this->debug(Utils::varDumpToString($subscribers_to_uninstall));
+        $this->assertEqual($subscribers_to_uninstall[0]->id, 5);
+        $this->assertEqual($subscribers_to_uninstall[1]->id, 3);
     }
 }

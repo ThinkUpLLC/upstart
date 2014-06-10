@@ -1,3 +1,4 @@
+{if not isset($hide_footer) or not $hide_footer}
 <div class="container" id="container-footer">
   <div class="section" id="section-footer">
     <div class="subsection" id="subsection-blog">
@@ -27,6 +28,7 @@
     </div>
   </div>
 </div>
+{/if}
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>

@@ -333,7 +333,6 @@ body.settings {
           }
         }
 
-
         &.list-group-item-warning {
           &:before {
             content: "\f071";
@@ -356,12 +355,40 @@ body.settings {
         .list-group-item-label {
           float: left;
 
-          max-width: 130px;
+          max-width: 100px;
         }
 
         .list-group-item-value {
-          margin-left: 130px;
+          margin-left: 100px;
           font-weight: 600;
+          position: relative;
+
+          .btn-pay {
+            position: absolute;
+            display: block;
+            right: 0;
+            top: 5px;
+            z-index: 9;
+          }
+        }
+
+
+        .help-block {
+          padding: 0;
+          margin: 0 0 0 100px;
+          color: lighten(@gray-light,10%);
+          font-size: 12px;
+          line-height: 1.33;
+
+          strong {
+            color: darken(@gray-light,10%);
+            font-weight: 300;
+          }
+        }
+
+        &#list-group-status .help-block {
+          position: relative;
+          top: -5px;
         }
 
         &#list-group-item-extras {
@@ -468,6 +495,17 @@ body.settings {
       }
     }
 
+    .btn-close-account {
+      display: block;
+      margin: 0 auto 15px;
+      width: 12em;
+
+      &:hover {
+        background: lighten(@red-warning, 10%);
+        border-color: lighten(@red-warning, 10%);
+      }
+    }
+
     .accounts-privacy {
       color: @green-success-darker;
     }
@@ -541,7 +579,18 @@ body#settings-registration {
         textarea.form-control {
           width: 210px;
         }
+      }
 
+      .list-group {
+        .list-group-item {
+          .list-group-item-label {
+            max-width: 130px;
+          }
+
+          .list-group-item-value, .help-block {
+            margin-left: 130px;
+          }
+        }
       }
     }
   }
