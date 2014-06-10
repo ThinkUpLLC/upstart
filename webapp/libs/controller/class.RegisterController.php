@@ -1,6 +1,6 @@
 <?php
 
-class RegisterNewUserController extends SignUpHelperController {
+class RegisterController extends SignUpHelperController {
     public function control() {
         $this->setViewTemplate('register.tpl');
         //Avoid "unable to write file [really long file]" errors

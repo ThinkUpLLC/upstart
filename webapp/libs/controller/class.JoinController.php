@@ -2,9 +2,9 @@
 /**
  * Create interface to Twitter and Facebook
  */
-class SubscribeController extends SignUpHelperController {
+class JoinController extends SignUpHelperController {
     public function control() {
-        $this->setViewTemplate('subscribe.tpl');
+        $this->setViewTemplate('join.tpl');
         //Don't cache network auth links
         $this->disableCaching();
         $twitter_member_link = $this->getTwitterAuthLink('register.php?n=twitter&level=member');

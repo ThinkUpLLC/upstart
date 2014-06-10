@@ -1,5 +1,5 @@
 <?php
 require_once 'init.php';
 
-$controller = new SubscribeController();
+$controller = new JoinController();
 echo $controller->go();

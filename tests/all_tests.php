@@ -12,7 +12,7 @@ $all_tests->add(new TestOfClickMySQLDAO());
 $all_tests->add(new TestOfErrorLogMySQLDAO());
 $all_tests->add(new TestOfInstallLogMySQLDAO());
 $all_tests->add(new TestOfThinkUpTablesMySQLDAO());
-$all_tests->add(new TestOfSubscribeController());
+$all_tests->add(new TestOfJoinController());
 $all_tests->add(new TestOfSubscriberAuthorizationMySQLDAO());
 $all_tests->add(new TestOfAuthorizationMySQLDAO());
 $all_tests->add(new TestOfSubscriberMySQLDAO());
@@ -32,7 +32,7 @@ $all_tests->add(new TestOfPaymentMySQLDAO());
 $all_tests->add(new TestOfSubscriberPaymentMySQLDAO());
 $all_tests->add(new TestOfSubscriber());
 $all_tests->add(new TestOfLandingController());
-$all_tests->add(new TestOfRegisterNewUserController());
+$all_tests->add(new TestOfRegisterController());
 $all_tests->add(new TestOfPaymentReminderController());
 $all_tests->add(new TestOfMailer());
 
