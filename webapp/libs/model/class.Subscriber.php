@@ -124,6 +124,10 @@ class Subscriber {
      * @var str Subscription payment status.
      */
     var $subscription_status;
+    /**
+     * @var bool Whether or not the member closed their account.
+     */
+    var $is_account_closed = false;
     public function __construct($row = false) {
         if ($row) {
             $this->id = $row['id'];
@@ -157,6 +161,7 @@ class Subscriber {
             $this->password_token = $row['password_token'];
             $this->timezone = $row['timezone'];
             $this->subscription_status = $row['subscription_status'];
+            $this->is_account_closed = PDODAO::convertDBToBool($row['is_account_closed']);
         }
     }
 
@@ -192,7 +197,7 @@ class Subscriber {
     /**
      * Get a simple string indicating the payment status of a subscriber's subscription payment.
      * Possible values:
-     * - Payment due
+     * - Payment due (Soon to be Free trial)
      * - Paid through [date]
      * - Complimentary membership
      * - Payment pending

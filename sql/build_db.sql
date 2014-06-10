@@ -138,13 +138,14 @@ CREATE TABLE subscribers (
   subscription_status varchar(50) DEFAULT 'Payment due' COMMENT 'Status of subscription payment.',
   total_payment_reminders_sent int(11) NOT NULL DEFAULT '0' COMMENT 'The number of payment reminder emails sent to this subscriber.',
   payment_reminder_last_sent timestamp NULL DEFAULT NULL COMMENT 'Last time a payment reminder was sent to this subscriber.',
+  is_account_closed int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not the member closed their account.',
   PRIMARY KEY (id),
   UNIQUE KEY email (email),
   UNIQUE KEY network_user_id (network_user_id,network),
   UNIQUE KEY thinkup_username (thinkup_username),
   KEY subscription_status (subscription_status),
   KEY payment_reminder_last_sent (payment_reminder_last_sent)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Paid subscribers who have authorized their social network ac';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Paid subscribers who have authorized their social network ac';
 
 -- --------------------------------------------------------
 
@@ -185,7 +186,8 @@ CREATE TABLE subscriber_archive (
   token_validity_start_date timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Date the token becomes valid.',
   subscription_status varchar(50) DEFAULT NULL COMMENT 'Status of subscription payment.',
   total_payment_reminders_sent int(11) NOT NULL DEFAULT '0' COMMENT 'The number of payment reminder emails sent to this subscriber.',
-  payment_reminder_last_sent timestamp NULL DEFAULT NULL COMMENT 'Last time a payment reminder was sent to this subscriber.'
+  payment_reminder_last_sent timestamp NULL DEFAULT NULL COMMENT 'Last time a payment reminder was sent to this subscriber.',
+  is_account_closed int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not the member closed their account.'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Deleted subscribers with authorizaton data.';
 
 -- --------------------------------------------------------
