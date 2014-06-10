@@ -231,6 +231,9 @@ class RegisterController extends SignUpHelperController {
                     if ($has_user_been_created) {
                         $installer = new AppInstaller();
                         $install_results = $installer->install($new_subscriber_id);
+                        $controller = new WelcomeController();
+                        return $controller->control();
+                        /** TODO: Move this to WelcomeController
                         //Begin Amazon redirect
                         $caller_reference = $new_subscriber_id.'_'.time();
 
@@ -241,6 +244,7 @@ class RegisterController extends SignUpHelperController {
                         $pay_with_amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference,
                             $callback_url, $amount);
                         header('Location: '.$pay_with_amazon_url);
+                        */
                     } else {
                         return $this->tryAgain($this->generic_error_msg);
                     }
