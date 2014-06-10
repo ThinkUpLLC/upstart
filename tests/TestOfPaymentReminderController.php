@@ -53,6 +53,7 @@ class TestOfPaymentReminderController extends UpstartUnitTestCase {
         $controller = new PaymentReminderController(true);
         $controller->control();
         $sent_email = Mailer::getLastMail();
-        $this->assertPattern('/Last chance to keep unique1.thinkup.com!/', $sent_email);
+        $this->debug($sent_email);
+        $this->assertPattern('/finalize your ThinkUp membership/', $sent_email);
     }
 }
