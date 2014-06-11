@@ -12,10 +12,10 @@
 
 <div class="container" id="container-signup-top">
   <div class="section section-screenshot" id="section-signup-top">
-    <h3 class="section-header">Get started right now.</h3>
+    <h3 class="section-header">Get started for free.</h3>
     <div class="section-copy">
-      <p>ThinkUp offers a full money-back guarantee so you can try it out risk-free. Right from the start, you’ll get insights you’ve never seen before.</p>
-      <a href="{$site_root_path}join.php" class="btn btn-pill-large">Choose your plan</a>
+      <p>Sign up for our Free 14-Day Trial to see exactly what ThinkUp can do for you. We bet your very first email will be full of insights you’ve never seen before.</p>
+      <a href="{$site_root_path}join.php" class="btn btn-pill-large">Start your free trial</a>
       <div class="illustration">
         <a href="https://ginatrapani.thinkup.com">See a live demo</a>
       </div>
@@ -93,7 +93,7 @@
 
 <div class="container" id="container-signup-bottom">
   <div class="section" id="section-signup-bottom">
-    <h3 class="section-header">We’ve got a 100% risk-free money-back guarantee</h3>
+    <h3 class="section-header">Start your <em>100% free</em> trial and get insights immediately</h3>
     <div class="section-copy">
       <a href="{$site_root_path}join.php" class="btn btn-pill-medium">Join now</a>
     </div>
