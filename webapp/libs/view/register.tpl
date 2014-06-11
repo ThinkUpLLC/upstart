@@ -69,7 +69,7 @@
 
       </fieldset>
 
-      <input type="Submit" name="Submit" value="Pay with Amazon" class="btn btn-pill btn-submit is-static">
+      <input type="Submit" name="Submit" value="Create Account" class="btn btn-pill btn-submit is-static">
     </form>
 
 {include file="_appfooter.tpl" include_tz_js=true}
