@@ -1,11 +1,11 @@
-{include file="_header.marketing.tpl" marketing_page=true
+{include file="_header.marketing.tpl" marketing_page=true hide_join=true
 body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe"}
 
   <div class="container">
 
     <section class="section" id="section-page-header">
-      <h2 class="section-header">Join thousands of happy ThinkUp members.</h2>
-      <h3 class="section-subheader">100% money-back guarantee (but almost nobody ever asks)</h3>
+      <h2 class="section-header">Start Your 14-day Free Trial.</h2>
+      <h3 class="section-subheader">First, pick the level that’s right for you.</h3>
     </section>
   </div>
   <div class="container">

@@ -1645,7 +1645,8 @@ body.app-message-visible.account .container {
 .body-list.body-list-show-all .list-item {
   display: block;
 }
-.btn-default {
+.btn-default,
+.btn-big {
   background: #125c9c;
   border: 0;
   color: #fff;
@@ -1655,6 +1656,11 @@ body.app-message-visible.account .container {
 .btn-default:focus {
   background: #1777ca;
   color: #fff;
+}
+.btn-big {
+  font-size: 2rem;
+  line-height: 1;
+  padding: 12px 18px;
 }
 .btn-transparent {
   background: transparent;
@@ -1714,6 +1720,13 @@ body#welcome .insight {
 }
 body#welcome .insight .panel-heading {
   background: #fff;
+}
+body#welcome .insight .panel-body {
+  padding-bottom: 20px;
+}
+body#welcome .insight .panel-body .panel-body-inner {
+  padding: 0;
+  margin: 10px;
 }
 @media (max-width: 420px) {
   .insight .panel-body .panel-body-inner {
