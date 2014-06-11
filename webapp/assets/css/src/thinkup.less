@@ -995,6 +995,13 @@ body.app-message-visible {
     }
 }
 
+.btn-big {
+    &:extend(.btn-default);
+    font-size: 2rem;
+    line-height: 1;
+    padding: 12px 18px;
+}
+
 .btn-transparent {
     background: transparent;
     color: @link-color;
@@ -1062,6 +1069,16 @@ body#welcome {
         .panel-heading {
             background: #fff;
         }
+
+        .panel-body {
+            padding-bottom: 20px;
+
+            .panel-body-inner {
+                padding: 0;
+                margin: 10px;
+            }
+        }
+
     }
 }
 

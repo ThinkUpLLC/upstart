@@ -14,9 +14,26 @@
             <div class="panel-desktop-right">
               <div class="panel-body">
                 <div class="panel-body-inner">
-                  <p>Your account is all set up: <a href="{$new_subscriber->installation_url}">{$new_subscriber->installation_url}</a></p>
+                  <p>A special offer: Pay for your ThinkUp subscription now and you'll get a <strong>free</strong> copy of our e-book, <em>Insights</em>.</p>
 
-                  <p>Keep your eyes peeled for an email from us with your first set of ThinkUp insights.</p>
+                  <p><a href="#" class="btn btn-big">Pay with Amazon</a></p>
+
+                  <p>Have questions or need help? Email us any time at <a href="mailto:help@thinkup.com">help@thinkup.com</a>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default insight insight-default insight-salmon">
+            <div class="panel-heading">
+              <h2 class="panel-title insight-color-text">Your account is all set up</h2>
+            </div>
+            <div class="panel-desktop-right">
+              <div class="panel-body">
+                <div class="panel-body-inner">
+                  <p>Head here to see your insights: <a href="{$new_subscriber->installation_url}">{$new_subscriber->installation_url}</a></p>
+
+                  <p>And keep your eyes peeled for an email from us with your first set of ThinkUp insights.</p>
                 </div>
               </div>
             </div>
@@ -49,21 +66,6 @@
             </div>
           </div>
           {/if}
-
-          <div class="panel panel-default insight insight-default insight-bubblegum">
-            <div class="panel-heading">
-              <h2 class="panel-title insight-color-text">Need any help? Let us know.</h2>
-            </div>
-            <div class="panel-desktop-right">
-              <div class="panel-body">
-                <div class="panel-body-inner">
-                  <p>Email us any time at <a href="mailto:help@thinkup.com">help@thinkup.com</a> if you get stuck, and we’ll help you out.</p>
-
-                  <p>You might want to follow us at <a href="https://twitter.com/intent/user?screen_name=thinkup">@thinkup</a> on Twitter, too.</p>
-                </div>
-              </div>
-            </div>
-          </div>
 
       </div>
     </div>
