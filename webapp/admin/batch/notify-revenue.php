@@ -8,6 +8,8 @@ require_once 'init.php';
  */
 
 $url = 'https://thinkup.slack.com/services/hooks/incoming-webhook?token=mPEOeIpng7h2EIskwtNd9hNF';
+$channel = "#signups";
+//$channel = "#testbot";
 
 // New signups
 $subscriber_dao = new SubscriberMySQLDAO();
@@ -21,14 +23,14 @@ if ($daily_signups[0]['new_members'] > $daily_signups[1]['new_members']) {
     $message .= "the same as";
 }
 $subject = number_format($daily_signups[0]['new_members']) . " new member". 
-	(($daily_signups[0]['new_members'] > 1)?'s':'') ." joined ThinkUp today.";
+	(($daily_signups[0]['new_members'] == 1)?'':'s') ." joined ThinkUp today.";
 
 $message = "That's ". $message. " ".number_format($daily_signups[1]['new_members']). 
-	" signup". (($daily_signups[1]['new_members'] > 1)?'s':'') ." yesterday. Day before was ".
-    number_format($daily_signups[2]['new_members']) . " signup" .(($daily_signups[1]['new_members'] > 1)?'s':'').
+	" signup". (($daily_signups[1]['new_members'] == 1)?'':'s') ." yesterday. Day before was ".
+    number_format($daily_signups[2]['new_members']) . " signup" .(($daily_signups[1]['new_members'] == 1)?'':'s').
     ".";
 
-$payload = '{"channel": "#signups", "username": "upstartbot", "text": "'. $subject.'\n'.
+$payload = '{"channel": "'.$channel.'", "username": "upstartbot", "text": "'. $subject.'\n'.
 	$message. '", "icon_emoji": ":cubimal_chick:"}';
 
 $fields = array('payload'=>$payload);
@@ -54,7 +56,7 @@ $message .= " $". number_format($daily_revenue[1]['revenue']). " yesterday. Day 
 $subject = "$" . number_format($daily_revenue[0]['revenue']) . " in revenue today";
 
 
-$payload = '{"channel": "#signups", "username": "upstartbot", "text": "'. $subject.'\n'.
+$payload = '{"channel": "'.$channel.'", "username": "upstartbot", "text": "'. $subject.'\n'.
 	$message. '", "icon_emoji": ":cubimal_chick:"}';
 
 $fields = array('payload'=>$payload);
@@ -68,21 +70,14 @@ $result = postToURL($url, $fields);
  * @return str contents
  */
 function postToURL($URL, array $fields) {
-    $fields_string = '';
-    //url-ify the data for the POST
-    foreach($fields as $key=>$value) {
-        $fields_string .= $key.'='.$value.'&';
-    }
-    rtrim($fields_string,'&');
-
     //open connection
     $ch = curl_init();
 
     //set the url, number of POST vars, POST data
-    curl_setopt($ch,CURLOPT_URL,$URL);
-    curl_setopt($ch,CURLOPT_POST,count($fields));
-    curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 0);
+    curl_setopt($ch, CURLOPT_URL, $URL);
+    curl_setopt($ch, CURLOPT_POST, count($fields));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
     //execute post
     $contents = curl_exec($ch);
