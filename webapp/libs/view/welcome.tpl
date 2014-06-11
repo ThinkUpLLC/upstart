@@ -16,7 +16,7 @@
                 <div class="panel-body-inner">
                   <p>A special offer: Pay for your ThinkUp subscription now and you'll get a <strong>free</strong> copy of our e-book, <em>Insights</em>.</p>
 
-                  <p><a href="#" class="btn btn-big">Pay with Amazon</a></p>
+                  <p><a href="{$pay_with_amazon_url}" class="btn btn-big">Pay with Amazon</a></p>
 
                   <p>Have questions or need help? Email us any time at <a href="mailto:help@thinkup.com">help@thinkup.com</a>.</p>
                 </div>
