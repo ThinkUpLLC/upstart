@@ -151,21 +151,6 @@ class SubscriberMySQLDAO extends PDODAO {
         }
     }
 
-    public function getTotalSubscribers($amount = 0) {
-        $q = "SELECT count(*) as total FROM subscribers s ";
-        if ($amount > 0) {
-            $q .= "INNER JOIN subscriber_authorizations sa ON s.id = sa.subscriber_id ";
-            $q .= "INNER JOIN authorizations a ON a.id = sa.authorization_id WHERE a.amount = :amount";
-            $vars = array ( ':amount' => $amount);
-            $ps = $this->execute($q, $vars);
-        } else {
-            if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-            $ps = $this->execute($q);
-        }
-        $result = $this->getDataRowAsArray($ps);
-        return $result["total"];
-    }
-
     public function getVerificationCode($email) {
         $q = "SELECT verification_code FROM subscribers WHERE email = :email;";
         $vars = array (':email'=>$email);
@@ -444,40 +429,6 @@ class SubscriberMySQLDAO extends PDODAO {
         //echo self::mergeSQLVars($q, $vars)."\n";
         $ps = $this->execute($q, $vars);
         return $this->getUpdateCount($ps);
-    }
-
-    public function getSubscribersNotInstalled($count=25) {
-        $q  = "SELECT id FROM subscribers WHERE thinkup_username IS NOT NULL AND date_installed IS null ";
-        $q .= "AND membership_level != 'Waitlist' LIMIT :limit;";
-
-        $vars = array(
-            ':limit'=>$count
-        );
-        //echo self::mergeSQLVars($q, $vars);
-        $ps = $this->execute($q, $vars);
-        return $this->getDataRowsAsArrays($ps);
-    }
-
-    public function getTotalSubscribersToInstall() {
-        $q  = "SELECT count(id) as total FROM subscribers ";
-        $q .= "WHERE thinkup_username IS NOT NULL AND date_installed IS null ";
-        $q .= "AND membership_level != 'Waitlist';";
-
-        //echo self::mergeSQLVars($q, $vars);
-        $ps = $this->execute($q, $vars);
-        $result = $this->getDataRowAsArray($ps);
-        return $result['total'];
-    }
-
-    public function getTotalSubscribersToUninstall() {
-        $q  = "SELECT count(id) as total FROM subscribers ";
-        $q .= "WHERE thinkup_username IS NOT NULL AND date_installed IS NOT null ";
-        $q .= "AND membership_level != 'Waitlist';";
-
-        //echo self::mergeSQLVars($q, $vars);
-        $ps = $this->execute($q, $vars);
-        $result = $this->getDataRowAsArray($ps);
-        return $result['total'];
     }
 
     public function getSubscribersInstalled($count=25) {
@@ -786,25 +737,6 @@ class SubscriberMySQLDAO extends PDODAO {
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
         return $this->getDataRowsAsArrays($ps);
-    }
-
-    /**
-     * Get total subscribers who have have never paid.
-     * @TODO: Make this work for second payments (a year from now)
-     * @return int  Number of subscribers to charge
-     */
-    public function getTotalSubscribersToCharge() {
-        $q = "SELECT count(s.id) as total FROM subscribers s ";
-        $q .= "INNER JOIN subscriber_authorizations sa ON sa.subscriber_id = s.id ";
-        $q .= "INNER JOIN authorizations a ON sa.authorization_id = a.id ";
-        $q .= "LEFT JOIN subscriber_payments sp ON sp.subscriber_id = s.id ";
-        $q .= "LEFT JOIN payments p ON p.id = sp.payment_id ";
-        $q .= "WHERE s.is_membership_complimentary = 0 AND s.membership_level != 'Waitlist' AND request_id IS NULL ";
-        //echo self::mergeSQLVars($q, $vars);
-        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q);
-        $result = $this->getDataRowAsArray($ps);
-        return $result['total'];
     }
 
     public function compSubscription($subscriber_id) {
