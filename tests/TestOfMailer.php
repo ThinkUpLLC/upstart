@@ -41,4 +41,47 @@ class TestOfMailer extends UpstartUnitTestCase {
         $message = Mailer::getSystemMessageHTML($body_html, $headline);
         $this->debug($message);
     }
+
+    public function testGetSystemMessageHTMLPaymentChargeSuccessfulMember() {
+        $headline = "Thanks for joining ThinkUp!";
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $email_view_mgr->assign('member_level', 'Member' );
+        $email_view_mgr->assign('amount', 60 );
+        $email_view_mgr->assign('renewal_date', 'January 15, 2015' );
+        $body_html = $email_view_mgr->fetch('_email.payment-charge-successful.tpl');
+        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $this->debug($message);
+    }
+
+    public function testGetSystemMessageHTMLPaymentChargeSuccessfulPro() {
+        $headline = "Thanks for joining ThinkUp!";
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $email_view_mgr->assign('member_level', 'Pro' );
+        $email_view_mgr->assign('amount', 60 );
+        $email_view_mgr->assign('renewal_date', 'January 15, 2015' );
+        $body_html = $email_view_mgr->fetch('_email.payment-charge-successful.tpl');
+        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $this->debug($message);
+    }
+
+    public function testGetSystemMessageHTMLPaymentChargeFailureNoAdditionalInfo() {
+        $headline = "Uh oh! Problem with your ThinkUp payment";
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $body_html = $email_view_mgr->fetch('_email.payment-charge-failure.tpl');
+        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $this->debug($message);
+    }
+
+    public function testGetSystemMessageHTMLPaymentChargeFailureWithAdditionalInfo() {
+        $headline = "Uh oh! Problem with your ThinkUp payment";
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $email_view_mgr->assign('amazon_error_message', "Card has Expired" );
+        $body_html = $email_view_mgr->fetch('_email.payment-charge-failure.tpl');
+        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $this->debug($message);
+    }
 }
