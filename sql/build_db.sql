@@ -144,8 +144,9 @@ CREATE TABLE subscribers (
   UNIQUE KEY network_user_id (network_user_id,network),
   UNIQUE KEY thinkup_username (thinkup_username),
   KEY subscription_status (subscription_status),
-  KEY payment_reminder_last_sent (payment_reminder_last_sent)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Paid subscribers who have authorized their social network ac';
+  KEY payment_reminder_last_sent (payment_reminder_last_sent),
+  KEY is_account_closed (is_account_closed)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Paid subscribers who have authorized their social network ac';
 
 -- --------------------------------------------------------
 
