@@ -231,7 +231,7 @@ class RegisterController extends SignUpHelperController {
                     if ($has_user_been_created) {
                         $installer = new AppInstaller();
                         $install_results = $installer->install($new_subscriber_id);
-                        $controller = new WelcomeController();
+                        $controller = new PayNowController();
                         return $controller->control();
                     } else {
                         return $this->tryAgain($this->generic_error_msg);
