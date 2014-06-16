@@ -39,7 +39,7 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
     }
 
     public function testGetSystemMessageHTMLPaymentReminderFreeTrial1Through4() {
-        $headline = "Pay for your ThinkUp membership now and get a free gift!";
+        $headline = "Loving ThinkUp? Time to join!";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('thinkup_username', 'username' );
@@ -55,7 +55,7 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
         $message = Mailer::getSystemMessageHTML($body_html, $headline);
         $this->debug($message);
 
-        $headline = "Your ThinkUp trial is almost over! Don't lose username.thinkup.com";
+        $headline = "Your ThinkUp trial has almost expired!";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('thinkup_username', 'username' );
