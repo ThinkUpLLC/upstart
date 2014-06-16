@@ -1,5 +1,5 @@
 <?php
-class WelcomeController extends Controller {
+class PayNowController extends Controller {
     /**
      * @var array Options for notification frequency
      */
@@ -7,8 +7,8 @@ class WelcomeController extends Controller {
 
     public function control() {
         $this->disableCaching();
-        $this->setPageTitle('Welcome');
-        $this->setViewTemplate('welcome.tpl');
+        $this->setPageTitle('Pay now and get a free gift');
+        $this->setViewTemplate('paynow.tpl');
 
         $new_subscriber_id = SessionCache::get('new_subscriber_id');
         $subscriber_dao = new SubscriberMySQLDAO();
