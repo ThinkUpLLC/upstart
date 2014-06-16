@@ -12,32 +12,62 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
         parent::tearDown();
     }
 
-    public function testGetSystemMessageHTMLPaymentReminder1() {
+    public function testGetSystemMessageHTMLPaymentReminderAbandons1Through3() {
         $headline = "Lock in your ThinkUp membership";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('thinkup_username', 'username' );
-        $body_html = $email_view_mgr->fetch('_email.payment-reminder-first.tpl');
+        $body_html = $email_view_mgr->fetch('_email.payment-reminder-abandon-1.tpl');
         $message = Mailer::getSystemMessageHTML($body_html, $headline);
         $this->debug($message);
-    }
 
-    public function testGetSystemMessageHTMLPaymentReminder2() {
         $headline = "One quick step needed to keep your ThinkUp account";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('thinkup_username', 'username' );
-        $body_html = $email_view_mgr->fetch('_email.payment-reminder-second.tpl');
+        $body_html = $email_view_mgr->fetch('_email.payment-reminder-abandon-2.tpl');
         $message = Mailer::getSystemMessageHTML($body_html, $headline);
         $this->debug($message);
-    }
 
-    public function testGetSystemMessageHTMLPaymentReminder3() {
         $headline = "We don’t want to say goodbye so soon!";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('thinkup_username', 'username' );
-        $body_html = $email_view_mgr->fetch('_email.payment-reminder-third.tpl');
+        $body_html = $email_view_mgr->fetch('_email.payment-reminder-abandon-3.tpl');
+        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $this->debug($message);
+    }
+
+    public function testGetSystemMessageHTMLPaymentReminderFreeTrial1Through4() {
+        $headline = "Pay for your ThinkUp membership now and get a free gift!";
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $email_view_mgr->assign('thinkup_username', 'username' );
+        $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-1.tpl');
+        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $this->debug($message);
+
+        $headline = "What you won't hear from Facebook or Twitter...";
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $email_view_mgr->assign('thinkup_username', 'username' );
+        $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-2.tpl');
+        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $this->debug($message);
+
+        $headline = "Your ThinkUp trial is almost over! Don't lose username.thinkup.com";
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $email_view_mgr->assign('thinkup_username', 'username' );
+        $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-3.tpl');
+        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $this->debug($message);
+
+        $headline = "FINAL REMINDER: Don't lose your ThinkUp membership!";
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $email_view_mgr->assign('thinkup_username', 'username' );
+        $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-4.tpl');
         $message = Mailer::getSystemMessageHTML($body_html, $headline);
         $this->debug($message);
     }
