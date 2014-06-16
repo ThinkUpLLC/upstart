@@ -4,6 +4,7 @@
 	<li>You're officially a <strong>ThinkUp {if $member_level eq "Pro"}Pro {/if}Member</strong>! Your username is <strong><a href="{$installation_url}" style="color: #46bcff;">{$thinkup_username}</a></strong>.</li>
 	<li>Your Amazon Payments account has been charged <strong>${$amount}</strong> for your membership.</li>
 	<li>Your membership lasts until <strong>{$renewal_date}</strong>, when it will automatically renew.</li>
+  <li>Download your copy of the <em>Insights</em> book on <a href="https://www.thinkup.com/join/user/membership.php">your membership page</a>.</li>
 </ul>
 
 <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">We truly appreciate you joining the ThinkUp community, and we hope you'll love ThinkUp as much as we enjoy building it for you.</p>
