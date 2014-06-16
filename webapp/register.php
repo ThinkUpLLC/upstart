@@ -1,5 +1,5 @@
 <?php
 require_once 'init.php';
 
-$controller = new RegisterNewUserController();
+$controller = new RegisterController();
 echo $controller->go();
