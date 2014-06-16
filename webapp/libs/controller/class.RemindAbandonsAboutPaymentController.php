@@ -1,8 +1,11 @@
 <?php
 
 /**
+ * This controller sends email reminders to ThinkUp members who abandoned payment.
+ * Eventually, it will be deprecated by free trial.
+ *
  * For first reminder, select all subscribers who are not on the waitlist, whose subscription_status is 'Payment due','
- * 'whose total_payment_reminders_sent = 0, and whose creation_time is more than 24 hours earlier than now. 
+ * 'whose total_payment_reminders_sent = 0, and whose creation_time is more than 24 hours earlier than now.
  * Cycle through them and send first reminder, setting total_payment_reminders_sent = 1 along the way.
  *
  * For the second reminder, select all subscribers who are not on the waitlist, whose subscription_status is
@@ -14,7 +17,7 @@
  * 'Payment due', whose total_payment_reminders_sent = 2, and whose last_payment_reminder_sent is more than 96 hours
  * earlier than now. Cycle through them and send third reminder, setting total_payment_reminders_sent = 3 along the way.
  */
-class PaymentReminderController extends Controller {
+class RemindAbandonsAboutPaymentController extends Controller {
     public function control() {
         $subscriber_dao = new SubscriberMySQLDAO();
         $email_view_mgr = new ViewManager();
@@ -28,7 +31,7 @@ class PaymentReminderController extends Controller {
         $headline = "Lock in your ThinkUp membership";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
-            $body_html = $email_view_mgr->fetch('_email.payment-reminder-first.tpl');
+            $body_html = $email_view_mgr->fetch('_email.payment-reminder-abandon-1.tpl');
             $message = Mailer::getSystemMessageHTML($body_html, $headline);
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name, 
                 array('html_body'=>$message), $api_key);
@@ -41,7 +44,7 @@ class PaymentReminderController extends Controller {
         $headline = "One quick step needed to keep your ThinkUp account";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
-            $body_html = $email_view_mgr->fetch('_email.payment-reminder-second.tpl');
+            $body_html = $email_view_mgr->fetch('_email.payment-reminder-abandon-2.tpl');
             $message = Mailer::getSystemMessageHTML($body_html, $headline);
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name, 
                 array('html_body'=>$message), $api_key);
@@ -54,7 +57,7 @@ class PaymentReminderController extends Controller {
         foreach ($subscribers as $subscriber) {
             $subject_line = "Last chance to keep ".$subscriber->thinkup_username.".thinkup.com!";
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
-            $body_html = $email_view_mgr->fetch('_email.payment-reminder-third.tpl');
+            $body_html = $email_view_mgr->fetch('_email.payment-reminder-abandon-3.tpl');
             $message = Mailer::getSystemMessageHTML($body_html, $headline);
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name, 
                 array('html_body'=>$message), $api_key);
