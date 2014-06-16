@@ -49,6 +49,7 @@ class TestOfMailer extends UpstartUnitTestCase {
         $email_view_mgr->assign('member_level', 'Member' );
         $email_view_mgr->assign('amount', 60 );
         $email_view_mgr->assign('renewal_date', 'January 15, 2015' );
+        $email_view_mgr->assign('thinkup_username', 'username' );
         $body_html = $email_view_mgr->fetch('_email.payment-charge-successful.tpl');
         $message = Mailer::getSystemMessageHTML($body_html, $headline);
         $this->debug($message);
@@ -61,6 +62,7 @@ class TestOfMailer extends UpstartUnitTestCase {
         $email_view_mgr->assign('member_level', 'Pro' );
         $email_view_mgr->assign('amount', 60 );
         $email_view_mgr->assign('renewal_date', 'January 15, 2015' );
+        $email_view_mgr->assign('thinkup_username', 'username' );
         $body_html = $email_view_mgr->fetch('_email.payment-charge-successful.tpl');
         $message = Mailer::getSystemMessageHTML($body_html, $headline);
         $this->debug($message);
