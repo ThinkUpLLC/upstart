@@ -1,13 +1,24 @@
-<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">We just confirmed your Amazon Payments subscription to ThinkUp. Here are the details:</p>
+<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">We just confirmed your ThinkUp membership payment. Here are the details:</p>
 
 <ul>
-	<li>You're a ThinkUp {$member_level}</li>
-	<li>You've been charged {$amount} for your annual membership</li>
-	<li>Your subscription will be automatically renewed on {$renewal_date}</li>
+	<li>You're officially a <strong>ThinkUp {if $member_level eq "Pro"}Pro {/if}Member</strong>! Your user name is <strong>{$thinkup_username}</strong>.</li>
+	<li>Your Amazon Payments account has been charged <strong>${$amount}</strong> for your membership.</li>
+	<li>Your membership lasts until <strong>{$renewal_date}</strong>, when it will automatically renew.</li>
+    <li>Download your copy of the <em>Insights</em> book on <a href="https://www.thinkup.com/join/user/membership.php">your membership page</a>.</li>
 </ul>
 
-<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">We truly appreciate you joining the ThinkUp community. As a thank you, we'd encourage you to download our exclusive ebook Insights, which features interviews with a lot of the smartest and most influential people in social media. You can find it here:</p>
+<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">We truly appreciate you joining the ThinkUp community, and we hope you'll love ThinkUp as much as we enjoy building it for you.</p>
 
-<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left"><a href="https://{$thinkup_username}.thinkup.com" style="color: #46bcff;">https://thinkup.com/insights_book</a></p>
+<div style="text-align:center;"><!--[if mso]>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://www.thinkup.com/join/user/membership.php" style="height:40px;v-text-anchor:middle;width:200px;" arcsize="10%" stroke="f" fillcolor="#125C9C">
+    <w:anchorlock/>
+    <center>
+  <![endif]-->
+      <a href="https://{$thinkup_username}.thinkup.com/"
+style="background-color:#125C9C;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:13px;font-weight:bold;line-height:40px;text-align:center;text-decoration:none;width:200px;margin-bottom:20px;-webkit-text-size-adjust:none;">See your ThinkUp Insights!</a>
+  <!--[if mso]>
+    </center>
+  </v:roundrect>
+<![endif]--></div>
 
-<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">We hope you love ThinkUp as much as we enjoy building it for you, and if you ever have any questions or comments, just contact us at help@thinkup.com and one of the members of our team will help you out!</p>
+<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">p.s. If you ever have questions or comments, just contact us at <a href="mailto:help@thinkup.com">help@thinkup.com</a> &mdash; we'd love to hear from you!</p>
