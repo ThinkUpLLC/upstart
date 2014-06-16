@@ -1,23 +1,12 @@
-{include file="_header.marketing.tpl" body_classes="landing" body_id="landing-home"}
-
-<div class="container" id="container-analytics">
-  <div class="section section-screenshot" id="section-analytics">
-    <h3 class="section-header">There’s buried treasure in your social networks.</h3>
-    <div class="section-copy">
-      <p>ThinkUp uncovers fun and fascinating insights about your Facebook and Twitter activity.</p>
-      <div class="illustration">An insight</div>
-    </div>
-  </div>
-</div>
+{include file="_header.marketing.tpl" body_classes="landing" body_id="landing-home" hide_join="1"}
 
 <div class="container" id="container-signup-top">
   <div class="section section-screenshot" id="section-signup-top">
-    <h3 class="section-header">Get started for free.</h3>
+    <h3 class="section-header">There are things Facebook &amp; Twitter won't tell you.</h3>
     <div class="section-copy">
-      <p>Sign up for our Free 14-Day Trial to see exactly what ThinkUp can do for you. We bet your very first email will be full of insights you’ve never seen before.</p>
+      <p>ThinkUp gives you insights about your social networks that you can't find anywhere else. Sign up for our Free 14-Day Trial and see what you've been missing.</p>
       <a href="{$site_root_path}join.php" class="btn btn-pill-large">Start your free trial</a>
       <div class="illustration">
-        <a href="https://ginatrapani.thinkup.com">See a live demo</a>
       </div>
     </div>
   </div>
@@ -65,17 +54,6 @@
   </div>
 </div>
 
-<div class="container" id="container-company">
-  <div class="section section-screenshot" id="section-company">
-    <h3 class="section-header">A tech company that<br>
-      treats you with respect.</h3>
-    <div class="section-copy">
-      <p>ThinkUp is a different kind of company. We make products for regular people, we collaborate with an <a href="https://github.com/ginatrapani/ThinkUp">open source community</a> and we live by <a href="{$site_root_path}about/values.php">our values</a>.</p>
-      <div class="illustration">An insight</div>
-    </div>
-  </div>
-</div>
-
 <div class="container" id="container-not-thinkup">
   <div class="section section-screenshot" id="section-not-thinkup">
     <h3 class="section-header">You’ll love what ThinkUp <em>doesn’t</em> do.</h3>
@@ -90,6 +68,28 @@
     </div>
   </div>
 </div>
+
+<div class="container" id="container-analytics">
+  <div class="section section-screenshot" id="section-analytics">
+    <h3 class="section-header">There’s buried treasure in your social networks.</h3>
+    <div class="section-copy">
+      <p>ThinkUp uncovers fun and fascinating insights about your Facebook and Twitter activity.</p>
+      <div class="illustration">An insight</div>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="container-company">
+  <div class="section section-screenshot" id="section-company">
+    <h3 class="section-header">A tech company that<br>
+      treats you with respect.</h3>
+    <div class="section-copy">
+      <p>ThinkUp is a different kind of company. We make products for regular people, we collaborate with an <a href="https://github.com/ginatrapani/ThinkUp">open source community</a> and we live by <a href="{$site_root_path}about/values.php">our values</a>.</p>
+      <div class="illustration">An insight</div>
+    </div>
+  </div>
+</div>
+
 
 <div class="container" id="container-signup-bottom">
   <div class="section" id="section-signup-bottom">
