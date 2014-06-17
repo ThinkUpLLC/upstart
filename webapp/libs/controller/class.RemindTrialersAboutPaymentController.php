@@ -14,5 +14,6 @@ class RemindTrialersAboutPaymentController extends Controller {
         $api_key = Config::getInstance()->getValue('mandrill_api_key_for_payment_reminders');
 
         //TODO Fill in body with logic here
+        //TODO Only assign amazon_error_message if it does not contain '<?xml' in it
     }
 }
