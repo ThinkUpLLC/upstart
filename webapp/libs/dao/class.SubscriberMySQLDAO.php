@@ -469,7 +469,7 @@ class SubscriberMySQLDAO extends PDODAO {
     /**
      * Get installations for members who have not paid.
      * This function does not return members who have received 3 email reminders to pay, and 12 days have passed since
-     * last reminder was sent. That's so they're not being crawled when they are uninstalled automatically at the 
+     * last reminder was sent. That's so they're not being crawled when they are uninstalled automatically at the
      * 14-day threshold.
      * @param  integer $count How many installs to retrieve; defaults to 25
      * @return arr Array of installation information
@@ -657,7 +657,11 @@ class SubscriberMySQLDAO extends PDODAO {
     public function updateSubscriptionStatus($id, $status=null) {
         if (!isset($status)) {
             $subscriber = $this->getByID($id);
-            $status = $subscriber->getSubscriptionStatus();
+            if (isset($subscriber)) {
+                $status = $subscriber->getSubscriptionStatus();
+            } else {
+                throw new SubscriberDoesNotExistException('Subscriber ID '.$id.' does not exist.');
+            }
         }
         $q = "UPDATE subscribers
               SET subscription_status=:status
