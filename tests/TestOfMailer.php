@@ -90,7 +90,7 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('member_level', 'Pro' );
-        $email_view_mgr->assign('amount', 60 );
+        $email_view_mgr->assign('amount', 120 );
         $email_view_mgr->assign('renewal_date', 'January 15, 2015' );
         $email_view_mgr->assign('thinkup_username', 'username' );
         $body_html = $email_view_mgr->fetch('_email.payment-charge-successful.tpl');
