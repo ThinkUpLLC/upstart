@@ -42,6 +42,42 @@ class AmazonFPSAPIAccessor {
     }
 
     /**
+     * Get the status of a pending transaction.
+     * @param str $transaction_id
+     * @return arr status, status_message, caller_reference, transaction_id
+     */
+    public function getTransactionStatus($transaction_id) {
+        if (strpos($transaction_id, 'failure') === false) {
+            return array('status'=>'Success',
+                'status_message'=>'The transaction was successful and the payment instrument was charged.',
+                'caller_reference'=>'12345',
+                'transaction_id'=>$transaction_id);
+        } else {
+            if (strpos($transaction_id, 'no-message') !== false) {
+            // no message
+                return array('status'=>'Failure',
+                    'status_message'=>null,
+                    'caller_reference'=>'12345',
+                    'transaction_id'=>$transaction_id);
+            } elseif (strpos($transaction_id, 'message-with-xml') !== false) {
+            // message with xml
+                return array('status'=>'Failure',
+                    'status_message'=>'Sender token not active.
+<?xml version="1.0"?>
+<Response><Errors><Error><Code>TokenNotActive_Sender</Code><Message>Sender token not active.</Message></Error></Errors><RequestID>a3cb5e5c-da1f-403a-a05e-03ea9c7407ac</RequestID></Response>',
+                    'caller_reference'=>'12345',
+                    'transaction_id'=>$transaction_id);
+            } elseif (strpos($transaction_id, 'message-human-readable') !== false) {
+            // human-readable message
+                return array('status'=>'Failure',
+                    'status_message'=>'Credit Card is no longer valid',
+                    'caller_reference'=>'12345',
+                    'transaction_id'=>$transaction_id);
+            }
+        }
+    }
+
+    /**
      * Get a valid Amazon Flexible Payment System payment URL for a given amount.
      * @param  str $caller_reference
      * @param  str $callback_url
