@@ -12,4 +12,4 @@ style="background-color:#125C9C;border-radius:4px;color:#ffffff;display:inline-b
   </v:roundrect>
 <![endif]--></div>
 
-<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left"> p.s. We've been really glad to have you try out ThinkUp! Got any questions? Just reply to this email and we'll take care of you.</p>
+<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left"> p.s. We've been really glad to have you try out ThinkUp! Got any questions about what you've seen at <a href="https://{$thinkup_username}.thinkup.com">{$thinkup_username}.thinkup.com</a>? Just reply to this email and we'll take care of you.</p>
