@@ -112,7 +112,27 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($subscriber->subscription_status, 'Payment due');
         $this->assertFalse($subscriber->is_account_closed);
 
+        $this->expectException('SubscriberDoesNotExistException');
         $subscriber = $dao->getByEmail('yoyo@example.com');
+        $this->assertNull($subscriber);
+    }
+
+    public function testGetByID() {
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->insert('ginatrapani@example.com', 'secr3tpassword');
+
+        $subscriber = $dao->getByID(1);
+        $this->assertIsA($subscriber, 'Subscriber');
+        $this->assertEqual($subscriber->id, 1);
+        $this->assertEqual($subscriber->email, 'ginatrapani@example.com');
+        $this->assertEqual($subscriber->full_name, '');
+        $this->assertEqual($subscriber->follower_count, 0);
+        $this->assertEqual($subscriber->is_verified, 0);
+        $this->assertEqual($subscriber->subscription_status, 'Payment due');
+        $this->assertFalse($subscriber->is_account_closed);
+
+        $this->expectException('SubscriberDoesNotExistException');
+        $subscriber = $dao->getByID(5);
         $this->assertNull($subscriber);
     }
 
@@ -428,7 +448,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani@example.com',
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
-            'thinkup_username'=>'unique1', 'date_installed'=>null, 'is_membership_complimentary'=>1, 
+            'thinkup_username'=>'unique1', 'date_installed'=>null, 'is_membership_complimentary'=>1,
             'subscription_status'=>'Payment due'));
 
         $dao = new SubscriberMySQLDAO();

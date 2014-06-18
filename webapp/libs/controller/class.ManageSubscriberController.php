@@ -12,12 +12,12 @@ class ManageSubscriberController extends Controller {
         if ($subscriber_id !== false ) {
             //Get subscriber and assign to view
             $subscriber_dao = new SubscriberMySQLDAO();
-            $subscriber = $subscriber_dao->getByID($subscriber_id);
-            $this->addToView('application_url', UpstartHelper::getApplicationURL());
+            try {
+                $subscriber = $subscriber_dao->getByID($subscriber_id);
+                $this->addToView('application_url', UpstartHelper::getApplicationURL());
 
-            $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
+                $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
 
-            if (isset($subscriber)) {
                 //Get authorizations and assign to view
                 $subscriber_auth_dao = new SubscriberAuthorizationMySQLDAO();
                 $authorizations = $subscriber_auth_dao->getBySubscriberID($subscriber_id);
@@ -125,7 +125,7 @@ class ManageSubscriberController extends Controller {
                     $subscriber->installation_url = str_replace ("{user}", $subscriber->thinkup_username,
                     $user_installation_url);
                 }
-                if (isset($subscriber) && !isset($subscriber->thinkup_username)) {
+                if (!isset($subscriber->thinkup_username)) {
                     $subscriber->subdomainified_username = self::subdomainify($subscriber->network_user_name);
                 }
                 $this->addToView('subscriber', $subscriber);
@@ -148,8 +148,8 @@ class ManageSubscriberController extends Controller {
                 $cfg = Config::getInstance();
                 $is_in_sandbox = $cfg->getValue('amazon_sandbox');
                 $this->addToView('is_in_sandbox', $is_in_sandbox);
-            } else {
-                $this->addErrorMessage("Subscriber does not exist.");
+            } catch (SubscriberDoesNotExistException $e) {
+                $this->addErrorMessage($e->getMessage());
             }
         } else {
             $this->addErrorMessage("No subscriber specified.");

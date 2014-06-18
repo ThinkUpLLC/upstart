@@ -50,7 +50,12 @@ class LoginController extends UpstartController {
                         $user_email = stripslashes($user_email);
                     }
                     $this->addToView('email', $user_email);
-                    $subscriber = $subscriber_dao->getByEmail($user_email);
+                    try {
+                        $subscriber = $subscriber_dao->getByEmail($user_email);
+                    } catch (SubscriberDoesNotExistException $e) {
+                        $this->addErrorMessage("Sorry, can't find that email.");
+                        return $this->generateView();
+                    }
 
                     // Attempt to quietly verify the email address if it's not already
                     if (isset($subscriber) && !$subscriber->is_email_verified) {
@@ -68,9 +73,6 @@ class LoginController extends UpstartController {
                             }
                         }
                     }
-                    if (!$subscriber) {
-                        $this->addErrorMessage("Sorry, can't find that email.");
-                        return $this->generateView();
                     //@TODO Properly implement is_activated check here with failed login cap
                     // } elseif (!$subscriber->is_activated) {
                     //     $error_msg = 'Inactive account. ';
@@ -83,8 +85,8 @@ class LoginController extends UpstartController {
                     //     $disable_xss = true;
                     //     $this->addErrorMessage($error_msg, null, $disable_xss);
                     //     return $this->generateView();
-                        // If the credentials supplied by the user are incorrect
-                    } elseif ($subscriber->membership_level == 'Waitlist')  {
+                    // If the credentials supplied by the user are incorrect
+                    if ($subscriber->membership_level == 'Waitlist')  {
                         $error_msg = "Hey! We’ve got you on our waiting list and will email you soon with ".
                         "subscription info.";
                         $this->addErrorMessage($error_msg, null, $disable_xss=true);

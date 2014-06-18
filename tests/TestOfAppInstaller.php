@@ -71,7 +71,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         } catch (Exception $e) {
         }
         $this->assertNotNull($e);
-        $this->assertEqual($e->getMessage(), 'Subscriber does not exist.');
+        $this->assertEqual($e->getMessage(), 'Subscriber ID 6 does not exist.');
     }
 
     public function testUninstallSubscriberUsernameNotSet() {
@@ -108,7 +108,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         } catch (InactiveInstallationException $e) {
         }
         $this->assertNotNull($e);
-        $this->assertEqual($e->getMessage(), 
+        $this->assertEqual($e->getMessage(),
             'testerrific installation is not active (is_installation_active is set to false).');
     }
 

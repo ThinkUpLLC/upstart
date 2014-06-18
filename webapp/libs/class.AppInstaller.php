@@ -101,64 +101,59 @@ class AppInstaller {
         $commit_hash = self::getMasterInstallCommitHash();
 
         if (isset($this->app_source_path)
-        && isset($this->master_app_source_path)
-        && isset($this->data_path)
-        && isset($this->admin_email)
-        && isset($this->admin_password)
-        && isset($this->user_installation_url)) {
+            && isset($this->master_app_source_path)
+            && isset($this->data_path)
+            && isset($this->admin_email)
+            && isset($this->admin_password)
+            && isset($this->user_installation_url)) {
 
             $subscriber = null;
             if (isset($subscriber_id)) {
                 $subscriber_dao = new SubscriberMySQLDAO();
                 $subscriber = $subscriber_dao->getById($subscriber_id);
-            }
-            if (!isset($subscriber)) {
-                if (isset($subscriber_id)) {
-                    throw new Exception('Subscriber doesn\'t exist');
-                } else {
-                    throw new Exception('No subscriber specified');
-                }
             } else {
-                if ($subscriber->thinkup_username == null) {
-                    throw new Exception("ThinkUp username is not set.");
-                } elseif ($subscriber->date_installed != null && $subscriber->is_installation_active) {
-                    throw new Exception('Installation for '.$subscriber->thinkup_username.' already exists.');
-                } else {
-                    session_write_close();
-                    // Set up application files
-                    self::setUpApplicationFiles($subscriber->thinkup_username);
-                    // Set up installation database
-                    $database_name = self::createDatabase($subscriber->thinkup_username);
-                    // Upgrade database
-                    $install_log_dao = new InstallLogMySQLDAO();
-                    self::upgradeDatabaseToLatestMigrations($subscriber, $commit_hash, $install_log_dao,
-                    $subscriber_dao);
+                throw new Exception('No subscriber specified');
+            }
 
-                    // Create session API token Upstart will use to log into ThinkUp via the Session API
-                    $api_key_private = hash('sha256', rand(). $subscriber->email);
-                    $subscriber->api_key_private = substr($api_key_private, 0, 32);
+            if ($subscriber->thinkup_username == null) {
+                throw new Exception("ThinkUp username is not set.");
+            } elseif ($subscriber->date_installed != null && $subscriber->is_installation_active) {
+                throw new Exception('Installation for '.$subscriber->thinkup_username.' already exists.');
+            } else {
+                session_write_close();
+                // Set up application files
+                self::setUpApplicationFiles($subscriber->thinkup_username);
+                // Set up installation database
+                $database_name = self::createDatabase($subscriber->thinkup_username);
+                // Upgrade database
+                $install_log_dao = new InstallLogMySQLDAO();
+                self::upgradeDatabaseToLatestMigrations($subscriber, $commit_hash, $install_log_dao,
+                $subscriber_dao);
 
-                    self::setUpApplicationOptions($subscriber->thinkup_username);
+                // Create session API token Upstart will use to log into ThinkUp via the Session API
+                $api_key_private = hash('sha256', rand(). $subscriber->email);
+                $subscriber->api_key_private = substr($api_key_private, 0, 32);
 
-                    list($admin_id, $admin_api_key, $owner_id, $owner_api_key) =
-                    self::createOwners($subscriber);
-                    self::setUpServiceUser($owner_id, $subscriber);
+                self::setUpApplicationOptions($subscriber->thinkup_username);
 
-                    $url = str_replace ("{user}", $subscriber->thinkup_username, $this->user_installation_url);
+                list($admin_id, $admin_api_key, $owner_id, $owner_api_key) =
+                self::createOwners($subscriber);
+                self::setUpServiceUser($owner_id, $subscriber);
 
-                    $subscriber_dao->intializeInstallation($subscriber_id, $subscriber->api_key_private,
-                    $commit_hash);
-                    self::logToUserMessage("Updated waitlist with link and db name");
-                    try {
-                        self::dispatchCrawlJob($subscriber->thinkup_username);
-                    } catch (DispatchException $e) {
-                        self::logToUserMessage('Crawl job not dispatched due to malformed JSON.');
-                    }
-                    $subscriber_dao->updateLastDispatchedTime($subscriber_id);
-                    $install_log_dao->insertLogEntry($subscriber_id, $commit_hash, 1, "Installed");
+                $url = str_replace ("{user}", $subscriber->thinkup_username, $this->user_installation_url);
 
-                    self::logToUserMessage("Complete. Log in at <a href=\"$url\" target=\"new\">".$url."</a>.");
+                $subscriber_dao->intializeInstallation($subscriber_id, $subscriber->api_key_private,
+                $commit_hash);
+                self::logToUserMessage("Updated waitlist with link and db name");
+                try {
+                    self::dispatchCrawlJob($subscriber->thinkup_username);
+                } catch (DispatchException $e) {
+                    self::logToUserMessage('Crawl job not dispatched due to malformed JSON.');
                 }
+                $subscriber_dao->updateLastDispatchedTime($subscriber_id);
+                $install_log_dao->insertLogEntry($subscriber_id, $commit_hash, 1, "Installed");
+
+                self::logToUserMessage("Complete. Log in at <a href=\"$url\" target=\"new\">".$url."</a>.");
             }
             return $this->results_message;
         } else {
@@ -170,11 +165,11 @@ class AppInstaller {
      * Uninstall a member's installation.
      * * Remove symlink and data directory
      * * Archive or drop database (depending on $do_archive_db)
-     * 
+     *
      * @param  int  $subscriber_id
      * @param  boolean $do_archive_db Whether or not to archive (vs delete) the database
      * @return str Log of uninstallation activity
-     * @throws Exception If subscriber doesn't exist 
+     * @throws Exception If subscriber doesn't exist
      * @throws PDOException If there's a problem archiving or dropping the database
      * @throws InactiveInstallationException If is_installation_active is false
      * @throws NonExistentInstallationException If date_installed is null or ThinkUp username is not set
@@ -185,14 +180,7 @@ class AppInstaller {
         if (isset($subscriber_id)) {
             $subscriber_dao = new SubscriberMySQLDAO();
             $subscriber = $subscriber_dao->getById($subscriber_id);
-        }
-        if (!isset($subscriber)) {
-            if (isset($subscriber_id)) {
-                throw new Exception('Subscriber does not exist.');
-            } else {
-                throw new Exception('No subscriber specified.');
-            }
-        } else {
+
             // Check if installation exists and is active
             if ($subscriber->thinkup_username == null) {
                 throw new NonExistentInstallationException("ThinkUp username is not set.");
@@ -228,6 +216,8 @@ class AppInstaller {
                 $install_log_dao->insertLogEntry( $subscriber_id, $subscriber->commit_hash, 1, "Uninstalled");
                 self::logToUserMessage("Uninstallation complete.");
             }
+        } else {
+            throw new Exception('No subscriber specified.');
         }
         return $this->results_message;
     }
@@ -352,7 +342,7 @@ class AppInstaller {
 
     /**
      * Drop or archive a member's database.
-     * 
+     *
      * @param  str  $thinkup_username Member's username
      * @param  boolean $do_keep_copy  Whether or not to keep a copy of the database
      * @return void

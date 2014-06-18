@@ -189,7 +189,11 @@ class SubscriberMySQLDAO extends PDODAO {
         $vars = array ( ':email' => $email);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
-        return $this->getDataRowAsObject($ps, "Subscriber");
+        $subscriber =  $this->getDataRowAsObject($ps, "Subscriber");
+        if (!isset($subscriber)) {
+            throw new SubscriberDoesNotExistException('Subscriber '.$email.' does not exist.');
+        }
+        return $subscriber;
     }
 
     public function getByID($subscriber_id) {
@@ -198,7 +202,11 @@ class SubscriberMySQLDAO extends PDODAO {
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         //echo self::mergeSQLVars($q, $vars);
         $ps = $this->execute($q, $vars);
-        return $this->getDataRowAsObject($ps, "Subscriber");
+        $subscriber = $this->getDataRowAsObject($ps, "Subscriber");
+        if (!isset($subscriber)) {
+            throw new SubscriberDoesNotExistException('Subscriber ID '.$subscriber_id.' does not exist.');
+        }
+        return $subscriber;
     }
 
     public function getSubscriberList($page_number=1, $count=50) {
