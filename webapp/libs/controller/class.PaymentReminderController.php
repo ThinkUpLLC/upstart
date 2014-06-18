@@ -30,7 +30,7 @@ class PaymentReminderController extends Controller {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
             $body_html = $email_view_mgr->fetch('_email.payment-reminder-first.tpl');
             $message = Mailer::getSystemMessageHTML($body_html, $headline);
-            Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name, 
+            Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 1);
         }
@@ -43,7 +43,7 @@ class PaymentReminderController extends Controller {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
             $body_html = $email_view_mgr->fetch('_email.payment-reminder-second.tpl');
             $message = Mailer::getSystemMessageHTML($body_html, $headline);
-            Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name, 
+            Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 2);
         }
@@ -56,7 +56,7 @@ class PaymentReminderController extends Controller {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
             $body_html = $email_view_mgr->fetch('_email.payment-reminder-third.tpl');
             $message = Mailer::getSystemMessageHTML($body_html, $headline);
-            Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name, 
+            Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 3);
         }
