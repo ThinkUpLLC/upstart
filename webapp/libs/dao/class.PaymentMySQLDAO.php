@@ -87,7 +87,12 @@ class PaymentMySQLDAO extends PDODAO {
         );
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
-        return $this->getDataRowAsObject($ps, 'Payment');
+        $payment = $this->getDataRowAsObject($ps, 'Payment');
+        if (!isset($payment)) {
+            throw new PaymentDoesNotExistException('Payment '.$transaction_id.', caller reference '.$caller_reference.
+                ' does not exist.');
+        }
+        return $payment;
     }
     /**
      * Update payment status.

@@ -58,12 +58,15 @@ class TestOfPaymentMySQLDAO extends UpstartUnitTestCase {
         $valid_caller_reference = '252cf11bbd71e2';
         $builders = array();
         $builders[] = FixtureBuilder::build('payments', array('id'=>1,
-        'transaction_id'=>$valid_transaction_id, 'caller_reference'=>$valid_caller_reference));
+            'transaction_id'=>$valid_transaction_id, 'caller_reference'=>$valid_caller_reference));
         $builders[] = FixtureBuilder::build('payments', array('id'=>2,
-        'transaction_id'=>'213893Z22ZZ7483S3EVDZDFI95AZ1EOIRN6', 'caller_reference'=>'252cf11bbd71e1'));
+            'transaction_id'=>'213893Z22ZZ7483S3EVDZDFI95AZ1EOIRN6', 'caller_reference'=>'252cf11bbd71e1'));
         $dao = new PaymentMySQLDAO();
         $result = $dao->getPayment($valid_transaction_id, $valid_caller_reference);
         $this->assertEqual($result->id, 1);
+
+        $this->expectException('PaymentDoesNotExistException');
+        $dao->getPayment('asdfsfasdf', 'adfasdfasdf');
     }
 
     public function testUpdateStatus() {
