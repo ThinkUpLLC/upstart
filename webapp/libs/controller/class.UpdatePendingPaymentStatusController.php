@@ -42,17 +42,22 @@ class UpdatePendingPaymentStatusController extends Controller {
                     $email_view_mgr = new ViewManager();
                     $email_view_mgr->caching=false;
                     $template_name = "Upstart System Messages";
-                    $api_key = Config::getInstance()->getValue('mandrill_api_key_for_payment_reminders');
+                    $cfg = Config::getInstance();
+                    $api_key = $cfg->getValue('mandrill_api_key_for_payment_reminders');
 
                     if ($status['status'] == 'Success') {
                         $subject_line = "Thanks for joining ThinkUp!";
                         $email_view_mgr->assign('member_level', $subscriber->membership_level);
                         $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
                         $email_view_mgr->assign('amount', $payment->amount);
+                        $user_installation_url = $cfg->getValue('user_installation_url');
+                        $subscriber->installation_url = str_replace ("{user}", $subscriber->thinkup_username,
+                            $user_installation_url);
 
                         $paid_through_year = intval(date('Y', strtotime($payment->timestamp))) + 1;
                         $paid_through_date = date('M j, ', strtotime($payment->timestamp));
                         $email_view_mgr->assign('renewal_date', $paid_through_date.$paid_through_year );
+                        $email_view_mgr->assign('installation_url', $subscriber->installation_url );
                         $body_html = $email_view_mgr->fetch('_email.payment-charge-successful.tpl');
                         $message = Mailer::getSystemMessageHTML($body_html, $subject_line);
                         Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
