@@ -26,7 +26,7 @@ class RemindAbandonsAboutPaymentController extends Controller {
         $api_key = Config::getInstance()->getValue('mandrill_api_key_for_payment_reminders');
 
         //Send first payment reminder 24 hours after signup time
-        $subscribers = $subscriber_dao->getSubscribersDueReminder(0, 24);
+        $subscribers = $subscriber_dao->getSubscribersPaymentDueReminder(0, 24);
         $subject_line = "Hey, did you forget something?";
         $headline = "Lock in your ThinkUp membership";
         foreach ($subscribers as $subscriber) {
@@ -39,7 +39,7 @@ class RemindAbandonsAboutPaymentController extends Controller {
         }
 
         //Send second payment reminder 48 hours after first reminder
-        $subscribers = $subscriber_dao->getSubscribersDueReminder(1, 48);
+        $subscribers = $subscriber_dao->getSubscribersPaymentDueReminder(1, 48);
         $subject_line = "Don’t forget to finalize your ThinkUp membership";
         $headline = "One quick step needed to keep your ThinkUp account";
         foreach ($subscribers as $subscriber) {
@@ -52,7 +52,7 @@ class RemindAbandonsAboutPaymentController extends Controller {
         }
 
         //Send final payment reminder 96 hours after second reminder
-        $subscribers = $subscriber_dao->getSubscribersDueReminder(2, 96);
+        $subscribers = $subscriber_dao->getSubscribersPaymentDueReminder(2, 96);
         $headline = "We don’t want to say goodbye so soon!";
         foreach ($subscribers as $subscriber) {
             $subject_line = "Last chance to keep ".$subscriber->thinkup_username.".thinkup.com!";

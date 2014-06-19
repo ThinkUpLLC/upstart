@@ -561,7 +561,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($result[2]['thinkup_username'], 'unique7');
     }
 
-    public function testGetSubscribersDueReminder() {
+    public function testgetSubscribersPaymentDueReminder() {
         $builders = array();
         //Payment due, 0 reminders sent, signed up 2 days ago
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani+1@example.com',
@@ -598,20 +598,20 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         //sleep(1000);
 
         //Get subscribers with no reminders, due one 24 hours later
-        $result = $dao->getSubscribersDueReminder( 0, 24);
+        $result = $dao->getSubscribersPaymentDueReminder( 0, 24);
         $this->debug(Utils::varDumpToString($result));
         $this->assertEqual(sizeof($result), 2);
         $this->assertEqual($result[0]->thinkup_username, 'unique3');
         $this->assertEqual($result[1]->thinkup_username, 'unique1');
 
         //Get subscribers with 1 reminder, due one 24 hours later
-        $result = $dao->getSubscribersDueReminder(1, 24);
+        $result = $dao->getSubscribersPaymentDueReminder(1, 24);
         $this->debug(Utils::varDumpToString($result));
         $this->assertEqual(sizeof($result), 1);
         $this->assertEqual($result[0]->thinkup_username, 'unique4');
 
         //Get subscribers with 1 reminder, due one 70 hours later
-        $result = $dao->getSubscribersDueReminder(1, 70);
+        $result = $dao->getSubscribersPaymentDueReminder(1, 70);
         $this->debug(Utils::varDumpToString($result));
         $this->assertEqual(sizeof($result), 0);
     }
