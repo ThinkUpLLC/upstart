@@ -30,6 +30,7 @@ class UpstartBasicUnitTestCase extends UnitTestCase {
     }
 
     public function tearDown() {
+        Mailer::clearLastMail();
         Config::destroyInstance();
         if (isset($_SESSION)) {
             $this->unsetArray($_SESSION);
