@@ -119,14 +119,4 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
         $message = Mailer::getSystemMessageHTML($body_html, $headline);
         $this->debug($message);
     }
-
-    public function testGetSystemMessageHTMLPaymentReminder4() {
-        $headline = "We don’t want to say goodbye so soon!";
-        $email_view_mgr = new ViewManager();
-        $email_view_mgr->caching=false;
-        $email_view_mgr->assign('thinkup_username', 'username' );
-        $body_html = $email_view_mgr->fetch('_email.payment-reminder-fourth.tpl');
-        $message = Mailer::getSystemMessageHTML($body_html, $headline);
-        $this->debug($message);
-    }
 }
