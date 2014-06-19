@@ -2,13 +2,14 @@
 </p>
 {if $amazon_error_message}
 <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">
-(The specific message we got from Amazon was "<b>{$amazon_error_message}</b>".)
+The specific message we got from Amazon was "<b>{$amazon_error_message}</b>".
 </p>
 {/if}
 
+<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">To fix it:</p>
 <ol>
-<li style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">Double-check that your information is correct on your <a href="https://payments.amazon.com/accountsettings">Amazon Payments account</a></li>
-<li style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">Once that's done, submit your payment again on your membership page, here:</li>
+<li style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">Double-check that your information is correct on your <a href="https://payments.amazon.com/accountsettings" style="color: #46bcff;">Amazon Payments account</a>.</li>
+<li style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">Then, submit your payment again on your membership page, here:</li>
 </ol>
 
 <div style="text-align:center;"><!--[if mso]>
@@ -23,4 +24,4 @@ style="background-color:#125C9C;border-radius:4px;color:#ffffff;display:inline-b
   </v:roundrect>
 <![endif]--></div>
 
-<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">We apologize for the inconvenience and thank you again for being a ThinkUp member!</p>
+<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">We apologize for the inconvenience. Thank you again for being a ThinkUp member.</p>

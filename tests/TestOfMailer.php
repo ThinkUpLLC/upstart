@@ -72,6 +72,7 @@ class TestOfMailer extends UpstartUnitTestCase {
         $headline = "Uh oh! Problem with your ThinkUp payment";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
+        $email_view_mgr->assign('amazon_error_message', null );
         $body_html = $email_view_mgr->fetch('_email.payment-charge-failure.tpl');
         $message = Mailer::getSystemMessageHTML($body_html, $headline);
         $this->debug($message);

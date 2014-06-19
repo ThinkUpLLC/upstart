@@ -77,7 +77,8 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
         //populate payments table with pending transaction
         $builders = array();
         $builders[] = FixtureBuilder::build('payments', array('payment_id'=>1, 'transaction_id'=>'123-success',
-            'transaction_status'=>'Pending', 'caller_reference'=>'12345', 'amount'=>'60', 'timestamp'=>time()));
+            'transaction_status'=>'Pending', 'caller_reference'=>'12345', 'amount'=>'60',
+            'timestamp'=>'2014-04-21 14:50:12'));
         $builders[] = FixtureBuilder::build('subscriber_payments', array('payment_id'=>1, 'subscriber_id'=>1));
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'thinkup_username'=>'willowrosenberg',
             'membership_level'=>'Member'));
@@ -90,13 +91,15 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
         $this->debug($body);
         $this->assertPattern('/Thanks for joining ThinkUp!/', $body);
         $this->assertPattern('/You\'re officially a <strong>ThinkUp Member<\/strong>!/', $body);
+        $this->assertPattern('/Your membership lasts until <strong>Apr 21, 2015<\/strong>/', $body);
     }
 
     public function testControlSuccessfulChargeProEmail() {
         //populate payments table with pending transaction
         $builders = array();
         $builders[] = FixtureBuilder::build('payments', array('payment_id'=>1, 'transaction_id'=>'123-success',
-            'transaction_status'=>'Pending', 'caller_reference'=>'12345', 'amount'=>'60', 'timestamp'=>time()));
+            'transaction_status'=>'Pending', 'caller_reference'=>'12345', 'amount'=>'60',
+            'timestamp'=>'2014-04-21 14:50:12'));
         $builders[] = FixtureBuilder::build('subscriber_payments', array('payment_id'=>1, 'subscriber_id'=>1));
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'thinkup_username'=>'willowrosenberg',
             'membership_level'=>'Pro'));
@@ -136,7 +139,7 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
         $builders = array();
         $builders[] = FixtureBuilder::build('payments', array('payment_id'=>1,
             'transaction_id'=>'123-failure-message-with-xml', 'transaction_status'=>'Pending',
-            'caller_reference'=>'12345', 'amount'=>'60', 'timestamp'=>time()));
+            'caller_reference'=>'12345', 'amount'=>'60', 'timestamp'=>'2014-04-21 14:50:12'));
         $builders[] = FixtureBuilder::build('subscriber_payments', array('payment_id'=>1, 'subscriber_id'=>1));
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'thinkup_username'=>'willowrosenberg',
             'membership_level'=>'Member'));
