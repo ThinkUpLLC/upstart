@@ -278,6 +278,93 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Paid through/', $results);
     }
 
+    private function buildSubscriberFreeTrialCreated($days_ago) {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'trial@example.com',
+            'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
+            'subscription_status'=>'Free trial',  'is_installation_active'=>0, 'date_installed'=>null,
+            'membership_level'=>'Member', 'creation_time'=>"-".(($days_ago*24)+3)."h"));
+        return $builders;
+    }
+
+    public function testFreeTrialNotExpired() {
+        $this->builders = $this->buildSubscriberFreeTrialCreated(10);
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('trial@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('trial@example.com');
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Membership Info/', $results);
+        $this->assertPattern('/This is what our database knows./', $results);
+        $this->assertNoPattern('/Complimentary membership/', $results);
+        $this->assertPattern('/One last step/', $results);
+        $this->assertPattern('/free trial expires in 3 days/', $results);
+        $this->assertNoPattern('/Payment due/', $results);
+        $this->assertNoPattern('/Payment pending/', $results);
+        $this->assertNoPattern('/Paid through/', $results);
+        $paid_through_year = intval(date('Y')) + 1;
+        $paid_through_date = date('M j ');
+    }
+
+    public function testFreeTrialExpired() {
+        $this->builders = $this->buildSubscriberFreeTrialCreated(15);
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('trial@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('trial@example.com');
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Membership Info/', $results);
+        $this->assertPattern('/This is what our database knows./', $results);
+        $this->assertNoPattern('/Complimentary membership/', $results);
+        $this->assertPattern('/One last step/', $results);
+        $this->assertPattern('/Expired!/', $results);
+        $this->assertNoPattern('/Payment due/', $results);
+        $this->assertNoPattern('/Payment pending/', $results);
+        $this->assertNoPattern('/Paid through/', $results);
+        $paid_through_year = intval(date('Y')) + 1;
+        $paid_through_date = date('M j ');
+    }
+
+    private function buildSubscriberAccountClosed() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'closed@example.com',
+            'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
+            'subscription_status'=>'Free trial',  'is_installation_active'=>0, 'date_installed'=>null,
+            'membership_level'=>'Member', 'creation_time'=>"-10d", 'is_account_closed'=>1));
+        return $builders;
+    }
+
+    public function testAccountClosed() {
+        $this->builders = $this->buildSubscriberAccountClosed();
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('closed@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('closed@example.com');
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Membership Info/', $results);
+        $this->assertPattern('/This is what our database knows./', $results);
+        $this->assertPattern('/Re-open your ThinkUp account/', $results);
+        $this->assertNoPattern('/Complimentary membership/', $results);
+        $this->assertNoPattern('/One last step/', $results);
+        $this->assertNoPattern('/Payment due/', $results);
+        $this->assertNoPattern('/Payment pending/', $results);
+        $this->assertNoPattern('/Paid through/', $results);
+        $paid_through_year = intval(date('Y')) + 1;
+        $paid_through_date = date('M j ');
+    }
+
     public function testInvalidReturnFromAmazonRetriedPayment() {
         $this->builders = $this->buildSubscriberPaid('Failure');
         $dao = new SubscriberMySQLDAO();

@@ -85,10 +85,26 @@ class MembershipController extends AuthController {
         if ($membership_status == 'Authorization failed') {
             $membership_status = 'Payment failed';
         }
+
+        //Add Free trial status (including if expired, and how many days left)
         $this->addToView('membership_status', $membership_status);
+        if ($membership_status == 'Free trial') {
+            $creation_date = new DateTime($subscriber->creation_time);
+            $now = new DateTime();
+            $end_of_trial = $creation_date->add(new DateInterval('P14D'));
+            if ($end_of_trial < $now) {
+                $this->addToView('trial_status', 'Expired!');
+            } else {
+                $datetime1 = new DateTime('2009-10-11');
+                $datetime2 = new DateTime('2009-10-13');
+                $interval = $now->diff($end_of_trial);
+                $this->addToView('trial_status', 'Your free trial expires in '.$interval->format('%a days'));
+            }
+        }
 
         // If status is "Payment failed" or "Payment due" then send Amazon Payments URL to view and handle charge
-        if ($membership_status == 'Payment failed' || $membership_status == 'Payment due') {
+        if ($membership_status == 'Payment failed' || $membership_status == 'Payment due'
+            || $membership_status == 'Free trial') {
             $callback_url = UpstartHelper::getApplicationURL().'user/membership.php';
             $caller_reference = $subscriber->id.'_'.time();
             $amount = self::getSubscriptionAmount($subscriber->membership_level);
