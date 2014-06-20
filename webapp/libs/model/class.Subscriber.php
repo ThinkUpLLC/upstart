@@ -197,7 +197,7 @@ class Subscriber {
     /**
      * Get a simple string indicating the payment status of a subscriber's subscription payment.
      * Possible values:
-     * - Payment due (Soon to be Free trial)
+     * - Free trial
      * - Paid through [date]
      * - Complimentary membership
      * - Payment pending
@@ -230,7 +230,7 @@ class Subscriber {
                     $subscription_status = "Payment failed";
                 } else {
                     $subscription_status = "Payment failed";
-                } 
+                }
             } else {
                 //Get latest authorization
                 $subscriber_auth_dao = new SubscriberAuthorizationMySQLDAO();
@@ -247,7 +247,7 @@ class Subscriber {
                         $subscription_status = 'Authorization failed';
                     }
                 } else { //no auth, no payment
-                    $subscription_status = "Payment due";
+                    $subscription_status = "Free trial";
                 }
             }
         }
