@@ -26,7 +26,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $stmt = SubscriberMySQLDAO::$PDO->query($sql);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual('ginatrapani@example.com', $data['email']);
-        $this->assertEqual('Payment due', $data['subscription_status']);
+        $this->assertEqual('Free trial', $data['subscription_status']);
         $this->assertEqual(0, $data['is_account_closed']);
     }
 
@@ -55,7 +55,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual('s3cr3tt0ken', $data['oauth_access_token']);
         $this->assertEqual('Member', $data['membership_level']);
         $this->assertEqual('America/New_York', $data['timezone']);
-        $this->assertEqual('Payment due', $data['subscription_status']);
+        $this->assertEqual('Free trial', $data['subscription_status']);
         $this->assertEqual(0, $data['is_account_closed']);
 
         //Try inserting new subscriber with same network credentials
@@ -109,7 +109,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($subscriber->full_name, '');
         $this->assertEqual($subscriber->follower_count, 0);
         $this->assertEqual($subscriber->is_verified, 0);
-        $this->assertEqual($subscriber->subscription_status, 'Payment due');
+        $this->assertEqual($subscriber->subscription_status, 'Free trial');
         $this->assertFalse($subscriber->is_account_closed);
 
         $this->expectException('SubscriberDoesNotExistException');
@@ -128,7 +128,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($subscriber->full_name, '');
         $this->assertEqual($subscriber->follower_count, 0);
         $this->assertEqual($subscriber->is_verified, 0);
-        $this->assertEqual($subscriber->subscription_status, 'Payment due');
+        $this->assertEqual($subscriber->subscription_status, 'Free trial');
         $this->assertFalse($subscriber->is_account_closed);
 
         $this->expectException('SubscriberDoesNotExistException');
@@ -306,7 +306,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual('lexluther', $data['network_user_name']);
         $this->assertEqual('aabbccdd', $data['token_id']);
-        $this->assertEqual('Payment due', $data['subscription_status']);
+        $this->assertEqual('Free trial', $data['subscription_status']);
         $this->assertEqual(0, $data['total_payment_reminders_sent']);
     }
 
