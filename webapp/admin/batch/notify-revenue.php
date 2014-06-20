@@ -14,7 +14,7 @@ $channel = "#signups";
 // New signups
 $subscriber_dao = new SubscriberMySQLDAO();
 $daily_signups = $subscriber_dao->getDailySignups();
-$message .= "";
+$message = "";
 if ($daily_signups[0]['new_members'] > $daily_signups[1]['new_members']) {
     $message .= "up from";
 } elseif ($daily_signups[0]['new_members'] < $daily_signups[1]['new_members']) {
@@ -22,10 +22,10 @@ if ($daily_signups[0]['new_members'] > $daily_signups[1]['new_members']) {
 } else {
     $message .= "the same as";
 }
-$subject = number_format($daily_signups[0]['new_members']) . " new member". 
+$subject = number_format($daily_signups[0]['new_members']) . " new member".
 	(($daily_signups[0]['new_members'] == 1)?'':'s') ." joined ThinkUp today.";
 
-$message = "That's ". $message. " ".number_format($daily_signups[1]['new_members']). 
+$message = "That's ". $message. " ".number_format($daily_signups[1]['new_members']).
 	" signup". (($daily_signups[1]['new_members'] == 1)?'':'s') ." yesterday. Day before was ".
     number_format($daily_signups[2]['new_members']) . " signup" .(($daily_signups[1]['new_members'] == 1)?'':'s').
     ".";
