@@ -12,11 +12,11 @@ WHERE subscription_status like 'Paid through%'
 --
 SELECT subscriber_count, membership_level, subscription_status, (subscriber_count*price) as total_payments_owed FROM
 (
-SELECT COUNT(id) AS subscriber_count, subscription_status, membership_level, 
-IF(membership_level = 'Member', 60, 
-	IF(membership_level = 'Early Bird', 50, 
-		IF(membership_level = 'Late Bird', 50, 
-			IF(membership_level = 'Pro', 120, 
+SELECT COUNT(id) AS subscriber_count, subscription_status, membership_level,
+IF(membership_level = 'Member', 60,
+	IF(membership_level = 'Early Bird', 50,
+		IF(membership_level = 'Late Bird', 50,
+			IF(membership_level = 'Pro', 120,
 				IF(membership_level = 'Exec', 996, 0))))) AS price FROM subscribers
 WHERE subscription_status = 'Payment due' GROUP BY membership_level
 ) AS failed_payments ORDER BY total_payments_owed DESC;
@@ -26,11 +26,11 @@ WHERE subscription_status = 'Payment due' GROUP BY membership_level
 --
 SELECT subscriber_count, membership_level, subscription_status, (subscriber_count*price) as total_payments_owed FROM
 (
-SELECT COUNT(id) AS subscriber_count, subscription_status, membership_level, 
-IF(membership_level = 'Member', 60, 
-	IF(membership_level = 'Early Bird', 50, 
-		IF(membership_level = 'Late Bird', 50, 
-			IF(membership_level = 'Pro', 120, 
+SELECT COUNT(id) AS subscriber_count, subscription_status, membership_level,
+IF(membership_level = 'Member', 60,
+	IF(membership_level = 'Early Bird', 50,
+		IF(membership_level = 'Late Bird', 50,
+			IF(membership_level = 'Pro', 120,
 				IF(membership_level = 'Exec', 996, 0))))) AS price FROM subscribers
 WHERE subscription_status = 'Payment failed' GROUP BY membership_level
 ) AS failed_payments ORDER BY total_payments_owed DESC;

@@ -135,7 +135,7 @@ CREATE TABLE subscribers (
   is_activated int(1) NOT NULL DEFAULT '0' COMMENT 'If user is activated, 1 for true, 0 for false.',
   password_token varchar(64) DEFAULT NULL COMMENT 'Password reset token.',
   timezone varchar(50) NOT NULL DEFAULT 'UTC' COMMENT 'Subscriber timezone.',
-  subscription_status varchar(50) DEFAULT 'Payment due' COMMENT 'Status of subscription payment.',
+  subscription_status varchar(50) DEFAULT 'Free trial' COMMENT 'Status of subscription payment.',
   total_payment_reminders_sent int(11) NOT NULL DEFAULT '0' COMMENT 'The number of payment reminder emails sent to this subscriber.',
   payment_reminder_last_sent timestamp NULL DEFAULT NULL COMMENT 'Last time a payment reminder was sent to this subscriber.',
   is_account_closed int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not the member closed their account.',
