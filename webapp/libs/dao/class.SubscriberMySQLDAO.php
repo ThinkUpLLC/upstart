@@ -723,6 +723,10 @@ class SubscriberMySQLDAO extends PDODAO {
      * @return bool  Whether or not it is in use
      */
     public function isUsernameTaken($thinkup_username) {
+        $reserved_names = array('stage', 'demo');
+        if (in_array($thinkup_username, $reserved_names) ) {
+            return true;
+        }
         $q = "SELECT thinkup_username FROM subscribers WHERE thinkup_username=:thinkup_username";
         $vars = array(
             //The username is always lowercase

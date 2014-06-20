@@ -384,6 +384,12 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
     }
 
     public function testIsUsernameTaken() {
+        $dao = new SubscriberMySQLDAO();
+        //Test reserved names
+        $this->assertTrue($dao->isUsernameTaken('stage'));
+        $this->assertTrue($dao->isUsernameTaken('demo'));
+        $this->assertFalse($dao->isUsernameTaken('cordeliachase'));
+
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('email'=>'ginatrapani@example.com',
         'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
@@ -396,7 +402,6 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique4'));
         $builders[] = FixtureBuilder::build('subscribers', array('email'=>'buffysummers@willow.com',
         'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'UniQue5'));
-        $dao = new SubscriberMySQLDAO();
        //Username not taken
         $this->assertFalse($dao->isUsernameTaken('cordeliachase'));
 
