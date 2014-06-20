@@ -209,7 +209,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'due@example.com',
             'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
-            'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>'Member'));
+            'subscription_status'=>'Payment due',  'is_installation_active'=>0, 'date_installed'=>null,
+            'membership_level'=>'Member'));
         return $builders;
     }
 
