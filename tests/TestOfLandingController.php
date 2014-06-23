@@ -23,7 +23,7 @@ class TestOfLandingController extends UpstartUnitTestCase {
         $controller = new LandingController(true);
         $results = $controller->go();
         $this->debug($results);
-        $this->assertPattern('/Sign in with Twitter/', $results);
-        $this->assertPattern('/Sign in with Facebook/', $results);
+        $this->assertPattern('/Sign in with<\/small> Twitter/', $results);
+        $this->assertPattern('/Sign in with<\/small> Facebook/', $results);
     }
 }
