@@ -20,11 +20,11 @@ class RemindTrialersAboutPaymentController extends Controller {
         //Send first payment reminder 24 hours after signup time (day 1)
         $subscribers = $subscriber_dao->getSubscribersFreeTrialPaymentReminder(0, 24);
         $subject_line = "Loving ThinkUp? Time to join!";
-        $headline = $subject_line;
+        $headline = "Loving ThinkUp? Time to join!";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
             $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-1.tpl');
-            $message = Mailer::getSystemMessageHTML($body_html, $subject_line);
+            $message = Mailer::getSystemMessageHTML($body_html, $headline);
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 1);
@@ -33,11 +33,11 @@ class RemindTrialersAboutPaymentController extends Controller {
         //Send second payment reminder 144 hours (6 days) after 1st reminder (day 7)
         $subscribers = $subscriber_dao->getSubscribersFreeTrialPaymentReminder(1, 144);
         $subject_line = "What you won't hear from Facebook or Twitter...";
-        $headline = $subject_line;
+        $headline = "You've tried ThinkUp for a week...";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
             $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-2.tpl');
-            $message = Mailer::getSystemMessageHTML($body_html, $subject_line);
+            $message = Mailer::getSystemMessageHTML($body_html, $headline);
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 2);
@@ -46,11 +46,11 @@ class RemindTrialersAboutPaymentController extends Controller {
         //Send third payment reminder 144 hours (6 days) after 2nd reminder (day 13)
         $subscribers = $subscriber_dao->getSubscribersFreeTrialPaymentReminder(2, 144);
         $subject_line = "Your ThinkUp trial has almost expired!";
-        $headline = $subject_line;
+        $headline = "Only one day left to join ThinkUp!";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
             $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-3.tpl');
-            $message = Mailer::getSystemMessageHTML($body_html, $subject_line);
+            $message = Mailer::getSystemMessageHTML($body_html, $headline);
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 3);
@@ -59,11 +59,11 @@ class RemindTrialersAboutPaymentController extends Controller {
         //Send fourth and final payment reminder 24 hours (1 day) after 3rd reminder (day 14)
         $subscribers = $subscriber_dao->getSubscribersFreeTrialPaymentReminder(3, 24);
         $subject_line = "FINAL REMINDER: Don't lose your ThinkUp membership!";
-        $headline = $subject_line;
+        $headline = "Action Required: Your ThinkUp trial is ending";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
             $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-4.tpl');
-            $message = Mailer::getSystemMessageHTML($body_html, $subject_line);
+            $message = Mailer::getSystemMessageHTML($body_html, $headline);
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 4);
