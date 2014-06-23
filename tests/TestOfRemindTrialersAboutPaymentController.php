@@ -31,6 +31,7 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $sent_email = Mailer::getLastMail();
         $this->debug($sent_email);
         $this->assertPattern('/Loving ThinkUp\? Time to join!/', $sent_email);
+        $this->assertPattern('/Loving ThinkUp\? Time to join!/', $sent_email);
     }
 
     public function testSecondReminder() {
@@ -47,6 +48,7 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $sent_email = Mailer::getLastMail();
         $this->debug($sent_email);
         $this->assertPattern('/What you won\'t hear from Facebook or Twitter.../', $sent_email);
+        $this->assertPattern('/You\'ve tried ThinkUp for a week.../', $sent_email);
     }
 
     public function testThirdReminder() {
@@ -63,6 +65,7 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $sent_email = Mailer::getLastMail();
         $this->debug($sent_email);
         $this->assertPattern('/Your ThinkUp trial has almost expired!/', $sent_email);
+        $this->assertPattern('/Only one day left to join ThinkUp!/', $sent_email);
     }
 
     public function testFourthReminder() {
@@ -79,6 +82,7 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $sent_email = Mailer::getLastMail();
         $this->debug($sent_email);
         $this->assertPattern('/FINAL REMINDER: Don\'t lose your ThinkUp membership!/', $sent_email);
+        $this->assertPattern('/Action Required: Your ThinkUp trial is ending/', $sent_email);
     }
 
     public function testNoReminderDuePaid() {
