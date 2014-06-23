@@ -631,13 +631,24 @@ body {
     padding-right: 400px;
   }
 }
+@media (max-width: 760px) {
+  #container-signup-top .section-copy .signup-buttons {
+    text-align: center;
+  }
+}
 #container-signup-top .section-copy .btn {
-  display: block;
-  margin: 0 auto 35px;
+  display: inline-block;
+  margin: 0 10px 35px;
+  padding: 1px 30px;
+  width: 180px;
+}
+#container-signup-top .section-copy .btn small {
+  font-size: .875rem;
+  color: #d4e7f6;
 }
 @media (min-width: 760px) {
   #container-signup-top .section-copy .btn {
-    margin: 0;
+    margin: 0 20px 0 0;
   }
 }
 #container-signup-top .section-copy .illustration {

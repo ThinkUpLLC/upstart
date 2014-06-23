@@ -228,12 +228,25 @@
       }
     }
 
+    .signup-buttons {
+      @media (max-width: 760px) {
+        text-align: center;
+      }
+    }
+
     .btn {
-      display: block;
-      margin: 0 auto 35px;
+      display: inline-block;
+      margin: 0 10px 35px;
+      padding: 1px 30px;
+      width: 180px;
+
+      small {
+        font-size: .875rem;
+        color: mix(#fff, @blue-darker, 80%);
+      }
 
       @media (min-width: 760px) {
-        margin: 0;
+        margin: 0 20px 0 0;
       }
     }
 

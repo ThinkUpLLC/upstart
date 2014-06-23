@@ -5,8 +5,11 @@
     <h3 class="section-header">There are things Facebook &amp; Twitter won't tell you.</h3>
     <div class="section-copy">
       <p>ThinkUp gives you insights about your social networks that you can't find anywhere else. Sign up for our Free 14-Day Trial and see what you've been missing.</p>
-      <a href="{$twitter_member_link}" class="btn btn-pill-medium">Sign in with Twitter</a>
-      <a href="{$facebook_member_link}" class="btn btn-pill-medium">Sign in with Facebook</a>
+      <div class="signup-buttons">
+
+        <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign in with</small> Twitter</a>
+        <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign in with</small> Facebook</a>
+      </div>
       <div class="illustration">
       </div>
     </div>
