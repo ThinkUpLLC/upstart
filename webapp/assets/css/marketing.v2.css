@@ -274,10 +274,12 @@ body {
 }
 #container-footer #subsection-links {
   background: #D0D0D0;
+  margin-bottom: 10px;
 }
 @media (min-width: 640px) {
   #container-footer #subsection-links {
     background: #f0f0f0;
+    margin-bottom: 0;
   }
 }
 #container-footer .blog-posts,
@@ -558,6 +560,35 @@ body {
   line-height: 0;
   font-size: 1.25em;
 }
+@media (max-width: 760px) {
+  .signup-buttons {
+    text-align: center;
+  }
+}
+.signup-buttons .btn {
+  display: inline-block;
+  margin: 0 0 35px;
+  padding: 1px 20px;
+  width: 140px;
+  transition: background 100ms ease-in;
+}
+.signup-buttons .btn:hover {
+  background: #2377bd;
+}
+.signup-buttons .btn:first-child {
+  margin-right: 15px;
+}
+.signup-buttons .btn small {
+  font-size: .875rem;
+  color: #d4e7f6;
+}
+@media (min-width: 760px) {
+  .signup-buttons .btn {
+    margin: 0 20px 0 0;
+    padding: 1px 30px;
+    width: 180px;
+  }
+}
 #container-analytics {
   background-color: #41dab3;
   height: auto;
@@ -597,7 +628,7 @@ body {
 }
 #container-signup-top {
   background-color: #ffffff;
-  height: 640px;
+  height: auto;
 }
 #container-signup-top .section-header {
   color: #2785d3;
@@ -607,15 +638,17 @@ body {
 }
 @media (min-width: 760px) {
   #container-signup-top {
-    height: 400px;
+    height: 350px;
   }
 }
 #container-signup-top .section-header {
   font-size: 2rem;
   line-height: 1.25;
+  padding-top: 0;
 }
 @media (min-width: 760px) {
   #container-signup-top .section-header {
+    padding: 20px 250px 20px 0;
     text-align: left;
   }
 }
@@ -627,54 +660,23 @@ body {
 }
 @media (min-width: 760px) {
   #container-signup-top .section-copy p {
-    margin-bottom: 40px;
     padding-right: 400px;
   }
 }
-@media (max-width: 760px) {
-  #container-signup-top .section-copy .signup-buttons {
-    text-align: center;
-  }
-}
-#container-signup-top .section-copy .btn {
-  display: inline-block;
-  margin: 0 10px 35px;
-  padding: 1px 30px;
-  width: 180px;
-}
-#container-signup-top .section-copy .btn small {
-  font-size: .875rem;
-  color: #d4e7f6;
-}
-@media (min-width: 760px) {
-  #container-signup-top .section-copy .btn {
-    margin: 0 20px 0 0;
-  }
-}
 #container-signup-top .section-copy .illustration {
-  width: 303px;
-  height: 616px;
-  background: url(../img/landing/phone-screenshot.png) 0 40px no-repeat;
+  display: none;
+  width: 375px;
+  height: 375px;
+  background: url(../img/landing/hand.png) 0 0 no-repeat;
+  background-size: 375px 375px;
   box-shadow: 0 0 0;
 }
-#container-signup-top .section-copy .illustration a {
-  text-indent: 0;
-  display: block;
-  font: 1.25rem/1.3 "tablet-gothic-wide", helvetica, arial, sans-serif;
-  font-weight: 400;
-  text-align: center;
-}
 @media (min-width: 760px) {
   #container-signup-top .section-copy .illustration {
+    display: block;
     left: auto;
     right: 0;
-    top: -62px;
-  }
-}
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-  #container-signup-top .section-copy .illustration {
-    background-image: url(../img/landing/phone-screenshot@2x.png);
-    background-size: 303px 616px;
+    top: -87px;
   }
 }
 #container-what {
@@ -1105,8 +1107,16 @@ body {
 @media (min-width: 840px) {
   #container-signup-bottom .section-copy {
     float: right;
-    width: 220px;
+    width: 300px;
     padding-top: 20px;
+  }
+  #container-signup-bottom .section-copy .btn {
+    width: 140px;
+    padding: 1px 20px;
+    margin: 0;
+  }
+  #container-signup-bottom .section-copy .btn:first-child {
+    margin-right: 15px;
   }
 }
 body.marketing-page .container {

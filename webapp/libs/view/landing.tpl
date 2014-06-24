@@ -6,9 +6,8 @@
     <div class="section-copy">
       <p>ThinkUp gives you insights about your social networks that you can't find anywhere else. Sign up for our Free 14-Day Trial and see what you've been missing.</p>
       <div class="signup-buttons">
-
-        <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign in with</small> Twitter</a>
-        <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign in with</small> Facebook</a>
+        <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign in with</small><br>Twitter</a>
+        <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign in with</small><br>Facebook</a>
       </div>
       <div class="illustration">
       </div>
@@ -99,7 +98,10 @@
   <div class="section" id="section-signup-bottom">
     <h3 class="section-header">Start your <em>100% free</em> trial and get insights immediately</h3>
     <div class="section-copy">
-      <a href="{$site_root_path}join.php" class="btn btn-pill-medium">Join now</a>
+      <div class="signup-buttons">
+        <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign in with</small><br>Twitter</a>
+        <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign in with</small><br>Facebook</a>
+      </div>
     </div>
   </div>
 </div>

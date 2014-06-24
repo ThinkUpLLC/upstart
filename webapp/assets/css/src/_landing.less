@@ -167,6 +167,40 @@
   }
 }
 
+.signup-buttons {
+  @media (max-width: 760px) {
+    text-align: center;
+  }
+
+  .btn {
+    display: inline-block;
+    margin: 0 0 35px;
+    padding: 1px 20px;
+    width: 140px;
+    transition: background 100ms ease-in;
+
+    &:hover {
+      background: darken(@blue-darker, 5%);
+    }
+
+    &:first-child {
+      margin-right: 15px;
+    }
+
+    small {
+      font-size: .875rem;
+      color: mix(#fff, @blue-darker, 80%);
+    }
+
+    @media (min-width: 760px) {
+      margin: 0 20px 0 0;
+      padding: 1px 30px;
+      width: 180px;
+    }
+  }
+}
+
+
 #container-analytics {
   .section-colors(@color-mint);
   height: auto;
@@ -201,17 +235,19 @@
 
 #container-signup-top {
   .section-colors(#fff, #444, @blue-darker);
-  height: 640px;
+  height: auto;
 
   @media (min-width: 760px) {
-    height: 400px;
+    height: 350px;
   }
 
   .section-header {
     font-size: 2rem;
     line-height: 1.25;
+    padding-top: 0;
 
     @media (min-width: 760px) {
+      padding: 20px 250px 20px 0;
       text-align: left;
     }
   }
@@ -223,56 +259,23 @@
       margin-bottom: 30px;
 
       @media (min-width: 760px) {
-        margin-bottom: 40px;
         padding-right: 5 * @col-full;
       }
     }
 
-    .signup-buttons {
-      @media (max-width: 760px) {
-        text-align: center;
-      }
-    }
-
-    .btn {
-      display: inline-block;
-      margin: 0 10px 35px;
-      padding: 1px 30px;
-      width: 180px;
-
-      small {
-        font-size: .875rem;
-        color: mix(#fff, @blue-darker, 80%);
-      }
-
-      @media (min-width: 760px) {
-        margin: 0 20px 0 0;
-      }
-    }
-
     .illustration {
-      a {
-        text-indent: 0;
-        display: block;
-        font: 1.25rem/1.3 @tablet-gothic-wide;
-        font-weight: 400;
-        text-align: center;
-      }
-
-      width: 303px;
-      height: 616px;
-      background: url(../img/landing/phone-screenshot.png) 0 40px no-repeat;
+      display: none;
+      width: 375px;
+      height: 375px;
+      background: url(../img/landing/hand.png) 0 0 no-repeat;
+      background-size: 375px 375px;
       box-shadow: 0 0 0;
 
       @media (min-width: 760px) {
+        display: block;
         left: auto;
         right: 0;
-        top: -62px;
-      }
-
-      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-        background-image: url(../img/landing/phone-screenshot@2x.png);
-        background-size: 303px 616px;
+        top: -87px;
       }
     }
 
@@ -678,8 +681,18 @@
 
     @media (min-width: 840px) {
       float: right;
-      width: 220px;
+      width: 300px;
       padding-top: 20px;
+
+      .btn {
+        width: 140px;
+        padding: 1px 20px;
+        margin: 0;
+
+        &:first-child {
+          margin-right: 15px;
+        }
+      }
     }
   }
 }
