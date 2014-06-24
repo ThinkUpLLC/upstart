@@ -1,5 +1,5 @@
 (function() {
-  var $lastActiveDateGroup, animateContentShift, checkEmailField, checkEmailFormat, checkPasswordField, checkPasswordFormat, checkSettingsPasswordField, checkTermsField, checkUsername, featureTest, focusField, mimerEmail, pinDateMarker, setActiveDateGroup, setDateGroupData, setFixedPadding, setListOpenData, setNavHeight, timerPassword, timerUsername, wt;
+  var $lastActiveDateGroup, animateContentShift, checkEmailAvailability, checkEmailField, checkEmailFormat, checkPasswordField, checkPasswordFormat, checkSettingsPasswordField, checkTermsField, checkUsername, featureTest, focusField, pinDateMarker, setActiveDateGroup, setDateGroupData, setFixedPadding, setListOpenData, setNavHeight, timerEmail, timerPassword, timerUsername, wt;
 
   wt = window.tu = {};
 
@@ -228,6 +228,21 @@
     }
   };
 
+  checkEmailAvailability = function(email, cb) {
+    var isGood;
+    isGood = false;
+    if ((email != null) && email !== "") {
+      return $.getJSON("user/check-email.php?em=" + (encodeURIComponent(email)), function(data) {
+        if (data.available) {
+          isGood = true;
+        }
+        return cb(isGood);
+      });
+    } else {
+      return cb(isGood);
+    }
+  };
+
   checkPasswordFormat = function(value) {
     return value.match(/^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*).{8,}$/gi) != null;
   };
@@ -280,10 +295,11 @@
     }
   };
 
-  mimerEmail = null;
+  timerEmail = null;
 
   checkEmailField = function($el) {
-    var timerEmail;
+    var val;
+    val = $el.val();
     if ($el.val() !== "") {
       if (timerEmail) {
         clearTimeout(timerEmail);
@@ -292,9 +308,16 @@
         var $group;
         $group = $el.parent();
         if (checkEmailFormat($el.val())) {
-          $group.addClass("form-group-ok").removeClass("form-group-warning");
-          $group.find(".help-block").remove();
-          return wt.appMessage.destroy();
+          return checkEmailAvailability($el.val(), function(isGood) {
+            if (isGood) {
+              $group.addClass("form-group-ok").removeClass("form-group-warning");
+              $group.find(".help-block").remove();
+              return wt.appMessage.destroy();
+            } else {
+              $group.removeClass("form-group-ok").addClass("form-group-warning");
+              return wt.appMessage.create("An existing account is using this email address.", "warning");
+            }
+          });
         } else {
           $group.removeClass("form-group-ok").addClass("form-group-warning");
           return wt.appMessage.create("Please enter a valid email address.", "warning");
