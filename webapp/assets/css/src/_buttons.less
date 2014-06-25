@@ -1,4 +1,4 @@
-.btn {
+.btn, a.btn {
   text-decoration: none;
   display: inline-block;
   background: @blue-darker;
@@ -9,9 +9,15 @@
   border: 0;
   -webkit-appearance: initial;
   font-family: @tablet-gothic-condensed;
+  transition: background 100ms ease-in;
+
+  &:hover {
+    background: darken(@blue-darker, 5%);
+  }
 }
 
-.btn-pill {
+.btn-pill, a.btn-pill {
+  &:extend(a.btn);
   width: 140px;
   height: 48px;
   padding: 12px 0;
@@ -20,20 +26,22 @@
   line-height: 1;
 }
 
-.btn-pill-large {
-  width: 260px;
-  height: 80px;
-  border-radius: 40px;
-  padding: 24px 0;
-  font-size: 1.5rem;
-  line-height: 1;
-}
-
-.btn-pill-medium {
+.btn-pill-medium, a.btn-pill-medium {
+  &:extend(a.btn);
   width: 220px;
   height: 60px;
   border-radius: 30px;
   padding: 15px 0;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.btn-pill-large, a.btn-pill-large {
+  &:extend(a.btn);
+  width: 260px;
+  height: 80px;
+  border-radius: 40px;
+  padding: 24px 0;
   font-size: 1.5rem;
   line-height: 1;
 }

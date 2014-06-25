@@ -1662,6 +1662,11 @@ body.app-message-visible.account .container {
   line-height: 1;
   padding: 12px 18px;
 }
+.btn-big:hover,
+.btn-big:focus {
+  background: #1777ca;
+  color: #fff;
+}
 .btn-transparent {
   background: transparent;
   color: #2785d3;

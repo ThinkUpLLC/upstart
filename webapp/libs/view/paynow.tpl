@@ -1,73 +1,17 @@
-{include file="_appheader.tpl" include_menu=true body_id="welcome"}
-{include file="_appusermessage.tpl"}
+{include file="_header.marketing.tpl" marketing_page=true hide_join=true
+body_classes="marketing marketing-page" body_id="marketing-welcome"}
+
   <div class="container">
-    <div class="stream">
-      <div class="date-group today">
-          <div class="date-marker">
-              <div class="absolute">Today</div>
-          </div>
+    <section class="section section-marketing-text" id="section-pay-now">
+      <h2 class="section-header">Terrific! Your 14-Day free trial has begun.</h2>
 
-          <div class="panel panel-default insight insight-default insight-purple insight-hero">
-            <div class="panel-heading">
-              <h2 class="panel-title insight-color-text">Thanks for joining ThinkUp!</h2>
-            </div>
-            <div class="panel-desktop-right">
-              <div class="panel-body">
-                <div class="panel-body-inner">
-                  <p>A special offer: Pay for your ThinkUp subscription now and you'll get a <strong>free</strong> copy of our e-book, <em>Insights</em>.</p>
+      <img src="{$site_root_path}assets/img/book-cover.png" class="illustration book-cover">
 
-                  <p><a href="{$pay_with_amazon_url}" class="btn btn-big">Pay with Amazon</a></p>
+      <p>Thinkup is analyzing your data now. You'll get your first insights via email <strong>in the next 20 minutes.</strong></p>
 
-                  <p>Have questions or need help? Email us any time at <a href="mailto:help@thinkup.com">help@thinkup.com</a>.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+      <p>Join ThinkUp now for just $60 a year and get <strong>the book we wrote for you</strong>! Our exclusive ebook <em>Insights</em> offers interviews with the smartest people in social media.</p>
 
-          <div class="panel panel-default insight insight-default insight-salmon">
-            <div class="panel-heading">
-              <h2 class="panel-title insight-color-text">Your account is all set up</h2>
-            </div>
-            <div class="panel-desktop-right">
-              <div class="panel-body">
-                <div class="panel-body-inner">
-                  <p>Head here to see your insights: <a href="{$new_subscriber->installation_url}">{$new_subscriber->installation_url}</a></p>
+      <p class="btn-wrapper"><a href="{$pay_with_amazon_url}" class="btn btn-pill-large">Pay now with Amazon</a></p>
+    </section>
 
-                  <p>And keep your eyes peeled for an email from us with your first set of ThinkUp insights.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {if $new_subscriber->membership_level eq "Pro"}
-          <div class="panel panel-default insight insight-default insight-mint">
-            <div class="panel-heading">
-              <h2 class="panel-title insight-color-text">Got more social networking accounts?</h2>
-            </div>
-            <div class="panel-desktop-right">
-              <div class="panel-body">
-                <div class="panel-body-inner">
-                  <p>As a Pro member, you can add up to ten accounts. Connect another <a href="{$new_subscriber->installation_url}account/?p=facebook">Facebook</a> or <a href="{$new_subscriber->installation_url}account/?p=twitter">Twitter</a> account with a click.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          {else}
-          <div class="panel panel-default insight insight-default insight-mint">
-            <div class="panel-heading">
-              <h2 class="panel-title insight-color-text">Got a {if $new_subscriber->network eq 'facebook'}Twitter{else}Facebook{/if} account?</h2>
-            </div>
-            <div class="panel-desktop-right">
-              <div class="panel-body">
-                <div class="panel-body-inner">
-                  <p>You can <a href="{$new_subscriber->installation_url}account/?p={if $new_subscriber->network eq 'facebook'}twitter{else}facebook{/if}">connect your account</a> to ThinkUp and get insights from both Facebook and Twitter in one place.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/if}
-
-      </div>
-    </div>
-
-{include file="_appfooter.tpl"}
+{include file="_footer.marketing.tpl"}

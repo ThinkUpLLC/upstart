@@ -33,8 +33,8 @@ class TestOfPayNowController extends UpstartUnitTestCase {
         $results = $controller->go();
         $this->debug($results);
         $this->assertNoPattern('/Subscriber ID  does not exist./', $results);
-        $this->assertPattern('/Thanks for joining ThinkUp/', $results);
-        $this->assertPattern('/A special offer/', $results);
+        $this->assertPattern('/Terrific! Your 14-Day free trial has begun./', $results);
+        $this->assertPattern('/the book we wrote for you/', $results);
     }
 
     protected function buildData() {

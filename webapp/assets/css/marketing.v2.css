@@ -378,7 +378,14 @@ body {
     display: none;
   }
 }
-.btn {
+.btn,
+a.btn,
+.btn-pill,
+a.btn-pill,
+.btn-pill-medium,
+a.btn-pill-medium,
+.btn-pill-large,
+a.btn-pill-large {
   text-decoration: none;
   display: inline-block;
   background: #2785d3;
@@ -389,8 +396,14 @@ body {
   border: 0;
   -webkit-appearance: initial;
   font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
+  transition: background 100ms ease-in;
 }
-.btn-pill {
+.btn:hover,
+a.btn:hover {
+  background: #2377bd;
+}
+.btn-pill,
+a.btn-pill {
   width: 140px;
   height: 48px;
   padding: 12px 0;
@@ -398,19 +411,21 @@ body {
   font-size: 1.5rem;
   line-height: 1;
 }
-.btn-pill-large {
-  width: 260px;
-  height: 80px;
-  border-radius: 40px;
-  padding: 24px 0;
-  font-size: 1.5rem;
-  line-height: 1;
-}
-.btn-pill-medium {
+.btn-pill-medium,
+a.btn-pill-medium {
   width: 220px;
   height: 60px;
   border-radius: 30px;
   padding: 15px 0;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.btn-pill-large,
+a.btn-pill-large {
+  width: 260px;
+  height: 80px;
+  border-radius: 40px;
+  padding: 24px 0;
   font-size: 1.5rem;
   line-height: 1;
 }
@@ -570,10 +585,6 @@ body {
   margin: 0 0 35px;
   padding: 1px 20px;
   width: 140px;
-  transition: background 100ms ease-in;
-}
-.signup-buttons .btn:hover {
-  background: #2377bd;
 }
 .signup-buttons .btn:first-child {
   margin-right: 15px;
@@ -1175,6 +1186,17 @@ body.marketing-page .section-marketing-text li a,
 body.marketing-page .section-legal-text li a {
   color: #2785d3;
 }
+body.marketing-page .section-marketing-text p a[class^=btn],
+body.marketing-page .section-legal-text p a[class^=btn],
+body.marketing-page .section-marketing-text li a[class^=btn],
+body.marketing-page .section-legal-text li a[class^=btn] {
+  color: #fff;
+  text-decoration: none;
+}
+body.marketing-page .section-marketing-text .center,
+body.marketing-page .section-legal-text .center {
+  text-align: center;
+}
 body.marketing-page .section-marketing-text .list-values,
 body.marketing-page .section-legal-text .list-values {
   counter-reset: values;
@@ -1393,65 +1415,102 @@ body.marketing-page #section-page-header {
     padding: 24px 30px;
   }
 }
-body#marketing-about #section-about-text .headshots {
+#section-about-text .headshots {
   text-align: center;
 }
-body#marketing-about #section-about-text .headshots .headshot {
+#section-about-text .headshots .headshot {
   display: inline-block;
   width: 75px;
   height: 75px;
   border-radius: 50%;
   margin-left: 5px;
 }
-body#marketing-about #section-about-text .headshots .headshot:first-child {
+#section-about-text .headshots .headshot:first-child {
   margin: 0;
 }
-body#marketing-about #section-about-text .investor-logos {
+#section-about-text .investor-logos {
   text-align: center;
 }
-body#marketing-about #section-about-text .investor-logos .investor-logos-row {
+#section-about-text .investor-logos .investor-logos-row {
   margin-bottom: 10px;
 }
-body#marketing-about #section-about-text .investor-logos .investor-logo {
+#section-about-text .investor-logos .investor-logo {
   height: 35px;
   width: auto;
   padding-left: 10px;
 }
-body#marketing-about #section-about-text .download-our-logo {
+#section-about-text .download-our-logo {
   float: right;
   margin: 20px 0 10px 20px;
   font-size: 0.875em;
 }
-body#marketing-about #section-about-text .download-our-logo a {
+#section-about-text .download-our-logo a {
   color: #2785d3;
 }
-body#marketing-about #section-about-text .download-our-logo img {
+#section-about-text .download-our-logo img {
   width: 148px;
   height: 40px;
 }
 @media (min-width: 31.875em) {
-  body#marketing-about #section-about-text .headshots {
+  #section-about-text .headshots {
     float: right;
     margin-left: 10px;
   }
-  body#marketing-about #section-about-text .headshots .headshot {
+  #section-about-text .headshots .headshot {
     width: 100px;
     height: 100px;
   }
-  body#marketing-about #section-about-text .investor-logos {
+  #section-about-text .investor-logos {
     margin: 20px -20px;
   }
-  body#marketing-about #section-about-text .investor-logos .investor-logo {
+  #section-about-text .investor-logos .investor-logo {
     height: 40px;
     padding-left: 20px;
   }
 }
 @media (min-width: 48em) {
-  body#marketing-about #section-about-text .investor-logos .investor-logos-row {
+  #section-about-text .investor-logos .investor-logos-row {
     display: inline;
   }
-  body#marketing-about #section-about-text .investor-logos .investor-logo.is-first {
+  #section-about-text .investor-logos .investor-logo.is-first {
     padding: 0;
+  }
+}
+#section-pay-now {
+  padding: 15px;
+}
+#section-pay-now .section-header {
+  text-align: left;
+  width: 100%;
+}
+@media (min-width: 31.875em) {
+  #section-pay-now .section-header {
+    width: 66%;
+  }
+}
+#section-pay-now .book-cover {
+  margin: 20px 0 60px 20px;
+  float: right;
+  min-width: 100px;
+  max-width: 200px;
+  width: 33%;
+}
+@media (min-width: 31.875em) {
+  #section-pay-now .book-cover {
+    margin-left: 100px;
+    margin-top: -30px;
+    border: 1px solid #e7df0b;
+    box-shadow: 4px 4px 0 #fdfcd6, 5px 5px 0 #ddd62b, 8px 8px #fdfcd6, 9px 9px #ddd62b, 12px 12px #fdfcd6, 13px 13px #cfc80a;
+  }
+}
+#section-pay-now .btn-wrapper {
+  clear: both;
+  text-align: center;
+}
+@media (min-width: 31.875em) {
+  #section-pay-now .btn-wrapper {
+    clear: none;
+    text-align: left;
   }
 }
 .hc {

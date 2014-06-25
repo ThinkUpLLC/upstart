@@ -26,7 +26,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
         </div>
 
         <div class="action-buttons">
-          <div class="action-buttons-label">Sign up with:</div>
+          <div class="action-buttons-label">Get started with:</div>
           <div class="actual-buttons">
             <a href="{$twitter_member_link}" class="btn btn-pill btn-twitter"><i class="fa fa-twitter icon"></i> Twitter</a>
             <a href="{$facebook_member_link}" class="btn btn-pill btn-facebook"><i class="fa fa-facebook icon"></i> Facebook</a>
@@ -49,7 +49,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
         </div>
 
         <div class="action-buttons">
-          <div class="action-buttons-label">Sign up with:</div>
+          <div class="action-buttons-label">Get started with:</div>
           <div class="actual-buttons">
             <a href="{$twitter_pro_link}" class="btn btn-pill btn-twitter"><i class="fa fa-twitter icon"></i> Twitter</a>
             <a href="{$facebook_pro_link}" class="btn btn-pill btn-facebook"><i class="fa fa-facebook icon"></i> Facebook</a>
