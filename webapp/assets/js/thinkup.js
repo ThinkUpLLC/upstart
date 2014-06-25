@@ -458,17 +458,31 @@
     });
     if ($("#form-register").length) {
       focusField([$("#email"), $("#username"), $("#pwd")]);
+      $("#username, #pwd, #email").on("blur", function(e) {
+        console.log("blur");
+        if ($(this).val().length) {
+          return $(this).data("do-validate", "1").keyup();
+        }
+      });
       $("#username").on("keyup", function() {
-        return checkUsername($(this));
+        if ($(this).data("do-validate") === "1") {
+          return checkUsername($(this));
+        }
       });
       $("#pwd").on("keyup", function() {
-        return checkPasswordField($(this));
+        if ($(this).data("do-validate") === "1") {
+          return checkPasswordField($(this));
+        }
       });
       $("#email").on("keyup", function() {
-        return checkEmailField($(this));
+        if ($(this).data("do-validate") === "1") {
+          return checkEmailField($(this));
+        }
       });
       $("#terms").on("click", function() {
-        return checkTermsField($(this));
+        if ($(this).data("do-validate") === "1") {
+          return checkTermsField($(this));
+        }
       });
     }
     $("#form-reset").on("submit", function(e) {

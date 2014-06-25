@@ -353,10 +353,14 @@ $ ->
 
   if $("#form-register").length
     focusField [$("#email"),$("#username"),$("#pwd")]
-    $("#username").on "keyup", -> checkUsername $(@)
-    $("#pwd").on "keyup",      -> checkPasswordField $(@)
-    $("#email").on "keyup",    -> checkEmailField $(@)
-    $("#terms").on "click",   -> checkTermsField $(@)
+    $("#username, #pwd, #email").on "blur", (e) ->
+      console.log "blur"
+      if $(@).val().length then $(@).data("do-validate", "1").keyup()
+
+    $("#username").on "keyup", -> if $(@).data("do-validate") is "1" then checkUsername $(@)
+    $("#pwd").on "keyup",      -> if $(@).data("do-validate") is "1" then checkPasswordField $(@)
+    $("#email").on "keyup",    -> if $(@).data("do-validate") is "1" then checkEmailField $(@)
+    $("#terms").on "click",    -> if $(@).data("do-validate") is "1" then checkTermsField $(@)
 
   $("#form-reset").on "submit", (e) ->
     if $(@).find("#password").val().length is 0 or  $(@).find("#password_confirm").val().length is 0
