@@ -37,6 +37,22 @@ body_classes="settings menu-open" body_id="settings-subscription"}
 
           {/if}
         </li>
+
+        {*
+          Dear Gina,
+
+          I wrote a really dumb function in the controller so I could test this. I will make it all better
+          when you write the *real* function.
+
+          xo,
+          Matty
+        *}
+        {if isset($ebook_download_link)}
+        <li class="list-group-item">
+          <div class="list-group-item-label">Extras</div>
+          <div class="list-group-item-value"><a href="{$ebook_download_link}">Download your copy of <em>Insights</em></a></div>
+        </li>
+        {/if}
       </ul>
 
     {* OMG SO MUCH LOGIC IN THE VIEW :\ :\ :\ *}

@@ -85,9 +85,15 @@ class MembershipController extends AuthController {
         if ($membership_status == 'Authorization failed') {
             $membership_status = 'Payment failed';
         }
+        $this->addToView('membership_status', $membership_status);
+
+        // Add ebook download link (this is just a stub for now)
+        if ($membership_status != 'Payment failed' && $membership_status != 'Payment due'
+            && $membership_status != 'Payment pending' && $membership_status != 'Free trial') {
+            $this->addToView('ebook_download_link', 'TOTALLY FAKE');
+        }
 
         //Add Free trial status (including if expired, and how many days left)
-        $this->addToView('membership_status', $membership_status);
         if ($membership_status == 'Free trial') {
             $creation_date = new DateTime($subscriber->creation_time);
             $now = new DateTime();
