@@ -26,31 +26,33 @@ body_classes="settings menu-open" body_id="settings-subscription"}
   * "Free trial" - User is in free trial (either expired or not)
   * "Complimentary membership" - Comped
 *}
-        <li class="list-group-item{if $membership_status eq 'Payment failed' or $membership_status eq 'Payment due'
-      or (isset($trial_status) && $trial_status eq 'Expired!')} list-group-item-warning{/if}">
+        <li class="list-group-item{if $membership_status eq 'Payment failed' or $membership_status eq 'Payment due'} list-group-item-warning{/if}" id="list-group-status">
           <div class="list-group-item-label">Status</div>
           {if $subscriber->is_account_closed}
-          <div class="list-group-item-value">Closed</div>
+            <div class="list-group-item-value">Closed</div>
           {else}
-          <div class="list-group-item-value">{$membership_status}{if isset($trial_status)}<br>{$trial_status}{/if}</div>
+            <div class="list-group-item-value">{$membership_status}{if $membership_status eq 'Free trial'}
+            <a href="{$amazon_link}" class="btn btn-default btn-pay">Pay now</a>{/if}</div>
+            {if isset($trial_status)}<div class="help-block">{$trial_status}</div>{/if}
+
           {/if}
         </li>
       </ul>
 
     {* OMG SO MUCH LOGIC IN THE VIEW :\ :\ :\ *}
+    {* I tried to make it A LITTLE better, Gina! -- MBJ *}
     {if !$subscriber->is_account_closed}
-    {if $membership_status eq 'Payment failed' or $membership_status eq 'Payment due' or $membership_status eq 'Free trial'}
-      <div class="form-message">
-        <p>{if $membership_status eq 'Payment failed'}There was a problem with your payment. But it's easy to fix!{else}One last step to complete your ThinkUp membership!{/if}</p>
-        <a href="{$failed_cc_amazon_link}" class="btn btn-default">Pay via Amazon Payments</a>
-      </div>
-      {if $membership_status eq 'Free trial'}
-      <p class="form-note"><a href="#">Close your account</a></p>
+      {if isset($failed_cc_amazon_link)}
+        <div class="form-message">
+          <p>{$failed_cc_amazon_text}</p>
+          <a href="{$failed_cc_amazon_link}" class="btn btn-default">Pay via Amazon Payments</a>
+        </div>
+      {elseif $membership_status eq 'Free trial'}
+        <a href="#" class="btn btn-sm btn-transparent btn-close-account">Close your account</a>
+      {else}
+        <p class="form-note"><a href="https://payments.amazon.com">View your payment information
+          at Amazon Payments.</a></p>
       {/if}
-    {else}
-      <p class="form-note"><a href="https://payments.amazon.com">View your payment information
-        at Amazon Payments.</a></p>
-    {/if}
     {else}
         <p class="form-note"><a href="#" class="btn btn-default">Re-open your ThinkUp account</a></p>
     {/if}

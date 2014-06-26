@@ -98,7 +98,7 @@ class MembershipController extends AuthController {
                 $datetime1 = new DateTime('2009-10-11');
                 $datetime2 = new DateTime('2009-10-13');
                 $interval = $now->diff($end_of_trial);
-                $this->addToView('trial_status', 'Your free trial expires in '.$interval->format('%a days'));
+                $this->addToView('trial_status', 'expires in <strong>'.$interval->format('%a days').'</strong>');
             }
         }
 
@@ -110,7 +110,17 @@ class MembershipController extends AuthController {
             $amount = self::getSubscriptionAmount($subscriber->membership_level);
             $amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL( $caller_reference, $callback_url, $amount );
             SessionCache::put('caller_reference', $caller_reference);
-            $this->addToView('failed_cc_amazon_link', $amazon_url);
+            if ($membership_status == 'Free trial') {
+                $this->addToView('amazon_link', $amazon_url);
+            } else {
+                $this->addToView('failed_cc_amazon_link', $amazon_url);
+            }
+
+            if ($membership_status == 'Payment failed') {
+                $this->addToView('failed_cc_amazon_text', "There was a problem with your payment. But it's easy to fix!");
+            } else {
+                $this->addToView('failed_cc_amazon_text', "One last step to complete your ThinkUp membership!");
+            }
         }
         //END populating membership_status
 

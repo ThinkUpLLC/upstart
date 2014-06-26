@@ -335,11 +335,34 @@ body.settings .container .list-group .list-group-item.list-group-item-ok:before 
 }
 body.settings .container .list-group .list-group-item .list-group-item-label {
   float: left;
-  max-width: 130px;
+  max-width: 100px;
 }
 body.settings .container .list-group .list-group-item .list-group-item-value {
-  margin-left: 130px;
+  margin-left: 100px;
   font-weight: 600;
+  position: relative;
+}
+body.settings .container .list-group .list-group-item .list-group-item-value .btn-pay {
+  position: absolute;
+  display: block;
+  right: 0;
+  top: 5px;
+  z-index: 9;
+}
+body.settings .container .list-group .list-group-item .help-block {
+  padding: 0;
+  margin: 0 0 0 100px;
+  color: #b3b3b3;
+  font-size: 12px;
+  line-height: 1.33;
+}
+body.settings .container .list-group .list-group-item .help-block strong {
+  color: #808080;
+  font-weight: 300;
+}
+body.settings .container .list-group .list-group-item#list-group-status .help-block {
+  position: relative;
+  top: -5px;
 }
 body.settings .container .list-accounts .list-group-item .account-label {
   font-weight: 400;
@@ -418,6 +441,15 @@ body.settings .container .form-warning .btn {
 body.settings .container .form-warning .btn:hover {
   background: #b70218;
 }
+body.settings .container .btn-close-account {
+  display: block;
+  margin: 0 auto 15px;
+  width: 12em;
+}
+body.settings .container .btn-close-account:hover {
+  background: #fd0826;
+  border-color: #fd0826;
+}
 body.settings .container .accounts-privacy {
   color: #417505;
 }
@@ -463,6 +495,13 @@ body#settings-registration .container .form-group-radio .control-label {
   }
   body.settings .container .form-horizontal textarea.form-control {
     width: 210px;
+  }
+  body.settings .container .list-group .list-group-item .list-group-item-label {
+    max-width: 130px;
+  }
+  body.settings .container .list-group .list-group-item .list-group-item-value,
+  body.settings .container .list-group .list-group-item .help-block {
+    margin-left: 130px;
   }
 }
 body.account {
@@ -1670,11 +1709,13 @@ body.app-message-visible.account .container {
 .btn-transparent {
   background: transparent;
   color: #2785d3;
+  border: 1px solid #2785d3;
 }
 .btn-transparent:hover,
 .btn-transparent:focus {
-  background: transparent;
-  color: #46bcff;
+  background: #1777ca;
+  border-color: #1777ca;
+  color: #fff;
 }
 .btn-see-all {
   width: 102%;

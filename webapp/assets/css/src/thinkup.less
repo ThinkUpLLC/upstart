@@ -1011,10 +1011,12 @@ body.app-message-visible {
 .btn-transparent {
     background: transparent;
     color: @link-color;
+    border: 1px solid @link-color;
 
     &:hover, &:focus {
-        background: transparent;
-        color: @link-hover-color;
+        background: lighten(@blue-action, 10%);
+        border-color: lighten(@blue-action, 10%);
+        color: #fff;
     }
 }
 
