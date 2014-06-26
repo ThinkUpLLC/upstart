@@ -30,6 +30,16 @@ body_classes="settings menu-open" body_id="settings-subscription"}
           <div class="list-group-item-label">Status</div>
           <div class="list-group-item-value">{$membership_status}</div>
         </li>
+
+        {if isset($ebook_download_link_pdf)}
+        <li class="list-group-item" id="list-group-item-extras">
+          <div class="list-group-item-label">Extras</div>
+          <div class="list-group-item-value">Download your copy of <em>Insights</em><br><br>
+          <a href="{$ebook_download_link_pdf}" class="btn btn-default">PDF</a>
+          <a href="{$ebook_download_link_kindle}" class="btn btn-default">Kindle</a>
+          <a href="{$ebook_download_link_epub}" class="btn btn-default">ePub</a></div>
+        </li>
+        {/if}
       </ul>
 
     {if $membership_status eq 'Payment failed' or $membership_status eq 'Payment due'}

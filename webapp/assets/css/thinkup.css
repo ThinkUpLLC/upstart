@@ -341,6 +341,10 @@ body.settings .container .list-group .list-group-item .list-group-item-value {
   margin-left: 130px;
   font-weight: 600;
 }
+body.settings .container .list-group .list-group-item#list-group-item-extras .list-group-item-value {
+  line-height: 18px;
+  padding: 5px 0;
+}
 body.settings .container .list-accounts .list-group-item .account-label {
   font-weight: 400;
 }

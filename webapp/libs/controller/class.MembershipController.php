@@ -98,6 +98,13 @@ class MembershipController extends AuthController {
         }
         //END populating membership_status
 
+        // Add ebook download link for members who have paid successfully or been comped
+        if ( (strpos( $membership_status, 'Paid through') !== false)  || $subscriber->is_membership_complimentary ) {
+            $this->addToView('ebook_download_link_pdf', 'http://book.thinkup.com/insights.pdf');
+            $this->addToView('ebook_download_link_kindle', 'http://book.thinkup.com/insights.mobi');
+            $this->addToView('ebook_download_link_epub', 'http://book.thinkup.com/insights.epub');
+        }
+
         //BEGIN populating nav bar icons
         $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
         $instances = $tu_tables_dao->getInstancesWithStatus($subscriber->thinkup_username, 2);

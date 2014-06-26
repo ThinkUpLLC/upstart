@@ -435,6 +435,11 @@
     });
     if ($("#form-register").length) {
       focusField([$("#email"), $("#username"), $("#pwd")]);
+      $("#username, #pwd, #email").on("blur", function(e) {
+        if ($(this).val().length) {
+          return $(this).data("do-validate", "1").keyup();
+        }
+      });
       $("#username").on("keyup", function() {
         return checkUsername($(this));
       });

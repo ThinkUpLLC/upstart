@@ -86,6 +86,24 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
     }
 
+    public function testEbookDownload() {
+        $this->builders = $this->buildSubscriberPaid('Success');
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('paid@example.com');
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Download your copy of/', $results);
+        $this->assertPattern('/book.thinkup.com/', $results);
+        $this->assertPattern('/insights.pdf/', $results);
+        $this->assertPattern('/insights.mobi/', $results);
+        $this->assertPattern('/insights.epub/', $results);
+    }
+
     private function buildSubscriberAuthorizationPending($level) {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'authed@example.com',
