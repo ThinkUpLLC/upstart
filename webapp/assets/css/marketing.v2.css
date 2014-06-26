@@ -175,7 +175,8 @@ body {
 @media (min-width: 560px) {
   #section-navbar .navbar-nav {
     float: right;
-    width: 220px;
+    min-width: 220px;
+    max-width: 300px;
     text-align: center;
   }
 }
@@ -402,13 +403,19 @@ a.btn-pill-large {
 a.btn:hover {
   background: #2377bd;
 }
+.btn.var-width,
+a.btn.var-width {
+  width: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
 .btn-pill,
 a.btn-pill {
   width: 140px;
   height: 48px;
-  padding: 12px 0;
+  padding: 14px 0 10px;
   border-radius: 24px;
-  font-size: 1.5rem;
+  font-size: 1rem;
   line-height: 1;
 }
 .btn-pill-medium,
@@ -1219,6 +1226,20 @@ body.marketing-page .section-legal-text .list-values li:before {
   font-weight: 400;
   color: #2785d3;
 }
+body.marketing-page .section-marketing-text .illustration,
+body.marketing-page .section-legal-text .illustration {
+  margin: 20px 0 60px 20px;
+  float: right;
+  min-width: 100px;
+  max-width: 200px;
+  width: 33%;
+}
+@media (min-width: 31.875em) {
+  body.marketing-page .section-marketing-text .illustration,
+  body.marketing-page .section-legal-text .illustration {
+    margin-left: 30px;
+  }
+}
 @media (min-width: 31.875em) {
   body.marketing-page .section-marketing-text,
   body.marketing-page .section-legal-text {
@@ -1487,13 +1508,6 @@ body.marketing-page #section-page-header {
   #section-pay-now .section-header {
     width: 66%;
   }
-}
-#section-pay-now .book-cover {
-  margin: 20px 0 60px 20px;
-  float: right;
-  min-width: 100px;
-  max-width: 200px;
-  width: 33%;
 }
 @media (min-width: 31.875em) {
   #section-pay-now .book-cover {

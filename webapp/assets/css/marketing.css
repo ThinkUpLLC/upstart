@@ -703,6 +703,20 @@ body.marketing-page .section-legal-text .list-values li:before {
   font-weight: 400;
   color: #2785d3;
 }
+body.marketing-page .section-marketing-text .illustration,
+body.marketing-page .section-legal-text .illustration {
+  margin: 20px 0 60px 20px;
+  float: right;
+  min-width: 100px;
+  max-width: 200px;
+  width: 33%;
+}
+@media (min-width: 31.875em) {
+  body.marketing-page .section-marketing-text .illustration,
+  body.marketing-page .section-legal-text .illustration {
+    margin-left: 30px;
+  }
+}
 @media (min-width: 31.875em) {
   body.marketing-page .section-marketing-text,
   body.marketing-page .section-legal-text {
@@ -971,13 +985,6 @@ body.marketing-page #section-page-header {
   #section-pay-now .section-header {
     width: 66%;
   }
-}
-#section-pay-now .book-cover {
-  margin: 20px 0 60px 20px;
-  float: right;
-  min-width: 100px;
-  max-width: 200px;
-  width: 33%;
 }
 @media (min-width: 31.875em) {
   #section-pay-now .book-cover {

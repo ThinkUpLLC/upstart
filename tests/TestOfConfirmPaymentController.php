@@ -26,7 +26,25 @@ class TestOfConfirmPaymentController extends UpstartUnitTestCase {
     }
 
     public function testReturnFromAmazonValidSignature() {
-        $builders = $this->buildData();
+        $results = $this->confirmPayment();
+        $this->assertNoPattern('/Subscriber ID  does not exist./', $results);
+        $this->assertPattern('/Welcome to the ThinkUp community/', $results);
+        $this->assertPattern('/Insight Stream/', $results);
+    }
+
+    public function testReturnFromAmazonWithTwitter() {
+        $results = $this->confirmPayment('twitter');
+        $this->assertPattern('/Add a Facebook account/', $results);
+    }
+
+    public function testReturnFromAmazonWithFacebook() {
+        $results = $this->confirmPayment('facebook');
+        $this->assertPattern('/Add a Twitter account/', $results);
+    }
+
+    // We have three tests that all need this, so we’ll keep it DRY.
+    protected function confirmPayment($network = 'twitter') {
+        $builders = $this->buildData($network);
         SessionCache::put('new_subscriber_id', 6);
 
         $_GET['callerReference'] = 'abcde';
@@ -40,14 +58,14 @@ class TestOfConfirmPaymentController extends UpstartUnitTestCase {
         $controller = new ConfirmPaymentController(true);
         $results = $controller->go();
         $this->debug($results);
-        $this->assertNoPattern('/Subscriber ID  does not exist./', $results);
-        $this->assertPattern('/delighted to have you as part of the ThinkUp community/', $results);
+
+        return $results;
     }
 
-    protected function buildData() {
+    protected function buildData($network = 'twitter') {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'me@example.com',
-            'is_activated'=>1, 'is_admin'=>1, 'thinkup_username'=>'iamtaken', 'membership_level'=>'Member'));
+            'is_activated'=>1, 'is_admin'=>1, 'thinkup_username'=>'iamtaken', 'membership_level'=>'Member', 'network'=>$network));
 
         return $builders;
     }

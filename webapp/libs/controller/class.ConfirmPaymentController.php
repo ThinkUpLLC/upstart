@@ -46,6 +46,7 @@ class ConfirmPaymentController extends SignUpHelperController {
                 $subscriber->subscription_status = $subscription_status;
                 //Update subscription_status in the data store
                 $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
+                $this->addToView('subscriber', $subscriber);
             } else {
                 $this->addErrorMessage($this->generic_error_msg);
                 $this->logError('Amazon response invalid', __FILE__,__LINE__, __METHOD__);
