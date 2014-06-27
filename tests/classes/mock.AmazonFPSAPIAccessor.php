@@ -47,9 +47,14 @@ class AmazonFPSAPIAccessor {
      * @return arr status, status_message, caller_reference, transaction_id
      */
     public function getTransactionStatus($transaction_id) {
-        if (strpos($transaction_id, 'failure') === false) {
+        if (strpos($transaction_id, 'failure') === false && strpos($transaction_id, 'continue-pending') === false) {
             return array('status'=>'Success',
                 'status_message'=>'The transaction was successful and the payment instrument was charged.',
+                'caller_reference'=>'12345',
+                'transaction_id'=>$transaction_id);
+        } elseif (strpos($transaction_id, 'continue-pending') !== false) {
+            return array('status'=>'Pending',
+                'status_message'=>'Waiting for backend payment processor',
                 'caller_reference'=>'12345',
                 'transaction_id'=>$transaction_id);
         } else {

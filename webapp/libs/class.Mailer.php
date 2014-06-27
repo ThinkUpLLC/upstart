@@ -99,6 +99,17 @@ class Mailer {
         fclose($fp);
     }
     /**
+     * Delete contents of the last email Mailer "sent" out.
+     * For testing purposes only; this will return nothing in production.
+     * @return void
+     */
+    public static function clearLastMail() {
+        $test_email_file = FileDataManager::getDataPath(Mailer::EMAIL);
+        if (file_exists($test_email_file)) {
+            return unlink($test_email_file);
+        }
+    }
+    /**
      * Send email from ThinkUp installation via PHP's built-in mail() function.
      * If you're running tests, just write the message headers and contents to the file system in the data directory.
      * @param str $to A valid email address

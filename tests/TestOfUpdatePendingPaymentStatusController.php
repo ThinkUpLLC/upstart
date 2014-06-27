@@ -114,6 +114,23 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
         $this->assertPattern('/You\'re officially a <strong>ThinkUp Pro Member<\/strong>!/', $body);
     }
 
+    public function testControlPendingChargeNoEmail() {
+        //populate payments table with pending transaction
+        $builders = array();
+        $builders[] = FixtureBuilder::build('payments', array('payment_id'=>1,
+            'transaction_id'=>'123-continue-pending', 'transaction_status'=>'Pending', 'caller_reference'=>'12345',
+            'amount'=>'60', 'timestamp'=>time()));
+        $builders[] = FixtureBuilder::build('subscriber_payments', array('payment_id'=>1, 'subscriber_id'=>1));
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'thinkup_username'=>'willowrosenberg',
+            'membership_level'=>'Member'));
+
+        $controller = new UpdatePendingPaymentStatusController(true);
+        $controller->control();
+        $email = Mailer::getLastMail();
+        $decoded_email = json_decode($email);
+        $this->assertEqual('', $email);
+    }
+
     public function testControlFailedChargeEmailNoStatusMessage() {
         //populate payments table with pending transaction
         $builders = array();

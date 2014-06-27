@@ -46,30 +46,18 @@ class PaymentMySQLDAO extends PDODAO {
         return $result['total'];
     }
     /**
-     * Get the count of all payments with a Pending status.
-     * @return int
-     */
-    public function getTotalPendingPayments() {
-        $q  = "SELECT count(*) as count FROM payments p ";
-        $q .= "WHERE transaction_status = 'Pending';";
-        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q);
-        $result = $this->getDataRowAsArray($ps);
-        return $result['count'];
-    }
-    /**
-     * Get transaction IDs of payments with a Pending status.
+     * Get Payments with a Pending status.
      * @param int $limit
-     * @return arr
+     * @return arr Payment objects
      */
-    public function getPendingPayments($limit) {
-        $q  = "SELECT p.transaction_id, sp.subscriber_id FROM payments p ";
+    public function getPendingPayments($limit=50) {
+        $q  = "SELECT p.*, sp.subscriber_id FROM payments p ";
         $q .= "INNER JOIN subscriber_payments sp ON sp.payment_id = p.id ";
         $q .= "WHERE p.transaction_status = 'Pending' LIMIT :limit;";
         $vars = array(':limit'=>$limit);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
-        return $this->getDataRowsAsArrays($ps);
+        return $this->getDataRowsAsObjects($ps, 'Payment');
     }
     /**
      * Get payment by transaction ID and caller reference.
