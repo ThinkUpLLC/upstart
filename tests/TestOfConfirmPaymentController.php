@@ -28,7 +28,7 @@ class TestOfConfirmPaymentController extends UpstartUnitTestCase {
     public function testReturnFromAmazonValidSignature() {
         $results = $this->confirmPayment();
         $this->assertNoPattern('/Subscriber ID  does not exist./', $results);
-        $this->assertPattern('/Welcome to the ThinkUp community/', $results);
+        $this->assertPattern('/Welcome to ThinkUp/', $results);
         $this->assertPattern('/Insight Stream/', $results);
     }
 

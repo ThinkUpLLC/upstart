@@ -3,25 +3,23 @@ body_classes="marketing marketing-page" body_id="marketing-confirm"}
 
   <div class="container">
     <section class="section section-legal-text" id="section-confirm">
-      <h2 class="section-header">Welcome to the ThinkUp community!</h2>
+      <h2 class="section-header">Welcome to ThinkUp!</h2>
 
       <img src="{$site_root_path}assets/img/landing/crowd@2x.png" class="illustration book-cover">
 
-      <p>We’re delighted you’ve decided to join us. Keep an eye out for that first email, but here are a few things you can do now:</p>
+      <p>We’re delighted you've joined ThinkUp. Remember, an email containing your first insights will arrive in your inbox soon.</p>
 
-      <h3 class="hc">1. Add another service</h3>
-      <p>ThinkUp is better with more data. When you authenticate with another service, it unlocks new types of insights. Since you already have a{if $subscriber->network == 'twitter'} Twitter account&hellip;</p>
-      <p><a class="btn btn-pill var-width" href="https://{$subscriber->thinkup_username}.thinkup.com/account/?p=facebook">Add a Facebook account</a>{else} Facebook account&hellip;</p>
-      <p><a class="btn btn-pill var-width" href="https://{$subscriber->thinkup_username}.thinkup.com/account/?p=twitter">Add a Twitter account</a>{/if}</p>
+      {if $subscriber->network == 'twitter'}
+        {assign var='service' value='Facebook'}
+      {else}
+        {assign var='service' value='Twitter'}
+      {/if}
+      <h3 class="hc">Add another service</h3>
+      <p>Have a {$service} account? Connect it to ThinkUp to unlock even more insights about the time you spend online.
+      <p><a class="btn btn-pill var-width" href="https://{$subscriber->thinkup_username}.thinkup.com/account/?p={$service|strtolower}">Add a {$service} account</a>
 
-      <h3 class="hc">2. Download your copy of <em>Insights</em></h3>
-      <p>To thank you, and all our community members, we put together an ebook of interviews with the smartest people in social media. <a href="{$site_root_path}user/membership.php">Download <em>Insights</em> from your membership page</a>.</p>
-
-      <h3 class="hc">3. Ask questions, get answers</h3>
-      <p>We love hearing from our members, whether it’s a bug report, feature request, or quick hello. If you need anything, email us at <a href="mailto:help@thinkup.com">help@thinkup.com</a>. You can also look at our <a href="{$site_root_path}about/faq.php">FAQ</a> for, well, frequently asked questions.</p>
-
-      <p><a href="https://blog.thinkup.com/">Our blog</a> is also a great source of information. We post about feature releases, share our investor updates, and explain how we make decisions. To date, there has been a lack of animated GIFs, but it’s high on our list of bugs to fix.</p>
-
+      <h3 class="hc">Download your copy of <em>Insights</em></h3>
+      <p>We asked some of the most influential and innovative thinkers on the web about the future of social networking and social media. We want to share their wisdom with you. <a href="{$site_root_path}user/membership.php">Download <em>Insights</em> from your membership page</a>.</p>
 
     </section>
 
