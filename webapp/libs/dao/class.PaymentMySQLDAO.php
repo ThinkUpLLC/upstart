@@ -108,12 +108,38 @@ class PaymentMySQLDAO extends PDODAO {
      * @return array
      */
     public function getDailyRevenue() {
+        $today = date('Y-m-d');
+        $yesterday = date('Y-m-d', strtotime("-1 days"));
+        $day_before = date('Y-m-d', strtotime("-2 days"));
+        $results = array(
+            $today => array('successful_payments'=>0, 'revenue'=>0),
+            $yesterday => array('successful_payments'=>0, 'revenue'=>0),
+            $day_before =>  array('successful_payments'=>0, 'revenue'=>0),
+        );
+
         $q = "SELECT count(id) as successful_payments, SUM(amount) as revenue, ";
         $q .= "DATE(timestamp) AS date  FROM payments WHERE transaction_status = 'Success' ";
-        $q .= "GROUP BY DATE(timestamp) ORDER BY timestamp DESC LIMIT 3;";
+        $q .= "AND ( date(timestamp) = '".$today."' ";
+        $q .= "OR date(timestamp) = '".$yesterday."' ";
+        $q .= "OR date(timestamp) = '".$day_before."') ";
+        $q .= "GROUP BY DATE(timestamp) ORDER BY timestamp DESC;";
+
         $ps = $this->execute($q);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
-        return $this->getDataRowsAsArrays($ps);
+        $revenue_results = $this->getDataRowsAsArrays($ps);
+        foreach ($revenue_results as $rev) {
+            if ($rev['date'] == $today) {
+                $results[$today]['successful_payments'] = $rev['successful_payments'];
+                $results[$today]['revenue'] = $rev['revenue'];
+            } elseif ($rev['date'] == $yesterday) {
+                $results[$yesterday]['successful_payments'] = $rev['successful_payments'];
+                $results[$yesterday]['revenue'] = $rev['revenue'];
+            } elseif ($rev['date'] == $day_before) {
+                $results[$day_before]['successful_payments'] = $rev['successful_payments'];
+                $results[$day_before]['revenue'] = $rev['revenue'];
+            }
+        }
+        return $results;
     }
 }

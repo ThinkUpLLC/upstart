@@ -9,29 +9,37 @@ require_once 'init.php';
 
 $url = 'https://thinkup.slack.com/services/hooks/incoming-webhook?token=mPEOeIpng7h2EIskwtNd9hNF';
 $channel = "#signups";
+//debug
 //$channel = "#testbot";
+
+$today = date('Y-m-d');
+$yesterday = date('Y-m-d', strtotime("-1 days"));
+$day_before = date('Y-m-d', strtotime("-2 days"));
 
 // New signups
 $subscriber_dao = new SubscriberMySQLDAO();
 $daily_signups = $subscriber_dao->getDailySignups();
 $message = "";
-if ($daily_signups[0]['new_members'] > $daily_signups[1]['new_members']) {
+if ($daily_signups[$today]['new_members'] > $daily_signups[$yesterday]['new_members']) {
     $message .= "up from";
-} elseif ($daily_signups[0]['new_members'] < $daily_signups[1]['new_members']) {
+} elseif ($daily_signups[$today]['new_members'] < $daily_signups[$yesterday]['new_members']) {
     $message .= "down from";
 } else {
     $message .= "the same as";
 }
-$subject = number_format($daily_signups[0]['new_members']) . " new member".
-	(($daily_signups[0]['new_members'] == 1)?'':'s') ." joined ThinkUp today.";
+$subject = number_format($daily_signups[$today]['new_members']) . " new member".
+	(($daily_signups[$today]['new_members'] == 1)?'':'s') ." joined ThinkUp today.";
 
-$message = "That's ". $message. " ".number_format($daily_signups[1]['new_members']).
-	" signup". (($daily_signups[1]['new_members'] == 1)?'':'s') ." yesterday. Day before was ".
-    number_format($daily_signups[2]['new_members']) . " signup" .(($daily_signups[1]['new_members'] == 1)?'':'s').
+$message = "That's ". $message. " ".number_format($daily_signups[$yesterday]['new_members']).
+	" signup". (($daily_signups[$yesterday]['new_members'] == 1)?'':'s') ." yesterday. Day before was ".
+    number_format($daily_signups[$day_before]['new_members']) . " signup" .
+    (($daily_signups[$day_before]['new_members'] == 1)?'':'s').
     ".";
 
 $payload = '{"channel": "'.$channel.'", "username": "upstartbot", "text": "'. $subject.'\n'.
 	$message. '", "icon_emoji": ":cubimal_chick:"}';
+//debug
+//echo $payload;
 
 $fields = array('payload'=>$payload);
 
@@ -44,20 +52,22 @@ $subject = null;
 $payment_dao = new PaymentMySQLDAO();
 $daily_revenue = $payment_dao->getDailyRevenue();
 $message .= "";
-if ($daily_revenue[0]['revenue'] > $daily_revenue[1]['revenue']) {
+if ($daily_revenue[$today]['revenue'] > $daily_revenue[$yesterday]['revenue']) {
     $message .= "Up from";
-} elseif ($daily_revenue[0]['revenue'] < $daily_revenue[1]['revenue']) {
+} elseif ($daily_revenue[$today]['revenue'] < $daily_revenue[$yesterday]['revenue']) {
     $message .= "Down from";
 } else {
     $message .= "Same as";
 }
-$message .= " $". number_format($daily_revenue[1]['revenue']). " yesterday. Day before was $".
-    number_format($daily_revenue[2]['revenue']) . ".";
-$subject = "$" . number_format($daily_revenue[0]['revenue']) . " in revenue today";
+$message .= " $". number_format($daily_revenue[$yesterday]['revenue']). " yesterday. Day before was $".
+    number_format($daily_revenue[$day_before]['revenue']) . ".";
+$subject = "$" . number_format($daily_revenue[$today]['revenue']) . " in revenue today";
 
 
 $payload = '{"channel": "'.$channel.'", "username": "upstartbot", "text": "'. $subject.'\n'.
 	$message. '", "icon_emoji": ":cubimal_chick:"}';
+//debug
+//echo $payload;
 
 $fields = array('payload'=>$payload);
 

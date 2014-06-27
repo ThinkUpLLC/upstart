@@ -827,12 +827,35 @@ class SubscriberMySQLDAO extends PDODAO {
      * @return array
      */
     public function getDailySignups() {
+        $today = date('Y-m-d');
+        $yesterday = date('Y-m-d', strtotime("-1 days"));
+        $day_before = date('Y-m-d', strtotime("-2 days"));
+        $results = array(
+            $today => array('successful_payments'=>0, 'revenue'=>0),
+            $yesterday => array('successful_payments'=>0, 'revenue'=>0),
+            $day_before =>  array('successful_payments'=>0, 'revenue'=>0),
+        );
+
         $q = "SELECT count(id) as new_members, ";
         $q .= "DATE(creation_time) AS date  FROM subscribers WHERE membership_level != 'Waitlist' ";
-        $q .= "GROUP BY DATE(creation_time) ORDER BY creation_time DESC LIMIT 3;";
+        $q .= "AND ( date(creation_time) = '".$today."' ";
+        $q .= "OR date(creation_time) = '".$yesterday."' ";
+        $q .= "OR date(creation_time) = '".$day_before."') ";
+        $q .= "GROUP BY DATE(creation_time) ORDER BY creation_time DESC;";
         $ps = $this->execute($q);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
-        return $this->getDataRowsAsArrays($ps);
+
+        $signup_results = $this->getDataRowsAsArrays($ps);
+        foreach ($signup_results as $signup) {
+            if ($signup['date'] == $today) {
+                $results[$today]['new_members'] = $signup['new_members'];
+            } elseif ($signup['date'] == $yesterday) {
+                $results[$yesterday]['new_members'] = $signup['new_members'];
+            } elseif ($signup['date'] == $day_before) {
+                $results[$day_before]['new_members'] = $signup['new_members'];
+            }
+        }
+        return $results;
     }
 }
