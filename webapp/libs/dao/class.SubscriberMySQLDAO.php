@@ -809,6 +809,7 @@ class SubscriberMySQLDAO extends PDODAO {
      */
     public function getSubscribersPaymentDueReminder($total_reminders_sent, $hours_past_time) {
         $q = "SELECT * FROM subscribers WHERE membership_level != 'Waitlist' AND subscription_status = 'Payment due' ";
+        $q .= "AND is_account_closed = 0 ";
         $q .= "AND total_payment_reminders_sent = :total_reminders_sent AND (";
         //If total_reminders_sent = 0, use creation_time to compare. Otherwise, use payment_reminder_last_sent.
         if ($total_reminders_sent == 0) {
@@ -831,6 +832,7 @@ class SubscriberMySQLDAO extends PDODAO {
      */
     public function getSubscribersFreeTrialPaymentReminder($total_reminders_sent, $hours_past_time) {
         $q = "SELECT * FROM subscribers WHERE membership_level != 'Waitlist' AND subscription_status = 'Free Trial' ";
+        $q .= "AND is_account_closed = 0 ";
         $q .= "AND total_payment_reminders_sent = :total_reminders_sent AND (";
         //If total_reminders_sent = 0, use creation_time to compare. Otherwise, use payment_reminder_last_sent.
         if ($total_reminders_sent == 0) {
