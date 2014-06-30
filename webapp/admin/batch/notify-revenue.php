@@ -36,8 +36,14 @@ $message = "That's ". $message. " ".number_format($daily_signups[$yesterday]['ne
     (($daily_signups[$day_before]['new_members'] == 1)?'':'s').
     ".";
 
+$chart_url = 'https://chart.googleapis.com/chart?cht=lc&chs=500x250&chd=t:'.
+    $daily_signups[$day_before]['new_members'].
+    ','.$daily_signups[$yesterday]['new_members'].
+    ','.$daily_signups[$today]['new_members'].
+    '&chxt=x,y&chxl=0:|Day+Before|Yesterday|Today|1:||5|10|15|20|25&chds=0,25';
+
 $payload = '{"channel": "'.$channel.'", "username": "upstartbot", "text": "'. $subject.'\n'.
-	$message. '", "icon_emoji": ":cubimal_chick:"}';
+	$message. '\n'.$chart_url.'", "icon_emoji": ":cubimal_chick:"}';
 //debug
 //echo $payload;
 

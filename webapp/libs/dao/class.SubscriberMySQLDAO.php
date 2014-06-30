@@ -831,9 +831,9 @@ class SubscriberMySQLDAO extends PDODAO {
         $yesterday = date('Y-m-d', strtotime("-1 days"));
         $day_before = date('Y-m-d', strtotime("-2 days"));
         $results = array(
-            $today => array('successful_payments'=>0, 'revenue'=>0),
-            $yesterday => array('successful_payments'=>0, 'revenue'=>0),
-            $day_before =>  array('successful_payments'=>0, 'revenue'=>0),
+            $today => array('new_members'=>0),
+            $yesterday => array('new_members'=>0),
+            $day_before =>  array('new_members'=>0),
         );
 
         $q = "SELECT count(id) as new_members, ";
