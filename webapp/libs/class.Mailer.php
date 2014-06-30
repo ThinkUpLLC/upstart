@@ -63,8 +63,8 @@ class Mailer {
             } else {
                 $async = false;
                 $ip_pool = 'Main Pool';
-                $result = $mandrill->messages->sendTemplate($template_name, $template_content, $message,
-                $async, $ip_pool);
+                $result = $mandrill->messages->sendTemplate($template_name, $template_content=null, $message,
+                    $async, $ip_pool);
             }
         } catch (Mandrill_Unknown_Template $unknown_template_error) {
             // We want to be able to handle this specific error differently.
