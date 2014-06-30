@@ -459,7 +459,6 @@
     if ($("#form-register").length) {
       focusField([$("#email"), $("#username"), $("#pwd")]);
       $("#username, #pwd, #email").on("blur", function(e) {
-        console.log("blur");
         if ($(this).val().length) {
           return $(this).data("do-validate", "1").keyup();
         }

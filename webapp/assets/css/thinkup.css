@@ -364,6 +364,10 @@ body.settings .container .list-group .list-group-item#list-group-status .help-bl
   position: relative;
   top: -5px;
 }
+body.settings .container .list-group .list-group-item#list-group-item-extras .list-group-item-value {
+  line-height: 18px;
+  padding: 5px 0;
+}
 body.settings .container .list-accounts .list-group-item .account-label {
   font-weight: 400;
 }

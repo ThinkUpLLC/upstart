@@ -354,7 +354,6 @@ $ ->
   if $("#form-register").length
     focusField [$("#email"),$("#username"),$("#pwd")]
     $("#username, #pwd, #email").on "blur", (e) ->
-      console.log "blur"
       if $(@).val().length then $(@).data("do-validate", "1").keyup()
 
     $("#username").on "keyup", -> if $(@).data("do-validate") is "1" then checkUsername $(@)
