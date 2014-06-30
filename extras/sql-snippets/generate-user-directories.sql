@@ -1,8 +1,8 @@
 #
 # Installation Symlinks
 #
-SELECT concat('ln -s /local/www/thinkup.com/www/thinkup-user-master/webapp /local/www/thinkup.com/www/doc/user/ ', thinkup_username) FROM subscribers WHERE membership_level != 'Waitlist' and thinkup_username is not null;
-
+SELECT concat('ln -s /local/www/thinkup.com/www/thinkup-user-master/webapp /local/www/thinkup.com/www/doc/user/', thinkup_username) FROM subscribers WHERE membership_level != 'Waitlist' and thinkup_username is not null;
+SELECT 'chown -R www-data.www-data /local/www/thinkup.com/www/doc/user/*';
 
 #
 # Data directories
