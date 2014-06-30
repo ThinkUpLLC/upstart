@@ -19,11 +19,11 @@ body_classes="settings menu-open" body_id="settings-subscription"}
 {*
   Potential values for $membership_status that the template expects:
 
+  * "Free trial" - User is in free trial (either expired or not)
   * "Paid throuh Mon dd, YYYY" - Successful charge
   * "Payment pending" - Authorized and not charged yet, charged and no success returned yet
   * "Payment failed" - Charge failed
   * "Payment due" - User has not attempted payment
-  * "Free trial" - User is in free trial (either expired or not)
   * "Complimentary membership" - Comped
 *}
         <li class="list-group-item{if $membership_status eq 'Payment failed' or $membership_status eq 'Payment due'} list-group-item-warning{/if}" id="list-group-status">
@@ -64,13 +64,19 @@ body_classes="settings menu-open" body_id="settings-subscription"}
           <a href="{$failed_cc_amazon_link}" class="btn btn-default">Pay via Amazon Payments</a>
         </div>
       {elseif $membership_status eq 'Free trial'}
-        <a href="#" class="btn btn-sm btn-transparent btn-close-account">Close your account</a>
+        <form id="form-membership-close-account" action="membership.php?close=true" method="post">
+        <a href="javascript:document.forms['form-membership-close-account'].submit();" onClick="return confirm('Do you really want to close your account?');" class="btn btn-sm btn-transparent btn-close-account">Close your account</a>
+         {insert name="csrf_token"}
+        </form>
       {else}
         <p class="form-note"><a href="https://payments.amazon.com">View your payment information
           at Amazon Payments.</a></p>
       {/if}
     {else}
-        <p class="form-note"><a href="#" class="btn btn-default">Re-open your ThinkUp account</a></p>
+        <form id="form-membership-reopen-account" action="membership.php?reopen=true" method="post">
+        <p class="form-note"><a href="javascript:document.forms['form-membership-reopen-account'].submit();" class="btn btn-default">Re-open your ThinkUp account</a></p>
+        {insert name="csrf_token"}
+        </form>
     {/if}
 
       <p class="form-note">Need help? <a href="mailto:help@thinkup.com" class="show-section"

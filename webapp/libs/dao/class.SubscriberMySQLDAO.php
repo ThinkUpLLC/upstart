@@ -426,6 +426,27 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getUpdateCount($ps);
     }
 
+    public function closeAccount($id) {
+        return self::setIsAccountClosed($id, 1);
+    }
+
+    public function openAccount($id) {
+        return self::setIsAccountClosed($id, 0);
+    }
+
+    private function setIsAccountClosed($id, $is_account_closed) {
+        $q  = "UPDATE subscribers SET is_account_closed = :is_account_closed ";
+        $q .= "WHERE id = :id ";
+
+        $vars = array(
+            ':is_account_closed'=> (int) $is_account_closed,
+            ':id'=>(int) $id
+        );
+        //echo self::mergeSQLVars($q, $vars)."\n";
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
     public function setMembershipLevel($id, $membership_level) {
         $q  = "UPDATE subscribers SET membership_level = :membership_level ";
         $q .= "WHERE id = :id ";

@@ -5,6 +5,7 @@ class MembershipController extends AuthController {
         $this->setPageTitle('Membership Info');
         $this->setViewTemplate('user.membership.tpl');
         $this->disableCaching();
+        $this->enableCSRFToken();
 
         $logged_in_user = Session::getLoggedInUser();
         $this->addToView('logged_in_user', $logged_in_user);
@@ -74,6 +75,29 @@ class MembershipController extends AuthController {
                 $this->logError('Internal caller reference not set or Amazon response invalid', __FILE__,__LINE__,
                 __METHOD__);
             }
+        }
+
+        try {
+            if (self::hasUserRequestedAccountClosure() && $this->validateCSRFToken()) {
+                $result = $subscriber_dao->closeAccount($subscriber->id);
+                if ($result > 0) {
+                    $this->addSuccessMessage("Your ThinkUp account has been closed. ".
+                        "But there's still time to change your mind!");
+                    $subscriber->is_account_closed = true;
+                    $this->addToView('subscriber', $subscriber);
+                }
+            }
+
+            if (self::hasUserRequestedAccountReopening() && $this->validateCSRFToken()) {
+                $result = $subscriber_dao->openAccount($subscriber->id);
+                if ($result > 0) {
+                    $this->addSuccessMessage("Your ThinkUp account has been re-opened!");
+                    $subscriber->is_account_closed = false;
+                    $this->addToView('subscriber', $subscriber);
+                }
+            }
+        } catch (InvalidCSRFTokenException $e) {
+            $this->addErrorMessage("There was a problem processing your request. Please try again.");
         }
 
         //BEGIN populating membership_status for view
@@ -149,6 +173,22 @@ class MembershipController extends AuthController {
 
         return $this->generateView();
 	}
+
+    /**
+     * Whether or not user has requested account closure.
+     * @return bool
+     */
+    private function hasUserRequestedAccountClosure() {
+        return (isset($_GET['close'])  && $_GET['close'] == 'true');
+    }
+
+    /**
+     * Whether or not user has requested account re-opening.
+     * @return bool
+     */
+    private function hasUserRequestedAccountReopening() {
+        return (isset($_GET['reopen'])  && $_GET['reopen'] == 'true');
+    }
 
     /**
      * Whether or not user has returned from paying at Amazon.

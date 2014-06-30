@@ -643,4 +643,35 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual(2, $data['total_payment_reminders_sent']);
         $this->assertNotNull($data['payment_reminder_last_sent']);
     }
+
+    public function testCloseAndOpenAccount() {
+        //Subscriber doesn't exist
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->closeAccount(1);
+        $this->assertEqual($result, 0);
+
+        //Subscriber exists and account is open
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>101, 'email'=>'willow@buffy.com',
+        'network_user_name'=>'willowr', 'thinkup_username'=>'myusername', 'total_payment_reminders_sent'=>0,
+        'payment_reminder_last_sent'=>null, 'is_account_closed'=>0));
+
+        $result = $dao->closeAccount(101);
+        $this->assertEqual($result, 1);
+
+        $sql = "SELECT * FROM subscribers WHERE id=101";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertTrue($data);
+        $this->assertEqual(1, $data['is_account_closed']);
+
+        $result = $dao->openAccount(101);
+        $this->assertEqual($result, 1);
+
+        $sql = "SELECT * FROM subscribers WHERE id=101";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertTrue($data);
+        $this->assertEqual(0, $data['is_account_closed']);
+    }
 }
