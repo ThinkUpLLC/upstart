@@ -472,8 +472,13 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getDataRowsAsArrays($ps);
     }
 
+    /**
+     * Get installations to crawl for members who have paid or are complimentary.
+     * @param  integer $count How many installs to retrieve; defaults to 25
+     * @return arr Array of installation information
+     */
     public function getPaidStaleInstalls($count=25) {
-        $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 ";
+        $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0 ";
         $q .= "AND (subscription_status LIKE 'Paid through%' OR is_membership_complimentary = 1) ";
         $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL 90 MINUTE) OR last_dispatched IS NULL) ";
         $q .= "ORDER BY last_dispatched ASC ";
@@ -488,15 +493,16 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     /**
-     * Get installations for members who have not paid.
-     * This function does not return members who have received 3 email reminders to pay, and 12 days have passed since
+     * Get installations to crawl for members who have not paid.
+     * This function does not return members who have closed their account.
+     * This function does not return members who have received 3 payment reminders and 12 days have passed since
      * last reminder was sent. That's so they're not being crawled when they are uninstalled automatically at the
      * 14-day threshold.
      * @param  integer $count How many installs to retrieve; defaults to 25
      * @return arr Array of installation information
      */
     public function getNotYetPaidStaleInstalls($count=25) {
-        $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 ";
+        $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0 ";
         $q .= "AND subscription_status NOT LIKE 'Paid through%' ";
         $q .= "AND ((last_dispatched < DATE_SUB(NOW(), INTERVAL 3 HOUR) OR last_dispatched IS NULL)) ";
         // Upstart isn't sending payment reminders or isn't finished sending them

@@ -507,6 +507,12 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
             'thinkup_username'=>'unique7', 'date_installed'=>null, 'is_membership_complimentary'=>1,
             'is_installation_active'=>1, 'last_dispatched'=>'-4h', 'subscription_status'=>'Payment failed'));
+        //Should not get returned because account is closed
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>8, 'email'=>'ginatrapani+8@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique8', 'date_installed'=>null, 'is_membership_complimentary'=>1,
+            'is_installation_active'=>1, 'last_dispatched'=>'-4h', 'subscription_status'=>'Payment failed',
+            'is_account_closed'=>1));
 
         $dao = new SubscriberMySQLDAO();
         $result = $dao->getPaidStaleInstalls();
@@ -556,6 +562,12 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
             'thinkup_username'=>'unique7', 'date_installed'=>null, 'is_membership_complimentary'=>0,
             'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment due',
             'total_payment_reminders_sent'=>3, 'payment_reminder_last_sent'=>'-10d'));
+        //Should not get returned because account is closed
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>8, 'email'=>'ginatrapani+8@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra6', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique8', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment due',
+            'total_payment_reminders_sent'=>3, 'payment_reminder_last_sent'=>'-10d', 'is_account_closed'=>1));
 
         $dao = new SubscriberMySQLDAO();
         $result = $dao->getNotYetPaidStaleInstalls();
