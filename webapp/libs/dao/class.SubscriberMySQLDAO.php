@@ -538,7 +538,7 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     public function getTotalActiveInstalls() {
-        $q  = "SELECT count(*) AS total FROM subscribers WHERE is_installation_active = 1;";
+        $q  = "SELECT count(*) AS total FROM subscribers WHERE is_installation_active = 1 and is_account_closed = 0;";
         //echo self::mergeSQLVars($q, $vars);
         $ps = $this->execute($q);
         $result = $this->getDataRowAsArray($ps);
