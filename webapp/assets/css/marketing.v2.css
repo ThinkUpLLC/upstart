@@ -804,16 +804,16 @@ a.btn-pill-large {
   text-indent: 100%;
   font: 0/0 a;
   width: 300px;
-  height: 193px;
-  background: url(../img/landing/insight-creamsicle-mobile-1@2x.png) top left no-repeat;
-  background-size: 300px 193px;
+  height: 208px;
+  background: url(../img/landing/insight-mint-mobile@2x.png) top left no-repeat;
+  background-size: 300px 208px;
 }
 @media (min-width: 760px) {
   #container-what .section-copy .sample-insight {
     width: 540px;
-    height: 128px;
-    background: url(../img/landing/insight-creamsicle-desktop-1@2x.png) top left no-repeat;
-    background-size: 540px 128px;
+    height: 146px;
+    background-image: url(../img/landing/insight-mint-desktop@2x.png);
+    background-size: 540px 146px;
   }
 }
 #container-what .section-copy #sample-2 .sample-insight {
@@ -850,6 +850,18 @@ a.btn-pill-large {
     height: 92px;
     background-image: url(../img/landing/insight-creamsicle-desktop-3@2x.png);
     background-size: 540px 92px;
+  }
+}
+#container-what .section-copy #sample-5 .sample-insight {
+  height: 193px;
+  background: url(../img/landing/insight-creamsicle-mobile-1@2x.png) top left no-repeat;
+  background-size: 300px 193px;
+}
+@media (min-width: 760px) {
+  #container-what .section-copy #sample-5 .sample-insight {
+    height: 128px;
+    background: url(../img/landing/insight-creamsicle-desktop-1@2x.png) top left no-repeat;
+    background-size: 540px 128px;
   }
 }
 #container-specs {
