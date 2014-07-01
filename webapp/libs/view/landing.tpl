@@ -2,7 +2,7 @@
 
 <div class="container" id="container-signup-top">
   <div class="section section-screenshot" id="section-signup-top">
-    <h3 class="section-header">There are things Facebook &amp; Twitter won't tell you.</h3>
+    <h3 class="section-header">There are things Facebook &amp; Twitter don't tell you.</h3>
     <div class="section-copy">
       <p>ThinkUp gives you insights about your social networks that you can't find anywhere else. Sign up for our Free 14-Day Trial and see what you've been missing.</p>
       <div class="signup-buttons">
