@@ -27,6 +27,8 @@
           <li data-target="#sample-insights-carousel" data-slide-to="1"><a href="#">2</a></li>
           <li data-target="#sample-insights-carousel" data-slide-to="2"><a href="#">3</a></li>
           <li data-target="#sample-insights-carousel" data-slide-to="3"><a href="#">4</a></li>
+          <li data-target="#sample-insights-carousel" data-slide-to="4"><a href="#">5</a></li>
+
         </ul>
         <div class="sample-insights carousel-inner">
           <figure class="item active" id="sample-1">
@@ -39,6 +41,9 @@
             <div class="sample-insight"></div>
           </figure>
           <figure class="item" id="sample-4">
+            <div class="sample-insight"></div>
+          </figure>
+          <figure class="item" id="sample-5">
             <div class="sample-insight"></div>
           </figure>
         </div>
@@ -67,16 +72,6 @@
         <li>No ugly surprises about how your data is used.</li>
         <li>No hassle if you want to cancel your subscription.</li>
       </ul>
-      <div class="illustration">An insight</div>
-    </div>
-  </div>
-</div>
-
-<div class="container" id="container-analytics">
-  <div class="section section-screenshot" id="section-analytics">
-    <h3 class="section-header">There’s buried treasure in your social networks.</h3>
-    <div class="section-copy">
-      <p>ThinkUp uncovers fun and fascinating insights about your Facebook and Twitter activity.</p>
       <div class="illustration">An insight</div>
     </div>
   </div>
