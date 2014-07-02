@@ -1,5 +1,5 @@
 (function() {
-  var $lastActiveDateGroup, animateContentShift, checkEmailAvailability, checkEmailField, checkEmailFormat, checkPasswordField, checkPasswordFormat, checkSettingsPasswordField, checkTermsField, checkUsername, featureTest, focusField, pinDateMarker, setActiveDateGroup, setDateGroupData, setFixedPadding, setListOpenData, setNavHeight, timerEmail, timerPassword, timerUsername, wt;
+  var $lastActiveDateGroup, animateContentShift, checkEmailAvailability, checkEmailField, checkEmailFormat, checkPasswordField, checkPasswordFormat, checkSettingsPasswordField, checkTermsField, checkUsername, constants, featureTest, focusField, pinDateMarker, setActiveDateGroup, setDateGroupData, setFixedPadding, setListOpenData, setNavHeight, timerEmail, timerPassword, timerUsername, wt;
 
   wt = window.tu = {};
 
@@ -14,6 +14,144 @@
       mStyle.cssText = prop + value;
     }
     return mStyle[property].indexOf(value) !== -1;
+  };
+
+  setNavHeight = function(fixPadding) {
+    var oldHeight;
+    if (fixPadding == null) {
+      fixPadding = false;
+    }
+    oldHeight = wt.navHeight;
+    if ($(".app-message").length && $("body").hasClass("app-message-visible")) {
+      wt.navHeight = $(".app-message").outerHeight(true) + $(".app-message").offset().top;
+    } else {
+      wt.navHeight = $(".navbar").outerHeight(true);
+    }
+    if (fixPadding && (oldHeight !== wt.navHeight)) {
+      return setFixedPadding();
+    }
+  };
+
+  setFixedPadding = function() {
+    $(".container").css("padding-top", wt.navHeight);
+    return $(".date-marker").css("top", wt.navHeight + 14);
+  };
+
+  animateContentShift = function(state) {
+    var leftPos, pos, selector;
+    pos = state === "open" ? "280px" : "0";
+    selector = ".navbar-default";
+    if ($(".app-message").length && $("body").hasClass("app-message-visible")) {
+      selector += ", .app-message";
+    }
+    $(selector).animate({
+      left: pos
+    }, 150, function() {
+      if (pos === "0") {
+        return $(selector).css("left", "");
+      }
+    });
+    if ($(".date-marker.fixed").length) {
+      leftPos = $(".date-marker.fixed").offset().left;
+      pos = state === "open" ? "" + (leftPos + 280) + "px" : "" + (leftPos - 280) + "px";
+      $(".date-marker.fixed").animate({
+        left: pos
+      }, 150, function() {
+        return $(".date-marker.fixed").css("left", "");
+      });
+    }
+    if ($(window).width() <= 540) {
+      pos = state === "open" ? "-280px" : "0";
+      return $(".btn-submit").animate({
+        right: pos
+      }, 150);
+    }
+  };
+
+  wt.appMessage = {
+    paddingChange: wt.navHeight - $(".navbar-default").outerHeight(true),
+    create: function(message, type) {
+      var $el, msgClass;
+      if (type == null) {
+        type = "info";
+      }
+      if ($(".app-message").text().trim() !== $('<div/>').html(message).text()) {
+        wt.appMessage.destroy();
+        msgClass = "content";
+        if (type === "warning") {
+          msgClass += " fa-override-before fa-exclamation-triangle";
+        }
+        if (type === "success") {
+          msgClass += " fa-override-before fa-check-circle";
+        }
+        $el = $("<div class=\"app-message app-message-" + type + "\" style=\"display: none\">\n  <div class=\"" + msgClass + "\">" + message + "</div>\n  <a href=\"#\" class=\"app-message-close\"><i class=\"fa fa-times-circle icon\"></i></a>\n</div>");
+        $("#page-content").append($el);
+        return $(".container").animate({
+          paddingTop: "+=" + wt.appMessage.paddingChange
+        }, 150, function() {
+          $(".app-message").fadeIn(150);
+          $("body").addClass("app-message-visible");
+          if (!$("body").hasClass("account")) {
+            return setNavHeight(true);
+          }
+        });
+      }
+    },
+    destroy: function() {
+      var $appMessage;
+      $appMessage = $(".app-message");
+      $appMessage.fadeOut(150);
+      return $(".container").animate({
+        paddingTop: "+=-" + wt.appMessage.paddingChange
+      }, 150, function() {
+        $appMessage.remove();
+        $("body").removeClass("app-message-visible");
+        if (!$("body").hasClass("account")) {
+          return setNavHeight(true);
+        }
+      });
+    }
+  };
+
+  constants = window.tu.constants = {};
+
+  constants.colors = {
+    pea: "#9dd767",
+    pea_dark: "#5fac1c",
+    pea_darker: "#417505",
+    salmon: "#fc939e",
+    salmon_dark: "#da6070",
+    salmon_darker: "#d0374b",
+    creamsicle: "#ffbb4e",
+    creamsicle_dark: "#ff8f41",
+    creamsicle_darker: "#f36400",
+    sepia: "#c0bdaf",
+    sepia_dark: "#a19f8b",
+    sepia_darker: "#8a876f",
+    historical: "#c0bdaf",
+    historical_dark: "#a19f8b",
+    historical_darker: "#8a876f",
+    purple: "#b690e2",
+    purple_dark: "#8e69c2",
+    purple_darker: "#7348b0",
+    mint: "#41dab3",
+    mint_dark: "#24b98f",
+    mint_darker: "#1c8e6e",
+    bubblegum: "#f576b5",
+    bubblegum_dark: "#b3487c",
+    bubblegum_darker: "#8f3963",
+    seabreeze: "#44c9d7",
+    seabreeze_dark: "#198a9c",
+    seabreeze_darker: "#126370",
+    dijon: "#e4bf28",
+    dijon_dark: "#c59301",
+    dijon_darker: "#926d01",
+    sandalwood: "#fd8560",
+    sandalwood_dark: "#d13a0a",
+    sandalwood_darker: "#a02c08",
+    caramel: "#dd814b",
+    caramel_dark: "#9e5e14",
+    caramel_darker: "#71430e"
   };
 
   setListOpenData = function(includeClosed, setHeight) {
@@ -100,103 +238,6 @@
     if (position === "absolute") {
       return $dm.css("top", $container.data("scroll-bottom"));
     }
-  };
-
-  animateContentShift = function(state) {
-    var leftPos, pos, selector;
-    pos = state === "open" ? "280px" : "0";
-    selector = ".navbar-default";
-    if ($(".app-message").length && $("body").hasClass("app-message-visible")) {
-      selector += ", .app-message";
-    }
-    $(selector).animate({
-      left: pos
-    }, 150, function() {
-      if (pos === "0") {
-        return $(selector).css("left", "");
-      }
-    });
-    if ($(".date-marker.fixed").length) {
-      leftPos = $(".date-marker.fixed").offset().left;
-      pos = state === "open" ? "" + (leftPos + 280) + "px" : "" + (leftPos - 280) + "px";
-      $(".date-marker.fixed").animate({
-        left: pos
-      }, 150, function() {
-        return $(".date-marker.fixed").css("left", "");
-      });
-    }
-    if ($(window).width() <= 540) {
-      pos = state === "open" ? "-280px" : "0";
-      return $(".btn-submit").animate({
-        right: pos
-      }, 150);
-    }
-  };
-
-  wt.appMessage = {
-    paddingChange: wt.navHeight - $(".navbar-default").outerHeight(true),
-    create: function(message, type) {
-      var $el, msgClass;
-      if (type == null) {
-        type = "info";
-      }
-      if ($(".app-message").text().trim() !== $('<div/>').html(message).text()) {
-        wt.appMessage.destroy();
-        msgClass = "content";
-        if (type === "warning") {
-          msgClass += " fa-override-before fa-exclamation-triangle";
-        }
-        if (type === "success") {
-          msgClass += " fa-override-before fa-check-circle";
-        }
-        $el = $("<div class=\"app-message app-message-" + type + "\" style=\"display: none\">\n  <div class=\"" + msgClass + "\">" + message + "</div>\n  <a href=\"#\" class=\"app-message-close\"><i class=\"fa fa-times-circle icon\"></i></a>\n</div>");
-        $("#page-content").append($el);
-        return $(".container").animate({
-          paddingTop: "+=" + wt.appMessage.paddingChange
-        }, 150, function() {
-          $(".app-message").fadeIn(150);
-          $("body").addClass("app-message-visible");
-          if (!$("body").hasClass("account")) {
-            return setNavHeight(true);
-          }
-        });
-      }
-    },
-    destroy: function() {
-      var $appMessage;
-      $appMessage = $(".app-message");
-      $appMessage.fadeOut(150);
-      return $(".container").animate({
-        paddingTop: "+=-" + wt.appMessage.paddingChange
-      }, 150, function() {
-        $appMessage.remove();
-        $("body").removeClass("app-message-visible");
-        if (!$("body").hasClass("account")) {
-          return setNavHeight(true);
-        }
-      });
-    }
-  };
-
-  setNavHeight = function(fixPadding) {
-    var oldHeight;
-    if (fixPadding == null) {
-      fixPadding = false;
-    }
-    oldHeight = wt.navHeight;
-    if ($(".app-message").length && $("body").hasClass("app-message-visible")) {
-      wt.navHeight = $(".app-message").outerHeight(true) + $(".app-message").offset().top;
-    } else {
-      wt.navHeight = $(".navbar").outerHeight(true);
-    }
-    if (fixPadding && (oldHeight !== wt.navHeight)) {
-      return setFixedPadding();
-    }
-  };
-
-  setFixedPadding = function() {
-    $(".container").css("padding-top", wt.navHeight);
-    return $(".date-marker").css("top", wt.navHeight + 14);
   };
 
   timerUsername = null;

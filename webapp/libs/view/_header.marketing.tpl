@@ -40,6 +40,9 @@
     <meta name="og:image:height" content="154">
     <meta name="twitter:creator" content="@thinkup">
 
+    <!-- TU JS namespace -->
+    <script>window.tu = {};</script>
+
     <!-- styles -->
     {literal}<script type="text/javascript" src="//use.typekit.net/xzh8ady.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>{/literal}

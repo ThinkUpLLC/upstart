@@ -28,13 +28,29 @@ module.exports = (grunt) ->
           '<%= project.css_path %>/thinkup.css': '<%= project.css_path %>/src/thinkup.less'
     coffee:
       app:
+        options:
+          join: true
         files: [
-          '<%= project.js_path %>/thinkup.js':'<%= project.js_path %>/src/thinkup.coffee'
+          '<%= project.js_path %>/thinkup.js':[
+            '<%= project.js_path %>/src/_util.coffee'
+            '<%= project.js_path %>/src/_constants.coffee'
+            '<%= project.js_path %>/src/_stream.coffee'
+            '<%= project.js_path %>/src/_forms.coffee'
+            '<%= project.js_path %>/src/thinkup.coffee'
+          ]
         ]
       marketing:
         files: [
           '<%= project.js_path %>/marketing.js':'<%= project.js_path %>/src/marketing.coffee'
         ]
+    uglify:
+      app:
+        files:
+          '<%= project.js_path %>/thinkup.min.js':'<%= project.js_path %>/thinkup.js'
+      marketing:
+        files:
+          '<%= project.js_path %>/marketing.min.js':'<%= project.js_path %>/marketing.js'
+
     premailer:
       options:
         css: [
@@ -65,6 +81,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-contrib-less')
   grunt.loadNpmTasks('grunt-contrib-coffee')
+  grunt.loadNpmTasks('grunt-contrib-uglify')
   grunt.loadNpmTasks('grunt-premailer')
 
   grunt.registerTask('fix_styles', 'This fixes the stuff premailer breaks', ->
@@ -82,3 +99,5 @@ module.exports = (grunt) ->
   grunt.registerTask('default', ['premailer:system', 'fix_styles'])
   grunt.registerTask('email', ['premailer:system', 'fix_styles'])
   grunt.registerTask('email_dev', ['premailer:email_dev', 'fix_styles'])
+  grunt.registerTask('app_js', ['coffee:app', 'uglify:app'])
+  grunt.registerTask('marketing_js', ['coffee:marketing', 'uglify:marketing'])

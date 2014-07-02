@@ -13,6 +13,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <!-- TU JS namespace -->
+    <script>window.tu = {};</script>
+
     <!-- styles -->
     {literal}<script type="text/javascript" src="//use.typekit.net/xzh8ady.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>{/literal}
