@@ -27,6 +27,7 @@ class PayNowController extends Controller {
         $user_installation_url = $cfg->getValue('user_installation_url');
         $subscriber->installation_url = str_replace ("{user}", $subscriber->thinkup_username, $user_installation_url);
         $this->addToView('new_subscriber', $subscriber);
+        $this->addToView('thinkup_url', $subscriber->installation_url);
 
         return $this->generateView();
     }

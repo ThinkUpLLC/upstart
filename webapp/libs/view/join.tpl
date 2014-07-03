@@ -36,7 +36,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
 
       <section class="subsection section-subscription-level"
       id="section-subscription-pro">
-        <h3 class="subsection-header">5 accounts
+        <h3 class="subsection-header">More than 1 account
           <span class="descriptor">per social network</span></h3>
         <div class="level-cost">
           <div class="annually">$120/year</div>

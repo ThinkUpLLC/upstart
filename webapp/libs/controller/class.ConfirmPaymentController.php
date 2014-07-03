@@ -47,6 +47,10 @@ class ConfirmPaymentController extends SignUpHelperController {
                 //Update subscription_status in the data store
                 $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
                 $this->addToView('subscriber', $subscriber);
+                $cfg = Config::getInstance();
+                $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
+                    $cfg->getValue('user_installation_url'));
+                $this->addToView('thinkup_url', $user_installation_url);
             } else {
                 $this->addErrorMessage($this->generic_error_msg);
                 $this->logError('Amazon response invalid', __FILE__,__LINE__, __METHOD__);

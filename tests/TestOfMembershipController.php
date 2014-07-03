@@ -99,7 +99,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->debug($results);
         $this->assertPattern('/Download your copy of/', $results);
         // This tests that link exists, which is "totally fake" right now.
-        $this->assertPattern('/TOTALLY FAKE/', $results);
+        $this->assertPattern('/book.thinkup.com\/insights/', $results);
     }
 
     private function buildSubscriberAuthorizationPending($level) {

@@ -7,11 +7,12 @@ body_classes="marketing marketing-page" body_id="marketing-welcome"}
 
       <img src="{$site_root_path}assets/img/book-cover.png" class="illustration book-cover">
 
-      <p>Thinkup is analyzing your data now. You'll get your first insights via email <strong>in the next 20 minutes.</strong></p>
+      <p class="break-word">Thinkup is analyzing your data now. You’ll get an email when your first insights are ready, and they’ll show up at your personal address: <a href="{$thinkup_url}">{$thinkup_url}</a>.</p>
 
       <p>Join ThinkUp now for just $60 a year and get <strong>the book we wrote for you</strong>! Our exclusive ebook <em>Insights</em> offers interviews with the smartest people in social media.</p>
 
-      <p class="btn-wrapper"><a href="{$pay_with_amazon_url}" class="btn btn-pill-large">Pay now with Amazon</a></p>
+      <p class="btn-wrapper"><a href="{$pay_with_amazon_url}" class="btn btn-pill-large has-note">Pay now with Amazon<br><small>$60 per year</small></a><br>
+      <a class="alt-to-btn-large" href="{$thinkup_url}">I’m not ready to pay yet.</a></p>
     </section>
 
-{include file="_footer.marketing.tpl"}
+{include file="_footer.marketing.tpl" hide_footer=true}

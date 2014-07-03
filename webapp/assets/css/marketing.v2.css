@@ -409,6 +409,11 @@ a.btn.var-width {
   padding-left: 20px;
   padding-right: 20px;
 }
+.btn small,
+a.btn small {
+  color: #93c2e9;
+  font-size: .625em;
+}
 .btn-pill,
 a.btn-pill {
   width: 140px;
@@ -435,6 +440,17 @@ a.btn-pill-large {
   padding: 24px 0;
   font-size: 1.5rem;
   line-height: 1;
+}
+.btn-pill-large.has-note,
+a.btn-pill-large.has-note {
+  padding: 18px 0;
+  line-height: .9;
+}
+.alt-to-btn-large {
+  display: inline-block;
+  width: 260px;
+  font-size: .875rem;
+  text-align: center;
 }
 .container {
   overflow: hidden;
@@ -649,56 +665,55 @@ a.btn-pill-large {
   height: auto;
 }
 #container-signup-top .section-header {
-  color: #2785d3;
+  color: #a97cdd;
 }
 #container-signup-top .section-copy {
   color: #444444;
 }
 @media (min-width: 760px) {
   #container-signup-top {
-    height: 350px;
+    height: 500px;
   }
 }
 #container-signup-top .section-header {
   font-size: 2rem;
+  font-weight: 600;
   line-height: 1.25;
   padding-top: 0;
 }
 @media (min-width: 760px) {
   #container-signup-top .section-header {
-    padding: 20px 250px 20px 0;
-    text-align: left;
+    font-size: 2.75rem;
+    padding: 75px 0 25px;
   }
 }
 #container-signup-top .section-copy {
   font-style: normal;
+  padding-top: 5px;
+}
+@media (min-width: 760px) {
+  #container-signup-top .section-copy {
+    padding-top: 10px;
+  }
 }
 #container-signup-top .section-copy p {
-  margin-bottom: 30px;
+  text-align: center;
+  padding: 0;
+  margin-bottom: 25px;
 }
 @media (min-width: 760px) {
   #container-signup-top .section-copy p {
-    padding-right: 400px;
+    padding: 0 190px;
+    text-align: center;
   }
 }
-#container-signup-top .section-copy .illustration {
-  display: none;
-  width: 375px;
-  height: 375px;
-  background: url(../img/landing/hand.png) 0 0 no-repeat;
-  background-size: 375px 375px;
-  box-shadow: 0 0 0;
-}
 @media (min-width: 760px) {
-  #container-signup-top .section-copy .illustration {
-    display: block;
-    left: auto;
-    right: 0;
-    top: -87px;
+  #container-signup-top .signup-buttons {
+    text-align: center;
   }
 }
 #container-what {
-  background-color: #ffbb4e;
+  background-color: #41dab3;
   height: 580px;
 }
 #container-what .section-header {
@@ -745,7 +760,7 @@ a.btn-pill-large {
   }
 }
 #container-what .section-copy .section-insights-carousel figcaption {
-  color: #b46f00;
+  color: #156d56;
   font-size: 1rem;
   line-height: 1.25;
 }
@@ -774,8 +789,8 @@ a.btn-pill-large {
 }
 #container-what .section-copy .carousel-indicators li a {
   display: block;
-  color: #ffeed3;
-  background: #e78e00;
+  color: #d0f6ec;
+  background: #1e9778;
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -787,7 +802,7 @@ a.btn-pill-large {
 #container-what .section-copy .carousel-indicators li a:hover,
 #container-what .section-copy .carousel-indicators li.active a {
   color: #fff;
-  background: #b46f00;
+  background: #156d56;
   text-decoration: none;
 }
 #container-what .section-copy .sample-insights figure {
@@ -1205,6 +1220,13 @@ body.marketing-page .section-legal-text li {
   font-weight: 300;
   margin-bottom: 1em;
 }
+body.marketing-page .section-marketing-text p.break-word,
+body.marketing-page .section-legal-text p.break-word,
+body.marketing-page .section-marketing-text li.break-word,
+body.marketing-page .section-legal-text li.break-word {
+  word-wrap: break-word;
+  overflow: hidden;
+}
 body.marketing-page .section-marketing-text p a,
 body.marketing-page .section-legal-text p a,
 body.marketing-page .section-marketing-text li a,
@@ -1531,6 +1553,7 @@ body.marketing-page #section-page-header {
   #section-pay-now .book-cover {
     margin-left: 100px;
     margin-top: -30px;
+    margin-right: 10px;
     border: 1px solid #e7df0b;
     box-shadow: 4px 4px 0 #fdfcd6, 5px 5px 0 #ddd62b, 8px 8px #fdfcd6, 9px 9px #ddd62b, 12px 12px #fdfcd6, 13px 13px #cfc80a;
   }

@@ -114,7 +114,7 @@ class MembershipController extends AuthController {
         // Add ebook download link (this is just a stub for now)
         if ($membership_status != 'Payment failed' && $membership_status != 'Payment due'
             && $membership_status != 'Payment pending' && $membership_status != 'Free trial') {
-            $this->addToView('ebook_download_link', 'TOTALLY FAKE');
+            $this->addToView('show_ebook_links', true);
         }
 
         //Add Free trial status (including if expired, and how many days left)

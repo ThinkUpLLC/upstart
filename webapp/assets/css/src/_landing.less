@@ -229,56 +229,54 @@
 }
 
 #container-signup-top {
-  .section-colors(#fff, #444, @blue-darker);
+  .section-colors(#fff, #444, darken(@color-purple, 5%));
   height: auto;
 
   @media (min-width: 760px) {
-    height: 350px;
+    height: 500px;
   }
 
   .section-header {
     font-size: 2rem;
+    font-weight: 600;
     line-height: 1.25;
     padding-top: 0;
 
     @media (min-width: 760px) {
-      padding: 20px 250px 20px 0;
-      text-align: left;
+      font-size: 2.75rem;
+      padding: 75px 0 25px;
     }
   }
 
   .section-copy {
     font-style: normal;
+    padding-top: 5px;
+
+    @media (min-width: 760px) {
+      padding-top: 10px;
+    }
 
     p {
-      margin-bottom: 30px;
+      text-align: center;
+      padding: 0;
+      margin-bottom: 25px;
 
       @media (min-width: 760px) {
-        padding-right: 5 * @col-full;
+        padding: 0 190px;
+        text-align: center;
       }
     }
+  }
 
-    .illustration {
-      display: none;
-      width: 375px;
-      height: 375px;
-      background: url(../img/landing/hand.png) 0 0 no-repeat;
-      background-size: 375px 375px;
-      box-shadow: 0 0 0;
-
-      @media (min-width: 760px) {
-        display: block;
-        left: auto;
-        right: 0;
-        top: -87px;
-      }
+  .signup-buttons {
+    @media (min-width: 760px) {
+      text-align: center;
     }
-
   }
 }
 
 #container-what {
-  .section-colors(@color-creamsicle, #fff);
+  .section-colors(@color-mint, #fff);
 
   height: 580px;
 
@@ -316,7 +314,7 @@
       }
 
       figcaption {
-        color: darken(@color-creamsicle, 30%);
+        color: darken(@color-mint, 30%);
         font-size: 1rem;
         line-height: 1.25;
       }
@@ -345,8 +343,8 @@
 
         a {
           display: block;
-          color: mix(@color-creamsicle, #fff, 25%);
-          background: darken(@color-creamsicle, 20%);
+          color: mix(@color-mint, #fff, 25%);
+          background: darken(@color-mint, 20%);
           width: 24px;
           height: 24px;
           border-radius: 50%;
@@ -358,7 +356,7 @@
 
         a:hover, &.active a {
           color: #fff;
-          background: darken(@color-creamsicle, 30%);
+          background: darken(@color-mint, 30%);
           text-decoration: none;
         }
 
