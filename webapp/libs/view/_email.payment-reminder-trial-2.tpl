@@ -1,5 +1,7 @@
 <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">ThinkUp has been <a href="https://{$thinkup_username}.thinkup.com" style="color:#2785d3;">giving you insights</a> that Twitter or Facebook would never tell you about {$thinkup_username}'s activity online. But to keep getting them, you need to become a ThinkUp member now, before your free trial ends! It'll just take a minute:</p>
 
+<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">Take just a minute to join and <strong>we'll send you a FREE copy of <em>Insights</em></strong>, our exclusive book of interviews about the future of social media.</p>
+
 <div style="text-align:center;"><!--[if mso]>
   <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://www.thinkup.com/join/user/membership.php" style="height:40px;v-text-anchor:middle;width:200px;" arcsize="10%" stroke="f" fillcolor="#125C9C">
     <w:anchorlock/>

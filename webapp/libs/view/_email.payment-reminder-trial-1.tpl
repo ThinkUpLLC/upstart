@@ -12,4 +12,6 @@ style="background-color:#125C9C;border-radius:4px;color:#ffffff;display:inline-b
   </v:roundrect>
 <![endif]--></div>
 
-<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">Have any questions? Want to know more about what you get from ThinkUp? Just reply to this email and a real person will send you an answer!</p>
+<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">When you pay, you'll get your <strong>FREE copy of the <em>Insights</em> book</strong>, with exclusive interviews from many of the smartest minds in social media. So join now!</p>
+
+<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">Have any questions? Want to know more about what you get from ThinkUp? Just reply to this email and a real person will send you an answer.</p>
