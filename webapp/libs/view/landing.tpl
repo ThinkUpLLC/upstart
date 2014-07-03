@@ -9,8 +9,6 @@
         <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign in with</small><br>Twitter</a>
         <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign in with</small><br>Facebook</a>
       </div>
-      <div class="illustration">
-      </div>
     </div>
   </div>
 </div>
