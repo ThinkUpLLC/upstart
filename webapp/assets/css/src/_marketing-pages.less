@@ -49,6 +49,11 @@ body.marketing-page {
       font-weight: 300;
       margin-bottom: 1em;
 
+      &.break-word {
+        word-wrap: break-word;
+        overflow: hidden;
+      }
+
       a {
         color: @link-color;
 
@@ -406,6 +411,7 @@ body.marketing-page {
     @media (min-width: 31.875em) {
       margin-left: 100px;
       margin-top: -30px;
+      margin-right: 10px;
       @y:   #f5ee30;
       @yd:  darken(@y, 10%);
       @ydr: darken(@y, 15%);
