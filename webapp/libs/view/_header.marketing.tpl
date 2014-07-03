@@ -78,7 +78,7 @@
         <ul class="nav navbar-nav">
             {if isset($thinkup_url)}<li class="nav-link"><a href="{$thinkup_url}">Your Insights</a></li>
             {else}<li class="nav-link"><a href="{$site_root_path}user/">Login</a></li>{/if}
-            <li class="nav-link"><a href="https://github.com/ginatrapani/ThinkUp">Developers</a></li>
+            <li class="nav-link"><a href="{$site_root_path}join.php">Pricing</a></li>
             <li class="nav-link"><a href="{$site_root_path}about/">About</a></li>
             {if (isset($hide_join) and not $hide_join) or not isset($hide_join)}<li class="nav-button"><a class="btn btn-pill" href="{$site_root_path}join.php">Join now</a></li>{/if}
         </ul>
