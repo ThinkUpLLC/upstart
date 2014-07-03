@@ -76,7 +76,7 @@
 
 
         <ul class="nav navbar-nav">
-            {if isset($subscriber)}<li class="nav-link"><a href="https://{$subscriber->thinkup_username}.thinkup.com/">Insight Stream</a></li>
+            {if isset($thinkup_url)}<li class="nav-link"><a href="{$thinkup_url}">Your Insights</a></li>
             {else}<li class="nav-link"><a href="{$site_root_path}user/">Login</a></li>{/if}
             <li class="nav-link"><a href="https://github.com/ginatrapani/ThinkUp">Developers</a></li>
             <li class="nav-link"><a href="{$site_root_path}about/">About</a></li>

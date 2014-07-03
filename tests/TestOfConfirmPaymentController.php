@@ -29,7 +29,7 @@ class TestOfConfirmPaymentController extends UpstartUnitTestCase {
         $results = $this->confirmPayment();
         $this->assertNoPattern('/Subscriber ID  does not exist./', $results);
         $this->assertPattern('/Welcome to ThinkUp/', $results);
-        $this->assertPattern('/Insight Stream/', $results);
+        $this->assertPattern('/Your Insights/', $results);
     }
 
     public function testReturnFromAmazonWithTwitter() {
