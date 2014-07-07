@@ -19,7 +19,7 @@ class RemindTrialersAboutPaymentController extends Controller {
 
         //Send first payment reminder 24 hours after signup time (day 1)
         $subscribers = $subscriber_dao->getSubscribersFreeTrialPaymentReminder(0, 24);
-        $subject_line = "Loving ThinkUp? Time to join!";
+        $subject_line = "Ready to join ThinkUp & get your FREE gift?";
         $headline = "Loving ThinkUp? Time to join!";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
@@ -32,7 +32,7 @@ class RemindTrialersAboutPaymentController extends Controller {
 
         //Send second payment reminder 144 hours (6 days) after 1st reminder (day 7)
         $subscribers = $subscriber_dao->getSubscribersFreeTrialPaymentReminder(1, 144);
-        $subject_line = "What you won't hear from Facebook or Twitter...";
+        $subject_line = "Enjoying ThinkUp? Join & get a FREE book...";
         $headline = "You've tried ThinkUp for a week...";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
