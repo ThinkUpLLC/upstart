@@ -30,7 +30,7 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $controller->control();
         $sent_email = Mailer::getLastMail();
         $this->debug($sent_email);
-        $this->assertPattern('/Loving ThinkUp\? Time to join!/', $sent_email);
+        $this->assertPattern('/Ready to join ThinkUp & get your FREE gift\?/', $sent_email);
         $this->assertPattern('/Loving ThinkUp\? Time to join!/', $sent_email);
     }
 
@@ -47,7 +47,7 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $controller->control();
         $sent_email = Mailer::getLastMail();
         $this->debug($sent_email);
-        $this->assertPattern('/What you won\'t hear from Facebook or Twitter.../', $sent_email);
+        $this->assertPattern('/Enjoying ThinkUp\? Join & get a FREE book.../', $sent_email);
         $this->assertPattern('/You\'ve tried ThinkUp for a week.../', $sent_email);
     }
 
