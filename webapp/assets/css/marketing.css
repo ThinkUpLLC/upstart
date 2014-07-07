@@ -774,6 +774,12 @@ body.marketing-page .section-legal-text .illustration {
     font-size: 1.375em;
     line-height: 1;
   }
+  body.marketing-page .section-marketing-text .text-header.lil-margin,
+  body.marketing-page .section-legal-text .text-header.lil-margin,
+  body.marketing-page .section-marketing-text h3.lil-margin,
+  body.marketing-page .section-legal-text h3.lil-margin {
+    margin: .25em 0;
+  }
   body.marketing-page .section-marketing-text .list-values,
   body.marketing-page .section-legal-text .list-values {
     padding-left: 0;

@@ -1,17 +1,16 @@
 {include file="_header.marketing.tpl" marketing_page=true
-body_classes="marketing marketing-page" body_id="marketing-faq"}
+body_classes="marketing marketing-page" body_id="marketing-book"}
 
   <div class="container">
-    <section class="section section-legal-text" id="section-legal-text">
+    <section class="section section-marketing-text">
       <h2 class="section-header"><em>Insights</em></h2>
+      <h3 class="text-header lil-margin">Free Book: The Web’s Best Thinkers Look into the Future </h3>
       {include file="_about.nav.tpl" active="book"}
 
-      <h3 class="hc text-header">Free Ebook: The Web’s Best Thinkers Look into the Future </h3>
-
-      <h4 id="what-is"><a href="#what-is">What is <em>Insights</em>?</a></h4>
+      <h4 class="hc text-header">What is <em>Insights</em>?</h4>
 
       <p>
-      <img src="../assets/img/book-cover-small.jpg" style="float: right;" alt="Insights book cover" />
+      <img src="../assets/img/book-cover-small.jpg" class="illustration book-cover" alt="Insights book cover" />
       <em>Insights: Interviews on the Future of the Social Web</em> features interviews with dozens of artists, innovators, entrepreneurs, educators, and technologists including: </p>
 
       <ul>
@@ -28,11 +27,12 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <p>We asked some of the most influential and innovative thinkers on the web about the future of social networking and social media. We want to share their wisdom with you. </p>
 
-      <p><img src="../assets/img/book-promo-interviewees.jpg" style="text-align: center; width: 100%;" alt="Juliana Rotich, John Maeda, Eugene Mirman, danah boyd" />
+      <p><img src="../assets/img/book-promo-interviewees.jpg" style="text-align: center; width: 100%;" alt="Juliana Rotich, John Maeda, Eugene Mirman, danah boyd" /></p>
 
-      <h4 id="what-is-beta"><a href="#how-do-i-get-it">How do I get the book?</a></h4>
+      <h4 class="hc text-header">How do I get the book?</h4>
 
       <p><em>Insights</em> is <strong>free</strong> when you <a href="http://localhost/join/join.php">join ThinkUp</a>.</p>
+
       <p>Already a member? Just head to your <a href="https://www.thinkup.com/join/user/membership.php">membership page</a> and you can download the book in formats that work with your computer, Kindle, iPhone, iPad or other devices.</p>
 
     </section>
