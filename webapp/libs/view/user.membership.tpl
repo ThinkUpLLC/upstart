@@ -34,10 +34,10 @@ body_classes="settings menu-open" body_id="settings-subscription"}
         {if isset($ebook_download_link_pdf)}
         <li class="list-group-item" id="list-group-item-extras">
           <div class="list-group-item-label">Extras</div>
-          <div class="list-group-item-value">Download your copy of <em>Insights</em><br><br>
-          <a href="{$ebook_download_link_pdf}" class="btn btn-default">PDF</a>
-          <a href="{$ebook_download_link_kindle}" class="btn btn-default">Kindle</a>
-          <a href="{$ebook_download_link_epub}" class="btn btn-default">ePub</a></div>
+          <div class="list-group-item-value">Download the <em>Insights</em> book<br><br>
+          <a href="{$ebook_download_link_pdf}" class="btn btn-default btn-with-note">PDF<br><small>8mb</small></a>
+          <a href="{$ebook_download_link_kindle}" class="btn btn-default btn-with-note">Kindle<br><small>32mb</small></a>
+          <a href="{$ebook_download_link_epub}" class="btn btn-default btn-with-note">iBooks<br><small>22mb</small></a></div>
         </li>
         {/if}
       </ul>
