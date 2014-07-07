@@ -1660,6 +1660,18 @@ body.app-message-visible.account .container {
   background: #1777ca;
   color: #fff;
 }
+.btn-default small {
+  color: #93c2e9;
+  font-size: .625em;
+}
+.btn-with-note {
+  line-height: 1;
+  padding: 8px 12px;
+}
+.btn-with-note small {
+  color: #93c2e9;
+  font-size: .625em;
+}
 .btn-transparent {
   background: transparent;
   color: #2785d3;
