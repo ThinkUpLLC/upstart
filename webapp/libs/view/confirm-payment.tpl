@@ -7,7 +7,7 @@ body_classes="marketing marketing-page" body_id="marketing-confirm"}
 
       <img src="{$site_root_path}assets/img/landing/crowd@2x.png" class="illustration book-cover">
 
-      <p>We’re delighted you've joined ThinkUp. Remember, an email containing your first insights will arrive in your inbox soon.</p>
+      <p>We’re delighted you've joined ThinkUp. Remember, an email containing your first insights will arrive in your inbox soon. They’ll also show up at your personal address: <a href="{$thinkup_url}">{$thinkup_url}</a>.</p>
 
       {if $subscriber->network == 'twitter'}
         {assign var='service' value='Facebook'}
@@ -16,10 +16,10 @@ body_classes="marketing marketing-page" body_id="marketing-confirm"}
       {/if}
       <h3 class="hc">Add another service</h3>
       <p>Have a {$service} account? Connect it to ThinkUp to unlock even more insights about the time you spend online.
-      <p><a class="btn btn-pill var-width" href="https://{$subscriber->thinkup_username}.thinkup.com/account/?p={$service|strtolower}">Add a {$service} account</a>
+      <p><a class="btn btn-pill var-width" href="{$thinkup_url}account/?p={$service|strtolower}">Add a {$service} account</a>
 
-      <h3 class="hc">Download your copy of <em>Insights</em></h3>
-      <p>We asked some of the most influential and innovative thinkers on the web about the future of social networking and social media. We want to share their wisdom with you. <a href="{$site_root_path}user/membership.php">Download <em>Insights</em> from your membership page</a>.</p>
+      <h3 class="hc">Download <em>Insights</em> the book</h3>
+      <p>We asked some of the most influential and innovative thinkers on the web about the future of social networking and social media. We want to share their wisdom with you. <a href="{$site_root_path}user/membership.php">Download <em>Insights</em> the book from your membership page</a>.</p>
 
     </section>
 
