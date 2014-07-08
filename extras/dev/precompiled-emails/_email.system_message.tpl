@@ -86,14 +86,6 @@
         <tr>
             <td class="text-pad">
               {$body_html}
-
-              <p>When that’s done, here’s <strong>what you’ll get:</strong></p>
-              <ul>
-                <li>New insights from ThinkUp all day, every day -- including in your inbox each morning </li>
-                <li>You'll lock in username.thinkup.com for yourself</li>
-                <li>You get a direct line to the ThinkUp team to tell us what you’d like to see in the future</li>
-              </ul>
-              <p>We're still a tiny team here at ThinkUp, so we value every one of our members. If you've got a question about your subscription, just reply to this message and we'll be happy to answer it. Thanks!</p>
             </td>
             <td class="expander"></td>
         </tr>

@@ -406,14 +406,6 @@ color: #417505 !important;
         <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
             <td class="text-pad" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; color: #222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 18px; font-size: 14px; margin: 0; padding: 10px;" align="left" valign="top">
               {$body_html}
-
-              <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">When that’s done, here’s <strong>what you’ll get:</strong></p>
-              <ul>
-                <li style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 1.3; margin: 0; padding: 0;">New insights from ThinkUp all day, every day -- including in your inbox each morning </li>
-                <li style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 1.3; margin: 0; padding: 0;">You'll lock in username.thinkup.com for yourself</li>
-                <li style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 1.3; margin: 0; padding: 0;">You get a direct line to the ThinkUp team to tell us what you’d like to see in the future</li>
-              </ul>
-              <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">We're still a tiny team here at ThinkUp, so we value every one of our members. If you've got a question about your subscription, just reply to this message and we'll be happy to answer it. Thanks!</p>
             </td>
             <td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 18px; font-size: 14px; margin: 0; padding: 0;" align="left" valign="top"></td>
         </tr>
