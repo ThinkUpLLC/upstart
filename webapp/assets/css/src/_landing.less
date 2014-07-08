@@ -195,39 +195,6 @@
   }
 }
 
-
-#container-analytics {
-  .section-colors(@color-mint);
-  height: auto;
-
-  @media (min-width: 760px) {
-    height: 300px;
-  }
-
-  .section-copy {
-    @media (min-width: 760px) {
-      padding: 15px 0 0 560px;
-      max-width: none;
-    }
-
-    .illustration {
-      width: 300px;
-      height: 208px;
-      background: url(../img/landing/insight-mint-mobile@2x.png) top left no-repeat;
-      background-size: 300px 211px;
-      margin-bottom: 20px;
-
-      @media (min-width: 760px) {
-        width: 540px;
-        height: 146px;
-        background: url(../img/landing/insight-mint-desktop@2x.png) top left no-repeat;
-        background-size: 540px 146px;
-        margin-bottom: 0;
-      }
-    }
-  }
-}
-
 #container-signup-top {
   .section-colors(#fff, #444, #222);
   height: auto;
@@ -278,10 +245,10 @@
 #container-what {
   .section-colors(@color-mint, #fff);
 
-  height: 580px;
+  height: 625px;
 
   @media (min-width: 760px) {
-    height: 450px;
+    height: 500px;
   }
 
   .section-copy {
@@ -327,7 +294,7 @@
       @media (min-width: 760px) {
         position: absolute;
         left: -52px;
-        top: 10px;
+        top: 15px;
         padding: 0;
       }
 
@@ -339,6 +306,7 @@
 
         @media (min-width: 760px) {
           display: block;
+          padding: 5px 10px;
         }
 
         a {
@@ -380,13 +348,13 @@
       margin: 0 auto 10px;
       text-indent: 100%;
       font: 0/0 a;
-      width: 300px;
+      width: 310px;
     }
 
     .carousel-insight(@m_height, @d_height, @file_prefix) {
       height: @m_height;
       background: url("../img/landing/@{file_prefix}-mobile@2x.png") top left no-repeat;
-      background-size: 300px @m_height;
+      background-size: 310px @m_height;
 
       @media (min-width: 760px) {
         width: 540px;
@@ -397,23 +365,27 @@
     }
 
     #sample-1 .sample-insight {
-      .carousel-insight(208px, 146px, "insight-mint");
+      .carousel-insight(208px, 146px, "insight-personal");
     }
 
     #sample-2 .sample-insight {
-      .carousel-insight(245px, 187px, "insight-creamsicle-2");
+      .carousel-insight(231px, 187px, "insight-lol");
     }
 
     #sample-3 .sample-insight {
-      .carousel-insight(320px, 240px, "insight-sepia");
+      .carousel-insight(305px, 225px, "insight-history");
     }
 
     #sample-4 .sample-insight {
-      .carousel-insight(136px, 92px, "insight-creamsicle-3");
+      .carousel-insight(157px, 92px, "insight-gratitude");
     }
 
     #sample-5 .sample-insight {
-      .carousel-insight(193px, 128px, "insight-creamsicle-1");
+      .carousel-insight(369px, 338px, "insight-oscars");
+    }
+
+    #sample-6 .sample-insight {
+      .carousel-insight(193px, 128px, "insight-list");
     }
   }
 }
@@ -561,10 +533,10 @@
   }
 
   .illustration {
-    width: 300px;
-    height: 413px;
-    background: url(../img/landing/insight-salmon-mobile@2x.png) top left no-repeat;
-    background-size: 300px 413px;
+    width: 310px;
+    height: 340px;
+    background: url(../img/landing/insight-last-week-mobile@2x.png) top left no-repeat;
+    background-size: 310px 340px;
     margin-bottom: 20px;
 
     @media (min-width: 760px) {
@@ -572,9 +544,9 @@
       left: auto;
       right: 0;
       width: 540px;
-      height: 338px;
-      background: url(../img/landing/insight-salmon-desktop@2x.png) top left no-repeat;
-      background-size: 540px 338px;
+      height: 307px;
+      background: url(../img/landing/insight-last-week-desktop@2x.png) top left no-repeat;
+      background-size: 540px 307px;
     }
   }
 }
@@ -606,16 +578,16 @@
     }
 
     .illustration {
-      width: 300px;
+      width: 310px;
       height: 193px;
-      background: url(../img/landing/insight-seabreeze-mobile@2x.png) top left no-repeat;
-      background-size: 300px 193px;
+      background: url(../img/landing/insight-quotations-mobile@2x.png) top left no-repeat;
+      background-size: 310px 193px;
       margin-bottom: 20px;
 
       @media (min-width: 760px) {
         width: 540px;
         height: 128px;
-        background: url(../img/landing/insight-seabreeze-desktop@2x.png) top left no-repeat;
+        background: url(../img/landing/insight-quotations-desktop@2x.png) top left no-repeat;
         background-size: 540px 128px;
         margin-bottom: 0;
       }
