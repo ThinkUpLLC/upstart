@@ -24,7 +24,7 @@
     <script src="{$site_root_path}assets/js/vendor/bootstrap.min.js"></script>
     <script src="{$site_root_path}assets/js/vendor/jpanelmenu.js"></script>
     <script src="//platform.twitter.com/widgets.js"></script>
-     <script src="{$site_root_path}assets/js/thinkup.js "></script>
+     <script src="{$site_root_path}assets/js/thinkup.min.js "></script>
     {if isset($include_tz_js) and $include_tz_js}
     {if not isset($owner) or $owner->timezone eq 'UTC'}
       <script type="text/javascript" src="{$site_root_path}assets/js/vendor/jstz-1.0.4.min.js"></script>
