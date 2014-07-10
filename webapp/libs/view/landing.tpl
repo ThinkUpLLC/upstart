@@ -26,6 +26,7 @@
           <li data-target="#sample-insights-carousel" data-slide-to="2"><a href="#">3</a></li>
           <li data-target="#sample-insights-carousel" data-slide-to="3"><a href="#">4</a></li>
           <li data-target="#sample-insights-carousel" data-slide-to="4"><a href="#">5</a></li>
+          <li data-target="#sample-insights-carousel" data-slide-to="5"><a href="#">6</a></li>
 
         </ul>
         <div class="sample-insights carousel-inner">
@@ -42,6 +43,9 @@
             <div class="sample-insight"></div>
           </figure>
           <figure class="item" id="sample-5">
+            <div class="sample-insight"></div>
+          </figure>
+          <figure class="item" id="sample-6">
             <div class="sample-insight"></div>
           </figure>
         </div>
