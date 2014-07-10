@@ -1,5 +1,5 @@
 (function() {
-  var $lastActiveDateGroup, animateContentShift, checkEmailAvailability, checkEmailField, checkEmailFormat, checkPasswordField, checkPasswordFormat, checkSettingsPasswordField, checkTermsField, checkUsername, constants, featureTest, focusField, pinDateMarker, setActiveDateGroup, setDateGroupData, setFixedPadding, setListOpenData, setNavHeight, timerEmail, timerPassword, timerUsername, wt;
+  var $lastActiveDateGroup, animateContentShift, checkEmailAvailability, checkEmailField, checkEmailFormat, checkPasswordField, checkPasswordFormat, checkSettingsPasswordField, checkTermsField, checkUsername, constants, featureTest, focusField, pinDateMarker, positionUsernameHelper, setActiveDateGroup, setDateGroupData, setFixedPadding, setListOpenData, setNavHeight, timerEmail, timerPassword, timerUsername, wt;
 
   wt = window.tu = {};
 
@@ -249,7 +249,7 @@
       }
       return timerUsername = setTimeout(function() {
         var $group, _ref;
-        $group = $el.parent();
+        $group = $el.parents(".form-group");
         if (((_ref = $el.val().match(/^[\w]{3,15}$/gi)) != null ? _ref.length : void 0) !== 1) {
           $group.removeClass("form-group-ok").addClass("form-group-warning");
           return wt.appMessage.create("Your username must be between 3 - 15 unaccented numbers or letters.", "warning");
@@ -266,6 +266,22 @@
           });
         }
       }, 500);
+    }
+  };
+
+  positionUsernameHelper = function($input) {
+    var $ig, $uh, $ul, gWidth, tWidth;
+    $ul = $("#username-length");
+    $ig = $input.parents(".input-with-domain");
+    $uh = $ig.find(".domain");
+    $ul.text($input.val());
+    gWidth = $ig.width();
+    tWidth = $ul.width();
+    if (tWidth + 15 + 110 < gWidth && $ul.text().length) {
+      console.log("" + ($ul.text()) + ": " + tWidth);
+      return $uh.css("left", tWidth + 15);
+    } else {
+      return $uh.css("left", "6.95em");
     }
   };
 
@@ -301,7 +317,7 @@
       }
       return timerPassword = setTimeout(function() {
         var $group;
-        $group = $el.parent();
+        $group = $el.parents(".form-group");
         if (checkPasswordFormat($el.val())) {
           $group.addClass("form-group-ok").removeClass("form-group-warning");
           $group.find(".help-block").remove();
@@ -347,7 +363,7 @@
       }
       return timerEmail = setTimeout(function() {
         var $group;
-        $group = $el.parent();
+        $group = $el.parents(".form-group");
         if (checkEmailFormat($el.val())) {
           return checkEmailAvailability($el.val(), function(isGood) {
             if (isGood) {
@@ -383,7 +399,7 @@
     _results = [];
     for (_i = 0, _len = $el_array.length; _i < _len; _i++) {
       $el = $el_array[_i];
-      if ($el.val() === "" || $el.parent().hasClass("form-group-warning")) {
+      if ($el.val() === "" || $el.parents(".form-group").hasClass("form-group-warning")) {
         $el.focus();
         break;
       } else {
@@ -499,12 +515,14 @@
     });
     if ($("#form-register").length) {
       focusField([$("#email"), $("#username"), $("#pwd")]);
+      positionUsernameHelper($("#username"));
       $("#username, #pwd, #email").on("blur", function(e) {
         if ($(this).val().length) {
           return $(this).data("do-validate", "1").keyup();
         }
       });
       $("#username").on("keyup", function() {
+        positionUsernameHelper($(this));
         if ($(this).data("do-validate") === "1") {
           return checkUsername($(this));
         }

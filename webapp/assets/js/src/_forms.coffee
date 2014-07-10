@@ -3,7 +3,7 @@ checkUsername = ($el) ->
   if $el.val() isnt ""
     if timerUsername then clearTimeout timerUsername
     timerUsername = setTimeout(->
-      $group = $el.parent()
+      $group = $el.parents(".form-group")
       if $el.val().match(/^[\w]{3,15}$/gi)?.length isnt 1
         $group.removeClass("form-group-ok").addClass("form-group-warning")
         wt.appMessage.create "Your username must be between 3 - 15 unaccented numbers or letters.", "warning"
@@ -18,6 +18,21 @@ checkUsername = ($el) ->
             wt.appMessage.destroy()
     , 500
     )
+
+positionUsernameHelper = ($input) ->
+  $ul = $("#username-length")
+  $ig = $input.parents(".input-with-domain")
+  $uh = $ig.find(".domain")
+
+  $ul.text $input.val()
+  gWidth  = $ig.width()
+  tWidth  = $ul.width()
+
+  if tWidth + 15 + 110 < gWidth and $ul.text().length
+    console.log "#{$ul.text()}: #{tWidth}"
+    $uh.css("left", tWidth + 15)
+  else
+    $uh.css("left", "6.95em")
 
 checkEmailAvailability = (email, cb) ->
   isGood = false
@@ -36,7 +51,7 @@ checkPasswordField = ($el) ->
   if $el.val() isnt ""
     if timerPassword then clearTimeout timerPassword
     timerPassword = setTimeout(->
-      $group = $el.parent()
+      $group = $el.parents(".form-group")
       if checkPasswordFormat $el.val()
         $group.addClass("form-group-ok").removeClass("form-group-warning")
         $group.find(".help-block").remove()
@@ -74,7 +89,7 @@ checkEmailField = ($el) ->
   if $el.val() isnt ""
     if timerEmail then clearTimeout timerEmail
     timerEmail = setTimeout(->
-      $group = $el.parent()
+      $group = $el.parents(".form-group")
       if checkEmailFormat $el.val()
         checkEmailAvailability $el.val(), (isGood) ->
           if isGood
@@ -101,6 +116,6 @@ checkTermsField = ($el) ->
 # Focus on the first form field without an empty value or error.
 focusField = ($el_array) ->
   for $el in $el_array
-    if $el.val() is "" or $el.parent().hasClass "form-group-warning"
+    if $el.val() is "" or $el.parents(".form-group").hasClass "form-group-warning"
       $el.focus()
       break

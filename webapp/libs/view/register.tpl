@@ -20,7 +20,7 @@
         <div class="form-group has-addon{if isset($error_msgs.username)} form-group-warning{/if}">
           <label class="control-label" for="username">Username</label>
           <div class="input-with-domain">
-            <input type="text" class="form-control" id="username"
+            <input type="text" class="form-control" id="username" autocomplete="off" placeholder="yourusername"
             {if isset($username)}value="{$username|filter_xss}"{/if} name="username">
             <span class="domain">.thinkup.com</span>
             <div id="username-length">{if isset($username)}{$username|filter_xss}{/if}</div>

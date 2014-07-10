@@ -93,10 +93,13 @@ $ ->
 
   if $("#form-register").length
     focusField [$("#email"),$("#username"),$("#pwd")]
+    positionUsernameHelper $("#username")
     $("#username, #pwd, #email").on "blur", (e) ->
       if $(@).val().length then $(@).data("do-validate", "1").keyup()
 
-    $("#username").on "keyup", -> if $(@).data("do-validate") is "1" then checkUsername $(@)
+    $("#username").on "keyup", ->
+      positionUsernameHelper $(@)
+      if $(@).data("do-validate") is "1" then checkUsername $(@)
     $("#pwd").on "keyup",      -> if $(@).data("do-validate") is "1" then checkPasswordField $(@)
     $("#email").on "keyup",    -> if $(@).data("do-validate") is "1" then checkEmailField $(@)
     $("#terms").on "click",    -> if $(@).data("do-validate") is "1" then checkTermsField $(@)

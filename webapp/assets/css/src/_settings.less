@@ -196,9 +196,13 @@ textarea.form-control {
 .input-with-domain {
   position: relative;
 
+  .form-control {
+    padding-right: 110px;
+  }
+
   .domain {
     position: absolute;
-    right: 0;
+    left: 6.95em;
     top: 0;
     width: 110px;
     color: @gray-light;
@@ -206,6 +210,7 @@ textarea.form-control {
     padding: 0 5px;
     font-size: 16px;
     line-height: 1.5;
+    font-weight: 400;
   }
 
   #username-length {
@@ -213,6 +218,7 @@ textarea.form-control {
     visibility: hidden;
     height: auto;
     width: auto;
+    font-size: 16px;
   }
 }
 
