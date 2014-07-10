@@ -2,15 +2,16 @@
 body_classes="settings menu-open" body_id="settings-subscription"}
 
   <div class="container">
-      <header>
+      <header class="container-header">
         <h1>Membership Info</h1>
         <h2>This is what our database knows.</h2>
       </header>
+
       <ul class="list-group">
         <li class="list-group-item">
-          <div class="list-group-item-label">Username</div>
-          <div class="list-group-item-value">{if isset($subscriber->thinkup_username)}
-            <a href="{$thinkup_url}">{$subscriber->thinkup_username}</a>{else}<em>None set</em>{/if}</div>
+          <div class="list-group-item-label">Insight Stream URL</div>
+          <div class="list-group-item-value">{if isset({$thinkup_url})}
+            <a href="{$thinkup_url}">{$thinkup_url}</a>{else}<em>None set</em>{/if}</div>
         </li>
         <li class="list-group-item">
           <div class="list-group-item-label">Level</div>

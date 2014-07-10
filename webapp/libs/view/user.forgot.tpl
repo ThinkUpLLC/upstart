@@ -2,12 +2,12 @@
 body_classes="settings account menu-off"}
 
   <div class="container">
-    <header>
+    <header class="container-header">
       <h1>Reset your password</h1>
       <h2>You'll get a password reset email.</h2>
     </header>
 
-    <form action="{$site_root_path}user/forgot.php" method="POST" role="form" class="form-horizontal" id="form-forgot-password">
+    <form action="{$site_root_path}user/forgot.php" method="POST" role="form" id="form-forgot-password">
       <fieldset class="fieldset-no-header">
         <div class="form-group">
           <label class="control-label" for="control-email">Email</label>
