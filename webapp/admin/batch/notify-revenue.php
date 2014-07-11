@@ -36,8 +36,8 @@ $message = "That's ". $message. " ".number_format($daily_signups[$yesterday]['ne
     (($daily_signups[$day_before]['new_members'] == 1)?'':'s').
     ".";
 
-$y_axis_max = ((max($daily_signups[$today]['new_members'], $daily_signups[$yesterday]['new_members'],
-    $daily_signups[$day_before]['new_members']) / 100 ) + 1) * 100;
+$y_axis_max = ((floor(max($daily_signups[$today]['new_members'], $daily_signups[$yesterday]['new_members'],
+    $daily_signups[$day_before]['new_members']) / 100 )) + 1) * 100;
 
 $chart_url = 'https://chart.googleapis.com/chart?cht=lc&chs=500x250&chd=t:'.
     $daily_signups[$day_before]['new_members'].
