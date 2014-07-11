@@ -36,11 +36,24 @@ $message = "That's ". $message. " ".number_format($daily_signups[$yesterday]['ne
     (($daily_signups[$day_before]['new_members'] == 1)?'':'s').
     ".";
 
+$y_axis_max = ((max($daily_signups[$today]['new_members'], $daily_signups[$yesterday]['new_members'],
+    $daily_signups[$day_before]['new_members']) / 100 ) + 1) * 100;
+
 $chart_url = 'https://chart.googleapis.com/chart?cht=lc&chs=500x250&chd=t:'.
     $daily_signups[$day_before]['new_members'].
     ','.$daily_signups[$yesterday]['new_members'].
     ','.$daily_signups[$today]['new_members'].
-    '&chxt=x,y&chxl=0:|Day+Before|Yesterday|Today|1:||25|50|75|100|125&chds=0,125';
+    '&chxt=x,y&chxl=0:|Day+Before|Yesterday|Today|1:|';
+
+//|50|100|150|200|250|300|350|400|450|500
+$total_y_axis_markers = $y_axis_max / 50;
+$i = 0;
+while ($i < $y_axis_max ) {
+    $i = $i+50;
+    $chart_url .= '|'.$i;
+}
+
+$chart_url .= '&chds=0,'.$y_axis_max;
 
 $payload = '{"channel": "'.$channel.'", "username": "upstartbot", "text": "'. $subject.'\n'.
 	$message. '\n'.$chart_url.'", "icon_emoji": ":cubimal_chick:"}';
