@@ -38,7 +38,9 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <p>ThinkUp costs money because we're committed to making sure our company and our product are sustainable and around for the long term. Our members say ThinkUp is worth it, because they like the service and believe in our company, especially as our product improves.</p>
 
-      <p>We don’t have a free trial yet, but we do offer an effortless 100% money-back guarantee. 99.65% of our users don’t ask for it.</p>
+      <h4 id="free-trial"><a href="#why-does-it-cost-money">Is there a free trial?</a></h4>
+
+      <p>Yes! We offer a 14-day free trial. </p>
 
       <h3 class="hc text-header">Supported Services and Features</h3>
 
