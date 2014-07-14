@@ -113,6 +113,30 @@
     }
   };
 
+  wt.inputWarning = {
+    create: function(message, $group) {
+      var $elMsg, $label, $message;
+      $group.addClass("form-group-warning").removeClass("form-group-ok");
+      if ($group.find(".warning-block").length) {
+        $elMsg = $group.find(".warning-block");
+        return $elMsg.text(message);
+      } else {
+        $label = $group.find(".control-label");
+        $message = $("<div class=\"warning-block\">" + message + "</div>");
+        return $group.prepend($message);
+      }
+    },
+    destroy: function($group, isOk) {
+      if (isOk == null) {
+        isOk = true;
+      }
+      $group.removeClass("form-group-warning").find(".warning-block").remove();
+      if (isOk) {
+        return $group.addClass("form-group-ok");
+      }
+    }
+  };
+
   constants = window.tu.constants = {};
 
   constants.colors = {
@@ -243,30 +267,24 @@
   timerUsername = null;
 
   checkUsername = function($el) {
-    if ($el.val() !== "") {
-      if (timerUsername) {
-        clearTimeout(timerUsername);
-      }
-      return timerUsername = setTimeout(function() {
-        var $group, _ref;
-        $group = $el.parents(".form-group");
-        if (((_ref = $el.val().match(/^[\w]{3,15}$/gi)) != null ? _ref.length : void 0) !== 1) {
-          $group.removeClass("form-group-ok").addClass("form-group-warning");
-          return wt.appMessage.create("Your username must be between 3 - 15 unaccented numbers or letters.", "warning");
-        } else {
-          return $.getJSON("user/check.php?un=" + (encodeURIComponent($el.val())), function(data) {
-            if (!data.available) {
-              $group.removeClass("form-group-ok").addClass("form-group-warning");
-              return wt.appMessage.create("Sorry, someone already grabbed that name. Please try again.", "warning");
-            } else {
-              $group.addClass("form-group-ok").removeClass("form-group-warning");
-              $group.find(".help-block").remove();
-              return wt.appMessage.destroy();
-            }
-          });
-        }
-      }, 500);
+    if (timerUsername) {
+      clearTimeout(timerUsername);
     }
+    return timerUsername = setTimeout(function() {
+      var $group, _ref;
+      $group = $el.parents(".form-group");
+      if (((_ref = $el.val().match(/^[\w]{3,15}$/gi)) != null ? _ref.length : void 0) !== 1) {
+        return wt.inputWarning.create("Your username must be between 3 - 15 unaccented numbers or letters.", $group);
+      } else {
+        return $.getJSON("user/check.php?un=" + (encodeURIComponent($el.val())), function(data) {
+          if (!data.available) {
+            return wt.inputWarning.create("Sorry, someone already grabbed that name. Please try again.", $group);
+          } else {
+            return wt.inputWarning.destroy($group);
+          }
+        });
+      }
+    }, 500);
   };
 
   positionUsernameHelper = function($input) {
@@ -277,11 +295,15 @@
     $ul.text($input.val());
     gWidth = $ig.width();
     tWidth = $ul.width();
-    if (tWidth + 15 + 110 < gWidth && $ul.text().length) {
-      console.log("" + ($ul.text()) + ": " + tWidth);
-      return $uh.css("left", tWidth + 15);
+    if ($input.val().length === 0) {
+      return $uh.hide();
     } else {
-      return $uh.css("left", "6.95em");
+      $uh.show();
+      if (tWidth + 15 + 110 < gWidth) {
+        return $uh.css("left", tWidth + 15);
+      } else {
+        return $uh.css("left", "6.95em");
+      }
     }
   };
 
@@ -319,34 +341,38 @@
         var $group;
         $group = $el.parents(".form-group");
         if (checkPasswordFormat($el.val())) {
-          $group.addClass("form-group-ok").removeClass("form-group-warning");
-          $group.find(".help-block").remove();
-          return wt.appMessage.destroy();
+          return wt.inputWarning.destroy($group);
         } else {
-          $group.removeClass("form-group-ok").addClass("form-group-warning");
-          return wt.appMessage.create("Your password must be at least 8 characters and contain both numbers &amp; letters.", "warning");
+          return wt.inputWarning.create("Passwords must be at least 8 characters and contain both numbers and letters.", $group);
         }
       }, 500);
     }
   };
 
   checkSettingsPasswordField = function($form, e) {
-    $form.find('#control-password-new, #control-password-verify').parent().removeClass('form-group-warning');
-    wt.appMessage.destroy();
+    var $pgc, $pgn, $pgv;
+    $pgc = $form.find("#control-password-current").parent();
+    $pgn = $form.find("#control-password-new").parent();
+    $pgv = $form.find("#control-password-verify").parent();
+    wt.inputWarning.destroy($pgc, false);
+    wt.inputWarning.destroy($pgn, false);
+    wt.inputWarning.destroy($pgv, false);
     if ($form.find("#control-password-current").length) {
       if ($form.find("#control-password-current").val().length !== 0) {
         if ($form.find("#control-password-new").val().length === 0 && $form.find("#control-password-verify").val().length === 0) {
-          wt.appMessage.create("You didn't provide a new password in both fields.", "warning");
-          $form.find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning");
+          wt.inputWarning.destroy($pgc);
+          wt.inputWarning.create("Please provide a new password in both fields.", $pgn);
+          wt.inputWarning.create("Please provide a new password in both fields.", $pgv);
           return e.preventDefault();
         } else if (!checkPasswordFormat($form.find("#control-password-new").val())) {
-          wt.appMessage.create("Your password must be at least 8 characters, contain both numbers &amp; letters, " + "and omit special characters.", "warning");
-          $form.find("#control-password-new").parent().addClass("form-group-warning");
+          wt.inputWarning.destroy($pgc);
+          wt.inputWarning.create("Passwords must be 8+ characters and contain both letters and numbers.", $pgn);
           return e.preventDefault();
         } else if ($form.find("#control-password-new").val() !== $form.find("#control-password-verify").val()) {
           e.preventDefault();
-          wt.appMessage.create("The passwords must match.", "warning");
-          return $form.find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning");
+          wt.inputWarning.destroy($pgc);
+          wt.inputWarning.destroy($pgn);
+          return wt.inputWarning.create("The passwords must match.", $pgv);
         }
       }
     }
@@ -367,17 +393,13 @@
         if (checkEmailFormat($el.val())) {
           return checkEmailAvailability($el.val(), function(isGood) {
             if (isGood) {
-              $group.addClass("form-group-ok").removeClass("form-group-warning");
-              $group.find(".help-block").remove();
-              return wt.appMessage.destroy();
+              return wt.inputWarning.destroy($group);
             } else {
-              $group.removeClass("form-group-ok").addClass("form-group-warning");
-              return wt.appMessage.create("An existing account is using this email address.", "warning");
+              return wt.inputWarning.create("An existing account is using this email address.", $group);
             }
           });
         } else {
-          $group.removeClass("form-group-ok").addClass("form-group-warning");
-          return wt.appMessage.create("Please enter a valid email address.", "warning");
+          return wt.inputWarning.create("Please enter a valid email address.", $group);
         }
       }, 500);
     }
@@ -408,6 +430,60 @@
     }
     return _results;
   };
+
+  $(function() {
+    if ($("#form-register").length) {
+      focusField([$("#email"), $("#username"), $("#pwd")]);
+      positionUsernameHelper($("#username"));
+      $("#username, #pwd, #email").on("blur", function(e) {
+        if ($(this).val().length) {
+          return $(this).data("do-validate", "1").keyup();
+        }
+      }).each(function() {
+        if ($(this).parents(".form-group-warning").length) {
+          return $(this).data("do-validate", "1").keyup();
+        }
+      });
+      $("#username").on("keyup", function() {
+        positionUsernameHelper($(this));
+        if ($(this).data("do-validate") === "1") {
+          return checkUsername($(this));
+        }
+      });
+      $("#pwd").on("keyup", function() {
+        if ($(this).data("do-validate") === "1") {
+          return checkPasswordField($(this));
+        }
+      });
+      $("#email").on("keyup", function() {
+        if ($(this).data("do-validate") === "1") {
+          return checkEmailField($(this));
+        }
+      });
+      $("#terms").on("click", function() {
+        if ($(this).data("do-validate") === "1") {
+          return checkTermsField($(this));
+        }
+      });
+    }
+    $("#form-reset").on("submit", function(e) {
+      if ($(this).find("#password").val().length === 0 || $(this).find("#password_confirm").val().length === 0) {
+        wt.appMessage.create("You must fill in both fields", "warning");
+        return e.preventDefault();
+      } else if (!checkPasswordFormat($(this).find("#password").val())) {
+        wt.appMessage.create("Your password must be at least 8 characters, contain both numbers &amp; letters, " + "and omit special characters.", "warning");
+        return e.preventDefault();
+      } else if ($(this).find("#password").val() !== $(this).find("#password_confirm").val()) {
+        e.preventDefault();
+        return wt.appMessage.create("Passwords must match", "warning");
+      } else {
+        return wt.appMessage.destroy();
+      }
+    });
+    return $("#form-settings").on("submit", function(e) {
+      return checkSettingsPasswordField($(this), e);
+    });
+  });
 
   $(function() {
     var isjPMon, jPM;
@@ -512,53 +588,6 @@
     $("body").on("click", ".app-message .app-message-close", function(e) {
       e.preventDefault();
       return wt.appMessage.destroy();
-    });
-    if ($("#form-register").length) {
-      focusField([$("#email"), $("#username"), $("#pwd")]);
-      positionUsernameHelper($("#username"));
-      $("#username, #pwd, #email").on("blur", function(e) {
-        if ($(this).val().length) {
-          return $(this).data("do-validate", "1").keyup();
-        }
-      });
-      $("#username").on("keyup", function() {
-        positionUsernameHelper($(this));
-        if ($(this).data("do-validate") === "1") {
-          return checkUsername($(this));
-        }
-      });
-      $("#pwd").on("keyup", function() {
-        if ($(this).data("do-validate") === "1") {
-          return checkPasswordField($(this));
-        }
-      });
-      $("#email").on("keyup", function() {
-        if ($(this).data("do-validate") === "1") {
-          return checkEmailField($(this));
-        }
-      });
-      $("#terms").on("click", function() {
-        if ($(this).data("do-validate") === "1") {
-          return checkTermsField($(this));
-        }
-      });
-    }
-    $("#form-reset").on("submit", function(e) {
-      if ($(this).find("#password").val().length === 0 || $(this).find("#password_confirm").val().length === 0) {
-        wt.appMessage.create("You must fill in both fields", "warning");
-        return e.preventDefault();
-      } else if (!checkPasswordFormat($(this).find("#password").val())) {
-        wt.appMessage.create("Your password must be at least 8 characters, contain both numbers &amp; letters, " + "and omit special characters.", "warning");
-        return e.preventDefault();
-      } else if ($(this).find("#password").val() !== $(this).find("#password_confirm").val()) {
-        e.preventDefault();
-        return wt.appMessage.create("Passwords must match", "warning");
-      } else {
-        return wt.appMessage.destroy();
-      }
-    });
-    $("#form-settings").on("submit", function(e) {
-      return checkSettingsPasswordField($(this), e);
     });
     return $("body").on("click", ".show-section", function(e) {
       var $el;

@@ -99,7 +99,7 @@ fieldset header .help-text {
 .form-group.form-group-ok:before {
   position: absolute;
   right: 9px;
-  top: 3px;
+  top: 5px;
   font-size: 12px;
   opacity: .75;
 }
@@ -107,9 +107,6 @@ fieldset header .help-text {
   content: "\f071";
   color: #d0021b;
   right: 7px;
-}
-.form-group.form-group-warning .help-block {
-  color: #d0021b;
 }
 .form-group.form-group-ok:before {
   content: "\f058";
@@ -152,8 +149,13 @@ fieldset header .help-text {
   text-align: left;
   font-weight: 400;
   font-size: 12px;
-  padding: 4px 5px;
-  line-height: 1;
+  padding: 3px 5px 2px;
+  line-height: 1.25;
+}
+.form-group-warning .control-label {
+  position: relative;
+  top: -2em;
+  display: none;
 }
 .form-control,
 .list-group-item-value {
@@ -192,6 +194,7 @@ textarea.form-control {
   padding-right: 110px;
 }
 .input-with-domain .domain {
+  display: none;
   position: absolute;
   left: 6.95em;
   top: 0;
@@ -210,12 +213,18 @@ textarea.form-control {
   width: auto;
   font-size: 16px;
 }
-.help-block {
+.help-block,
+.warning-block {
   padding: 4px 5px;
-  margin: 0;
+  margin: 0 0 5px;
   color: #b3b3b3;
   font-size: 12px;
-  line-height: 1.33;
+  line-height: 1.25;
+}
+.warning-block {
+  color: #d0021b;
+  position: relative;
+  padding: 3px 15px 2px 5px;
 }
 .form-group-toggle .control-label {
   width: 100%;
@@ -298,6 +307,11 @@ textarea.form-control {
   border: 0;
   line-height: 1;
   font-weight: 600;
+}
+.btn-submit:hover,
+.btn-submit:focus {
+  background: #0d416e;
+  color: #fff;
 }
 @media (min-width: 540px) {
   .btn-circle {
@@ -498,7 +512,14 @@ body#settings-registration .container .form-group-radio .control-label {
   max-width: none;
   width: 215px;
   font-size: 14px;
-  padding: 17px 10px 10px;
+  padding: 16px 10px 11px;
+}
+body#settings-registration .container .form-group-radio.form-group-warning .control-label {
+  top: 0;
+  display: block;
+}
+body#settings-registration .container .form-group-radio.form-group-warning .warning-block {
+  clear: both;
 }
 body.account {
   background: #46bcff;

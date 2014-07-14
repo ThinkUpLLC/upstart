@@ -99,7 +99,7 @@ fieldset {
     &:before {
       position: absolute;
       right: 9px;
-      top: 3px;
+      top: 5px;
       font-size: 12px;
       opacity: .75;
     }
@@ -111,10 +111,6 @@ fieldset {
       content: "\f071";
       color: @red-warning;
       right: 7px;
-    }
-
-    .help-block {
-      color: @red-warning;
     }
   }
 
@@ -158,8 +154,14 @@ fieldset {
   text-align: left;
   font-weight: 400;
   font-size: 12px;
-  padding: 4px 5px;
-  line-height: 1;
+  padding: 3px 5px 2px;
+  line-height: 1.25;
+
+  .form-group-warning & {
+    position: relative;
+    top: -2em;
+    display: none;
+  }
 }
 
 .form-control {
@@ -201,6 +203,7 @@ textarea.form-control {
   }
 
   .domain {
+    display: none;
     position: absolute;
     left: 6.95em;
     top: 0;
@@ -225,10 +228,17 @@ textarea.form-control {
 
 .help-block {
   padding: 4px 5px;
-  margin: 0;
+  margin: 0 0 5px;
   color: lighten(@gray-light,10%);
   font-size: 12px;
-  line-height: 1.33;
+  line-height: 1.25;
+}
+
+.warning-block {
+  &:extend(.help-block);
+  color: @red-warning;
+  position: relative;
+  padding: 3px 15px 2px 5px;
 }
 
 .form-group-toggle {
@@ -312,6 +322,8 @@ textarea.form-control {
   }
 }
 
+
+
 .btn-submit {
   z-index: 101;
   width: auto;
@@ -325,6 +337,11 @@ textarea.form-control {
   border: 0;
   line-height: 1;
   font-weight: 600;
+
+  &:hover, &:focus {
+    background: darken(@blue-action, 10%);
+    color: #fff;
+  }
 }
 
 .btn-circle {
@@ -577,7 +594,18 @@ body#settings-registration {
         max-width: none;
         width: 215px;
         font-size: 14px;
-        padding: 17px 10px 10px;
+        padding: 16px 10px 11px;
+      }
+
+      &.form-group-warning {
+        .control-label {
+          top: 0;
+          display: block;
+        }
+
+        .warning-block {
+          clear: both;
+        }
       }
     }
 
