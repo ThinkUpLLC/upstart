@@ -4,10 +4,10 @@
   <div class="section section-screenshot" id="section-signup-top">
     <h3 class="section-header">There are things Facebook &amp; Twitter don't tell you.</h3>
     <div class="section-copy">
-      <p>ThinkUp gives you insights about your social networks that you can't find anywhere else. Sign up for our Free 14-Day Trial and see what you've been missing.</p>
+      <p>ThinkUp gives you insights about your social networks that you can't find anywhere else. Sign up for your 14-day free trial and see what you've been missing.</p>
       <div class="signup-buttons">
-        <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign in with</small><br>Twitter</a>
-        <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign in with</small><br>Facebook</a>
+        <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
+        <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign up with</small><br>Facebook</a>
       </div>
     </div>
   </div>
@@ -59,7 +59,7 @@
   <div class="section section-screenshot" id="section-specs">
     <h3 class="section-header">ThinkUp works the way that you do.</h3>
     <div class="section-copy">
-      <p>ThinkUp’s insights come any way you want them. Check them any time on your phone, tablet, or computer. And get a personalized email telling you what's up with your friends and followers every day (or less often if you don't like email). </p>
+      <p>ThinkUp’s insights come any way you want them. Check them any time on your phone, tablet, or computer with our simple web app. And get a personalized email telling you what's up with your friends and followers every day (or less often if you don't like email). </p>
       <div class="illustration">An image of three devices</div>
     </div>
   </div>
