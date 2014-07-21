@@ -7,7 +7,7 @@
   <div class="span10">
 
 {if $search_term}
-    <h3>Showing search results for <span style="background-color:yellow">{$search_term}</span>. <a href="?p={$page}">Show all.</a></h3>
+    <h3>Showing search results for <span style="background-color:yellow">{$search_term}</span>. <a href="?p={$page}" class="btn btn-small btn-primary">Show all</a></h3>
 {else}
 <h2>${$total_payments|number_format} paid by {$total_paid_subscribers|number_format} members. {$total_active_installs|number_format} active installations.</h2>
 <p>Stalest paid installation dispatched {$stalest_dispatch_time_paid|relative_datetime} ago, not paid {$stalest_dispatch_not_paid|relative_datetime} ago.</p>
@@ -25,7 +25,7 @@
           <th>Level</th>
       </tr>
       {foreach $subscribers as $subscriber}
-      <tr onclick="document.location = 'subscriber.php?id={$subscriber->id}';"{if $subscriber->is_account_closed} class="text-danger"{/if}>
+      <tr onclick="document.location = 'subscriber.php?id={$subscriber->id}';" class="{if $subscriber->follower_count > 1000}text-primary{/if} {if $subscriber->is_account_closed}text-danger{/if} ">
         <td style="cursor:pointer"> {if $subscriber->is_verified}<img src="../assets/img/twitter_verified_icon.png" />{/if}</td>
         <td style="cursor:pointer">{include file="_admin-network_user.tpl" link_to_network="false"}</td>
         <td style="cursor:pointer">{$subscriber->email}</th>
@@ -39,8 +39,11 @@
 
 <div class="span1"></div>
 
+<ul class="pager">
+  {if $prev_page}<li class="previous"><a href="?p={$prev_page}{if $search_term}&q={$search_term|urlencode}{/if}">&larr; Previous</a></li>{/if}
+  {if $next_page}<li class="next"><a href="?p={$next_page}{if $search_term}&q={$search_term|urlencode}{/if}">Next &rarr;</a></li>{/if}
+</ul>
 
-{if $prev_page}<a href="?p={$prev_page}{if $search_term}&q={$search_term|urlencode}{/if}">&larr; previous</a>{/if} {if $next_page and $prev_page}|{/if} {if $next_page}<a href="?p={$next_page}{if $search_term}&q={$search_term|urlencode}{/if}">next &rarr;</a>{/if}
 </div>
 </div>
     </div> <!-- /container -->

@@ -6,56 +6,86 @@
   <div class="span6">
 
       {include file="_adminusermessage.tpl"}
+
       {if $subscriber}
-      <h2 style="display: inline-block;">{if $subscriber->full_name neq ''}{$subscriber->full_name}{else}[No name]{/if}</h2>&nbsp;&nbsp;&nbsp;<span>{$subscriber->membership_level} since {$subscriber->creation_time} &nbsp;&nbsp;&nbsp; {include file="_admin-comp.tpl"} &#8226; <a href="subscriber.php?action=archive&id={$subscriber->id}" class="text-danger" onClick="return confirm('Do you really want to archive this subscriber?');">Archive</a>
-        </span>
-      <table class="table table-condensed table-hover">
-      <tr>
-        <td>Email</td>
-        <td>{$subscriber->email}</td>
-      </tr>
-      {if isset($subscriber->network) && isset($subscriber->network_user_name)}
-      <tr>
-        <td>{$subscriber->network|ucfirst}</td>
-        <td>{include file="_admin-network_user.tpl"}</td>
-      </tr>
-      {/if}
-      <tr>
-        <td>Username</td>
-        <td>{include file="_admin-thinkup_username.tpl"} {if $install_results}<h5>Install log:</h5><ul>{$install_results}{/if}</td>
-      </tr>
-      {if $subscriber->last_dispatched}
-      <tr>
-        <td>Crawled</td>
-        <td>{$subscriber->last_dispatched|relative_datetime} ago</td>
-      </tr>
-      {/if}
-      <tr>
-        <td>Change email</td>
-        <td><form action="subscriber.php?action=updateemail&id={$subscriber->id}" method="get"><input type="text" width="10" value="" placeholder="" name="email"> <input type="hidden" name="id" value="{$subscriber->id}"> <input type="hidden" name="action" value="setemail"><input type="submit" value="Save" class="btn btn-default"></form>
-        </td>
-      </tr>
-      <tr>
-        <td>Status</td>
-        <td>{$subscriber->subscription_status}{if $subscriber->is_account_closed} - <span class="text-danger">Account closed</span>{/if}
-</td>
-      </tr>
-      {if $subscriber->total_payment_reminders_sent > 0}
-      <tr>
-        <td>Reminders</td>
-        <td>
-        {$subscriber->total_payment_reminders_sent} sent, last one {$subscriber->payment_reminder_last_sent|relative_datetime} ago
-        </td>
-      </tr>
-      {/if}
-      </table>
+
+      <div class="panel panel-default panel-primary {if $subscriber->is_account_closed}panel-danger{/if}">
+        <div class="panel-heading">
+          <h3>{if $subscriber->full_name neq ''}{$subscriber->full_name}{else}[No name]{/if}</h3>
+          <h5>{$subscriber->membership_level} since {$subscriber->creation_time} </h5>
+        </div>
+
+        <table class="table ">
+          <tr>
+            <td>Username</td>
+            <td>{include file="_admin-thinkup_username.tpl"} {if $install_results}<h5>Install log:</h5><ul>{$install_results}{/if}</td>
+          </tr>
+
+          <tr>
+            <td>Status</td>
+            <td>{$subscriber->subscription_status}{if $subscriber->is_account_closed} - <span class="text-danger">Account closed</span>{/if} {include file="_admin-comp.tpl"}
+            </td>
+          </tr>
+          {if $subscriber->total_payment_reminders_sent > 0}
+          <tr>
+          <td>Reminders</td>
+            <td>
+            {$subscriber->total_payment_reminders_sent} sent, last one {$subscriber->payment_reminder_last_sent|relative_datetime} ago
+            </td>
+          </tr>
+          {/if}
+          <tr>
+            <td>Email</td>
+            <td>
+              <a href="mailto:{$subscriber->email}">{$subscriber->email}</a>
+              <form action="subscriber.php?action=updateemail&id={$subscriber->id}" method="get" class="pull-right"><input type="email" width="10" value="" placeholder="" name="email"> <input type="hidden" name="id" value="{$subscriber->id}"> <input type="hidden" name="action" value="setemail"><input type="submit" value="Change" class="btn btn-xs btn-default"></form>
+            </td>
+          </tr>
+          {if isset($subscriber->network) && isset($subscriber->network_user_name)}
+          <tr>
+            <td>{$subscriber->network|ucfirst}</td>
+            <td>
+              {include file="_admin-network_user.tpl" link_to_network="true"}
+              {if $subscriber->follower_count > 0}({$subscriber->follower_count|number_format} followers){/if}
+            </td>
+          </tr>
+          {/if}
+
+          {if $subscriber->last_dispatched}
+          <tr>
+            <td>Crawled</td>
+            <td>
+              {$subscriber->last_dispatched|relative_datetime} ago
+              {if $subscriber->installation_url neq null}<a href="https://www.thinkup.com/phpyouradmin/index.php?server=2&db=thinkupstart_{$subscriber->thinkup_username}" class="btn btn-xs btn-primary pull-right">See database</a>{/if}
+
+              <!-- https://www.thinkup.com/dispatch/monitor.php?auth_token=itisnicetobenice104&install_name={$subscriber->thinkup_username} -->
+            </td>
+          </tr>
+          {/if}
+
+        </table>
+
+        <div class="panel-footer">
+          <a href="subscriber.php?action=archive&id={$subscriber->id}" class="btn btn-xs btn-danger pull-right" onClick="return confirm('Do you really want to archive this subscriber?');">Archive</a>
+          <a href="subscriber.php?action=uninstall&id={$subscriber->id}" class="btn btn-xs btn-danger pull-right" onClick="return confirm('Do you really want to UNINSTALL this subscriber?');">Uninstall</a>
+
+          <h5 class="text-muted">Dangerous Actions</h5>
+        </div>
+      </div>
+
+      
+      
+      
 
 {if $payments}
-<br>
-  <h4>Payments</h4>
-  <table class="table table-condensed table-hover">
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h4>Payments</h4>
+  </div>
+  <table class="table table-hover">
     <tr>
       <th>Timestamp</th><th>Status</th><th>Amount</th><th>Transaction ID and Message</th>
+    </tr>
     {foreach from=$payments item=payment}
        <tr>
           <td>{$payment.timestamp}</td>
@@ -71,11 +101,14 @@
        </tr>
     {/foreach}
   </table>
+</div>
 {/if}
 
 {if $authorizations}
-<br >
-      <h4>Authorization</h3>
+<div class="panel panel-success">
+  <div class="panel-heading">
+      <h4>Authorization</h4>
+  </div>
       <table class="table table-condensed table-hover">
       {foreach $authorizations as $authorization}
       <tr>
@@ -106,11 +139,17 @@
       {/if}
       {/foreach}
     </table>
-    {/if}
+  </div>
+  {/if}
+
 {/if}
+
+
 {if $install_log_entries}
-<br>
-  <h4>Install Log</h4>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h4>Install Log</h4>
+  </div>
   <table class="table table-condensed table-hover">
     <tr>
       <th>Date</th><th>Message</th>
@@ -128,6 +167,7 @@
        </tr>
     {/foreach}
   </table>
+</div>
 {/if}
   </div>
   <div class="span3"></div>
