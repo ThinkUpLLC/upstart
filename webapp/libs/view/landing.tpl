@@ -17,7 +17,8 @@
   <div class="section section-screenshot" id="section-what">
     <h3 class="section-header">What is ThinkUp?</h3>
     <div class="section-copy">
-      <p>ThinkUp is a smart, simple app that analyzes your activity on Facebook and Twitter. Each day, ThinkUp offers you fun and surprising insights your social networks don’t give you.</p>
+      <p>ThinkUp is a smart, simple app that analyzes your activity on Facebook and Twitter. ThinkUp gives you fun and surprising insights based on what you and your friends are doing.</p>
+      <p style="padding-top: 20px;">ThinkUp costs $60 a year (just five bucks a month!). We don't have ads and we don't sell your data.</p>
       <div class="section-insights-carousel carousel" id="sample-insights-carousel"
         data-ride="carousel" data-interval="2500">
         <ul class="carousel-indicators">
@@ -58,7 +59,7 @@
   <div class="section section-screenshot" id="section-specs">
     <h3 class="section-header">ThinkUp works the way that you do.</h3>
     <div class="section-copy">
-      <p>ThinkUp’s insights come any way you want them. Check them any time on your smartphone, tablet, or computer. And each day (or once a week, or never!), get a personalized email telling you what's up with your friends, followers, and fans.</p>
+      <p>ThinkUp’s insights come any way you want them. Check them any time on your phone, tablet, or computer. And get a personalized email telling you what's up with your friends and followers every day (or less often if you don't like email). </p>
       <div class="illustration">An image of three devices</div>
     </div>
   </div>
