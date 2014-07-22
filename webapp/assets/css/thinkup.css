@@ -390,7 +390,7 @@ textarea.form-control {
 }
 .list-group-item#list-group-item-extras .list-group-item-value {
   line-height: 18px;
-  padding: 5px 0;
+  height: auto;
 }
 .list-group-item-value {
   overflow: hidden;
@@ -400,7 +400,7 @@ textarea.form-control {
   position: absolute;
   display: block;
   right: 0;
-  top: 16px;
+  top: 10px;
   z-index: 9;
 }
 .list-accounts .list-group-item .account-label {
@@ -451,20 +451,16 @@ textarea.form-control {
   color: #999999;
 }
 .form-message {
-  color: #222;
-  border: 1px solid #ffee25;
-  border-left: 0;
-  border-right: 0;
-  background: #fffabe;
-  padding: 7px;
-  margin-bottom: 14px;
+  border: 0;
+  background: transparent;
   text-align: center;
+  margin-bottom: 20px;
+}
+.form-message p {
+  color: #999999;
 }
 .form-message .btn {
-  background: #27af3f;
-}
-.form-message .btn:hover {
-  background: #2cc446;
+  min-width: 140px;
 }
 .form-warning {
   color: #9d0214;
@@ -484,10 +480,14 @@ textarea.form-control {
   display: block;
   margin: 0 auto 15px;
   width: 12em;
+  background: transparent;
+  color: #2785d3;
+  border: 1px solid #7ab5e6;
 }
 .btn-close-account:hover {
   background: #fd0826;
   border-color: #fd0826;
+  color: #fff;
 }
 .accounts-privacy {
   color: #417505;

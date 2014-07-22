@@ -429,7 +429,7 @@ textarea.form-control {
   &#list-group-item-extras {
     .list-group-item-value {
       line-height: 18px;
-      padding: 5px 0;
+      height: auto;
     }
   }
 }
@@ -447,7 +447,7 @@ textarea.form-control {
     position: absolute;
     display: block;
     right: 0;
-    top: 16px;
+    top: 10px;
     z-index: 9;
   }
 }
@@ -512,21 +512,17 @@ textarea.form-control {
 }
 
 .form-message {
-  color: #222;
-  border: 1px solid darken(@yellow-info, 30%);
-  border-left: 0;
-  border-right: 0;
-  background: @yellow-info;
-  padding: 7px;
-  margin-bottom: 14px;
+  border: 0;
+  background: transparent;
   text-align: center;
+  margin-bottom: 20px;
+
+  p {
+    color: @gray-light;
+  }
 
   .btn {
-    background: darken(@green-success, 15%);
-
-    &:hover {
-      background: darken(@green-success, 10%);
-    }
+    min-width: 140px;
   }
 }
 
@@ -551,10 +547,14 @@ textarea.form-control {
   display: block;
   margin: 0 auto 15px;
   width: 12em;
+  background: transparent;
+  color: @link-color;
+  border: 1px solid lighten(@link-color, 20%);
 
   &:hover {
     background: lighten(@red-warning, 10%);
     border-color: lighten(@red-warning, 10%);
+    color: #fff;
   }
 }
 

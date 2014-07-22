@@ -9,6 +9,9 @@
         <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
         <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign up with</small><br>Facebook</a>
       </div>
+      <p class="section-note">ThinkUp costs $60 a year (just five bucks a month!).<br>
+        We don't have ads and we don't sell your data.
+      </p>
     </div>
   </div>
 </div>
@@ -18,7 +21,6 @@
     <h3 class="section-header">What is ThinkUp?</h3>
     <div class="section-copy">
       <p>ThinkUp is a smart, simple app that analyzes your activity on Facebook and Twitter. ThinkUp gives you fun and surprising insights based on what you and your friends are doing.</p>
-      <p style="padding-top: 20px;">ThinkUp costs $60 a year (just five bucks a month!). We don't have ads and we don't sell your data.</p>
       <div class="section-insights-carousel carousel" id="sample-insights-carousel"
         data-ride="carousel" data-interval="2500">
         <ul class="carousel-indicators">

@@ -673,6 +673,16 @@ a.btn-pill-large.has-note {
 @media (min-width: 760px) {
   #container-signup-top .signup-buttons {
     text-align: center;
+    margin-bottom: 25px;
+  }
+}
+#container-signup-top .section-note {
+  font-size: .75rem;
+  color: #666666;
+}
+@media (min-width: 760px) {
+  #container-signup-top .section-note {
+    font-size: .875rem;
   }
 }
 #container-what {
