@@ -93,12 +93,19 @@ body {
 
 #container-navbar {
   height: auto;
-  min-height: 120px;
+
+  @media (min-width: 560px) {
+    min-height: 120px;
+  }
 }
 
 #section-navbar {
   .clearfix;
-  padding: 20px 10px 10px;
+  padding: 20px 10px 0;
+
+  @media (min-width: 560px) {
+    padding-bottom: 10px;
+  }
 
   .navbar-brand {
     position: relative;
