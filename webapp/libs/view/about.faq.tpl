@@ -34,7 +34,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <p>We also have custom Executive Memberships for larger companies or institutions that are more personalized. These start at $1000/year and you can <a href="{$site_root_path}about/contact.php">contact us</a> for more information.</p>
 
-      <h4 id="why-does-it-cost-money"><a href="#why-does-it-cost-money">Why does ThinkUp cost money? Is there a free trial?</a></h4>
+      <h4 id="why-does-it-cost-money"><a href="#why-does-it-cost-money">Why does ThinkUp cost money?</a></h4>
 
       <p>ThinkUp costs money because we're committed to making sure our company and our product are sustainable and around for the long term. Our members say ThinkUp is worth it, because they like the service and believe in our company, especially as our product improves.</p>
 
