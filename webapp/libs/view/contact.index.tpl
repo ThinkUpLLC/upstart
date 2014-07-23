@@ -29,7 +29,7 @@ body_classes="marketing marketing-page" body_id="marketing-contact"}
           <textarea class="form-control" id="control-body"></textarea>
         </div>
 
-        <button type="submit" class="btn btn-circle btn-submit">Send it</button>
+        <button type="submit" class="btn btn-pill btn-submit">Send it</button>
       </form>
     </section>
 

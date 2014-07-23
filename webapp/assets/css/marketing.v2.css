@@ -423,6 +423,9 @@ a.btn-pill {
   font-size: 1rem;
   line-height: 1;
 }
+button.btn-pill {
+  padding: 8px 0 10px;
+}
 .btn-pill-medium,
 a.btn-pill-medium {
   width: 220px;
