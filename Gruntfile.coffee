@@ -75,7 +75,7 @@ module.exports = (grunt) ->
         tasks: ['less']
       js:
         files: '<%= project.js_path %>/src/*'
-        tasks: ['coffee']
+        tasks: ['app_js', 'marketing_js']
 
   )
   grunt.loadNpmTasks('grunt-contrib-watch')

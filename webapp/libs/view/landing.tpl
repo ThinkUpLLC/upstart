@@ -4,11 +4,14 @@
   <div class="section section-screenshot" id="section-signup-top">
     <h3 class="section-header">There are things Facebook &amp; Twitter don't tell you.</h3>
     <div class="section-copy">
-      <p>ThinkUp gives you insights about your social networks that you can't find anywhere else. Sign up for our Free 14-Day Trial and see what you've been missing.</p>
+      <p>ThinkUp gives you insights about your social networks that you can't find anywhere else. Sign up for your 14-day free trial and see what you've been missing.</p>
       <div class="signup-buttons">
-        <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign in with</small><br>Twitter</a>
-        <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign in with</small><br>Facebook</a>
+        <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
+        <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign up with</small><br>Facebook</a>
       </div>
+      <p class="section-note">ThinkUp costs $60 a year (just five bucks a month!).<br>
+        We don't have ads and we don't sell your data.
+      </p>
     </div>
   </div>
 </div>
@@ -17,7 +20,7 @@
   <div class="section section-screenshot" id="section-what">
     <h3 class="section-header">What is ThinkUp?</h3>
     <div class="section-copy">
-      <p>ThinkUp is a smart, simple app that analyzes your activity on Facebook and Twitter. Each day, ThinkUp offers you fun and surprising insights your social networks don’t give you.</p>
+      <p>ThinkUp is a smart, simple app that analyzes your activity on Facebook and Twitter. ThinkUp gives you fun and surprising insights based on what you and your friends are doing.</p>
       <div class="section-insights-carousel carousel" id="sample-insights-carousel"
         data-ride="carousel" data-interval="2500">
         <ul class="carousel-indicators">
@@ -58,7 +61,7 @@
   <div class="section section-screenshot" id="section-specs">
     <h3 class="section-header">ThinkUp works the way that you do.</h3>
     <div class="section-copy">
-      <p>ThinkUp’s insights come any way you want them. Check them any time on your smartphone, tablet, or computer. And each day (or once a week, or never!), get a personalized email telling you what's up with your friends, followers, and fans.</p>
+      <p>ThinkUp’s insights come any way you want them. Check them any time on your phone, tablet, or computer with our simple web app. And get a personalized email telling you what's up with your friends and followers every day (or less often if you don't like email). </p>
       <div class="illustration">An image of three devices</div>
     </div>
   </div>

@@ -2,11 +2,11 @@
 body_classes="settings account menu-off"}
 
   <div class="container">
-    <header>
+    <header class="container-header">
       <h1>Pick a new password</h1>
     </header>
 
-<form action="" method="POST" class="form-horizontal" id="form-reset">
+<form action="" method="POST" id="form-reset">
   <fieldset class="fieldset-no-header">
     <div class="form-group">
         <label class="control-label" for="password">New</label>

@@ -1,23 +1,36 @@
 timerUsername = null
 checkUsername = ($el) ->
-  if $el.val() isnt ""
-    if timerUsername then clearTimeout timerUsername
-    timerUsername = setTimeout(->
-      $group = $el.parent()
-      if $el.val().match(/^[\w]{3,15}$/gi)?.length isnt 1
-        $group.removeClass("form-group-ok").addClass("form-group-warning")
-        wt.appMessage.create "Your username must be between 3 - 15 unaccented numbers or letters.", "warning"
-      else
-        $.getJSON "user/check.php?un=#{encodeURIComponent $el.val()}", (data) ->
-          if not data.available
-            $group.removeClass("form-group-ok").addClass("form-group-warning")
-            wt.appMessage.create "Sorry, someone already grabbed that name. Please try again.", "warning"
-          else
-            $group.addClass("form-group-ok").removeClass("form-group-warning")
-            $group.find(".help-block").remove()
-            wt.appMessage.destroy()
-    , 500
-    )
+  if timerUsername then clearTimeout timerUsername
+  timerUsername = setTimeout(->
+    $group = $el.parents(".form-group")
+    if $el.val().match(/^[\w]{3,15}$/gi)?.length isnt 1
+      wt.inputWarning.create "Your username must be between 3 - 15 unaccented numbers or letters.", $group
+    else
+      $.getJSON "user/check.php?un=#{encodeURIComponent $el.val()}", (data) ->
+        if not data.available
+          wt.inputWarning.create "Sorry, someone already grabbed that name. Please try again.", $group
+        else
+          wt.inputWarning.destroy $group
+  , 500
+  )
+
+positionUsernameHelper = ($input) ->
+  $ul = $("#username-length")
+  $ig = $input.parents(".input-with-domain")
+  $uh = $ig.find(".domain")
+
+  $ul.text $input.val()
+  gWidth  = $ig.width()
+  tWidth  = $ul.width()
+
+  if $input.val().length is 0
+    $uh.hide()
+  else
+    $uh.show()
+    if tWidth + 15 + 110 < gWidth
+      $uh.css("left", tWidth + 15)
+    else
+      $uh.css("left", "6.95em")
 
 checkEmailAvailability = (email, cb) ->
   isGood = false
@@ -36,36 +49,39 @@ checkPasswordField = ($el) ->
   if $el.val() isnt ""
     if timerPassword then clearTimeout timerPassword
     timerPassword = setTimeout(->
-      $group = $el.parent()
+      $group = $el.parents(".form-group")
       if checkPasswordFormat $el.val()
-        $group.addClass("form-group-ok").removeClass("form-group-warning")
-        $group.find(".help-block").remove()
-        wt.appMessage.destroy()
+        wt.inputWarning.destroy $group
       else
-        $group.removeClass("form-group-ok").addClass("form-group-warning")
-        wt.appMessage.create "Your password must be at least 8 characters and contain both numbers &amp; letters.", "warning"
+        wt.inputWarning.create "Passwords must be at least 8 characters and contain both numbers and letters."
+          , $group
     , 500
     )
 
 checkSettingsPasswordField = ($form,e) ->
-  $form.find('#control-password-new, #control-password-verify').parent().removeClass('form-group-warning')
-  wt.appMessage.destroy()
+  $pgc   = $form.find("#control-password-current").parent()
+  $pgn   = $form.find("#control-password-new").parent()
+  $pgv   = $form.find("#control-password-verify").parent()
+  wt.inputWarning.destroy $pgc, false
+  wt.inputWarning.destroy $pgn, false
+  wt.inputWarning.destroy $pgv, false
   if $form.find("#control-password-current").length
     if $form.find("#control-password-current").val().length isnt 0
       if $form.find("#control-password-new").val().length is 0 and
-         $form.find("#control-password-verify").val().length is 0
-        wt.appMessage.create "You didn't provide a new password in both fields.", "warning"
-        $form.find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning")
+      $form.find("#control-password-verify").val().length is 0
+        wt.inputWarning.destroy $pgc
+        wt.inputWarning.create "Please provide a new password in both fields.", $pgn
+        wt.inputWarning.create "Please provide a new password in both fields.", $pgv
         e.preventDefault()
-       else if !checkPasswordFormat($form.find("#control-password-new").val())
-         wt.appMessage.create "Your password must be at least 8 characters, contain both numbers &amp; letters, " +
-           "and omit special characters.", "warning"
-         $form.find("#control-password-new").parent().addClass("form-group-warning")
-         e.preventDefault()
-       else if $form.find("#control-password-new").val() isnt $form.find("#control-password-verify").val()
-         e.preventDefault()
-         wt.appMessage.create "The passwords must match.", "warning"
-         $form.find("#control-password-new, #control-password-verify").parent().addClass("form-group-warning")
+      else if !checkPasswordFormat($form.find("#control-password-new").val())
+        wt.inputWarning.destroy $pgc
+        wt.inputWarning.create "Passwords must be 8+ characters and contain both letters and numbers.", $pgn
+        e.preventDefault()
+      else if $form.find("#control-password-new").val() isnt $form.find("#control-password-verify").val()
+        e.preventDefault()
+        wt.inputWarning.destroy $pgc
+        wt.inputWarning.destroy $pgn
+        wt.inputWarning.create "The passwords must match.", $pgv
 
 
 timerEmail = null
@@ -74,19 +90,15 @@ checkEmailField = ($el) ->
   if $el.val() isnt ""
     if timerEmail then clearTimeout timerEmail
     timerEmail = setTimeout(->
-      $group = $el.parent()
+      $group = $el.parents(".form-group")
       if checkEmailFormat $el.val()
         checkEmailAvailability $el.val(), (isGood) ->
           if isGood
-            $group.addClass("form-group-ok").removeClass("form-group-warning")
-            $group.find(".help-block").remove()
-            wt.appMessage.destroy()
+            wt.inputWarning.destroy $group
           else
-            $group.removeClass("form-group-ok").addClass("form-group-warning")
-            wt.appMessage.create "An existing account is using this email address.", "warning"
+            wt.inputWarning.create "An existing account is using this email address.", $group
       else
-        $group.removeClass("form-group-ok").addClass("form-group-warning")
-        wt.appMessage.create "Please enter a valid email address.", "warning"
+        wt.inputWarning.create "Please enter a valid email address.", $group
     , 500
     )
 
@@ -101,6 +113,39 @@ checkTermsField = ($el) ->
 # Focus on the first form field without an empty value or error.
 focusField = ($el_array) ->
   for $el in $el_array
-    if $el.val() is "" or $el.parent().hasClass "form-group-warning"
+    if $el.val() is "" or $el.parents(".form-group").hasClass "form-group-warning"
       $el.focus()
       break
+
+$ ->
+  if $("#form-register").length
+    focusField [$("#email"),$("#username"),$("#pwd")]
+    positionUsernameHelper $("#username")
+    $("#username, #pwd, #email").on "blur", (e) ->
+      if $(@).val().length then $(@).data("do-validate", "1").keyup()
+    .each ->
+      if $(@).parents(".form-group-warning").length then $(@).data("do-validate", "1").keyup()
+
+    $("#username").on "keyup", ->
+      positionUsernameHelper $(@)
+      if $(@).data("do-validate") is "1" then checkUsername $(@)
+    $("#pwd").on "keyup",      -> if $(@).data("do-validate") is "1" then checkPasswordField $(@)
+    $("#email").on "keyup",    -> if $(@).data("do-validate") is "1" then checkEmailField $(@)
+    $("#terms").on "click",    -> if $(@).data("do-validate") is "1" then checkTermsField $(@)
+
+  $("#form-reset").on "submit", (e) ->
+    if $(@).find("#password").val().length is 0 or  $(@).find("#password_confirm").val().length is 0
+      wt.appMessage.create "You must fill in both fields", "warning"
+      e.preventDefault()
+    else if !checkPasswordFormat($(@).find("#password").val())
+      wt.appMessage.create "Your password must be at least 8 characters, contain both numbers &amp; letters, " +
+        "and omit special characters.", "warning"
+      e.preventDefault()
+    else if $(@).find("#password").val() isnt $(@).find("#password_confirm").val()
+      e.preventDefault()
+      wt.appMessage.create "Passwords must match", "warning"
+    else
+      wt.appMessage.destroy()
+
+  $("#form-settings").on "submit", (e) ->
+    checkSettingsPasswordField $(@), e

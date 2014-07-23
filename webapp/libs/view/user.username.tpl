@@ -2,19 +2,19 @@
 
   <div class="container">
 {if isset($subscriber->thinkup_username)}
-    <header>
+    <header class="container-header">
       <h1>You reserved {$subscriber->thinkup_username}.thinkup.com.</h1>
       <h2>You'll get an email shortly when ThinkUp is ready for you.<br>
       <a href="{$site_root_path}user/logout.php">Log out</a>
       </h2>
     </header>
 {else}
-    <header>
+    <header class="container-header">
       <h1>Pick your username</h1>
       <h2>Choose carefully. You'll only do this once.</h2>
     </header>
 
-    <form method="POST" role="form" class="form-horizontal" id="form-username" action="{$site_root_path}user/choose-username.php">
+    <form method="POST" role="form" id="form-username" action="{$site_root_path}user/choose-username.php">
       <fieldset class="fieldset-no-header">
         <div class="form-group">
           <label class="control-label" for="username">Username</label>

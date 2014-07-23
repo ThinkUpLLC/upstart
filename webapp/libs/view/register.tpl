@@ -6,33 +6,40 @@
     </header>
 
     {assign var="missing_fields" value="false"}
-    <form method="POST" class="form-horizontal" id="form-register" action="register.php{if isset($smarty.get.level)}?level={$smarty.get.level}{/if}">
+    <form method="POST" id="form-register" action="register.php{if isset($smarty.get.level)}?level={$smarty.get.level}{/if}">
       <fieldset class="fieldset-no-header">
-        <div class="form-group{if isset($error_msgs.email)} form-group-warning{/if}">
-          <label class="control-label" for="email">Email</label>
-          <input type="email" name="email" class="form-control" id="email"
-          {if isset($email)}value="{$email|filter_xss}"{/if}>
+        <div class="form-group{if isset($error_msgs.email)} form-group-warning{/if}
+          {if isset($email) and $email != "" and !isset($error_msgs.email)} form-group-ok{/if}">
           {capture name="email_message"}{include file="_appusermessage.tpl" field="email"}{/capture}
           {if preg_match('/Please enter an email address/', $smarty.capture.email_message)}
             {assign var="missing_fields" value="true"}
           {else}{$smarty.capture.email_message}{/if}
+          <label class="control-label" for="email">Email</label>
+          <input type="email" name="email" class="form-control" id="email"
+          {if isset($email)}value="{$email|filter_xss}"{/if}>
         </div>
-        <div class="form-group{if isset($error_msgs.username)} form-group-warning{/if}">
-          <label class="control-label" for="username">Username</label>
-          <input type="text" class="form-control" id="username"
-          {if isset($username)}value="{$username|filter_xss}"{/if} name="username">
+        <div class="form-group has-addon{if isset($error_msgs.username)} form-group-warning{/if}
+          {if isset($username) and $username != "" and !isset($error_msgs.username)} form-group-ok{/if}">
           {capture name="username_message"}{include file="_appusermessage.tpl" field="username"}{/capture}
           {if preg_match('/Please enter a username/', $smarty.capture.username_message)}
-            {assign var="missing_fields" value="true"}
-          {else}{$smarty.capture.username_message}{/if}
+            {assign var="missing_fields" value="true"}{/if}
+          {$smarty.capture.username_message}
+          <label class="control-label" for="username">Username</label>
+          <div class="input-with-domain">
+            <input type="text" class="form-control" id="username" autocomplete="off"
+            placeholder="yourusername.thinkup.com" {if isset($username)}value="{$username|filter_xss}"{/if} name="username">
+            <span class="domain">.thinkup.com</span>
+            <div id="username-length">{if isset($username)}{$username|filter_xss}{/if}</div>
+          </div>
         </div>
-        <div class="form-group{if isset($error_msgs.password)} form-group-warning{/if}" id="form-group-password">
-          <label class="control-label" for="pwd">Password</label>
-          <input type="password" class="form-control" id="pwd" name="password" value="{if isset($password)}{$password|filter_xss}{/if}">
+        <div class="form-group{if isset($error_msgs.password)} form-group-warning{/if}
+        {if isset($password) and $password != "" and !isset($error_msgs.password)} form-group-ok{/if}" id="form-group-password">
           {capture name="password_message"}{include file="_appusermessage.tpl" field="password"}{/capture}
           {if preg_match('/Please enter a password/', $smarty.capture.password_message)}
-            {assign var="missing_fields" value="true"}
-          {else}{$smarty.capture.password_message}{/if}
+            {assign var="missing_fields" value="true"}{/if}
+          {$smarty.capture.password_message}
+          <label class="control-label" for="pwd">Password</label>
+          <input type="password" class="form-control" id="pwd" name="password" value="{if isset($password)}{$password|filter_xss}{/if}">
         </div>
         {if $missing_fields eq "true"}{literal}
         <script>

@@ -93,3 +93,16 @@ wt.appMessage =
         setNavHeight(true) if not $("body").hasClass "account"
     )
 
+wt.inputWarning =
+  create: (message, $group) ->
+    $group.addClass("form-group-warning").removeClass("form-group-ok")
+    if $group.find(".warning-block").length
+      $elMsg = $group.find(".warning-block")
+      $elMsg.text(message)
+    else
+      $label = $group.find(".control-label")
+      $message = $("""<div class="warning-block">#{message}</div>""")
+      $group.prepend $message
+  destroy: ($group, isOk = true) ->
+    $group.removeClass("form-group-warning").find(".warning-block").remove()
+    if isOk then $group.addClass("form-group-ok")

@@ -14,7 +14,7 @@
         </div>{/strip}
     {/if}
     {if isset($error_msgs.$field)}{strip}
-        <div class="help-block">
+        <div class="warning-block">
         {if isset($error_msg_no_xss_filter)}
             {$error_msgs.$field}
         {else}

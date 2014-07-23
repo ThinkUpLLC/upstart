@@ -2,12 +2,11 @@
 body_classes="settings menu-open" body_id="settings-main"}
 
   <div class="container">
-    <header>
+    <header class="container-header">
       <h1>Settings</h1>
     </header>
     {include file="_usermessage.tpl" field="timezone"}
-        <form role="form" id="form-settings" name="form-settings"
-        class="form-horizontal" method="post">
+        <form role="form" id="form-settings" name="form-settings" method="post">
 
           <fieldset class="fieldset-password">
             <header>
@@ -28,6 +27,7 @@ body_classes="settings menu-open" body_id="settings-main"}
           </fieldset>
           <fieldset class="fieldset-personal">
             <header>
+              <h2>General Settings</h2>
             </header>
             <div class="form-group">
               {* The jstz javascript is in the footer, added via a boolean variable *}
