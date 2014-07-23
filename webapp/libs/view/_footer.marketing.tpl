@@ -17,12 +17,6 @@
         <li><a href="{$site_root_path}about/faq.php">FAQ</a></li>
       </ul>
 
-      <form action="http://thinkup.us6.list-manage.com/subscribe/post?u=62b20c60f2abf6a8724447bf0&amp;id=dffdb8d09e" method="post" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-signup-form">
-        <label for="EMAIL">Get updates from ThinkUp</label>
-        <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email">
-        <button type="submit" value="Subscribe" name="subscribe" class="btn-submit"><i class="fa fa-envelope-o"></i></button>
-      </form>
-
       <div class="copy-tagline">&copy;2014 ThinkUp LLC.<br>
         It is nice to be nice.</div>
     </div>
