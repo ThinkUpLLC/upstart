@@ -20,7 +20,7 @@
   <div class="section section-screenshot" id="section-what">
     <h3 class="section-header">What is ThinkUp?</h3>
     <div class="section-copy">
-      <p>ThinkUp is a smart, simple app that analyzes your activity on Facebook and Twitter. ThinkUp gives you fun and surprising insights based on what you and your friends are doing.</p>
+      <p>ThinkUp is a smart, simple web app that analyzes your activity on Facebook and Twitter. ThinkUp gives you fun and surprising insights about what you and your friends are doing online.</p>
       <div class="section-insights-carousel carousel" id="sample-insights-carousel"
         data-ride="carousel" data-interval="2500">
         <ul class="carousel-indicators">
@@ -61,7 +61,7 @@
   <div class="section section-screenshot" id="section-specs">
     <h3 class="section-header">ThinkUp works the way that you do.</h3>
     <div class="section-copy">
-      <p>ThinkUp’s insights come any way you want them. Check them any time on your phone, tablet, or computer with our simple web app. And get a personalized email telling you what's up with your friends and followers every day (or less often if you don't like email). </p>
+      <p>ThinkUp’s insights come any way you want them. Check them any time on your phone, tablet, or computer at your personal ThinkUp address. Get an email telling you what's up with your friends and followers every day (or less often if you prefer). </p>
       <div class="illustration">An image of three devices</div>
     </div>
   </div>
@@ -99,8 +99,8 @@
     <h3 class="section-header">Start your <em>100% free</em> trial and get insights immediately</h3>
     <div class="section-copy">
       <div class="signup-buttons">
-        <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign in with</small><br>Twitter</a>
-        <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign in with</small><br>Facebook</a>
+        <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
+        <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign up with</small><br>Facebook</a>
       </div>
     </div>
   </div>
