@@ -1,4 +1,4 @@
-<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">Your free trial of ThinkUp <strong>ends tomorrow</strong>, and we'd hate for you to miss out on all these insights that Facebook or Twitter would never tell you. <b>But there's good news:</b> It only takes a minute to become a member:</p>
+<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">Your free trial of ThinkUp <strong>ends tomorrow</strong>, and we'd hate for you to miss out on all these insights that Facebook or Twitter would never tell you. <b>But there's good news:</b> It only takes a minute to become a member.</p>
 
 <div style="text-align:center;"><!--[if mso]>
   <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://www.thinkup.com/join/user/membership.php" style="height:40px;v-text-anchor:middle;width:200px;" arcsize="10%" stroke="f" fillcolor="#125C9C">
