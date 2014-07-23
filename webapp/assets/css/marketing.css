@@ -988,22 +988,30 @@ body.marketing-page #section-page-header {
   }
 }
 #section-pay-now {
-  padding: 15px;
+  padding: 0 15px;
+}
+@media (min-width: 31.875em) {
+  #section-pay-now {
+    padding: 15px;
+  }
 }
 #section-pay-now .section-header {
   text-align: left;
   width: 100%;
+  font-size: 1.125rem;
 }
 @media (min-width: 31.875em) {
   #section-pay-now .section-header {
     width: 66%;
+    font-size: 2rem;
   }
+}
+#section-pay-now .book-cover {
+  margin-bottom: 30px;
 }
 @media (min-width: 31.875em) {
   #section-pay-now .book-cover {
-    margin-left: 100px;
-    margin-top: -30px;
-    margin-right: 10px;
+    margin: -30px 100px 60px 10px;
     border: 1px solid #e7df0b;
     box-shadow: 4px 4px 0 #fdfcd6, 5px 5px 0 #ddd62b, 8px 8px #fdfcd6, 9px 9px #ddd62b, 12px 12px #fdfcd6, 13px 13px #cfc80a;
   }

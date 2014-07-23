@@ -400,22 +400,28 @@ body.marketing-page {
 }
 
 #section-pay-now {
-  padding: 15px;
+  padding: 0 15px;
+
+  @media (min-width: 31.875em) {
+    padding: 15px;
+  }
 
   .section-header {
     text-align: left;
     width: 100%;
+    font-size: 1.125rem;
 
     @media (min-width: 31.875em) {
       width: 66%;
+      font-size: 2rem;
     }
   }
 
   .book-cover {
+    margin-bottom: 30px;
+
     @media (min-width: 31.875em) {
-      margin-left: 100px;
-      margin-top: -30px;
-      margin-right: 10px;
+      margin: -30px 100px 60px 10px;
       @y:   #f5ee30;
       @yd:  darken(@y, 10%);
       @ydr: darken(@y, 15%);
