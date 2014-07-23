@@ -35,6 +35,8 @@ body_classes="marketing marketing-page" body_id="marketing-values"}
 
         <li><span>We define our internal success in terms of many people having fulfilling, rewarding careers, rather than just a small number of extremely successful leaders. We aim for anyone with whom we work to feel empowered, respected, challenged and enriched.</span></li>
 
+        <li>We believe that working sensible hours and taking care of ourselves and our loved ones is the best way to ensure long-term productivity.</li>
+
         <li><span>We define community success as a healthy, sustainable growth rate that allows our community to become more diverse and inclusive while also still having coherence and a sense of camaraderie.</span></li>
 
         <li><span>We define civic success as being a meaningful and committed driver of improvements in our local communities, whether those are defined by geography, identity or technology. We want to contribute time, energy and our voices to encouraging good policy, good participation and good citizenship by us and our community.</span></li>
