@@ -35,7 +35,10 @@
       var tz_option_id = '#tz-' + regionname[1];
       if( $('#control-timezone option[value="' + tz_info.name() + '"]').length > 0) {
           if( $(tz_option_id) ) {
-              $('#control-timezone').val( tz_info.name());
+              $('#control-timezone')
+              .val( tz_info.name())
+              .closest(".form-group").addClass("form-group-ok");
+
           }
       }
       {/literal}

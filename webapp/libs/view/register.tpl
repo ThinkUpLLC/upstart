@@ -12,19 +12,19 @@
           {if isset($email) and $email != "" and !isset($error_msgs.email)} form-group-ok{/if}">
           {capture name="email_message"}{include file="_appusermessage.tpl" field="email"}{/capture}
           {if preg_match('/Please enter an email address/', $smarty.capture.email_message)}
-            {assign var="missing_fields" value="true"}
-          {else}{$smarty.capture.email_message}{/if}
-          <label class="control-label" for="email">Email</label>
+            {assign var="missing_fields" value="true"}{/if}
+          {$smarty.capture.email_message}
+          <label class="control-label{if isset($email)} with-focus{/if}" for="email">Email</label>
           <input type="email" name="email" class="form-control" id="email"
           {if isset($email)}value="{$email|filter_xss}"{/if}>
         </div>
         <div class="form-group has-addon{if isset($error_msgs.username)} form-group-warning{/if}
           {if isset($username) and $username != "" and !isset($error_msgs.username)} form-group-ok{/if}">
           {capture name="username_message"}{include file="_appusermessage.tpl" field="username"}{/capture}
-          {if preg_match('/Please enter a username/', $smarty.capture.username_message)}
+          {if preg_match('/Please choose your Insights URL/', $smarty.capture.username_message)}
             {assign var="missing_fields" value="true"}{/if}
           {$smarty.capture.username_message}
-          <label class="control-label" for="username">Username</label>
+          <label class="control-label{if isset($username)} with-focus{/if}" for="username">Insights URL</label>
           <div class="input-with-domain">
             <input type="text" class="form-control" id="username" autocomplete="off"
             placeholder="yourusername.thinkup.com" {if isset($username)}value="{$username|filter_xss}"{/if} name="username">
@@ -38,7 +38,7 @@
           {if preg_match('/Please enter a password/', $smarty.capture.password_message)}
             {assign var="missing_fields" value="true"}{/if}
           {$smarty.capture.password_message}
-          <label class="control-label" for="pwd">Password</label>
+          <label class="control-label{if isset($password)} with-focus{/if}" for="pwd">Password</label>
           <input type="password" class="form-control" id="pwd" name="password" value="{if isset($password)}{$password|filter_xss}{/if}">
         </div>
         {if $missing_fields eq "true"}{literal}
@@ -48,7 +48,7 @@
           app_message.type = "warning";
         </script>
         {/literal}{/if}
-        <div class="form-group{if isset($error_msgs.timezone)} form-group-warning{/if}">
+        <div class="form-group form-group-select{if isset($error_msgs.timezone)} form-group-warning{/if}">
           {* The jstz javascript is in the footer, added via a boolean variable *}
           <label class="control-label" for="control-timezone">Time zone</label>
           <div class="form-control picker">
@@ -66,11 +66,11 @@
           </div>
           {include file="_appusermessage.tpl" field="timezone"}
         </div>
-        <div class="form-group form-group-radio{if isset($error_msgs.terms)} form-group-warning{/if}">
-          <label class="control-label" for="terms">I’ll follow the <a href="{$site_root_path}about/terms.php" tabindex="-1" target="_blank">terms of service</a></label>
+        <div class="form-group form-group-terms{if isset($error_msgs.terms)} form-group-warning{/if}">
           <div class="form-control">
             <input type="checkbox" class="radio-control" id="terms" name="terms" value="agreed" {if isset($terms) && $terms eq 'agreed'}checked{/if}>
           </div>
+          <label class="control-label" for="terms">I’ll follow the <a href="{$site_root_path}about/terms.php" tabindex="-1" target="_blank">terms of service</a></label>
           {include file="_appusermessage.tpl" field="terms"}
         </div>
 

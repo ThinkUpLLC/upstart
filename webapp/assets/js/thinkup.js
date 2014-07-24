@@ -1,5 +1,5 @@
 (function() {
-  var $lastActiveDateGroup, animateContentShift, checkEmailAvailability, checkEmailField, checkEmailFormat, checkPasswordField, checkPasswordFormat, checkSettingsPasswordField, checkTermsField, checkUsername, constants, featureTest, focusField, pinDateMarker, positionUsernameHelper, setActiveDateGroup, setDateGroupData, setFixedPadding, setListOpenData, setNavHeight, timerEmail, timerPassword, timerUsername, wt;
+  var $lastActiveDateGroup, animateContentShift, animateLabelIn, checkEmailAvailability, checkEmailField, checkEmailFormat, checkPasswordField, checkPasswordFormat, checkSettingsPasswordField, checkTermsField, checkUsername, constants, featureTest, focusField, pinDateMarker, positionUsernameHelper, setActiveDateGroup, setDateGroupData, setFixedPadding, setListOpenData, setNavHeight, timerEmail, timerPassword, timerUsername, wt;
 
   wt = window.tu = {};
 
@@ -274,11 +274,11 @@
       var $group, _ref;
       $group = $el.parents(".form-group");
       if (((_ref = $el.val().match(/^[\w]{3,15}$/gi)) != null ? _ref.length : void 0) !== 1) {
-        return wt.inputWarning.create("Your username must be between 3 - 15 unaccented numbers or letters.", $group);
+        return wt.inputWarning.create("Must be between 3 - 15 unaccented numbers or letters.", $group);
       } else {
         return $.getJSON("user/check.php?un=" + (encodeURIComponent($el.val())), function(data) {
           if (!data.available) {
-            return wt.inputWarning.create("Sorry, someone already grabbed that name. Please try again.", $group);
+            return wt.inputWarning.create("That URL is already in use. Please try again.", $group);
           } else {
             return wt.inputWarning.destroy($group);
           }
@@ -431,6 +431,18 @@
     return _results;
   };
 
+  animateLabelIn = function($input) {
+    var $label;
+    $label = $input.siblings("label");
+    return $label.animate({
+      top: "50px"
+    }, 50, function() {
+      return $label.css("top", "-50px").addClass("with-focus").animate({
+        top: 0
+      }, 100);
+    });
+  };
+
   $(function() {
     if ($("#form-register").length) {
       focusField([$("#email"), $("#username"), $("#pwd")]);
@@ -438,6 +450,14 @@
       $("#username, #pwd, #email").on("blur", function(e) {
         if ($(this).val().length) {
           return $(this).data("do-validate", "1").keyup();
+        }
+      }).on("keyup", function() {
+        if ($(this).val().length > 2) {
+          return $(this).data("do-validate", "1");
+        }
+      }).on("keydown", function() {
+        if ($(this).val().length === 0 && !$(this).siblings("label").hasClass("with-focus")) {
+          return animateLabelIn($(this));
         }
       }).each(function() {
         if ($(this).parents(".form-group-warning").length) {
@@ -480,6 +500,13 @@
         return wt.appMessage.destroy();
       }
     });
+    if ($("#form-settings").length) {
+      $("#control-password-current, #control-password-new, #control-password-verify").on("keydown", function() {
+        if ($(this).val().length === 0 && !$(this).siblings("label").hasClass("with-focus")) {
+          return animateLabelIn($(this));
+        }
+      });
+    }
     return $("#form-settings").on("submit", function(e) {
       return checkSettingsPasswordField($(this), e);
     });

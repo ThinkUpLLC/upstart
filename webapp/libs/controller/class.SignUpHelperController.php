@@ -19,13 +19,13 @@ abstract class SignUpHelperController extends UpstartController {
      */
     protected function isUsernameValid() {
         if (isset($_POST['username']) && empty($_POST['username'])) {
-            $this->addErrorMessage('Please enter a username.', 'username');
+            $this->addErrorMessage('Please choose your Insights URL.', 'username');
         }
         $is_valid_username = false;
         if (isset($_POST['username']) && !empty($_POST['username'])) {
             $is_valid_username = UpstartHelper::isUsernameValid($_POST["username"]);
             if (!$is_valid_username) {
-                $this->addErrorMessage('Your username must be between 3 - 15 unaccented numbers or letters.',
+                $this->addErrorMessage('Must be between 3 - 15 unaccented numbers or letters',
                     'username');
             }
         }

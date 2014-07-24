@@ -4,11 +4,11 @@ checkUsername = ($el) ->
   timerUsername = setTimeout(->
     $group = $el.parents(".form-group")
     if $el.val().match(/^[\w]{3,15}$/gi)?.length isnt 1
-      wt.inputWarning.create "Your username must be between 3 - 15 unaccented numbers or letters.", $group
+      wt.inputWarning.create "Must be between 3 - 15 unaccented numbers or letters.", $group
     else
       $.getJSON "user/check.php?un=#{encodeURIComponent $el.val()}", (data) ->
         if not data.available
-          wt.inputWarning.create "Sorry, someone already grabbed that name. Please try again.", $group
+          wt.inputWarning.create "That URL is already in use. Please try again.", $group
         else
           wt.inputWarning.destroy $group
   , 500
@@ -117,12 +117,29 @@ focusField = ($el_array) ->
       $el.focus()
       break
 
+animateLabelIn = ($input) ->
+  $label = $input.siblings("label")
+  $label.animate(
+    top: "50px"
+  , 50
+  , ->
+    $label.css("top", "-50px").addClass("with-focus").animate(
+      top: 0
+    , 100
+    )
+  )
+
 $ ->
   if $("#form-register").length
     focusField [$("#email"),$("#username"),$("#pwd")]
     positionUsernameHelper $("#username")
     $("#username, #pwd, #email").on "blur", (e) ->
       if $(@).val().length then $(@).data("do-validate", "1").keyup()
+    .on "keyup", ->
+      if $(@).val().length > 2 then $(@).data("do-validate", "1")
+    .on "keydown", ->
+      if $(@).val().length is 0 and !$(@).siblings("label").hasClass "with-focus"
+        animateLabelIn $(@)
     .each ->
       if $(@).parents(".form-group-warning").length then $(@).data("do-validate", "1").keyup()
 
@@ -146,6 +163,11 @@ $ ->
       wt.appMessage.create "Passwords must match", "warning"
     else
       wt.appMessage.destroy()
+
+  if $("#form-settings").length
+    $("#control-password-current, #control-password-new, #control-password-verify").on "keydown", ->
+      if $(@).val().length is 0 and !$(@).siblings("label").hasClass "with-focus"
+        animateLabelIn $(@)
 
   $("#form-settings").on "submit", (e) ->
     checkSettingsPasswordField $(@), e
