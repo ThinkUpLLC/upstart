@@ -112,27 +112,32 @@ fieldset header .help-text {
   content: "\f058";
   color: #239a37;
 }
-.form-group.form-group-radio:before,
-.form-group.form-group-radio:after {
-  content: " ";
-  /* 1 */
-  display: table;
-  /* 2 */
+.form-group.form-group-terms {
+  text-align: center;
+  border-bottom: 0;
 }
-.form-group.form-group-radio:after {
-  clear: both;
+.form-group.form-group-terms .control-label,
+.form-group.form-group-terms .form-control {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
 }
-.form-group.form-group-radio .control-label {
-  float: right;
-  padding-left: 0;
+.form-group.form-group-terms .control-label {
+  padding: 16px 10px 11px;
+  top: 0;
+  width: auto;
 }
-.form-group.form-group-radio .form-control {
-  float: left;
+.form-group.form-group-terms .form-control {
   width: 30px;
   min-width: 0;
-  margin: 10px 0 0 10px;
   height: auto;
   padding: 0;
+}
+.form-group.form-group-terms.form-group-warning .control-label {
+  display: inline-block;
+}
+.form-group.form-group-terms.form-group-warning .warning-block {
+  clear: both;
 }
 .form-group .help-block {
   margin: 0;
@@ -148,12 +153,24 @@ fieldset header .help-text {
   color: #999999;
   text-align: left;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 16px;
   padding: 3px 5px 2px;
-  line-height: 1.25;
-}
-.form-group-warning .control-label {
+  margin-bottom: 0;
+  line-height: 15px;
   position: relative;
+  top: 22px;
+}
+.control-label.with-focus,
+.form-group-select .control-label,
+.list-group-item-label,
+body.account .container form .control-label {
+  top: 0;
+  font-size: 11px;
+  line-height: 15px;
+  color: rgba(70, 188, 255, 0.75);
+  letter-spacing: .02em;
+}
+.form-group-warning .control-label.with-focus {
   top: -2em;
   display: none;
 }
@@ -225,6 +242,7 @@ textarea.form-control {
   color: #d0021b;
   position: relative;
   padding: 3px 15px 2px 5px;
+  margin: 0;
 }
 .form-group-toggle .control-label {
   width: 100%;
@@ -392,6 +410,9 @@ textarea.form-control {
   line-height: 18px;
   height: auto;
 }
+.list-group-item-label {
+  color: #999999;
+}
 .list-group-item-value {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -501,25 +522,6 @@ body#settings-subscription #form-membership-contact {
 }
 body#settings-registration header h1 {
   font-size: 24px;
-}
-body#settings-registration .container .form-group-radio {
-  border-bottom: 0;
-  margin: 0 auto;
-  width: 255px;
-}
-body#settings-registration .container .form-group-radio .control-label {
-  min-width: 0;
-  max-width: none;
-  width: 215px;
-  font-size: 14px;
-  padding: 16px 10px 11px;
-}
-body#settings-registration .container .form-group-radio.form-group-warning .control-label {
-  top: 0;
-  display: block;
-}
-body#settings-registration .container .form-group-radio.form-group-warning .warning-block {
-  clear: both;
 }
 body.account {
   background: #46bcff;

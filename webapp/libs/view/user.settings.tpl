@@ -31,7 +31,7 @@ body_classes="settings menu-open" body_id="settings-main"}
             </header>
             <div class="form-group">
               {* The jstz javascript is in the footer, added via a boolean variable *}
-              <label class="control-label" for="control-timezone">Time zone</label>
+              <label class="control-label with-focus" for="control-timezone">Time zone</label>
               <div class="form-control picker">
                 <i class="fa fa-chevron-down icon"></i>
                 <select id="control-timezone" name="timezone">
@@ -47,7 +47,7 @@ body_classes="settings menu-open" body_id="settings-main"}
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label" for="control-timezone">Insights email</label>
+              <label class="control-label with-focus" for="control-timezone">Insights email</label>
               <div class="form-control picker">
               <i class="fa fa-chevron-down icon"></i>
               <select name="control-notification-frequency">

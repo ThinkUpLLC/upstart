@@ -9,7 +9,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
 
       <ul class="list-group">
         <li class="list-group-item">
-          <div class="list-group-item-label">Your ThinkUp URL</div>
+          <div class="list-group-item-label">Insights URL</div>
           <div class="list-group-item-value">{if isset({$thinkup_url})}
             <a href="{$thinkup_url}">{$thinkup_url}</a>{else}<em>None set</em>{/if}</div>
         </li>

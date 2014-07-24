@@ -214,7 +214,7 @@ class RegisterController extends SignUpHelperController {
                         $this->addToView('tz_list', UpstartHelper::getTimeZoneList());
                         return $this->generateView();
                     } catch (DuplicateSubscriberUsernameException $e) {
-                        $this->addErrorMessage('That username is already in use. Please try again.');
+                        $this->addErrorMessage('That URL is already in use. Please try again.');
                         $this->addToView('email', $_POST['email']);
                         $this->addToView('current_tz', $_POST['timezone']);
                         $this->addToView('password', $_POST['password']);
@@ -237,7 +237,7 @@ class RegisterController extends SignUpHelperController {
                         return $this->tryAgain($this->generic_error_msg);
                     }
                 } else {
-                    return $this->tryAgain($this->generic_error_msg, "SubscriberDAO insertion failed", __FILE__, 
+                    return $this->tryAgain($this->generic_error_msg, "SubscriberDAO insertion failed", __FILE__,
                         __METHOD__, __LINE__);
                 }
             } else { //Populate form with the submitted values

@@ -121,21 +121,39 @@ fieldset {
     }
   }
 
-  &.form-group-radio {
-    .clearfix;
+  &.form-group-terms {
+    text-align: center;
+    border-bottom: 0;
+
+    .control-label, .form-control {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 14px;
+    }
+
     .control-label {
-      float: right;
-      padding-left: 0;
+      padding: 16px 10px 11px;
+      top: 0;
+      width: auto;
     }
 
     .form-control {
-      float: left;
       width: 30px;
       min-width: 0;
-      margin: 10px 0 0 10px;
       height: auto;
       padding: 0;
     }
+
+    &.form-group-warning {
+      .control-label {
+        display: inline-block;
+      }
+
+      .warning-block {
+        clear: both;
+      }
+    }
+
   }
 
   .help-block {
@@ -153,12 +171,22 @@ fieldset {
   color: @gray-light;
   text-align: left;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 16px;
   padding: 3px 5px 2px;
-  line-height: 1.25;
+  margin-bottom: 0;
+  line-height: 15px;
+  position: relative;
+  top: 22px;
 
-  .form-group-warning & {
-    position: relative;
+  &.with-focus, .form-group-select & {
+    top: 0;
+    font-size: 11px;
+    line-height: 15px;
+    color: fade(@blue, 75%);
+    letter-spacing: .02em;
+  }
+
+  .form-group-warning &.with-focus {
     top: -2em;
     display: none;
   }
@@ -239,6 +267,7 @@ textarea.form-control {
   color: @red-warning;
   position: relative;
   padding: 3px 15px 2px 5px;
+  margin: 0;
 }
 
 .form-group-toggle {
@@ -436,6 +465,8 @@ textarea.form-control {
 
 .list-group-item-label {
   &:extend(.control-label);
+  &:extend(.control-label.with-focus);
+  color: @gray-light;
 }
 
 .list-group-item-value {
@@ -581,33 +612,5 @@ body#settings-registration {
     h1 {
       font-size: 24px;
     }
-  }
-
-  .container {
-    .form-group-radio {
-      border-bottom: 0;
-      margin: 0 auto;
-      width: 255px;
-
-      .control-label {
-        min-width: 0;
-        max-width: none;
-        width: 215px;
-        font-size: 14px;
-        padding: 16px 10px 11px;
-      }
-
-      &.form-group-warning {
-        .control-label {
-          top: 0;
-          display: block;
-        }
-
-        .warning-block {
-          clear: both;
-        }
-      }
-    }
-
   }
 }
