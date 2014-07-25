@@ -17,8 +17,8 @@ class RemindTrialersAboutPaymentController extends Controller {
         $template_name = "Upstart System Messages";
         $api_key = Config::getInstance()->getValue('mandrill_api_key_for_payment_reminders');
 
-        //Send first payment reminder 24 hours after signup time (day 1)
-        $subscribers = $subscriber_dao->getSubscribersFreeTrialPaymentReminder(0, 24);
+        //Send first payment reminder 48 hours after signup time (day 2)
+        $subscribers = $subscriber_dao->getSubscribersFreeTrialPaymentReminder(0, 48);
         $subject_line = "Ready to join ThinkUp and get your FREE gift?";
         $headline = "Loving ThinkUp? Time to join!";
         foreach ($subscribers as $subscriber) {
@@ -30,8 +30,8 @@ class RemindTrialersAboutPaymentController extends Controller {
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 1);
         }
 
-        //Send second payment reminder 144 hours (6 days) after 1st reminder (day 7)
-        $subscribers = $subscriber_dao->getSubscribersFreeTrialPaymentReminder(1, 144);
+        //Send second payment reminder 120 hours (5 days) after 1st reminder (day 7)
+        $subscribers = $subscriber_dao->getSubscribersFreeTrialPaymentReminder(1, 120);
         $subject_line = "Enjoying ThinkUp? Join and get a FREE book...";
         $headline = "You've tried ThinkUp for a week...";
         foreach ($subscribers as $subscriber) {

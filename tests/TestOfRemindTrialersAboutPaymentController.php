@@ -19,12 +19,12 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
 
     public function testFirstReminder() {
         $builders = array();
-        //Free Trial, 0 reminders sent, signed up 2 days ago
+        //Free Trial, 0 reminders sent, signed up 3 days ago
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani+1@example.com',
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
             'thinkup_username'=>'unique1', 'date_installed'=>null, 'is_membership_complimentary'=>0,
             'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Free Trial',
-            'total_payment_reminders_sent'=>0, 'creation_time'=>'-2d'));
+            'total_payment_reminders_sent'=>0, 'creation_time'=>'-3d'));
 
         $controller = new RemindTrialersAboutPaymentController(true);
         $controller->control();
@@ -41,7 +41,7 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
             'thinkup_username'=>'unique4', 'date_installed'=>null, 'is_membership_complimentary'=>0,
             'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Free Trial',
-            'total_payment_reminders_sent'=>1, 'creation_time'=>'-7d', 'payment_reminder_last_sent'=>'-150h'));
+            'total_payment_reminders_sent'=>1, 'creation_time'=>'-8d', 'payment_reminder_last_sent'=>'-150h'));
 
         $controller = new RemindTrialersAboutPaymentController(true);
         $controller->control();
