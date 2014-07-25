@@ -324,11 +324,11 @@ class AppInstaller {
         }
     }
 
-    private function getMoveQueries($thinkup_username) {
+    private function getMoveQueries($thinkup_username, $time_suffix) {
         $install_pdo = self::getInstallPDO();
         $prefix = Config::getInstance()->getValue('user_installation_db_prefix');
-        $q = "SELECT concat('RENAME TABLE ".$prefix.$thinkup_username.".',table_name, ' TO ".
-            self::ARCHIVED_DB_PREFIX.$thinkup_username. ".',table_name, ';') as move_command ";
+        $q = "SELECT concat('RENAME TABLE ".$prefix.$thinkup_username.".',table_name, ' TO `".
+            self::ARCHIVED_DB_PREFIX.$thinkup_username. "-".$time_suffix."`.',table_name, ';') as move_command ";
         $q .= "FROM information_schema.TABLES WHERE table_schema='".
             $prefix.$thinkup_username."';";
         $ps = $install_pdo->query($q);
@@ -351,17 +351,19 @@ class AppInstaller {
     public function dropDatabase($thinkup_username, $do_keep_copy = true) {
         $prefix = Config::getInstance()->getValue('user_installation_db_prefix');
         $install_pdo = self::getInstallPDO();
+        $time_suffix = time();
+
         if ($do_keep_copy) {
-            $queries = self::getMoveQueries($thinkup_username);
+            $queries = self::getMoveQueries($thinkup_username, $time_suffix);
 
             //create database to archive tables to
-            $install_pdo->exec('CREATE DATABASE '.self::ARCHIVED_DB_PREFIX.$thinkup_username);
+            $install_pdo->exec('CREATE DATABASE `'.self::ARCHIVED_DB_PREFIX.$thinkup_username.'-'.$time_suffix.'`');
 
             foreach ($queries as $q) {
                 $install_pdo->exec($q['move_command']);
             }
             self::logToUserMessage("Moved user database ".$prefix.$thinkup_username." to ".
-                self::ARCHIVED_DB_PREFIX.$thinkup_username);
+                self::ARCHIVED_DB_PREFIX.$thinkup_username.$time_suffix);
         }
         //drop original database
         $install_pdo->exec('DROP DATABASE '.$prefix.$thinkup_username);

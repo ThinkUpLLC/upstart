@@ -21,8 +21,13 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         PDODAO::$PDO->exec($q);
 
         // Destroy archived user installation database
-        $q = "DROP DATABASE IF EXISTS ".AppInstaller::ARCHIVED_DB_PREFIX. $this->thinkup_username .";";
-        PDODAO::$PDO->exec($q);
+        $stmt = PDODAO::$PDO->query('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME LIKE  '
+            .' "'. AppInstaller::ARCHIVED_DB_PREFIX . $this->thinkup_username . '%";');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (isset($row['SCHEMA_NAME'])) {
+            $q = "DROP DATABASE IF EXISTS `".$row["SCHEMA_NAME"]."`;";
+            PDODAO::$PDO->exec($q);
+        }
 
         // Unlink username installation folder
         $config = Config::getInstance();
@@ -493,8 +498,8 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertFalse($row);
 
          // Assert archived database does exist
-        $stmt = PDODAO::$PDO->query('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME =  '
-            .' "'. AppInstaller::ARCHIVED_DB_PREFIX . $this->thinkup_username . '";');
+        $stmt = PDODAO::$PDO->query('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME LIKE  '
+            .' "'. AppInstaller::ARCHIVED_DB_PREFIX . $this->thinkup_username . '%";');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->debug(Utils::varDumpToString($row));
         $this->assertTrue($row);
