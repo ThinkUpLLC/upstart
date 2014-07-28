@@ -48,6 +48,7 @@ require_once 'extlibs/amazon/FPS/Model/PayResult.php';
 require_once 'extlibs/amazon/FPS/Model/GetTransactionStatusRequest.php';
 require_once 'extlibs/amazon/FPS/Model/GetTransactionStatusResponse.php';
 require_once 'extlibs/amazon/FPS/Model/GetTransactionStatusResult.php';
+require_once 'extlibs/amazon/IpnReturnUrlValidation/SignatureUtilsForOutbound.php';
 
 
 require_once 'extlibs/mandrill/Mandrill.php';
