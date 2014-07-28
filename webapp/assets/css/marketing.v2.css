@@ -846,16 +846,16 @@ a.btn-pill-large.has-note {
   }
 }
 #container-what .section-copy #sample-4 .sample-insight {
-  height: 157px;
-  background: url("../img/landing/insight-gratitude-mobile@2x.png") top left no-repeat;
-  background-size: 310px 157px;
+  height: 315px;
+  background: url("../img/landing/insight-followers-mobile@2x.png") top left no-repeat;
+  background-size: 310px 315px;
 }
 @media (min-width: 760px) {
   #container-what .section-copy #sample-4 .sample-insight {
     width: 540px;
-    height: 92px;
-    background: url("../img/landing/insight-gratitude-desktop@2x.png") top left no-repeat;
-    background-size: 540px 92px;
+    height: 285px;
+    background: url("../img/landing/insight-followers-desktop@2x.png") top left no-repeat;
+    background-size: 540px 285px;
   }
 }
 #container-what .section-copy #sample-5 .sample-insight {
@@ -872,16 +872,16 @@ a.btn-pill-large.has-note {
   }
 }
 #container-what .section-copy #sample-6 .sample-insight {
-  height: 193px;
-  background: url("../img/landing/insight-list-mobile@2x.png") top left no-repeat;
-  background-size: 310px 193px;
+  height: 316px;
+  background: url("../img/landing/insight-fans-mobile@2x.png") top left no-repeat;
+  background-size: 310px 316px;
 }
 @media (min-width: 760px) {
   #container-what .section-copy #sample-6 .sample-insight {
     width: 540px;
-    height: 128px;
-    background: url("../img/landing/insight-list-desktop@2x.png") top left no-repeat;
-    background-size: 540px 128px;
+    height: 256px;
+    background: url("../img/landing/insight-fans-desktop@2x.png") top left no-repeat;
+    background-size: 540px 256px;
   }
 }
 #container-specs {
