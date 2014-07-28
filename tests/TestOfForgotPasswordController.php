@@ -50,20 +50,6 @@ class TestOfForgotPasswordController extends UpstartUnitTestCase {
         $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), 'Sorry, can\'t find that email address.');
     }
 
-    public function testOfControllerWithWaitlistedUser() {
-        $builder = FixtureBuilder::build('subscribers', array('id'=>2,
-        'email'=>'waitlisted@example.com', 'membership_level'=>'Waitlist'));
-
-        $_POST['email'] = 'waitlisted@example.com';
-        $_POST['Submit'] = "Send";
-
-        $controller = new ForgotPasswordController(true);
-        $result = $controller->go();
-
-        $v_mgr = $controller->getViewManager();
-        $this->assertEqual($v_mgr->getTemplateDataItem('error_msg'), 'Sorry, can\'t find that email address.');
-    }
-
     public function testOfControllerWithValidEmailAddress() {
         $config = Config::getInstance();
         $site_root_path = $config->getValue('site_root_path');

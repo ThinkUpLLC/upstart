@@ -4,16 +4,16 @@
  * This controller sends email reminders to ThinkUp members who abandoned payment.
  * Eventually, it will be deprecated by free trial.
  *
- * For first reminder, select all subscribers who are not on the waitlist, whose subscription_status is 'Payment due','
+ * For first reminder, select all subscribers whose subscription_status is 'Payment due','
  * 'whose total_payment_reminders_sent = 0, and whose creation_time is more than 24 hours earlier than now.
  * Cycle through them and send first reminder, setting total_payment_reminders_sent = 1 along the way.
  *
- * For the second reminder, select all subscribers who are not on the waitlist, whose subscription_status is
+ * For the second reminder, select all subscribers whose subscription_status is
  * 'Payment due', whose total_payment_reminders_sent = 1, and whose last_payment_reminder_sent is more than 48 hours
  * earlier than now. Cycle through them and send second reminder, setting total_payment_reminders_sent = 2 along
  * the way.
  *
- * For the final reminder, select all subscribers who are not on the waitlist, whose subscription_status is
+ * For the final reminder, select all subscribers whose subscription_status is
  * 'Payment due', whose total_payment_reminders_sent = 2, and whose last_payment_reminder_sent is more than 96 hours
  * earlier than now. Cycle through them and send third reminder, setting total_payment_reminders_sent = 3 along the way.
  */

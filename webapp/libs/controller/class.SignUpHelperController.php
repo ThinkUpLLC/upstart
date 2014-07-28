@@ -80,7 +80,6 @@ abstract class SignUpHelperController extends UpstartController {
         $oauth_consumer_secret = $cfg->getValue('oauth_consumer_secret');
 
         $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret);
-        //Add unique waitlisted user ID from previous DB operation to callback
         $tok = $to->getRequestToken(UpstartHelper::getApplicationURL(false, false).$redirect_location);
 
         if (isset($tok['oauth_token'])) {

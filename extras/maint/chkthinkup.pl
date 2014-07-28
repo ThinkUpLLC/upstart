@@ -30,7 +30,7 @@ my $sth;
 
 if ($options->{'users'}) {
 	$dbh->do('USE thinkupllc_upstart');
-	$sth = $dbh->prepare("SELECT thinkup_username FROM subscribers WHERE membership_level != 'Waitlist' AND thinkup_username IS NOT NULL");
+	$sth = $dbh->prepare("SELECT thinkup_username FROM subscribers WHERE thinkup_username IS NOT NULL");
 	$sth->execute();
 	while (my $user = $sth->fetchrow_array()) {
 		$users->{$user} = 1;
@@ -55,12 +55,12 @@ if ($options->{'engine'}) {
 		}
 	}
 	$sth->finish();
-	
+
 	foreach my $db (keys %{$engine}) {
 		$dbh->do(sprintf('USE %s',$db));
 		foreach my $table (keys %{$engine->{$db}}) {
 			my (undef,$desc) = $dbh->selectrow_array(sprintf('SHOW CREATE TABLE %s',$table));
-	
+
 			$engine->{$db}->{$table} = $1 if ($desc =~ m{ENGINE=(.*?) });
 		}
 	}
@@ -98,7 +98,7 @@ if ($options->{'users'}) {
 my $first = 1;
 if ($options->{'engine'}) {
 	foreach my $db (keys %{$engine}) {
-	
+
 		my @cmds = ();
 		foreach my $table (keys %{$engine->{$db}}) {
 			if ($engine->{$db}->{$table} ne 'InnoDB') {

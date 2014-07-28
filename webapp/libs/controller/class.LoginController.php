@@ -86,12 +86,7 @@ class LoginController extends UpstartController {
                     //     $this->addErrorMessage($error_msg, null, $disable_xss);
                     //     return $this->generateView();
                     // If the credentials supplied by the user are incorrect
-                    if ($subscriber->membership_level == 'Waitlist')  {
-                        $error_msg = "Hey! We’ve got you on our waiting list and will email you soon with ".
-                        "subscription info.";
-                        $this->addErrorMessage($error_msg, null, $disable_xss=true);
-                        return $this->generateView();
-                    } elseif (!$subscriber_dao->isAuthorized($user_email, $_POST['pwd']) ) {
+                    if (!$subscriber_dao->isAuthorized($user_email, $_POST['pwd']) ) {
                         $error_msg = 'That password doesn\'t seem right.';
                         if ($subscriber->failed_logins >= 9) { // where 9 represents the 10th attempt!
                             $subscriber_dao->deactivateSubscriber($user_email);

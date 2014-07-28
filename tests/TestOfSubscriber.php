@@ -26,10 +26,6 @@ class TestOfSubscriber extends UpstartUnitTestCase {
         'pwd'=>$password, 'pwd_salt'=>$test_salt, 'is_email_verified'=>0, 'is_activated'=>0, 'is_admin'=>0,
         'thinkup_username'=>null, 'verification_code'=>'224455'));
 
-        $builders[] = FixtureBuilder::build('subscribers', array('id'=>8, 'email'=>'waitlist@example.com',
-        'pwd'=>$password, 'pwd_salt'=>$test_salt, 'is_email_verified'=>0, 'is_activated'=>0, 'is_admin'=>0,
-        'thinkup_username'=>null, 'membership_level'=>'Waitlist'));
-
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>9, 'email'=>'activeinstall@example.com',
         'pwd'=>$password, 'pwd_salt'=>$test_salt, 'is_email_verified'=>1, 'is_activated'=>0, 'is_admin'=>0,
         'thinkup_username'=>'unique', 'membership_level'=>'Member', 'is_installation_active'=>1,

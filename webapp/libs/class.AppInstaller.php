@@ -144,7 +144,7 @@ class AppInstaller {
 
                 $subscriber_dao->intializeInstallation($subscriber_id, $subscriber->api_key_private,
                 $commit_hash);
-                self::logToUserMessage("Updated waitlist with link and db name");
+                self::logToUserMessage("Updated subscriber with link and db name");
                 try {
                     self::dispatchCrawlJob($subscriber->thinkup_username);
                 } catch (DispatchException $e) {

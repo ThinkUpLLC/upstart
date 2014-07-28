@@ -776,7 +776,7 @@ class SubscriberMySQLDAO extends PDODAO {
         $q .= "INNER JOIN authorizations a ON sa.authorization_id = a.id ";
         $q .= "LEFT JOIN subscriber_payments sp ON sp.subscriber_id = s.id ";
         $q .= "LEFT JOIN payments p ON p.id = sp.payment_id ";
-        $q .= "WHERE s.is_membership_complimentary = 0 AND s.membership_level != 'Waitlist' AND request_id IS NULL ";
+        $q .= "WHERE s.is_membership_complimentary = 0 AND request_id IS NULL ";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
         return $this->getDataRowsAsArrays($ps);
@@ -808,7 +808,7 @@ class SubscriberMySQLDAO extends PDODAO {
      * @return arr                       Array of Subscriber objects
      */
     public function getSubscribersPaymentDueReminder($total_reminders_sent, $hours_past_time) {
-        $q = "SELECT * FROM subscribers WHERE membership_level != 'Waitlist' AND subscription_status = 'Payment due' ";
+        $q = "SELECT * FROM subscribers WHERE subscription_status = 'Payment due' ";
         $q .= "AND is_account_closed = 0 ";
         $q .= "AND total_payment_reminders_sent = :total_reminders_sent AND (";
         //If total_reminders_sent = 0, use creation_time to compare. Otherwise, use payment_reminder_last_sent.
@@ -831,7 +831,7 @@ class SubscriberMySQLDAO extends PDODAO {
      * @return arr                       Array of Subscriber objects
      */
     public function getSubscribersFreeTrialPaymentReminder($total_reminders_sent, $hours_past_time) {
-        $q = "SELECT * FROM subscribers WHERE membership_level != 'Waitlist' AND subscription_status = 'Free Trial' ";
+        $q = "SELECT * FROM subscribers WHERE subscription_status = 'Free Trial' ";
         $q .= "AND is_account_closed = 0 ";
         $q .= "AND total_payment_reminders_sent = :total_reminders_sent AND (";
         //If total_reminders_sent = 0, use creation_time to compare. Otherwise, use payment_reminder_last_sent.
@@ -852,7 +852,7 @@ class SubscriberMySQLDAO extends PDODAO {
      * @return arr Array of Subscriber objects
      */
     public function getSubscribersToUninstallDueToNonPayment() {
-        $q = "SELECT * FROM subscribers WHERE membership_level != 'Waitlist' AND subscription_status = 'Payment due' ";
+        $q = "SELECT * FROM subscribers WHERE subscription_status = 'Payment due' ";
         $q .= "AND total_payment_reminders_sent = 3 AND ";
         $q .= "(payment_reminder_last_sent < DATE_SUB(NOW(), INTERVAL 14 DAY )) ";
         $q .= "ORDER BY creation_time ASC LIMIT 25";
@@ -866,7 +866,7 @@ class SubscriberMySQLDAO extends PDODAO {
      * @return arr Array of Subscriber objects
      */
     public function getSubscribersToUninstallDueToExpiredTrial() {
-        $q = "SELECT * FROM subscribers WHERE membership_level != 'Waitlist' AND subscription_status = 'Free trial' ";
+        $q = "SELECT * FROM subscribers WHERE subscription_status = 'Free trial' ";
         //AND trial is more than 15 days old, and last dispatched is over 30 hours ago.
         $q .= "AND (creation_time < DATE_SUB(NOW(), INTERVAL 15 DAY )) ";
         $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL 30 HOUR )) ";
@@ -903,8 +903,8 @@ class SubscriberMySQLDAO extends PDODAO {
         );
 
         $q = "SELECT count(id) as new_members, ";
-        $q .= "DATE(creation_time) AS date  FROM subscribers WHERE membership_level != 'Waitlist' ";
-        $q .= "AND ( date(creation_time) = '".$today."' ";
+        $q .= "DATE(creation_time) AS date  FROM subscribers WHERE ";
+        $q .= "( date(creation_time) = '".$today."' ";
         $q .= "OR date(creation_time) = '".$yesterday."' ";
         $q .= "OR date(creation_time) = '".$day_before."') ";
         $q .= "GROUP BY DATE(creation_time) ORDER BY creation_time DESC;";

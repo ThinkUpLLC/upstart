@@ -10,24 +10,20 @@ class ForgotPasswordController extends Controller {
             $subscriber_dao = new SubscriberMySQLDAO();
             try {
                 $subscriber = $subscriber_dao->getByEmail($_POST['email']);
-                if ($subscriber->membership_level != 'Waitlist') {
-                    $token = $subscriber->setPasswordRecoveryToken();
+                $token = $subscriber->setPasswordRecoveryToken();
 
-                    $email_view_mgr = new ViewManager();
-                    $email_view_mgr->caching=false;
+                $email_view_mgr = new ViewManager();
+                $email_view_mgr->caching=false;
 
-                    $email_view_mgr->assign('app_title', "ThinkUp.com" );
-                    $email_view_mgr->assign('recovery_url', "user/reset.php?token=$token");
-                    $email_view_mgr->assign('application_url', UpstartHelper::getApplicationURL(false));
-                    $email_view_mgr->assign('site_root_path', $config->getValue('site_root_path') );
-                    $message = $email_view_mgr->fetch('_email.forgotpassword.tpl');
+                $email_view_mgr->assign('app_title', "ThinkUp.com" );
+                $email_view_mgr->assign('recovery_url', "user/reset.php?token=$token");
+                $email_view_mgr->assign('application_url', UpstartHelper::getApplicationURL(false));
+                $email_view_mgr->assign('site_root_path', $config->getValue('site_root_path') );
+                $message = $email_view_mgr->fetch('_email.forgotpassword.tpl');
 
-                    Mailer::mail($_POST['email'], "Recover your ThinkUp password", $message);
+                Mailer::mail($_POST['email'], "Recover your ThinkUp password", $message);
 
-                    $this->addSuccessMessage('Check your email for a password reset link.');
-                } else {
-                    $this->addErrorMessage('Sorry, can\'t find that email address.');
-                }
+                $this->addSuccessMessage('Check your email for a password reset link.');
             } catch (SubscriberDoesNotExistException $e) {
                 $this->addErrorMessage('Sorry, can\'t find that email address.');
             }
