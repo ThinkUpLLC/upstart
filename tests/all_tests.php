@@ -38,6 +38,7 @@ $all_tests->add(new TestOfRemindTrialersAboutPaymentController());
 $all_tests->add(new TestOfMailer());
 $all_tests->add(new TestOfUpdatePendingPaymentStatusController());
 $all_tests->add(new TestOfPayNowController());
+$all_tests->add(new TestOfAPIIPNController());
 
 //$tr = new TextReporter();
 //$all_tests->run( $tr );

@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  *  PHP Version 5
  *
  *  @category    Amazon
@@ -9,26 +9,26 @@
  *  @license     http://aws.amazon.com/apache2.0  Apache License, Version 2.0
  *  @version     2010-08-28
  */
-/******************************************************************************* 
- *    __  _    _  ___ 
+/*******************************************************************************
+ *    __  _    _  ___
  *   (  )( \/\/ )/ __)
  *   /__\ \    / \__ \
  *  (_)(_) \/\/  (___/
- * 
+ *
  *  Amazon FPS PHP5 Library
  *  Generated: Wed Sep 23 03:35:04 PDT 2009
- * 
+ *
  */
 
 require_once '.config.inc.php';
 require_once 'Amazon/IpnReturnUrlValidation/SignatureUtilsForOutbound.php';
-  
+
 class Amazon_FPS_IPNVerificationSampleCode {
 
 	public static function test() {
-		
+
         $utils = new Amazon_FPS_SignatureUtilsForOutbound();
-        
+
         //Parameters present in ipn.
         $params["transactionId"] = "14DRG2JGR7LK4J54P544DKKNDLQFFZLE323";
         $params["transactionDate"] = "1251832057";
@@ -51,7 +51,7 @@ class Amazon_FPS_IPNVerificationSampleCode {
                 . "bhp5+AuNyAs+QrGMYO8VZruZJfkZO4b6QOgV2A==";
 
         $urlEndPoint = "http://www.mysite.com/ipn.jsp"; //Your url end point receiving the ipn.
-         
+
         print "Verifying IPN signed using signature v2 ....\n";
         //IPN is sent as a http POST request and hence we specify POST as the http method.
         //Signature verification does not require your secret key
@@ -59,5 +59,5 @@ class Amazon_FPS_IPNVerificationSampleCode {
 	}
 }
 
-Amazon_FPS_IPNVerificationSampleCode::test(); 
+Amazon_FPS_IPNVerificationSampleCode::test();
 ?>
