@@ -85,7 +85,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
       <form role="form" class="form" id="form-membership-contact">
         <fieldset>
           <header>
-            <h2>What’s your trouble?</h2>
+            <h2>How can we help you?</h2>
           </header>
           <div class="form-group">
             <label class="control-label no-check" for="control-subject">Type of issue</label>
