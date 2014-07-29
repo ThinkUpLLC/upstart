@@ -733,6 +733,7 @@ a.btn-pill-large.has-note {
   position: relative;
   text-align: center;
   padding: 20px 0 30px;
+  margin-left: -5px;
 }
 @media (min-width: 760px) {
   #container-what .section-copy .section-insights-carousel {
@@ -742,6 +743,7 @@ a.btn-pill-large.has-note {
     right: 0;
     width: 540px;
     height: 300px;
+    margin-left: 0;
   }
 }
 #container-what .section-copy .section-insights-carousel figcaption {
@@ -763,7 +765,7 @@ a.btn-pill-large.has-note {
 }
 #container-what .section-copy .carousel-indicators li {
   list-style: none;
-  padding: 10px;
+  padding: 10px 5px;
   margin: 0;
   display: inline-block;
 }
@@ -882,6 +884,32 @@ a.btn-pill-large.has-note {
     height: 256px;
     background: url("../img/landing/insight-fans-desktop@2x.png") top left no-repeat;
     background-size: 540px 256px;
+  }
+}
+#container-what .section-copy #sample-7 .sample-insight {
+  height: 386px;
+  background: url("../img/landing/insight-popular-mobile@2x.png") top left no-repeat;
+  background-size: 310px 386px;
+}
+@media (min-width: 760px) {
+  #container-what .section-copy #sample-7 .sample-insight {
+    width: 540px;
+    height: 321px;
+    background: url("../img/landing/insight-popular-desktop@2x.png") top left no-repeat;
+    background-size: 540px 321px;
+  }
+}
+#container-what .section-copy #sample-8 .sample-insight {
+  height: 306px;
+  background: url("../img/landing/insight-time-mobile@2x.png") top left no-repeat;
+  background-size: 310px 306px;
+}
+@media (min-width: 760px) {
+  #container-what .section-copy #sample-8 .sample-insight {
+    width: 540px;
+    height: 199px;
+    background: url("../img/landing/insight-time-desktop@2x.png") top left no-repeat;
+    background-size: 540px 199px;
   }
 }
 #container-specs {
