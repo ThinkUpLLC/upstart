@@ -616,7 +616,7 @@
       e.preventDefault();
       return wt.appMessage.destroy();
     });
-    return $("body").on("click", ".show-section", function(e) {
+    $("body").on("click", ".show-section", function(e) {
       var $el;
       $el = $($(this).data("section-selector"));
       if ($el.length) {
@@ -625,6 +625,17 @@
           return $el.show();
         }
       }
+    });
+    return $("#form-membership-contact").submit(function(e) {
+      var $form, body, subject;
+      e.preventDefault();
+      $form = $(this);
+      subject = $form.find("#control-subject option:selected").text();
+      if (subject === "Choose…") {
+        subject = "ThinkUp Help";
+      }
+      body = $form.find("#control-body").val();
+      return window.location.href = "mailto:help@thinkup.com?subject=" + (encodeURI(subject)) + "&body=" + (encodeURI(body));
     });
   });
 
