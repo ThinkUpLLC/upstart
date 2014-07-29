@@ -88,10 +88,10 @@ body_classes="settings menu-open" body_id="settings-subscription"}
             <h2>What’s your trouble?</h2>
           </header>
           <div class="form-group">
-            <label class="control-label no-check" for="control-type">Type of issue</label>
+            <label class="control-label no-check" for="control-subject">Type of issue</label>
             <div class="form-control picker">
               <i class="fa fa-chevron-down icon"></i>
-              <select id="control-type">
+              <select id="control-subject">
                 <option value="">Choose&hellip;</option>
                 <option value="level">Change membership level</option>
                 <option value="billing">Billing issue</option>
