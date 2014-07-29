@@ -73,7 +73,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
     {/if}
 
       <p class="form-note">Need help? <a href="mailto:help@thinkup.com" class="show-section"
-      {* data-section-selector="#form-membership-contact" *}>Contact us</a></p>
+      data-section-selector="#form-membership-contact">Contact us</a></p>
 
       {if $membership_status eq 'Free trial'}
       <form id="form-membership-close-account" action="membership.php?close=true" method="post">
@@ -82,13 +82,13 @@ body_classes="settings menu-open" body_id="settings-subscription"}
       </form>
       {/if}
 
-      <form role="form" class="form-horizontal" id="form-membership-contact">
+      <form role="form" class="form" id="form-membership-contact">
         <fieldset>
           <header>
             <h2>What’s your trouble?</h2>
           </header>
           <div class="form-group">
-            <label class="control-label" for="control-type">Type of issue</label>
+            <label class="control-label no-check" for="control-type">Type of issue</label>
             <div class="form-control picker">
               <i class="fa fa-chevron-down icon"></i>
               <select id="control-type">
@@ -101,7 +101,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label" for="control-body">More info</label>
+            <label class="control-label no-check" for="control-body">More info</label>
             <textarea class="form-control" id="control-body"></textarea>
           </div>
         </fieldset>

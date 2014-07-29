@@ -178,12 +178,16 @@ fieldset {
   position: relative;
   top: 22px;
 
-  &.with-focus, .form-group-select & {
+  &.with-focus, .form-group-select &, &.no-check {
     top: 0;
     font-size: 11px;
     line-height: 15px;
     color: fade(@blue, 75%);
     letter-spacing: .02em;
+  }
+
+  .form-group-select &, &.no-check {
+    color: @gray-light;
   }
 
   .form-group-warning &.with-focus {
@@ -213,14 +217,10 @@ fieldset {
 }
 
 textarea.form-control {
-  width: 190px;
+  width: 100%;
   height: (28*4px);
-  padding: 0;
-  margin: 11px 10px 10px 0;
-
-  @media (min-width: 400px) {
-    width: 210px;
-  }
+  padding: 5px;
+  margin: 0 0 5px;
 }
 
 .input-with-domain {
