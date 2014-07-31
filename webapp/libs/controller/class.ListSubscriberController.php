@@ -40,7 +40,7 @@ class ListSubscriberController extends Controller {
         $daily_signups = $subscriber_dao->getDailySignups();
         $this->addToView('total_daily_signups', $daily_signups[date('Y-m-d')]['new_members']);
         $daily_revenue = $payment_dao->getDailyRevenue();
-        $this->addToView('total_daily_revenue', $daily_revenue[date('Y-m-d')]['new_members']);
+        $this->addToView('total_daily_revenue', $daily_revenue[date('Y-m-d')]['revenue']);
 
         try {
             $worker_status = Dispatcher::getNagiosCheckStatus();
