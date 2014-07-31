@@ -37,6 +37,11 @@ class ListSubscriberController extends Controller {
         $stalest_dispatch_time_not_paid = $subscriber_dao->getNotPaidStalestInstallLastDispatchTime();
         $this->addToView('stalest_dispatch_not_paid', $stalest_dispatch_time_not_paid);
 
+        $daily_signups = $subscriber_dao->getDailySignups();
+        $this->addToView('total_daily_signups', $daily_signups[date('Y-m-d')]['new_members']);
+        $daily_revenue = $payment_dao->getDailyRevenue();
+        $this->addToView('total_daily_revenue', $daily_revenue[date('Y-m-d')]['new_members']);
+
         try {
             $worker_status = Dispatcher::getNagiosCheckStatus();
             if (strrpos($worker_status, 'NOT OK') !== false) {
