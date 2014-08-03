@@ -37,8 +37,8 @@
           <tr>
             <td>Email</td>
             <td>
-              <a href="mailto:{$subscriber->email}">{$subscriber->email}</a>
-              <form action="subscriber.php?action=updateemail&id={$subscriber->id}" method="get" class="pull-right"><input type="email" width="10" value="" placeholder="" name="email"> <input type="hidden" name="id" value="{$subscriber->id}"> <input type="hidden" name="action" value="setemail"><input type="submit" value="Change" class="btn btn-xs btn-default"></form>
+              <a href="mailto:{$subscriber->email}">{$subscriber->email}</a> <a href="https://mandrillapp.com/activity?q=full_email:{$subscriber->email|urlencode}" class="btn btn-xs btn-primary pull-right" target="_new">See email activity&rarr;</a><br>
+              <form action="subscriber.php?action=updateemail&id={$subscriber->id}" method="get"><input type="email" width="10" value="" placeholder="" name="email"> <input type="hidden" name="id" value="{$subscriber->id}"> <input type="hidden" name="action" value="setemail"><input type="submit" value="Change" class="btn btn-xs btn-default"></form>
             </td>
           </tr>
           {if isset($subscriber->network) && isset($subscriber->network_user_name)}
@@ -56,7 +56,7 @@
             <td>Crawled</td>
             <td>
               {$subscriber->last_dispatched|relative_datetime} ago
-              {if $subscriber->installation_url neq null}<a href="https://www.thinkup.com/phpyouradmin/index.php?server=2&db=thinkupstart_{$subscriber->thinkup_username}" class="btn btn-xs btn-primary pull-right">See database</a>{/if}
+              {if $subscriber->installation_url neq null}<a href="https://www.thinkup.com/phpyouradmin/index.php?server=2&db=thinkupstart_{$subscriber->thinkup_username}" target="_new" class="btn btn-xs btn-primary pull-right">See database&rarr;</a>{/if}
 
               <!-- https://www.thinkup.com/dispatch/monitor.php?auth_token=itisnicetobenice104&install_name={$subscriber->thinkup_username} -->
             </td>
