@@ -54,26 +54,6 @@ class TestOfSubscriber extends UpstartUnitTestCase {
         $this->assertEqual($result, 'Free trial');
     }
 
-    public function testGetSubscriptionStatusAuthPending() {
-        $this->builders[] = FixtureBuilder::build('authorizations', array('id'=>1, 'error_message'=>null));
-        $this->builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>6,
-            'authorization_id'=>1));
-        $subscriber = new Subscriber();
-        $subscriber->id = 6;
-        $result = $subscriber->getSubscriptionStatus();
-        $this->assertEqual($result, 'Authorization pending');
-    }
-
-    public function testGetSubscriptionStatusAuthFailed() {
-        $this->builders[] = FixtureBuilder::build('authorizations', array('id'=>1, 'error_message'=>'An error'));
-        $this->builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>6,
-            'authorization_id'=>1));
-        $subscriber = new Subscriber();
-        $subscriber->id = 6;
-        $result = $subscriber->getSubscriptionStatus();
-        $this->assertEqual($result, 'Authorization failed');
-    }
-
     public function testGetSubscriptionStatusPaymentPending() {
         $this->builders[] = FixtureBuilder::build('authorizations', array('id'=>1, 'error_message'=>null));
         $this->builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>6,
@@ -132,5 +112,38 @@ class TestOfSubscriber extends UpstartUnitTestCase {
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j, ');
         $this->assertEqual($result, 'Paid through '.$paid_through_date.$paid_through_year);
+    }
+
+    public function testGetSubscriptionStatusSimplePayPaymentSucceeded() {
+        $this->builders[] = FixtureBuilder::build('subscription_operations', array('subscriber_id'=>6,
+            'operation'=>'pay', 'status_code'=>'SS', 'transaction_date'=>'2014-08-05 11:51:44'));
+
+        $subscriber = new Subscriber();
+        $subscriber->id = 6;
+        $result = $subscriber->getSubscriptionStatus();
+
+        $this->assertEqual($result, 'Paid through Sep 5, 2014');
+    }
+
+    public function testGetSubscriptionStatusSimplePayPaymentFailed() {
+        $this->builders[] = FixtureBuilder::build('subscription_operations', array('subscriber_id'=>6,
+            'operation'=>'pay', 'status_code'=>'SF', 'transaction_date'=>'2014-08-05 11:51:44'));
+
+        $subscriber = new Subscriber();
+        $subscriber->id = 6;
+        $result = $subscriber->getSubscriptionStatus();
+
+        $this->assertEqual($result, 'Payment failed');
+    }
+
+    public function testGetSubscriptionStatusSimplePayPaymentPending() {
+        $this->builders[] = FixtureBuilder::build('subscription_operations', array('subscriber_id'=>6,
+            'operation'=>'pay', 'status_code'=>'SI', 'transaction_date'=>'2014-08-05 11:51:44'));
+
+        $subscriber = new Subscriber();
+        $subscriber->id = 6;
+        $result = $subscriber->getSubscriptionStatus();
+
+        $this->assertEqual($result, 'Payment pending');
     }
 }

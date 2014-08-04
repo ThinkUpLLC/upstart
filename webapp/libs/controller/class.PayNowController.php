@@ -17,11 +17,15 @@ class PayNowController extends Controller {
         //Get Amazon URL
         $caller_reference = $new_subscriber_id.'_'.time();
         $callback_url = UpstartHelper::getApplicationURL().'confirm-payment.php?level='.
-            (strtolower($subscriber->membership_level));
-        $amount = SignUpHelperController::$subscription_levels[strtolower($subscriber->membership_level)];
-        $pay_with_amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL($caller_reference, $callback_url, $amount);
+            (strtolower($subscriber->membership_level)).'&recur='.
+            urlencode($subscriber->subscription_recurrence);
+        $amount = SignUpHelperController::$subscription_levels[strtolower($subscriber->membership_level)]
+            [$subscriber->subscription_recurrence];
+        $api_accessor = new AmazonFPSAPIAccessor();
+        $pay_with_amazon_form = $api_accessor->generateSimplePayNowForm('USD '.$amount,
+            $subscriber->subscription_recurrence, 'ThinkUp.com membership', $caller_reference, $callback_url);
 
-        $this->addToView('pay_with_amazon_url', $pay_with_amazon_url);
+        $this->addToView('pay_with_amazon_form', $pay_with_amazon_form);
 
         $cfg = Config::getInstance();
         $user_installation_url = $cfg->getValue('user_installation_url');

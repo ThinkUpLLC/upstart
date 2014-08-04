@@ -23,52 +23,58 @@ class MembershipController extends AuthController {
             $config->getValue('user_installation_url'));
         $this->addToView('thinkup_url', $user_installation_url);
 
+        //@TODO Rewrite this to handle Amazon Simple Pay parameters
         // Process payment if returned from Amazon
         if (self::hasUserReturnedFromAmazon()) {
             $internal_caller_reference = SessionCache::get('caller_reference');
             if (isset($internal_caller_reference) && $this->isAmazonResponseValid($internal_caller_reference)) {
-                $amazon_caller_reference = $_GET['callerReference'];
+                if (UpstartHelper::areGetParamsSet(SignUpHelperController::$amazon_simple_pay_return_params)) {
+                    $error_message = isset($_GET["errorMessage"])?$_GET["errorMessage"]:null;
+                    if ($error_message !== null ) {
+                        $this->addErrorMessage($this->generic_error_msg);
+                        $this->logError("Amazon returned error: ".$error_message, __FILE__,__LINE__,__METHOD__);
+                    } else {
+                        //Capture Simple Pay return codes
+                        $op = new SubscriptionOperation();
+                        $op->subscriber_id = $subscriber->id;
+                        $op->payment_reason = $_GET['paymentReason'];
+                        $op->transaction_amount = $_GET['transactionAmount'];
+                        $op->status_code = $_GET['status'];
+                        $op->buyer_email = $_GET['buyerEmail'];
+                        //@TODO Verify the reference_id starts with the subscriber ID
+                        $op->reference_id = $_GET['referenceId'];
+                        $op->amazon_subscription_id = $_GET['subscriptionId'];
+                        $op->transaction_date = $_GET['transactionDate'];
+                        $op->buyer_name = $_GET['buyerName'];
+                        $op->operation = $_GET['operation'];
+                        $op->recurring_frequency = $_GET['recurringFrequency'];
+                        $op->payment_method = $_GET['paymentMethod'];
 
-                $error_message = isset($_GET["errorMessage"])?$_GET["errorMessage"]:null;
-                if ($error_message !== null ) {
-                    $this->addErrorMessage($this->generic_error_msg);
-                    $this->logError("Amazon returned error: ".$error_message, __FILE__,__LINE__,__METHOD__);
-                } else {
-                    //Record authorization
-                    $authorization_dao = new AuthorizationMySQLDAO();
-                    $amount = self::getSubscriptionAmount($subscriber->membership_level);
-                    $payment_expiry_date = (isset($_GET['expiry']))?$_GET['expiry']:null;
-                    $token_id = (isset($_GET['tokenID']))?$_GET['tokenID']:null;
-                    try {
-                        $authorization_id = $authorization_dao->insert($token_id, $amount, $_GET["status"],
-                            $internal_caller_reference, $error_message, $payment_expiry_date);
+                        //Check to make sure this isn't a page refresh by catching a DuplicateKey exception
+                        try {
+                            $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
+                            $subscription_operation_dao->insert($op);
 
-                        //Save authorization ID and subscriber ID in subscriber_authorizations table.
-                        $subscriber_authorization_dao = new SubscriberAuthorizationMySQLDAO();
-                        $subscriber_authorization_dao->insert($subscriber->id, $authorization_id);
+                            if ($op->status_code !== 'SF') {
+                                $this->addSuccessMessage("Success! Thanks for being a ThinkUp member.");
+                            }
 
-                        //Charge for authorization
-                        $api_accessor = new AmazonFPSAPIAccessor();
-                        $is_charge_successful = $api_accessor->invokeAmazonPayAction($subscriber->id, $token_id,
-                            $amount);
-
-                        if ($is_charge_successful) {
-                            $this->addSuccessMessage("Success! Thanks for being a ThinkUp member.");
-                        } else {
-                            $this->addErrorMessage("Oops! Something went wrong. ".
-                                "Please try again or contact us for help.");
-                            $this->logError('Amazon charge was unsuccessful', __FILE__,__LINE__, __METHOD__);
+                            //Now that user has created a subscription, generate up-to-date subscription_status
+                            $subscription_status = $subscriber->getSubscriptionStatus();
+                            //Update subscription_status in the subscriber object
+                            $subscriber->subscription_status = $subscription_status;
+                            //Update subscription_status in the data store
+                            $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
+                            //Update recurrence_frequency in the data store
+                            $subscriber_dao->updateSubscriptionRecurrence($subscriber->id, $op->recurring_frequency);
+                        } catch (DuplicateSubscriptionOperationException $e) {
+                            $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
+                                "subscription. Maybe you refreshed the page in your browser?");
                         }
-                        //Now that user has authed and paid, get current subscription_status
-                        $subscription_status = $subscriber->getSubscriptionStatus();
-                        //Update subscription_status in the subscriber object
-                        $subscriber->subscription_status = $subscription_status;
-                        //Update subscription_status in the data store
-                        $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
-                    } catch (DuplicateAuthorizationException $e) {
-                        $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
-                        "membership.  Did you refresh the page?");
                     }
+                } else {
+                    $this->addErrorMessage($this->generic_error_msg);
+                    $this->logError('Missing Amazon return parameter', __FILE__,__LINE__, __METHOD__);
                 }
             } else {
                 $this->addErrorMessage("Oops! Something went wrong. Please try again or contact us for help.");
@@ -136,17 +142,25 @@ class MembershipController extends AuthController {
         if ($membership_status == 'Payment failed' || $membership_status == 'Free trial') {
             $callback_url = UpstartHelper::getApplicationURL().'user/membership.php';
             $caller_reference = $subscriber->id.'_'.time();
-            $amount = self::getSubscriptionAmount($subscriber->membership_level);
-            $amazon_url = AmazonFPSAPIAccessor::getAmazonFPSURL( $caller_reference, $callback_url, $amount );
+            $amount = self::getSubscriptionAmount($subscriber->membership_level, $subscriber->subscription_recurrence);
+
+            $api_accessor = new AmazonFPSAPIAccessor();
+            $pay_with_amazon_form = $api_accessor->generateSimplePayNowForm('USD '.$amount,
+                $subscriber->subscription_recurrence, 'ThinkUp.com monthly membership',
+                $caller_reference, $callback_url);
+
+            $this->addToView('pay_with_amazon_form', $pay_with_amazon_form);
+
             SessionCache::put('caller_reference', $caller_reference);
             if ($membership_status == 'Free trial') {
-                $this->addToView('amazon_link', $amazon_url);
+                $this->addToView('amazon_form', $pay_with_amazon_form);
             } else {
-                $this->addToView('failed_cc_amazon_link', $amazon_url);
+                $this->addToView('failed_cc_amazon_form', $pay_with_amazon_form);
             }
 
             if ($membership_status == 'Payment failed') {
-                $this->addToView('failed_cc_amazon_text', "There was a problem with your payment. But it's easy to fix!");
+                $this->addToView('failed_cc_amazon_text',
+                    "There was a problem with your payment. But it's easy to fix!");
             } else {
                 $this->addToView('failed_cc_amazon_text', "One last step to complete your ThinkUp membership!");
             }
@@ -221,9 +235,10 @@ class MembershipController extends AuthController {
     /**
      * Get amount a subscription type costs per year in US Dollars.
      * @param  str $membership_level Early Bird, Member, Pro, Exec, Late Bird
+     * @param  str $recurrence_frequency '1 month' or '12 months'
      * @return int
      */
-    private function getSubscriptionAmount($membership_level) {
+    private function getSubscriptionAmount($membership_level, $recurrence_frequency) {
         $normalized_membership_level = strtolower($membership_level);
         $normalized_membership_level =
             ($normalized_membership_level == 'late bird')?'earlybird':$normalized_membership_level;
@@ -234,7 +249,13 @@ class MembershipController extends AuthController {
         if (!in_array( $normalized_membership_level, array_keys(SignUpHelperController::$subscription_levels))) {
             throw new Exception('No amount found for '.$normalized_membership_level);
         } else {
-            return SignUpHelperController::$subscription_levels[$normalized_membership_level];
+            if (!in_array($recurrence_frequency,
+                array_keys(SignUpHelperController::$subscription_levels[$normalized_membership_level]))) {
+                throw new Exception('No amount found for '.$normalized_membership_level. " ".$recurrence_frequency);
+            } else {
+                return
+                    SignUpHelperController::$subscription_levels[$normalized_membership_level][$recurrence_frequency];
+            }
         }
     }
 }
