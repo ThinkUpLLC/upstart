@@ -23,10 +23,10 @@ CREATE TABLE authorizations (
 -- --------------------------------------------------------
 
 --
--- Table structure for table 'authorization_status_codes'
+-- Table structure for table 'subscription_status_codes'
 --
 
-CREATE TABLE authorization_status_codes (
+CREATE TABLE subscription_status_codes (
   `code` varchar(2) NOT NULL COMMENT 'Status code.',
   description varchar(125) NOT NULL COMMENT 'Description.',
   PRIMARY KEY (`code`)
@@ -136,6 +136,7 @@ CREATE TABLE subscribers (
   password_token varchar(64) DEFAULT NULL COMMENT 'Password reset token.',
   timezone varchar(50) NOT NULL DEFAULT 'UTC' COMMENT 'Subscriber timezone.',
   subscription_status varchar(50) DEFAULT 'Free trial' COMMENT 'Status of subscription payment.',
+  subscription_recurrence varchar(10) NOT NULL DEFAULT '1 month' COMMENT 'How often subscription renews, 1 month or 12 months.',
   total_payment_reminders_sent int(11) NOT NULL DEFAULT '0' COMMENT 'The number of payment reminder emails sent to this subscriber.',
   payment_reminder_last_sent timestamp NULL DEFAULT NULL COMMENT 'Last time a payment reminder was sent to this subscriber.',
   is_account_closed int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not the member closed their account.',
@@ -220,3 +221,59 @@ CREATE TABLE subscriber_payments (
   PRIMARY KEY (id),
   KEY subscriber_id (subscriber_id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Payments by known subscribers.';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table 'subscription_operations'
+--
+
+CREATE TABLE subscription_operations (
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal unique ID.',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Timestamp of insertion.',
+  subscriber_id int(11) NOT NULL COMMENT 'Subscriber ID.',
+  operation varchar(25) NOT NULL COMMENT 'Operation performed on Amazon.',
+  payment_reason varchar(100) NOT NULL COMMENT 'Reason for payment.',
+  transaction_amount varchar(100) NOT NULL COMMENT 'Amount of transaction.',
+  recurring_frequency varchar(25) NOT NULL COMMENT 'How often subscription recurs, 1 month or 12 months.',
+  status_code varchar(2) NOT NULL COMMENT 'Transaction status code.',
+  buyer_email varchar(255) NOT NULL COMMENT 'Amazon''s buyer email address.',
+  reference_id varchar(20) NOT NULL COMMENT 'Caller reference for transaction.',
+  amazon_subscription_id varchar(100) NOT NULL COMMENT 'Amazon''s subscription ID.',
+  transaction_date timestamp NOT NULL COMMENT 'Amazon''s transaction date.',
+  buyer_name varchar(255) NOT NULL COMMENT 'Amazon''s buyer name.',
+  payment_method varchar(25) NOT NULL COMMENT 'Payment method.',
+  PRIMARY KEY (id),
+  KEY subscriber_id (subscriber_id),
+  UNIQUE KEY amazon_subscription_id (amazon_subscription_id,reference_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Amazon subscription operations.';
+
+
+-- Populate subscription status codes
+
+INSERT INTO  subscription_status_codes ( code , description )
+VALUES (
+'SA',  'Success status for the ABT payment method.'
+), (
+'SS',  'The subscription was completed.'
+), (
+'SF',  'The subscription failed.'
+), (
+'SI',  'The subscription has initiated.'
+), (
+'SB',  'Success status for the ACH (bank account) payment method.'
+), (
+'SC',  'Success status for the credit card payment method.'
+), (
+'SE',  'System error.'
+), (
+'A',  'Buyer abandoned the pipeline.'
+), (
+'CE',  'Specifies a caller exception.'
+), (
+'PE',  'Payment Method Mismatch Error: Specifies that the buyer does not have payment method that you have requested.'
+), (
+'NP',  'This account type does not support the specified payment method.'
+), (
+'NM',  'You are not registered as a third-party caller to make this transaction. Contact Amazon Payments for more information.'
+);

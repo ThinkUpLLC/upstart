@@ -52,13 +52,12 @@ body_classes="settings menu-open" body_id="settings-subscription"}
     {if !$subscriber->is_account_closed}
       {if $membership_status eq 'Free trial'}
         <div class="form-message">
-          <a href="{$amazon_link}" class="btn btn-default btn-lg btn-with-note">Pay now<br>
-          <small>$60/year</small></a>
+          {$amazon_form}
         </div>
-      {elseif isset($failed_cc_amazon_link)}
+      {elseif isset($failed_cc_amazon_form)}
         <div class="form-message">
           <p><small>{$failed_cc_amazon_text}</small></p>
-          <a href="{$failed_cc_amazon_link}" class="btn btn-default">Pay via Amazon Payments</a>
+          {$failed_cc_amazon_form}
         </div>
       {else}
         <p class="form-note"><a href="https://payments.amazon.com">View your payment information
