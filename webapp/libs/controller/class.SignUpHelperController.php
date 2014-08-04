@@ -5,14 +5,23 @@
  *
  */
 abstract class SignUpHelperController extends UpstartController {
+    /**
+     * Simple pay return parameters.
+     * @var array
+     */
+    public static $amazon_simple_pay_return_params =  array('paymentReason', 'transactionAmount', 'status', 'buyerEmail',
+        'referenceId', 'subscriptionId', 'transactionDate', 'buyerName', 'operation', 'recurringFrequency',
+        'paymentMethod');
+
     /*
      * Subscription level amounts
      */
-    public static $subscription_levels = array('earlybird'=>50, 'member'=>60, 'pro'=>120, 'executive'=>996);
-    /*
-     * Membership level names
-     */
-    public static $membership_levels = array('60'=>'Member', '120'=>'Pro', '996'=>'Exec');
+    public static $subscription_levels = array(
+        'earlybird'=>array('12 months'=>50),
+        'member'=>array('1 month'=>5, '12 months'=>50),
+        'pro'=>array('1 month'=>10, '12 months'=>100),
+        'executive'=>array('12 months'=>996)
+    );
     /**
      * Verify ThinkUp username and add appropriate error message if not
      * return bool

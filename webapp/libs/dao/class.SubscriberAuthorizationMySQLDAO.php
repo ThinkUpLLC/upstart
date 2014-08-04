@@ -41,7 +41,7 @@ class SubscriberAuthorizationMySQLDAO extends PDODAO {
     public function getBySubscriberID($subscriber_id, $limit=null) {
         $q  = "SELECT *, UNIX_TIMESTAMP(a.token_validity_start_date) as token_validity_start_date_ts ";
         $q .= "FROM authorizations a INNER JOIN subscriber_authorizations sa ON a.id = sa.authorization_id ";
-        $q .= "LEFT JOIN authorization_status_codes sc ON sc.code = a.status_code ";
+        $q .= "LEFT JOIN subscription_status_codes sc ON sc.code = a.status_code ";
         $q .= "WHERE subscriber_id = :subscriber_id ";
         $q .= "ORDER BY a.timestamp DESC ";
         $vars = array(
