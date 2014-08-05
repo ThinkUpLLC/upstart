@@ -49,4 +49,18 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
         $ps = $this->execute($q, $vars);
         return $this->getDataRowAsObject($ps, 'SubscriptionOperation');
     }
+
+    public function getBySubscriberID($subscriber_id) {
+        $q  = "SELECT so.*, sc.description as status_description FROM subscription_operations so ";
+        $q .= "INNER JOIN subscription_status_codes sc ";
+        $q .= "ON sc.code = so.status_code WHERE subscriber_id = :subscriber_id ";
+        $q .= "ORDER BY timestamp DESC LIMIT 10; ";
+
+        $vars = array(
+            ':subscriber_id'=>$subscriber_id,
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowsAsObjects($ps, 'SubscriptionOperation');
+    }
 }
