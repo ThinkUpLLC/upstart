@@ -4,7 +4,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
   <div class="container">
 
     <section class="section" id="section-page-header">
-      <h2 class="section-header">Start Your 14-day Free Trial.</h2>
+      <h2 class="section-header">Start your 14-day free trial.</h2>
       <h3 class="section-subheader">First, pick the level that’s right for you.</h3>
     </section>
   </div>
@@ -16,8 +16,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
         <h3 class="subsection-header">1 account
           <span class="descriptor">per social network</span></h3>
         <div class="level-cost">
-          <div class="annually">$60/year</div>
-          <div class="monthly">$5 a month!</div>
+          <div class="annually">$5/month</div>
         </div>
 
         <div class="level-description">
@@ -39,8 +38,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
         <h3 class="subsection-header">More than 1 account
           <span class="descriptor">per social network</span></h3>
         <div class="level-cost">
-          <div class="annually">$120/year</div>
-          <div class="monthly">$10 a month!</div>
+          <div class="annually">$10/month</div>
         </div>
 
         <div class="level-description">
