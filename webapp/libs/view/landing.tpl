@@ -9,7 +9,7 @@
         <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
         <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign up with</small><br>Facebook</a>
       </div>
-      <p class="section-note">ThinkUp costs $60 a year (just five bucks a month!).<br>
+      <p class="section-note">ThinkUp costs 5 bucks a month.<br>
         We don't have ads and we don't sell your data.
       </p>
     </div>
