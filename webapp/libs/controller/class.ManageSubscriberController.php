@@ -23,6 +23,11 @@ class ManageSubscriberController extends Controller {
                 $authorizations = $subscriber_auth_dao->getBySubscriberID($subscriber_id);
                 $this->addToView('authorizations', $authorizations);
 
+                //Get subscription operations and assign to view
+                $sub_op_dao = new SubscriptionOperationMySQLDAO();
+                $subscription_operations = $sub_op_dao->getBySubscriberID($subscriber_id);
+                $this->addToView('subscription_operations', $subscription_operations);
+
                 //If action specified, perform it
                 if (isset($_GET['action'])) {
                     if ($_GET['action'] == 'archive') {
