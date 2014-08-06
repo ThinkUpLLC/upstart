@@ -6,6 +6,8 @@ class ConfirmPaymentController extends SignUpHelperController {
      */
     public function control() {
         $this->setViewTemplate('confirm-payment.tpl');
+        //Avoid "unable to write file [really long file]" errors
+        $this->disableCaching();
         $new_subscriber_id = SessionCache::get('new_subscriber_id');
         $subscriber_dao = new SubscriberMySQLDAO();
         $subscriber = $subscriber_dao->getByID($new_subscriber_id);
