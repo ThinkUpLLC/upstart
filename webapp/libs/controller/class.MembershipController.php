@@ -112,8 +112,8 @@ class MembershipController extends AuthController {
         $this->addToView('membership_status', $membership_status);
 
         // Add ebook download link (this is just a stub for now)
-        if ($membership_status != 'Payment failed' && $membership_status != 'Payment due'
-            && $membership_status != 'Payment pending' && $membership_status != 'Free trial') {
+        if ($membership_status != 'Payment failed' && $membership_status != 'Payment pending'
+            && $membership_status != 'Free trial') {
             $this->addToView('show_ebook_links', true);
         }
 
@@ -132,9 +132,8 @@ class MembershipController extends AuthController {
             }
         }
 
-        // If status is "Payment failed" or "Payment due" then send Amazon Payments URL to view and handle charge
-        if ($membership_status == 'Payment failed' || $membership_status == 'Payment due'
-            || $membership_status == 'Free trial') {
+        // If status is "Payment failed" or "Free trial" then send Amazon Payments URL to view and handle charge
+        if ($membership_status == 'Payment failed' || $membership_status == 'Free trial') {
             $callback_url = UpstartHelper::getApplicationURL().'user/membership.php';
             $caller_reference = $subscriber->id.'_'.time();
             $amount = self::getSubscriptionAmount($subscriber->membership_level);

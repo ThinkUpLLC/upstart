@@ -801,28 +801,6 @@ class SubscriberMySQLDAO extends PDODAO {
         $ps = $this->execute($q, $vars);
         return $this->getUpdateCount($ps);
     }
-    /**
-     * Get 25 subscribers with a payment due who should get an email reminder.
-     * @param  int $total_reminders_sent How many reminders already sent to these subscribers
-     * @param  int $hours_past_time      How many hours past signup or last reminder time.
-     * @return arr                       Array of Subscriber objects
-     */
-    public function getSubscribersPaymentDueReminder($total_reminders_sent, $hours_past_time) {
-        $q = "SELECT * FROM subscribers WHERE subscription_status = 'Payment due' ";
-        $q .= "AND is_account_closed = 0 ";
-        $q .= "AND total_payment_reminders_sent = :total_reminders_sent AND (";
-        //If total_reminders_sent = 0, use creation_time to compare. Otherwise, use payment_reminder_last_sent.
-        if ($total_reminders_sent == 0) {
-            $q .= "creation_time ";
-        } else {
-            $q .= "payment_reminder_last_sent ";
-        }
-        $q .= "< DATE_SUB(NOW(), INTERVAL :hours_past_time HOUR )) ORDER BY creation_time ASC LIMIT 25";
-        $vars = array(':total_reminders_sent' => $total_reminders_sent, ':hours_past_time' => $hours_past_time);
-        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q, $vars);
-        return $this->getDataRowsAsObjects($ps, 'Subscriber');
-    }
 
     /**
      * Get 25 free trial subscribers who are due a payment reminder email.
@@ -844,20 +822,6 @@ class SubscriberMySQLDAO extends PDODAO {
         $vars = array(':total_reminders_sent' => $total_reminders_sent, ':hours_past_time' => $hours_past_time);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
-        return $this->getDataRowsAsObjects($ps, 'Subscriber');
-    }
-
-    /**
-     * Get 25 subscribers to uninstall because payment has been due 14 days past the third reminder email.
-     * @return arr Array of Subscriber objects
-     */
-    public function getSubscribersToUninstallDueToNonPayment() {
-        $q = "SELECT * FROM subscribers WHERE subscription_status = 'Payment due' ";
-        $q .= "AND total_payment_reminders_sent = 3 AND ";
-        $q .= "(payment_reminder_last_sent < DATE_SUB(NOW(), INTERVAL 14 DAY )) ";
-        $q .= "ORDER BY creation_time ASC LIMIT 25";
-        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q);
         return $this->getDataRowsAsObjects($ps, 'Subscriber');
     }
 

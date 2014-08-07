@@ -24,10 +24,9 @@ body_classes="settings menu-open" body_id="settings-subscription"}
   * "Paid throuh Mon dd, YYYY" - Successful charge
   * "Payment pending" - Authorized and not charged yet, charged and no success returned yet
   * "Payment failed" - Charge failed
-  * "Payment due" - User has not attempted payment
   * "Complimentary membership" - Comped
 *}
-        <li class="list-group-item{if $membership_status eq 'Payment failed' or $membership_status eq 'Payment due'} list-group-item-warning{/if}" id="list-group-status">
+        <li class="list-group-item{if $membership_status eq 'Payment failed'} list-group-item-warning{/if}" id="list-group-status">
           <div class="list-group-item-label">Status</div>
           {if $subscriber->is_account_closed}
             <div class="list-group-item-value">Closed</div>

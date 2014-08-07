@@ -223,15 +223,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $subscriber_dao->updateSubscriptionStatus( $subscriber_id);
     }
 
-    private function buildSubscriberPaymentDue() {
-        $builders = array();
-        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'due@example.com',
-            'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
-            'subscription_status'=>'Payment due',  'is_installation_active'=>0, 'date_installed'=>null,
-            'membership_level'=>'Member'));
-        return $builders;
-    }
-
     public function testPaymentPending() {
         $this->builders = $this->buildSubscriberPaid('Pending');
         $dao = new SubscriberMySQLDAO();
@@ -274,28 +265,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Paid through/', $results);
     }
 
-    public function testPaymentDue() {
-        $this->builders = $this->buildSubscriberPaymentDue();
-        $dao = new SubscriberMySQLDAO();
-        $subscriber = $dao->getByEmail('due@example.com');
-        $this->subscriber = $subscriber;
-        $this->setUpInstall($subscriber);
-
-        $this->simulateLogin('due@example.com');
-        $controller = new MembershipController(true);
-        $results = $controller->go();
-        $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertPattern('/One last step/', $results);
-        $this->assertPattern('/Payment due/', $results);
-        $this->assertNoPattern('/Payment pending/', $results);
-        $paid_through_year = intval(date('Y')) + 1;
-        $paid_through_date = date('M j ');
-        $this->assertNoPattern('/Paid through/', $results);
-    }
-
     private function buildSubscriberFreeTrialCreated($days_ago) {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'trial@example.com',
@@ -321,7 +290,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Complimentary membership/', $results);
         $this->assertPattern('/Pay now/', $results);
         $this->assertPattern('/expires in <strong>3 days/', $results);
-        $this->assertNoPattern('/Payment due/', $results);
         $this->assertNoPattern('/Payment pending/', $results);
         $this->assertNoPattern('/Paid through/', $results);
         $paid_through_year = intval(date('Y')) + 1;
@@ -344,7 +312,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Complimentary membership/', $results);
         $this->assertPattern('/Pay now/', $results);
         $this->assertPattern('/Expired!/', $results);
-        $this->assertNoPattern('/Payment due/', $results);
         $this->assertNoPattern('/Payment pending/', $results);
         $this->assertNoPattern('/Paid through/', $results);
         $paid_through_year = intval(date('Y')) + 1;
@@ -376,7 +343,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Re-open your ThinkUp account/', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
         $this->assertNoPattern('/One last step/', $results);
-        $this->assertNoPattern('/Payment due/', $results);
         $this->assertNoPattern('/Payment pending/', $results);
         $this->assertNoPattern('/Paid through/', $results);
         $paid_through_year = intval(date('Y')) + 1;

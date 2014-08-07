@@ -34,7 +34,6 @@ $all_tests->add(new TestOfSubscriberPaymentMySQLDAO());
 $all_tests->add(new TestOfSubscriber());
 $all_tests->add(new TestOfLandingController());
 $all_tests->add(new TestOfRegisterController());
-$all_tests->add(new TestOfRemindAbandonsAboutPaymentController());
 $all_tests->add(new TestOfRemindTrialersAboutPaymentController());
 $all_tests->add(new TestOfMailer());
 $all_tests->add(new TestOfUpdatePendingPaymentStatusController());
