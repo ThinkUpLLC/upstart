@@ -43,32 +43,28 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('thinkup_username', 'tyrionlannister' );
-        $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-1.tpl');
-        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $message = $email_view_mgr->fetch('_email.payment-reminder-trial-1.tpl');
         $this->debug($message);
 
         $headline = "You've tried ThinkUp for a week...";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('thinkup_username', 'tyrionlannister' );
-        $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-2.tpl');
-        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $message = $email_view_mgr->fetch('_email.payment-reminder-trial-2.tpl');
         $this->debug($message);
 
         $headline = "Only one day left to join ThinkUp!";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('thinkup_username', 'tyrionlannister' );
-        $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-3.tpl');
-        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $message = $email_view_mgr->fetch('_email.payment-reminder-trial-3.tpl');
         $this->debug($message);
 
         $headline = "Action Required: Your ThinkUp trial is ending";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('thinkup_username', 'tyrionlannister' );
-        $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-4.tpl');
-        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $message = $email_view_mgr->fetch('_email.payment-reminder-trial-4.tpl');
         $this->debug($message);
     }
 

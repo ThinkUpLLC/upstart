@@ -26,12 +26,6 @@ color: #222222; font-family: "Helvetica", "Arial", sans-serif; font-weight: norm
 body {
 font-size: 14px; line-height: 19px;
 }
-a:hover {
-color: #2795b6 !important;
-}
-a:active {
-color: #2795b6 !important;
-}
 h1 a:active {
 color: #2ba6cb !important;
 }

@@ -356,15 +356,6 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  color: #2795b6 !important;
-}
-
-a:active {
-  color: #2795b6 !important;
-}
-
-
 h1 a,
 h2 a,
 h3 a,

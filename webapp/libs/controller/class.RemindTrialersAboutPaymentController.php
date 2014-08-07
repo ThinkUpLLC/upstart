@@ -23,8 +23,7 @@ class RemindTrialersAboutPaymentController extends Controller {
         $headline = "Loving ThinkUp? Time to join!";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
-            $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-1.tpl');
-            $message = Mailer::getSystemMessageHTML($body_html, $headline);
+            $message = $email_view_mgr->fetch('_email.payment-reminder-trial-1.tpl');
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 1);
@@ -36,8 +35,7 @@ class RemindTrialersAboutPaymentController extends Controller {
         $headline = "You've tried ThinkUp for a week...";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
-            $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-2.tpl');
-            $message = Mailer::getSystemMessageHTML($body_html, $headline);
+            $message = $email_view_mgr->fetch('_email.payment-reminder-trial-2.tpl');
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 2);
@@ -49,8 +47,7 @@ class RemindTrialersAboutPaymentController extends Controller {
         $headline = "Only one day left to join ThinkUp!";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
-            $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-3.tpl');
-            $message = Mailer::getSystemMessageHTML($body_html, $headline);
+            $message = $email_view_mgr->fetch('_email.payment-reminder-trial-3.tpl');
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 3);
@@ -62,8 +59,7 @@ class RemindTrialersAboutPaymentController extends Controller {
         $headline = "Action Required: Your ThinkUp trial is ending";
         foreach ($subscribers as $subscriber) {
             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
-            $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-4.tpl');
-            $message = Mailer::getSystemMessageHTML($body_html, $headline);
+            $message = $email_view_mgr->fetch('_email.payment-reminder-trial-4.tpl');
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
             $subscriber_dao->setTotalPaymentRemindersSent( $subscriber->id, 4);
