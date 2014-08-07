@@ -21,3 +21,8 @@ UPDATE subscribers SET payment_reminder_last_sent = DATE_SUB(payment_reminder_la
 # Fourth and final reminder on day 14
 #
 UPDATE subscribers SET payment_reminder_last_sent = DATE_SUB(payment_reminder_last_sent, INTERVAL 25 HOUR);
+
+#
+# Reset all subscribers on staging to 0 reminders
+#
+UPDATE subscribers SET payment_reminder_last_sent = null, total_payment_reminders_sent = 0;
