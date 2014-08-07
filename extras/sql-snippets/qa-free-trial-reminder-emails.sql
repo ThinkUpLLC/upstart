@@ -3,9 +3,9 @@
 #
 
 #
-# First reminder on day 1
+# First reminder on day 2
 #
-UPDATE subscribers SET creation_time = DATE_SUB(creation_time, INTERVAL 2 DAY);
+UPDATE subscribers SET creation_time = DATE_SUB(creation_time, INTERVAL 3 DAY);
 
 #
 # Second reminder on day 7
