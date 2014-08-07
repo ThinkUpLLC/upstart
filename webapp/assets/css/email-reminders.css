@@ -1,0 +1,14 @@
+.row p {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.row p a {
+  text-decoration: underline;
+}
+
+.footer p {
+  color: #999;
+  font-size: 12px;
+  line-height: 18px;
+}

@@ -39,36 +39,32 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
     }
 
     public function testGetSystemMessageHTMLPaymentReminderFreeTrial1Through4() {
-        $headline = "Loving ThinkUp? Time to join!";
+        $headline = "Join ThinkUp and get your FREE gift!";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('thinkup_username', 'tyrionlannister' );
-        $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-1.tpl');
-        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $message = $email_view_mgr->fetch('_email.payment-reminder-trial-1.tpl');
         $this->debug($message);
 
-        $headline = "You've tried ThinkUp for a week...";
+        $headline = "Enjoying ThinkUp? Join and get even more...";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('thinkup_username', 'tyrionlannister' );
-        $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-2.tpl');
-        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $message = $email_view_mgr->fetch('_email.payment-reminder-trial-2.tpl');
         $this->debug($message);
 
-        $headline = "Only one day left to join ThinkUp!";
+        $headline = "One day left: Ready to join ThinkUp?";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('thinkup_username', 'tyrionlannister' );
-        $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-3.tpl');
-        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $message = $email_view_mgr->fetch('_email.payment-reminder-trial-3.tpl');
         $this->debug($message);
 
-        $headline = "Action Required: Your ThinkUp trial is ending";
+        $headline = "Your ThinkUp free trial ends TODAY. Join now!";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('thinkup_username', 'tyrionlannister' );
-        $body_html = $email_view_mgr->fetch('_email.payment-reminder-trial-4.tpl');
-        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $message = $email_view_mgr->fetch('_email.payment-reminder-trial-4.tpl');
         $this->debug($message);
     }
 

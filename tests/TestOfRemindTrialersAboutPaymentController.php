@@ -30,8 +30,8 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $controller->control();
         $sent_email = Mailer::getLastMail();
         $this->debug($sent_email);
-        $this->assertPattern('/Ready to join ThinkUp and get your FREE gift\?/', $sent_email);
-        $this->assertPattern('/Loving ThinkUp\? Time to join!/', $sent_email);
+        $this->assertPattern('/Join ThinkUp and get your FREE gift!/', $sent_email);
+        $this->assertPattern('/Check out your ThinkUp insights at/', $sent_email);
     }
 
     public function testSecondReminder() {
@@ -47,8 +47,8 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $controller->control();
         $sent_email = Mailer::getLastMail();
         $this->debug($sent_email);
-        $this->assertPattern('/Enjoying ThinkUp\? Join and get a FREE book.../', $sent_email);
-        $this->assertPattern('/You\'ve tried ThinkUp for a week.../', $sent_email);
+        $this->assertPattern('/Enjoying ThinkUp\? Join and get even more.../', $sent_email);
+        $this->assertPattern('/seen that no other service gives you these/', $sent_email);
     }
 
     public function testThirdReminder() {
@@ -64,8 +64,8 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $controller->control();
         $sent_email = Mailer::getLastMail();
         $this->debug($sent_email);
-        $this->assertPattern('/Your ThinkUp trial has almost expired!/', $sent_email);
-        $this->assertPattern('/Only one day left to join ThinkUp!/', $sent_email);
+        $this->assertPattern('/One day left: Ready to join ThinkUp\?/', $sent_email);
+        $this->assertPattern('/Over the past two weeks/', $sent_email);
     }
 
     public function testFourthReminder() {
@@ -81,8 +81,8 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $controller->control();
         $sent_email = Mailer::getLastMail();
         $this->debug($sent_email);
-        $this->assertPattern('/FINAL REMINDER: Don\'t lose your ThinkUp membership!/', $sent_email);
-        $this->assertPattern('/Action Required: Your ThinkUp trial is ending/', $sent_email);
+        $this->assertPattern('/Your ThinkUp free trial ends TODAY. Join now!/', $sent_email);
+        $this->assertPattern('/lose your personal insights at/', $sent_email);
     }
 
     public function testNoReminderDuePaid() {

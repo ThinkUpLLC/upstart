@@ -52,24 +52,37 @@ module.exports = (grunt) ->
           '<%= project.js_path %>/marketing.min.js':'<%= project.js_path %>/marketing.js'
 
     premailer:
-      options:
-        css: [
-          '<%= project.app %>/assets/css/vendor/zurb-ink.css'
-          '<%= project.app %>/assets/css/email-system-messages.css'
-        ]
       system:
+        options:
+          css: [
+            '<%= project.app %>/assets/css/vendor/zurb-ink.css'
+            '<%= project.app %>/assets/css/email-system-messages.css'
+          ]
         files:
           '<%= project.prod_emails %>/_email.system_message.tpl': ['<%= project.premails %>/_email.system_message.tpl']
+      reminders:
+        options:
+          css: [
+            '<%= project.app %>/assets/css/vendor/zurb-ink.css'
+            '<%= project.app %>/assets/css/email-reminders.css'
+          ]
+        files:
+          '<%= project.prod_emails %>/_email.payment-reminder-trial-1.tpl': ['<%= project.premails %>/_email.payment-reminder-trial-1.tpl']
+          '<%= project.test_emails %>/payment-reminder-1.html': ['<%= project.premails %>/_email.payment-reminder-trial-1.tpl']
+          '<%= project.prod_emails %>/_email.payment-reminder-trial-2.tpl': ['<%= project.premails %>/_email.payment-reminder-trial-2.tpl']
+          '<%= project.test_emails %>/payment-reminder-2.html': ['<%= project.premails %>/_email.payment-reminder-trial-2.tpl']
+          '<%= project.prod_emails %>/_email.payment-reminder-trial-3.tpl': ['<%= project.premails %>/_email.payment-reminder-trial-3.tpl']
+          '<%= project.test_emails %>/payment-reminder-3.html': ['<%= project.premails %>/_email.payment-reminder-trial-3.tpl']
+          '<%= project.prod_emails %>/_email.payment-reminder-trial-4.tpl': ['<%= project.premails %>/_email.payment-reminder-trial-4.tpl']
+          '<%= project.test_emails %>/payment-reminder-4.html': ['<%= project.premails %>/_email.payment-reminder-trial-4.tpl']
+
       email_dev:
         files:
-          '<%= project.app %>/email_system_message.html': ['<%= project.premails %>/_email.system_message.tpl']
+          '<%= project.test_emails %>/email_system_message.html': ['<%= project.premails %>/_email.system_message.tpl']
     watch:
       email:
         files: '<%= project.premails %>/*'
         tasks: ['email']
-      email_dev:
-        files: '<%= project.premails %>/*'
-        tasks: ['email', 'email_dev']
       css:
         files: '<%= project.css_path %>/src/*'
         tasks: ['less']
@@ -97,7 +110,7 @@ module.exports = (grunt) ->
   )
 
   grunt.registerTask('default', ['premailer:system', 'fix_styles'])
-  grunt.registerTask('email', ['premailer:system', 'fix_styles'])
+  grunt.registerTask('email', ['premailer:system', 'premailer:reminders', 'fix_styles'])
   grunt.registerTask('email_dev', ['premailer:email_dev', 'fix_styles'])
   grunt.registerTask('app_js', ['coffee:app', 'uglify:app'])
   grunt.registerTask('marketing_js', ['coffee:marketing', 'uglify:marketing'])
