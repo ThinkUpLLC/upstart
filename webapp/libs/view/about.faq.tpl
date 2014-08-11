@@ -28,17 +28,17 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="pricing"><a href="#pricing">How much does ThinkUp cost?</a></h4>
 
-      <p>A ThinkUp Membership costs $60 per year and gathers insights from one Twitter account and one personal Facebook account.</p>
+      <p>A ThinkUp Membership costs $5 per month and gathers insights from one Twitter account and one personal Facebook accoun</p>
 
-      <p>If you have more than one account on each social network, a Pro ThinkUp Membership costs $120 per year and gathers insights from a total of 10 Twitter and/or Facebook accounts.</p>
+      <p>If you have more than one account on each social network, a Pro ThinkUp Membership costs $10 per month and gathers insights from a total of 10 Twitter and/or Facebook accounts.</p>
 
-      <p>We also have custom Executive Memberships for larger companies or institutions that are more personalized. These start at $1000/year and you can <a href="{$site_root_path}about/contact.php">contact us</a> for more information.</p>
+      <p>We also have custom Executive Memberships for larger companies or institutions that are more personalized. These start at $100/month and you can <a href="{$site_root_path}about/contact.php">contact us</a> for more information.</p>
 
       <h4 id="why-does-it-cost-money"><a href="#why-does-it-cost-money">Why does ThinkUp cost money?</a></h4>
 
       <p>ThinkUp costs money because we're committed to making sure our company and our product are sustainable and around for the long term. Our members say ThinkUp is worth it, because they like the service and believe in our company, especially as our product improves.</p>
 
-      <h4 id="free-trial"><a href="#why-does-it-cost-money">Is there a free trial?</a></h4>
+      <h4 id="free-trial"><a href="#free-trial">Is there a free trial?</a></h4>
 
       <p>Yes! We offer a 14-day free trial. </p>
 
@@ -74,9 +74,9 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
       <h4 id="change-username-email"><a href="#change-username-email">How can I change my ThinkUp username or email address?</a></h4>
       <p><a href="{$site_root_path}about/contact.php">Just contact us</a> with the change you’d like made and we’ll take care of it for you.</p>
 
-      <h4 id="pro-upgrade"><a href="#pro-upgrade">How can I upgrade to a Pro membership?</a></h4>
+      <h4 id="pro-upgrade"><a href="#pro-upgrade">How can I add more accounts to my Pro membership?</a></h4>
 
-      <p>We're so glad you want to take your relationship with ThinkUp to the next level! Just <a href="{$site_root_path}about/contact.php">contact us</a> and we'll take care of the upgrade for you.</p>
+      <p>Up to 10 total Facebook and Twitter accounts can be connected to your Pro Membership. On the Twitter or Facebook settings page click the "Connect a Twitter account" or "Connect a Facebook account" button. Your ThinkUp stream (http://yourusername.thinkup.com) will include insights from all of your connected accounts. </p>
 
       <h4 id="self-hosted"><a href="#self-hosted"> Where can I get support for self-hosted installations of ThinkUp?</a></h4>
 
