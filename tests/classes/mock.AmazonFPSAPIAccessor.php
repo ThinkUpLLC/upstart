@@ -129,4 +129,8 @@ class AmazonFPSAPIAccessor {
     public static function isAmazonSignatureValid($endpoint_url, $endpoint_url_params = array()) {
         return true;
     }
+
+    public function cancelAndRefundSubscription($subscription_id, $refund_amount, $caller_reference) {
+        return new Amazon_FPS_Model_CancelSubscriptionAndRefundResponse();
+   }
 }
