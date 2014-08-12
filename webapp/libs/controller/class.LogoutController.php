@@ -3,8 +3,12 @@ class LogoutController extends AuthController {
     public function authControl() {
         $subscriber_dao = new SubscriberMySQLDAO();
         $logged_in_user = Session::getLoggedInUser();
-        $subscriber = $subscriber_dao->getByEmail( $logged_in_user );
-
+        try {
+            $subscriber = $subscriber_dao->getByEmail( $logged_in_user );
+        } catch (SubscriberDoesNotExistException $e) {
+            //Do nothing because this is a rare case when a user is logged in as a subscriber that no longer exists
+            //ie, they got uninstalled overnight or something.
+        }
         Session::logout();
 
         if (isset($subscriber->thinkup_username) && isset($subscriber->date_installed)
