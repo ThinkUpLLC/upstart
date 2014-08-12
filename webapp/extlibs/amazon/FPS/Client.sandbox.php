@@ -375,10 +375,10 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     public function cancelSubscriptionAndRefund($request)
     {
         if (!$request instanceof Amazon_FPS_Model_CancelSubscriptionAndRefundRequest) {
-            require_once ('Amazon/FPS/Model/CancelSubscriptionAndRefundRequest.php');
+            //require_once ('Amazon/FPS/Model/CancelSubscriptionAndRefundRequest.php');
             $request = new Amazon_FPS_Model_CancelSubscriptionAndRefundRequest($request);
         }
-        require_once ('Amazon/FPS/Model/CancelSubscriptionAndRefundResponse.php');
+        //require_once ('Amazon/FPS/Model/CancelSubscriptionAndRefundResponse.php');
         return Amazon_FPS_Model_CancelSubscriptionAndRefundResponse::fromXML($this->_invoke($this->_convertCancelSubscriptionAndRefund($request)));
     }
 
@@ -1106,7 +1106,6 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
      * Convert CancelSubscriptionAndRefundRequest to name value pairs
      */
     private function _convertCancelSubscriptionAndRefund($request) {
-
         $parameters = array();
         $parameters['Action'] = 'CancelSubscriptionAndRefund';
         if ($request->isSetSubscriptionId()) {

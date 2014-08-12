@@ -47,6 +47,24 @@ class AmazonFPSAPIAccessor {
     }
 
     /**
+     * Cancel Simple Pay subscription.
+     * @param str $subscription_id
+     * @param str $refund_amount
+     * @param str $caller_reference
+     * @return Amazon_FPS_Model_CancelSubscriptionAndRefundResponse
+     */
+    public function cancelAndRefundSubscription($subscription_id, $refund_amount, $caller_reference) {
+        $service = new Amazon_FPS_Client($this->AWS_ACCESS_KEY_ID, $this->AWS_SECRET_ACCESS_KEY);
+        $params = array();
+        //REQUIRED PARAMS:
+        $params['SubscriptionId'] = $subscription_id;
+        $params['RefundAmount'] = array('Value'=>$refund_amount, 'CurrencyCode'=>'USD');
+        $params['CallerReference'] = $caller_reference;
+
+        return $service->cancelSubscriptionAndRefund($params);
+    }
+
+    /**
      * Charge user, record transaction, and report success or error back.
      * @param str $token_id
      * @param int $amount

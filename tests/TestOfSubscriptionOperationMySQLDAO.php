@@ -51,4 +51,28 @@ class TestOfSubscriptionOperationMySQLDAO extends UpstartUnitTestCase {
         $result = $dao->getLatest(10);
         $this->assertIsA($result, 'SubscriptionOperation');
     }
+
+    public function testCalculateProRatedMonthlyRefund() {
+        $op = new SubscriptionOperation();
+        $op->subscriber_id = 10;
+        $op->payment_reason = 'ThinkUp.com membership';
+        $op->transaction_amount = 'USD 5';
+        $op->status_code = 'SS';
+        $op->buyer_email = 'ginatrapani@example.com';
+        $op->reference_id = '24_1407173263';
+        $op->amazon_subscription_id = '5a81c762-f3ff-4319-9e07-007fffe7d4da';
+        $op->transaction_date = strtotime('-3 days');
+        $op->buyer_name = 'Angelina Jolie';
+        $op->operation = 'pay';
+        $op->recurring_frequency = '1 month';
+        $op->payment_method = 'Credit Card';
+
+        $dao = new SubscriptionOperationMySQLDAO();
+        $result = $dao->insert($op);
+        $this->assertEqual($result, 1);
+
+        $refund = $dao->calculateProRatedMonthlyRefund(10);
+        $this->debug($refund);
+        $this->assertTrue(($refund > 4.50));
+    }
 }
