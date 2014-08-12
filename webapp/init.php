@@ -52,5 +52,8 @@ require_once 'extlibs/amazon/ipn/SignatureUtilsForOutbound.php';
 require_once 'extlibs/amazon/simplepay/ButtonGenerator.php';
 require_once 'extlibs/amazon/simplepay/SignatureUtils.php';
 
+require_once 'extlibs/amazon/FPS/Model/CancelSubscriptionAndRefundRequest.php';
+require_once 'extlibs/amazon/FPS/Model/CancelSubscriptionAndRefundResponse.php';
+require_once 'extlibs/amazon/FPS/Model/CancelSubscriptionAndRefundResult.php';
 
 require_once 'extlibs/mandrill/Mandrill.php';

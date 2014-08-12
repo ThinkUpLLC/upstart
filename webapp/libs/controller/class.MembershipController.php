@@ -85,12 +85,63 @@ class MembershipController extends AuthController {
 
         try {
             if (self::hasUserRequestedAccountClosure() && $this->validateCSRFToken()) {
-                $result = $subscriber_dao->closeAccount($subscriber->id);
-                if ($result > 0) {
-                    $this->addSuccessMessage("Your ThinkUp account has been closed. ".
-                        "But there's still time to change your mind!");
-                    $subscriber->is_account_closed = true;
-                    $this->addToView('subscriber', $subscriber);
+                //Get SubscriptionId for logged-in subscriber
+                $sub_op_dao = new SubscriptionOperationMySQLDAO();
+                $operation = $sub_op_dao->getLatestOperation($subscriber->id);
+                if (isset($operation)) {
+                    try {
+                        //Issue CancelAndRefund call to Amazon API
+                        $api_accessor = new AmazonFPSAPIAccessor();
+                        //Calculate refund
+                        $refund_amount = $sub_op_dao->calculateProRatedMonthlyRefund($subscriber->id);
+                        //Create a callerReference
+                        $caller_reference = $subscriber->id.'_'.time();
+                        $response = $api_accessor->cancelAndRefundSubscription($operation->amazon_subscription_id,
+                            $refund_amount, $caller_reference);
+
+                        // If request ID is set correctly, add subscription operation and close account
+                        if (isset($response)) {
+                            // Add subscription operation
+                            $op_cancel = new SubscriptionOperation();
+                            $op_cancel->subscriber_id = $subscriber->id;
+                            $op_cancel->payment_reason = "Refund due to cancellation";
+                            $op_cancel->transaction_amount = $refund_amount;
+                            $op_cancel->status_code = '';
+                            $op_cancel->buyer_email = $operation->buyer_email;
+                            //@TODO Verify the reference_id starts with the subscriber ID
+                            $op_cancel->reference_id = $caller_reference;
+                            $op_cancel->amazon_subscription_id = $operation->amazon_subscription_id;
+                            $op_cancel->transaction_date = time();
+                            $op_cancel->buyer_name = $operation->buyer_name;
+                            $op_cancel->operation = 'cancel';
+                            $op_cancel->recurring_frequency = $operation->recurring_frequency;
+                            $op_cancel->payment_method = $operation->payment_method;
+                            $sub_op_dao->insert($op_cancel);
+
+                            // Close account
+                            $result = $subscriber_dao->closeAccount($subscriber->id);
+                            if ($result > 0) {
+                                //@TODO log user out with message about closure and refund.
+                                $this->addSuccessMessage("Your ThinkUp account has been closed. ".
+                                    "But there's still time to change your mind!");
+                                $subscriber->is_account_closed = true;
+                                $this->addToView('subscriber', $subscriber);
+                            } else {
+                                //@TODO show user error, log system error
+                            }
+                        } else {
+                            //@TODO show user error, log system error
+                        }
+                    } catch (Amazon_FPS_Exception $ex) {
+                        //@TODO show user error, log system error
+                        $debug = "Caught Exception: " . $ex->getMessage() . "\n";
+                        $debug .= "Response Status Code: " . $ex->getStatusCode() . "\n";
+                        $debug .= "Error Code: " . $ex->getErrorCode() . "\n";
+                        $debug .= "Error Type: " . $ex->getErrorType() . "\n";
+                        $debug .= "Request ID: " . $ex->getRequestId() . "\n";
+                        $debug .= "XML: " . $ex->getXML() . "\n";
+                        print_r($debug);
+                    }
                 }
             }
 
@@ -117,7 +168,7 @@ class MembershipController extends AuthController {
         }
         $this->addToView('membership_status', $membership_status);
 
-        // Add ebook download link (this is just a stub for now)
+        // Add ebook download link
         if ($membership_status != 'Payment failed' && $membership_status != 'Payment pending'
             && $membership_status != 'Free trial') {
             $this->addToView('show_ebook_links', true);
