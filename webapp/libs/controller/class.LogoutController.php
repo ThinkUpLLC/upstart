@@ -38,7 +38,7 @@ class LogoutController extends AuthController {
     public static function getURLContents($URL) {
         $c = curl_init();
         curl_setopt($c, CURLOPT_URL, $URL);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT ,2);
+        curl_setopt($c, CURLOPT_CONNECTTIMEOUT ,2);
         $contents = curl_exec($c);
         $status = curl_getinfo($c, CURLINFO_HTTP_CODE);
         curl_close($c);
