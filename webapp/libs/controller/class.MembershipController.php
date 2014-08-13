@@ -112,12 +112,13 @@ class MembershipController extends AuthController {
                             $op_cancel->amazon_subscription_id = $operation->amazon_subscription_id;
                             $op_cancel->transaction_date = time();
                             $op_cancel->buyer_name = $operation->buyer_name;
-                            $op_cancel->operation = 'cancel';
+                            $op_cancel->operation = 'refund';
                             $op_cancel->recurring_frequency = $operation->recurring_frequency;
                             $op_cancel->payment_method = $operation->payment_method;
                             $sub_op_dao->insert($op_cancel);
 
                             // Close account
+                            $subscriber_dao->updateSubscriptionStatus($subscriber->id, 'Refunded $'.$refund_amount );
                             $result = $subscriber_dao->closeAccount($subscriber->id);
 
                             // Log user out with message about closure and refund
