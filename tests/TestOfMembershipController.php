@@ -242,7 +242,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->debug($results);
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertPattern('/Re-open your ThinkUp account/', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
         $this->assertNoPattern('/One last step/', $results);
         $this->assertNoPattern('/Payment pending/', $results);
@@ -405,86 +404,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/easy to fix/', $results);
         $this->assertNoPattern('/Success! Thanks for being a ThinkUp member./', $results);
         $this->assertPattern('/There was a problem processing your request. Please try again./', $results);
-    }
-
-    public function testReopenAccountValidCSRF() {
-        $this->builders = $this->buildSubscriberFreeTrialCreated(2);
-        $dao = new SubscriberMySQLDAO();
-        $subscriber = $dao->getByEmail('trial@example.com');
-        $this->subscriber = $subscriber;
-        $this->setUpInstall($subscriber);
-        $dao->closeAccount($subscriber->id);
-
-        $this->simulateLogin('trial@example.com', false, true);
-
-        //Set close account URL param
-        $_GET['reopen'] = 'true';
-        $_POST['csrf_token'] = parent::CSRF_TOKEN;
-
-        $controller = new MembershipController(true);
-        $results = $controller->go();
-        $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertNoPattern('/easy to fix/', $results);
-        $this->assertNoPattern('/Success! Thanks for being a ThinkUp member./', $results);
-        $this->assertNoPattern('/There was a problem processing your request. Please try again./', $results);
-        $this->assertNoPattern('/Your ThinkUp account has been closed. But there\'s still time to change your mind!/',
-            $results);
-        $this->assertPattern('/Your ThinkUp account has been re-opened!/', $results);
-    }
-
-    public function testReopenAccountInvalidCSRF() {
-        $this->builders = $this->buildSubscriberFreeTrialCreated(2);
-        $dao = new SubscriberMySQLDAO();
-        $subscriber = $dao->getByEmail('trial@example.com');
-        $this->subscriber = $subscriber;
-        $this->setUpInstall($subscriber);
-        $dao->closeAccount($subscriber->id);
-
-        $this->simulateLogin('trial@example.com');
-
-        //Set close account URL param
-        $_GET['reopen'] = 'true';
-
-        $controller = new MembershipController(true);
-        $results = $controller->go();
-        $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertNoPattern('/easy to fix/', $results);
-        $this->assertNoPattern('/Success! Thanks for being a ThinkUp member./', $results);
-        $this->assertPattern('/There was a problem processing your request. Please try again./', $results);
-        $this->assertNoPattern('/Your ThinkUp account has been re-opened!/', $results);
-    }
-
-    public function testReopenAccountAlreadyOpenValidCSRF() {
-        $this->builders = $this->buildSubscriberFreeTrialCreated(2);
-        $dao = new SubscriberMySQLDAO();
-        $subscriber = $dao->getByEmail('trial@example.com');
-        $this->subscriber = $subscriber;
-        $this->setUpInstall($subscriber);
-
-        $this->simulateLogin('trial@example.com', false, true);
-
-        //Set close account URL param
-        $_GET['reopen'] = 'true';
-        $_POST['csrf_token'] = parent::CSRF_TOKEN;
-
-        $controller = new MembershipController(true);
-        $results = $controller->go();
-        $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertNoPattern('/easy to fix/', $results);
-        $this->assertNoPattern('/Success! Thanks for being a ThinkUp member./', $results);
-        $this->assertNoPattern('/There was a problem processing your request. Please try again./', $results);
-        $this->assertNoPattern('/Your ThinkUp account has been closed. But there\'s still time to change your mind!/',
-            $results);
-        $this->assertNoPattern('/Your ThinkUp account has been re-opened!/', $results);
     }
 
     public function testCloseAccountAlreadyClosedValidCSRF() {
