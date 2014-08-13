@@ -23,7 +23,6 @@ class MembershipController extends AuthController {
             $config->getValue('user_installation_url'));
         $this->addToView('thinkup_url', $user_installation_url);
 
-        //@TODO Rewrite this to handle Amazon Simple Pay parameters
         // Process payment if returned from Amazon
         if (self::hasUserReturnedFromAmazon()) {
             $internal_caller_reference = SessionCache::get('caller_reference');
@@ -120,26 +119,25 @@ class MembershipController extends AuthController {
 
                             // Close account
                             $result = $subscriber_dao->closeAccount($subscriber->id);
-                            if ($result > 0) {
-                                //@TODO log user out with message about closure and refund.
-                                $this->addSuccessMessage("Your ThinkUp account has been closed.");
-                                $subscriber->is_account_closed = true;
-                                $this->addToView('subscriber', $subscriber);
-                            } else {
-                                //@TODO show user error, log system error
-                            }
+
+                            //@TODO log user out with message about closure and refund.
+                            $this->addSuccessMessage("Your ThinkUp account is closed, and we've issued a refund. ".
+                                "We're sorry to see you go!" );
                         } else {
-                            //@TODO show user error, log system error
+                            //Show user error, log system error
+                            $this->logError('Amazon refund response was null. Refund operation was '.
+                                Utils::varDumpToString($op_cancel), __FILE__, __LINE__, __METHOD__);
+                            $this->addErrorMessage($this->generic_error_msg);
                         }
                     } catch (Amazon_FPS_Exception $ex) {
-                        //@TODO show user error, log system error
                         $debug = "Caught Exception: " . $ex->getMessage() . "\n";
                         $debug .= "Response Status Code: " . $ex->getStatusCode() . "\n";
                         $debug .= "Error Code: " . $ex->getErrorCode() . "\n";
                         $debug .= "Error Type: " . $ex->getErrorType() . "\n";
                         $debug .= "Request ID: " . $ex->getRequestId() . "\n";
                         $debug .= "XML: " . $ex->getXML() . "\n";
-                        print_r($debug);
+                        $this->logError($debug, __FILE__, __LINE__, __METHOD__);
+                        $this->addErrorMessage($this->generic_error_msg);
                     }
                 }
             }
@@ -172,8 +170,6 @@ class MembershipController extends AuthController {
             if ($end_of_trial < $now) {
                 $this->addToView('trial_status', 'Expired!');
             } else {
-                $datetime1 = new DateTime('2009-10-11');
-                $datetime2 = new DateTime('2009-10-13');
                 $interval = $now->diff($end_of_trial);
                 $this->addToView('trial_status', 'expires in <strong>'.$interval->format('%a days').'</strong>');
             }
