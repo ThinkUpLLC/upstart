@@ -104,7 +104,7 @@ class MembershipController extends AuthController {
                             $op_cancel = new SubscriptionOperation();
                             $op_cancel->subscriber_id = $subscriber->id;
                             $op_cancel->payment_reason = "Refund due to cancellation";
-                            $op_cancel->transaction_amount = $refund_amount;
+                            $op_cancel->transaction_amount = "USD ".$refund_amount;
                             $op_cancel->status_code = '';
                             $op_cancel->buyer_email = $operation->buyer_email;
                             //@TODO Verify the reference_id starts with the subscriber ID
@@ -120,9 +120,11 @@ class MembershipController extends AuthController {
                             // Close account
                             $result = $subscriber_dao->closeAccount($subscriber->id);
 
-                            //@TODO log user out with message about closure and refund.
-                            $this->addSuccessMessage("Your ThinkUp account is closed, and we've issued a refund. ".
-                                "We're sorry to see you go!" );
+                            // Log user out with message about closure and refund
+                            $logout_controller = new LogoutController(true);
+                            $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
+                                "and we've issued a refund.  We're sorry to see you go!");
+                            return $logout_controller->control();
                         } else {
                             //Show user error, log system error
                             $this->logError('Amazon refund response was null. Refund operation was '.
