@@ -122,8 +122,7 @@ class MembershipController extends AuthController {
                             $result = $subscriber_dao->closeAccount($subscriber->id);
                             if ($result > 0) {
                                 //@TODO log user out with message about closure and refund.
-                                $this->addSuccessMessage("Your ThinkUp account has been closed. ".
-                                    "But there's still time to change your mind!");
+                                $this->addSuccessMessage("Your ThinkUp account has been closed.");
                                 $subscriber->is_account_closed = true;
                                 $this->addToView('subscriber', $subscriber);
                             } else {
@@ -142,15 +141,6 @@ class MembershipController extends AuthController {
                         $debug .= "XML: " . $ex->getXML() . "\n";
                         print_r($debug);
                     }
-                }
-            }
-
-            if (self::hasUserRequestedAccountReopening() && $this->validateCSRFToken()) {
-                $result = $subscriber_dao->openAccount($subscriber->id);
-                if ($result > 0) {
-                    $this->addSuccessMessage("Your ThinkUp account has been re-opened!");
-                    $subscriber->is_account_closed = false;
-                    $this->addToView('subscriber', $subscriber);
                 }
             }
         } catch (InvalidCSRFTokenException $e) {
@@ -251,14 +241,6 @@ class MembershipController extends AuthController {
      */
     private function hasUserRequestedAccountClosure() {
         return (isset($_GET['close'])  && $_GET['close'] == 'true');
-    }
-
-    /**
-     * Whether or not user has requested account re-opening.
-     * @return bool
-     */
-    private function hasUserRequestedAccountReopening() {
-        return (isset($_GET['reopen'])  && $_GET['reopen'] == 'true');
     }
 
     /**
