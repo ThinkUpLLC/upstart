@@ -79,15 +79,17 @@ class ButtonGenerator {
          * @return - An html form created using the key-value pairs
          */
 	public static function getSimplePayStandardForm(array $formHiddenInputs,$endPoint,$imageLocation) {
-
+        $buttonAmount = str_replace('USD ', 'Just ', $formHiddenInputs["amount"]) . " bucks";
+        $buttonFreq = $formHiddenInputs["recurringFrequency"];
+        $buttonFreq = str_replace("1 month", "month", $buttonFreq);
 		$form = "";
 		$form .=  "<form action=\"";
 		$form .= $endPoint;
 		$form .= "\" method=\"";
 		$form .= self::$httpMethod . "\">\n";
 		//$form .= "<input type=\"image\" src=\"".$imageLocation."\" border=\"0\">\n";
-        $form .= "<input type=\"submit\" class=\"btn btn-pill-large has-note\" value=\"Pay now with Amazon\n ".
-            $formHiddenInputs["amount"]." per ".$formHiddenInputs["recurringFrequency"]."\" border=\"0\">\n";
+        $form .= "<button type=\"submit\" class=\"btn-pill-large has-note\">Pay now with Amazon<br>\n<small>".
+            $buttonAmount." a ".$buttonFreq."</small></button>\n";
 
 		foreach ($formHiddenInputs  as $name => $value) {
 			$form .= "<input type=\"hidden\" name=\"$name";
