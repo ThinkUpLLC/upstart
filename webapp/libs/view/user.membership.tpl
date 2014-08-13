@@ -31,8 +31,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
           {if $subscriber->is_account_closed}
             <div class="list-group-item-value">Closed</div>
           {else}
-            <div class="list-group-item-value">{$membership_status}</div>
-            {if isset($trial_status)}<div class="help-block">{$trial_status}</div>{/if}
+            <div class="list-group-item-value">{$membership_status}{if isset($trial_status)} that {$trial_status}!{/if}{*<div class="trial-countdown">13<small>days<br>left</small></div>*}</div>
           {/if}
         </li>
 
