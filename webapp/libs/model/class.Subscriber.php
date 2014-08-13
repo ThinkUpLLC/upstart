@@ -230,6 +230,9 @@ class Subscriber {
                     } elseif ($latest_operation->status_code == 'SI') {
                         $subscription_status = "Payment pending";
                     }
+                } elseif ($latest_operation->operation == 'refund') {
+                    $subscription_status = "Refunded $".
+                        round(intval(str_replace('USD ', $latest_operation->transaction_amount)), 2);
                 } //@TODO handle other actions!
             } else {
                 //Get latest payment
