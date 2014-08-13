@@ -458,6 +458,15 @@ a.btn-pill-large.has-note {
   padding: 18px 0;
   line-height: .9;
 }
+.btn-pill-large small,
+a.btn-pill-large small {
+  color: #93c2e9;
+  font-size: .625em;
+}
+.btn-pill-large:hover,
+a.btn-pill-large:hover {
+  background: #2377bd;
+}
 .alt-to-btn-large {
   display: inline-block;
   width: 260px;

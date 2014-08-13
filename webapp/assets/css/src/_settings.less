@@ -389,6 +389,40 @@ textarea.form-control {
   }
 }
 
+.btn-pill-large {
+  text-decoration: none;
+  display: inline-block;
+  background: @blue-darker;
+  color: #fff;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: .02em;
+  border: 0;
+  -webkit-appearance: initial;
+  font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
+  transition: background 100ms ease-in;
+  width: 260px;
+  height: 80px;
+  border-radius: 40px;
+  padding: 24px 0;
+  font-size: 2rem;
+  line-height: 1;
+
+  &.has-note {
+    padding: 18px 0;
+    line-height: .9;
+  }
+
+  &:hover {
+    background: darken(@blue-darker, 5%);
+  }
+
+  small {
+    color: mix(@blue-darker, #fff, 50%);
+    font-size: .625em;
+  }
+}
+
 .list-group {
   border-top: 1px solid @blue-pale;
   margin-top: 20px;
@@ -482,6 +516,32 @@ textarea.form-control {
     z-index: 9;
   }
 }
+
+#list-group-status strong {
+  color: @red-warning;
+}
+
+.trial-countdown {
+  position: absolute;
+  top: 0;
+  left: 85px;
+  font-weight: 600;
+  line-height: 1;
+  font-size: 2.75rem;
+  background: mix(@red-warning, #fff, 75%);
+  color: white;
+  border-radius: 4px;
+  padding: 3px 5px;
+
+  small {
+    display: inline-block;
+    font-size: .45em;
+    font-weight: 400;
+    line-height: 1.2;
+    padding-left: 5px;
+  }
+}
+
 
 .list-accounts {
   .list-group-item {
