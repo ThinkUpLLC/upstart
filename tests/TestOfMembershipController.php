@@ -358,7 +358,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->builders = $this->buildSubscriberFreeTrialCreated(2);
         $this->builders[] = FixtureBuilder::build('subscription_operations',
             array('amazon_subscription_id'=>'test-sub-id', 'subscriber_id'=> 1, 'recurring_frequency'=>'1 month',
-            'transaction_amount'=>'5 USD', 'operation'=>'pay' ));
+            'transaction_amount'=>'USD 5', 'operation'=>'pay' ));
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('trial@example.com');
         $this->subscriber = $subscriber;
@@ -373,14 +373,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $controller = new MembershipController(true);
         $results = $controller->go();
         $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertNoPattern('/easy to fix/', $results);
-        $this->assertNoPattern('/Success! Thanks for being a ThinkUp member./', $results);
-        $this->assertNoPattern('/There was a problem processing your request. Please try again./', $results);
-        $this->assertNoPattern('/Your ThinkUp account has been closed. But there\'s still time to change your mind!/',
-            $results);
+        $this->assertPattern('/Your ThinkUp account is closed, and we&#39;ve issued a refund.  '.
+            'We&#39;re sorry to see you go!/', $results);
     }
 
     public function testCloseAccountInvalidCSRF() {
