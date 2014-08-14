@@ -65,10 +65,12 @@ body_classes="settings menu-open" body_id="settings-subscription"}
       <p class="form-note">Need help? <a href="mailto:help@thinkup.com" class="show-section"
       data-section-selector="#form-membership-contact">Contact us</a></p>
 
+    {if !$subscriber->is_account_closed}
       <form id="form-membership-close-account" action="membership.php?close=true" method="post">
         <a href="javascript:document.forms['form-membership-close-account'].submit();" onClick="return confirm('Do you really want to close your account?');" class="btn btn-sm btn-close-account">Close your account</a>
          {insert name="csrf_token"}
       </form>
+    {/if}
 
       <form role="form" class="form" id="form-membership-contact">
         <fieldset>
