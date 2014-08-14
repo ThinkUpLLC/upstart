@@ -1,10 +1,10 @@
 <?php
 /**
- * Create interface to Twitter and Facebook
+ * Create various pricing level interfaces to Twitter and Facebook.
  */
-class JoinController extends SignUpHelperController {
+class PricingController extends SignUpHelperController {
     public function control() {
-        $this->setViewTemplate('join.tpl');
+        $this->setViewTemplate('pricing.tpl');
         //Don't cache network auth links
         $this->disableCaching();
         $twitter_member_link = $this->getTwitterAuthLink('register.php?n=twitter&level=member');

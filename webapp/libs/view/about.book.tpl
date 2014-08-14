@@ -31,7 +31,7 @@ body_classes="marketing marketing-page" body_id="marketing-book"}
 
       <h4 class="hc text-header">How do I get the book?</h4>
 
-      <p><em>Insights</em> is <strong>free</strong> when you <a href="{$site_root_path}join.php">join ThinkUp</a>.</p>
+      <p><em>Insights</em> is <strong>free</strong> when you <a href="{$site_root_path}">join ThinkUp</a>.</p>
 
       <p>Already a member? Just head to your <a href="{$site_root_path}user/membership.php">membership page</a> and you can download the book in formats that work with your computer, Kindle, iPhone, iPad or other devices.</p>
 
