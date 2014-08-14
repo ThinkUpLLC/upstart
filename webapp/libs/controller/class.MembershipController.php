@@ -253,7 +253,7 @@ class MembershipController extends AuthController {
      * @return bool
      */
     private function hasUserRequestedAccountClosure() {
-        return (isset($_GET['close'])  && $_GET['close'] == 'true');
+        return (isset($_POST['close'])  && $_POST['close'] == 'true');
     }
 
     /**
