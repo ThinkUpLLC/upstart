@@ -2,7 +2,7 @@
 require_once dirname(__FILE__) . '/init.tests.php';
 require_once ISOSCELES_PATH.'extlibs/simpletest/autorun.php';
 
-class TestOfJoinController extends UpstartUnitTestCase {
+class TestOfPricingController extends UpstartUnitTestCase {
 
     public function setUp() {
         parent::setUp();
@@ -13,7 +13,7 @@ class TestOfJoinController extends UpstartUnitTestCase {
     }
 
     public function testConstructor() {
-        $controller = new JoinController(true);
-        $this->assertIsA($controller, 'JoinController');
+        $controller = new PricingController(true);
+        $this->assertIsA($controller, 'PricingController');
     }
 }
