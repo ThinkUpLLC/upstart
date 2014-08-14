@@ -328,7 +328,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Oops! Something went wrong and our team is looking into it./', $results);
     }
 
-    public function testCloseAccountValidCSRF() {
+    public function testCloseAccountValidCSRFNoSubscriptionOperation() {
         $this->builders = $this->buildSubscriberFreeTrialCreated(2);
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('trial@example.com');
@@ -344,14 +344,15 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $controller = new MembershipController(true);
         $results = $controller->go();
         $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
+        $this->assertNoPattern('/Membership Info/', $results);
+        $this->assertNoPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
         $this->assertNoPattern('/easy to fix/', $results);
         $this->assertNoPattern('/Success! Thanks for being a ThinkUp member./', $results);
         $this->assertNoPattern('/There was a problem processing your request. Please try again./', $results);
         $this->assertNoPattern('/Your ThinkUp account has been closed. But there\'s still time to change your mind!/',
             $results);
+        $this->assertPattern('/Your ThinkUp account is closed. We&#39;re sorry to see you go!/', $results);
     }
 
     public function testCloseAccountValidCSRFWithSubscriptionOperation() {
@@ -422,7 +423,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Complimentary membership/', $results);
         $this->assertNoPattern('/easy to fix/', $results);
         $this->assertNoPattern('/Success! Thanks for being a ThinkUp member./', $results);
-        $this->assertNoPattern('/There was a problem processing your request. Please try again./', $results);
+        $this->assertPattern('/This account is already closed. Please log out./', $results);
         $this->assertNoPattern('/Your ThinkUp account has been closed. But there\'s still time to change your mind!/',
             $results);
     }
