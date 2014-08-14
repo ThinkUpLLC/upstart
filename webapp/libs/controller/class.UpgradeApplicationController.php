@@ -109,6 +109,7 @@ class UpgradeApplicationController extends Controller {
                 }
                 // Get another 10 installations that are active but haven't been upgraded to latest hash
                 $installs_to_upgrade = $subscriber_dao->getInstallsToUpgrade($commit_hash);
+                flush();
             }
             // Output how many installs error'ed, how many success
             $this->addToView('successful_upgrades', $successful_upgrades);
