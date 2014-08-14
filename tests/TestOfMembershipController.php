@@ -338,7 +338,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->simulateLogin('trial@example.com', false, true);
 
         //Set close account URL param
-        $_GET['close'] = 'true';
+        $_POST['close'] = 'true';
         $_POST['csrf_token'] = parent::CSRF_TOKEN;
 
         $controller = new MembershipController(true);
@@ -368,7 +368,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->simulateLogin('trial@example.com', false, true);
 
         //Set close account URL param
-        $_GET['close'] = 'true';
+        $_POST['close'] = 'true';
         $_POST['csrf_token'] = parent::CSRF_TOKEN;
 
         $controller = new MembershipController(true);
@@ -388,7 +388,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->simulateLogin('trial@example.com');
 
         //Set close account URL param
-        $_GET['close'] = 'true';
+        $_POST['close'] = 'true';
 
         $controller = new MembershipController(true);
         $results = $controller->go();
@@ -412,7 +412,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->simulateLogin('trial@example.com', false, true);
 
         //Set close account URL param
-        $_GET['close'] = 'true';
+        $_POST['close'] = 'true';
         $_POST['csrf_token'] = parent::CSRF_TOKEN;
 
         $controller = new MembershipController(true);
