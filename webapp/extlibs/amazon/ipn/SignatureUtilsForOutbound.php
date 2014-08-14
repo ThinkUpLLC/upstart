@@ -15,7 +15,7 @@ class SignatureException extends Exception {}
 
 
 class SignatureUtilsForOutbound {
-	 
+
     const SIGNATURE_KEYNAME = "signature";
     const SIGNATURE_METHOD_KEYNAME = "signatureMethod";
     const SIGNATURE_VERSION_KEYNAME = "signatureVersion";
@@ -50,13 +50,13 @@ class SignatureUtilsForOutbound {
 	return $this;
 
     }
-	
+
     /**
      * Validates the request by checking the integrity of its parameters.
-     * @param parameters - all the http parameters sent in IPNs or return urls. 
-     * @param urlEndPoint should be the url which recieved this request. 
+     * @param parameters - all the http parameters sent in IPNs or return urls.
+     * @param urlEndPoint should be the url which recieved this request.
      * @param httpMethod should be either POST (IPNs) or GET (returnUrl redirections)
-     * Verifies the signature. 
+     * Verifies the signature.
      * Only default algorithm OPENSSL_ALGO_SHA1 is supported.
      */
     public function validateRequest(array $parameters, $urlEndPoint, $httpMethod)  {
@@ -81,7 +81,7 @@ class SignatureUtilsForOutbound {
 	    if (!isset($certificateUrl)) {
 	    	throw new Exception("'certificateUrl' is missing from the parameters.");
 	    }
-	    elseif((stripos($parameters[self::CERTIFICATE_URL_KEYNAME], self::FPS_PROD_ENDPOINT) !== 0) 
+	    elseif((stripos($parameters[self::CERTIFICATE_URL_KEYNAME], self::FPS_PROD_ENDPOINT) !== 0)
 	        && (stripos($parameters[self::CERTIFICATE_URL_KEYNAME], self::FPS_SANDBOX_ENDPOINT) !== 0)){
 			throw new SignatureException('The `certificateUrl` value must begin with ' . self::FPS_PROD_ENDPOINT . ' or ' . self::FPS_SANDBOX_ENDPOINT . '.');
 		}
@@ -92,7 +92,7 @@ class SignatureUtilsForOutbound {
 
 	     return $verified;
     }
-    
+
     private static function getSignatureAlgorithm($signatureMethod) {
         if ("RSA-SHA1" == $signatureMethod) {
             return OPENSSL_ALGO_SHA1;
@@ -118,17 +118,17 @@ class SignatureUtilsForOutbound {
    	   if (extension_loaded('zlib')){
    	   	curl_setopt($curlHandle, CURLOPT_ENCODING, '');
    	   }
-   	
+
    	    // Execute the request
    	   $response = curl_exec($curlHandle);
-   		
+
 	    // Grab only the body
    	   $headerSize = curl_getinfo($curlHandle, CURLINFO_HEADER_SIZE);
    	   $responseBody = substr($response, $headerSize);
-   	
+
    		// Close the cURL connection
    	   curl_close($curlHandle);
-   	
+
    		// Return the public key
    	   return $responseBody;
 	}
