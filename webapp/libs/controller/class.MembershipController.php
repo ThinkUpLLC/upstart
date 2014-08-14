@@ -84,64 +84,78 @@ class MembershipController extends AuthController {
 
         try {
             if (self::hasUserRequestedAccountClosure() && $this->validateCSRFToken()) {
-                //Get SubscriptionId for logged-in subscriber
-                $sub_op_dao = new SubscriptionOperationMySQLDAO();
-                $operation = $sub_op_dao->getLatestOperation($subscriber->id);
-                if (isset($operation)) {
-                    try {
-                        //Issue CancelAndRefund call to Amazon API
-                        $api_accessor = new AmazonFPSAPIAccessor();
-                        //Calculate refund
-                        $refund_amount = $sub_op_dao->calculateProRatedMonthlyRefund($subscriber->id);
-                        //Create a callerReference
-                        $caller_reference = $subscriber->id.'_'.time();
-                        $response = $api_accessor->cancelAndRefundSubscription($operation->amazon_subscription_id,
-                            $refund_amount, $caller_reference);
+                if (!$subscriber->is_account_closed) {
+                    //Get SubscriptionId for logged-in subscriber
+                    $sub_op_dao = new SubscriptionOperationMySQLDAO();
+                    $operation = $sub_op_dao->getLatestOperation($subscriber->id);
+                    if (isset($operation)) { // Member has paid for subscription, we're going to issue a refund
+                        try {
+                            //Issue CancelAndRefund call to Amazon API
+                            $api_accessor = new AmazonFPSAPIAccessor();
+                            //Calculate refund
+                            $refund_amount = $sub_op_dao->calculateProRatedMonthlyRefund($subscriber->id);
+                            //Create a callerReference
+                            $caller_reference = $subscriber->id.'_'.time();
+                            $response = $api_accessor->cancelAndRefundSubscription($operation->amazon_subscription_id,
+                                $refund_amount, $caller_reference);
 
-                        // If request ID is set correctly, add subscription operation and close account
-                        if (isset($response)) {
-                            // Add subscription operation
-                            $op_cancel = new SubscriptionOperation();
-                            $op_cancel->subscriber_id = $subscriber->id;
-                            $op_cancel->payment_reason = "Refund due to cancellation";
-                            $op_cancel->transaction_amount = "USD ".$refund_amount;
-                            $op_cancel->status_code = '';
-                            $op_cancel->buyer_email = $operation->buyer_email;
-                            //@TODO Verify the reference_id starts with the subscriber ID
-                            $op_cancel->reference_id = $caller_reference;
-                            $op_cancel->amazon_subscription_id = $operation->amazon_subscription_id;
-                            $op_cancel->transaction_date = time();
-                            $op_cancel->buyer_name = $operation->buyer_name;
-                            $op_cancel->operation = 'refund';
-                            $op_cancel->recurring_frequency = $operation->recurring_frequency;
-                            $op_cancel->payment_method = $operation->payment_method;
-                            $sub_op_dao->insert($op_cancel);
+                            // If request ID is set correctly, add subscription operation and close account
+                            if (isset($response)) {
+                                // Add subscription operation
+                                $op_cancel = new SubscriptionOperation();
+                                $op_cancel->subscriber_id = $subscriber->id;
+                                $op_cancel->payment_reason = "Refund due to cancellation";
+                                $op_cancel->transaction_amount = "USD ".$refund_amount;
+                                $op_cancel->status_code = '';
+                                $op_cancel->buyer_email = $operation->buyer_email;
+                                //@TODO Verify the reference_id starts with the subscriber ID
+                                $op_cancel->reference_id = $caller_reference;
+                                $op_cancel->amazon_subscription_id = $operation->amazon_subscription_id;
+                                $op_cancel->transaction_date = time();
+                                $op_cancel->buyer_name = $operation->buyer_name;
+                                $op_cancel->operation = 'refund';
+                                $op_cancel->recurring_frequency = $operation->recurring_frequency;
+                                $op_cancel->payment_method = $operation->payment_method;
+                                $sub_op_dao->insert($op_cancel);
 
-                            // Close account
-                            $subscriber_dao->updateSubscriptionStatus($subscriber->id, 'Refunded $'.$refund_amount );
-                            $result = $subscriber_dao->closeAccount($subscriber->id);
+                                // Update subscription status
+                                $subscriber_dao->updateSubscriptionStatus($subscriber->id, 'Refunded $'.$refund_amount);
+                                // Close account
+                                $result = $subscriber_dao->closeAccount($subscriber->id);
 
-                            // Log user out with message about closure and refund
-                            $logout_controller = new LogoutController(true);
-                            $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
-                                "and we've issued a refund.  We're sorry to see you go!");
-                            return $logout_controller->control();
-                        } else {
-                            //Show user error, log system error
-                            $this->logError('Amazon refund response was null. Refund operation was '.
-                                Utils::varDumpToString($op_cancel), __FILE__, __LINE__, __METHOD__);
+                                // Log user out with message about closure and refund
+                                $logout_controller = new LogoutController(true);
+                                $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
+                                    "and we've issued a refund.  We're sorry to see you go!");
+                                return $logout_controller->control();
+                            } else {
+                                //Show user error, log system error
+                                $this->logError('Amazon refund response was null. Refund operation was '.
+                                    Utils::varDumpToString($op_cancel), __FILE__, __LINE__, __METHOD__);
+                                $this->addErrorMessage($this->generic_error_msg);
+                            }
+                        } catch (Amazon_FPS_Exception $ex) {
+                            $debug = "Caught Exception: " . $ex->getMessage() . "\n";
+                            $debug .= "Response Status Code: " . $ex->getStatusCode() . "\n";
+                            $debug .= "Error Code: " . $ex->getErrorCode() . "\n";
+                            $debug .= "Error Type: " . $ex->getErrorType() . "\n";
+                            $debug .= "Request ID: " . $ex->getRequestId() . "\n";
+                            $debug .= "XML: " . $ex->getXML() . "\n";
+                            $this->logError($debug, __FILE__, __LINE__, __METHOD__);
                             $this->addErrorMessage($this->generic_error_msg);
                         }
-                    } catch (Amazon_FPS_Exception $ex) {
-                        $debug = "Caught Exception: " . $ex->getMessage() . "\n";
-                        $debug .= "Response Status Code: " . $ex->getStatusCode() . "\n";
-                        $debug .= "Error Code: " . $ex->getErrorCode() . "\n";
-                        $debug .= "Error Type: " . $ex->getErrorType() . "\n";
-                        $debug .= "Request ID: " . $ex->getRequestId() . "\n";
-                        $debug .= "XML: " . $ex->getXML() . "\n";
-                        $this->logError($debug, __FILE__, __LINE__, __METHOD__);
-                        $this->addErrorMessage($this->generic_error_msg);
+                    } else { // Free trial, no need to refund
+                        // Close account
+                        $result = $subscriber_dao->closeAccount($subscriber->id);
+
+                        // Log user out with message about closure and refund
+                        $logout_controller = new LogoutController(true);
+                        $logout_controller->addSuccessMessage("Your ThinkUp account is closed. ".
+                            "We're sorry to see you go!");
+                        return $logout_controller->control();
                     }
+                } else {
+                    $this->addErrorMessage("This account is already closed. Please log out.");
                 }
             }
         } catch (InvalidCSRFTokenException $e) {
