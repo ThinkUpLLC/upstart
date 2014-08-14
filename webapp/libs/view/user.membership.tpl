@@ -66,7 +66,8 @@ body_classes="settings menu-open" body_id="settings-subscription"}
       data-section-selector="#form-membership-contact">Contact us</a></p>
 
     {if !$subscriber->is_account_closed}
-      <form id="form-membership-close-account" action="membership.php?close=true" method="post">
+      <form id="form-membership-close-account" action="membership.php" method="post">
+        <input type="hidden" name="close" value="true" />
         <a href="javascript:document.forms['form-membership-close-account'].submit();" onClick="return confirm('Do you really want to close your account?');" class="btn btn-sm btn-close-account">Close your account</a>
          {insert name="csrf_token"}
       </form>
