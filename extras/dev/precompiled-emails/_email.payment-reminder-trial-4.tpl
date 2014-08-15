@@ -47,7 +47,7 @@
                 <table class="twelve columns">
                   <tr>
                     <td>
-                      <a href="https://www.thinkup.com/join/user/membership.php"><img width="580" height="360" src="https://thinkup.com/join/assets/img/email/reminder-4-promo.png"
+                      <a href="https://www.thinkup.com/join/user/membership.php"><img width="580" height="360" src="https://thinkup.com/join/assets/img/email/reminder-4-promo-v2.png"
                       alt="Don't miss out! Your ThinkUp trial is ending. Join now! Just $5/month"></a>
                     </td>
                     <td class="expander"></td>
