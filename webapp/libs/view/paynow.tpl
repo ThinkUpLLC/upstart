@@ -12,7 +12,7 @@ body_classes="marketing marketing-page" body_id="marketing-welcome"}
       {$pay_with_amazon_form}
       <a class="alt-to-btn-large" href="{$thinkup_url}">I’m not ready to pay yet.</a></p>
 
-      <p>Join ThinkUp now for just $60 a year and get <strong>the book we wrote for you</strong>! Our exclusive ebook <em>Insights</em> offers interviews with the smartest people in social media.</p>
+      <p>Join ThinkUp now for just $5 a month and get <strong>the book we wrote for you</strong>! Our exclusive ebook <em>Insights</em> offers interviews with the smartest people in social media.</p>
     </section>
 
 {include file="_footer.marketing.tpl" hide_footer=true}
