@@ -36,6 +36,7 @@ class TestOfPayNowController extends UpstartUnitTestCase {
         $this->assertPattern('/Terrific! Your 14-Day free trial has begun./', $results);
         $this->assertPattern('/the book we wrote for you/', $results);
         $this->assertPattern('/Your Insights/', $results);
+        $this->assertPattern('/5 a month/', $results);
     }
 
     protected function buildData() {
