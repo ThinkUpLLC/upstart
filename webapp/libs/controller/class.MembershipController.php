@@ -25,59 +25,58 @@ class MembershipController extends AuthController {
 
         // Process payment if returned from Amazon
         if (self::hasUserReturnedFromAmazon()) {
-            $internal_caller_reference = SessionCache::get('caller_reference');
-            if (isset($internal_caller_reference) && $this->isAmazonResponseValid($internal_caller_reference)) {
-                if (UpstartHelper::areGetParamsSet(SignUpHelperController::$amazon_simple_pay_return_params)) {
-                    $error_message = isset($_GET["errorMessage"])?$_GET["errorMessage"]:null;
-                    if ($error_message !== null ) {
-                        $this->addErrorMessage($this->generic_error_msg);
-                        $this->logError("Amazon returned error: ".$error_message, __FILE__,__LINE__,__METHOD__);
-                    } else {
-                        //Capture Simple Pay return codes
-                        $op = new SubscriptionOperation();
-                        $op->subscriber_id = $subscriber->id;
-                        $op->payment_reason = $_GET['paymentReason'];
-                        $op->transaction_amount = $_GET['transactionAmount'];
-                        $op->status_code = $_GET['status'];
-                        $op->buyer_email = $_GET['buyerEmail'];
-                        //@TODO Verify the reference_id starts with the subscriber ID
-                        $op->reference_id = $_GET['referenceId'];
-                        $op->amazon_subscription_id = $_GET['subscriptionId'];
-                        $op->transaction_date = $_GET['transactionDate'];
-                        $op->buyer_name = $_GET['buyerName'];
-                        $op->operation = $_GET['operation'];
-                        $op->recurring_frequency = $_GET['recurringFrequency'];
-                        $op->payment_method = $_GET['paymentMethod'];
-
-                        //Check to make sure this isn't a page refresh by catching a DuplicateKey exception
-                        try {
-                            $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
-                            $subscription_operation_dao->insert($op);
-
-                            if ($op->status_code !== 'SF') {
-                                $this->addSuccessMessage("Success! Thanks for being a ThinkUp member.");
-                            }
-
-                            //Now that user has created a subscription, generate up-to-date subscription_status
-                            $subscription_status = $subscriber->getSubscriptionStatus();
-                            //Update subscription_status in the subscriber object
-                            $subscriber->subscription_status = $subscription_status;
-                            //Update subscription_status in the data store
-                            $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
-                            //Update recurrence_frequency in the data store
-                            $subscriber_dao->updateSubscriptionRecurrence($subscriber->id, $op->recurring_frequency);
-                        } catch (DuplicateSubscriptionOperationException $e) {
-                            $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
-                                "subscription. Maybe you refreshed the page in your browser?");
-                        }
-                    }
-                } else {
+            if ($this->isAmazonResponseValid()) {
+                //@TODO Double-check $_GET[errorMessage] is set if there's an error
+                $error_message = isset($_GET["errorMessage"])?$_GET["errorMessage"]:null;
+                if ($error_message !== null ) {
                     $this->addErrorMessage($this->generic_error_msg);
-                    $this->logError('Missing Amazon return parameter', __FILE__,__LINE__, __METHOD__);
+                    $this->logError("Amazon returned error: ".$error_message, __FILE__,__LINE__,__METHOD__);
+                } else {
+                    //Capture Simple Pay return codes
+                    $op = new SubscriptionOperation();
+                    $op->subscriber_id = $subscriber->id;
+                    $op->payment_reason = $_GET['paymentReason'];
+                    $op->transaction_amount = $_GET['transactionAmount'];
+                    $op->status_code = $_GET['status'];
+                    $op->buyer_email = $_GET['buyerEmail'];
+                    //@TODO Verify the reference_id starts with the subscriber ID
+                    $op->reference_id = $_GET['referenceId'];
+                    $op->amazon_subscription_id = $_GET['subscriptionId'];
+                    $op->transaction_date = $_GET['transactionDate'];
+                    $op->buyer_name = $_GET['buyerName'];
+                    $op->operation = $_GET['operation'];
+                    $op->recurring_frequency = $_GET['recurringFrequency'];
+                    $op->payment_method = $_GET['paymentMethod'];
+
+                    //Check to make sure this isn't a page refresh by catching a DuplicateKey exception
+                    try {
+                        $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
+                        $subscription_operation_dao->insert($op);
+
+                        if ($op->status_code !== 'SF') {
+                            $this->addSuccessMessage("Success! Thanks for being a ThinkUp member.");
+                        } else {
+                            $this->addErrorMessage($this->generic_error_msg);
+                            $this->logError('Subscription status code is not SF. '. Utils::varDumpToString($op),
+                                __FILE__, __LINE__, __METHOD__ );
+                        }
+
+                        //Now that user has created a subscription, generate up-to-date subscription_status
+                        $subscription_status = $subscriber->getSubscriptionStatus();
+                        //Update subscription_status in the subscriber object
+                        $subscriber->subscription_status = $subscription_status;
+                        //Update subscription_status in the data store
+                        $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
+                        //Update recurrence_frequency in the data store
+                        $subscriber_dao->updateSubscriptionRecurrence($subscriber->id, $op->recurring_frequency);
+                    } catch (DuplicateSubscriptionOperationException $e) {
+                        $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
+                            "subscription. Maybe you refreshed the page in your browser?");
+                    }
                 }
             } else {
                 $this->addErrorMessage("Oops! Something went wrong. Please try again or contact us for help.");
-                $this->logError('Internal caller reference not set or Amazon response invalid', __FILE__,__LINE__,
+                $this->logError('Amazon response invalid', __FILE__,__LINE__,
                 __METHOD__);
             }
         }
@@ -257,25 +256,21 @@ class MembershipController extends AuthController {
     }
 
     /**
-     * Whether or not user has returned from paying at Amazon.
+     * Return whether or not user has returned from Amazon with necessary parameters.
      * @return bool
      */
-    private function hasUserReturnedFromAmazon() {
-        return (isset($_GET['callerReference'])  && isset($_GET['tokenID'])
-        && isset($_GET['status']) && isset($_GET['certificateUrl']) && isset($_GET['signatureMethod'])
-        && isset($_GET['signature']) );
+    protected function hasUserReturnedFromAmazon() {
+        return UpstartHelper::areGetParamsSet(SignUpHelperController::$amazon_simple_pay_return_params);
     }
 
     /**
-     * Whether or not the response from Amazon is valid - if caller reference matches, if signature verifies.
-     * @param  str  $internal_caller_reference
+     * Whether or not the response from Amazon has a valid signature.
      * @return bool
      */
-    private function isAmazonResponseValid($internal_caller_reference) {
+    private function isAmazonResponseValid() {
         //Check inputs match internal rules
         $endpoint_url = UpstartHelper::getApplicationURL().'user/membership.php';
-        return ($internal_caller_reference == $_GET['callerReference']
-        && AmazonFPSAPIAccessor::isAmazonSignatureValid($endpoint_url));
+        return AmazonFPSAPIAccessor::isAmazonSignatureValid($endpoint_url);
     }
 
     /**

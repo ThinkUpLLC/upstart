@@ -260,12 +260,23 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->simulateLogin('paid@example.com');
 
         //Set URL params Amazon would return
-        $_GET['callerReference'] = 'test-caller-reference';
-        $_GET['tokenID'] = 'test-token-id';
-        $_GET['status'] = 'test-status';
-        $_GET['certificateUrl'] = 'test-certificate-url';
-        $_GET['signatureMethod'] = 'test-signature-method';
-        $_GET['signature'] = 'test-signature';
+        $_GET['status'] = 'SS';
+        $_GET['certificateUrl'] = "certificate1";
+        $_GET['signatureMethod'] = "SHA";
+        $_GET['signature'] = 'signature1';
+        $_GET['paymentReason'] = "ThinkUp.com membership";
+        $_GET['transactionAmount'] = 'USD 5';
+        $_GET['referenceId'] = '24_34390d';
+        $_GET['subscriptionId'] = '5a81c762-f3ff-4319-9e07-007fffe7d4da';
+        $_GET['transactionDate'] = '1407173277';
+        $_GET['buyerName'] = 'Angelina Jolie';
+        $_GET['buyerEmail'] = 'angelina@example.com';
+        $_GET['operation'] = 'pay';
+        $_GET['recurringFrequency'] = '1 month';
+        $_GET['paymentMethod'] = 'Credit Card';
+
+        //Set this to force the Mock to return false
+        $_GET['signatureValidity'] = false;
 
         $controller = new MembershipController(true);
         $results = $controller->go();
@@ -290,10 +301,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->simulateLogin('paid@example.com');
 
         //Set URL params Amazon would return
-        $_GET['callerReference'] = 'test-caller-reference';
-        $_GET['tokenID'] = 'token1';
-        $_GET['level'] = 'member';
-        $_GET['recur'] = '1 month';
         $_GET['status'] = 'SS';
         $_GET['certificateUrl'] = "certificate1";
         $_GET['signatureMethod'] = "SHA";
@@ -308,12 +315,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $_GET['operation'] = 'pay';
         $_GET['recurringFrequency'] = '1 month';
         $_GET['paymentMethod'] = 'Credit Card';
-        // $_GET['callerReference'] = 'test-caller-reference';
-        // $_GET['tokenID'] = 'test-token-id';
-        // $_GET['status'] = 'SC';
-        // $_GET['certificateUrl'] = 'test-certificate-url';
-        // $_GET['signatureMethod'] = 'test-signature-method';
-        // $_GET['signature'] = 'test-signature';
 
         SessionCache::put('caller_reference', 'test-caller-reference');
 
