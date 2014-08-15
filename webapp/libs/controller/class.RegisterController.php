@@ -301,7 +301,7 @@ class RegisterController extends SignUpHelperController {
     private function tryAgain($user_error_message, $technical_error_message, $file, $method, $line) {
         $this->logError($technical_error_message, $file, $line, $method);
         SessionCache::put('auth_error_message', $user_error_message);
-        $controller = new JoinController(true);
+        $controller = new PricingController(true);
         return $controller->go();
     }
 
