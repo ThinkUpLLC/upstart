@@ -330,10 +330,10 @@ display: inline !important;
                         <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
 
                           <td class="six sub-columns" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; min-width: 0px; width: 50%; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0px 10px 10px 0px;" align="left" valign="top">
-                            <a href="https://thinkup.com" style="text-decoration: none; color: #2ba6cb;"><img src="https://www.thinkup.com/join/assets/img/thinkup-logo.png" alt="ThinkUp" width="100" height="28" style="width: 100px !important; height: 28px !important; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; max-width: 100%; float: left; clear: both; display: block; border: none;" align="left" /></a>
+                            <a href="https://thinkup.com" style="text-decoration: none; color: #2ba6cb;"><img src="{$site_url}assets/img/thinkup-logo.png" alt="ThinkUp" width="100" height="28" style="width: 100px !important; height: 28px !important; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; max-width: 100%; float: left; clear: both; display: block; border: none;" align="left" /></a>
                           </td>
                           <td class="six sub-columns last" style="text-align: right; vertical-align: bottom; word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; min-width: 0px; width: 50%; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0px 0px 10px;" align="right" valign="bottom">
-                            <a href="https://{$thinkup_username}.thinkup.com" style="color: #2ba6cb; text-decoration: none;">Your Insights</a>
+                            <a href="{$thinkup_url}" style="color: #2ba6cb; text-decoration: none;">Your Insights</a>
                           </td>
                           <td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;" align="left" valign="top"></td>
                         </tr>
@@ -354,7 +354,7 @@ display: inline !important;
                 <table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
                   <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
                     <td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;" align="left" valign="top">
-                      <img width="580" height="176" src="https://thinkup.com/join/assets/img/email/reminder-2-promo.png" alt="Enjoying ThinkUp? ThinkUp gets better when you’re a member." style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: left; clear: both; display: block;" align="left" />
+                      <img width="580" height="176" src="{$site_url}assets/img/email/reminder-2-promo.png" alt="Enjoying ThinkUp? ThinkUp gets better when you’re a member." style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: left; clear: both; display: block;" align="left" />
                     </td>
                     <td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;" align="left" valign="top"></td>
                   </tr>
@@ -376,11 +376,11 @@ display: inline !important;
                       <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 22px; font-size: 16px; margin: 0 0 10px; padding: 0;" align="left">So don’t miss out! Join ThinkUp now to get the all the best updates on making the most out of your social networks.</p>
                       <br>
                       <div style="text-align: center;" align="center"><!--[if mso]>
-                        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://www.thinkup.com/join/user/membership.php" style="height:100px;v-text-anchor:middle;width:260px;" arcsize="10%" stroke="f" fillcolor="#24B98F">
+                        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{$site_url}user/membership.php" style="height:100px;v-text-anchor:middle;width:260px;" arcsize="10%" stroke="f" fillcolor="#24B98F">
                           <w:anchorlock/>
                           <center>
                         <![endif]-->
-                            <a href="https://www.thinkup.com/join/user/membership.php" style="border-radius: 4px; color: #ffffff; display: inline-block; font-family: sans-serif; font-size: 30px; font-weight: bold; line-height: 21px; text-align: center; text-decoration: none; width: 260px; margin-bottom: 20px; -webkit-text-size-adjust: none; background: #24B98F; border: 1px solid #219775;">&nbsp;<br><span style="line-height: 30px;">Join ThinkUp</span><br><span style="font-size: 15px; line-height: 20px; color: #A9DDC9;">Just $5/month!</span><br>&nbsp;</a>
+                            <a href="{$site_url}user/membership.php" style="border-radius: 4px; color: #ffffff; display: inline-block; font-family: sans-serif; font-size: 30px; font-weight: bold; line-height: 21px; text-align: center; text-decoration: none; width: 260px; margin-bottom: 20px; -webkit-text-size-adjust: none; background: #24B98F; border: 1px solid #219775;">&nbsp;<br><span style="line-height: 30px;">Join ThinkUp</span><br><span style="font-size: 15px; line-height: 20px; color: #A9DDC9;">Just $5/month!</span><br>&nbsp;</a>
                         <!--[if mso]>
                           </center>
                         </v:roundrect>
@@ -389,7 +389,7 @@ display: inline !important;
 
                       <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 22px; font-size: 16px; margin: 0 0 10px; padding: 0;" align="left">Thanks,</p>
 
-                      <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 22px; font-size: 16px; margin: 0 0 10px; padding: 0;" align="left"><img width="128" height="64" src="https://thinkup.com/join/assets/img/email/signatures.png" alt="Enjoying ThinkUp? ThinkUp gets better when you’re a member." style="float: none; display: inline; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; clear: both;" align="none" /></p>
+                      <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 22px; font-size: 16px; margin: 0 0 10px; padding: 0;" align="left"><img width="128" height="64" src="{$site_url}assets/img/email/signatures.png" alt="Enjoying ThinkUp? ThinkUp gets better when you’re a member." style="float: none; display: inline; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; clear: both;" align="none" /></p>
 
                       <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 22px; font-size: 16px; margin: 0 0 10px; padding: 0;" align="left">Gina, Anil and the ThinkUp team.</p>
 
@@ -416,7 +416,7 @@ display: inline !important;
                         <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
                           <td align="center" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0px 0px 10px;" valign="top">
                             <center style="width: 100%; min-width: 580px;">
-                              <p style="text-align: center; color: #999; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 18px; font-size: 12px; margin: 0 0 10px; padding: 0;" align="center"><a href="https://www.thinkup.com/join/user/membership.php" style="color: #2ba6cb; text-decoration: underline;">Manage your account</a> or <a href="https://www.thinkup.com/join/about/contact.php" style="color: #2ba6cb; text-decoration: underline;">contact us</a></p>
+                              <p style="text-align: center; color: #999; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 18px; font-size: 12px; margin: 0 0 10px; padding: 0;" align="center"><a href="{$site_url}user/membership.php" style="color: #2ba6cb; text-decoration: underline;">Manage your account</a> or <a href="{$site_url}about/contact.php" style="color: #2ba6cb; text-decoration: underline;">contact us</a></p>
                               <p style="text-align: center; color: #999; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 18px; font-size: 12px; margin: 0 0 10px; padding: 0;" align="center">220 E 23rd #601, NY, NY 10010</p>
                             </center>
                           </td>
