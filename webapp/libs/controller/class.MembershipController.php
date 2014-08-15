@@ -244,6 +244,8 @@ class MembershipController extends AuthController {
         $this->addToView('twitter_connection_status', $connection_status['twitter']);
         //END populating nav bar icons
 
+        //Set Amazon payments link to sandbox for testing
+        $this->addToView('amazon_sandbox', $config->getValue('amazon_sandbox'));
         return $this->generateView();
 	}
 
