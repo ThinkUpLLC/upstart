@@ -22,56 +22,49 @@ class ConfirmPaymentController extends SignUpHelperController {
                 //@TODO Double-check $_GET[errorMessage] is set if there's an error
                 $error_message = isset($_GET["errorMessage"])?$_GET["errorMessage"]:null;
                 if ($error_message !== null ) {
-                    //@TODO Display error message on page, instead of confirmation message
+                    //Display error message, log debug info
                     $this->addErrorMessage($this->generic_error_msg);
                     $this->logError("Amazon returned error: ".$error_message, __FILE__,__LINE__,__METHOD__);
                 } else {
-                    //Simple pay params
-                    if (UpstartHelper::areGetParamsSet(SignUpHelperController::$amazon_simple_pay_return_params)) {
-                        //Capture Simple Pay return codes
-                        $op = new SubscriptionOperation();
-                        $op->subscriber_id = $subscriber->id;
-                        $op->payment_reason = $_GET['paymentReason'];
-                        $op->transaction_amount = $_GET['transactionAmount'];
-                        $op->status_code = $_GET['status'];
-                        $op->buyer_email = $_GET['buyerEmail'];
-                        //@TODO Verify the reference_id starts with the subscriber ID
-                        $op->reference_id = $_GET['referenceId'];
-                        $op->amazon_subscription_id = $_GET['subscriptionId'];
-                        $op->transaction_date = $_GET['transactionDate'];
-                        $op->buyer_name = $_GET['buyerName'];
-                        $op->operation = $_GET['operation'];
-                        $op->recurring_frequency = $_GET['recurringFrequency'];
-                        $op->payment_method = $_GET['paymentMethod'];
+                    //Capture Simple Pay return codes
+                    $op = new SubscriptionOperation();
+                    $op->subscriber_id = $subscriber->id;
+                    $op->payment_reason = $_GET['paymentReason'];
+                    $op->transaction_amount = $_GET['transactionAmount'];
+                    $op->status_code = $_GET['status'];
+                    $op->buyer_email = $_GET['buyerEmail'];
+                    //@TODO Verify the reference_id starts with the subscriber ID
+                    $op->reference_id = $_GET['referenceId'];
+                    $op->amazon_subscription_id = $_GET['subscriptionId'];
+                    $op->transaction_date = $_GET['transactionDate'];
+                    $op->buyer_name = $_GET['buyerName'];
+                    $op->operation = $_GET['operation'];
+                    $op->recurring_frequency = $_GET['recurringFrequency'];
+                    $op->payment_method = $_GET['paymentMethod'];
 
-                        //Check to make sure this isn't a page refresh by catching a DuplicateKey exception
-                        try {
-                            $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
-                            $subscription_operation_dao->insert($op);
+                    //Check to make sure this isn't a page refresh by catching a DuplicateKey exception
+                    try {
+                        $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
+                        $subscription_operation_dao->insert($op);
 
-                            //@TODO Update subscriber method to get status to access subscription_operations data
-                            //Now that user has authed and paid, get current subscription_status
-                            $subscription_status = $subscriber->getSubscriptionStatus();
-                            //Update subscription_status in the subscriber object
-                            $subscriber->subscription_status = $subscription_status;
-                            //Update subscription_status in the data store
-                            $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
-                        } catch (DuplicateSubscriptionOperationException $e) {
-                            $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
-                                "subscription. Maybe you refreshed the page in your browser?");
-                        }
-                    } else {
-                        $this->addErrorMessage($this->generic_error_msg);
-                        $this->logError('Missing Amazon return parameter', __FILE__,__LINE__, __METHOD__);
+                        //Now that user has authed and paid, get current subscription_status
+                        $subscription_status = $subscriber->getSubscriptionStatus();
+                        //Update subscription_status in the subscriber object
+                        $subscriber->subscription_status = $subscription_status;
+                        //Update subscription_status in the data store
+                        $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
+                    } catch (DuplicateSubscriptionOperationException $e) {
+                        $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
+                            "subscription. Maybe you refreshed the page in your browser?");
                     }
                 }
             } else {
-                //@TODO Display error message on page, instead of confirmation message
+                //Display error message, log debug info
                 $this->addErrorMessage($this->generic_error_msg);
                 $this->logError('Amazon response invalid', __FILE__,__LINE__, __METHOD__);
             }
         } else {
-            //@TODO Display error message on page, instead of confirmation message
+            //Display error message, log debug info
         	$this->addErrorMessage($this->generic_error_msg);
             $this->logError('Has not returned from Amazon', __FILE__,__LINE__, __METHOD__);
         }
@@ -83,9 +76,8 @@ class ConfirmPaymentController extends SignUpHelperController {
      * @return bool
      */
     protected function hasUserReturnedFromAmazon() {
-        return (isset($_GET['referenceId']) /* && isset($_GET['tokenID'])*/  && isset($_GET['level'])
-            && isset($_GET['status']) && isset($_GET['certificateUrl']) && isset($_GET['signatureMethod'])
-            && isset($_GET['signature']) && isset($_GET['recur']));
+        return (UpstartHelper::areGetParamsSet(SignUpHelperController::$amazon_simple_pay_return_params) &&
+            isset($_GET['level']) && isset($_GET['recur']));
     }
 
     /**

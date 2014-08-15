@@ -127,7 +127,11 @@ class AmazonFPSAPIAccessor {
      * @return bool
      */
     public static function isAmazonSignatureValid($endpoint_url, $endpoint_url_params = array()) {
-        return true;
+        if (isset($_GET['signatureValidity'] )) {
+            return $_GET['signatureValidity'];
+        } else {
+            return true;
+        }
     }
 
     public function cancelAndRefundSubscription($subscription_id, $refund_amount, $caller_reference) {
