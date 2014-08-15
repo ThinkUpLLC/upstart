@@ -57,7 +57,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
           {$failed_cc_amazon_form}
         </div>
       {else}
-        <p class="form-note"><a href="https://payments.amazon.com">View your payment information
+        <p class="form-note"><a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">View your payment information
           at Amazon Payments.</a></p>
       {/if}
     {/if}
