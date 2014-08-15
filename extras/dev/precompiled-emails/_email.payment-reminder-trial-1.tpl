@@ -47,7 +47,7 @@
                 <table class="twelve columns">
                   <tr>
                     <td>
-                      <a href="https://www.thinkup.com/join/user/membership.php"><img width="580" height="479" src="https://thinkup.com/join/assets/img/email/reminder-1-promo.png"
+                      <a href="https://www.thinkup.com/join/user/membership.php"><img width="580" height="479" src="https://thinkup.com/join/assets/img/email/reminder-1-promo-v2.png"
                       alt="Join ThinkUp and get your free gift! Our exclusive book on the future of social media, featuring everyone from Steve Martin to danah boyd."></a>
                     </td>
                     <td class="expander"></td>

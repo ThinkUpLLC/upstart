@@ -62,7 +62,7 @@
                           <center>
                         <![endif]-->
                             <a href="https://www.thinkup.com/join/user/membership.php"
-                      style="border:1px solid #219775;background-color:#24B98F;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:26px;font-weight:bold;line-height:21px;text-align:center;text-decoration:none;width:280px;margin-bottom:20px;-webkit-text-size-adjust:none;">&nbsp;<br><span style="line-height:30px;">Join ThinkUp Today</span><br><span style="font-size:15px;line-height:20px;color:#A9DDC9;">Just $60/year!</span><br>&nbsp;</a>
+                      style="border:1px solid #219775;background-color:#24B98F;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:26px;font-weight:bold;line-height:21px;text-align:center;text-decoration:none;width:280px;margin-bottom:20px;-webkit-text-size-adjust:none;">&nbsp;<br><span style="line-height:30px;">Join ThinkUp Today</span><br><span style="font-size:15px;line-height:20px;color:#A9DDC9;">Just $5/month!</span><br>&nbsp;</a>
                         <!--[if mso]>
                           </center>
                         </v:roundrect>
