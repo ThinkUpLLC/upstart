@@ -354,6 +354,9 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Your ThinkUp account has been closed. But there\'s still time to change your mind!/',
             $results);
         $this->assertPattern('/Your ThinkUp account is closed. Thanks for trying ThinkUp!/', $results);
+        // Don't send account closure email to free trialers, just subscribers
+        $closure_email = Mailer::getLastMail();
+        $this->assertEqual('', $closure_email);
     }
 
     public function testCloseAccountValidCSRFWithSubscriptionOperation() {
@@ -376,7 +379,10 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $results = $controller->go();
         $this->debug($results);
         $this->assertPattern('/Your ThinkUp account is closed, and we&#39;ve issued a refund.  '.
-            'We&#39;re sorry to see you go!/', $results);
+            'Thanks for trying ThinkUp!/', $results);
+
+        $closure_email = Mailer::getLastMail();
+        $this->assertPattern('/COPY AND DESIGN GOES HERE/', $closure_email);
     }
 
     public function testCloseAccountInvalidCSRF() {

@@ -125,7 +125,19 @@ class MembershipController extends AuthController {
                                 // Log user out with message about closure and refund
                                 $logout_controller = new LogoutController(true);
                                 $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
-                                    "and we've issued a refund.  We're sorry to see you go!");
+                                    "and we've issued a refund.  Thanks for trying ThinkUp!");
+
+                                // Send account closure email
+                                $email_view_mgr = new ViewManager();
+                                $email_view_mgr->caching=false;
+                                $template_name = "Upstart System Messages";
+                                $api_key = Config::getInstance()->getValue('mandrill_api_key_for_payment_reminders');
+
+                                $subject_line = "Your ThinkUp account has been closed";
+                                $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
+                                $message = $email_view_mgr->fetch('_email.account-closed.tpl');
+                                Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
+                                    array('html_body'=>$message), $api_key);
                                 return $logout_controller->control();
                             } else {
                                 //Show user error, log system error
