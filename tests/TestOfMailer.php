@@ -115,4 +115,13 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
         $message = Mailer::getSystemMessageHTML($body_html, $headline);
         $this->debug($message);
     }
+
+    public function testGetSystemMessageHTMLAccountHasBeenClosed() {
+        $headline = "The headline goes here";
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $body_html = $email_view_mgr->fetch('_email.account-closed.tpl');
+        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $this->debug($message);
+    }
 }
