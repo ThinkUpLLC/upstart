@@ -353,7 +353,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/There was a problem processing your request. Please try again./', $results);
         $this->assertNoPattern('/Your ThinkUp account has been closed. But there\'s still time to change your mind!/',
             $results);
-        $this->assertPattern('/Your ThinkUp account is closed. We&#39;re sorry to see you go!/', $results);
+        $this->assertPattern('/Your ThinkUp account is closed. Thanks for trying ThinkUp!/', $results);
     }
 
     public function testCloseAccountValidCSRFWithSubscriptionOperation() {

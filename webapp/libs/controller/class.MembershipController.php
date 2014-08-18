@@ -150,7 +150,7 @@ class MembershipController extends AuthController {
                         // Log user out with message about closure and refund
                         $logout_controller = new LogoutController(true);
                         $logout_controller->addSuccessMessage("Your ThinkUp account is closed. ".
-                            "We're sorry to see you go!");
+                            "Thanks for trying ThinkUp!");
                         return $logout_controller->control();
                     }
                 } else {
