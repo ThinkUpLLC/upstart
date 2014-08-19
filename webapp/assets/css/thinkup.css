@@ -562,6 +562,14 @@ textarea.form-control {
   border-color: #fd0826;
   color: #fff;
 }
+.modal-close-account .modal-content {
+  padding: 25px;
+  text-align: center;
+}
+.modal-close-account .modal-content .btn {
+  display: inline-block;
+  margin: 0 5px;
+}
 .accounts-privacy {
   color: #417505;
 }
