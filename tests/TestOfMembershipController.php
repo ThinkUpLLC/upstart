@@ -81,6 +81,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
+        $this->assertPattern('/You will receive a refund/', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j, ');
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
@@ -194,6 +195,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/expires in <strong>3 days/', $results);
         $this->assertNoPattern('/Payment pending/', $results);
         $this->assertNoPattern('/Paid through/', $results);
+        $this->assertNoPattern('/You will receive a refund/', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
     }

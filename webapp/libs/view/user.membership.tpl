@@ -66,11 +66,24 @@ body_classes="settings menu-open" body_id="settings-subscription"}
       data-section-selector="#form-membership-contact">Contact us</a></p>
 
     {if !$subscriber->is_account_closed}
-      <form id="form-membership-close-account" action="membership.php" method="post">
-        <input type="hidden" name="close" value="true" />
-        <a href="javascript:document.forms['form-membership-close-account'].submit();" onClick="return confirm('Do you really want to close your account?');" class="btn btn-sm btn-close-account">Close your account</a>
-         {insert name="csrf_token"}
-      </form>
+    <button class="btn btn-sm btn-close-account" data-toggle="modal" data-target=".modal-close-account">Close your account</button>
+
+    <div class="modal fade modal-close-account" tabindex="-1" role="dialog" aria-labelledby="closeAccount" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <header class="container-header">
+            <h1>Do you really want to close your account?</h1>
+            <h2>{if $membership_status neq 'Free trial'}You will receive a refund and all{else}All{/if} your data will be deleted. This cannot be undone.</h2>
+          </header>
+          <form id="form-membership-close-account" action="membership.php" method="post">
+            <input type="hidden" name="close" value="true" />
+            <button type="button" class="btn btn-transparent" data-dismiss="modal">Never mind</button>
+            <button type="submit" class="btn btn-submit">Close account</button>
+             {insert name="csrf_token"}
+          </form>
+        </div>
+      </div>
+    </div>
     {/if}
 
       <form role="form" class="form" id="form-membership-contact">
