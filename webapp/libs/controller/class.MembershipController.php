@@ -135,6 +135,7 @@ class MembershipController extends AuthController {
 
                                 $subject_line = "Your ThinkUp account has been closed";
                                 $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
+                                $email_view_mgr->assign('refund_amount', $refund_amount);
                                 $message = $email_view_mgr->fetch('_email.account-closed.tpl');
                                 Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                                     array('html_body'=>$message), $api_key);
