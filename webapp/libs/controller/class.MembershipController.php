@@ -122,11 +122,6 @@ class MembershipController extends AuthController {
                                 // Close account
                                 $result = $subscriber_dao->closeAccount($subscriber->id);
 
-                                // Log user out with message about closure and refund
-                                $logout_controller = new LogoutController(true);
-                                $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
-                                    "and we've issued a refund.  Thanks for trying ThinkUp!");
-
                                 // Send account closure email
                                 $email_view_mgr = new ViewManager();
                                 $email_view_mgr->caching=false;
@@ -139,9 +134,18 @@ class MembershipController extends AuthController {
                                 $body_html = $email_view_mgr->fetch('_email.account-closed.tpl');
                                 $headline = "Thanks for trying ThinkUp.";
                                 $message = Mailer::getSystemMessageHTML($body_html, $headline);
-                                Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
-                                    array('html_body'=>$message), $api_key);
-                                return $logout_controller->control();
+                                try {
+                                    Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line,
+                                        $template_name, array('html_body'=>$message), $api_key);
+                                    // Log user out with message about closure and refund
+                                    $logout_controller = new LogoutController(true);
+                                    $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
+                                        "and we've issued a refund.  Thanks for trying ThinkUp!");
+
+                                    return $logout_controller->control();
+                                } catch (Exception $e) {
+                                    $this->addErrorMessage($e->getMessage());
+                                }
                             } else {
                                 //Show user error, log system error
                                 $this->logError('Amazon refund response was null. Refund operation was '.
