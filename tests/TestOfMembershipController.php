@@ -384,7 +384,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
             'Thanks for trying ThinkUp!/', $results);
 
         $closure_email = Mailer::getLastMail();
-        $this->assertPattern('/COPY AND DESIGN GOES HERE/', $closure_email);
+        $this->assertPattern('/Your ThinkUp account is now closed./', $closure_email);
     }
 
     public function testCloseAccountInvalidCSRF() {

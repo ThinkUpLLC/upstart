@@ -130,9 +130,10 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
     }
 
     public function testGetSystemMessageHTMLAccountHasBeenClosed() {
-        $headline = "The headline goes here";
+        $headline = "Thanks for trying ThinkUp.";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
+        $email_view_mgr->assign('refund_amount', '2.50' );
         $body_html = $email_view_mgr->fetch('_email.account-closed.tpl');
         $message = Mailer::getSystemMessageHTML($body_html, $headline);
         $this->debug($message);
