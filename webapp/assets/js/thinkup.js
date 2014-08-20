@@ -626,7 +626,7 @@
         }
       }
     });
-    return $("#form-membership-contact").submit(function(e) {
+    $("#form-membership-contact").submit(function(e) {
       var $form, body, subject;
       e.preventDefault();
       $form = $(this);
@@ -636,6 +636,17 @@
       }
       body = $form.find("#control-body").val();
       return window.location.href = "mailto:help@thinkup.com?subject=" + (encodeURI(subject)) + "&body=" + (encodeURI(body));
+    });
+    $("#modal-close-account").on("shown.bs.modal", function() {
+      var $backdrop;
+      $backdrop = $(".modal-backdrop").clone();
+      if ($(".jPanelMenu-panel").length) {
+        $("body > .modal-backdrop").remove();
+        return $(".jPanelMenu-panel").append($backdrop);
+      }
+    });
+    return $("#modal-close-account").on("hidden.bs.modal", function() {
+      return $(".modal-backdrop").remove();
     });
   });
 
