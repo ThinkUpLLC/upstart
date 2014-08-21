@@ -32,12 +32,14 @@ $all_tests->add(new TestOfAmazonFPSAPIAccessor());
 $all_tests->add(new TestOfPaymentMySQLDAO());
 $all_tests->add(new TestOfSubscriberPaymentMySQLDAO());
 $all_tests->add(new TestOfSubscriber());
+$all_tests->add(new TestOfSubscriptionOperationMySQLDAO());
 $all_tests->add(new TestOfLandingController());
 $all_tests->add(new TestOfRegisterController());
 $all_tests->add(new TestOfRemindTrialersAboutPaymentController());
 $all_tests->add(new TestOfMailer());
 $all_tests->add(new TestOfUpdatePendingPaymentStatusController());
 $all_tests->add(new TestOfPayNowController());
+$all_tests->add(new TestOfAPIIPNController());
 
 //$tr = new TextReporter();
 //$all_tests->run( $tr );

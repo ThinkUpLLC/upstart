@@ -39,31 +39,44 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
     }
 
     public function testGetSystemMessageHTMLPaymentReminderFreeTrial1Through4() {
+        $cfg = Config::getInstance();
         $headline = "Join ThinkUp and get your FREE gift!";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
-        $email_view_mgr->assign('thinkup_username', 'tyrionlannister' );
+        $thinkup_username = 'tyrionlannister';
+        $user_installation_url = str_replace('{user}', $thinkup_username,
+            $cfg->getValue('user_installation_url'));
+        $email_view_mgr->assign('thinkup_url', $user_installation_url );
         $message = $email_view_mgr->fetch('_email.payment-reminder-trial-1.tpl');
         $this->debug($message);
 
         $headline = "Enjoying ThinkUp? Join and get even more...";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
-        $email_view_mgr->assign('thinkup_username', 'tyrionlannister' );
+        $thinkup_username = 'tyrionlannister';
+        $user_installation_url = str_replace('{user}', $thinkup_username,
+            $cfg->getValue('user_installation_url'));
+        $email_view_mgr->assign('thinkup_url', $user_installation_url );
         $message = $email_view_mgr->fetch('_email.payment-reminder-trial-2.tpl');
         $this->debug($message);
 
         $headline = "One day left: Ready to join ThinkUp?";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
-        $email_view_mgr->assign('thinkup_username', 'tyrionlannister' );
+        $thinkup_username = 'tyrionlannister';
+        $user_installation_url = str_replace('{user}', $thinkup_username,
+            $cfg->getValue('user_installation_url'));
+        $email_view_mgr->assign('thinkup_url', $user_installation_url );
         $message = $email_view_mgr->fetch('_email.payment-reminder-trial-3.tpl');
         $this->debug($message);
 
         $headline = "Your ThinkUp free trial ends TODAY. Join now!";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
-        $email_view_mgr->assign('thinkup_username', 'tyrionlannister' );
+        $thinkup_username = 'tyrionlannister';
+        $user_installation_url = str_replace('{user}', $thinkup_username,
+            $cfg->getValue('user_installation_url'));
+        $email_view_mgr->assign('thinkup_url', $user_installation_url );
         $message = $email_view_mgr->fetch('_email.payment-reminder-trial-4.tpl');
         $this->debug($message);
     }
@@ -112,6 +125,16 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
         $email_view_mgr->caching=false;
         $email_view_mgr->assign('amazon_error_message', "Card has Expired" );
         $body_html = $email_view_mgr->fetch('_email.payment-charge-failure.tpl');
+        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        $this->debug($message);
+    }
+
+    public function testGetSystemMessageHTMLAccountHasBeenClosed() {
+        $headline = "Thanks for trying ThinkUp.";
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $email_view_mgr->assign('refund_amount', '2.50' );
+        $body_html = $email_view_mgr->fetch('_email.account-closed.tpl');
         $message = Mailer::getSystemMessageHTML($body_html, $headline);
         $this->debug($message);
     }

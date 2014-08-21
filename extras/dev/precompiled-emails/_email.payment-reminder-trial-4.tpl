@@ -22,10 +22,10 @@
                         <tr>
 
                           <td class="six sub-columns">
-                            <a href="https://thinkup.com" style="text-decoration:none;"><img src="https://www.thinkup.com/join/assets/img/thinkup-logo.png" alt="ThinkUp" width="100" height="28" style="width: 100px !important; height: 28px !important;"></a>
+                            <a href="https://thinkup.com" style="text-decoration:none;"><img src="https://thinkup.com/join/assets/img/thinkup-logo.png" alt="ThinkUp" width="100" height="28" style="width: 100px !important; height: 28px !important;"></a>
                           </td>
                           <td class="six sub-columns last" style="text-align: right; vertical-align: bottom;">
-                            <a href="https://{$thinkup_username}.thinkup.com">Your Insights</a>
+                            <a href="{$thinkup_url}">Your Insights</a>
                           </td>
                           <td class="expander"></td>
                         </tr>
@@ -47,7 +47,7 @@
                 <table class="twelve columns">
                   <tr>
                     <td>
-                      <a href="https://www.thinkup.com/join/user/membership.php"><img width="580" height="360" src="https://thinkup.com/join/assets/img/email/reminder-4-promo.png"
+                      <a href="{$site_url}user/membership.php"><img width="580" height="360" src="https://thinkup.com/join/assets/img/email/reminder-4-promo-v2.png"
                       alt="Don't miss out! Your ThinkUp trial is ending. Join now! Just $5/month"></a>
                     </td>
                     <td class="expander"></td>
@@ -65,7 +65,7 @@
                 <table class="twelve columns">
                   <tr>
                     <td class="text-pad">
-                      <p>Don’t lose your personal insights at <a href="https://{$thinkup_username}.thinkup.com">{$thinkup_username}.thinkup.com</a> &mdash; this is your last chance to <a href="https://www.thinkup.com/join/user/membership.php">join</a>! It only takes a moment to complete your membership.</p>
+                      <p>Don’t lose your personal insights at <a href="{$thinkup_url}">{$thinkup_url}</a> &mdash; this is your last chance to <a href="{$site_url}user/membership.php">join</a>! It only takes a moment to complete your membership.</p>
 
                     </td>
                     <td class="expander"></td>
@@ -88,7 +88,7 @@
                         <tr>
                           <td align="center">
                             <center>
-                              <p style="text-align:center;"><a href="https://www.thinkup.com/join/user/membership.php">Manage your account</a> or <a href="https://www.thinkup.com/join/about/contact.php">contact us</a></p>
+                              <p style="text-align:center;"><a href="{$site_url}user/membership.php">Manage your account</a> or <a href="{$site_url}about/contact.php">contact us</a></p>
                               <p style="text-align:center;">220 E 23rd #601, NY, NY 10010</p>
                             </center>
                           </td>

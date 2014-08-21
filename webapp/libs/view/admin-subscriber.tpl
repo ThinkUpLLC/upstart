@@ -73,9 +73,28 @@
         </div>
       </div>
 
-      
-      
-      
+{if $subscription_operations}
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h4>Subscription Activity</h4>
+  </div>
+  <table class="table table-hover">
+    <tr>
+      <th>Time</th><th>Subscription ID</th><th>Operation</th><th>Status</th><th>Frequency</th><th>Amount</th>
+    </tr>
+    {foreach from=$subscription_operations item=operation}
+       <tr>
+          <td>{$operation->timestamp}</td>
+          <td>{$operation->amazon_subscription_id}</td>
+          <td>{$operation->operation}</td>
+          <td>{$operation->status_description}</td>
+          <td>{$operation->recurring_frequency}</td>
+          <td>{$operation->transaction_amount}</td>
+       </tr>
+    {/foreach}
+  </table>
+</div>
+{/if}
 
 {if $payments}
 <div class="panel panel-success">

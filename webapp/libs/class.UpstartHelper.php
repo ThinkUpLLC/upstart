@@ -158,4 +158,16 @@ class UpstartHelper {
         }
         return $view_tzs;
     }
+
+    /**
+     * Check if URL GET params are set.
+     * @param  array  $params
+     * @return bool
+     */
+    public static function areGetParamsSet($params = array()) {
+        foreach ($params as $param) {
+            if (!isset($_GET[$param])) return false;
+        }
+        return true;
+    }
 }

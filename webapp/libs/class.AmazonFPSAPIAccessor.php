@@ -12,11 +12,56 @@ class AmazonFPSAPIAccessor {
 	* @str
 	*/
 	var $AWS_SECRET_ACCESS_KEY;
+    /**
+     * AWS environment. Valid values are 'sandbox' or 'prod'
+     * @var str
+     */
+    var $environment;
 
 	public function __construct() {
         $cfg = Config::getInstance();
         $this->AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
         $this->AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
+        $this->environment = ($cfg->getValue('amazon_sandbox'))?'sandbox':'prod';
+    }
+
+    /**
+     * Generate Amazon Simple Pay form with Pay Now button markup.
+     * @param  str $amount
+     * @param  str $recurring_frequency
+     * @param  str $description
+     * @param  str $reference_id
+     * @param  str $return_url
+     * @return str
+     */
+    public function generateSimplePayNowForm($amount, $recurring_frequency, $description, $reference_id, $return_url) {
+        try{
+            return ButtonGenerator::generateForm($this->AWS_ACCESS_KEY_ID, $this->AWS_SECRET_ACCESS_KEY, $amount,
+                $recurring_frequency, $description, $reference_id, $immediateReturn=1, $returnUrl=$return_url,
+                $abandonUrl=null, $processImmediate=1, $ipnUrl=null, $collectShippingAddress=0,
+                $signatureMethod="HmacSHA256", $this->environment);
+        } catch (Exception $e) {
+            //@TODO handle this more gracefully
+            echo 'Exception : ', $e->getMessage(),"\n";
+        }
+    }
+
+    /**
+     * Cancel Simple Pay subscription.
+     * @param str $subscription_id
+     * @param str $refund_amount
+     * @param str $caller_reference
+     * @return Amazon_FPS_Model_CancelSubscriptionAndRefundResponse
+     */
+    public function cancelAndRefundSubscription($subscription_id, $refund_amount, $caller_reference) {
+        $service = new Amazon_FPS_Client($this->AWS_ACCESS_KEY_ID, $this->AWS_SECRET_ACCESS_KEY);
+        $params = array();
+        //REQUIRED PARAMS:
+        $params['SubscriptionId'] = $subscription_id;
+        $params['RefundAmount'] = array('Value'=>$refund_amount, 'CurrencyCode'=>'USD');
+        $params['CallerReference'] = $caller_reference;
+
+        return $service->cancelSubscriptionAndRefund($params);
     }
 
     /**
@@ -176,14 +221,14 @@ class AmazonFPSAPIAccessor {
             }
         } catch (Amazon_FPS_Exception $ex) {
             //@TODO Log these error details into error log table
-            /*
+
              echo("Caught Exception: " . $ex->getMessage() . "\n");
              echo("Response Status Code: " . $ex->getStatusCode() . "\n");
              echo("Error Code: " . $ex->getErrorCode() . "\n");
              echo("Error Type: " . $ex->getErrorType() . "\n");
              echo("Request ID: " . $ex->getRequestId() . "\n");
              echo("XML: " . $ex->getXML() . "\n");
-             */
+
         }
         return false;
     }

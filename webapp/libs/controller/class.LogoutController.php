@@ -26,7 +26,12 @@ class LogoutController extends AuthController {
         // Logout complete, show login screen
         $controller = new LoginController(true);
         $controller->disableCaching();
-        $controller->addSuccessMessage("You have successfully logged out.");
+        $preset_success_message = $this->view_mgr->getTemplateVars('success_msg');
+        if ( isset($preset_success_message)) {
+            $controller->addSuccessMessage($preset_success_message);
+        } else {
+            $controller->addSuccessMessage("You have successfully logged out.");
+        }
         return $controller->go();
     }
 

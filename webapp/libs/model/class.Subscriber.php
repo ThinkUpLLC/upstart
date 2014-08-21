@@ -125,6 +125,10 @@ class Subscriber {
      */
     var $subscription_status;
     /**
+     * @var str How often subscription renews, 1 month or 12 months.
+     */
+    var $subscription_recurrence;
+    /**
      * @var bool Whether or not the member closed their account.
      */
     var $is_account_closed = false;
@@ -161,6 +165,7 @@ class Subscriber {
             $this->password_token = $row['password_token'];
             $this->timezone = $row['timezone'];
             $this->subscription_status = $row['subscription_status'];
+            $this->subscription_recurrence = $row['subscription_recurrence'];
             $this->is_account_closed = PDODAO::convertDBToBool($row['is_account_closed']);
         }
     }
@@ -211,42 +216,46 @@ class Subscriber {
         if ($this->is_membership_complimentary) {
             $subscription_status = "Complimentary membership";
         } else {
-            //Get latest payment
-            $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
-            $latest_payment = $subscriber_payment_dao->getBySubscriber($this->id, 1);
-            if (sizeof($latest_payment) > 0) {
-                $latest_payment = $latest_payment[0];
-            } else {
-                $latest_payment = null;
-            }
-            if ( $latest_payment !== null ) {
-                if ( $latest_payment['transaction_status'] == 'Success') {
-                    $paid_through_year = intval(date('Y', strtotime($latest_payment['timestamp']))) + 1;
-                    $paid_through_date = date('M j, ', strtotime($latest_payment['timestamp']));
-                    $subscription_status = "Paid through ".$paid_through_date.$paid_through_year;
-                } elseif ( $latest_payment['transaction_status'] == 'Pending') {
-                    $subscription_status = "Payment pending";
-                } elseif ( $latest_payment['transaction_status'] == 'Failure') {
-                    $subscription_status = "Payment failed";
-                } else {
-                    $subscription_status = "Payment failed";
-                }
-            } else {
-                //Get latest authorization
-                $subscriber_auth_dao = new SubscriberAuthorizationMySQLDAO();
-                $latest_auth = $subscriber_auth_dao->getBySubscriberID($this->id, 1);
-                if (sizeof($latest_auth) > 0) {
-                    $latest_auth = $latest_auth[0];
-                } else {
-                    $latest_auth = null;
-                }
-                if ($latest_auth !== null ) {
-                    if ($latest_auth->error_message === null) {
-                        $subscription_status = 'Authorization pending';
-                    } else {
-                        $subscription_status = 'Authorization failed';
+            //Get latest subscription operation
+            $sub_op_dao = new SubscriptionOperationMySQLDAO();
+            $latest_operation = $sub_op_dao->getLatestOperation($this->id);
+            if (isset($latest_operation)) {
+                if ($latest_operation->operation == 'pay') {
+                    if ($latest_operation->status_code == 'SS') {
+                        $paid_through_time = strtotime('+1 month', strtotime($latest_operation->transaction_date));
+                        $paid_through_date_string = date('M j, Y', $paid_through_time);
+                        $subscription_status = "Paid through ".$paid_through_date_string;
+                    } elseif ($latest_operation->status_code == 'SF') {
+                        $subscription_status = "Payment failed";
+                    } elseif ($latest_operation->status_code == 'SI') {
+                        $subscription_status = "Payment pending";
                     }
-                } else { //no auth, no payment
+                } elseif ($latest_operation->operation == 'refund') {
+                    $subscription_status = "Refunded $".
+                        round(intval(str_replace('USD ', $latest_operation->transaction_amount)), 2);
+                } //@TODO handle other actions!
+            } else {
+                //Get latest payment
+                $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
+                $latest_payment = $subscriber_payment_dao->getBySubscriber($this->id, 1);
+                if (sizeof($latest_payment) > 0) {
+                    $latest_payment = $latest_payment[0];
+                } else {
+                    $latest_payment = null;
+                }
+                if ( $latest_payment !== null ) {
+                    if ( $latest_payment['transaction_status'] == 'Success') {
+                        $paid_through_year = intval(date('Y', strtotime($latest_payment['timestamp']))) + 1;
+                        $paid_through_date = date('M j, ', strtotime($latest_payment['timestamp']));
+                        $subscription_status = "Paid through ".$paid_through_date.$paid_through_year;
+                    } elseif ( $latest_payment['transaction_status'] == 'Pending') {
+                        $subscription_status = "Payment pending";
+                    } elseif ( $latest_payment['transaction_status'] == 'Failure') {
+                        $subscription_status = "Payment failed";
+                    } else {
+                        $subscription_status = "Payment failed";
+                    }
+                } else {
                     $subscription_status = "Free trial";
                 }
             }

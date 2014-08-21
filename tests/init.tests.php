@@ -59,5 +59,12 @@ require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/PayResult.php';
 require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/GetTransactionStatusRequest.php';
 require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/GetTransactionStatusResponse.php';
 require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/GetTransactionStatusResult.php';
+require_once WEBAPP_PATH.'extlibs/amazon/ipn/SignatureUtilsForOutbound.php';
+require_once WEBAPP_PATH.'extlibs/amazon/simplepay/ButtonGenerator.php';
+require_once WEBAPP_PATH.'extlibs/amazon/simplepay/SignatureUtils.php';
+
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/CancelSubscriptionAndRefundRequest.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/CancelSubscriptionAndRefundResponse.php';
+require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/CancelSubscriptionAndRefundResult.php';
 
 require_once WEBAPP_PATH.'extlibs/mandrill/Mandrill.php';

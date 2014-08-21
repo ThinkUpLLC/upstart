@@ -81,6 +81,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
+        $this->assertPattern('/You will receive a refund/', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j, ');
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
@@ -104,110 +105,12 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/insights.epub/', $results);
     }
 
-    private function buildSubscriberAuthorizationPending($level) {
-        $builders = array();
-        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'authed@example.com',
-            'is_membership_complimentary'=>0, 'thinkup_username'=>'buffysummers',
-            'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>$level));
-
-        $builders[] = FixtureBuilder::build('authorizations', array('id'=>100, 'timestamp'=>'-0s', 'amount'=>50,
-            'error_message'=>null));
-        $builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>1,
-            'authorization_id'=>100));
-
-        $this->updateSubscriptionStatus(1);
-        return $builders;
-    }
-
-    public function testAuthorizationPendingEarlyBird() {
-        $this->builders = $this->buildSubscriberAuthorizationPending('Early Bird');
-        $dao = new SubscriberMySQLDAO();
-        $subscriber = $dao->getByEmail('authed@example.com');
-        $this->subscriber = $subscriber;
-        $this->setUpInstall($subscriber);
-
-        $this->simulateLogin('authed@example.com');
-        $controller = new MembershipController(true);
-        $results = $controller->go();
-        $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertNoPattern('/easy to fix/', $results);
-        $this->assertPattern('/Payment pending/', $results);
-        $paid_through_year = intval(date('Y')) + 1;
-        $paid_through_date = date('M j ');
-        $this->assertNoPattern('/Paid through/', $results);
-    }
-
-    public function testAuthorizationPendingLateBird() {
-        $this->builders = $this->buildSubscriberAuthorizationPending('Late Bird');
-        $dao = new SubscriberMySQLDAO();
-        $subscriber = $dao->getByEmail('authed@example.com');
-        $this->subscriber = $subscriber;
-        $this->setUpInstall($subscriber);
-
-        $this->simulateLogin('authed@example.com');
-        $controller = new MembershipController(true);
-        $results = $controller->go();
-        $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertNoPattern('/easy to fix/', $results);
-        $this->assertPattern('/Payment pending/', $results);
-        $paid_through_year = intval(date('Y')) + 1;
-        $paid_through_date = date('M j ');
-        $this->assertNoPattern('/Paid through/', $results);
-    }
-
-    public function testAuthorizationPendingPro() {
-        $this->builders = $this->buildSubscriberAuthorizationPending('Pro');
-        $dao = new SubscriberMySQLDAO();
-        $subscriber = $dao->getByEmail('authed@example.com');
-        $this->subscriber = $subscriber;
-        $this->setUpInstall($subscriber);
-
-        $this->simulateLogin('authed@example.com');
-        $controller = new MembershipController(true);
-        $results = $controller->go();
-        $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertNoPattern('/easy to fix/', $results);
-        $this->assertPattern('/Payment pending/', $results);
-        $paid_through_year = intval(date('Y')) + 1;
-        $paid_through_date = date('M j ');
-        $this->assertNoPattern('/Paid through/', $results);
-    }
-
-    public function testAuthorizationPendingExec() {
-        $this->builders = $this->buildSubscriberAuthorizationPending('Executive');
-        $dao = new SubscriberMySQLDAO();
-        $subscriber = $dao->getByEmail('authed@example.com');
-        $this->subscriber = $subscriber;
-        $this->setUpInstall($subscriber);
-
-        $this->simulateLogin('authed@example.com');
-        $controller = new MembershipController(true);
-        $results = $controller->go();
-        $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertNoPattern('/easy to fix/', $results);
-        $this->assertPattern('/Payment pending/', $results);
-        $paid_through_year = intval(date('Y')) + 1;
-        $paid_through_date = date('M j ');
-        $this->assertNoPattern('/Paid through/', $results);
-    }
-
     private function buildSubscriberPaid($payment_status) {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'paid@example.com',
             'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
-            'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>'Member'));
+            'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>'Member',
+            'subscription_recurrence'=>'12 months'));
 
         $builders[] = FixtureBuilder::build('payments', array('id'=>100, 'transaction_status'=>$payment_status,
             'timestamp'=>'-10s'));
@@ -292,6 +195,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/expires in <strong>3 days/', $results);
         $this->assertNoPattern('/Payment pending/', $results);
         $this->assertNoPattern('/Paid through/', $results);
+        $this->assertNoPattern('/You will receive a refund/', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
     }
@@ -340,7 +244,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->debug($results);
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertPattern('/Re-open your ThinkUp account/', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
         $this->assertNoPattern('/One last step/', $results);
         $this->assertNoPattern('/Payment pending/', $results);
@@ -359,12 +262,23 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->simulateLogin('paid@example.com');
 
         //Set URL params Amazon would return
-        $_GET['callerReference'] = 'test-caller-reference';
-        $_GET['tokenID'] = 'test-token-id';
-        $_GET['status'] = 'test-status';
-        $_GET['certificateUrl'] = 'test-certificate-url';
-        $_GET['signatureMethod'] = 'test-signature-method';
-        $_GET['signature'] = 'test-signature';
+        $_GET['status'] = 'SS';
+        $_GET['certificateUrl'] = "certificate1";
+        $_GET['signatureMethod'] = "SHA";
+        $_GET['signature'] = 'signature1';
+        $_GET['paymentReason'] = "ThinkUp.com membership";
+        $_GET['transactionAmount'] = 'USD 5';
+        $_GET['referenceId'] = '24_34390d';
+        $_GET['subscriptionId'] = '5a81c762-f3ff-4319-9e07-007fffe7d4da';
+        $_GET['transactionDate'] = '1407173277';
+        $_GET['buyerName'] = 'Angelina Jolie';
+        $_GET['buyerEmail'] = 'angelina@example.com';
+        $_GET['operation'] = 'pay';
+        $_GET['recurringFrequency'] = '1 month';
+        $_GET['paymentMethod'] = 'Credit Card';
+
+        //Set this to force the Mock to return false
+        $_GET['signatureValidity'] = false;
 
         $controller = new MembershipController(true);
         $results = $controller->go();
@@ -389,12 +303,20 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->simulateLogin('paid@example.com');
 
         //Set URL params Amazon would return
-        $_GET['callerReference'] = 'test-caller-reference';
-        $_GET['tokenID'] = 'test-token-id';
-        $_GET['status'] = 'SC';
-        $_GET['certificateUrl'] = 'test-certificate-url';
-        $_GET['signatureMethod'] = 'test-signature-method';
-        $_GET['signature'] = 'test-signature';
+        $_GET['status'] = 'SS';
+        $_GET['certificateUrl'] = "certificate1";
+        $_GET['signatureMethod'] = "SHA";
+        $_GET['signature'] = 'signature1';
+        $_GET['paymentReason'] = "ThinkUp.com membership";
+        $_GET['transactionAmount'] = 'USD 5';
+        $_GET['referenceId'] = '24_34390d';
+        $_GET['subscriptionId'] = '5a81c762-f3ff-4319-9e07-007fffe7d4da';
+        $_GET['transactionDate'] = '1407173277';
+        $_GET['buyerName'] = 'Angelina Jolie';
+        $_GET['buyerEmail'] = 'angelina@example.com';
+        $_GET['operation'] = 'pay';
+        $_GET['recurringFrequency'] = '1 month';
+        $_GET['paymentMethod'] = 'Credit Card';
 
         SessionCache::put('caller_reference', 'test-caller-reference');
 
@@ -407,12 +329,9 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/easy to fix/', $results);
         $this->assertPattern('/Success! Thanks for being a ThinkUp member./', $results);
         $this->assertNoPattern('/Oops! Something went wrong and our team is looking into it./', $results);
-        $paid_through_year = intval(date('Y')) + 1;
-        $paid_through_date = date('M j ');
-        $this->assertNoPattern('/Paid through/', $results);
     }
 
-    public function testCloseAccountValidCSRF() {
+    public function testCloseAccountValidCSRFNoSubscriptionOperation() {
         $this->builders = $this->buildSubscriberFreeTrialCreated(2);
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('trial@example.com');
@@ -422,20 +341,52 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->simulateLogin('trial@example.com', false, true);
 
         //Set close account URL param
-        $_GET['close'] = 'true';
+        $_POST['close'] = 'true';
         $_POST['csrf_token'] = parent::CSRF_TOKEN;
 
         $controller = new MembershipController(true);
         $results = $controller->go();
         $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
+        $this->assertNoPattern('/Membership Info/', $results);
+        $this->assertNoPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
         $this->assertNoPattern('/easy to fix/', $results);
         $this->assertNoPattern('/Success! Thanks for being a ThinkUp member./', $results);
         $this->assertNoPattern('/There was a problem processing your request. Please try again./', $results);
         $this->assertNoPattern('/Your ThinkUp account has been closed. But there\'s still time to change your mind!/',
             $results);
+        $this->assertPattern('/Your ThinkUp account is closed. Thanks for trying ThinkUp!/', $results);
+        // Don't send account closure email to free trialers, just subscribers
+        $closure_email = Mailer::getLastMail();
+        $this->assertEqual('', $closure_email);
+    }
+
+    public function testCloseAccountValidCSRFWithSubscriptionOperation() {
+        $this->builders = $this->buildSubscriberFreeTrialCreated(2);
+        $this->builders[] = FixtureBuilder::build('subscription_operations',
+            array('amazon_subscription_id'=>'test-sub-id', 'subscriber_id'=> 1, 'recurring_frequency'=>'1 month',
+            'transaction_amount'=>'USD 5', 'operation'=>'pay' ));
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('trial@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('trial@example.com', false, true);
+
+        //Set close account URL param
+        $_POST['close'] = 'true';
+        $_POST['csrf_token'] = parent::CSRF_TOKEN;
+
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Your ThinkUp account is closed, and we&#39;ve issued a refund.  '.
+            'Thanks for trying ThinkUp!/', $results);
+
+        $closure_email = Mailer::getLastMail();
+        $this->assertPattern('/Thanks for trying ThinkUp./', $closure_email);
+        $this->assertPattern('/Your ThinkUp account is now closed./', $closure_email);
+        $this->assertPattern('/We will credit your Amazon Payments account/', $closure_email);
     }
 
     public function testCloseAccountInvalidCSRF() {
@@ -448,7 +399,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->simulateLogin('trial@example.com');
 
         //Set close account URL param
-        $_GET['close'] = 'true';
+        $_POST['close'] = 'true';
 
         $controller = new MembershipController(true);
         $results = $controller->go();
@@ -459,86 +410,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/easy to fix/', $results);
         $this->assertNoPattern('/Success! Thanks for being a ThinkUp member./', $results);
         $this->assertPattern('/There was a problem processing your request. Please try again./', $results);
-    }
-
-    public function testReopenAccountValidCSRF() {
-        $this->builders = $this->buildSubscriberFreeTrialCreated(2);
-        $dao = new SubscriberMySQLDAO();
-        $subscriber = $dao->getByEmail('trial@example.com');
-        $this->subscriber = $subscriber;
-        $this->setUpInstall($subscriber);
-        $dao->closeAccount($subscriber->id);
-
-        $this->simulateLogin('trial@example.com', false, true);
-
-        //Set close account URL param
-        $_GET['reopen'] = 'true';
-        $_POST['csrf_token'] = parent::CSRF_TOKEN;
-
-        $controller = new MembershipController(true);
-        $results = $controller->go();
-        $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertNoPattern('/easy to fix/', $results);
-        $this->assertNoPattern('/Success! Thanks for being a ThinkUp member./', $results);
-        $this->assertNoPattern('/There was a problem processing your request. Please try again./', $results);
-        $this->assertNoPattern('/Your ThinkUp account has been closed. But there\'s still time to change your mind!/',
-            $results);
-        $this->assertPattern('/Your ThinkUp account has been re-opened!/', $results);
-    }
-
-    public function testReopenAccountInvalidCSRF() {
-        $this->builders = $this->buildSubscriberFreeTrialCreated(2);
-        $dao = new SubscriberMySQLDAO();
-        $subscriber = $dao->getByEmail('trial@example.com');
-        $this->subscriber = $subscriber;
-        $this->setUpInstall($subscriber);
-        $dao->closeAccount($subscriber->id);
-
-        $this->simulateLogin('trial@example.com');
-
-        //Set close account URL param
-        $_GET['reopen'] = 'true';
-
-        $controller = new MembershipController(true);
-        $results = $controller->go();
-        $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertNoPattern('/easy to fix/', $results);
-        $this->assertNoPattern('/Success! Thanks for being a ThinkUp member./', $results);
-        $this->assertPattern('/There was a problem processing your request. Please try again./', $results);
-        $this->assertNoPattern('/Your ThinkUp account has been re-opened!/', $results);
-    }
-
-    public function testReopenAccountAlreadyOpenValidCSRF() {
-        $this->builders = $this->buildSubscriberFreeTrialCreated(2);
-        $dao = new SubscriberMySQLDAO();
-        $subscriber = $dao->getByEmail('trial@example.com');
-        $this->subscriber = $subscriber;
-        $this->setUpInstall($subscriber);
-
-        $this->simulateLogin('trial@example.com', false, true);
-
-        //Set close account URL param
-        $_GET['reopen'] = 'true';
-        $_POST['csrf_token'] = parent::CSRF_TOKEN;
-
-        $controller = new MembershipController(true);
-        $results = $controller->go();
-        $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertNoPattern('/easy to fix/', $results);
-        $this->assertNoPattern('/Success! Thanks for being a ThinkUp member./', $results);
-        $this->assertNoPattern('/There was a problem processing your request. Please try again./', $results);
-        $this->assertNoPattern('/Your ThinkUp account has been closed. But there\'s still time to change your mind!/',
-            $results);
-        $this->assertNoPattern('/Your ThinkUp account has been re-opened!/', $results);
     }
 
     public function testCloseAccountAlreadyClosedValidCSRF() {
@@ -552,7 +423,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->simulateLogin('trial@example.com', false, true);
 
         //Set close account URL param
-        $_GET['close'] = 'true';
+        $_POST['close'] = 'true';
         $_POST['csrf_token'] = parent::CSRF_TOKEN;
 
         $controller = new MembershipController(true);
@@ -563,7 +434,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Complimentary membership/', $results);
         $this->assertNoPattern('/easy to fix/', $results);
         $this->assertNoPattern('/Success! Thanks for being a ThinkUp member./', $results);
-        $this->assertNoPattern('/There was a problem processing your request. Please try again./', $results);
+        $this->assertPattern('/This account is already closed. Please log out./', $results);
         $this->assertNoPattern('/Your ThinkUp account has been closed. But there\'s still time to change your mind!/',
             $results);
     }

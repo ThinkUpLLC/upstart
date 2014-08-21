@@ -31,8 +31,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
           {if $subscriber->is_account_closed}
             <div class="list-group-item-value">Closed</div>
           {else}
-            <div class="list-group-item-value">{$membership_status}</div>
-            {if isset($trial_status)}<div class="help-block">{$trial_status}</div>{/if}
+            <div class="list-group-item-value">{$membership_status}{if isset($trial_status)} that {$trial_status}!{/if}{*<div class="trial-countdown">13<small>days<br>left</small></div>*}</div>
           {/if}
         </li>
 
@@ -47,39 +46,45 @@ body_classes="settings menu-open" body_id="settings-subscription"}
         {/if}
       </ul>
 
-    {* OMG SO MUCH LOGIC IN THE VIEW :\ :\ :\ *}
-    {* I tried to make it A LITTLE better, Gina! -- MBJ *}
     {if !$subscriber->is_account_closed}
       {if $membership_status eq 'Free trial'}
         <div class="form-message">
-          <a href="{$amazon_link}" class="btn btn-default btn-lg btn-with-note">Pay now<br>
-          <small>$60/year</small></a>
+          {$amazon_form}
         </div>
-      {elseif isset($failed_cc_amazon_link)}
+      {elseif isset($failed_cc_amazon_form)}
         <div class="form-message">
           <p><small>{$failed_cc_amazon_text}</small></p>
-          <a href="{$failed_cc_amazon_link}" class="btn btn-default">Pay via Amazon Payments</a>
+          {$failed_cc_amazon_form}
         </div>
       {else}
-        <p class="form-note"><a href="https://payments.amazon.com">View your payment information
+        <p class="form-note"><a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">View your payment information
           at Amazon Payments.</a></p>
       {/if}
-    {else}
-        <form id="form-membership-reopen-account" action="membership.php?reopen=true" method="post">
-        <p class="form-note"><a href="javascript:document.forms['form-membership-reopen-account'].submit();" class="btn btn-default">Re-open your ThinkUp account</a></p>
-        {insert name="csrf_token"}
-        </form>
     {/if}
 
       <p class="form-note">Need help? <a href="mailto:help@thinkup.com" class="show-section"
       data-section-selector="#form-membership-contact">Contact us</a></p>
 
-      {if $membership_status eq 'Free trial'}
-      <form id="form-membership-close-account" action="membership.php?close=true" method="post">
-        <a href="javascript:document.forms['form-membership-close-account'].submit();" onClick="return confirm('Do you really want to close your account?');" class="btn btn-sm btn-close-account">Close your account</a>
-         {insert name="csrf_token"}
-      </form>
-      {/if}
+    {if !$subscriber->is_account_closed}
+    <button class="btn btn-sm btn-close-account" data-toggle="modal" data-target=".modal-close-account">Close your account</button>
+
+    <div class="modal fade modal-close-account" id="modal-close-account" tabindex="-1" role="dialog" aria-labelledby="closeAccount" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <header class="container-header">
+            <h1>Do you really want to close your account?</h1>
+            <h2>{if $membership_status neq 'Free trial'}You will receive a refund and all{else}All{/if} your data will be deleted. This cannot be undone.</h2>
+          </header>
+          <form id="form-membership-close-account" action="membership.php" method="post">
+            <input type="hidden" name="close" value="true" />
+            <button type="button" class="btn btn-transparent" data-dismiss="modal">Never mind</button>
+            <button type="submit" class="btn btn-submit">Close account</button>
+             {insert name="csrf_token"}
+          </form>
+        </div>
+      </div>
+    </div>
+    {/if}
 
       <form role="form" class="form" id="form-membership-contact">
         <fieldset>
