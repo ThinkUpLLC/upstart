@@ -3,7 +3,7 @@ body_classes="marketing marketing-page" body_id="marketing-welcome"}
 
   <div class="container">
     <section class="section section-marketing-text" id="section-pay-now">
-      <h2 class="section-header">Terrific! Your 14-Day free trial has begun.</h2>
+      <h2 class="section-header">Terrific! Your 14-day free trial has begun.</h2>
 
       <img src="{$site_root_path}assets/img/book-cover.png" class="illustration book-cover">
 
@@ -12,7 +12,7 @@ body_classes="marketing marketing-page" body_id="marketing-welcome"}
       {$pay_with_amazon_form}
       <a class="alt-to-btn-large" href="{$thinkup_url}">I’m not ready to pay yet.</a></p>
 
-      <p>Join ThinkUp now for just $5 a month and get <strong>the book we wrote for you</strong>! Our exclusive ebook <em>Insights</em> offers interviews with the smartest people in social media.</p>
+      <p>Join ThinkUp now for just ${if $new_subscriber->membership_level == 'Pro'}10{else}5{/if} a month and get <strong>the book we wrote for you</strong>! Our exclusive ebook <em>Insights</em> offers interviews with the smartest people in social media.</p>
     </section>
 
 {include file="_footer.marketing.tpl" hide_footer=true}
