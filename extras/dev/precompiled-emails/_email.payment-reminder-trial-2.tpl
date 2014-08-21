@@ -22,7 +22,7 @@
                         <tr>
 
                           <td class="six sub-columns">
-                            <a href="https://thinkup.com" style="text-decoration:none;"><img src="{$site_url}assets/img/thinkup-logo.png" alt="ThinkUp" width="100" height="28" style="width: 100px !important; height: 28px !important;"></a>
+                            <a href="https://thinkup.com" style="text-decoration:none;"><img src="https://thinkup.com/join/assets/img/thinkup-logo.png" alt="ThinkUp" width="100" height="28" style="width: 100px !important; height: 28px !important;"></a>
                           </td>
                           <td class="six sub-columns last" style="text-align: right; vertical-align: bottom;">
                             <a href="{$thinkup_url}">Your Insights</a>
@@ -46,7 +46,7 @@
                 <table class="twelve columns">
                   <tr>
                     <td style="padding: 0;">
-                      <img width="580" height="176" src="{$site_url}assets/img/email/reminder-2-promo.png"
+                      <img width="580" height="176" src="https://thinkup.com/join/assets/img/email/reminder-2-promo.png"
                       alt="Enjoying ThinkUp? ThinkUp gets better when you’re a member.">
                     </td>
                     <td class="expander"></td>
@@ -83,7 +83,7 @@
 
                       <p>Thanks,</p>
 
-                      <p><img width="128" height="64" src="{$site_url}assets/img/email/signatures.png"
+                      <p><img width="128" height="64" src="https://thinkup.com/join/assets/img/email/signatures.png"
                       alt="Enjoying ThinkUp? ThinkUp gets better when you’re a member." style="float:none; display:inline;"></p>
 
                       <p>Gina, Anil and the ThinkUp team.</p>
