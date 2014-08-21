@@ -50,7 +50,7 @@
                       style="height:72px !important; width: 299px !important;"></p>
                       <br>
 
-                      <p style="clear:both;">Over the past two weeks, you’ve seen how ThinkUp tells you things about your time online that you won’t find in any other app. But now there’s just one day left to join ThinkUp, and we hope you will.
+                      <p style="clear:both;">Over the past two weeks, you’ve seen how ThinkUp tells you things about your time online that you won’t find in any other app. But now there’s just one day left to join ThinkUp, and we hope you will.</p>
 
                       <p>You see, ThinkUp isn’t just a unique app. We’re a community of people who care about making the web better, giving you control and insight into your data, and making all of our time online more meaningful.</p>
 
