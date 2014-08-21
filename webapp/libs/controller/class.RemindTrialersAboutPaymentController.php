@@ -26,6 +26,7 @@ class RemindTrialersAboutPaymentController extends Controller {
             $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
                 $cfg->getValue('user_installation_url'));
             $email_view_mgr->assign('thinkup_url', $user_installation_url);
+            $email_view_mgr->assign('membership_level', $subscriber->membership_level);
             $message = $email_view_mgr->fetch('_email.payment-reminder-trial-1.tpl');
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
@@ -39,6 +40,7 @@ class RemindTrialersAboutPaymentController extends Controller {
             $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
                 $cfg->getValue('user_installation_url'));
             $email_view_mgr->assign('thinkup_url', $user_installation_url);
+            $email_view_mgr->assign('membership_level', $subscriber->membership_level);
             $message = $email_view_mgr->fetch('_email.payment-reminder-trial-2.tpl');
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
@@ -52,6 +54,7 @@ class RemindTrialersAboutPaymentController extends Controller {
             $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
                 $cfg->getValue('user_installation_url'));
             $email_view_mgr->assign('thinkup_url', $user_installation_url);
+            $email_view_mgr->assign('membership_level', $subscriber->membership_level);
             $message = $email_view_mgr->fetch('_email.payment-reminder-trial-3.tpl');
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
@@ -65,6 +68,7 @@ class RemindTrialersAboutPaymentController extends Controller {
             $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
                 $cfg->getValue('user_installation_url'));
             $email_view_mgr->assign('thinkup_url', $user_installation_url);
+            $email_view_mgr->assign('membership_level', $subscriber->membership_level);
             $message = $email_view_mgr->fetch('_email.payment-reminder-trial-4.tpl');
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
