@@ -380,7 +380,7 @@ display: inline !important;
                           <w:anchorlock/>
                           <center>
                         <![endif]-->
-                            <a href="{$site_url}user/membership.php" style="border-radius: 4px; color: #ffffff; display: inline-block; font-family: sans-serif; font-size: 30px; font-weight: bold; line-height: 21px; text-align: center; text-decoration: none; width: 260px; margin-bottom: 20px; -webkit-text-size-adjust: none; background: #24B98F; border: 1px solid #219775;">&nbsp;<br><span style="line-height: 30px;">Join ThinkUp</span><br><span style="font-size: 15px; line-height: 20px; color: #A9DDC9;">Just $5/month!</span><br>&nbsp;</a>
+                            <a href="{$site_url}user/membership.php" style="border-radius: 4px; color: #ffffff; display: inline-block; font-family: sans-serif; font-size: 30px; font-weight: bold; line-height: 21px; text-align: center; text-decoration: none; width: 260px; margin-bottom: 20px; -webkit-text-size-adjust: none; background: #24B98F; border: 1px solid #219775;">&nbsp;<br><span style="line-height: 30px;">Join ThinkUp</span><br><span style="font-size: 15px; line-height: 20px; color: #A9DDC9;">Just ${if $membership_level eq 'Member'}5{else}10{/if}/month!</span><br>&nbsp;</a>
                         <!--[if mso]>
                           </center>
                         </v:roundrect>
