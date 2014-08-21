@@ -17,7 +17,7 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $this->assertIsA($controller, 'RemindTrialersAboutPaymentController');
     }
 
-    public function testFirstReminder() {
+    public function testFirstReminderMonthlyMember() {
         $builders = array();
         //Free Trial, 0 reminders sent, signed up 3 days ago
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani+1@example.com',
@@ -32,10 +32,11 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $this->debug($sent_email);
         $this->assertPattern('/Join ThinkUp and get your FREE gift!/', $sent_email);
         $this->assertPattern('/Check out your ThinkUp insights at/', $sent_email);
-        $this->assertNoPattern('/-pro\.png/', $sent_email);
+        $this->assertNoPattern('/monthly-pro\.png/', $sent_email);
+        $this->assertPattern('/monthly-member\.png/', $sent_email);
     }
 
-    public function testSecondReminder() {
+    public function testSecondReminderMonthlyMember() {
         $builders = array();
         //Free Trial, 1 reminder sent, signed up 7 days ago, last sent 60 hours ago
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'email'=>'ginatrapani+4@example.com',
@@ -52,9 +53,10 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $this->assertPattern('/Enjoying ThinkUp\? Join and get even more.../', $sent_email);
         $this->assertPattern('/seen that no other service gives you these/', $sent_email);
         $this->assertPattern('/\$5/', $sent_email);
+        $this->assertNoPattern('/\$10/', $sent_email);
     }
 
-    public function testThirdReminder() {
+    public function testThirdReminderMonthlyMember() {
         $builders = array();
         //Free Trial, 2 reminders sent, signed up 7 days ago, last sent 60 hours ago
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'email'=>'ginatrapani+4@example.com',
@@ -71,9 +73,10 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $this->assertPattern('/One day left: Ready to join ThinkUp\?/', $sent_email);
         $this->assertPattern('/Over the past two weeks/', $sent_email);
         $this->assertPattern('/\$5/', $sent_email);
+        $this->assertNoPattern('/\$10/', $sent_email);
     }
 
-    public function testFourthReminder() {
+    public function testFourthReminderMonthlyMember() {
         $builders = array();
         //Free Trial, 3 reminders sent, signed up 7 days ago, last sent 40 hours ago
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'email'=>'ginatrapani+4@example.com',
@@ -89,10 +92,11 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $this->debug($sent_email);
         $this->assertPattern('/Your ThinkUp free trial ends TODAY. Join now!/', $sent_email);
         $this->assertPattern('/lose your personal insights at/', $sent_email);
-        $this->assertNoPattern('/-pro\.png/', $sent_email);
+        $this->assertNoPattern('/monthly-pro\.png/', $sent_email);
+        $this->assertPattern('/monthly-member\.png/', $sent_email);
     }
 
-    public function testFirstReminderPro() {
+    public function testFirstReminderMonthlyPro() {
         $builders = array();
         //Free Trial, 0 reminders sent, signed up 3 days ago
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani+1@example.com',
@@ -108,7 +112,7 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $this->assertPattern('/-pro\.png/', $sent_email);
     }
 
-    public function testSecondReminderPro() {
+    public function testSecondReminderMonthlyPro() {
         $builders = array();
         //Free Trial, 1 reminder sent, signed up 7 days ago, last sent 60 hours ago
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'email'=>'ginatrapani+4@example.com',
@@ -125,7 +129,7 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $this->assertPattern('/\$10/', $sent_email);
     }
 
-    public function testThirdReminderPro() {
+    public function testThirdReminderMonthlyPro() {
         $builders = array();
         //Free Trial, 2 reminders sent, signed up 7 days ago, last sent 60 hours ago
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'email'=>'ginatrapani+4@example.com',
@@ -142,7 +146,7 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $this->assertPattern('/\$10/', $sent_email);
     }
 
-    public function testFourthReminderPro() {
+    public function testFourthReminderMonthlyPro() {
         $builders = array();
         //Free Trial, 3 reminders sent, signed up 7 days ago, last sent 40 hours ago
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'email'=>'ginatrapani+4@example.com',

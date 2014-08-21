@@ -38,7 +38,7 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
         $this->debug($message);
     }
 
-    private function createSystemMessageHTMLPaymentReminderFreeTrial1Through4($membership_level = 'Members') {
+    private function createSystemMessageHTMLPaymentReminderFreeTrial1Through4($membership_level = 'Member') {
         $cfg = Config::getInstance();
         $headline = "Join ThinkUp and get your FREE gift!";
         $email_view_mgr = new ViewManager();

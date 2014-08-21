@@ -47,7 +47,7 @@
                 <table class="twelve columns">
                   <tr>
                     <td>
-                      <a href="{$site_url}user/membership.php"><img width="580" height="360" src="https://thinkup.com/join/assets/img/email/reminder-4-promo-{if $membership_level eq 'Member'}v2{else}pro{/if}.png"
+                      <a href="{$site_url}user/membership.php"><img width="580" height="360" src="https://thinkup.com/join/assets/img/email/reminder-4-promo-monthly-{if $membership_level eq 'Member'}member{else}pro{/if}.png"
                       alt="Don't miss out! Your ThinkUp trial is ending. Join now! Just ${if $membership_level eq 'Member'}5{else}10{/if}/month"></a>
                     </td>
                     <td class="expander"></td>
