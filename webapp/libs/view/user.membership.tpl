@@ -68,7 +68,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
     {if !$subscriber->is_account_closed}
     <button class="btn btn-sm btn-close-account" data-toggle="modal" data-target=".modal-close-account">Close your account</button>
 
-    <div class="modal fade modal-close-account" tabindex="-1" role="dialog" aria-labelledby="closeAccount" aria-hidden="true">
+    <div class="modal fade modal-close-account" id="modal-close-account" tabindex="-1" role="dialog" aria-labelledby="closeAccount" aria-hidden="true">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <header class="container-header">

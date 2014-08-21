@@ -105,3 +105,12 @@ $ ->
     body = $form.find("#control-body").val()
 
     window.location.href = "mailto:help@thinkup.com?subject=#{encodeURI subject}&body=#{encodeURI body}"
+
+  $("#modal-close-account").on "shown.bs.modal", ->
+    $backdrop = $(".modal-backdrop").clone()
+    if $(".jPanelMenu-panel").length
+      $("body > .modal-backdrop").remove()
+      $(".jPanelMenu-panel").append $backdrop
+
+  $("#modal-close-account").on "hidden.bs.modal", ->
+    $(".modal-backdrop").remove()
