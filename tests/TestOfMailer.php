@@ -38,7 +38,7 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
         $this->debug($message);
     }
 
-    public function testGetSystemMessageHTMLPaymentReminderFreeTrial1Through4() {
+    private function createSystemMessageHTMLPaymentReminderFreeTrial1Through4($membership_level = 'Members') {
         $cfg = Config::getInstance();
         $headline = "Join ThinkUp and get your FREE gift!";
         $email_view_mgr = new ViewManager();
@@ -47,6 +47,7 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
         $user_installation_url = str_replace('{user}', $thinkup_username,
             $cfg->getValue('user_installation_url'));
         $email_view_mgr->assign('thinkup_url', $user_installation_url );
+        $email_view_mgr->assign('membership_level', $membership_level);
         $message = $email_view_mgr->fetch('_email.payment-reminder-trial-1.tpl');
         $this->debug($message);
 
@@ -57,6 +58,7 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
         $user_installation_url = str_replace('{user}', $thinkup_username,
             $cfg->getValue('user_installation_url'));
         $email_view_mgr->assign('thinkup_url', $user_installation_url );
+        $email_view_mgr->assign('membership_level', $membership_level);
         $message = $email_view_mgr->fetch('_email.payment-reminder-trial-2.tpl');
         $this->debug($message);
 
@@ -67,6 +69,7 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
         $user_installation_url = str_replace('{user}', $thinkup_username,
             $cfg->getValue('user_installation_url'));
         $email_view_mgr->assign('thinkup_url', $user_installation_url );
+        $email_view_mgr->assign('membership_level', $membership_level);
         $message = $email_view_mgr->fetch('_email.payment-reminder-trial-3.tpl');
         $this->debug($message);
 
@@ -77,8 +80,17 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
         $user_installation_url = str_replace('{user}', $thinkup_username,
             $cfg->getValue('user_installation_url'));
         $email_view_mgr->assign('thinkup_url', $user_installation_url );
+        $email_view_mgr->assign('membership_level', $membership_level);
         $message = $email_view_mgr->fetch('_email.payment-reminder-trial-4.tpl');
         $this->debug($message);
+    }
+
+    public function testGetSystemMessageHTMLPaymentReminderFreeTrial1Through4Member() {
+        $this->createSystemMessageHTMLPaymentReminderFreeTrial1Through4($membership_level = 'Member');
+    }
+
+    public function testGetSystemMessageHTMLPaymentReminderFreeTrial1Through4Pro() {
+        $this->createSystemMessageHTMLPaymentReminderFreeTrial1Through4($membership_level = 'Pro');
     }
 
     public function testGetSystemMessageHTMLPaymentChargeSuccessfulMember() {
