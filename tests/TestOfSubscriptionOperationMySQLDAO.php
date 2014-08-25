@@ -75,4 +75,53 @@ class TestOfSubscriptionOperationMySQLDAO extends UpstartUnitTestCase {
         $this->debug($refund);
         $this->assertTrue(($refund > 4.50));
     }
+
+    public function testGetDailyRevenue() {
+        $builders = array();
+
+        $today = date('Y-m-d');
+        $yesterday = date('Y-m-d', strtotime("-1 days"));
+        $day_before = date('Y-m-d', strtotime("-2 days"));
+
+        $dao = new SubscriptionOperationMySQLDAO();
+
+        //No payments or refunds in last 3 days
+        $result = $dao->getDailyRevenue();
+        $this->debug(Utils::varDumpToString($result));
+        $this->assertEqual($result[$today]['revenue'], 0);
+        $this->assertEqual($result[$today]['successful_payments'], 0);
+
+        //Successful payment yesterday only
+        $builders[] = FixtureBuilder::build('subscription_operations', array('operation'=>'pay',
+            'timestamp'=>'-23h', 'transaction_amount'=>'USD 5'));
+
+        $result = $dao->getDailyRevenue();
+        $this->debug(Utils::varDumpToString($result));
+        $this->assertEqual($result[$today]['revenue'], 0);
+        $this->assertEqual($result[$today]['successful_payments'], 0);
+
+        $this->assertEqual($result[$yesterday]['revenue'], 5);
+        $this->assertEqual($result[$yesterday]['successful_payments'], 1);
+
+        //Another successful payment yesterday and one day before yesterday
+        $builders[] = FixtureBuilder::build('subscription_operations', array('operation'=>'pay',
+            'timestamp'=>'-23h', 'transaction_amount'=>'USD 5'));
+        $builders[] = FixtureBuilder::build('subscription_operations', array('operation'=>'pay',
+            'timestamp'=>'-46h', 'transaction_amount'=>'USD 5'));
+        //Refund yesterday
+        $builders[] = FixtureBuilder::build('subscription_operations', array('operation'=>'refund',
+            'timestamp'=>'-46h', 'transaction_amount'=>'USD 5'));
+
+        $result = $dao->getDailyRevenue();
+        $this->debug(Utils::varDumpToString($result));
+        $this->assertEqual($result[$today]['revenue'], 0);
+        $this->assertEqual($result[$today]['successful_payments'], 0);
+
+        $this->assertEqual($result[$yesterday]['revenue'], 10);
+        $this->assertEqual($result[$yesterday]['successful_payments'], 2);
+
+        $this->assertEqual($result[$day_before]['revenue'], 5);
+        $this->assertEqual($result[$day_before]['successful_payments'], 1);
+        $this->assertEqual($result[$day_before]['refunds'], 1);
+    }
 }

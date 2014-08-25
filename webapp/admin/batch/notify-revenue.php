@@ -68,8 +68,8 @@ $subject = null;
 
 
 // Revenue
-$payment_dao = new PaymentMySQLDAO();
-$daily_revenue = $payment_dao->getDailyRevenue();
+$subscription_operation_dao = new SubscriptionOperationMySQLDAO();
+$daily_revenue = $subscription_operation_dao->getDailyRevenue();
 $message .= "";
 if ($daily_revenue[$today]['revenue'] > $daily_revenue[$yesterday]['revenue']) {
     $message .= "Up from";

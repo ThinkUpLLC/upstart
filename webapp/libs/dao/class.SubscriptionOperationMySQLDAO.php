@@ -112,4 +112,58 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
                 $last_operation->operation ." recurring frequency: ".$last_operation->recurring_frequency);
         }
     }
+
+    /**
+     * Get last three days worth of successful payments and refunds - total, sum, and date.
+     * @return array
+     */
+    public function getDailyRevenue() {
+        $today = date('Y-m-d');
+        $yesterday = date('Y-m-d', strtotime("-1 days"));
+        $day_before = date('Y-m-d', strtotime("-2 days"));
+        $results = array(
+            $today => array('successful_payments'=>0, 'revenue'=>0, 'refunds'=>0),
+            $yesterday => array('successful_payments'=>0, 'revenue'=>0, 'refunds'=>0),
+            $day_before =>  array('successful_payments'=>0, 'revenue'=>0, 'refunds'=>0),
+        );
+
+        $q = "SELECT operation, transaction_amount, DATE(timestamp) AS date, reference_id ";
+        $q .= "FROM subscription_operations so WHERE ";
+        $q .= "( date(timestamp) = '".$today."' ";
+        $q .= "OR date(timestamp) = '".$yesterday."' ";
+        $q .= "OR date(timestamp) = '".$day_before."') ";
+        $q .= "ORDER BY timestamp DESC;";
+
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+        $revenue_results = $this->getDataRowsAsArrays($ps);
+        foreach ($revenue_results as $rev) {
+            if ($rev['date'] == $today) {
+                if ($rev['operation'] == 'pay') {
+                    $results[$today]['successful_payments'] = $results[$today]['successful_payments'] + 1;
+                    $results[$today]['revenue'] =
+                        $results[$today]['revenue'] + intval(str_replace('USD ', '', $rev['transaction_amount']));
+                } elseif ($rev['operation'] == 'refund') {
+                    $results[$today]['refunds'] = $results[$today]['refunds'] + 1;
+                }
+            } elseif ($rev['date'] == $yesterday) {
+                if ($rev['operation'] == 'pay') {
+                    $results[$yesterday]['successful_payments'] = $results[$yesterday]['successful_payments'] + 1;
+                    $results[$yesterday]['revenue'] =
+                        $results[$yesterday]['revenue'] + intval(str_replace('USD ', '', $rev['transaction_amount']));
+                } elseif ($rev['operation'] == 'refund') {
+                    $results[$yesterday]['refunds'] = $results[$yesterday]['refunds'] + 1;
+                }
+            } elseif ($rev['date'] == $day_before) {
+                if ($rev['operation'] == 'pay') {
+                    $results[$day_before]['successful_payments'] = $results[$day_before]['successful_payments'] + 1;
+                    $results[$day_before]['revenue'] =
+                        $results[$day_before]['revenue'] + intval(str_replace('USD ', '', $rev['transaction_amount']));
+                } elseif ($rev['operation'] == 'refund') {
+                    $results[$day_before]['refunds'] = $results[$day_before]['refunds'] + 1;
+                }
+            }
+        }
+        return $results;
+    }
 }
