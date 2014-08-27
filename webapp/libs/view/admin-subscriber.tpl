@@ -76,7 +76,7 @@
 {if $subscription_operations}
 <div class="panel panel-success">
   <div class="panel-heading">
-    <h4>Subscription ID {$subscription_operations[0]->amazon_subscription_id}</h4>
+    <h4>Subscription ID: {$subscription_operations[0]->amazon_subscription_id}<br><br>Amazon email: {$subscription_operations[0]->buyer_email}</h4>
   </div>
   <table class="table table-hover">
     <tr>
