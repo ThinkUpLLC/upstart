@@ -170,4 +170,40 @@ class UpstartHelper {
         }
         return true;
     }
+
+    /**
+     * Post a message to a ThinkUp Slack channel.
+     * @param str $channel like #signups
+     * @param str $text
+     * @return str contents
+     */
+    public static function postToSlack($channel, $text) {
+        $url = 'https://thinkup.slack.com/services/hooks/incoming-webhook?token=mPEOeIpng7h2EIskwtNd9hNF';
+
+        $payload = '{"channel": "'.$channel.'", "username": "upstartbot", "text": "'. $text.
+            '", "icon_emoji": ":cubimal_chick:"}';
+        //debug
+        //echo $payload;
+        $fields = array('payload'=>$payload);
+
+        //open connection
+        $ch = curl_init();
+
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        //execute post
+        $contents = curl_exec($ch);
+
+        //close connection
+        curl_close($ch);
+        if (isset($contents)) {
+            return $contents;
+        } else {
+            return null;
+        }
+    }
 }

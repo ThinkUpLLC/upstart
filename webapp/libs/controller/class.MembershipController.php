@@ -55,6 +55,11 @@ class MembershipController extends AuthController {
 
                         if ($op->status_code !== 'SF') {
                             $this->addSuccessMessage("Success! Thanks for being a ThinkUp member.");
+                            UpstartHelper::postToSlack('#signups',
+                                'Hooray! Someone just subscribed from their membership page.\nhttps://'.
+                                $subscriber->thinkup_username.
+                                '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
+                                $subscriber->id);
                         } else {
                             $this->addErrorMessage($this->generic_error_msg);
                             $this->logError('Subscription status code is not SF. '. Utils::varDumpToString($op),

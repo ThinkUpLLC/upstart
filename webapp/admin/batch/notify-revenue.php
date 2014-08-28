@@ -6,8 +6,6 @@ require_once 'init.php';
 /**
  * Post signups and revenue numbers to ThinkUp's Slack #signups room.
  */
-
-$url = 'https://thinkup.slack.com/services/hooks/incoming-webhook?token=mPEOeIpng7h2EIskwtNd9hNF';
 $channel = "#signups";
 //debug
 //$channel = "#testbot";
@@ -54,15 +52,9 @@ while ($i < $y_axis_max ) {
 }
 
 $chart_url .= '&chds=0,'.$y_axis_max;
+$text = $subject.'\n'. $message. '\n'.$chart_url;
 
-$payload = '{"channel": "'.$channel.'", "username": "upstartbot", "text": "'. $subject.'\n'.
-	$message. '\n'.$chart_url.'", "icon_emoji": ":cubimal_chick:"}';
-//debug
-//echo $payload;
-
-$fields = array('payload'=>$payload);
-
-$result = postToURL($url, $fields);
+$result = UpstartHelper::postToSlack($channel, $text);
 $message = null;
 $subject = null;
 
@@ -82,40 +74,6 @@ $message .= " $". number_format($daily_revenue[$yesterday]['revenue']). " yester
     number_format($daily_revenue[$day_before]['revenue']) . ".";
 $subject = "$" . number_format($daily_revenue[$today]['revenue']) . " in revenue today";
 
+$text = $subject.'\n'. $message;
 
-$payload = '{"channel": "'.$channel.'", "username": "upstartbot", "text": "'. $subject.'\n'.
-	$message. '", "icon_emoji": ":cubimal_chick:"}';
-//debug
-//echo $payload;
-
-$fields = array('payload'=>$payload);
-
-$result = postToURL($url, $fields);
-
-/**
- * Post fields to a URL.
- * @param str $URL
- * @param array $fields
- * @return str contents
- */
-function postToURL($URL, array $fields) {
-    //open connection
-    $ch = curl_init();
-
-    //set the url, number of POST vars, POST data
-    curl_setopt($ch, CURLOPT_URL, $URL);
-    curl_setopt($ch, CURLOPT_POST, count($fields));
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    //execute post
-    $contents = curl_exec($ch);
-
-    //close connection
-    curl_close($ch);
-    if (isset($contents)) {
-        return $contents;
-    } else {
-        return null;
-    }
-}
+$result = UpstartHelper::postToSlack($channel, $text);

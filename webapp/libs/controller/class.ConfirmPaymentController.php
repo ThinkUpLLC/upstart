@@ -53,6 +53,11 @@ class ConfirmPaymentController extends SignUpHelperController {
                         $subscriber->subscription_status = $subscription_status;
                         //Update subscription_status in the data store
                         $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
+                        UpstartHelper::postToSlack('#signups',
+                            'Ding-ding! A member just subscribed during signup.\nhttps://'.
+                            $subscriber->thinkup_username.
+                            '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
+                            $subscriber->id);
                     } catch (DuplicateSubscriptionOperationException $e) {
                         $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
                             "subscription. Maybe you refreshed the page in your browser?");
