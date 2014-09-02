@@ -390,6 +390,8 @@ class AppInstaller {
         $dao = new ThinkUpTablesMySQLDAO($thinkup_username);
         $query_file = $this->master_app_source_path . '/install/sql/build-db_mysql.sql';
         $q = file_get_contents($query_file);
+        //InnoDB is better performance in thinkup.com's production environment so let's switch to that
+        $q = str_replace( "ENGINE=MyISAM", "ENGINE=InnoDB", $q);
         ThinkUpPDODAO::$PDO->exec($q);
 
         self::logToUserMessage("Created new database ".$prefix.$thinkup_username);

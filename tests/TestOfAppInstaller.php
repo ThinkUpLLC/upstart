@@ -361,6 +361,16 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertEqual($instance_network_user_id, 'abcdefg101');
         $this->assertEqual($instance_network_viewer_id, 'abcdefg101');
 
+        //All the tables except tu_completed_migrations should be InnoDB
+        //tu_completed migratios is created by ThinkUp itself, and it's rarely accessed, so it's okay to keep MyISAM
+        $stmt = PDODAO::$PDO->query('SHOW TABLE STATUS FROM '. $this->user_database);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($rows as $row) {
+            if ($row['Name'] !== 'tu_completed_migrations') {
+                $this->assertEqual($row['Engine'], 'InnoDB');
+            }
+        }
+
         //Try installing again
         try {
             $install_results = $app_installer->install(6);
