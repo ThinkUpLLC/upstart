@@ -12,3 +12,9 @@ LIMIT 0, 3;
 --
 SELECT count(id) as successful_payments, CONCAT('$', FORMAT(SUM(amount), 0)) as revenue, DATE(timestamp) AS date
 FROM payments WHERE transaction_status = "Success" GROUP BY DATE(timestamp) ORDER BY timestamp DESC LIMIT 4;
+
+--
+-- New monthly subs by day.
+--
+SELECT count(id) as successful_payments, DATE(timestamp) AS date
+FROM subscription_operations WHERE operation = "pay" GROUP BY DATE(timestamp) ORDER BY timestamp DESC LIMIT 30;
