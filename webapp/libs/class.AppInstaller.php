@@ -479,12 +479,12 @@ class AppInstaller {
         $cfg = Config::getInstance();
         $admin_session_api_key = $cfg->getValue('admin_session_api_key');
         list($admin_id, $admin_api_key) = $tu_tables_dao->createOwner($this->admin_email, $admin_hashed_pwd,
-            $admin_pwd_salt, null, 'America/New_York', true, $admin_session_api_key);
+            $admin_pwd_salt, null, 'America/New_York', true, $admin_session_api_key, $is_free_trial=false);
 
         //insert user into owners
         list($user_id, $user_api_key) = $tu_tables_dao->createOwner($subscriber->email, $subscriber->pwd,
             $subscriber->pwd_salt, $subscriber->membership_level, $subscriber->timezone, false,
-            $subscriber->api_key_private);
+            $subscriber->api_key_private, $is_free_trial=true);
 
         self::logToUserMessage("Inserted $this->admin_email and user ".$subscriber->email);
         return array($admin_id, $admin_api_key, $user_id, $user_api_key);

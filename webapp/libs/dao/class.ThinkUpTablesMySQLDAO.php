@@ -55,14 +55,14 @@ class ThinkUpTablesMySQLDAO extends ThinkUpPDODAO {
     }
 
     public function createOwner($email, $hashed_pwd, $pwd_salt, $membership_level, $timezone='UTC',
-        $is_admin=false, $api_key_private = null ) {
+        $is_admin=false, $api_key_private = null, $is_free_trial = true ) {
         $activation_code = rand(1000, 9999);
         $api_key = $this->generateAPIKey();
 
         $q = "INSERT INTO tu_owners SET email=:email, pwd=:hashed_pwd, pwd_salt=:pwd_salt, joined=NOW(), ";
         $q .= "activation_code=:activation_code, full_name=:full_name, api_key=:api_key, ";
         $q .= "membership_level=:membership_level, timezone=:timezone, ";
-        $q .= "api_key_private=:api_key_private, is_activated=1 ";
+        $q .= "api_key_private=:api_key_private, is_activated=1, is_free_trial=:is_free_trial ";
 
         if ($is_admin) {
             $q .= ", is_admin=1";
@@ -76,11 +76,20 @@ class ThinkUpTablesMySQLDAO extends ThinkUpPDODAO {
                 ':api_key'=>$api_key,
                 ':api_key_private'=>$api_key_private,
                 ':membership_level'=>$membership_level,
-                ':timezone'=>$timezone
+                ':timezone'=>$timezone,
+                ':is_free_trial'=>self::convertBoolToDB($is_free_trial)
         );
         if ($this->profiler_enabled) Profiler::setDAOMethod(__METHOD__);
         $ps = $this->execute($q, $vars);
         return array($this->getInsertId($ps), $api_key);
+    }
+
+    public function endFreeTrial($email) {
+        $q = "UPDATE tu_owners SET is_free_trial = 0 WHERE email=:email ";
+        $vars = array( ':email'=>$email );
+        if ($this->profiler_enabled) Profiler::setDAOMethod(__METHOD__);
+        $ps = $this->execute($q, $vars);
+        return ($this->getUpdateCount($ps) > 0);
     }
 
     public function updateOwnerEmail($current_email, $new_email) {

@@ -44,7 +44,7 @@ class TestOfThinkUpTablesMySQLDAO extends UpstartUnitTestCase {
 
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'me@example.com', 'pwd'=>$password,
         'pwd_salt'=>$test_salt, 'is_activated'=>1, 'is_admin'=>1, 'thinkup_username'=>$this->thinkup_username,
-        'is_installation_active'=>0));
+        'is_installation_active'=>0, 'is_free_trial'=>1));
 
         $config = Config::getInstance();
         $config->setValue('user_installation_url', 'http://www.example.com/thinkup/{user}/');
@@ -95,5 +95,39 @@ class TestOfThinkUpTablesMySQLDAO extends UpstartUnitTestCase {
         $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database .'.tu_owners o WHERE o.id = 2');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['email'], 'me@example.com');
+    }
+
+    public function testOfEndFreeTrial() {
+        $this->debug(Utils::varDumpToString(ThinkUpPDODAO::$PDO));
+        // Assert that free trial is on
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database. '.tu_owners o WHERE o.id = 2');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual($row['is_free_trial'], 1);
+
+        $this->debug('About to end free trial');
+        $dao = new ThinkUpTablesMySQLDAO($this->thinkup_username);
+        $result = $dao->endFreeTrial('me@example.com');
+        $this->assertTrue($result);
+
+        // Assert that free trial is off
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database. '.tu_owners o WHERE o.id = 2');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual($row['is_free_trial'], 0);
+
+        //Test failure to update because the free trial has already ended
+        $result = $dao->endFreeTrial('me@example.com');
+        $this->assertFalse($result);
+    }
+
+    public function testCreateOwner() {
+        $dao = new ThinkUpTablesMySQLDAO($this->thinkup_username);
+        $result = $dao->createOwner('newowner@example.com', 'hash', 'salt', 'Member', 'UTC', false, null, true);
+        $this->assertEqual($result[0], 3); // new insert ID
+        $this->assertNotNull($result[1]); // API key
+
+        // Assert that email is me@example.com
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database. '.tu_owners o WHERE o.id = 3');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual($row['is_free_trial'], 1);
     }
 }

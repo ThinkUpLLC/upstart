@@ -53,6 +53,13 @@ class ConfirmPaymentController extends SignUpHelperController {
                         $subscriber->subscription_status = $subscription_status;
                         //Update subscription_status in the data store
                         $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
+                        //Update is_free_trial field in ThinkUp installation
+                        $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
+                        $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
+                        if (!$trial_ended) {
+                            $this->logError('Unable to end trial in ThinkUp installation',
+                                __FILE__,__LINE__, __METHOD__);
+                        }
                         UpstartHelper::postToSlack('#signups',
                             'Ding-ding! A member just subscribed during signup.\nhttps://'.
                             $subscriber->thinkup_username.

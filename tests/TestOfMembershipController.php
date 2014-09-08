@@ -329,6 +329,12 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/easy to fix/', $results);
         $this->assertPattern('/Success! Thanks for being a ThinkUp member./', $results);
         $this->assertNoPattern('/Oops! Something went wrong and our team is looking into it./', $results);
+
+        $dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $subscriber->thinkup_username
+            . '.tu_owners o WHERE o.email = "paid@example.com"');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual($row['is_free_trial'], 0);
     }
 
     public function testCloseAccountValidCSRFNoSubscriptionOperation() {

@@ -277,6 +277,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertEqual($rows[0]['email'],'admin@thinkup.com');
         $this->assertEqual($rows[0]['is_admin'], 1);
         $this->assertEqual($rows[0]['api_key_private'], $config->getValue('admin_session_api_key'));
+        $this->assertEqual($rows[0]['is_free_trial'], 0); //Admin is not on free trial
 
         // Assert user owner details are set
         $thinkup_owner_pass = $rows[1]['pwd'];
@@ -294,6 +295,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertNotNull($subscriber->date_installed);
         $this->assertEqual($subscriber->timezone, $thinkup_owner_timezone);
         $this->assertEqual($subscriber->membership_level, $thinkup_owner_membership_level);
+        $this->assertEqual($rows[1]['is_free_trial'], 1); //user is on free trial
 
         // Assert Upstart api_key_private = ThinkUp's owner api_key_private
         $thinkup_owner_api_key_private = $rows[1]['api_key_private'];
@@ -399,6 +401,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertEqual($rows[0]['email'],'admin@thinkup.com');
         $this->assertEqual($rows[0]['is_admin'], 1);
         $this->assertEqual($rows[0]['api_key_private'], $config->getValue('admin_session_api_key'));
+        $this->assertEqual($rows[0]['is_free_trial'], 0); //Admin is not on free trial
 
         // Assert user owner details are set
         $thinkup_owner_pass = $rows[1]['pwd'];
@@ -416,6 +419,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertNotNull($subscriber->date_installed);
         $this->assertEqual($subscriber->timezone, $thinkup_owner_timezone);
         $this->assertEqual($subscriber->membership_level, $thinkup_owner_membership_level);
+        $this->assertEqual($rows[1]['is_free_trial'], 1); //user is on free trial
 
         // Assert Upstart api_key_private = ThinkUp's owner api_key_private
         $thinkup_owner_api_key_private = $rows[1]['api_key_private'];

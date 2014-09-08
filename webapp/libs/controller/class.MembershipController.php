@@ -74,6 +74,13 @@ class MembershipController extends AuthController {
                         $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
                         //Update recurrence_frequency in the data store
                         $subscriber_dao->updateSubscriptionRecurrence($subscriber->id, $op->recurring_frequency);
+                        //Update is_free_trial field in ThinkUp installation
+                        $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
+                        $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
+                        if (!$trial_ended) {
+                            $this->logError('Unable to end trial in ThinkUp installation',
+                                __FILE__,__LINE__, __METHOD__);
+                        }
                     } catch (DuplicateSubscriptionOperationException $e) {
                         $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
                             "subscription. Maybe you refreshed the page in your browser?");

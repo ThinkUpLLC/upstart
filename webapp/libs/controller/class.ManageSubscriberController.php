@@ -96,6 +96,13 @@ class ManageSubscriberController extends Controller {
                     } elseif ($_GET['action'] == 'comp') {
                         $comped = $subscriber_dao->compSubscription($subscriber_id, $username);
                         if ( $comped > 0 ) {
+                            //Update is_free_trial field in ThinkUp installation
+                            $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
+                            $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
+                            if (!$trial_ended) {
+                                $this->logError('Unable to end trial in ThinkUp installation',
+                                    __FILE__,__LINE__, __METHOD__);
+                            }
                             $subscriber_dao->updateSubscriptionStatus($subscriber_id);
                             $this->addSuccessMessage("Comped membership for ".$subscriber->email);
                             $subscriber->is_membership_complimentary = true;
