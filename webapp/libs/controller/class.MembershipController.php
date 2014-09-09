@@ -206,7 +206,7 @@ class MembershipController extends AuthController {
         if ($membership_status == 'Free trial') {
             $creation_date = new DateTime($subscriber->creation_time);
             $now = new DateTime();
-            $end_of_trial = $creation_date->add(new DateInterval('P14D'));
+            $end_of_trial = $creation_date->add(new DateInterval('P15D'));
             if ($end_of_trial < $now) {
                 $this->addToView('trial_status', 'Expired!');
             } else {

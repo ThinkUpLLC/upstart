@@ -192,7 +192,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
         $this->assertPattern('/Pay now/', $results);
-        $this->assertPattern('/expires in <strong>3 days/', $results);
+        $this->assertPattern('/expires in <strong>4 days/', $results);
         $this->assertNoPattern('/Payment pending/', $results);
         $this->assertNoPattern('/Paid through/', $results);
         $this->assertNoPattern('/You will receive a refund/', $results);
