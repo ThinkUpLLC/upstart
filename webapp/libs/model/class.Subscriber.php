@@ -262,4 +262,20 @@ class Subscriber {
         }
         return $subscription_status;
     }
+
+   /**
+    * Calculate how many days are left in a 14-day trial.
+    * @return int
+    */
+    public function getDaysLeftInFreeTrial() {
+        $creation_date = new DateTime($this->creation_time);
+        $now = new DateTime();
+        $end_of_trial = $creation_date->add(new DateInterval('P15D'));
+        $days_left = 0;
+        if ($end_of_trial >= $now) {
+            $interval = $now->diff($end_of_trial);
+            $days_left = $interval->format('%a');
+        }
+        return intval($days_left);
+    }
 }

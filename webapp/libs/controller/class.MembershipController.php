@@ -55,9 +55,13 @@ class MembershipController extends AuthController {
 
                         if ($op->status_code !== 'SF') {
                             $this->addSuccessMessage("Success! Thanks for being a ThinkUp member.");
+
+                            //Figure out how many days left in the trial
+                            $days_left = $subscriber->getDaysLeftInFreeTrial();
                             UpstartHelper::postToSlack('#signups',
-                                'Hooray! Someone just subscribed from their membership page.\nhttps://'.
-                                $subscriber->thinkup_username.
+                                'Hooray! Someone just subscribed from their membership page with '
+                                .$days_left." days left in their trial."
+                                .'.\nhttps://'. $subscriber->thinkup_username.
                                 '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
                                 $subscriber->id);
                         } else {
@@ -211,14 +215,12 @@ class MembershipController extends AuthController {
 
         //Add Free trial status (including if expired, and how many days left)
         if ($membership_status == 'Free trial') {
-            $creation_date = new DateTime($subscriber->creation_time);
-            $now = new DateTime();
-            $end_of_trial = $creation_date->add(new DateInterval('P15D'));
-            if ($end_of_trial < $now) {
+            $days_left_in_trial = $subscriber->getDaysLeftInFreeTrial();
+            if ($days_left_in_trial < 1) {
                 $this->addToView('trial_status', 'Expired!');
             } else {
-                $interval = $now->diff($end_of_trial);
-                $this->addToView('trial_status', 'expires in <strong>'.$interval->format('%a days').'</strong>');
+                $this->addToView('trial_status', 'expires in <strong>'.$days_left_in_trial.' day'
+                    .(($days_left_in_trial > 1)?'s':'').'</strong>');
             }
         }
 
