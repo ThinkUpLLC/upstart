@@ -520,7 +520,7 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     public function getPaidStalestInstallLastDispatchTime() {
-        $q  = "SELECT last_dispatched FROM subscribers WHERE is_installation_active=1 ";
+        $q  = "SELECT last_dispatched FROM subscribers WHERE is_installation_active=1 AND is_account_closed != 1 ";
         $q .= "AND subscription_status LIKE 'Paid through%' ";
         $q .= "ORDER BY last_dispatched ASC LIMIT 1";
         //echo self::mergeSQLVars($q, $vars);
