@@ -186,24 +186,29 @@ class UpstartHelper {
         //echo $payload;
         $fields = array('payload'=>$payload);
 
-        //open connection
-        $ch = curl_init();
+        if (!self::isTest()) {
+            //open connection
+            $ch = curl_init();
 
-        //set the url, number of POST vars, POST data
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            //set the url, number of POST vars, POST data
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, count($fields));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        //execute post
-        $contents = curl_exec($ch);
+            //execute post
+            $contents = curl_exec($ch);
 
-        //close connection
-        curl_close($ch);
-        if (isset($contents)) {
-            return $contents;
+            //close connection
+            curl_close($ch);
+
+            if (isset($contents)) {
+                return $contents;
+            } else {
+                return null;
+            }
         } else {
-            return null;
+            return $payload;
         }
     }
 }
