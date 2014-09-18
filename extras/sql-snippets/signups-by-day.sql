@@ -18,3 +18,18 @@ FROM payments WHERE transaction_status = "Success" GROUP BY DATE(timestamp) ORDE
 --
 SELECT count(id) as successful_payments, DATE(timestamp) AS date
 FROM subscription_operations WHERE operation = "pay" GROUP BY DATE(timestamp) ORDER BY timestamp DESC LIMIT 30;
+
+--
+-- Average subs per day grouped by month
+--
+SELECT year, month, ROUND(total_subs / days_in_month, 1) AS subs_per_day FROM
+(
+SELECT timestamp, YEAR(timestamp) AS year, MONTH(timestamp) AS month, count(*) AS total_subs,
+IF( (MONTH(timestamp)= 8 AND YEAR(timestamp)=2014), 7,
+    IF ((MONTH(NOW())=MONTH(timestamp) AND YEAR(NOW())=YEAR(timestamp)), DAY(NOW()),
+    DAY(LAST_DAY(timestamp)))
+    ) AS days_in_month
+
+FROM subscription_operations where operation='pay'
+GROUP BY YEAR(timestamp), MONTH(timestamp) ORDER BY year, month DESC
+) AS subscriptions
