@@ -22,7 +22,6 @@ body_classes="settings menu-open" body_id="settings-subscription"}
 
   * "Free trial" - User is in free trial (either expired or not)
   * "Paid throuh Mon dd, YYYY" - Successful charge
-  * "Payment pending" - Authorized and not charged yet, charged and no success returned yet
   * "Payment failed" - Charge failed
   * "Complimentary membership" - Comped
 *}
@@ -65,7 +64,8 @@ body_classes="settings menu-open" body_id="settings-subscription"}
       <p class="form-note">Need help? <a href="mailto:help@thinkup.com" class="show-section"
       data-section-selector="#form-membership-contact">Contact us</a></p>
 
-    {if !$subscriber->is_account_closed}
+    {* Don't let annual members close their account; refunds don't work for them *}
+    {if !$subscriber->is_account_closed && $subscriber->subscription_recurrence neq '12 months'}
     <button class="btn btn-sm btn-close-account" data-toggle="modal" data-target=".modal-close-account">Close your account</button>
 
     <div class="modal fade modal-close-account" id="modal-close-account" tabindex="-1" role="dialog" aria-labelledby="closeAccount" aria-hidden="true">
