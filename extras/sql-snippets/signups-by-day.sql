@@ -33,3 +33,10 @@ IF( (MONTH(timestamp)= 8 AND YEAR(timestamp)=2014), 7,
 FROM subscription_operations where operation='pay'
 GROUP BY YEAR(timestamp), MONTH(timestamp) ORDER BY year, month DESC
 ) AS subscriptions
+
+--
+-- Subscriptions per week
+--
+SELECT date(timestamp) as date, YEARWEEK(timestamp) as week_of_year, count(*) AS total_subs
+FROM subscription_operations where operation='pay'
+GROUP BY YEARWEEK(timestamp) ORDER BY timestamp DESC
