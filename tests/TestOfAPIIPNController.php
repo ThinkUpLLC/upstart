@@ -20,8 +20,101 @@ class TestOfAPIIPNController extends UpstartUnitTestCase {
         $this->assertIsA($controller, 'APIIPNController');
     }
 
-    public function testControl() {
+    public function testControlPaymentInitiated() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscription_operations',
+            array('amazon_subscription_id'=>'a9b486d3-95cf-4587-957f-61da63030f55', 'subscriber_id'=>'5',
+            'operation'=>'pay', 'payment_reason'=>'ThinkUp.com membership'));
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>'5', 'subscription_status'=>'Paid',
+            'subscription_recurrence'=>'1 month'));
+
+        $_POST = array(
+            "paymentReason"=> "ThinkUp.com membership",
+            "transactionAmount"=> "USD 5.00",
+            "signatureMethod"=> "RSA-SHA1",
+            "transactionId"=> "192F72Q6OQR4VOEUQ6KBE8RCK6S6NUABACA",
+            "status"=> "PI",
+            "buyerEmail"=> "ameliaearhart@gmail.com",
+            "referenceId"=> "60d73_1411407531",
+            "recipientEmail"=> "hostmaster@thinkup.com",
+            "transactionDate"=> "1411407505",
+            "buyerName"=> "Amelia Earhart",
+            "subscriptionId"=> "a9b486d3-95cf-4587-957f-61da63030f55",
+            "operation"=> "pay",
+            "recipientName"=> "ThinkUp, LLC",
+            "transactionSerialNumber"=> "1",
+            "signatureVersion"=> "2",
+            "signature"=> "wYORr8QauK0mBhHqEC5THhauu0qXFBV07aIGobctEjETl2TbpZ8Rk7qOA9EHfWMjjcOm+7obRKCF"
+                ."ng+1ZkLFBAklxsoHOg8GdaQH5rBDvJtF+BrZixVHWOMMwiM43L/KgUynH5faiJyrMN1PjpDqPDFR"
+                ."RPmb3Hrgmo5aPu45XZmdl2+tnCnIj2Wz4sgON0rpHk8dZQG74Fn0rfT5Jrih9ZyGaQUvz6rw17rG"
+                ."PtH0OVUVLMd8Vl3P5KaJ4YzaENQzLvltmPzhYdjyM0aOswkYiD2a8ShUnKKcsRFbNOvj5+qx/yBu"
+                ."x0TPEbCVNLP23hNrXiexZwVb6mNhDS9OPRtUEA==",
+            "certificateUrl"=>
+            "https://fps.amazonaws.com/certs/040714/PKICert.pem?requestId=15nc4iuawep4ysh221xnridgoywkn9xz8fn6y7jq09rs0tu",
+            "paymentMethod"=> "CC"
+        );
+
         $controller = new APIIPNController(true);
         $controller->control();
+
+        //Assert that the subscription_operation was inserted
+        $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
+        $op = $subscription_operation_dao->getByReferenceID("a9b486d3-95cf-4587-957f-61da63030f55", "60d73_1411407531");
+        $this->assertNotNull($op);
+        $this->assertEqual($op->reference_id, "60d73_1411407531");
+
+        //Assert that the subscriber's status is correct ("Paid through")
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber = $subscriber_dao->getByID($op->subscriber_id);
+        $this->assertPattern("/Payment pending/", $subscriber->subscription_status);
+    }
+
+    public function testControlPaymentSuccessful() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscription_operations',
+            array('amazon_subscription_id'=>'a9b486d3-95cf-4587-957f-61da63030f55', 'subscriber_id'=>'5',
+            'operation'=>'pay', 'payment_reason'=>'ThinkUp.com membership'));
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>'5', 'subscription_status'=>'Paid',
+            'subscription_recurrence'=>'1 month'));
+
+        $_POST = array(
+            "paymentReason"=> "ThinkUp.com membership",
+            "transactionAmount"=> "USD 5.00",
+            "signatureMethod"=> "RSA-SHA1",
+            "transactionId"=> "192F72Q6OQR4VOEUQ6KBE8RCK6S6NUABACA",
+            "status"=> "PS",
+            "buyerEmail"=> "ameliaearhart@gmail.com",
+            "referenceId"=> "60d73_1411407531",
+            "recipientEmail"=> "hostmaster@thinkup.com",
+            "transactionDate"=> "1411407505",
+            "buyerName"=> "Amelia Earhart",
+            "subscriptionId"=> "a9b486d3-95cf-4587-957f-61da63030f55",
+            "operation"=> "pay",
+            "recipientName"=> "ThinkUp, LLC",
+            "transactionSerialNumber"=> "1",
+            "signatureVersion"=> "2",
+            "signature"=> "wYORr8QauK0mBhHqEC5THhauu0qXFBV07aIGobctEjETl2TbpZ8Rk7qOA9EHfWMjjcOm+7obRKCF"
+                ."ng+1ZkLFBAklxsoHOg8GdaQH5rBDvJtF+BrZixVHWOMMwiM43L/KgUynH5faiJyrMN1PjpDqPDFR"
+                ."RPmb3Hrgmo5aPu45XZmdl2+tnCnIj2Wz4sgON0rpHk8dZQG74Fn0rfT5Jrih9ZyGaQUvz6rw17rG"
+                ."PtH0OVUVLMd8Vl3P5KaJ4YzaENQzLvltmPzhYdjyM0aOswkYiD2a8ShUnKKcsRFbNOvj5+qx/yBu"
+                ."x0TPEbCVNLP23hNrXiexZwVb6mNhDS9OPRtUEA==",
+            "certificateUrl"=>
+            "https://fps.amazonaws.com/certs/040714/PKICert.pem?requestId=15nc4iuawep4ysh221xnridgoywkn9xz8fn6y7jq09rs0tu",
+            "paymentMethod"=> "CC"
+        );
+
+        $controller = new APIIPNController(true);
+        $controller->control();
+
+        //Assert that the subscription_operation was inserted
+        $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
+        $op = $subscription_operation_dao->getByReferenceID("a9b486d3-95cf-4587-957f-61da63030f55", "60d73_1411407531");
+        $this->assertNotNull($op);
+        $this->assertEqual($op->reference_id, "60d73_1411407531");
+
+        //Assert that the subscriber's status is correct ("Paid through")
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber = $subscriber_dao->getByID($op->subscriber_id);
+        $this->assertPattern("/Paid through/", $subscriber->subscription_status);
     }
 }

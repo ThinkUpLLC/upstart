@@ -153,7 +153,11 @@ class SignatureUtilsForOutbound {
 		$url .= '&HttpParameters=' . $queryString . '&Version=2008-09-17';
 
 		$response = $this->httpsRequest($url);
-		$xml = new SimpleXMLElement($response);
+        try {
+		  $xml = new SimpleXMLElement($response);
+        } catch (Exception $e) {
+            throw new Exception("String could not be parsed as XML. String was: ".$response);
+        }
 		$result = (string) $xml->VerifySignatureResult->VerificationStatus;
 
 		return ($result === 'Success');

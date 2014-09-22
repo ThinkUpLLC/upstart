@@ -2,9 +2,9 @@
 /**
  * Mock classes for use in testing.
  */
-class Amazon_FPS_SignatureException extends Exception {}
+class SignatureException extends Exception {}
 
-class Amazon_FPS_SignatureUtilsForOutbound {
+class SignatureUtilsForOutbound {
 
     public function validateRequest(array $parameters, $urlEndPoint, $httpMethod)  {
       return true;

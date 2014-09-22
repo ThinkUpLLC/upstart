@@ -64,6 +64,33 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
         return $this->getDataRowsAsObjects($ps, 'SubscriptionOperation');
     }
 
+    public function getByAmazonSubscriptionID($amazon_subscription_id) {
+        $q  = "SELECT so.* FROM subscription_operations so ";
+        $q .= "WHERE amazon_subscription_id = :amazon_subscription_id ";
+        $q .= "ORDER BY timestamp DESC LIMIT 1; ";
+
+        $vars = array(
+            ':amazon_subscription_id'=>$amazon_subscription_id,
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowAsObject($ps, 'SubscriptionOperation');
+    }
+
+    public function getByReferenceID($amazon_subscription_id, $reference_id) {
+        $q  = "SELECT so.* FROM subscription_operations so ";
+        $q .= "WHERE amazon_subscription_id = :amazon_subscription_id AND reference_id = :reference_id ";
+        $q .= "ORDER BY timestamp DESC LIMIT 1; ";
+
+        $vars = array(
+            ':amazon_subscription_id'=>$amazon_subscription_id,
+            ':reference_id'=>$reference_id,
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowAsObject($ps, 'SubscriptionOperation');
+    }
+
     /**
      * Calculate the refund a member should receive if the member cancels their subscription today.
      * @param  int $subscriber_id

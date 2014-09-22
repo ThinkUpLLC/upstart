@@ -221,13 +221,13 @@ class Subscriber {
             $latest_operation = $sub_op_dao->getLatestOperation($this->id);
             if (isset($latest_operation)) {
                 if ($latest_operation->operation == 'pay') {
-                    if ($latest_operation->status_code == 'SS') {
+                    if ($latest_operation->status_code == 'SS' || $latest_operation->status_code == 'PS') {
                         $paid_through_time = strtotime('+1 month', strtotime($latest_operation->transaction_date));
                         $paid_through_date_string = date('M j, Y', $paid_through_time);
                         $subscription_status = "Paid through ".$paid_through_date_string;
-                    } elseif ($latest_operation->status_code == 'SF') {
+                    } elseif ($latest_operation->status_code == 'SF' || $latest_operation->status_code == 'PF') {
                         $subscription_status = "Payment failed";
-                    } elseif ($latest_operation->status_code == 'SI') {
+                    } elseif ($latest_operation->status_code == 'SI' || $latest_operation->status_code == 'PI') {
                         $subscription_status = "Payment pending";
                     }
                 } elseif ($latest_operation->operation == 'refund') {
