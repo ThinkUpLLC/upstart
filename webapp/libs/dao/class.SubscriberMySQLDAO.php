@@ -480,7 +480,7 @@ class SubscriberMySQLDAO extends PDODAO {
     public function getPaidStaleInstalls($count=25) {
         $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0 ";
         $q .= "AND (subscription_status LIKE 'Paid through%' OR is_membership_complimentary = 1) ";
-        $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL 90 MINUTE) OR last_dispatched IS NULL) ";
+        $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL 3 HOUR) OR last_dispatched IS NULL) ";
         $q .= "ORDER BY last_dispatched ASC ";
         $q .= "LIMIT :limit;";
 
@@ -504,7 +504,7 @@ class SubscriberMySQLDAO extends PDODAO {
     public function getNotYetPaidStaleInstalls($count=25) {
         $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0 ";
         $q .= "AND subscription_status NOT LIKE 'Paid through%' ";
-        $q .= "AND ((last_dispatched < DATE_SUB(NOW(), INTERVAL 3 HOUR) OR last_dispatched IS NULL)) ";
+        $q .= "AND ((last_dispatched < DATE_SUB(NOW(), INTERVAL 4 HOUR) OR last_dispatched IS NULL)) ";
         // Upstart isn't sending payment reminders or isn't finished sending them
         $q .= "AND (total_payment_reminders_sent < 3  OR ";
         // Upstart's sent all the payment reminders but the last one was sent within the last 12 days
