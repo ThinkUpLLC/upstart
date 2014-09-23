@@ -480,7 +480,7 @@ class SubscriberMySQLDAO extends PDODAO {
     public function getPaidStaleInstalls($count=25) {
         $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0 ";
         $q .= "AND (subscription_status LIKE 'Paid through%' OR is_membership_complimentary = 1) ";
-        $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL 3 HOUR) OR last_dispatched IS NULL) ";
+        $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL 2 HOUR) OR last_dispatched IS NULL) ";
         $q .= "ORDER BY last_dispatched ASC ";
         $q .= "LIMIT :limit;";
 
