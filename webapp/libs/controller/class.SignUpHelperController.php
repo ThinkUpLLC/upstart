@@ -98,8 +98,8 @@ abstract class SignUpHelperController extends UpstartController {
             $twitter_auth_link = $to->getAuthorizeURL($token);
         } else {
             $this->addErrorMessage($generic_error_msg);
-            $this->logError('Twitter auth link failure, token not set '.(isset($tok))?Utils::varDumpToString($tok):'',
-            __FILE__,__LINE__,__METHOD__);
+            $this->logError('Twitter auth link failure, token not set '.htmlentities(Utils::varDumpToString($tok)),
+                __FILE__,__LINE__,__METHOD__);
         }
         return $twitter_auth_link;
     }
