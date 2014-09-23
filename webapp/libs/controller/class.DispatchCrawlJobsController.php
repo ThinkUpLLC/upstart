@@ -12,9 +12,17 @@ class DispatchCrawlJobsController extends Controller {
             $number_of_calls = $jobs_to_dispatch / 25;
             while ($number_of_calls > 0) {
 
-                $stale_installs = $subscriber_dao->getPaidStaleInstalls();
+                $stale_installs = $subscriber_dao->getPaidStaleInstalls(2);
                 if (count($stale_installs) == 0) {
-                    $stale_installs = $subscriber_dao->getNotYetPaidStaleInstalls();
+                    $stale_installs = $subscriber_dao->getNotYetPaidStaleInstalls(4);
+                }
+
+                //No installs to crawl? Okay, get less stale options
+                if (count($stale_installs) == 0 ) {
+                    $stale_installs = $subscriber_dao->getPaidStaleInstalls(1);
+                    if (count($stale_installs) == 0) {
+                        $stale_installs = $subscriber_dao->getNotYetPaidStaleInstalls(2);
+                    }
                 }
 
                 if (count($stale_installs) > 0 ) {

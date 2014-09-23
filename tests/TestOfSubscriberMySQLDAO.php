@@ -517,7 +517,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
             'is_account_closed'=>1));
 
         $dao = new SubscriberMySQLDAO();
-        $result = $dao->getPaidStaleInstalls();
+        $result = $dao->getPaidStaleInstalls(2);
 
         $this->assertEqual(sizeof($result), 4);
         $this->assertEqual($result[0]['thinkup_username'], 'unique2');
@@ -572,7 +572,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
             'total_payment_reminders_sent'=>3, 'payment_reminder_last_sent'=>'-10d', 'is_account_closed'=>1));
 
         $dao = new SubscriberMySQLDAO();
-        $result = $dao->getNotYetPaidStaleInstalls();
+        $result = $dao->getNotYetPaidStaleInstalls(4);
 
         $this->assertEqual(sizeof($result), 3);
         $this->assertEqual($result[0]['thinkup_username'], 'unique4');
