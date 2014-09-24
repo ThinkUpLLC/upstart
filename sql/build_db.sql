@@ -236,7 +236,7 @@ CREATE TABLE subscription_operations (
   payment_reason varchar(100) NOT NULL COMMENT 'Reason for payment.',
   transaction_amount varchar(100) NOT NULL COMMENT 'Amount of transaction.',
   recurring_frequency varchar(25) NOT NULL COMMENT 'How often subscription recurs, 1 month or 12 months.',
-  status_code varchar(2) NOT NULL COMMENT 'Transaction status code.',
+  status_code varchar(50) NOT NULL COMMENT 'Transaction status code.',
   buyer_email varchar(255) NOT NULL COMMENT 'Amazon''s buyer email address.',
   reference_id varchar(20) NOT NULL COMMENT 'Caller reference for transaction.',
   amazon_subscription_id varchar(100) NOT NULL COMMENT 'Amazon''s subscription ID.',
@@ -244,9 +244,9 @@ CREATE TABLE subscription_operations (
   buyer_name varchar(255) NOT NULL COMMENT 'Amazon''s buyer name.',
   payment_method varchar(25) NOT NULL COMMENT 'Payment method.',
   PRIMARY KEY (id),
-  KEY subscriber_id (subscriber_id),
-  UNIQUE KEY amazon_subscription_id (amazon_subscription_id,reference_id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Amazon subscription operations.';
+  UNIQUE KEY amazon_subscription_id (amazon_subscription_id,reference_id,status_code),
+  KEY subscriber_id (subscriber_id)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Amazon subscription operations.';
 
 
 -- Populate subscription status codes
