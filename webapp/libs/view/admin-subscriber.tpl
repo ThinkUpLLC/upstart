@@ -86,7 +86,7 @@
        <tr>
           <td>{$operation->timestamp}</td>
           <td>{$operation->operation}</td>
-          <td>{$operation->status_code}</td>
+          <td>{$operation->status_code}<br>{$operation->status_description}</td>
           <td>{$operation->recurring_frequency}</td>
           <td>{$operation->transaction_amount}</td>
        </tr>

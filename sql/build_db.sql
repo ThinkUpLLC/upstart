@@ -276,4 +276,14 @@ VALUES (
 'NP',  'This account type does not support the specified payment method.'
 ), (
 'NM',  'You are not registered as a third-party caller to make this transaction. Contact Amazon Payments for more information.'
+), (
+'RS',  'The refund transaction was successful.'
+), (
+'RF',  'The refund transaction failed.'
+), (
+'PI',  'Payment has been initiated.'
+), (
+'PS',  'The payment transaction was successful.'
+), (
+'PF',  'Payment failed. Direct customer to the Amazon Payments Authorization page to select a different payment method.'
 );
