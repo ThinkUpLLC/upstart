@@ -80,13 +80,13 @@
   </div>
   <table class="table table-hover">
     <tr>
-      <th>Time</th><th>Operation</th><th>Status</th><th>Frequency</th><th>Amount</th>
+      <th>Time</th><th>Operation</th><th>Status Code</th><th>Frequency</th><th>Amount</th>
     </tr>
     {foreach from=$subscription_operations item=operation}
        <tr>
           <td>{$operation->timestamp}</td>
           <td>{$operation->operation}</td>
-          <td>{$operation->status_description}</td>
+          <td>{$operation->status_code}</td>
           <td>{$operation->recurring_frequency}</td>
           <td>{$operation->transaction_amount}</td>
        </tr>
