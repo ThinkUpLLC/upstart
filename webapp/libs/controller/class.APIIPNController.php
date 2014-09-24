@@ -6,7 +6,7 @@ class APIIPNController extends UpstartController {
      * @var array
      */
     var $REQUIRED_PARAMS = array('signature', 'subscriptionId', 'paymentReason', 'transactionAmount', 'status',
-        'buyerEmail', 'referenceId', 'subscriptionId', 'transactionDate', 'buyerName', 'operation', 'paymentMethod');
+        'buyerEmail', 'referenceId', 'subscriptionId', 'buyerName', 'paymentMethod');
     /**
      *
      * @var bool
@@ -47,10 +47,10 @@ class APIIPNController extends UpstartController {
                         $op->buyer_email = $_POST['buyerEmail'];
                         $op->reference_id = $_POST['referenceId'];
                         $op->amazon_subscription_id = $_POST['subscriptionId'];
-                        $op->transaction_date = $_POST['transactionDate'];
                         $op->buyer_name = $_POST['buyerName'];
-                        $op->operation = $_POST['operation'];
                         $op->payment_method = $_POST['paymentMethod'];
+                        $op->operation = (isset($_POST['operation']))?$_POST['operation']:'unspecified';
+                        $op->transaction_date = (isset($_POST['transactionDate']))?$_POST['transactionDate']:"NOW()";
 
                         //Check to make sure this isn't a page refresh by catching a DuplicateKey exception
                         try {
@@ -78,7 +78,12 @@ class APIIPNController extends UpstartController {
                 $debug .= get_class($e).": ".$e->getMessage();
             }
         } else {
-            $debug = "Signature is not set.";
+            $debug = "Missing required parameters: ";
+            foreach ($this->REQUIRED_PARAMS as $req_param) {
+                if (!in_array($req_param, $_POST)) {
+                    $debug .= $req_param . " ";
+                }
+            }
         }
 
         //If there's something to log, log it
