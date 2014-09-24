@@ -20,6 +20,18 @@ class TestOfAPIIPNController extends UpstartUnitTestCase {
         $this->assertIsA($controller, 'APIIPNController');
     }
 
+    public function testMissingParams() {
+        $_POST = array(
+            "paymentReason"=> "ThinkUp.com membership",
+            "transactionAmount"=> "USD 5.00",
+            "signatureMethod"=> "RSA-SHA1",
+            "transactionId"=> "192F72Q6OQR4VOEUQ6KBE8RCK6S6NUABACA"
+        );
+        $controller = new APIIPNController(true);
+        $result = $controller->control();
+        $this->assertEqual('', $result);
+    }
+
     public function testControlPaymentInitiated() {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscription_operations',
