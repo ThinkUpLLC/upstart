@@ -85,10 +85,19 @@ class SignatureUtilsForOutbound {
 	        && (stripos($parameters[self::CERTIFICATE_URL_KEYNAME], self::FPS_SANDBOX_ENDPOINT) !== 0)){
 			throw new SignatureException('The `certificateUrl` value must begin with ' . self::FPS_PROD_ENDPOINT . ' or ' . self::FPS_SANDBOX_ENDPOINT . '.');
 		}
-	     $verified = $this->verifySignature($parameters, $urlEndPoint);
-	    if (!$verified){
-		throw new SignatureException('Certificate could not be verified by the FPS service');
-	    }
+
+        $sig_verification = $this->verifySignature($parameters, $urlEndPoint);
+        $result = (string) $sig_verification['response']->VerifySignatureResult->VerificationStatus;
+        $verified = ($result === 'Success');
+        if (!$verified) {
+            throw new SignatureException('Certificate could not be verified by the FPS service. URL: '
+                . $sig_verification['url']."  Response: ". ((string) $sig_verification['response']));
+        }
+
+  //        $verified = $this->verifySignature($parameters, $urlEndPoint);
+	 //    if (!$verified){
+		// throw new SignatureException('Certificate could not be verified by the FPS service');
+	 //    }
 
 	     return $verified;
     }
@@ -160,7 +169,8 @@ class SignatureUtilsForOutbound {
         }
 		$result = (string) $xml->VerifySignatureResult->VerificationStatus;
 
-		return ($result === 'Success');
+		//return ($result === 'Success');
+        return array('url'=>$url, 'response'=>$xml);
 	}
 
 }
