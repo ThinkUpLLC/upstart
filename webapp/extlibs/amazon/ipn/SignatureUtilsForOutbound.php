@@ -107,7 +107,7 @@ class SignatureUtilsForOutbound {
    	   curl_setopt($curlHandle, CURLOPT_FRESH_CONNECT, true);
    	   curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, true);
    	   curl_setopt($curlHandle, CURLOPT_SSL_VERIFYHOST, 2);
-   	   curl_setopt($curlHandle, CURLOPT_CAINFO, 'ca-bundle.crt');
+       curl_setopt($curlHandle, CURLOPT_CAINFO, 'extlibs/amazon/ca-bundle.crt');
    	   curl_setopt($curlHandle, CURLOPT_FOLLOWLOCATION, false);
    	   curl_setopt($curlHandle, CURLOPT_MAXREDIRS, 0);
    	   curl_setopt($curlHandle, CURLOPT_HEADER, true);
@@ -156,7 +156,7 @@ class SignatureUtilsForOutbound {
         try {
 		  $xml = new SimpleXMLElement($response);
         } catch (Exception $e) {
-            throw new Exception("String could not be parsed as XML. String was: ".$response);
+            throw new Exception($e->getMessage()." URL was: ". $url ."  String was: ".$response);
         }
 		$result = (string) $xml->VerifySignatureResult->VerificationStatus;
 
