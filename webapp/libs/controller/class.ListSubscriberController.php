@@ -38,9 +38,9 @@ class ListSubscriberController extends Controller {
         $this->addToView('total_daily_signups', $daily_signups[date('Y-m-d')]['new_members']);
         $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
         $daily_revenue = $subscription_operation_dao->getDailyRevenue();
-        $this->addToView('total_daily_revenue', $daily_revenue[date('Y-m-d')]['revenue']);
-        $this->addToView('total_daily_payments', $daily_revenue[date('Y-m-d')]['successful_payments']);
         $this->addToView('total_daily_refunds', $daily_revenue[date('Y-m-d')]['refunds']);
+        $daily_subscribers = $subscription_operation_dao->getDailySubscribers();
+        $this->addToView('total_new_subscribers', $daily_subscribers[date('Y-m-d')]['subscribers']);
 
         try {
             $worker_status = Dispatcher::getNagiosCheckStatus();
