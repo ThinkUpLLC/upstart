@@ -32,20 +32,6 @@ class PaymentMySQLDAO extends PDODAO {
         return $this->getInsertId($ps);
     }
     /**
-     * Get the sum of all successful payments by active subscribers.
-     * @return int
-     */
-    public function getTotalPayments() {
-        $q  = "SELECT SUM(amount) as total FROM payments p ";
-        $q .= "INNER JOIN subscriber_payments sp ON p.id = sp.payment_id ";
-        $q .= "INNER JOIN subscribers s on sp.subscriber_id = s.id ";
-        $q .= "WHERE transaction_status = 'Success';";
-        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q);
-        $result = $this->getDataRowAsArray($ps);
-        return $result['total'];
-    }
-    /**
      * Get Payments with a Pending status.
      * @param int $limit
      * @return arr Payment objects
