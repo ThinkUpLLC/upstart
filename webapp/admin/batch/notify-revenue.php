@@ -25,11 +25,11 @@ $text = "";
 $message = "";
 
 if ($daily_subscribers[$today]['subcribers'] > $daily_subscribers[$yesterday]['subscribers']) {
-    $comparator .= "up from";
+    $comparator = "up from";
 } elseif ($daily_subscribers[$today]['subscribers'] < $daily_subscribers[$yesterday]['subscribers']) {
-    $comparator .= "down from";
+    $comparator = "down from";
 } else {
-    $comparator .= "the same as";
+    $comparator = "the same as";
 }
 $subject = number_format($daily_subscribers[$today]['subscribers']) . " member".
     (($daily_subscribers[$today]['subscribers'] == 1)?'':'s') ." subscribed to ThinkUp today.";
@@ -43,11 +43,11 @@ $message = "That's ". $comparator. " ".number_format($daily_subscribers[$yesterd
 $text .= $subject.' '. $message. '\n'.$chart_url;
 
 if ($daily_signups[$today]['new_members'] > $daily_signups[$yesterday]['new_members']) {
-    $comparator .= "up from";
+    $comparator = "up from";
 } elseif ($daily_signups[$today]['new_members'] < $daily_signups[$yesterday]['new_members']) {
-    $comparator .= "down from";
+    $comparator = "down from";
 } else {
-    $comparator .= "the same as";
+    $comparator = "the same as";
 }
 $subject = number_format($daily_signups[$today]['new_members']) . " new member".
 	(($daily_signups[$today]['new_members'] == 1)?'':'s') ." joined ThinkUp today.";
@@ -83,22 +83,21 @@ $chart_url .= "&chco=0000FF,00FF00&chg=50,10";
 $text .= $subject.' '. $message. '\n'.$chart_url;
 
 $result = UpstartHelper::postToSlack($channel, $text);
-$message = null;
-$subject = null;
+$message = '';
+$subject = '';
 
 // Revenue
 $daily_revenue = $subscription_operation_dao->getDailyRevenue();
-$message .= "";
 if ($daily_revenue[$today]['revenue'] > $daily_revenue[$yesterday]['revenue']) {
-    $message .= "Up from";
+    $comparator = "Up from";
 } elseif ($daily_revenue[$today]['revenue'] < $daily_revenue[$yesterday]['revenue']) {
-    $message .= "Down from";
+    $comparator = "Down from";
 } else {
-    $message .= "Same as";
+    $comparator = "Same as";
 }
-$message .= " $". number_format($daily_revenue[$yesterday]['revenue']). " yesterday. Day before was $".
+$message = $comparator . " $". number_format($daily_revenue[$yesterday]['revenue']). " yesterday. Day before was $".
     number_format($daily_revenue[$day_before]['revenue']) . ".";
-$subject = "$" . number_format($daily_revenue[$today]['revenue']) . " in revenue today";
+$subject = "$" . number_format($daily_revenue[$today]['revenue']) . " in revenue today.";
 
 $text = $subject.' '. $message;
 
