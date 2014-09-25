@@ -61,7 +61,7 @@ class TestOfSubscriptionOperationMySQLDAO extends UpstartUnitTestCase {
         $op->buyer_email = 'ginatrapani@example.com';
         $op->reference_id = '24_1407173263';
         $op->amazon_subscription_id = '5a81c762-f3ff-4319-9e07-007fffe7d4da';
-        $op->transaction_date = strtotime('-3 days');
+        $op->transaction_date = strtotime('-2 days');
         $op->buyer_name = 'Angelina Jolie';
         $op->operation = 'pay';
         $op->recurring_frequency = '1 month';
