@@ -20,7 +20,7 @@ class TestOfAPIIPNController extends UpstartUnitTestCase {
         $this->assertIsA($controller, 'APIIPNController');
     }
 
-    public function testMissingParams() {
+    public function testMissingParamsErrorLog() {
         $_POST = array(
             "paymentReason"=> "ThinkUp.com membership",
             "transactionAmount"=> "USD 5.00",
@@ -30,6 +30,20 @@ class TestOfAPIIPNController extends UpstartUnitTestCase {
         $controller = new APIIPNController(true);
         $result = $controller->control();
         $this->assertEqual('', $result);
+        // Assert error got logged
+        $error_log_dao = new ErrorLogMySQLDAO();
+        $errors = $error_log_dao->getErrorList();
+        $this->assertEqual(count($errors), 1);
+    }
+
+    public function testNoPostVarsSet() {
+        $controller = new APIIPNController(true);
+        $result = $controller->control();
+        $this->assertEqual('', $result);
+        // Assert no error got logged
+        $error_log_dao = new ErrorLogMySQLDAO();
+        $errors = $error_log_dao->getErrorList();
+        $this->assertEqual(count($errors), 0);
     }
 
     public function testControlPaymentInitiated() {
@@ -62,7 +76,7 @@ class TestOfAPIIPNController extends UpstartUnitTestCase {
                 ."PtH0OVUVLMd8Vl3P5KaJ4YzaENQzLvltmPzhYdjyM0aOswkYiD2a8ShUnKKcsRFbNOvj5+qx/yBu"
                 ."x0TPEbCVNLP23hNrXiexZwVb6mNhDS9OPRtUEA==",
             "certificateUrl"=>
-            "https://fps.amazonaws.com/certs/040714/PKICert.pem?requestId=15nc4iuawep4ysh221xnridgoywkn9xz8fn6y7jq09rs0tu",
+            "https://fps.amazonaws.com/certs/040714/PKICert.pem?requestId=15nc4iuawep4ysh221xnridwkn9xz8fn6y7jq09rs0tu",
             "paymentMethod"=> "CC"
         );
 
@@ -111,7 +125,7 @@ class TestOfAPIIPNController extends UpstartUnitTestCase {
                 ."PtH0OVUVLMd8Vl3P5KaJ4YzaENQzLvltmPzhYdjyM0aOswkYiD2a8ShUnKKcsRFbNOvj5+qx/yBu"
                 ."x0TPEbCVNLP23hNrXiexZwVb6mNhDS9OPRtUEA==",
             "certificateUrl"=>
-            "https://fps.amazonaws.com/certs/040714/PKICert.pem?requestId=15nc4iuawep4ysh221xnridgoywkn9xz8fn6y7jq09rs0tu",
+            "https://fps.amazonaws.com/certs/040714/PKICert.pem?requestId=15nc4iuawep4ysh221xnridgoywkn8fn6y7jq09rs0tu",
             "paymentMethod"=> "CC"
         );
 
