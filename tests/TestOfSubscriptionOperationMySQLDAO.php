@@ -93,7 +93,7 @@ class TestOfSubscriptionOperationMySQLDAO extends UpstartUnitTestCase {
 
         //Successful payment yesterday only
         $builders[] = FixtureBuilder::build('subscription_operations', array('operation'=>'pay',
-            'timestamp'=>'-23h', 'transaction_amount'=>'USD 5'));
+            'timestamp'=>'-23h', 'transaction_amount'=>'USD 5', 'reference_id'=>'101_adb'));
 
         $result = $dao->getDailyRevenue();
         $this->debug(Utils::varDumpToString($result));
@@ -105,12 +105,15 @@ class TestOfSubscriptionOperationMySQLDAO extends UpstartUnitTestCase {
 
         //Another successful payment yesterday and one day before yesterday
         $builders[] = FixtureBuilder::build('subscription_operations', array('operation'=>'pay',
-            'timestamp'=>'-23h', 'transaction_amount'=>'USD 5'));
+            'timestamp'=>'-23h', 'transaction_amount'=>'USD 5', 'reference_id'=>'102_adb'));
+        //These two are the same operations on one reference ID so should be counted as one pay
         $builders[] = FixtureBuilder::build('subscription_operations', array('operation'=>'pay',
-            'timestamp'=>'-46h', 'transaction_amount'=>'USD 5'));
+            'timestamp'=>'-46h', 'transaction_amount'=>'USD 5', 'reference_id'=>'103_adb'));
+        $builders[] = FixtureBuilder::build('subscription_operations', array('operation'=>'pay',
+            'timestamp'=>'-46h', 'transaction_amount'=>'USD 5', 'reference_id'=>'103_adb'));
         //Refund yesterday
         $builders[] = FixtureBuilder::build('subscription_operations', array('operation'=>'refund',
-            'timestamp'=>'-46h', 'transaction_amount'=>'USD 5'));
+            'timestamp'=>'-46h', 'transaction_amount'=>'USD 5', 'reference_id'=>'103_abc'));
 
         $result = $dao->getDailyRevenue();
         $this->debug(Utils::varDumpToString($result));
