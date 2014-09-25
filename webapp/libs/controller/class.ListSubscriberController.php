@@ -39,6 +39,7 @@ class ListSubscriberController extends Controller {
         $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
         $daily_revenue = $subscription_operation_dao->getDailyRevenue();
         $this->addToView('total_daily_refunds', $daily_revenue[date('Y-m-d')]['refunds']);
+        $this->addToView('total_daily_revenue', $daily_revenue[date('Y-m-d')]['revenue']);
         $daily_subscribers = $subscription_operation_dao->getDailySubscribers();
         $this->addToView('total_new_subscribers', $daily_subscribers[date('Y-m-d')]['subscribers']);
 

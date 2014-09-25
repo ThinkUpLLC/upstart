@@ -9,7 +9,7 @@
 {if $search_term}
     <h3>Showing search results for <span style="background-color:yellow">{$search_term}</span>. <a href="?p={$page}" class="btn btn-small btn-primary">Show all</a></h3>
 {else}
-<h2>{$total_daily_signups} signup{if $total_daily_signups neq 1}s{/if}{if $total_new_subscribers > 0}, {$total_new_subscribers|number_format} conversion{if $total_new_subscribers neq 1}s{/if} ({(($total_new_subscribers*100)/$total_daily_signups)|round}%){/if}{if $total_daily_refunds > 0}, {$total_daily_refunds|number_format} refund{if $total_daily_refunds neq 1}s{/if}{/if} today.</h2>
+<h2>{$total_daily_signups} signup{if $total_daily_signups neq 1}s{/if}{if $total_new_subscribers > 0}, {$total_new_subscribers|number_format} conversion{if $total_new_subscribers neq 1}s{/if} ({(($total_new_subscribers*100)/$total_daily_signups)|round}%){/if}{if $total_daily_refunds > 0}, {$total_daily_refunds|number_format} refund{if $total_daily_refunds neq 1}s{/if}{/if}, ${$total_daily_revenue} today.</h2>
 <p>{$total_paid_subscribers|number_format} paid members. {$total_active_installs|number_format} active installations.</p>
 <p>Stalest paid installation dispatched {$stalest_dispatch_time_paid|relative_datetime} ago, not paid {$stalest_dispatch_not_paid|relative_datetime} ago.</p>
 <p {if !$workers_ok} class="alert alert-danger"{/if}>Dispatch status: <b>{$worker_status}</b></p>
