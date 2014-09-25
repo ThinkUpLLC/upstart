@@ -143,4 +143,32 @@ class TestOfAPIIPNController extends UpstartUnitTestCase {
         $subscriber = $subscriber_dao->getByID($op->subscriber_id);
         $this->assertPattern("/Paid through/", $subscriber->subscription_status);
     }
+
+    public function testControlSubscriptionCancelled() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscription_operations',
+            array('amazon_subscription_id'=>'a9b486d3-95cf-4587-957f-61da63030f55', 'subscriber_id'=>'5',
+            'operation'=>'pay', 'payment_reason'=>'ThinkUp.com membership'));
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>'5', 'subscription_status'=>'Paid',
+            'subscription_recurrence'=>'1 month'));
+
+        $_POST = array(
+            "statusReason"=> "PaymentFailure",
+            "status"=> "SubscriptionCancelled",
+            "subscriptionId"=> "a9b486d3-95cf-4587-957f-61da63030f55",
+            "signatureVersion"=> "2",
+            "signature"=> "wYORr8QauK0mBhHqEC5THhauu0qXFBV07aIGobctEjETl2TbpZ8Rk7qOA9EHfWMjjcOm+7obRKCF"
+                ."ng+1ZkLFBAklxsoHOg8GdaQH5rBDvJtF+BrZixVHWOMMwiM43L/KgUynH5faiJyrMN1PjpDqPDFR"
+                ."RPmb3Hrgmo5aPu45XZmdl2+tnCnIj2Wz4sgON0rpHk8dZQG74Fn0rfT5Jrih9ZyGaQUvz6rw17rG"
+                ."PtH0OVUVLMd8Vl3P5KaJ4YzaENQzLvltmPzhYdjyM0aOswkYiD2a8ShUnKKcsRFbNOvj5+qx/yBu"
+                ."x0TPEbCVNLP23hNrXiexZwVb6mNhDS9OPRtUEA==",
+            "certificateUrl"=>
+            "https://fps.amazonaws.com/certs/040714/PKICert.pem?requestId=15nc4iuawep4ysh221xnridwkn9xz8fn6y7jq09rs0tu",
+        );
+
+        $controller = new APIIPNController(true);
+        $controller->control();
+
+        //TODO Assert that slack got notified by writing latest slack to a file in the data dir ala latest email
+    }
 }

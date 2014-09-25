@@ -5,35 +5,21 @@ class APIIPNController extends UpstartController {
      * Required IPN post values
      * @var array
      */
-    var $REQUIRED_PARAMS = array('signature', 'subscriptionId', 'paymentReason', 'transactionAmount', 'status',
-        'buyerEmail', 'referenceId', 'subscriptionId', 'buyerName', 'paymentMethod');
-    /**
-     *
-     * @var bool
-     */
-    var $is_missing_param = false;
+    var $REQUIRED_TRANSACTION_PARAMS = array('subscriptionId', 'paymentReason', 'transactionAmount', 'status',
+        'buyerEmail', 'referenceId', 'buyerName', 'paymentMethod');
 
     public function control() {
-        $amazon_ipn_utils = new SignatureUtilsForOutbound();
-
-        $ipn_endpoint = Config::getInstance()->getValue('amazon_ipn_endpoint');
-
         $debug = '';
-        //@TODO Check if all required POST vars are set first
-        foreach ($this->REQUIRED_PARAMS as $param) {
-            if (!isset($_POST[$param]) || $_POST[$param] == '' ) {
-                $this->is_missing_param = true;
-            }
-        }
-
         if (isset($_POST) && count($_POST) > 0) {
-            if (!$this->is_missing_param) {
-                try {
-                    //IPN is sent as a http POST request and hence we specify POST as the http method.
-                    //Signature verification does not require your secret key
-                    if ($amazon_ipn_utils->validateRequest($_POST, $ipn_endpoint, "POST")) {
-                        $debug .= "Validated signature. ";
-                        $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
+            $amazon_ipn_utils = new SignatureUtilsForOutbound();
+            $ipn_endpoint = Config::getInstance()->getValue('amazon_ipn_endpoint');
+            try {
+                //IPN is sent as a http POST request and hence we specify POST as the http method.
+                //Signature verification does not require your secret key
+                if ($amazon_ipn_utils->validateRequest($_POST, $ipn_endpoint, "POST")) {
+                    $debug .= "Validated signature. ";
+                    $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
+                    if ($this->isTransaction()) {
                         $past_op = $subscription_operation_dao->getByAmazonSubscriptionID($_POST['subscriptionId']);
                         if (isset($past_op)) {
                             $subscriber_dao = new SubscriberMySQLDAO();
@@ -55,37 +41,42 @@ class APIIPNController extends UpstartController {
                                 $_POST['transactionDate']:"NOW()";
 
                             //Check to make sure this isn't a page refresh by catching a DuplicateKey exception
-                            try {
-                                $subscription_operation_dao->insert($op);
-                                //Now that user has authed and paid, get current subscription_status
-                                $subscription_status = $subscriber->getSubscriptionStatus();
-                                //Update subscription_status in the subscriber object
-                                $subscriber->subscription_status = $subscription_status;
-                                //Update subscription_status in the data store
-                                $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
+                            $subscription_operation_dao->insert($op);
+                            //Now that user has authed and paid, get current subscription_status
+                            $subscription_status = $subscriber->getSubscriptionStatus();
+                            //Update subscription_status in the subscriber object
+                            $subscriber->subscription_status = $subscription_status;
+                            //Update subscription_status in the data store
+                            $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
 
-                                UpstartHelper::postToSlack('#signups',
-                                    'Instant Pay Notification: '.$op->status_code." for ".$subscriber->thinkup_username
-                                    .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $subscriber->id);
-                            } catch (DuplicateSubscriptionOperationException $e) {
-                                $debug .= "DuplicateSubscriptionOperationException thrown";
-                            }
+                            UpstartHelper::postToSlack('#signups',
+                                'Instant Pay Notification: '.$op->status_code." for ".$subscriber->thinkup_username
+                                .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $subscriber->id);
                         } else {
                             $debug .= "No past op found, subscriptionId ".$_POST['subscriptionId'];
                         }
+                    } elseif ($this->isCancellation()) {
+                        $sub_op = $subscription_operation_dao->getByAmazonSubscriptionID($_POST["subscriptionId"]);
+                        if (isset($sub_op)) {
+                            UpstartHelper::postToSlack('#signups',
+                                'Subscription canceled due to '.$_POST['statusReason']
+                                .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $sub_op->subscriber_id);
+                        }
                     } else {
-                        $debug .= "Signature not validated!";
+                        $debug = "Missing required parameters: ";
+                        foreach ($this->REQUIRED_TRANSACTION_PARAMS as $req_param) {
+                            if (!in_array($req_param, $_POST)) {
+                                $debug .= $req_param . " ";
+                            }
+                        }
                     }
-                } catch (Exception $e ) {
-                    $debug .= get_class($e).": ".$e->getMessage();
+                } else {
+                    $debug .= "Signature not validated!";
                 }
-            } else {
-                $debug = "Missing required parameters: ";
-                foreach ($this->REQUIRED_PARAMS as $req_param) {
-                    if (!in_array($req_param, $_POST)) {
-                        $debug .= $req_param . " ";
-                    }
-                }
+            } catch (DuplicateSubscriptionOperationException $e) {
+                $debug .= "DuplicateSubscriptionOperationException thrown";
+            } catch (Exception $e ) {
+                $debug .= get_class($e).": ".$e->getMessage();
             }
         }
 
@@ -93,5 +84,27 @@ class APIIPNController extends UpstartController {
         if ($debug !== '') {
             $this->logError($debug, __FILE__,__LINE__,__METHOD__);
         }
+    }
+    /**
+     * Did Amazon post all the required variables to parse a transaction?
+     * @return bool
+     */
+    private function isTransaction() {
+         // Check if all required POST vars for a transaction are set first
+        $has_all_transaction_params = true;
+        foreach ($this->REQUIRED_TRANSACTION_PARAMS as $param) {
+            if (!isset($_POST[$param]) || $_POST[$param] == '' ) {
+                $has_all_transaction_params = false;
+            }
+        }
+        return $has_all_transaction_params;
+   }
+    /**
+     * Did Amazon post data that indicates a subscription was cancelled?
+     * @return bool
+     */
+    private function isCancellation() {
+        return (isset($_POST["subscriptionId"]) && isset($_POST['status'])
+            && $_POST['status'] === 'SubscriptionCancelled' && isset($_POST['statusReason']));
     }
 }
