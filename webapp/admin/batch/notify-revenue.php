@@ -8,7 +8,7 @@ require_once 'init.php';
  */
 $channel = "#signups";
 //debug
-//$channel = "#testbot";
+$channel = "#testbot";
 
 $today = date('Y-m-d');
 $yesterday = date('Y-m-d', strtotime("-1 days"));
@@ -104,10 +104,11 @@ $text = $subject.' '. $message;
 $result = UpstartHelper::postToSlack($channel, $text);
 
 //Post subscribers per week on Sundays
-$subs_per_week = $subscriber_dao->getSubscriptionsByWeek();
+if (date( "w") == 0) {
+    $subs_per_week = $subscriber_dao->getSubscriptionsByWeek();
 
-foreach ($subs_per_week as $sub) {
-    $message = 'Week of '.$sub['date'].": ".$sub["total_subs"]." subscriptions";
-    $result = UpstartHelper::postToSlack($channel, $message);
+    foreach ($subs_per_week as $sub) {
+        $message = 'Week of '.$sub['date'].": ".$sub["total_subs"]." subscriptions";
+        $result = UpstartHelper::postToSlack($channel, $message);
+    }
 }
-
