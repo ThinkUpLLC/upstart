@@ -102,3 +102,12 @@ $subject = "$" . number_format($daily_revenue[$today]['revenue']) . " in revenue
 $text = $subject.' '. $message;
 
 $result = UpstartHelper::postToSlack($channel, $text);
+
+//Post subscribers per week on Sundays
+$subs_per_week = $subscriber_dao->getSubscriptionsByWeek();
+
+foreach ($subs_per_week as $sub) {
+    $message = 'Week of '.$sub['date'].": ".$sub["total_subs"]." subscriptions";
+    $result = UpstartHelper::postToSlack($channel, $message);
+}
+

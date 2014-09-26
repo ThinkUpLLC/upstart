@@ -889,7 +889,6 @@ class SubscriberMySQLDAO extends PDODAO {
         $q .= "OR date(creation_time) = '".$yesterday."' ";
         $q .= "OR date(creation_time) = '".$day_before."') ";
         $q .= "GROUP BY DATE(creation_time) ORDER BY creation_time DESC;";
-        $ps = $this->execute($q);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
 
@@ -904,5 +903,20 @@ class SubscriberMySQLDAO extends PDODAO {
             }
         }
         return $results;
+    }
+
+    /**
+     * Get total subscriptions week over week.
+     * @return arr
+     */
+    public function getSubscriptionsByWeek() {
+        $q = "SELECT date(timestamp) as date, YEARWEEK(timestamp) as week_of_year, count(*) AS total_subs ";
+        $q .= "FROM subscription_operations where operation='pay' ";
+        $q .= "GROUP BY YEARWEEK(timestamp) ORDER BY timestamp DESC";
+
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+
+        return $this->getDataRowsAsArrays($ps);
     }
 }
