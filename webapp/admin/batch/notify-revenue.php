@@ -8,7 +8,7 @@ require_once 'init.php';
  */
 $channel = "#signups";
 //debug
-$channel = "#testbot";
+//$channel = "#testbot";
 
 $today = date('Y-m-d');
 $yesterday = date('Y-m-d', strtotime("-1 days"));
