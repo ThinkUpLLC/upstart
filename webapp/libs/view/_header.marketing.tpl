@@ -50,6 +50,8 @@
     <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic|' rel='stylesheet' type='text/css'>
     <link href="{$site_root_path}assets/css/marketing.v2.css" rel="stylesheet">
 
+{include file="_header.common.tpl"}
+
 {if isset($header_css)}
 {foreach from=$header_css item=css}
     <link type="text/css" rel="stylesheet" href="{$site_root_path}{$css}" />
@@ -70,7 +72,7 @@
 <body{if isset($body_classes)} class="{$body_classes}"{/if}{if isset($body_id)} id="{$body_id}"{/if}>
 
 <div class="container" id="container-navbar">
-    <header class="section navbar" id="section-navbar">
+    <header class="section navbar navbar-marketing" id="section-navbar">
         <div class="navbar-brand">
             <h1 class="logo"><a href="{$site_root_path}">ThinkUp</a></h1>
             <h2 class="tagline">Analytics for humans</h2>
@@ -83,7 +85,7 @@
             {else}<li class="nav-link"><a href="{$site_root_path}user/">Login</a></li>{/if}
             <li class="nav-link"><a href="{$site_root_path}pricing.php">Pricing</a></li>
             <li class="nav-link"><a href="{$site_root_path}about/">About</a></li>
-            {if (isset($hide_join) and not $hide_join) or not isset($hide_join)}<li class="nav-button"><a class="btn btn-pill" href="{$site_root_path}">Join now</a></li>{/if}
+            {if (isset($hide_join) and not $hide_join) or not isset($hide_join)}<li class="nav-button"><a class="btn btn-pill btn-signup" href="{$site_root_path}">Join now</a></li>{/if}
         </ul>
     </header>
 </div>
