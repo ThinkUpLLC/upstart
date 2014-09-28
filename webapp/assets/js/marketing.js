@@ -64,7 +64,7 @@
         return _results;
       }
     });
-    return $("#form-contact").submit(function(e) {
+    $("#form-contact").submit(function(e) {
       var $form, body, subject;
       e.preventDefault();
       $form = $(this);
@@ -74,6 +74,18 @@
       }
       body = $form.find("#control-body").val();
       return window.location.href = "mailto:help@thinkup.com?subject=" + (encodeURI(subject)) + "&body=" + (encodeURI(body));
+    });
+    $("body").on("click", "#container-signup-top .btn-twitter, #container-signup-top .btn-facebook", function() {
+      return ga('send', 'event', 'Signup Button', 'click', 'homepage (top)');
+    });
+    $("body").on("click", "#container-signup-bottom .btn-twitter, #container-signup-bottom .btn-facebook", function() {
+      return ga('send', 'event', 'Signup Button', 'click', 'homepage (bottom)');
+    });
+    $("body").on("click", "#marketing-subscribe .btn-twitter, #marketing-subscribe .btn-facebook", function() {
+      return ga('send', 'event', 'Signup Button', 'click', 'pricing');
+    });
+    return $("body").on("click", ".navbar-marketing .btn-signup", function() {
+      return ga('send', 'event', 'Signup Button', 'click', 'marketing navbar');
     });
   });
 

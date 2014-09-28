@@ -61,3 +61,16 @@ $ ->
     body = $form.find("#control-body").val()
 
     window.location.href = "mailto:help@thinkup.com?subject=#{encodeURI subject}&body=#{encodeURI body}"
+
+  # GOOG event tracking
+  $("body").on "click", "#container-signup-top .btn-twitter, #container-signup-top .btn-facebook", ->
+    ga('send', 'event', 'Signup Button', 'click', 'homepage (top)');
+
+  $("body").on "click", "#container-signup-bottom .btn-twitter, #container-signup-bottom .btn-facebook", ->
+    ga('send', 'event', 'Signup Button', 'click', 'homepage (bottom)');
+
+  $("body").on "click", "#marketing-subscribe .btn-twitter, #marketing-subscribe .btn-facebook", ->
+    ga('send', 'event', 'Signup Button', 'click', 'pricing');
+
+  $("body").on "click", ".navbar-marketing .btn-signup", ->
+    ga('send', 'event', 'Signup Button', 'click', 'marketing navbar');

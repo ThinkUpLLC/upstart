@@ -27,6 +27,7 @@
     <link href="{$site_root_path}assets/css/vendor/bootstrap.min.css" rel="stylesheet">
     <link href="{$site_root_path}assets/css/thinkup.css" rel="stylesheet">
 {/if}
+{include file="_header.common.tpl"}
 {if isset($header_css)}
 {foreach from=$header_css item=css}
     <link type="text/css" rel="stylesheet" href="{$site_root_path}{$css}" />
