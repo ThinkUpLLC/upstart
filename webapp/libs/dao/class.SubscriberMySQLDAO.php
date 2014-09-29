@@ -911,7 +911,7 @@ class SubscriberMySQLDAO extends PDODAO {
      */
     public function getSubscriptionsByWeek() {
         $q = "SELECT date(timestamp) as date, YEARWEEK(timestamp) as week_of_year, count(*) AS total_subs ";
-        $q .= "FROM subscription_operations where operation='pay' ";
+        $q .= "FROM subscription_operations where operation='pay' AND status_code='SS' ";
         $q .= "GROUP BY YEARWEEK(timestamp) ORDER BY timestamp DESC";
 
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
