@@ -6,7 +6,7 @@ body_classes="marketing marketing-page" body_id="marketing-press"}
       <h2 class="section-header">Press</h2>
       {include file="_about.nav.tpl" active="press"}
 
-      <p>For all press inqueries, please email us at <a href="mailto:team@thinkup.com">team@thinkup.com</a>. We’ve provided press materials below, but they’re also available <a href="https://www.dropbox.com/sh/qfwbfetv4wisg6t/AABJGJiUqoOr563AbfPLoCz9a">on Dropbox</a>.
+      <p>For all press inquiries, please email us at <a href="mailto:team@thinkup.com">team@thinkup.com</a>. We’ve provided press materials below, but they’re also available <a href="https://www.dropbox.com/sh/qfwbfetv4wisg6t/AABJGJiUqoOr563AbfPLoCz9a">on Dropbox</a>.
 
       <h4 class="hc text-header">Hi-res Logo</h4>
 
@@ -33,14 +33,14 @@ body_classes="marketing marketing-page" body_id="marketing-press"}
         <a href="{$site_root_path}assets/img/press/thinkup-profile-change-insight-2.png" class="grid-item"><img src="{$site_root_path}assets/img/press/thinkup-profile-change-insight-2.png" alt="Profile Change insight 2" class="image-fw" /><br>
         Download</a>
       </p>
-
+<!--
       <h4 class="hc text-header">Testimonials</h4>
 
       <p class="center">
         <a href="{$site_root_path}assets/img/press/thinkup-testimonial-hunter-owens.png"><img src="{$site_root_path}assets/img/press/thinkup-testimonial-hunter-owens.png" alt="Hunter Owens testimonial" class="image-fw" /><br>
         Download</a>
       </p>
-
+ -->
       <h4 class="hc text-header">Fact Sheet</h4>
 
       <p class="center">
