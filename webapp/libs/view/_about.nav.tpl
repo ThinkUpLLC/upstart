@@ -5,5 +5,6 @@
   <li><a {if $active eq 'privacy'}class="active" {/if}href="{$site_root_path}about/privacy.php">Privacy</a></li>
   <li><a {if $active eq 'faq'}class="active" {/if}href="{$site_root_path}about/faq.php">FAQ</a></li>
   <li><a {if $active eq 'book'}class="active" {/if}href="{$site_root_path}about/book.php">Book</a></li>
+  <li><a {if $active eq 'press'}class="active" {/if}href="{$site_root_path}about/press.php">Press</a></li>
   <li><a {if $active eq 'contact'}class="active" {/if}href="{$site_root_path}about/contact.php">Contact</a></li>
 </ul>

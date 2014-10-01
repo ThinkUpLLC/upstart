@@ -68,6 +68,21 @@ body.marketing-page {
       text-align: center;
     }
 
+    .two-col-grid {
+      .clearfix;
+
+      .grid-item {
+        float: left;
+        display: block;
+        width: 48%;
+        margin: 10px 2% 10px 0;
+
+        &:nth-of-type(2n) {
+          margin: 10px 0 10px 2%;
+        }
+      }
+    }
+
     .list-values {
       counter-reset: values;
       list-style: none;
@@ -314,6 +329,10 @@ body.marketing-page {
       padding: 24px 30px;
     }
   }
+
+  .section-press-materials p.center a {
+    font-size: .8em;
+  }
 }
 
 #section-about-text {
@@ -441,8 +460,24 @@ body.marketing-page {
       text-align: left;
     }
   }
+}
 
+// For full-width images
+.image-fw {
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
 
+.image-hw {
+  display: block;
+  max-width: 50%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.border-light {
+  border: 1px solid @gray-lightest;
 }
 
 // For colored headers
