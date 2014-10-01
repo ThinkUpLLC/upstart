@@ -23,4 +23,7 @@ body_classes="marketing marketing-page" body_id="marketing-confirm"}
 
     </section>
 
+<script>
+ga('set', 'title', 'Payment Confirmation');
+</script>
 {include file="_footer.marketing.tpl"}

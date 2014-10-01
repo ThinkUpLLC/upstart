@@ -15,4 +15,7 @@ body_classes="marketing marketing-page" body_id="marketing-welcome"}
       <p>Join ThinkUp now for just ${if $new_subscriber->membership_level == 'Pro'}10{else}5{/if} a month and get <strong>the book we wrote for you</strong>! Our exclusive ebook <em>Insights</em> offers interviews with the smartest people in social media.</p>
     </section>
 
+<script>
+ga('set', 'title', 'Registration Complete');
+</script>
 {include file="_footer.marketing.tpl" hide_footer=true}
