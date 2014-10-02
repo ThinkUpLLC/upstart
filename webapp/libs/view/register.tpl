@@ -79,4 +79,8 @@
       <input type="Submit" name="Submit" value="Create Account" class="btn btn-pill btn-submit is-static">
     </form>
 
+<script>
+ga('set', 'title', 'Register');
+ga('set', 'page', '/register.php{if isset($network_username)}?n={$network}{/if}{if isset($smarty.get.level)}&level={$smarty.get.level}{/if}');
+</script>
 {include file="_appfooter.tpl" include_tz_js=true}

@@ -1,4 +1,6 @@
 {literal}<script type="text/javascript">
+ga('send', 'pageview');
+
 var _sf_async_config={uid:2383,domain:"thinkup.com"};
 (function(){
   function loadChartbeat() {
