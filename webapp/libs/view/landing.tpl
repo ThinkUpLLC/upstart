@@ -21,43 +21,39 @@
     <h3 class="section-header">What is ThinkUp?</h3>
     <div class="section-copy">
       <p>ThinkUp is a smart, simple web app that analyzes your activity on Facebook and Twitter. ThinkUp gives you fun and surprising insights about what you and your friends are doing online.</p>
-      <div class="section-insights-carousel carousel" id="sample-insights-carousel"
-        data-ride="carousel" data-interval="2500">
-        <ul class="carousel-indicators">
-          <li data-target="#sample-insights-carousel" data-slide-to="0" class="active"><a href="#">1</a></li>
-          <li data-target="#sample-insights-carousel" data-slide-to="1"><a href="#">2</a></li>
-          <li data-target="#sample-insights-carousel" data-slide-to="2"><a href="#">3</a></li>
-          <li data-target="#sample-insights-carousel" data-slide-to="3"><a href="#">4</a></li>
-          <li data-target="#sample-insights-carousel" data-slide-to="4"><a href="#">5</a></li>
-          <li data-target="#sample-insights-carousel" data-slide-to="5"><a href="#">6</a></li>
-          <li data-target="#sample-insights-carousel" data-slide-to="6"><a href="#">7</a></li>
-          <li data-target="#sample-insights-carousel" data-slide-to="7"><a href="#">8</a></li>
-
-        </ul>
-        <div class="sample-insights carousel-inner">
-          <figure class="item active" id="sample-1">
-            <div class="sample-insight"></div>
+      <div class="section-insights-carousel">
+        <div class="sample-insights">
+          <figure class="sample-insight" id="sample-1">
+            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <div class="sample-insight-img"></div>
           </figure>
-          <figure class="item" id="sample-2">
-            <div class="sample-insight"></div>
+          <figure class="sample-insight" id="sample-2">
+            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <div class="sample-insight-img"></div>
           </figure>
-          <figure class="item" id="sample-3">
-            <div class="sample-insight"></div>
+          <figure class="sample-insight" id="sample-3">
+            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <div class="sample-insight-img"></div>
           </figure>
-          <figure class="item" id="sample-4">
-            <div class="sample-insight"></div>
+          <figure class="sample-insight" id="sample-4">
+            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <div class="sample-insight-img"></div>
           </figure>
-          <figure class="item" id="sample-5">
-            <div class="sample-insight"></div>
+          <figure class="sample-insight" id="sample-5">
+            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <div class="sample-insight-img"></div>
           </figure>
-          <figure class="item" id="sample-6">
-            <div class="sample-insight"></div>
+          <figure class="sample-insight" id="sample-6">
+            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <div class="sample-insight-img"></div>
           </figure>
-          <figure class="item" id="sample-7">
-            <div class="sample-insight"></div>
+          <figure class="sample-insight" id="sample-7">
+            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <div class="sample-insight-img"></div>
           </figure>
-          <figure class="item" id="sample-8">
-            <div class="sample-insight"></div>
+          <figure class="sample-insight" id="sample-8">
+            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <div class="sample-insight-img"></div>
           </figure>
         </div>
       </div>

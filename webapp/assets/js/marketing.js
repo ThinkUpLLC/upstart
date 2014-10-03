@@ -1,5 +1,5 @@
 (function() {
-  var wt;
+  var stickyHeader, wt;
 
   wt = window.tu = {};
 
@@ -47,7 +47,34 @@
     }
   };
 
+  stickyHeader = function() {
+    var $navbar, $stickyNav, $stickyNavSection, breakpoint;
+    $navbar = $("#container-navbar");
+    breakpoint = $("#container-what").offset().top;
+    if ($(window).scrollTop() > breakpoint && $("#container-navbar-sticky").length === 0) {
+      $stickyNav = $navbar.clone().attr("id", "container-navbar-sticky").addClass("sticky").css("top", $navbar.outerHeight() * -1);
+      $stickyNavSection = $stickyNav.find(".section").attr("id", "section-navbar-sticky");
+      $stickyNav.find(".nav-button").removeClass("is-hidden");
+      $("body").append($stickyNav);
+      $stickyNav.animate({
+        top: 0
+      });
+    }
+    if ($(window).scrollTop() < breakpoint && $("#container-navbar-sticky").length === 1) {
+      return $("#container-navbar-sticky").animate({
+        top: -120
+      }, function() {
+        return $(this).remove();
+      });
+    }
+  };
+
   $(function() {
+    if ($("body").hasClass("landing")) {
+      $(window).scroll(function() {
+        return stickyHeader();
+      });
+    }
     $.getJSON("https://api.tumblr.com/v2/blog/thinkupapp.tumblr.com/posts/text?api_key=IQYCrVox6Ltyy4IqbbJWoIM9Czw0WzPGgzKWPg69WEFIa5mTtm&limit=3&callback=?", function(data) {
       var $posts, d, dateStr, mo, post, _i, _len, _ref, _ref1, _results;
       if (data != null ? (_ref = data.response) != null ? _ref.posts.length : void 0 : void 0) {

@@ -200,7 +200,7 @@
   height: auto;
 
   @media (min-width: 760px) {
-    height: 500px;
+    height: 400px;
   }
 
   .section-header {
@@ -211,7 +211,7 @@
 
     @media (min-width: 760px) {
       font-size: 2.75rem;
-      padding: 75px 0 25px;
+      padding: 25px 0;
     }
   }
 
@@ -254,107 +254,65 @@
 
 #container-what {
   .section-colors(@color-mint, #fff);
-
-  height: 625px;
-
-  @media (min-width: 760px) {
-    height: 500px;
-  }
+  height: auto;
 
   .section-copy {
-    font-size: 1rem;
-    line-height: (26/20);
-
-    @media (min-width: 760px) {
-      padding: 24px 600px 0 0;
-      max-width: none;
-      text-align: right;
-    }
-
-    @media (min-width: 800px) {
-      font-size: 1.25rem;
+    p {
+      font-size: 1rem;
+      @media (min-width: 760px) {
+        font-size: 1.125rem;
+        text-align: center;
+        width: 75%;
+        margin: 0 auto;
+      }
     }
 
     .section-insights-carousel {
+      margin-top: 20px;
       width: 100%;
-      position: relative;
       text-align: center;
-      padding: 20px 0 30px;
-      margin-left: -5px;
-
-      @media (min-width: 760px) {
-        text-align: left;
-        position: absolute;
-        top: 10px;
-        right: 0;
-        width: 540px;
-        height: 300px;
-        margin-left: 0;
-      }
-
-      figcaption {
-        color: darken(@color-mint, 30%);
-        font-size: 1rem;
-        line-height: 1.25;
-      }
-    }
-
-    .carousel-indicators {
-      margin: 0;
-      padding: 0 0 15px;
-
-      @media (min-width: 760px) {
-        position: absolute;
-        left: -52px;
-        top: 15px;
-        padding: 0;
-      }
-
-      li {
-        list-style: none;
-        padding: 10px 5px;
-        margin: 0;
-        display: inline-block;
-
-        @media (min-width: 760px) {
-          display: block;
-          padding: 5px 10px;
-        }
-
-        a {
-          display: block;
-          color: mix(@color-mint, #fff, 25%);
-          background: darken(@color-mint, 20%);
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          font-weight: 300;
-          font-size: .875rem;
-          line-height: (24/14);
-          text-align: center;
-        }
-
-        a:hover, &.active a {
-          color: #fff;
-          background: darken(@color-mint, 30%);
-          text-decoration: none;
-        }
-
-      }
-    }
-
-    .sample-insights {
-      figure {
-        display: none;
-        width: 100%;
-
-        &.active {
-          display: block;
-        }
-      }
     }
 
     .sample-insight {
+      margin-bottom: 30px;
+
+      // @media (min-width: 960px) {
+      //   .clearfix;
+
+      //   figcaption {
+      //     float: left;
+      //     width: 400px;
+      //   }
+
+      //   .sample-insight-img {
+      //     float: right;
+      //     width: 540px;
+      //   }
+
+      //   &:nth-of-type(2n) {
+      //     figcaption {
+      //       float: right;
+      //     }
+
+      //     .sample-insight-img {
+      //       float: left;
+      //     }
+      //   }
+      // }
+    }
+
+    figcaption {
+      color: darken(@color-mint, 30%);
+      font-size: 1.125rem;
+      line-height: 1.25;
+      margin-bottom: 10px;
+
+      @media (min-width: 760px) {
+        font-size: 1.25rem;
+      }
+    }
+
+    .sample-insight-img {
       box-shadow: 0 4px 8px rgba(0,0,0,.2);
       display: block;
       margin: 0 auto 10px;
@@ -363,7 +321,7 @@
       width: 310px;
     }
 
-    .carousel-insight(@m_height, @d_height, @file_prefix) {
+    .insight-img(@m_height, @d_height, @file_prefix) {
       height: @m_height;
       background: url("../img/landing/@{file_prefix}-mobile@2x.png") top left no-repeat;
       background-size: 310px @m_height;
@@ -376,34 +334,34 @@
       }
     }
 
-    #sample-1 .sample-insight {
-      .carousel-insight(208px, 146px, "insight-personal");
+    #sample-1 .sample-insight-img {
+      .insight-img(208px, 146px, "insight-personal");
     }
 
-    #sample-2 .sample-insight {
-      .carousel-insight(231px, 187px, "insight-lol");
+    #sample-2 .sample-insight-img {
+      .insight-img(231px, 187px, "insight-lol");
     }
 
-    #sample-3 .sample-insight {
-      .carousel-insight(305px, 225px, "insight-history");
+    #sample-3 .sample-insight-img {
+      .insight-img(305px, 225px, "insight-history");
     }
 
-    #sample-4 .sample-insight {
-      .carousel-insight(315px, 285px, "insight-followers");
+    #sample-4 .sample-insight-img {
+      .insight-img(315px, 285px, "insight-followers");
     }
 
-    #sample-5 .sample-insight {
-      .carousel-insight(369px, 338px, "insight-oscars");
+    #sample-5 .sample-insight-img {
+      .insight-img(369px, 338px, "insight-oscars");
     }
 
-    #sample-6 .sample-insight {
-      .carousel-insight(316px, 256px, "insight-fans");
+    #sample-6 .sample-insight-img {
+      .insight-img(316px, 256px, "insight-fans");
     }
-    #sample-7 .sample-insight {
-      .carousel-insight(386px, 321px, "insight-popular");
+    #sample-7 .sample-insight-img {
+      .insight-img(386px, 321px, "insight-popular");
     }
-    #sample-8 .sample-insight {
-      .carousel-insight(306px, 199px, "insight-time");
+    #sample-8 .sample-insight-img {
+      .insight-img(306px, 199px, "insight-time");
     }
   }
 }

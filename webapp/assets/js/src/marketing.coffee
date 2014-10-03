@@ -29,7 +29,31 @@ wt.appMessage =
     if app_message? and app_message.msg? and app_message.type?
       wt.appMessage.create app_message.msg, app_message.type
 
+stickyHeader = ->
+  $navbar = $("#container-navbar")
+  breakpoint = $("#container-what").offset().top
+  if $(window).scrollTop() > breakpoint and $("#container-navbar-sticky").length is 0
+    $stickyNav = $navbar.clone().attr("id", "container-navbar-sticky")
+      .addClass("sticky")
+      .css("top", $navbar.outerHeight() * -1)
+    $stickyNavSection = $stickyNav.find(".section").attr("id", "section-navbar-sticky")
+    $stickyNav.find(".nav-button").removeClass("is-hidden")
+    $("body").append($stickyNav)
+    $stickyNav.animate(
+      top: 0
+    )
+
+  if $(window).scrollTop() < breakpoint and $("#container-navbar-sticky").length is 1
+    $("#container-navbar-sticky").animate(
+      top: -120
+    , ->
+      $(@).remove()
+    )
+
 $ ->
+  if $("body").hasClass("landing")
+    $(window).scroll -> stickyHeader()
+
   $.getJSON "https://api.tumblr.com/v2/blog/thinkupapp.tumblr.com/posts/text?api_key=IQYCrVox6Ltyy4IqbbJWoIM9Czw0WzPGgzKWPg69WEFIa5mTtm&limit=3&callback=?", (data) ->
       if data?.response?.posts.length
         mo = [

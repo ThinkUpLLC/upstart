@@ -87,37 +87,46 @@ body {
   padding: 10px;
   margin: 0 auto;
 }
-#container-navbar {
+#container-navbar,
+#container-navbar-sticky {
   height: auto;
 }
 @media (min-width: 560px) {
-  #container-navbar {
+  #container-navbar,
+  #container-navbar-sticky {
     min-height: 120px;
   }
 }
-#section-navbar {
+#section-navbar,
+#section-navbar-sticky {
   padding: 20px 10px 0;
 }
 #section-navbar:before,
-#section-navbar:after {
+#section-navbar-sticky:before,
+#section-navbar:after,
+#section-navbar-sticky:after {
   content: " ";
   /* 1 */
   display: table;
   /* 2 */
 }
-#section-navbar:after {
+#section-navbar:after,
+#section-navbar-sticky:after {
   clear: both;
 }
 @media (min-width: 560px) {
-  #section-navbar {
+  #section-navbar,
+  #section-navbar-sticky {
     padding-bottom: 10px;
   }
 }
-#section-navbar .navbar-brand {
+#section-navbar .navbar-brand,
+#section-navbar-sticky .navbar-brand {
   position: relative;
   float: left;
 }
-#section-navbar .navbar-brand .logo {
+#section-navbar .navbar-brand .logo,
+#section-navbar-sticky .navbar-brand .logo {
   margin: 0;
   text-indent: 100%;
   font-size: 0;
@@ -126,13 +135,15 @@ body {
   background: url(../img/thinkup-logo@2x.png) 0 0 no-repeat;
   background-size: 140px 39px;
 }
-#section-navbar .navbar-brand .logo a {
+#section-navbar .navbar-brand .logo a,
+#section-navbar-sticky .navbar-brand .logo a {
   display: block;
   height: 100%;
   width: 100%;
 }
 @media (min-width: 560px) {
-  #section-navbar .navbar-brand .logo {
+  #section-navbar .navbar-brand .logo,
+  #section-navbar-sticky .navbar-brand .logo {
     width: 196px;
     height: 54px;
     background: url(../img/thinkup-logo@2x.png) 0 0 no-repeat;
@@ -140,7 +151,8 @@ body {
     margin-top: 5px;
   }
 }
-#section-navbar .navbar-brand .tagline {
+#section-navbar .navbar-brand .tagline,
+#section-navbar-sticky .navbar-brand .tagline {
   position: relative;
   font-size: 12px;
   line-height: 1;
@@ -151,17 +163,20 @@ body {
   left: 8px;
 }
 @media (min-width: 560px) {
-  #section-navbar .navbar-brand .tagline {
+  #section-navbar .navbar-brand .tagline,
+  #section-navbar-sticky .navbar-brand .tagline {
     font-size: 18px;
     top: -7px;
     left: 11px;
   }
 }
-#section-navbar .navbar-brand .beta-tag {
+#section-navbar .navbar-brand .beta-tag,
+#section-navbar-sticky .navbar-brand .beta-tag {
   display: none;
 }
 @media (min-width: 560px) {
-  #section-navbar .navbar-brand .beta-tag {
+  #section-navbar .navbar-brand .beta-tag,
+  #section-navbar-sticky .navbar-brand .beta-tag {
     display: block;
     position: absolute;
     top: -70px;
@@ -177,15 +192,83 @@ body {
     text-align: center;
   }
 }
-#section-navbar .navbar-nav {
+#section-navbar .navbar-nav,
+#section-navbar-sticky .navbar-nav {
   position: relative;
   top: -10px;
 }
 @media (min-width: 560px) {
-  #section-navbar .navbar-nav {
+  #section-navbar .navbar-nav,
+  #section-navbar-sticky .navbar-nav {
     float: right;
     min-width: 220px;
     max-width: 300px;
+    text-align: center;
+  }
+}
+body.has-sticky-navbar {
+  padding-top: 120px;
+}
+#container-navbar-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: white;
+  min-height: 75px;
+  z-index: 99;
+  box-shadow: 0 0 4px #ccc;
+}
+#container-navbar-sticky #section-navbar-sticky {
+  padding-top: 15px;
+}
+@media (min-width: 560px) {
+  #container-navbar-sticky #section-navbar-sticky {
+    padding-top: 10px;
+  }
+}
+#container-navbar-sticky #section-navbar-sticky .navbar-brand .logo {
+  width: 140px;
+  height: 39px;
+  background-size: 140px 39px;
+}
+@media (max-width: 400px) {
+  #container-navbar-sticky #section-navbar-sticky .navbar-brand .logo {
+    margin-top: 4px;
+    width: 112px;
+    height: 31px;
+    background-size: 112px 31px;
+  }
+}
+#container-navbar-sticky #section-navbar-sticky .navbar-brand .tagline {
+  font-size: 12px;
+  top: -5px;
+  left: 8px;
+}
+#container-navbar-sticky #section-navbar-sticky .navbar-brand .beta-tag {
+  display: none;
+}
+#container-navbar-sticky #section-navbar-sticky .navbar-nav {
+  top: 0;
+  float: right;
+  min-width: 140px;
+  max-width: 300px;
+  text-align: center;
+}
+@media (min-width: 560px) {
+  #container-navbar-sticky #section-navbar-sticky .navbar-nav {
+    top: 5px;
+    min-width: 220px;
+    text-align: right;
+  }
+}
+#container-navbar-sticky #section-navbar-sticky .navbar-nav .nav-link {
+  display: none;
+}
+#container-navbar-sticky #section-navbar-sticky .navbar-nav .nav-button {
+  text-align: right;
+}
+@media (min-width: 560px) {
+  #container-navbar-sticky #section-navbar-sticky .navbar-nav .nav-button {
     text-align: center;
   }
 }
@@ -220,6 +303,9 @@ body {
 .nav .nav-button {
   clear: both;
   text-align: center;
+}
+.nav .nav-button.is-hidden {
+  display: none;
 }
 #container-footer {
   background: #f0f0f0;
@@ -656,7 +742,7 @@ a.btn-pill-large:hover {
 }
 @media (min-width: 760px) {
   #container-signup-top {
-    height: 500px;
+    height: 400px;
   }
 }
 #container-signup-top .section-header {
@@ -668,7 +754,7 @@ a.btn-pill-large:hover {
 @media (min-width: 760px) {
   #container-signup-top .section-header {
     font-size: 2.75rem;
-    padding: 75px 0 25px;
+    padding: 25px 0;
   }
 }
 #container-signup-top .section-copy {
@@ -708,7 +794,7 @@ a.btn-pill-large:hover {
 }
 #container-what {
   background-color: #41dab3;
-  height: 625px;
+  height: auto;
 }
 #container-what .section-header {
   color: #ffffff;
@@ -716,100 +802,37 @@ a.btn-pill-large:hover {
 #container-what .section-copy {
   color: #ffffff;
 }
-@media (min-width: 760px) {
-  #container-what {
-    height: 500px;
-  }
-}
-#container-what .section-copy {
+#container-what .section-copy p {
   font-size: 1rem;
-  line-height: 1.3;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy {
-    padding: 24px 600px 0 0;
-    max-width: none;
-    text-align: right;
-  }
-}
-@media (min-width: 800px) {
-  #container-what .section-copy {
-    font-size: 1.25rem;
+  #container-what .section-copy p {
+    font-size: 1.125rem;
+    text-align: center;
+    width: 75%;
+    margin: 0 auto;
   }
 }
 #container-what .section-copy .section-insights-carousel {
+  margin-top: 20px;
   width: 100%;
-  position: relative;
   text-align: center;
-  padding: 20px 0 30px;
-  margin-left: -5px;
-}
-@media (min-width: 760px) {
-  #container-what .section-copy .section-insights-carousel {
-    text-align: left;
-    position: absolute;
-    top: 10px;
-    right: 0;
-    width: 540px;
-    height: 300px;
-    margin-left: 0;
-  }
-}
-#container-what .section-copy .section-insights-carousel figcaption {
-  color: #156d56;
-  font-size: 1rem;
-  line-height: 1.25;
-}
-#container-what .section-copy .carousel-indicators {
-  margin: 0;
-  padding: 0 0 15px;
-}
-@media (min-width: 760px) {
-  #container-what .section-copy .carousel-indicators {
-    position: absolute;
-    left: -52px;
-    top: 15px;
-    padding: 0;
-  }
-}
-#container-what .section-copy .carousel-indicators li {
-  list-style: none;
-  padding: 10px 5px;
-  margin: 0;
-  display: inline-block;
-}
-@media (min-width: 760px) {
-  #container-what .section-copy .carousel-indicators li {
-    display: block;
-    padding: 5px 10px;
-  }
-}
-#container-what .section-copy .carousel-indicators li a {
-  display: block;
-  color: #d0f6ec;
-  background: #1e9778;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  font-weight: 300;
-  font-size: .875rem;
-  line-height: 1.71428571;
-  text-align: center;
-}
-#container-what .section-copy .carousel-indicators li a:hover,
-#container-what .section-copy .carousel-indicators li.active a {
-  color: #fff;
-  background: #156d56;
-  text-decoration: none;
-}
-#container-what .section-copy .sample-insights figure {
-  display: none;
-  width: 100%;
-}
-#container-what .section-copy .sample-insights figure.active {
-  display: block;
 }
 #container-what .section-copy .sample-insight {
+  margin-bottom: 30px;
+}
+#container-what .section-copy figcaption {
+  color: #156d56;
+  font-size: 1.125rem;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+@media (min-width: 760px) {
+  #container-what .section-copy figcaption {
+    font-size: 1.25rem;
+  }
+}
+#container-what .section-copy .sample-insight-img {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: block;
   margin: 0 auto 10px;
@@ -817,104 +840,104 @@ a.btn-pill-large:hover {
   font: 0/0 a;
   width: 310px;
 }
-#container-what .section-copy #sample-1 .sample-insight {
+#container-what .section-copy #sample-1 .sample-insight-img {
   height: 208px;
   background: url("../img/landing/insight-personal-mobile@2x.png") top left no-repeat;
   background-size: 310px 208px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy #sample-1 .sample-insight {
+  #container-what .section-copy #sample-1 .sample-insight-img {
     width: 540px;
     height: 146px;
     background: url("../img/landing/insight-personal-desktop@2x.png") top left no-repeat;
     background-size: 540px 146px;
   }
 }
-#container-what .section-copy #sample-2 .sample-insight {
+#container-what .section-copy #sample-2 .sample-insight-img {
   height: 231px;
   background: url("../img/landing/insight-lol-mobile@2x.png") top left no-repeat;
   background-size: 310px 231px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy #sample-2 .sample-insight {
+  #container-what .section-copy #sample-2 .sample-insight-img {
     width: 540px;
     height: 187px;
     background: url("../img/landing/insight-lol-desktop@2x.png") top left no-repeat;
     background-size: 540px 187px;
   }
 }
-#container-what .section-copy #sample-3 .sample-insight {
+#container-what .section-copy #sample-3 .sample-insight-img {
   height: 305px;
   background: url("../img/landing/insight-history-mobile@2x.png") top left no-repeat;
   background-size: 310px 305px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy #sample-3 .sample-insight {
+  #container-what .section-copy #sample-3 .sample-insight-img {
     width: 540px;
     height: 225px;
     background: url("../img/landing/insight-history-desktop@2x.png") top left no-repeat;
     background-size: 540px 225px;
   }
 }
-#container-what .section-copy #sample-4 .sample-insight {
+#container-what .section-copy #sample-4 .sample-insight-img {
   height: 315px;
   background: url("../img/landing/insight-followers-mobile@2x.png") top left no-repeat;
   background-size: 310px 315px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy #sample-4 .sample-insight {
+  #container-what .section-copy #sample-4 .sample-insight-img {
     width: 540px;
     height: 285px;
     background: url("../img/landing/insight-followers-desktop@2x.png") top left no-repeat;
     background-size: 540px 285px;
   }
 }
-#container-what .section-copy #sample-5 .sample-insight {
+#container-what .section-copy #sample-5 .sample-insight-img {
   height: 369px;
   background: url("../img/landing/insight-oscars-mobile@2x.png") top left no-repeat;
   background-size: 310px 369px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy #sample-5 .sample-insight {
+  #container-what .section-copy #sample-5 .sample-insight-img {
     width: 540px;
     height: 338px;
     background: url("../img/landing/insight-oscars-desktop@2x.png") top left no-repeat;
     background-size: 540px 338px;
   }
 }
-#container-what .section-copy #sample-6 .sample-insight {
+#container-what .section-copy #sample-6 .sample-insight-img {
   height: 316px;
   background: url("../img/landing/insight-fans-mobile@2x.png") top left no-repeat;
   background-size: 310px 316px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy #sample-6 .sample-insight {
+  #container-what .section-copy #sample-6 .sample-insight-img {
     width: 540px;
     height: 256px;
     background: url("../img/landing/insight-fans-desktop@2x.png") top left no-repeat;
     background-size: 540px 256px;
   }
 }
-#container-what .section-copy #sample-7 .sample-insight {
+#container-what .section-copy #sample-7 .sample-insight-img {
   height: 386px;
   background: url("../img/landing/insight-popular-mobile@2x.png") top left no-repeat;
   background-size: 310px 386px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy #sample-7 .sample-insight {
+  #container-what .section-copy #sample-7 .sample-insight-img {
     width: 540px;
     height: 321px;
     background: url("../img/landing/insight-popular-desktop@2x.png") top left no-repeat;
     background-size: 540px 321px;
   }
 }
-#container-what .section-copy #sample-8 .sample-insight {
+#container-what .section-copy #sample-8 .sample-insight-img {
   height: 306px;
   background: url("../img/landing/insight-time-mobile@2x.png") top left no-repeat;
   background-size: 310px 306px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy #sample-8 .sample-insight {
+  #container-what .section-copy #sample-8 .sample-insight-img {
     width: 540px;
     height: 199px;
     background: url("../img/landing/insight-time-desktop@2x.png") top left no-repeat;

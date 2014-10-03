@@ -91,7 +91,7 @@ body {
   margin: 0 auto;
 }
 
-#container-navbar {
+#container-navbar, #container-navbar-sticky {
   height: auto;
 
   @media (min-width: 560px) {
@@ -99,7 +99,7 @@ body {
   }
 }
 
-#section-navbar {
+#section-navbar, #section-navbar-sticky {
   .clearfix;
   padding: 20px 10px 0;
 
@@ -186,6 +186,80 @@ body {
   }
 }
 
+body.has-sticky-navbar {
+  // The top padding is determined programatically for viewports below 560px
+
+  padding-top: 120px;
+}
+
+#container-navbar-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: white;
+  min-height: 75px;
+  z-index: 99;
+  box-shadow: 0 0 4px #ccc;
+
+  #section-navbar-sticky {
+    padding-top: 15px;
+
+    @media (min-width: 560px) {
+      padding-top: 10px;
+    }
+
+    .navbar-brand {
+      .logo {
+        width: 140px;
+        height: 39px;
+        background-size: 140px 39px;
+
+        @media (max-width: 400px) {
+          margin-top: 4px;
+          width: 112px;
+          height: 31px;
+          background-size: 112px 31px;
+        }
+      }
+
+      .tagline {
+        font-size: 12px;
+        top: -5px;
+        left: 8px;
+      }
+
+      .beta-tag {
+        display: none;
+      }
+    }
+
+    .navbar-nav {
+      top: 0;
+      float: right;
+      min-width: 140px;
+      max-width: 300px;
+      text-align: center;
+
+      @media (min-width: 560px) {
+        top: 5px;
+        min-width: 220px;
+        text-align: right;
+      }
+
+      .nav-link {
+        display: none;
+      }
+
+      .nav-button {
+        text-align: right;
+        @media (min-width: 560px) {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
 .nav {
   padding: 0;
   margin: 0;
@@ -220,6 +294,10 @@ body {
   .nav-button {
     clear: both;
     text-align: center;
+
+    &.is-hidden {
+      display: none;
+    }
   }
 }
 
