@@ -206,12 +206,9 @@ body {
     text-align: center;
   }
 }
-body.has-sticky-navbar {
-  padding-top: 120px;
-}
 #container-navbar-sticky {
   position: fixed;
-  top: 0;
+  top: -120px;
   left: 0;
   background: white;
   min-height: 75px;
@@ -219,12 +216,7 @@ body.has-sticky-navbar {
   box-shadow: 0 0 4px #ccc;
 }
 #container-navbar-sticky #section-navbar-sticky {
-  padding-top: 15px;
-}
-@media (min-width: 560px) {
-  #container-navbar-sticky #section-navbar-sticky {
-    padding-top: 10px;
-  }
+  padding-top: 10px;
 }
 #container-navbar-sticky #section-navbar-sticky .navbar-brand .logo {
   width: 140px;
@@ -233,43 +225,75 @@ body.has-sticky-navbar {
 }
 @media (max-width: 400px) {
   #container-navbar-sticky #section-navbar-sticky .navbar-brand .logo {
-    margin-top: 4px;
-    width: 112px;
-    height: 31px;
-    background-size: 112px 31px;
+    margin-top: 9px;
+    width: 98px;
+    height: 27.3px;
+    background-size: 98px 27.3px;
   }
 }
 #container-navbar-sticky #section-navbar-sticky .navbar-brand .tagline {
-  font-size: 12px;
+  font-size: 13px;
   top: -5px;
   left: 8px;
+}
+@media (max-width: 400px) {
+  #container-navbar-sticky #section-navbar-sticky .navbar-brand .tagline {
+    font-size: 12px;
+    top: -2px;
+    left: 4px;
+  }
 }
 #container-navbar-sticky #section-navbar-sticky .navbar-brand .beta-tag {
   display: none;
 }
-#container-navbar-sticky #section-navbar-sticky .navbar-nav {
-  top: 0;
+#container-navbar-sticky #section-navbar-sticky .signup-buttons {
   float: right;
-  min-width: 140px;
-  max-width: 300px;
-  text-align: center;
+  width: 170px;
 }
-@media (min-width: 560px) {
-  #container-navbar-sticky #section-navbar-sticky .navbar-nav {
-    top: 5px;
-    min-width: 220px;
-    text-align: right;
-  }
+#container-navbar-sticky #section-navbar-sticky .signup-buttons:before {
+  display: block;
+  content: "Sign up with:";
+  font-size: .75rem;
+  line-height: 1;
+  padding-bottom: 5px;
+  color: #666666;
 }
-#container-navbar-sticky #section-navbar-sticky .navbar-nav .nav-link {
+#container-navbar-sticky #section-navbar-sticky .signup-buttons .btn {
+  height: 30px;
+  font-size: 14px;
+  line-height: 14px;
+  padding: 8px 0;
+  width: 80px;
+  margin-bottom: 0;
+}
+#container-navbar-sticky #section-navbar-sticky .signup-buttons .btn small,
+#container-navbar-sticky #section-navbar-sticky .signup-buttons .btn br {
   display: none;
 }
-#container-navbar-sticky #section-navbar-sticky .navbar-nav .nav-button {
-  text-align: right;
+#container-navbar-sticky #section-navbar-sticky .signup-buttons .btn:first-child {
+  margin-right: 5px;
 }
 @media (min-width: 560px) {
-  #container-navbar-sticky #section-navbar-sticky .navbar-nav .nav-button {
-    text-align: center;
+  #container-navbar-sticky #section-navbar-sticky .signup-buttons {
+    width: 300px;
+  }
+  #container-navbar-sticky #section-navbar-sticky .signup-buttons:before {
+    display: none;
+  }
+  #container-navbar-sticky #section-navbar-sticky .signup-buttons .btn {
+    width: 140px;
+    height: 60px;
+    padding: 1px 20px;
+    font-size: 1.5rem;
+    line-height: 1;
+    margin: 0;
+  }
+  #container-navbar-sticky #section-navbar-sticky .signup-buttons .btn small,
+  #container-navbar-sticky #section-navbar-sticky .signup-buttons .btn br {
+    display: inherit;
+  }
+  #container-navbar-sticky #section-navbar-sticky .signup-buttons .btn:first-child {
+    margin-right: 15px;
   }
 }
 .nav {
@@ -795,6 +819,7 @@ a.btn-pill-large:hover {
 #container-what {
   background-color: #41dab3;
   height: auto;
+  padding-bottom: 30px;
 }
 #container-what .section-header {
   color: #ffffff;

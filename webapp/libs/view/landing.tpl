@@ -24,37 +24,35 @@
       <div class="section-insights-carousel">
         <div class="sample-insights">
           <figure class="sample-insight" id="sample-1">
-            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <figcaption>Are you talking about yourself too much?</figcaption>
             <div class="sample-insight-img"></div>
           </figure>
           <figure class="sample-insight" id="sample-2">
-            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <figcaption>What got a laugh?</figcaption>
             <div class="sample-insight-img"></div>
           </figure>
           <figure class="sample-insight" id="sample-3">
-            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <figcaption>What special moment happened a year ago?</figcaption>
             <div class="sample-insight-img"></div>
           </figure>
           <figure class="sample-insight" id="sample-4">
-            <figcaption>This is the explanatory title for the insight.</figcaption>
-            <div class="sample-insight-img"></div>
-          </figure>
-          <figure class="sample-insight" id="sample-5">
-            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <figcaption>What does your network really look like?</figcaption>
             <div class="sample-insight-img"></div>
           </figure>
           <figure class="sample-insight" id="sample-6">
-            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <figcaption>Who were your biggest fans this week?</figcaption>
             <div class="sample-insight-img"></div>
           </figure>
           <figure class="sample-insight" id="sample-7">
-            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <figcaption>Which of your ideas connected the best with your friends?</figcaption>
             <div class="sample-insight-img"></div>
           </figure>
           <figure class="sample-insight" id="sample-8">
-            <figcaption>This is the explanatory title for the insight.</figcaption>
+            <figcaption>When is the best time to share something important?</figcaption>
             <div class="sample-insight-img"></div>
           </figure>
+
+          <p>&hellip;and hundreds more!</p>
         </div>
       </div>
     </div>

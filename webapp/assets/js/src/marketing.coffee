@@ -37,7 +37,8 @@ stickyHeader = ->
       .addClass("sticky")
       .css("top", $navbar.outerHeight() * -1)
     $stickyNavSection = $stickyNav.find(".section").attr("id", "section-navbar-sticky")
-    $stickyNav.find(".nav-button").removeClass("is-hidden")
+    $stickyNav.find(".nav").remove()
+    $stickyNavSection.append($("#section-signup-bottom .signup-buttons").clone())
     $("body").append($stickyNav)
     $stickyNav.animate(
       top: 0

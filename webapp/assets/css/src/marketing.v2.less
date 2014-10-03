@@ -186,15 +186,10 @@ body {
   }
 }
 
-body.has-sticky-navbar {
-  // The top padding is determined programatically for viewports below 560px
-
-  padding-top: 120px;
-}
 
 #container-navbar-sticky {
   position: fixed;
-  top: 0;
+  top: -120px;
   left: 0;
   background: white;
   min-height: 75px;
@@ -202,11 +197,7 @@ body.has-sticky-navbar {
   box-shadow: 0 0 4px #ccc;
 
   #section-navbar-sticky {
-    padding-top: 15px;
-
-    @media (min-width: 560px) {
-      padding-top: 10px;
-    }
+    padding-top: 10px;
 
     .navbar-brand {
       .logo {
@@ -215,17 +206,23 @@ body.has-sticky-navbar {
         background-size: 140px 39px;
 
         @media (max-width: 400px) {
-          margin-top: 4px;
-          width: 112px;
-          height: 31px;
-          background-size: 112px 31px;
+          margin-top: 9px;
+          width: 140px * .7;
+          height: 39px * .7;
+          background-size: 140px * .7 39px * .7;
         }
       }
 
       .tagline {
-        font-size: 12px;
+        font-size: 13px;
         top: -5px;
         left: 8px;
+
+        @media (max-width: 400px) {
+          font-size: 12px;
+          top: -2px;
+          left: 4px;
+        }
       }
 
       .beta-tag {
@@ -233,29 +230,61 @@ body.has-sticky-navbar {
       }
     }
 
-    .navbar-nav {
-      top: 0;
+    .signup-buttons {
       float: right;
-      min-width: 140px;
-      max-width: 300px;
-      text-align: center;
+      width: 170px;
 
-      @media (min-width: 560px) {
-        top: 5px;
-        min-width: 220px;
-        text-align: right;
+      &:before {
+        display: block;
+        content: "Sign up with:";
+        font-size: .75rem;
+        line-height: 1;
+        padding-bottom: 5px;
+        color: @gray;
       }
 
-      .nav-link {
-        display: none;
-      }
+      .btn {
+        height: 30px;
+        font-size: 14px;
+        line-height: 14px;
+        padding: 8px 0;
+        width: 80px;
+        margin-bottom: 0;
 
-      .nav-button {
-        text-align: right;
-        @media (min-width: 560px) {
-          text-align: center;
+        small, br {
+          display: none;
+        }
+
+        &:first-child {
+          margin-right: 5px;
         }
       }
+
+      @media (min-width: 560px) {
+        width: 300px;
+
+        &:before {
+          display: none;
+        }
+
+        .btn {
+          width: 140px;
+          height: 60px;
+          padding: 1px 20px;
+          font-size: 1.5rem;
+          line-height: 1;
+          margin: 0;
+
+          small, br {
+            display: inherit;
+          }
+
+          &:first-child {
+            margin-right: 15px;
+          }
+        }
+      }
+
     }
   }
 }
