@@ -24,7 +24,7 @@ $daily_subscribers = $subscription_operation_dao->getDailySubscribers();
 $text = "";
 $message = "";
 
-if ($daily_subscribers[$today]['subcribers'] > $daily_subscribers[$yesterday]['subscribers']) {
+if ($daily_subscribers[$today]['subscribers'] > $daily_subscribers[$yesterday]['subscribers']) {
     $comparator = "up from";
 } elseif ($daily_subscribers[$today]['subscribers'] < $daily_subscribers[$yesterday]['subscribers']) {
     $comparator = "down from";
