@@ -88,7 +88,7 @@
             {else}<li class="nav-link"><a href="{$site_root_path}user/">Login</a></li>{/if}
             <li class="nav-link"><a href="{$site_root_path}pricing.php">Pricing</a></li>
             <li class="nav-link"><a href="{$site_root_path}about/">About</a></li>
-            {if (isset($hide_join) and not $hide_join) or not isset($hide_join)}<li class="nav-button"><a class="btn btn-pill btn-signup" href="{$site_root_path}">Join now</a></li>{/if}
+            <li class="nav-button{if (isset($hide_join) and $hide_join)} is-hidden{/if}"><a class="btn btn-pill btn-signup" href="{$site_root_path}">Join now</a></li>
         </ul>
     </header>
 </div>

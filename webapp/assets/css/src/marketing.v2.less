@@ -91,7 +91,7 @@ body {
   margin: 0 auto;
 }
 
-#container-navbar {
+#container-navbar, #container-navbar-sticky {
   height: auto;
 
   @media (min-width: 560px) {
@@ -99,7 +99,7 @@ body {
   }
 }
 
-#section-navbar {
+#section-navbar, #section-navbar-sticky {
   .clearfix;
   padding: 20px 10px 0;
 
@@ -186,6 +186,109 @@ body {
   }
 }
 
+
+#container-navbar-sticky {
+  position: fixed;
+  top: -120px;
+  left: 0;
+  background: white;
+  min-height: 75px;
+  z-index: 99;
+  box-shadow: 0 0 4px #ccc;
+
+  #section-navbar-sticky {
+    padding-top: 10px;
+
+    .navbar-brand {
+      .logo {
+        width: 140px;
+        height: 39px;
+        background-size: 140px 39px;
+
+        @media (max-width: 400px) {
+          margin-top: 9px;
+          width: 140px * .7;
+          height: 39px * .7;
+          background-size: 140px * .7 39px * .7;
+        }
+      }
+
+      .tagline {
+        font-size: 13px;
+        top: -5px;
+        left: 8px;
+
+        @media (max-width: 400px) {
+          font-size: 12px;
+          top: -2px;
+          left: 4px;
+        }
+      }
+
+      .beta-tag {
+        display: none;
+      }
+    }
+
+    .signup-buttons {
+      float: right;
+      width: 170px;
+
+      &:before {
+        display: block;
+        content: "Sign up with:";
+        font-size: .75rem;
+        line-height: 1;
+        padding-bottom: 5px;
+        color: @gray;
+      }
+
+      .btn {
+        height: 30px;
+        font-size: 14px;
+        line-height: 14px;
+        padding: 8px 0;
+        width: 80px;
+        margin-bottom: 0;
+
+        small, br {
+          display: none;
+        }
+
+        &:first-child {
+          margin-right: 5px;
+        }
+      }
+
+      @media (min-width: 560px) {
+        width: 300px;
+
+        &:before {
+          display: none;
+        }
+
+        .btn {
+          width: 140px;
+          height: 60px;
+          padding: 1px 20px;
+          font-size: 1.5rem;
+          line-height: 1;
+          margin: 0;
+
+          small, br {
+            display: inherit;
+          }
+
+          &:first-child {
+            margin-right: 15px;
+          }
+        }
+      }
+
+    }
+  }
+}
+
 .nav {
   padding: 0;
   margin: 0;
@@ -220,6 +323,10 @@ body {
   .nav-button {
     clear: both;
     text-align: center;
+
+    &.is-hidden {
+      display: none;
+    }
   }
 }
 
