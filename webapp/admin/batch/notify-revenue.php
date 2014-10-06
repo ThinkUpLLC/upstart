@@ -103,8 +103,8 @@ $text = $subject.' '. $message;
 
 $result = UpstartHelper::postToSlack($channel, $text);
 
-//Post subscribers per week on Sundays
-if (date( "w") == 0) {
+//Post subscribers per week on Saturday night
+if (date( "w") == 6) {
     $subs_per_week = $subscriber_dao->getSubscriptionsByWeek();
 
     foreach ($subs_per_week as $sub) {
