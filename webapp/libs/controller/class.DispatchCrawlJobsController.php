@@ -1,5 +1,11 @@
 <?php
 class DispatchCrawlJobsController extends Controller {
+    /**
+     * Number of jobs to dispatch per call; should evenly divide jobs_to_dispatch in config file.
+     * @var int
+     */
+    var $jobs_divisor = 10;
+
     public function control() {
         // get stalest subscriber installations
         $subscriber_dao = new SubscriberMySQLDAO();
@@ -9,17 +15,19 @@ class DispatchCrawlJobsController extends Controller {
         $queue_size = Dispatcher::getQueueSize();
         //        echo "QUEUE SIZE ".$queue_size;
         if (is_int($queue_size) && $queue_size < $jobs_to_dispatch) {
-            $number_of_calls = $jobs_to_dispatch / 25;
+            $number_of_calls = $jobs_to_dispatch / $this->jobs_divisor;
             while ($number_of_calls > 0) {
 
-                $stale_installs = $subscriber_dao->getPaidStaleInstalls(2);
+                $stale_installs = $subscriber_dao->getPaidStaleInstalls($hours_stale=2, $count=$this->jobs_divisor);
                 if (count($stale_installs) == 0) {
-                    $stale_installs = $subscriber_dao->getNotYetPaidStaleInstalls(4);
+                    $stale_installs = $subscriber_dao->getNotYetPaidStaleInstalls($hours_stale=4,
+                        $count=$this->jobs_divisor);
                 }
 
                 //No installs to crawl? Okay, get less stale options
                 if (count($stale_installs) == 0 ) {
-                    $stale_installs = $subscriber_dao->getNotYetPaidStaleInstalls(3);
+                    $stale_installs = $subscriber_dao->getNotYetPaidStaleInstalls($hours_stale=3,
+                        $count=$this->jobs_divisor);
                 }
 
                 if (count($stale_installs) > 0 ) {
