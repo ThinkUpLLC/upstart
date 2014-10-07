@@ -10,9 +10,9 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="what-is"><a href="#what-is">What is ThinkUp?</a></h4>
 
-      <p>ThinkUp is a simple new service that offers you a <strong>completely unique set of analytics</strong> about the way you use Twitter and Facebook.</p>
+      <p>ThinkUp is a simple new web app that gives you <strong>completely unique insights</strong> about you and your friends on Twitter and Facebook.</p>
 
-      <p>ThinkUp is a smart new way to <strong>get more meaning</strong> out of all the time you spend online, offering clever, fun insights that help you no matter what your goals are online. And it's built by a company and community that aim to respect you more than any other tech company.</p>
+      <p>ThinkUp is a smart new way to <strong>get more meaning</strong> out of all the time you spend online, offering clever, plain-English fun facts that help you no matter what your goals are online. And it's built by a company and community that aim to respect you more than any other tech company.</p>
 
       <p>When you <a href="https://thinkup.com/">join ThinkUp</a>, you get a simple stream showing you those insights about your Twitter and Facebook accounts. If you want, those insights can come to you in a handy email digest.</p>
 

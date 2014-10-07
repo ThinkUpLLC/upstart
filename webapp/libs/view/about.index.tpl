@@ -6,7 +6,7 @@ body_classes="marketing marketing-page" body_id="marketing-about"}
       <h2 class="section-header">About ThinkUp</h2>
       {include file="_about.nav.tpl" active="about"}
 
-      <p>ThinkUp is a simple new app that gives you insights into the way you use social networks like Twitter and Facebook. In contrast to regular analytics or statistics apps, ThinkUp uses plain English to explain how you’re doing and to help you achieve your goals, whatever they are. ThinkUp is a fun way to get more out of the time we spend online.</p>
+      <p>ThinkUp is a simple new app that gives you daily insights about you and your friends on social networks like Twitter and Facebook. ThinkUp uses plain English to explain how you’re doing and to help you achieve your goals, whatever they are. ThinkUp is a fun way to get more out of the time we spend online.</p>
 
       <h3 class="text-header">Our Company</h3>
 

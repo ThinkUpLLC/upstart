@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{if isset($controller_title)}{$controller_title} | {/if}ThinkUp - Analytics for humans</title>
+    <title>{if isset($controller_title)}{$controller_title} | {/if}ThinkUp - Daily insights about you</title>
     <link rel="shortcut icon" type="image/x-icon" href="{$site_root_path}assets/img/favicon.png">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{$site_root_path}assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{$site_root_path}assets/ico/apple-touch-icon-114-precomposed.png">
@@ -21,8 +21,8 @@
     <meta property="og:url" content="https://www.thinkup.com/" />
 
     <meta itemprop="name" content="ThinkUp">
-    <meta name="twitter:title" content="ThinkUp: Analytics for humans">
-    <meta property="og:title" content="ThinkUp: Analytics for humans" />
+    <meta name="twitter:title" content="ThinkUp: Daily insights about you">
+    <meta property="og:title" content="ThinkUp: Daily insights about you" />
 
     <meta itemprop="description" content="ThinkUp uncovers fun and fascinating insights about your Facebook and Twitter activity.">
     <meta name="description" content="ThinkUp uncovers fun and fascinating insights about your Facebook and Twitter activity.">
@@ -75,7 +75,7 @@
     <header class="section navbar navbar-marketing" id="section-navbar">
         <div class="navbar-brand">
             <h1 class="logo"><a href="{$site_root_path}">ThinkUp</a></h1>
-            <h2 class="tagline">Analytics for humans</h2>
+            <h2 class="tagline">Daily insights about you</h2>
             <div class="beta-tag">Beta</div>
         </div>
 

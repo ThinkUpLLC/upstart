@@ -4,7 +4,7 @@
   <div class="section section-screenshot" id="section-signup-top">
     <h3 class="section-header">There are things Facebook &amp; Twitter don't tell you.</h3>
     <div class="section-copy">
-      <p>ThinkUp gives you insights about your social networks that you can't find anywhere else. Sign up for your 14-day free trial and see what you've been missing.</p>
+      <p>ThinkUp gives you daily insights about you and your friends that you can't find anywhere else. Sign up for your 14-day free trial and see what you've been missing.</p>
       <div class="signup-buttons">
         <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
         <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign up with</small><br>Facebook</a>
