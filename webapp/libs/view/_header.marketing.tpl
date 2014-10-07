@@ -1,8 +1,11 @@
+{assign var="tagline" value="Daily insights about you and your friends"}
+{assign var="tagline_logo" value="Daily insights about you"}
+{assign var="description" value="ThinkUp uncovers fun and fascinating insights about you and your friends on Twitter and Facebook."}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{if isset($controller_title)}{$controller_title} | {/if}ThinkUp - Daily insights about you</title>
+    <title>{if isset($controller_title)}{$controller_title} | {/if}ThinkUp - {$tagline}</title>
     <link rel="shortcut icon" type="image/x-icon" href="{$site_root_path}assets/img/favicon.png">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{$site_root_path}assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{$site_root_path}assets/ico/apple-touch-icon-114-precomposed.png">
@@ -21,12 +24,12 @@
     <meta property="og:url" content="https://www.thinkup.com/" />
 
     <meta itemprop="name" content="ThinkUp">
-    <meta name="twitter:title" content="ThinkUp: Daily insights about you">
-    <meta property="og:title" content="ThinkUp: Daily insights about you" />
+    <meta name="twitter:title" content="ThinkUp: {$tagline}">
+    <meta property="og:title" content="ThinkUp: {$tagline}" />
 
-    <meta itemprop="description" content="ThinkUp uncovers fun and fascinating insights about your Facebook and Twitter activity.">
-    <meta name="description" content="ThinkUp uncovers fun and fascinating insights about your Facebook and Twitter activity.">
-    <meta name="twitter:description" content="ThinkUp uncovers fun and fascinating insights about your Facebook and Twitter activity.">
+    <meta itemprop="description" content="{$description}">
+    <meta name="description" content="{$description}">
+    <meta name="twitter:description" content="{$description}">
 
     <meta itemprop="image" content="https://www.thinkup.com/join/assets/img/landing/crowd.png">
     <meta property="og:image" content="https://www.thinkup.com/join/assets/img/landing/crowd.png" />
@@ -75,7 +78,7 @@
     <header class="section navbar navbar-marketing" id="section-navbar">
         <div class="navbar-brand">
             <h1 class="logo"><a href="{$site_root_path}">ThinkUp</a></h1>
-            <h2 class="tagline">Daily insights about you</h2>
+            <h2 class="tagline">{$tagline_logo}</h2>
             <div class="beta-tag">Beta</div>
         </div>
 
