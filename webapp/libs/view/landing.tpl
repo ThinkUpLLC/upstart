@@ -138,7 +138,7 @@
   <div class="section section-screenshot section-sample-insight">
     <div class="section-copy">
       <figure class="sample-insight">
-        <figcaption>Did you gain any interesting connections this week?</figcaption>
+        <figcaption>Make any interesting connections this week?</figcaption>
         <div class="sample-insight-img"></div>
       </figure>
     </div>
@@ -152,7 +152,7 @@
         <figcaption>Who were your biggest fans this week?</figcaption>
         <div class="sample-insight-img"></div>
       </figure>
-      <p>&hellip;and hundreds more!</p>
+      <p class="and-more">&hellip;and hundreds more!</p>
     </div>
   </div>
 </div>

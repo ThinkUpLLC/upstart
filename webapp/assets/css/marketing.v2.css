@@ -679,7 +679,7 @@ a.btn-pill-large:hover {
 }
 @media (min-width: 760px) {
   .section-sample-insight figcaption {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
   }
 }
 .section-sample-insight .sample-insight-img {
@@ -689,6 +689,16 @@ a.btn-pill-large:hover {
   text-indent: 100%;
   font: 0/0 a;
   width: 310px;
+}
+.section-sample-insight p.and-more {
+  font-weight: bold;
+  font-size: 1.5em;
+  padding: 20px 0 0;
+}
+@media (min-width: 760px) {
+  .section-sample-insight p.and-more {
+    font-size: 1.25em;
+  }
 }
 .section-header {
   font-size: 1.375rem;
