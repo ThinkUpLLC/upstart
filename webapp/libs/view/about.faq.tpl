@@ -94,7 +94,12 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <p>As ThinkUp grows and we start adding more members to our team we’ll post all open positions on <a href="http://blog.thinkup.com/">our blog</a>.</p>
 
-      <h4 id="press-inquiry"><a href="#press-inquiry">I'm press and interested in reviewing ThinkUp, or I'd like someone to speak at my event?</a></h4>
+      <h4 id="press-inquiry"><a href="#press-inquiry">I'm a member of the press. What's the best way for me to review ThinkUp?</a></h4>
+
+      <p>Great! <a href="{$site_root_path}">Sign up</a> for your free ThinkUp trial to get unlimited use of the product, and check out our <a href="{$site_root_path}about/press.php">press page</a>.</p>
+
+
+      <h4 id="speaking-request"><a href="#speaking-request">Can someone on your team speak at my event?</a></h4>
 
       <p>We try to say yes to every reasonable request possible. Please send details to <a href="mailto:team@thinkup.com">team@thinkup.com</a> or use our <a href="{$site_root_path}about/contact.php">contact form</a>  and we’ll do everything we can to hook you up.</p>
 
