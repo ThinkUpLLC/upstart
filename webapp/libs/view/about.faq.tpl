@@ -92,7 +92,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="hiring"><a href="#hiring">Are you hiring?</a></h4>
 
-      <p>As ThinkUp grows and we start adding more members to our team we’ll post all open positions on <a href="https://blog.thinkup.com/">our blog</a>.</p>
+      <p>As ThinkUp grows and we start adding more members to our team we’ll post all open positions on <a href="http://blog.thinkup.com/">our blog</a>.</p>
 
       <h4 id="press-inquiry"><a href="#press-inquiry">I'm press and interested in reviewing ThinkUp, or I'd like someone to speak at my event?</a></h4>
 
