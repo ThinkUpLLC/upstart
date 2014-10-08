@@ -21,40 +21,138 @@
     <h3 class="section-header">What is ThinkUp?</h3>
     <div class="section-copy">
       <p>ThinkUp is a smart, simple web app that analyzes your activity on Facebook and Twitter. ThinkUp gives you fun and surprising insights about what you and your friends are doing online.</p>
-      <div class="section-insights-carousel">
-        <div class="sample-insights">
-          <figure class="sample-insight" id="sample-1">
-            <figcaption>Are you talking about yourself too much?</figcaption>
-            <div class="sample-insight-img"></div>
-          </figure>
-          <figure class="sample-insight" id="sample-2">
-            <figcaption>What got a laugh?</figcaption>
-            <div class="sample-insight-img"></div>
-          </figure>
-          <figure class="sample-insight" id="sample-3">
-            <figcaption>What special moment happened a year ago?</figcaption>
-            <div class="sample-insight-img"></div>
-          </figure>
-          <figure class="sample-insight" id="sample-4">
-            <figcaption>What does your network really look like?</figcaption>
-            <div class="sample-insight-img"></div>
-          </figure>
-          <figure class="sample-insight" id="sample-6">
-            <figcaption>Who were your biggest fans this week?</figcaption>
-            <div class="sample-insight-img"></div>
-          </figure>
-          <figure class="sample-insight" id="sample-7">
-            <figcaption>Which of your ideas connected the best with your friends?</figcaption>
-            <div class="sample-insight-img"></div>
-          </figure>
-          <figure class="sample-insight" id="sample-8">
-            <figcaption>When is the best time to share something important?</figcaption>
-            <div class="sample-insight-img"></div>
-          </figure>
+      <!-- <div class="sample-insights">
+        <figure class="sample-insight" id="sample-1">
+          <figcaption>Are you talking about yourself too much?</figcaption>
+          <div class="sample-insight-img"></div>
+        </figure>
+        <figure class="sample-insight" id="sample-2">
+          <figcaption>What got a laugh?</figcaption>
+          <div class="sample-insight-img"></div>
+        </figure>
+        <figure class="sample-insight" id="sample-3">
+          <figcaption>What special moment happened a year ago?</figcaption>
+          <div class="sample-insight-img"></div>
+        </figure>
+        <figure class="sample-insight" id="sample-4">
+          <figcaption>What does your network really look like?</figcaption>
+          <div class="sample-insight-img"></div>
+        </figure>
+        <figure class="sample-insight" id="sample-6">
+          <figcaption>Who were your biggest fans this week?</figcaption>
+          <div class="sample-insight-img"></div>
+        </figure>
+        <figure class="sample-insight" id="sample-7">
+          <figcaption>Which of your ideas connected the best with your friends?</figcaption>
+          <div class="sample-insight-img"></div>
+        </figure>
+        <figure class="sample-insight" id="sample-8">
+          <figcaption>When is the best time to share something important?</figcaption>
+          <div class="sample-insight-img"></div>
+        </figure>
 
-          <p>&hellip;and hundreds more!</p>
-        </div>
-      </div>
+        <p>&hellip;and hundreds more!</p>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<div class="container container-sample-insight" id="container-sample-insight-profile">
+  <div class="section section-screenshot section-sample-insight">
+    <div class="section-copy">
+      <figure class="sample-insight">
+        <figcaption>What changes did your friends make to their profiles?</figcaption>
+        <div class="sample-insight-img"></div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<div class="container container-sample-insight" id="container-sample-insight-gender">
+  <div class="section section-screenshot section-sample-insight">
+    <div class="section-copy">
+      <figure class="sample-insight">
+        <figcaption>Are you getting more responses from men or women?</figcaption>
+        <div class="sample-insight-img"></div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<div class="container container-sample-insight" id="container-sample-insight-personal">
+  <div class="section section-screenshot section-sample-insight">
+    <div class="section-copy">
+      <figure class="sample-insight">
+        <figcaption>Are you talking about yourself too much?</figcaption>
+        <div class="sample-insight-img"></div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<div class="container container-sample-insight" id="container-sample-insight-link">
+  <div class="section section-screenshot section-sample-insight">
+    <div class="section-copy">
+      <figure class="sample-insight">
+        <figcaption>What sites are you linking to most often?</figcaption>
+        <div class="sample-insight-img"></div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<div class="container container-sample-insight" id="container-sample-insight-gratitude">
+  <div class="section section-screenshot section-sample-insight">
+    <div class="section-copy">
+      <figure class="sample-insight">
+        <figcaption>Did you remember to say thanks?</figcaption>
+        <div class="sample-insight-img"></div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<div class="container container-sample-insight" id="container-sample-insight-history">
+  <div class="section section-screenshot section-sample-insight">
+    <div class="section-copy">
+      <figure class="sample-insight">
+        <figcaption>What special moment happened a year ago?</figcaption>
+        <div class="sample-insight-img"></div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<div class="container container-sample-insight" id="container-sample-insight-lol">
+  <div class="section section-screenshot section-sample-insight">
+    <div class="section-copy">
+      <figure class="sample-insight">
+        <figcaption>What got a laugh?</figcaption>
+        <div class="sample-insight-img"></div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<div class="container container-sample-insight" id="container-sample-insight-verified">
+  <div class="section section-screenshot section-sample-insight">
+    <div class="section-copy">
+      <figure class="sample-insight">
+        <figcaption>Did you gain any interesting connections this week?</figcaption>
+        <div class="sample-insight-img"></div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<div class="container container-sample-insight" id="container-sample-insight-fans">
+  <div class="section section-screenshot section-sample-insight">
+    <div class="section-copy">
+      <figure class="sample-insight">
+        <figcaption>Who were your biggest fans this week?</figcaption>
+        <div class="sample-insight-img"></div>
+      </figure>
+      <p>&hellip;and hundreds more!</p>
     </div>
   </div>
 </div>

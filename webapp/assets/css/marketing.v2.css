@@ -651,6 +651,45 @@ a.btn-pill-large:hover {
     margin: 0;
   }
 }
+.container-sample-insight {
+  height: auto;
+}
+.container-sample-insight .section-copy p {
+  font-size: 1rem;
+}
+@media (min-width: 760px) {
+  .container-sample-insight .section-copy p {
+    font-size: 1.125rem;
+    text-align: center;
+    width: 75%;
+    margin: 0 auto;
+  }
+}
+.section-sample-insight {
+  padding: 30px 0;
+}
+.section-sample-insight .section-copy {
+  text-align: center;
+}
+.section-sample-insight figcaption {
+  color: #156d56;
+  font-size: 1.125rem;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+@media (min-width: 760px) {
+  .section-sample-insight figcaption {
+    font-size: 1.25rem;
+  }
+}
+.section-sample-insight .sample-insight-img {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: block;
+  margin: 0 auto 10px;
+  text-indent: 100%;
+  font: 0/0 a;
+  width: 310px;
+}
 .section-header {
   font-size: 1.375rem;
   line-height: 1.36363636;
@@ -764,6 +803,9 @@ a.btn-pill-large:hover {
 #container-signup-top .section-copy {
   color: #444444;
 }
+#container-signup-top .section-sample-insight figcaption {
+  color: #444444;
+}
 @media (min-width: 760px) {
   #container-signup-top {
     height: 400px;
@@ -827,6 +869,9 @@ a.btn-pill-large:hover {
 #container-what .section-copy {
   color: #ffffff;
 }
+#container-what .section-sample-insight figcaption {
+  color: #ffffff;
+}
 #container-what .section-copy p {
   font-size: 1rem;
 }
@@ -838,135 +883,229 @@ a.btn-pill-large:hover {
     margin: 0 auto;
   }
 }
-#container-what .section-copy .section-insights-carousel {
-  margin-top: 20px;
-  width: 100%;
-  text-align: center;
+#container-sample-insight-profile {
+  background-color: #fd8560;
 }
-#container-what .section-copy .sample-insight {
-  margin-bottom: 30px;
+#container-sample-insight-profile .section-header {
+  color: #ffffff;
 }
-#container-what .section-copy figcaption {
-  color: #156d56;
-  font-size: 1.125rem;
-  line-height: 1.25;
-  margin-bottom: 10px;
+#container-sample-insight-profile .section-copy {
+  color: #a02c08;
+}
+#container-sample-insight-profile .section-sample-insight figcaption {
+  color: #a02c08;
+}
+#container-sample-insight-profile .sample-insight-img {
+  height: 334px;
+  background: url("../img/landing/insight-profile-update-mobile@2x.png") top left no-repeat;
+  background-size: 310px 334px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy figcaption {
-    font-size: 1.25rem;
+  #container-sample-insight-profile .sample-insight-img {
+    width: 540px;
+    height: 297px;
+    background: url("../img/landing/insight-profile-update-desktop@2x.png") top left no-repeat;
+    background-size: 540px 297px;
   }
 }
-#container-what .section-copy .sample-insight-img {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: block;
-  margin: 0 auto 10px;
-  text-indent: 100%;
-  font: 0/0 a;
-  width: 310px;
+#container-sample-insight-gender {
+  background-color: #41dab3;
 }
-#container-what .section-copy #sample-1 .sample-insight-img {
-  height: 208px;
-  background: url("../img/landing/insight-personal-mobile@2x.png") top left no-repeat;
-  background-size: 310px 208px;
+#container-sample-insight-gender .section-header {
+  color: #ffffff;
+}
+#container-sample-insight-gender .section-copy {
+  color: #1c8e6e;
+}
+#container-sample-insight-gender .section-sample-insight figcaption {
+  color: #1c8e6e;
+}
+#container-sample-insight-gender .sample-insight-img {
+  height: 421px;
+  background: url("../img/landing/insight-gender-breakdown-mobile@2x.png") top left no-repeat;
+  background-size: 310px 421px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy #sample-1 .sample-insight-img {
+  #container-sample-insight-gender .sample-insight-img {
+    width: 540px;
+    height: 357px;
+    background: url("../img/landing/insight-gender-breakdown-desktop@2x.png") top left no-repeat;
+    background-size: 540px 357px;
+  }
+}
+#container-sample-insight-personal {
+  background-color: #44c9d7;
+}
+#container-sample-insight-personal .section-header {
+  color: #ffffff;
+}
+#container-sample-insight-personal .section-copy {
+  color: #126370;
+}
+#container-sample-insight-personal .section-sample-insight figcaption {
+  color: #126370;
+}
+#container-sample-insight-personal .sample-insight-img {
+  height: 190px;
+  background: url("../img/landing/insight-personal-mobile@2x.png") top left no-repeat;
+  background-size: 310px 190px;
+}
+@media (min-width: 760px) {
+  #container-sample-insight-personal .sample-insight-img {
     width: 540px;
     height: 146px;
     background: url("../img/landing/insight-personal-desktop@2x.png") top left no-repeat;
     background-size: 540px 146px;
   }
 }
-#container-what .section-copy #sample-2 .sample-insight-img {
-  height: 231px;
-  background: url("../img/landing/insight-lol-mobile@2x.png") top left no-repeat;
-  background-size: 310px 231px;
+#container-sample-insight-link {
+  background-color: #e4bf28;
+}
+#container-sample-insight-link .section-header {
+  color: #ffffff;
+}
+#container-sample-insight-link .section-copy {
+  color: #926d01;
+}
+#container-sample-insight-link .section-sample-insight figcaption {
+  color: #926d01;
+}
+#container-sample-insight-link .sample-insight-img {
+  height: 274px;
+  background: url("../img/landing/insight-link-diversity-mobile@2x.png") top left no-repeat;
+  background-size: 310px 274px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy #sample-2 .sample-insight-img {
+  #container-sample-insight-link .sample-insight-img {
     width: 540px;
-    height: 187px;
-    background: url("../img/landing/insight-lol-desktop@2x.png") top left no-repeat;
-    background-size: 540px 187px;
+    height: 230px;
+    background: url("../img/landing/insight-link-diversity-desktop@2x.png") top left no-repeat;
+    background-size: 540px 230px;
   }
 }
-#container-what .section-copy #sample-3 .sample-insight-img {
+#container-sample-insight-gratitude {
+  background-color: #9dd767;
+}
+#container-sample-insight-gratitude .section-header {
+  color: #ffffff;
+}
+#container-sample-insight-gratitude .section-copy {
+  color: #417505;
+}
+#container-sample-insight-gratitude .section-sample-insight figcaption {
+  color: #417505;
+}
+#container-sample-insight-gratitude .sample-insight-img {
+  height: 137px;
+  background: url("../img/landing/insight-gratitude-mobile@2x.png") top left no-repeat;
+  background-size: 310px 137px;
+}
+@media (min-width: 760px) {
+  #container-sample-insight-gratitude .sample-insight-img {
+    width: 540px;
+    height: 92px;
+    background: url("../img/landing/insight-gratitude-desktop@2x.png") top left no-repeat;
+    background-size: 540px 92px;
+  }
+}
+#container-sample-insight-history {
+  background-color: #c0bdaf;
+}
+#container-sample-insight-history .section-header {
+  color: #ffffff;
+}
+#container-sample-insight-history .section-copy {
+  color: #8a876f;
+}
+#container-sample-insight-history .section-sample-insight figcaption {
+  color: #8a876f;
+}
+#container-sample-insight-history .sample-insight-img {
   height: 305px;
   background: url("../img/landing/insight-history-mobile@2x.png") top left no-repeat;
   background-size: 310px 305px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy #sample-3 .sample-insight-img {
+  #container-sample-insight-history .sample-insight-img {
     width: 540px;
     height: 225px;
     background: url("../img/landing/insight-history-desktop@2x.png") top left no-repeat;
     background-size: 540px 225px;
   }
 }
-#container-what .section-copy #sample-4 .sample-insight-img {
-  height: 315px;
-  background: url("../img/landing/insight-followers-mobile@2x.png") top left no-repeat;
-  background-size: 310px 315px;
+#container-sample-insight-lol {
+  background-color: #ffbb4e;
+}
+#container-sample-insight-lol .section-header {
+  color: #ffffff;
+}
+#container-sample-insight-lol .section-copy {
+  color: #f36400;
+}
+#container-sample-insight-lol .section-sample-insight figcaption {
+  color: #f36400;
+}
+#container-sample-insight-lol .sample-insight-img {
+  height: 370px;
+  background: url("../img/landing/insight-lol-mobile@2x.png") top left no-repeat;
+  background-size: 310px 370px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy #sample-4 .sample-insight-img {
+  #container-sample-insight-lol .sample-insight-img {
     width: 540px;
-    height: 285px;
-    background: url("../img/landing/insight-followers-desktop@2x.png") top left no-repeat;
-    background-size: 540px 285px;
+    height: 326px;
+    background: url("../img/landing/insight-lol-desktop@2x.png") top left no-repeat;
+    background-size: 540px 326px;
   }
 }
-#container-what .section-copy #sample-5 .sample-insight-img {
-  height: 369px;
-  background: url("../img/landing/insight-oscars-mobile@2x.png") top left no-repeat;
-  background-size: 310px 369px;
+#container-sample-insight-verified {
+  background-color: #fd8560;
+}
+#container-sample-insight-verified .section-header {
+  color: #ffffff;
+}
+#container-sample-insight-verified .section-copy {
+  color: #a02c08;
+}
+#container-sample-insight-verified .section-sample-insight figcaption {
+  color: #a02c08;
+}
+#container-sample-insight-verified .sample-insight-img {
+  height: 277px;
+  background: url("../img/landing/insight-verified-mobile@2x.png") top left no-repeat;
+  background-size: 310px 277px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy #sample-5 .sample-insight-img {
+  #container-sample-insight-verified .sample-insight-img {
     width: 540px;
-    height: 338px;
-    background: url("../img/landing/insight-oscars-desktop@2x.png") top left no-repeat;
-    background-size: 540px 338px;
+    height: 197px;
+    background: url("../img/landing/insight-verified-desktop@2x.png") top left no-repeat;
+    background-size: 540px 197px;
   }
 }
-#container-what .section-copy #sample-6 .sample-insight-img {
+#container-sample-insight-fans {
+  background-color: #41dab3;
+}
+#container-sample-insight-fans .section-header {
+  color: #ffffff;
+}
+#container-sample-insight-fans .section-copy {
+  color: #1c8e6e;
+}
+#container-sample-insight-fans .section-sample-insight figcaption {
+  color: #1c8e6e;
+}
+#container-sample-insight-fans .sample-insight-img {
   height: 316px;
   background: url("../img/landing/insight-fans-mobile@2x.png") top left no-repeat;
   background-size: 310px 316px;
 }
 @media (min-width: 760px) {
-  #container-what .section-copy #sample-6 .sample-insight-img {
+  #container-sample-insight-fans .sample-insight-img {
     width: 540px;
     height: 256px;
     background: url("../img/landing/insight-fans-desktop@2x.png") top left no-repeat;
     background-size: 540px 256px;
-  }
-}
-#container-what .section-copy #sample-7 .sample-insight-img {
-  height: 386px;
-  background: url("../img/landing/insight-popular-mobile@2x.png") top left no-repeat;
-  background-size: 310px 386px;
-}
-@media (min-width: 760px) {
-  #container-what .section-copy #sample-7 .sample-insight-img {
-    width: 540px;
-    height: 321px;
-    background: url("../img/landing/insight-popular-desktop@2x.png") top left no-repeat;
-    background-size: 540px 321px;
-  }
-}
-#container-what .section-copy #sample-8 .sample-insight-img {
-  height: 306px;
-  background: url("../img/landing/insight-time-mobile@2x.png") top left no-repeat;
-  background-size: 310px 306px;
-}
-@media (min-width: 760px) {
-  #container-what .section-copy #sample-8 .sample-insight-img {
-    width: 540px;
-    height: 199px;
-    background: url("../img/landing/insight-time-desktop@2x.png") top left no-repeat;
-    background-size: 540px 199px;
   }
 }
 #container-specs {
@@ -976,6 +1115,9 @@ a.btn-pill-large:hover {
   color: #ffffff;
 }
 #container-specs .section-copy {
+  color: #7348b0;
+}
+#container-specs .section-sample-insight figcaption {
   color: #7348b0;
 }
 #container-specs .section-copy {
@@ -1029,6 +1171,9 @@ a.btn-pill-large:hover {
   color: #ffffff;
 }
 #container-company .section-copy {
+  color: #ffffff;
+}
+#container-company .section-sample-insight figcaption {
   color: #ffffff;
 }
 @media (min-width: 760px) {
@@ -1148,6 +1293,9 @@ a.btn-pill-large:hover {
 #container-not-thinkup .section-copy {
   color: #125056;
 }
+#container-not-thinkup .section-sample-insight figcaption {
+  color: #125056;
+}
 @media (min-width: 760px) {
   #container-not-thinkup {
     height: 400px;
@@ -1196,6 +1344,9 @@ a.btn-pill-large:hover {
   color: #2785d3;
 }
 #container-signup-bottom .section-copy {
+  color: #2785d3;
+}
+#container-signup-bottom .section-sample-insight figcaption {
   color: #2785d3;
 }
 @media (min-width: 840px) {
