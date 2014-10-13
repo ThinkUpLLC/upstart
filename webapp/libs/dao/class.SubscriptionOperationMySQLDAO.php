@@ -202,17 +202,23 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
         $today = date('Y-m-d');
         $yesterday = date('Y-m-d', strtotime("-1 days"));
         $day_before = date('Y-m-d', strtotime("-2 days"));
+        $three_days_earlier = date('Y-m-d', strtotime("-3 days"));
+        $four_days_earlier = date('Y-m-d', strtotime("-4 days"));
         $results = array(
             $today => array('subscribers'=>0),
             $yesterday => array('subscribers'=>0),
             $day_before =>  array('subscribers'=>0),
+            $three_days_earlier =>  array('subscribers'=>0),
+            $four_days_earlier =>  array('subscribers'=>0),
         );
 
         $q = "SELECT operation, transaction_amount, DATE(timestamp) AS date, reference_id ";
         $q .= "FROM subscription_operations so WHERE status_code = 'SS' AND ";
         $q .= "( date(timestamp) = '".$today."' ";
         $q .= "OR date(timestamp) = '".$yesterday."' ";
-        $q .= "OR date(timestamp) = '".$day_before."') ";
+        $q .= "OR date(timestamp) = '".$day_before."' ";
+        $q .= "OR date(timestamp) = '".$three_days_earlier."' ";
+        $q .= "OR date(timestamp) = '".$four_days_earlier."') ";
         $q .= "GROUP BY reference_id ORDER BY timestamp DESC;";
 
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
@@ -225,6 +231,46 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
                 $results[$yesterday]['subscribers'] = $results[$yesterday]['subscribers'] + 1;
             } elseif ($subscriber['date'] == $day_before) {
                 $results[$day_before]['subscribers'] = $results[$day_before]['subscribers'] + 1;
+            } elseif ($subscriber['date'] == $three_days_earlier) {
+                $results[$three_days_earlier]['subscribers'] = $results[$three_days_earlier]['subscribers'] + 1;
+            } elseif ($subscriber['date'] == $four_days_earlier) {
+                $results[$four_days_earlier]['subscribers'] = $results[$four_days_earlier]['subscribers'] + 1;
+            }
+        }
+        return $results;
+    }
+
+    /**
+     * Get last three days worth of successful payments (new subscribers and recharges).
+     * @return array
+     */
+    public function getDailySuccessfulPayments() {
+        $today = date('Y-m-d');
+        $yesterday = date('Y-m-d', strtotime("-1 days"));
+        $day_before = date('Y-m-d', strtotime("-2 days"));
+        $results = array(
+            $today => array('successful_payments'=>0),
+            $yesterday => array('successful_payments'=>0),
+            $day_before =>  array('successful_payments'=>0),
+        );
+
+        $q = "SELECT operation, transaction_amount, DATE(timestamp) AS date, reference_id ";
+        $q .= "FROM subscription_operations so WHERE status_code = 'PS' AND ";
+        $q .= "( date(timestamp) = '".$today."' ";
+        $q .= "OR date(timestamp) = '".$yesterday."' ";
+        $q .= "OR date(timestamp) = '".$day_before."') ";
+        $q .= "GROUP BY reference_id ORDER BY timestamp DESC;";
+
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+        $subscriber_results = $this->getDataRowsAsArrays($ps);
+        foreach ($subscriber_results as $subscriber) {
+            if ($subscriber['date'] == $today) {
+                $results[$today]['successful_payments'] = $results[$today]['successful_payments'] + 1;
+            } elseif ($subscriber['date'] == $yesterday) {
+                $results[$yesterday]['successful_payments'] = $results[$yesterday]['successful_payments'] + 1;
+            } elseif ($subscriber['date'] == $day_before) {
+                $results[$day_before]['successful_payments'] = $results[$day_before]['successful_payments'] + 1;
             }
         }
         return $results;

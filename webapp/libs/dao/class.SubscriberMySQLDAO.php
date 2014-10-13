@@ -877,17 +877,23 @@ class SubscriberMySQLDAO extends PDODAO {
         $today = date('Y-m-d');
         $yesterday = date('Y-m-d', strtotime("-1 days"));
         $day_before = date('Y-m-d', strtotime("-2 days"));
+        $three_days_earlier = date('Y-m-d', strtotime("-3 days"));
+        $four_days_earlier = date('Y-m-d', strtotime("-4 days"));
         $results = array(
             $today => array('new_members'=>0),
             $yesterday => array('new_members'=>0),
             $day_before =>  array('new_members'=>0),
+            $three_days_earlier =>  array('new_members'=>0),
+            $four_days_earlier =>  array('new_members'=>0),
         );
 
         $q = "SELECT count(id) as new_members, ";
         $q .= "DATE(creation_time) AS date  FROM subscribers WHERE ";
         $q .= "( date(creation_time) = '".$today."' ";
         $q .= "OR date(creation_time) = '".$yesterday."' ";
-        $q .= "OR date(creation_time) = '".$day_before."') ";
+        $q .= "OR date(creation_time) = '".$day_before."' ";
+        $q .= "OR date(creation_time) = '".$three_days_earlier."' ";
+        $q .= "OR date(creation_time) = '".$four_days_earlier."') ";
         $q .= "GROUP BY DATE(creation_time) ORDER BY creation_time DESC;";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
@@ -900,6 +906,10 @@ class SubscriberMySQLDAO extends PDODAO {
                 $results[$yesterday]['new_members'] = $signup['new_members'];
             } elseif ($signup['date'] == $day_before) {
                 $results[$day_before]['new_members'] = $signup['new_members'];
+            } elseif ($signup['date'] == $three_days_earlier) {
+                $results[$three_days_earlier]['new_members'] = $signup['new_members'];
+            } elseif ($signup['date'] == $four_days_earlier) {
+                $results[$four_days_earlier]['new_members'] = $signup['new_members'];
             }
         }
         return $results;
