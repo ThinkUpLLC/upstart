@@ -77,7 +77,7 @@ $result = UpstartHelper::postToSlack($channel, $text);
 $text = "";
 $message = "";
 
-if ($daily_successful_payments[$today]['new_members'] > $daily_signups[$yesterday]['new_members']) {
+if ($daily_signups[$today]['new_members'] > $daily_signups[$yesterday]['new_members']) {
     $comparator = "up from";
 } elseif ($daily_signups[$today]['new_members'] < $daily_signups[$yesterday]['new_members']) {
     $comparator = "down from";
