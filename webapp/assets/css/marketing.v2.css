@@ -716,68 +716,6 @@ a.btn-pill-large:hover {
     padding: 36px 0;
   }
 }
-.newsletter-signup-form {
-  text-align: center;
-}
-@media (min-width: 640px) {
-  .newsletter-signup-form {
-    text-align: left;
-  }
-}
-.newsletter-signup-form label {
-  display: block;
-  text-align: center;
-  font-size: 1rem;
-  line-height: 1;
-  color: #666666;
-  margin-bottom: 10px;
-}
-@media (min-width: 640px) {
-  .newsletter-signup-form label {
-    text-align: left;
-  }
-}
-@media (min-width: 960px) {
-  .newsletter-signup-form label {
-    display: inline-block;
-    width: 160px;
-    padding-right: 60px;
-    font-size: .875rem;
-    line-height: 1.25;
-    margin-bottom: 0;
-    vertical-align: top;
-    position: relative;
-    top: 4px;
-  }
-}
-.newsletter-signup-form .email {
-  border: 1px solid #999999;
-  background: #E5E2E2;
-  width: 230px;
-  display: inline-block;
-  font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
-  padding: 3px 5px;
-  font-size: 1em;
-  margin: 5px 10px 10px 0;
-  height: 36px;
-  -webkit-appearance: initial;
-  outline: 0;
-  border-radius: 0;
-}
-.newsletter-signup-form .btn-submit {
-  display: inline-block;
-  background: #4A90E2;
-  color: #fff;
-  font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
-  margin-top: 0;
-  margin-bottom: 0;
-  border: 0;
-  vertical-align: baseline;
-  -webkit-appearance: initial;
-  padding: 8px;
-  line-height: 0;
-  font-size: 1.25em;
-}
 @media (max-width: 760px) {
   .signup-buttons {
     text-align: center;
@@ -1549,6 +1487,10 @@ body.marketing-page .section-legal-text .illustration {
     margin-left: 30px;
   }
 }
+body.marketing-page .section-marketing-text .signup-buttons,
+body.marketing-page .section-legal-text .signup-buttons {
+  text-align: center;
+}
 @media (min-width: 31.875em) {
   body.marketing-page .section-marketing-text,
   body.marketing-page .section-legal-text {
@@ -1867,6 +1809,46 @@ body.marketing-page .section-press-materials p.center a {
 }
 .border-light {
   border: 1px solid #f0f0f0;
+}
+.marketing-form label {
+  display: block;
+  font-size: 1rem;
+  line-height: 1;
+  color: #666666;
+  margin-bottom: 10px;
+}
+.marketing-form .input,
+.marketing-form .btn-submit {
+  display: inline-block;
+  vertical-align: baseline;
+  font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
+  -webkit-appearance: initial;
+}
+.marketing-form .input {
+  border: 1px solid #999999;
+  background: #f6f6f6;
+  width: 230px;
+  padding: 3px 5px;
+  font-size: 1em;
+  margin: 5px 10px 10px 0;
+  height: 36px;
+  outline: 0;
+  border-radius: 0;
+}
+@media (min-width: 400px) {
+  .marketing-form .input {
+    width: 300px;
+  }
+}
+.marketing-form .btn-submit {
+  background: #4A90E2;
+  color: #fff;
+  margin-top: 0;
+  margin-bottom: 0;
+  border: 0;
+  padding: 8px 16px;
+  line-height: 0;
+  font-size: 1.25em;
 }
 .hc {
   color: #ff7f00;
