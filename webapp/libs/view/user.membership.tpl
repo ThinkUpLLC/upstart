@@ -49,7 +49,19 @@ body_classes="settings menu-open" body_id="settings-subscription"}
       {if $membership_status eq 'Free trial'}
         <div class="form-message">
           {$amazon_form}
+
+          <a class="alt-to-btn-large" id="btn-claim-code" href="#">Have a claim code? Enter it now.</a></p>
         </div>
+
+        <form class="form-claim-code">
+          <fieldset class="fieldset-no-header">
+            <div class="form-group">
+              <label class="control-label no-check" for="claim_code">Code</label>
+              <input type="text" value="" name="claim_code" class="form-control" placeholder="1234 5678 90AB">
+            </div>
+          </fieldset>
+          <button type="submit" value="Submit code" name="submit" class="btn-submit">Submit your code</button>
+        </form>
       {elseif isset($failed_cc_amazon_form)}
         <div class="form-message">
           <p><small>{$failed_cc_amazon_text}</small></p>

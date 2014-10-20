@@ -375,6 +375,12 @@ textarea.form-control {
   color: #93c2e9;
   font-size: .625em;
 }
+.alt-to-btn-large {
+  display: inline-block;
+  width: 260px;
+  font-size: 1em;
+  text-align: center;
+}
 .list-group {
   border-top: 1px solid #b9c7ce;
   margin-top: 20px;

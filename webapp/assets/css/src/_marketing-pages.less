@@ -117,6 +117,10 @@ body.marketing-page {
       }
     }
 
+    .signup-buttons {
+      text-align: center;
+    }
+
     @media (min-width: 31.875em) {
       height: auto;
       padding: 15px 60px;
@@ -479,6 +483,51 @@ body.marketing-page {
 .border-light {
   border: 1px solid @gray-lightest;
 }
+
+.marketing-form {
+  label {
+    display: block;
+    font-size: 1rem;
+    line-height: 1;
+    color: @gray;
+    margin-bottom: 10px;
+  }
+
+  .input, .btn-submit {
+    display: inline-block;
+    vertical-align: baseline;
+    font-family: @tablet-gothic-condensed;
+    -webkit-appearance: initial;
+  }
+
+  .input {
+    border: 1px solid @gray-light;
+    background: #f6f6f6;
+    width: 230px;
+    padding: 3px 5px;
+    font-size: 1em;
+    margin: 5px 10px 10px 0;
+    height: 36px;
+    outline: 0;
+    border-radius: 0;
+
+    @media (min-width: 400px) {
+      width: 300px;
+    }
+  }
+
+  .btn-submit{
+    background: #4A90E2;
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 0;
+    border: 0;
+    padding: 8px 16px;
+    line-height: 0;
+    font-size: (20/16em);
+  }
+}
+
 
 // For colored headers
 @colors: #FF7F00, #008BD6, #6bb93b, #7E57D1, #6BB93B, #FF39EA, #B51B2E, #5B76C1, #D58E19, #B97CC6, #5fac1c;
