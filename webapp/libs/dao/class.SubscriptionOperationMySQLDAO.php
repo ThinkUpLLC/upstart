@@ -40,7 +40,7 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
 
     public function getLatestOperation($subscriber_id) {
         $q  = "SELECT * FROM subscription_operations WHERE subscriber_id = :subscriber_id ";
-        $q .= "ORDER BY timestamp DESC LIMIT 1; ";
+        $q .= "AND operation != 'unspecified' ORDER BY timestamp DESC LIMIT 1; ";
 
         $vars = array(
             ':subscriber_id'=>$subscriber_id,

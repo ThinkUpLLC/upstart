@@ -47,9 +47,21 @@ class TestOfSubscriptionOperationMySQLDAO extends UpstartUnitTestCase {
         $this->expectException('DuplicateSubscriptionOperationException');
         $result = $dao->insert($op);
 
+        //Test get latest
         $result = null;
         $result = $dao->getLatest(10);
         $this->assertIsA($result, 'SubscriptionOperation');
+
+        //Insert operation with unspecified operation
+        $result = null;
+        $op->status_code = 'SubscriptionSuccessful';
+        $op->operation = 'unspecified';
+        $result = $dao->insert($op);
+
+        //Get latest and assert it's not unspecified
+        $result = null;
+        $result = $dao->getLatest(10);
+        $this->assertEqual($result->status_code, 'SS');
     }
 
     public function testCalculateProRatedMonthlyRefund() {
