@@ -49,7 +49,7 @@ abstract class UpstartController extends Controller {
         $debug = $title.'
 
 ';
-        if (sizeof($_SESSION) > 0) {
+        if (isset($_SESSION) && sizeof($_SESSION) > 0) {
             $debug .= 'SESSION:
 '.Utils::varDumpToString($_SESSION);
         }

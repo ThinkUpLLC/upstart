@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="../assets/css/vendor/bootstrap.css" rel="stylesheet">
+    <link href="{$site_root_path}assets/css/vendor/bootstrap.css" rel="stylesheet">
     <style type="text/css">
       body {
         background-color: #f5f5f5;
@@ -17,35 +17,35 @@
       /* Logo */
         div#logo {
         }
-        
+
         div#logo {
             padding: 0;
             color: #00aeef;
             font-size: 20px;
             line-height: 20px;
         }
-        
+
         div#logo span {
             color: #404040;
             font-weight: normal;
         }
     </style>
-    <link href="../assets/css/vendor/bootstrap-responsive.css" rel="stylesheet">
+    <link href="{$site_root_path}assets/css/vendor/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
+      <script src="{$site_root_path}assets/js/html5shiv.js"></script>
     <![endif]-->
 
     <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{$site_root_path}assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{$site_root_path}assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{$site_root_path}assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="{$site_root_path}assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="{$site_root_path}assets/ico/favicon.png">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript" src="../assets/js/vendor/bootstrap.js"></script>
-    <script type="text/javascript" src="../assets/js/vendor/widgets.js"></script>
+    <script type="text/javascript" src="{$site_root_path}assets/js/vendor/bootstrap.js"></script>
+    <script type="text/javascript" src="{$site_root_path}assets/js/vendor/widgets.js"></script>
   </head>
 
   <body>
@@ -62,6 +62,7 @@
     <a class="navbar-brand" href="index.php?p=1"><div id="logo">Think<span>Up</span></div></a>
   </div>
 
+  {if $hide_admin_nav_links neq true }
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
@@ -80,4 +81,5 @@
       <li><a href="https://www.thinkup.com/dispatch/admin.php" target="_new">Dispatch</a></li>
     </ul>
   </div><!-- /.navbar-collapse -->
+  {/if}
 </nav>

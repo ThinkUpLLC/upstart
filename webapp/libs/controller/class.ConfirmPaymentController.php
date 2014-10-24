@@ -88,7 +88,7 @@ class ConfirmPaymentController extends SignUpHelperController {
      * @return bool
      */
     protected function hasUserReturnedFromAmazon() {
-        return (UpstartHelper::areGetParamsSet(SignUpHelperController::$amazon_simple_pay_return_params) &&
+        return (UpstartHelper::areGetParamsSet(SignUpHelperController::$amazon_simple_pay_subscription_return_params) &&
             isset($_GET['level']) && isset($_GET['recur']));
     }
 
