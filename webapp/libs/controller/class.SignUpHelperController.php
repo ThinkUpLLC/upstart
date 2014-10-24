@@ -126,8 +126,8 @@ abstract class SignUpHelperController extends UpstartController {
                 SessionCache::put('facebook_auth_csrf', md5(uniqid(rand(), true)));
             }
 
-            $params = array('scope'=>'read_stream,user_likes,user_location,user_website,'.
-                'read_friendlists,friends_location,manage_pages,read_insights,manage_pages,email',
+            $params = array('scope'=>'read_stream,user_likes,user_location,user_website,read_friendlists,'.
+                'friends_location,manage_pages,read_insights,manage_pages,email,user_birthday,friends_birthday',
                 'state'=>SessionCache::get('facebook_auth_csrf'),
                 'redirect_uri'=>UpstartHelper::getApplicationURL(false, false).$redirect_location);
 
