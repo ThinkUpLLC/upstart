@@ -34,10 +34,30 @@ class AmazonFPSAPIAccessor {
      * @param  str $return_url
      * @return str
      */
-    public function generateSimplePayNowForm($amount, $recurring_frequency, $description, $reference_id, $return_url) {
+    public function generateSubscribeForm($amount, $recurring_frequency, $description, $reference_id, $return_url) {
         try{
-            return ButtonGenerator::generateForm($this->AWS_ACCESS_KEY_ID, $this->AWS_SECRET_ACCESS_KEY, $amount,
-                $recurring_frequency, $description, $reference_id, $immediateReturn=1, $returnUrl=$return_url,
+            return ButtonGenerator::generateSubscriptionForm($this->AWS_ACCESS_KEY_ID, $this->AWS_SECRET_ACCESS_KEY,
+                $amount, $recurring_frequency, $description, $reference_id, $immediateReturn=1, $returnUrl=$return_url,
+                $abandonUrl=null, $processImmediate=1, $ipnUrl=null, $collectShippingAddress=0,
+                $signatureMethod="HmacSHA256", $this->environment);
+        } catch (Exception $e) {
+            //@TODO handle this more gracefully
+            echo 'Exception : ', $e->getMessage(),"\n";
+        }
+    }
+
+    /**
+     * Generate Amazon Simple Pay form with Pay Now button markup.
+     * @param  str $amount
+     * @param  str $description
+     * @param  str $reference_id
+     * @param  str $return_url
+     * @return str
+     */
+    public function generateStandardForm($amount, $description, $reference_id, $return_url) {
+        try{
+            return ButtonGenerator::generateStandardForm($this->AWS_ACCESS_KEY_ID, $this->AWS_SECRET_ACCESS_KEY,
+                $amount, $description, $reference_id, $immediateReturn=1, $returnUrl=$return_url,
                 $abandonUrl=null, $processImmediate=1, $ipnUrl=null, $collectShippingAddress=0,
                 $signatureMethod="HmacSHA256", $this->environment);
         } catch (Exception $e) {

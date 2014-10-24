@@ -231,7 +231,7 @@ class MembershipController extends AuthController {
             $amount = self::getSubscriptionAmount($subscriber->membership_level, $subscriber->subscription_recurrence);
 
             $api_accessor = new AmazonFPSAPIAccessor();
-            $pay_with_amazon_form = $api_accessor->generateSimplePayNowForm('USD '.$amount,
+            $pay_with_amazon_form = $api_accessor->generateSubscribeForm('USD '.$amount,
                 $subscriber->subscription_recurrence, 'ThinkUp.com monthly membership',
                 $caller_reference, $callback_url);
 
@@ -295,7 +295,7 @@ class MembershipController extends AuthController {
      * @return bool
      */
     protected function hasUserReturnedFromAmazon() {
-        return UpstartHelper::areGetParamsSet(SignUpHelperController::$amazon_simple_pay_return_params);
+        return UpstartHelper::areGetParamsSet(SignUpHelperController::$amazon_simple_pay_subscription_return_params);
     }
 
     /**

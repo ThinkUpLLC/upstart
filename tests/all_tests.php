@@ -40,6 +40,11 @@ $all_tests->add(new TestOfMailer());
 $all_tests->add(new TestOfUpdatePendingPaymentStatusController());
 $all_tests->add(new TestOfPayNowController());
 $all_tests->add(new TestOfAPIIPNController());
+$all_tests->add(new TestOfClaimCodeMySQLDAO());
+$all_tests->add(new TestOfClaimCodeOperationMySQLDAO());
+$all_tests->add(new TestOfBundleController());
+$all_tests->add(new TestOfAPIValidClaimCodeController());
+
 
 //$tr = new TextReporter();
 //$all_tests->run( $tr );

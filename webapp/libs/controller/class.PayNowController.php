@@ -22,7 +22,7 @@ class PayNowController extends Controller {
         $amount = SignUpHelperController::$subscription_levels[strtolower($subscriber->membership_level)]
             [$subscriber->subscription_recurrence];
         $api_accessor = new AmazonFPSAPIAccessor();
-        $pay_with_amazon_form = $api_accessor->generateSimplePayNowForm('USD '.$amount,
+        $pay_with_amazon_form = $api_accessor->generateSubscribeForm('USD '.$amount,
             $subscriber->subscription_recurrence, 'ThinkUp.com membership', $caller_reference, $callback_url);
 
         $this->addToView('pay_with_amazon_form', $pay_with_amazon_form);
