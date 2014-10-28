@@ -14,6 +14,13 @@ SELECT count(id) as successful_payments, DATE(timestamp) AS date
 FROM subscription_operations WHERE operation = "pay" GROUP BY DATE(timestamp) ORDER BY timestamp DESC LIMIT 30;
 
 --
+-- Refunds (cancellations by day)
+--
+
+SELECT COUNT( id ) AS refunds, DATE( TIMESTAMP ) AS DATE
+FROM subscription_operations WHERE operation =  "refund" GROUP BY DATE( TIMESTAMP )  ORDER BY TIMESTAMP DESC LIMIT 30;
+
+--
 -- Average subs per day grouped by month
 --
 SELECT year, month, ROUND(total_subs / days_in_month, 1) AS subs_per_day FROM
