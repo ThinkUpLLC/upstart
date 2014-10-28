@@ -8,12 +8,6 @@ GROUP BY DATE(subscribers.creation_time) order by subscribers.creation_time desc
 LIMIT 0, 3;
 
 --
--- Revenue by day.
---
-SELECT count(id) as successful_payments, CONCAT('$', FORMAT(SUM(amount), 0)) as revenue, DATE(timestamp) AS date
-FROM payments WHERE transaction_status = "Success" GROUP BY DATE(timestamp) ORDER BY timestamp DESC LIMIT 4;
-
---
 -- New monthly subs by day.
 --
 SELECT count(id) as successful_payments, DATE(timestamp) AS date
@@ -40,3 +34,9 @@ GROUP BY YEAR(timestamp), MONTH(timestamp) ORDER BY year, month DESC
 SELECT date(timestamp) as date, YEARWEEK(timestamp) as week_of_year, count(*) AS total_subs
 FROM subscription_operations where operation='pay' AND status_code = 'SS'
 GROUP BY YEARWEEK(timestamp) ORDER BY timestamp DESC
+
+--
+-- Revenue by day. [Old annual subscriptions, pre-monthly]
+--
+SELECT count(id) as successful_payments, CONCAT('$', FORMAT(SUM(amount), 0)) as revenue, DATE(timestamp) AS date
+FROM payments WHERE transaction_status = "Success" GROUP BY DATE(timestamp) ORDER BY timestamp DESC LIMIT 4;
