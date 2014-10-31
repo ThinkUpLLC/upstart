@@ -2,10 +2,13 @@
 -- Run this after the batch update to the subscriber_status field.
 --
 SELECT count(id) as total, subscription_status FROM subscribers
-WHERE subscription_status not like 'Paid through%' group by subscription_status
+WHERE subscription_status not like 'Paid through%' and subscription_status not like 'Refunded%' group by subscription_status
 UNION
 SELECT count(id) as total, subscription_status FROM subscribers
 WHERE subscription_status like 'Paid through%'
+UNION
+SELECT count(id) as total, subscription_status FROM subscribers
+WHERE subscription_status like 'Refunded%'
 
 --
 -- Get membership_level of failed payments
