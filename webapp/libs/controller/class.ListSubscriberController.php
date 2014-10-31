@@ -22,7 +22,9 @@ class ListSubscriberController extends Controller {
         }
         $this->addToView('subscribers', $subscribers);
         $total_paid_subscribers = $subscriber_dao->getPaidTotal();
-        $this->addToView('total_paid_subscribers', $total_paid_subscribers);
+        $this->addToView('total_paid_subscribers', $total_paid_subscribers['total_paid_subscribers']);
+        $this->addToView('total_paid_subscribers_monthly', $total_paid_subscribers['breakdown']['monthly']);
+        $this->addToView('total_paid_subscribers_annual', $total_paid_subscribers['breakdown']['annual']);
         $this->addToView('application_url', UpstartHelper::getApplicationURL());
 
         /* Begin installation stats */
@@ -43,7 +45,7 @@ class ListSubscriberController extends Controller {
         $daily_subscribers = $subscription_operation_dao->getDailySubscribers();
         $this->addToView('total_new_subscribers', $daily_subscribers[date('Y-m-d')]['subscribers']);
         $daily_successful_payments = $subscription_operation_dao->getDailySuccessfulPayments();
-        $todays_reups = $daily_successful_payments[date('Y-m-d')]['successful_payments'] - 
+        $todays_reups = $daily_successful_payments[date('Y-m-d')]['successful_payments'] -
             $daily_subscribers[date('Y-m-d')]['subscribers'];
         $this->addToView('total_reups', $todays_reups);
 

@@ -243,11 +243,23 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     public function getPaidTotal() {
-        $q  = "SELECT count(*) as total FROM subscribers s WHERE subscription_status LIKE 'Paid through%' ";
+        $q  = "SELECT count(*) as total, subscription_recurrence FROM subscribers s ";
+        $q .= "WHERE subscription_status LIKE 'Paid through%' ";
+        $q .= "GROUP BY subscription_recurrence";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
-        $result = $this->getDataRowAsArray($ps);
-        return $result['total'];
+        $rows = $this->getDataRowsAsArrays($ps);
+        $total_paid_subscribers = 0;
+        $breakdown = array('monthly'=>0, 'annual'=>0);
+        foreach ($rows as $row) {
+            $total_paid_subscribers = $total_paid_subscribers + $row['total'];
+            if ($row['subscription_recurrence'] == '1 month') {
+                $breakdown['monthly'] = $row['total'];
+            } else if ($row['subscription_recurrence'] == '12 months') {
+                $breakdown['annual'] = $row['total'];
+            }
+        }
+        return array('total_paid_subscribers'=>$total_paid_subscribers, 'breakdown'=>$breakdown);
     }
 
     public function getSearchResults($search_term, $page_number = 1, $count = 50) {
