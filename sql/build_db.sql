@@ -244,7 +244,7 @@ CREATE TABLE subscription_operations (
   buyer_name varchar(255) NOT NULL COMMENT 'Amazon''s buyer name.',
   payment_method varchar(25) NOT NULL COMMENT 'Payment method.',
   PRIMARY KEY (id),
-  UNIQUE KEY amazon_subscription_id (amazon_subscription_id,reference_id,status_code),
+  UNIQUE KEY amazon_subscription_id (amazon_subscription_id,reference_id,status_code,transaction_date),
   KEY subscriber_id (subscriber_id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Amazon subscription operations.';
 
