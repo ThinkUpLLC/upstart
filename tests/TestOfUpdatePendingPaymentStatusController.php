@@ -52,25 +52,38 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
         $controller->control();
 
         $payment_dao = new PaymentMySQLDAO();
+        $subscriber_dao = new SubscriberMySQLDAO();
 
         //assert pending payments status has been updated
         $payment = $payment_dao->getPayment('123-success', '12345');
         $this->assertEqual($payment->transaction_status, 'Success');
         $this->assertEqual($payment->status_message,
             'The transaction was successful and the payment instrument was charged.');
+        $subscriber = $subscriber_dao->getByID(1);
+        $this->assertEqual($subscriber->subscription_status, 'Paid');
+        $this->assertNotNull($subscriber->paid_through);
 
         $payment = $payment_dao->getPayment('123-failure-no-message', '12345');
         $this->assertEqual($payment->transaction_status, 'Failure');
         $this->assertNull($payment->status_message);
+        $subscriber = $subscriber_dao->getByID(2);
+        $this->assertEqual($subscriber->subscription_status, 'Payment failed');
+        $this->assertNull($subscriber->paid_through);
 
         $payment = $payment_dao->getPayment('123-failure-message-with-xml', '12345');
         $this->assertEqual($payment->transaction_status, 'Failure');
         //TODO improve this assertion
         $this->assertTrue(strpos($payment->status_message, 'Sender token not active') !== false);
+        $subscriber = $subscriber_dao->getByID(3);
+        $this->assertEqual($subscriber->subscription_status, 'Payment failed');
+        $this->assertNull($subscriber->paid_through);
 
         $payment = $payment_dao->getPayment('123-failure-message-human-readable', '12345');
         $this->assertEqual($payment->transaction_status, 'Failure');
         $this->assertEqual($payment->status_message, 'Credit Card is no longer valid');
+        $subscriber = $subscriber_dao->getByID(4);
+        $this->assertEqual($subscriber->subscription_status, 'Payment failed');
+        $this->assertNull($subscriber->paid_through);
     }
 
     public function testControlSuccessfulChargeMemberEmail() {
@@ -92,6 +105,11 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
         $this->assertPattern('/Thanks for joining ThinkUp!/', $body);
         $this->assertPattern('/You\'re officially a <strong>ThinkUp Member<\/strong>!/', $body);
         $this->assertPattern('/Your membership lasts until <strong>Apr 21, 2015<\/strong>/', $body);
+
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber = $subscriber_dao->getByID(1);
+        $this->assertEqual($subscriber->subscription_status, 'Paid');
+        $this->assertNotNull($subscriber->paid_through);
     }
 
     public function testControlSuccessfulChargeProEmail() {
@@ -112,6 +130,11 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
         $this->debug($body);
         $this->assertPattern('/Thanks for joining ThinkUp!/', $body);
         $this->assertPattern('/You\'re officially a <strong>ThinkUp Pro Member<\/strong>!/', $body);
+
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber = $subscriber_dao->getByID(1);
+        $this->assertEqual($subscriber->subscription_status, 'Paid');
+        $this->assertNotNull($subscriber->paid_through);
     }
 
     public function testControlPendingChargeNoEmail() {
@@ -149,6 +172,11 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
         $this->debug($body);
         $this->assertPattern('/Uh oh! Problem with your ThinkUp payment/', $body);
         $this->assertNoPattern('/The specific message we got from Amazon/', $body);
+
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber = $subscriber_dao->getByID(1);
+        $this->assertEqual($subscriber->subscription_status, 'Payment failed');
+        $this->assertNull($subscriber->paid_through);
     }
 
     public function testControlFailedChargeEmailWithXMLifiedStatusMessage() {
@@ -169,6 +197,11 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
         $this->debug($body);
         $this->assertPattern('/Uh oh! Problem with your ThinkUp payment/', $body);
         $this->assertNoPattern('/The specific message we got from Amazon/', $body);
+
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber = $subscriber_dao->getByID(1);
+        $this->assertEqual($subscriber->subscription_status, 'Payment failed');
+        $this->assertNull($subscriber->paid_through);
     }
 
     public function testControlFailedChargeEmailWithHumanReadableStatusMessage() {
@@ -189,5 +222,10 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
         $this->debug($body);
         $this->assertPattern('/Uh oh! Problem with your ThinkUp payment/', $body);
         $this->assertPattern('/The specific message we got from Amazon/', $body);
-    }
+
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber = $subscriber_dao->getByID(1);
+        $this->assertEqual($subscriber->subscription_status, 'Payment failed');
+        $this->assertNull($subscriber->paid_through);
+   }
 }

@@ -108,7 +108,7 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     public function setUsername($subscriber_id, $username) {
-        $q = " UPDATE subscribers SET thinkup_username = :thinkup_username WHERE id=:id";
+        $q = "UPDATE subscribers SET thinkup_username = :thinkup_username WHERE id=:id";
         $vars = array(
             ':id'=>$subscriber_id,
             ':thinkup_username'=>$username
@@ -127,6 +127,28 @@ class SubscriberMySQLDAO extends PDODAO {
                 throw new DuplicateSubscriberUsernameException($message);
             }
         }
+    }
+
+    public function setSubscriptionStatus($subscriber_id, $subscription_status) {
+        $q = "UPDATE subscribers SET subscription_status = :subscription_status WHERE id=:id";
+        $vars = array(
+            ':id'=>$subscriber_id,
+            ':subscription_status'=>$subscription_status
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
+    public function setPaidThrough($subscriber_id, $paid_through) {
+        $q = "UPDATE subscribers SET paid_through = :paid_through WHERE id=:id";
+        $vars = array(
+            ':id'=>$subscriber_id,
+            ':paid_through'=>$paid_through
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
     }
 
     public function setEmail($subscriber_id, $email) {
@@ -691,27 +713,6 @@ class SubscriberMySQLDAO extends PDODAO {
         $vars = array(
             ":token" => $token,
             ":email" => $email
-        );
-        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q, $vars);
-        return $this->getUpdateCount($ps);
-    }
-
-    public function updateSubscriptionStatus($id, $status=null) {
-        if (!isset($status)) {
-            $subscriber = $this->getByID($id);
-            if (isset($subscriber)) {
-                $status = $subscriber->getSubscriptionStatus();
-            } else {
-                throw new SubscriberDoesNotExistException('Subscriber ID '.$id.' does not exist.');
-            }
-        }
-        $q = "UPDATE subscribers
-              SET subscription_status=:status
-              WHERE id=:id";
-        $vars = array(
-            ":id" => $id,
-            ":status" => $status
         );
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);

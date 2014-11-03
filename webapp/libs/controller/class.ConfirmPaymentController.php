@@ -47,12 +47,10 @@ class ConfirmPaymentController extends SignUpHelperController {
                         $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
                         $subscription_operation_dao->insert($op);
 
-                        //Now that user has authed and paid, get current subscription_status
-                        $subscription_status = $subscriber->getSubscriptionStatus();
-                        //Update subscription_status in the subscriber object
-                        $subscriber->subscription_status = $subscription_status;
-                        //Update subscription_status in the data store
-                        $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
+                        //Set new paid_through date and update status just in case
+                        $subscription_helper = new SubscriptionHelper();
+                        $subscription_helper->updateSubscriptionStatusAndPaidThrough($subscriber, $op);
+
                         //Update is_free_trial field in ThinkUp installation
                         $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
                         $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);

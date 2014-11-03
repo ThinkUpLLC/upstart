@@ -46,6 +46,11 @@ class TestOfConfirmPaymentController extends UpstartUnitTestCase {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['is_free_trial'], 0);
 
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber = $subscriber_dao->getByEmail('me@example.com');
+        $this->assertEqual($subscriber->subscription_status, 'Paid');
+        $this->assertNotNull($subscriber->paid_through);
+
         //Refresh
         $results = $this->confirmPaymentControl(true);
         $this->assertNoPattern('/Subscriber ID  does not exist./', $results);
@@ -56,6 +61,11 @@ class TestOfConfirmPaymentController extends UpstartUnitTestCase {
         $results = $this->buildDataAndConfirmPayment('twitter', false);
         $this->assertNoPattern('/Subscriber ID  does not exist./', $results);
         $this->assertPattern('/Oops\! Something went wrong and our team is looking into it./', $results);
+
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber = $subscriber_dao->getByEmail('me@example.com');
+        $this->assertEqual($subscriber->subscription_status, 'Free trial');
+        $this->assertNull($subscriber->paid_through);
     }
 
     public function testReturnFromAmazonWithTwitter() {
@@ -109,7 +119,7 @@ class TestOfConfirmPaymentController extends UpstartUnitTestCase {
     protected function buildData($network = 'twitter', $is_installed = true) {
         if (!isset($this->builders)) {
             $subscriber_array = array('id'=>6, 'email'=>'me@example.com', 'is_admin'=>1, 'thinkup_username'=>'iamtaken',
-                'membership_level'=>'Member', 'network'=>$network);
+                'membership_level'=>'Member', 'network'=>$network, 'paid_through'=>null);
             if ($is_installed) {
                 //Not installed; will be in the next section if it should be
                 $subscriber_array['date_installed'] = null;

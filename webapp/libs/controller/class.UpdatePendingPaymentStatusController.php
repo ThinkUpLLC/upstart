@@ -36,8 +36,14 @@ class UpdatePendingPaymentStatusController extends Controller {
                         // Update payment status using the PaymentDAO
                         $updated_payment_total = $payment_dao->updateStatus($payment->id, $status['status'],
                             $status['status_message']);
-                        $subscriber_dao->updateSubscriptionStatus($payment->subscriber_id);
+
                         $subscriber = $subscriber_dao->getByID($payment->subscriber_id);
+
+                        // Update subscriber details
+                        $subscription_helper = new SubscriptionHelper();
+                        $new_values = $subscription_helper->getSubscriptionStatusAndPaidThrough( $subscriber );
+                        $subscriber_dao->setSubscriptionStatus( $subscriber->id, $new_values['subscription_status']);
+                        $subscriber_dao->setPaidThrough($subscriber->id, $new_values['paid_through']);
 
                         // Send an email to the member re: payment status
                         $email_view_mgr = new ViewManager();

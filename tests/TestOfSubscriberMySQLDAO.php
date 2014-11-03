@@ -451,27 +451,6 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertTrue($subscriber->is_membership_complimentary);
     }
 
-    public function testUpdateSubscriptionStatus() {
-        $builders = array();
-        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani@example.com',
-            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
-            'thinkup_username'=>'unique1', 'date_installed'=>null, 'is_membership_complimentary'=>1,
-            'subscription_status'=>'Free trial'));
-
-        $dao = new SubscriberMySQLDAO();
-        $subscriber = $dao->getByID(1);
-        $this->assertEqual($subscriber->subscription_status, 'Free trial');
-        //test without specifying status
-        $subscriber = $dao->updateSubscriptionStatus(1);
-        $subscriber = $dao->getByID(1);
-        $this->assertEqual($subscriber->subscription_status, 'Complimentary membership');
-
-        //test with specifying status
-        $subscriber = $dao->updateSubscriptionStatus(1, 'Test status');
-        $subscriber = $dao->getByID(1);
-        $this->assertEqual($subscriber->subscription_status, 'Test status');
-    }
-
     public function testGetPaidStaleInstalls() {
         $builders = array();
         //Should get returned
