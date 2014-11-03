@@ -70,14 +70,16 @@ class MembershipController extends AuthController {
                                 __FILE__, __LINE__, __METHOD__ );
                         }
 
-                        //Now that user has created a subscription, generate up-to-date subscription_status
-                        $subscription_status = $subscriber->getSubscriptionStatus();
-                        //Update subscription_status in the subscriber object
-                        $subscriber->subscription_status = $subscription_status;
-                        //Update subscription_status in the data store
-                        $subscriber_dao->updateSubscriptionStatus($subscriber->id, $subscription_status);
+                        //Now that user has created a subscription, set new paid_through date and update status
+                        $subscription_helper = new SubscriptionHelper();
+                        $subscription_helper->updateSubscriptionStatusAndPaidThrough($subscriber, $op);
+
                         //Update recurrence_frequency in the data store
                         $subscriber_dao->updateSubscriptionRecurrence($subscriber->id, $op->recurring_frequency);
+
+                        //Refresh subscriber object with new field values
+                        $subscriber = $subscriber_dao->getByEmail($logged_in_user);
+
                         //Update is_free_trial field in ThinkUp installation
                         $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
                         $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
@@ -134,7 +136,9 @@ class MembershipController extends AuthController {
                                 $sub_op_dao->insert($op_cancel);
 
                                 // Update subscription status
-                                $subscriber_dao->updateSubscriptionStatus($subscriber->id, 'Refunded $'.$refund_amount);
+                                $subscription_helper = new SubscriptionHelper();
+                                $subscription_helper->updateSubscriptionStatusAndPaidThrough($subscriber, $op_cancel);
+
                                 // Close account
                                 $result = $subscriber_dao->closeAccount($subscriber->id);
 
@@ -204,6 +208,9 @@ class MembershipController extends AuthController {
         }
         if ($membership_status == 'Authorization failed') {
             $membership_status = 'Payment failed';
+        }
+        if ($membership_status == 'Paid') {
+            $membership_status = "Paid through ".(date('M j, Y', strtotime($subscriber->paid_through)));
         }
         $this->addToView('membership_status', $membership_status);
 

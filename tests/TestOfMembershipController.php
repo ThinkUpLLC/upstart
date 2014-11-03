@@ -130,34 +130,41 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'paid@example.com',
             'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
             'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>'Member',
-            'subscription_recurrence'=>'12 months'));
+            'subscription_recurrence'=>'12 months', 'paid_through'=>null,
+            'subscription_status'=>'Free trial'));
 
         $builders[] = FixtureBuilder::build('payments', array('id'=>100, 'transaction_status'=>$payment_status,
             'timestamp'=>'-10s'));
         $builders[] = FixtureBuilder::build('subscriber_payments', array('subscriber_id'=>1, 'payment_id'=>100));
 
-        $this->updateSubscriptionStatus(1);
+        self::updateSubscriptionStatus(1);
         return $builders;
     }
 
     private function buildSubscriberPaidMonthly($payment_status) {
         $builders = array();
+        $days_in_current_month = date("t");
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'paid@example.com',
             'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
             'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>'Member',
-            'subscription_recurrence'=>'1 month'));
+            'subscription_recurrence'=>'1 month', 'paid_through'=>null,
+            'subscription_status'=>'Free trial'));
 
         $this->builders[] = FixtureBuilder::build('subscription_operations', array('subscriber_id'=>1,
             'operation'=>'pay', 'status_code'=>'SS', 'transaction_date'=>'-10s'));
 
-        $this->updateSubscriptionStatus(1);
+        self::updateSubscriptionStatus(1);
         return $builders;
     }
 
     private function updateSubscriptionStatus($subscriber_id) {
         //tests shouldn't instantiate the DAO, but in the interest of expedience...
         $subscriber_dao = new SubscriberMySQLDAO();
-        $subscriber_dao->updateSubscriptionStatus( $subscriber_id);
+        $subscriber = $subscriber_dao->getByID($subscriber_id);
+        $subscription_helper = new SubscriptionHelper();
+        $new_values = $subscription_helper->getSubscriptionStatusAndPaidThrough( $subscriber );
+        $subscriber_dao->setSubscriptionStatus($subscriber->id, $new_values['subscription_status']);
+        $result = $subscriber_dao->setPaidThrough($subscriber->id, $new_values['paid_through']);
     }
 
     public function testPaymentPending() {

@@ -169,7 +169,7 @@ class TestOfRemindTrialersAboutPaymentController extends UpstartUnitTestCase {
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>5, 'email'=>'ginatrapani+5@example.com',
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
             'thinkup_username'=>'unique5', 'date_installed'=>null, 'is_membership_complimentary'=>0,
-            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid through April 1, 2015',
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid',
             'total_payment_reminders_sent'=>2, 'creation_time'=>'-7d', 'payment_reminder_last_sent'=>'-60h',
             'membership_level'=>'Member'));
 

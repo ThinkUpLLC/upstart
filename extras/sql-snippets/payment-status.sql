@@ -1,14 +1,7 @@
 --
 -- Run this after the batch update to the subscriber_status field.
 --
-SELECT count(id) as total, subscription_status FROM subscribers
-WHERE subscription_status not like 'Paid through%' and subscription_status not like 'Refunded%' group by subscription_status
-UNION
-SELECT count(id) as total, subscription_status FROM subscribers
-WHERE subscription_status like 'Paid through%'
-UNION
-SELECT count(id) as total, subscription_status FROM subscribers
-WHERE subscription_status like 'Refunded%'
+SELECT count(id) as total, subscription_status FROM subscribers GROUP BY subscription_status
 
 --
 -- Get membership_level of failed payments
@@ -35,6 +28,7 @@ IF(membership_level = 'Member', 60,
         IF(membership_level = 'Late Bird', 50,
             IF(membership_level = 'Pro', 120,
                 IF(membership_level = 'Exec', 996, 0))))) AS price FROM `subscribers`
-WHERE subscription_recurrence = '12 months' AND is_account_closed = 0 AND subscription_status = 'Paid through Jan 17, 2015'
+WHERE subscription_recurrence = '12 months' AND is_account_closed = 0 AND subscription_status = 'Paid' AND
+ paid_through IS NOT NULL AND DATE_FORMAT(paid_through, '%b %e %Y') = 'Jan 17 2015'
 GROUP BY membership_level
 ) AS crowdfunders

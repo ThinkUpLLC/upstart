@@ -138,10 +138,10 @@ class TestOfAPIIPNController extends UpstartUnitTestCase {
         $this->assertNotNull($op);
         $this->assertEqual($op->reference_id, "60d73_1411407531");
 
-        //Assert that the subscriber's status is correct ("Paid through")
+        //Assert that the subscriber's status is correct ("Paid")
         $subscriber_dao = new SubscriberMySQLDAO();
         $subscriber = $subscriber_dao->getByID($op->subscriber_id);
-        $this->assertPattern("/Paid through/", $subscriber->subscription_status);
+        $this->assertEqual("Paid", $subscriber->subscription_status);
     }
 
     public function testControlSubscriptionCancelled() {

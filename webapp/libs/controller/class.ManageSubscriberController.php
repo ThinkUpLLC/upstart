@@ -99,14 +99,23 @@ class ManageSubscriberController extends Controller {
                             //Update is_free_trial field in ThinkUp installation
                             $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
                             $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
-                            $subscriber_dao->updateSubscriptionStatus($subscriber_id);
+                            // Update subscriber details
+                            $subscription_helper = new SubscriptionHelper();
+                            $new_values = $subscription_helper->getSubscriptionStatusAndPaidThrough( $subscriber );
+                            $subscriber_dao->setSubscriptionStatus($subscriber->id, $new_values['subscription_status']);
+                            $subscriber_dao->setPaidThrough($subscriber->id, $new_values['paid_through']);
                             $this->addSuccessMessage("Comped membership for ".$subscriber->email);
                             $subscriber->is_membership_complimentary = true;
                         }
                     } elseif ($_GET['action'] == 'decomp') {
                         $decomped = $subscriber_dao->decompSubscription($subscriber_id, $username);
                         if ( $decomped > 0 ) {
-                            $subscriber_dao->updateSubscriptionStatus($subscriber_id);
+                            // Update subscriber details
+                            $subscription_helper = new SubscriptionHelper();
+                            $new_values = $subscription_helper->getSubscriptionStatusAndPaidThrough( $subscriber );
+                            $subscriber_dao->setSubscriptionStatus($subscriber->id, $new_values['subscription_status']);
+                            $subscriber_dao->setPaidThrough($subscriber->id, $new_values['paid_through']);
+
                             $this->addSuccessMessage("Decomped membership for ".$subscriber->email);
                             $subscriber->is_membership_complimentary = false;
                         }

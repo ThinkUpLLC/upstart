@@ -21,7 +21,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
   Potential values for $membership_status that the template expects:
 
   * "Free trial" - User is in free trial (either expired or not)
-  * "Paid throuh Mon dd, YYYY" - Successful charge
+  * "Paid through Mon dd, YYYY" - Successful charge
   * "Payment failed" - Charge failed
   * "Complimentary membership" - Comped
 *}
