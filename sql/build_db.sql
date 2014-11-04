@@ -198,6 +198,7 @@ CREATE TABLE subscribers (
 --
 
 CREATE TABLE subscriber_archive (
+  id int(11) DEFAULT NULL COMMENT 'Subscriber ID.',
   email varchar(200) NOT NULL COMMENT 'Subscriber email address.',
   pwd varchar(255) NOT NULL COMMENT 'Subscriber password.',
   pwd_salt varchar(255) NOT NULL COMMENT 'Subscriber password salt.',
@@ -229,9 +230,11 @@ CREATE TABLE subscriber_archive (
   recurrence_period varchar(12) NOT NULL DEFAULT '12 Months' COMMENT 'Recurrence period of payment authorization.',
   token_validity_start_date timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Date the token becomes valid.',
   subscription_status varchar(50) DEFAULT NULL COMMENT 'Status of subscription payment.',
+  paid_through timestamp NULL DEFAULT NULL COMMENT 'Membership is paid for through this date.',
   total_payment_reminders_sent int(11) NOT NULL DEFAULT '0' COMMENT 'The number of payment reminder emails sent to this subscriber.',
   payment_reminder_last_sent timestamp NULL DEFAULT NULL COMMENT 'Last time a payment reminder was sent to this subscriber.',
-  is_account_closed int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not the member closed their account.'
+  is_account_closed int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not the member closed their account.',
+  claim_code varchar(24) DEFAULT NULL COMMENT 'Redeemed claim code.'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Deleted subscribers with authorizaton data.';
 
 -- --------------------------------------------------------

@@ -306,14 +306,14 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     public function archiveSubscriber($subscriber_id) {
-        $q = "INSERT INTO subscriber_archive SELECT s.email, s.pwd, s.pwd_salt, s.creation_time, s.network_user_id, ";
-        $q .= "s.network_user_name, s.network, s.full_name, s.follower_count, s.is_verified, s.oauth_access_token, ";
+        $q = "INSERT INTO subscriber_archive SELECT s.id, s.email, s.pwd, s.pwd_salt, s.creation_time, ";
+        $q .= "s.network_user_id, s.network_user_name, s.network, s.full_name, s.follower_count, s.is_verified, ";
         $q .= "s.oauth_access_token_secret, s.verification_code, s.is_email_verified, s.is_from_waitlist, ";
-        $q .= "s.membership_level, s.thinkup_username, s.date_installed, s.api_key_private, s.last_dispatched, ";
-        $q .= "s.commit_hash, s.is_installation_active, a.token_id, a.amount, ";
+        $q .= "s.oauth_access_token, s.membership_level, s.thinkup_username, s.date_installed, s.api_key_private, ";
+        $q .= "s.last_dispatched, s.commit_hash, s.is_installation_active, a.token_id, a.amount, ";
         $q .= "a.status_code, a.error_message, a.payment_method_expiry, a.caller_reference, a.recurrence_period, ";
-        $q .= "a.token_validity_start_date, s.subscription_status, s.total_payment_reminders_sent, ";
-        $q .= "s.payment_reminder_last_sent, s.is_account_closed ";
+        $q .= "a.token_validity_start_date, s.subscription_status, s.paid_through, s.total_payment_reminders_sent, ";
+        $q .= "s.payment_reminder_last_sent, s.is_account_closed, s.claim_code ";
         $q .= "FROM subscribers s LEFT JOIN subscriber_authorizations sa ";
         $q .= "ON s.id = sa.subscriber_id LEFT JOIN authorizations a ON a.id = sa.authorization_id ";
         $q .= "WHERE s.id = :subscriber_id";

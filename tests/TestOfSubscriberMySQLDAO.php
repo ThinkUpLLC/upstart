@@ -270,40 +270,46 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
 
     public function testArchiveSubscriber() {
         $builders = array();
-        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'ginatrapani@example.com',
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1001, 'email'=>'ginatrapani@example.com',
         'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
         'thinkup_username'=>'unique1', 'subscription_status'=>'About to be archived', 'total_payment_reminders_sent'=>3,
-        'payment_reminder_last_sent'=>'2001-01-01 11:55:05'));
-        $builders[] = FixtureBuilder::build('subscribers', array('id'=>2, 'email'=>'lexluther@evilmail.com',
+        'payment_reminder_last_sent'=>'2001-01-01 11:55:05', 'claim_code'=>'abcdefghi', 'paid_through'=>null));
+        $paid_through_1002 = strtotime('+6 days');
+        $paid_through_1002 = date(DATE_ATOM, $paid_through_1002);
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1002, 'email'=>'lexluther@evilmail.com',
         'network_user_name'=>'lexluther', 'verification_code'=>1234, 'is_email_verified'=>0,
-        'thinkup_username'=>'unique2'));
-        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'xanderharris@buff.com',
+        'thinkup_username'=>'unique2', 'claim_code'=>null, 'paid_through'=>$paid_through_1002));
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1003, 'email'=>'xanderharris@buff.com',
         'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique3'));
-        $builders[] = FixtureBuilder::build('subscribers', array('email'=>'willowrosenberg@willow.com',
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1004, 'email'=>'willowrosenberg@willow.com',
         'verification_code'=>1234, 'is_email_verified'=>0, 'thinkup_username'=>'unique4'));
         $builders[] = FixtureBuilder::build('authorizations', array('id'=>1, 'token_id'=>'aabbccdd' ));
-        $builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>2,
+        $builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>1002,
         'authorization_id'=>1));
 
         $dao = new SubscriberMySQLDAO();
-        $result = $dao->archiveSubscriber(1);
+        $result = $dao->archiveSubscriber(1001);
         $this->assertEqual($result, 1);
 
         $sql = "SELECT * FROM subscriber_archive WHERE email = 'ginatrapani@example.com'";
         $stmt = SubscriberMySQLDAO::$PDO->query($sql);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual(1001, $data['id']);
+        $this->assertNull($data['paid_through']);
+        $this->assertEqual('abcdefghi', $data['claim_code']);
         $this->assertEqual('gtra', $data['network_user_name']);
         $this->assertEqual('', $data['token_id']);
         $this->assertEqual('About to be archived', $data['subscription_status']);
         $this->assertEqual(3, $data['total_payment_reminders_sent']);
         $this->assertEqual('2001-01-01 11:55:05', $data['payment_reminder_last_sent']);
 
-        $result = $dao->archiveSubscriber(2);
+        $result = $dao->archiveSubscriber(1002);
         $this->assertEqual($result, 1);
 
         $sql = "SELECT * FROM subscriber_archive WHERE email = 'lexluther@evilmail.com'";
         $stmt = SubscriberMySQLDAO::$PDO->query($sql);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual(substr($paid_through_1002, 0, 10), substr($data['paid_through'], 0, 10));
         $this->assertEqual('lexluther', $data['network_user_name']);
         $this->assertEqual('aabbccdd', $data['token_id']);
         $this->assertEqual('Free trial', $data['subscription_status']);
