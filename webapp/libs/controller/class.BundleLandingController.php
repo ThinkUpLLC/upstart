@@ -4,7 +4,7 @@ class BundleLandingController extends SignUpHelperController {
      * Name of the bundle
      * @var string
      */
-    var $name = "The Better Web Bundle 2014";
+    var $name = "The Good Web Bundle";
     /**
      * The total number of days of membership the user is purchasing.
      * @var integer
@@ -14,7 +14,7 @@ class BundleLandingController extends SignUpHelperController {
      * Price of the bundle.
      * @var integer
      */
-    var $price = 100;
+    var $price = 96;
 
     public function control() {
         $this->setViewTemplate('bundle.landing.tpl');
