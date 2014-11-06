@@ -151,6 +151,26 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getUpdateCount($ps);
     }
 
+    /**
+     * Apply a claim code to a subscriber: set subscription_recurrence to None, paid_through date, and claim_code field.
+     * @param  int $subscriber_id
+     * @param  ClaimCode $claim_code
+     * @return int update count
+     */
+    public function redeemClaimCode($subscriber_id, ClaimCode $claim_code) {
+        $paid_through = date(DATE_ATOM, strtotime('+'.$claim_code->number_days.'days'));
+        $q = "UPDATE subscribers SET subscription_recurrence = 'None', paid_through = :paid_through, ";
+        $q .= "claim_code = :claim_code, subscription_status = 'Paid' WHERE id=:id";
+        $vars = array(
+            ':id'=>$subscriber_id,
+            ':paid_through'=>$paid_through,
+            ':claim_code'=>$claim_code->code
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
     public function setEmail($subscriber_id, $email) {
         $q = " UPDATE subscribers SET email = :email WHERE id=:id";
         $vars = array(
