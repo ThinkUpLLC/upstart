@@ -1,5 +1,5 @@
 <?php
 require_once 'init.php';
 
-$controller = new BundleController();
+$controller = new BundleRedeemController();
 echo $controller->go();

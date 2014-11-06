@@ -6,4 +6,4 @@ Your claim code is:
 
 Redeem your code at:
 <br><br>
-{$site_url}bundle/redeem.php?code={$claim_code}
+{$site_url}bundle-redeem.php?code={$claim_code}

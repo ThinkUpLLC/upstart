@@ -1,5 +1,5 @@
 <?php
-class BundleController extends SignUpHelperController {
+class BundleLandingController extends SignUpHelperController {
     /**
      * Name of the bundle
      * @var string
@@ -17,7 +17,7 @@ class BundleController extends SignUpHelperController {
     var $price = 100;
 
     public function control() {
-        $this->setViewTemplate('bundle.index.tpl');
+        $this->setViewTemplate('bundle.landing.tpl');
         $this->disableCaching();
         $this->setPageTitle($this->name);
         $this->addToView('title', $this->name);
