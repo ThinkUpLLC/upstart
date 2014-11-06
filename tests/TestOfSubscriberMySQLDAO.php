@@ -30,6 +30,29 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual(0, $data['is_account_closed']);
     }
 
+    public function testRedeemClaimCode() {
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->insert('ginatrapani@example.com', 'secr3tpassword');
+        $this->assertEqual($result, 1);
+
+        $claim_code = new ClaimCode();
+        $claim_code->number_days = 365;
+        $claim_code->code = '1234567890AB';
+        $dao->redeemClaimCode(1, $claim_code);
+
+        $sql = "SELECT * FROM subscribers WHERE id = ".$result;
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual('ginatrapani@example.com', $data['email']);
+        $this->assertEqual('Paid', $data['subscription_status']);
+        $this->assertEqual(0, $data['is_account_closed']);
+        $this->assertNotNull($data['paid_through']);
+        $paid_through = date(DATE_ATOM, strtotime('+'.$claim_code->number_days.'days'));
+        $this->assertEqual(substr($data['paid_through'], 0, 10), substr($paid_through, 0, 10));
+        $this->assertEqual('None', $data['subscription_recurrence']);
+        $this->assertEqual('1234567890AB', $data['claim_code']);
+    }
+
     public function testInsertCompleteSubscriber() {
         //Valid, unique new subscriber
         $subscriber = new Subscriber();
