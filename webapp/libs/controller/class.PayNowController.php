@@ -10,6 +10,25 @@ class PayNowController extends Controller {
         $subscriber_dao = new SubscriberMySQLDAO();
         $subscriber = $subscriber_dao->getByID($new_subscriber_id);
 
+        //Process claim code
+        if (isset($_POST['claim_code'])) {
+            //Check if claim code is valid
+            $claim_code_dao = new ClaimCodeMySQLDAO();
+            //Strip spaces and go uppercase
+            $code_str = str_replace(' ', '', strtoupper($_POST['claim_code']));
+            $claim_code = $claim_code_dao->get($code_str);
+            if (isset($claim_code)) {
+                if ($claim_code->is_redeemed) {
+                    $this->addErrorMessage('Whoops! It looks like that code has already been used.');
+                } else {
+                    //Send to confirm payment with code on the query string
+                    return $this->redirect(UpstartHelper::getApplicationURL().'confirm-payment.php?code='.
+                        $claim_code->code);
+                }
+            } else {
+                $this->addErrorMessage("That code doesn't seem right. Check it and try again?");
+            }
+        }
         //Get Amazon URL
         $caller_reference = $new_subscriber_id.'_'.time();
         $callback_url = UpstartHelper::getApplicationURL().'confirm-payment.php?level='.
@@ -30,5 +49,22 @@ class PayNowController extends Controller {
         $this->addToView('thinkup_url', $subscriber->installation_url);
 
         return $this->generateView();
+    }
+    /**
+     * Send Location header
+     * @param str $destination
+     * @return bool Whether or not redirect header was sent
+     */
+    protected function redirect($destination=null) {
+        if (!isset($destination)) {
+            $destination = Utils::getSiteRootPathFromFileSystem();
+        }
+        $this->redirect_destination = $destination; //for validation
+        if ( !headers_sent() ) {
+            header('Location: '.$destination);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
