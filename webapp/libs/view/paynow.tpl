@@ -10,10 +10,10 @@ body_classes="marketing marketing-page" body_id="marketing-welcome"}
       <p class="break-word">ThinkUp is analyzing your data now. You’ll get an email when your first insights are ready, and they’ll show up at your personal address: <a href="{$thinkup_url}">{$thinkup_url}</a>.</p>
 
       {$pay_with_amazon_form}
-      <a class="alt-to-btn-large" id="btn-claim-code" href="#">Have a claim code? Enter it now.</a></p>
+      <a class="alt-to-btn-large" id="btn-claim-code" href="#">Got a coupon code?</a></p>
 
-      <form class="marketing-form">
-        <label for="claim-code">Enter your claim code</label>
+      <form class="marketing-form" method="post" action="paynow.php">
+        <label for="claim-code">Enter it here:</label>
         <input type="text" value="" name="claim_code" class="input" placeholder="1234 5678 90AB">
         <button type="submit" value="Submit code" name="submit" class="btn-submit"><i class="fa fa-chevron-right"></i></button>
       </form>

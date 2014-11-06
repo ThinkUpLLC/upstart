@@ -54,6 +54,43 @@ class TestOfPayNowController extends UpstartUnitTestCase {
         $this->assertPattern('/10 a month/', $results);
     }
 
+    public function testClaimCodeInvalid() {
+        $builders = $this->buildData('Member');
+        $builders[] = FixtureBuilder::build('claim_codes', array('code'=>'1234567890AB', 'is_redeemed'=>0));
+        SessionCache::put('new_subscriber_id', 6);
+        $_POST['claim_code'] = 'adsfadsf';
+
+        $controller = new PayNowController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/That code doesn&#39;t seem right. Check it and try again?/', $results);
+    }
+
+    public function testClaimCodeRedeemed() {
+        $builders = $this->buildData('Member');
+        $builders[] = FixtureBuilder::build('claim_codes', array('code'=>'1234567890AB', 'is_redeemed'=>1));
+        SessionCache::put('new_subscriber_id', 6);
+        $_POST['claim_code'] = '1234567890AB';
+
+        $controller = new PayNowController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertNoPattern('/That code doesn&#39;t seem right. Check it and try again?/', $results);
+        $this->assertPattern('/Whoops! It looks like that code has already been used./', $results);
+    }
+
+    public function testClaimCodeValidSubmittedLowercaseWithSpaces() {
+        $builders = $this->buildData('Member');
+        $builders[] = FixtureBuilder::build('claim_codes', array('code'=>'1234567890AB', 'is_redeemed'=>0));
+        SessionCache::put('new_subscriber_id', 6);
+        $_POST['claim_code'] = '1234 5678 90Ab';
+
+        $controller = new PayNowController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertFalse($results);
+    }
+
     protected function buildData($level) {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'me@example.com',

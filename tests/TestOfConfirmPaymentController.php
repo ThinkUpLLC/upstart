@@ -143,4 +143,48 @@ class TestOfConfirmPaymentController extends UpstartUnitTestCase {
             $this->debug("Not setting up install; already exists");
         }
     }
+
+    public function testInvalidClaimCode() {
+        $builders = $this->buildData();
+        SessionCache::put('new_subscriber_id', 6);
+        $_GET['code'] = 'asdfasd';
+
+        $controller = new ConfirmPaymentController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/That code doesn&#39;t seem right. Check it and try again/', $results);
+        $this->assertNoPattern('/Oops! There was a problem processing your code/', $results);
+        $this->assertNoPattern('/Whoops! It looks like that code has already been used/', $results);
+        $this->assertNoPattern('/It worked! We&#39;ve applied your coupon code./', $results);
+    }
+
+    public function testRedeemedClaimCode() {
+        $builders = $this->buildData();
+        $builders[] = FixtureBuilder::build('claim_codes', array('code'=>'1234567890AB', 'is_redeemed'=>1));
+        SessionCache::put('new_subscriber_id', 6);
+        $_GET['code'] = '1234567890AB';
+
+        $controller = new ConfirmPaymentController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertNoPattern('/That code doesn&#39;t seem right. Check it and try again?/', $results);
+        $this->assertNoPattern('/Oops! There was a problem processing your code/', $results);
+        $this->assertPattern('/Whoops! It looks like that code has already been used/', $results);
+        $this->assertNoPattern('/It worked! We&#39;ve applied your coupon code./', $results);
+    }
+
+    public function testValidClaimCodeWithSpacesLowercase() {
+        $builders = $this->buildData();
+        $builders[] = FixtureBuilder::build('claim_codes', array('code'=>'1234567890AB', 'is_redeemed'=>0));
+        SessionCache::put('new_subscriber_id', 6);
+        $_GET['code'] = '123456   7890aB';
+
+        $controller = new ConfirmPaymentController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertNoPattern('/That code doesn&#39;t seem right. Check it and try again?/', $results);
+        $this->assertNoPattern('/Oops! There was a problem processing your code/', $results);
+        $this->assertNoPattern('/Whoops! It looks like that code has already been used/', $results);
+        $this->assertPattern('/It worked! We&#39;ve applied your coupon code/', $results);
+    }
 }

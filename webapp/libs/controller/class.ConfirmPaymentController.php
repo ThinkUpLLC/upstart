@@ -73,6 +73,33 @@ class ConfirmPaymentController extends SignUpHelperController {
                 $this->addErrorMessage($this->generic_error_msg);
                 $this->logError('Amazon response invalid', __FILE__,__LINE__, __METHOD__);
             }
+        } else if (isset($_GET['code'])) {
+            //Strip spaces and go uppercase
+            $code_str = str_replace(' ', '', strtoupper($_GET['code']));
+            //Redeem code
+            $claim_code_dao = new ClaimCodeMySQLDAO();
+            $claim_code = $claim_code_dao->get($code_str);
+            if (isset($claim_code)) {
+                if (!$claim_code->is_redeemed) {
+                    $code_redemption_update = $claim_code_dao->redeem($claim_code->code);
+                    if ($code_redemption_update > 0) {
+                        $subscriber_redemption_update = $subscriber_dao->redeemClaimCode($subscriber->id, $claim_code);
+                        if ($subscriber_redemption_update > 0) {
+                            $this->addSuccessMessage("It worked! We've applied your coupon code.");
+                        } else {
+                            $this->addErrorMessage("Oops! There was a problem processing your code. Please log in "
+                                ."and try again on your membership page.");
+                        }
+                    } else {
+                        $this->addErrorMessage("Oops! There was a problem processing your code. Please log in "
+                            ."and try again on your membership page.");
+                    }
+                } else {
+                    $this->addErrorMessage("Whoops! It looks like that code has already been used.");
+                }
+            } else {
+                $this->addErrorMessage("That code doesn't seem right. Check it and try again?");
+            }
         } else {
             //Display error message, log debug info
         	$this->addErrorMessage($this->generic_error_msg);
