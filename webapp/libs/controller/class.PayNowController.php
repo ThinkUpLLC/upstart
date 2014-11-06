@@ -1,9 +1,5 @@
 <?php
 class PayNowController extends Controller {
-    /**
-     * @var array Options for notification frequency
-     */
-    protected $notification_frequencies = array('daily'=>'Daily','weekly'=>'Weekly', 'never'=>'Never');
 
     public function control() {
         $this->disableCaching();

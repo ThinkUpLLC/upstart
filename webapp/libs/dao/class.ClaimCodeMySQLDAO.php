@@ -75,7 +75,11 @@ class ClaimCodeMySQLDAO extends PDODAO {
     public static function makeClaimCodeReadable($code) {
         return substr($code, 0, 4)." ".substr($code, 4, 4). " ".substr($code, 8, 4);
     }
-
+    /**
+     * Get a ClaimCode object by the code string.
+     * @param  str $code
+     * @return ClaimCode
+     */
     public function get($code) {
         $q = "SELECT * FROM claim_codes WHERE code = :code";
         $vars = array ( ':code' => $code);
@@ -83,7 +87,11 @@ class ClaimCodeMySQLDAO extends PDODAO {
         $ps = $this->execute($q, $vars);
         return $this->getDataRowAsObject($ps, "ClaimCode");
     }
-
+    /**
+     * Mark a claim code as redeemed in the data store.
+     * @param  str $code
+     * @return int
+     */
     public function redeem($code) {
         $q = "UPDATE claim_codes SET redemption_date = CURRENT_TIMESTAMP, is_redeemed = 1 WHERE code = :code";
         $vars = array ( ':code' => $code);
