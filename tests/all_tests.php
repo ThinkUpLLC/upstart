@@ -42,7 +42,7 @@ $all_tests->add(new TestOfPayNowController());
 $all_tests->add(new TestOfAPIIPNController());
 $all_tests->add(new TestOfClaimCodeMySQLDAO());
 $all_tests->add(new TestOfClaimCodeOperationMySQLDAO());
-$all_tests->add(new TestOfBundleController());
+$all_tests->add(new TestOfBundleLandingController());
 $all_tests->add(new TestOfAPIValidClaimCodeController());
 $all_tests->add(new TestOfSubscriptionHelper());
 

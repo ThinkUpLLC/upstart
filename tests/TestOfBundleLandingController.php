@@ -3,7 +3,7 @@ require_once dirname(__FILE__) . '/init.tests.php';
 require_once ISOSCELES_PATH.'extlibs/simpletest/autorun.php';
 require_once dirname(__FILE__) . '/classes/mock.AmazonFPSAPIAccessor.php';
 
-class TestOfBundleController extends UpstartUnitTestCase {
+class TestOfBundleLandingController extends UpstartUnitTestCase {
 
     public function setUp() {
         parent::setUp();
@@ -14,7 +14,7 @@ class TestOfBundleController extends UpstartUnitTestCase {
     }
 
     public function testOfControllerNoParams() {
-        $controller = new BundleController(true);
+        $controller = new BundleLandingController(true);
         $result = $controller->go();
         $this->debug($result);
 
@@ -25,7 +25,7 @@ class TestOfBundleController extends UpstartUnitTestCase {
     public function testOfControllerAllParamsValidSig() {
         $_GET = self::setUpPaymentParams();
 
-        $controller = new BundleController(true);
+        $controller = new BundleLandingController(true);
         $results = $controller->go();
         $this->debug($results);
 
@@ -42,7 +42,7 @@ class TestOfBundleController extends UpstartUnitTestCase {
         $_GET = self::setUpPaymentParams();
         $_GET['signatureValidity'] = false;
 
-        $controller = new BundleController(true);
+        $controller = new BundleLandingController(true);
         $results = $controller->go();
         $this->debug($results);
 
@@ -56,7 +56,7 @@ class TestOfBundleController extends UpstartUnitTestCase {
     public function testOfControllerMissingParams() {
         $_GET = self::setUpPaymentParams(false);
 
-        $controller = new BundleController(true);
+        $controller = new BundleLandingController(true);
         $results = $controller->go();
         $this->debug($results);
         $this->assertPattern( '/Buy it now/', $results);
