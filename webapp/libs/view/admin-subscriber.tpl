@@ -73,6 +73,40 @@
         </div>
       </div>
 
+  {if isset($claim_code)}
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <h4>Claim code {$claim_code.readable_code}</h4>
+    </div>
+    <table class="table table-hover">
+    <tr>
+      <td>Type</td>
+      <td>{$claim_code.type}</td>
+    </tr>
+    <tr>
+      <td>Purchased</td>
+      <td>{$claim_code.timestamp|substr:0:10}</th>
+    </tr>
+    <tr>
+      <td>Redeemed</td>
+      <td>{$claim_code.redemption_date|substr:0:10}</th>
+    </tr>
+    <tr>
+      <td>Good for</th>
+      <td>{$claim_code.number_days} days <span class="text-muted">(expires {$subscriber->paid_through|substr:0:10})</span></td>
+    </tr>
+    <tr>
+      <td>Purchased by</th>
+      <td>{$claim_code.buyer_name} <span class="text-muted">{$claim_code.buyer_email}</span></td>
+    </tr>
+    <tr>
+      <td>Amazon Transaction ID</th>
+      <td><a href="https://payments{if $is_in_sandbox}-sandbox{/if}.amazon.com/sdui/sdui/txndetail?transactionId={$claim_code.transaction_id}" target="_new">{$claim_code.transaction_id}</a></td>
+    </tr>
+    </table>
+  </div>
+  {/if}
+
 {if $subscription_operations}
 <div class="panel panel-success">
   <div class="panel-heading">

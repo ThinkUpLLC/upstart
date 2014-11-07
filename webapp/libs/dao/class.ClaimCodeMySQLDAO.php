@@ -88,6 +88,21 @@ class ClaimCodeMySQLDAO extends PDODAO {
         return $this->getDataRowAsObject($ps, "ClaimCode");
     }
     /**
+     * Get an array of claim code and operation fields.
+     * @param  str $code
+     * @return arr
+     */
+    public function getWithOperationDetails($code) {
+        $q = "SELECT c.*, co.* FROM claim_codes c ";
+        $q .= "INNER JOIN claim_code_operations co ON co.id = c.operation_id WHERE code = :code";
+        $vars = array ( ':code' => $code);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        $row = $this->getDataRowAsArray($ps);
+        $row['readable_code'] = self::makeClaimCodeReadable($row['code']);
+        return $row;
+    }
+    /**
      * Mark a claim code as redeemed in the data store.
      * @param  str $code
      * @return int

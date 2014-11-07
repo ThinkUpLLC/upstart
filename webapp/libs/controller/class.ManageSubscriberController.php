@@ -28,6 +28,12 @@ class ManageSubscriberController extends Controller {
                 $subscription_operations = $sub_op_dao->getBySubscriberID($subscriber_id);
                 $this->addToView('subscription_operations', $subscription_operations);
 
+                if (isset($subscriber->claim_code)) {
+                    $claim_code_dao = new ClaimCodeMySQLDAO();
+                    $claim_code = $claim_code_dao->getWithOperationDetails($subscriber->claim_code);
+                    $this->addToView('claim_code', $claim_code);
+                }
+
                 //If action specified, perform it
                 if (isset($_GET['action'])) {
                     if ($_GET['action'] == 'archive') {
