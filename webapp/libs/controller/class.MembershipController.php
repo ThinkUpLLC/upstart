@@ -99,6 +99,34 @@ class MembershipController extends AuthController {
             }
         }
 
+        //Process claim code
+        if (isset($_POST['claim_code'])) {
+            //Check if claim code is valid
+            $claim_code_dao = new ClaimCodeMySQLDAO();
+            //Strip spaces and go uppercase
+            $code_str = str_replace(' ', '', strtoupper($_POST['claim_code']));
+            $claim_code = $claim_code_dao->get($code_str);
+            if (isset($claim_code)) {
+                if ($claim_code->is_redeemed) {
+                    $this->addErrorMessage('Whoops! It looks like that code has already been used.');
+                } else {
+                    $code_redemption_update = $claim_code_dao->redeem($claim_code->code);
+                    if ($code_redemption_update > 0) {
+                        $subscriber_redemption_update = $subscriber_dao->redeemClaimCode($subscriber->id, $claim_code);
+                        if ($subscriber_redemption_update > 0) {
+                            $this->addSuccessMessage("It worked! We've applied your coupon code.");
+                        } else {
+                            $this->addErrorMessage("Oops! There was a problem processing your code. Please try again.");
+                        }
+                    } else {
+                        $this->addErrorMessage("Oops! There was a problem processing your code. Please try again.");
+                    }
+                }
+            } else {
+                $this->addErrorMessage("That code doesn't seem right. Check it and try again?");
+            }
+        }
+
         try {
             if (self::hasUserRequestedAccountClosure() && $this->validateCSRFToken()) {
                 if (!$subscriber->is_account_closed) {

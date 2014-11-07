@@ -485,4 +485,62 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Your ThinkUp account has been closed. But there\'s still time to change your mind!/',
             $results);
     }
+
+    public function testInvalidClaimCode() {
+        $this->builders = $this->buildSubscriberFreeTrialCreated(10);
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('trial@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+        $this->simulateLogin('trial@example.com', false, true);
+        $_POST['claim_code'] = 'asdfasd';
+
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/That code doesn&#39;t seem right. Check it and try again?/', $results);
+        $this->assertNoPattern('/Whoops! It looks like that code has already been used/', $results);
+        $this->assertNoPattern('/It worked! We&#39;ve applied your coupon code./', $results);
+        $this->assertNoPattern('/Oops! There was a problem processing your code. Please try again./', $results);
+    }
+
+    public function testRedeemedClaimCode() {
+        $this->builders = $this->buildSubscriberFreeTrialCreated(10);
+        $this->builders[] = FixtureBuilder::build('claim_codes', array('code'=>'1234567890AB', 'is_redeemed'=>1));
+
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('trial@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+        $this->simulateLogin('trial@example.com', false, true);
+        $_POST['claim_code'] = '1234567890AB';
+
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertNoPattern('/That code doesn&#39;t seem right. Check it and try again?/', $results);
+        $this->assertPattern('/Whoops! It looks like that code has already been used/', $results);
+        $this->assertNoPattern('/It worked! We&#39;ve applied your coupon code./', $results);
+        $this->assertNoPattern('/Oops! There was a problem processing your code. Please try again./', $results);
+    }
+
+    public function testValidClaimCodeWithSpacesLowercase() {
+        $this->builders = $this->buildSubscriberFreeTrialCreated(10);
+        $this->builders[] = FixtureBuilder::build('claim_codes', array('code'=>'1234567890AB', 'is_redeemed'=>0));
+
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('trial@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+        $this->simulateLogin('trial@example.com', false, true);
+        $_POST['claim_code'] = '12345  67890a b ';
+
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertNoPattern('/That code doesn&#39;t seem right. Check it and try again?/', $results);
+        $this->assertNoPattern('/Whoops! It looks like that code has already been used/', $results);
+        $this->assertPattern('/It worked! We&#39;ve applied your coupon code./', $results);
+        $this->assertNoPattern('/Oops! There was a problem processing your code. Please try again./', $results);
+    }
 }
