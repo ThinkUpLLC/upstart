@@ -50,13 +50,13 @@ body_classes="settings menu-open" body_id="settings-subscription"}
         <div class="form-message">
           {$amazon_form}
 
-          <a class="alt-to-btn-large" id="btn-claim-code" href="#">Have a claim code? Enter it now.</a></p>
+          <a class="alt-to-btn-large" id="btn-claim-code" href="#">Got a coupon code?</a></p>
         </div>
 
-        <form class="form-claim-code">
+        <form class="form-claim-code" method="post" >
           <fieldset class="fieldset-no-header">
             <div class="form-group">
-              <label class="control-label no-check" for="claim_code">Code</label>
+              <label class="control-label no-check" for="claim_code">Enter it here:</label>
               <input type="text" value="" name="claim_code" class="form-control" placeholder="1234 5678 90AB">
             </div>
           </fieldset>
