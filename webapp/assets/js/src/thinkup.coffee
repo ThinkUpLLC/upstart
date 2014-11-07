@@ -91,6 +91,12 @@ $ ->
     e.preventDefault()
     wt.appMessage.destroy()
 
+
+  $("body").on "click", "#btn-claim-code", (e) ->
+    e.preventDefault()
+    $(".form-claim-code").toggleClass "hidden"
+    $(@).hide()
+
   $("body").on "click", ".show-section", (e) ->
     $el = $($(@).data("section-selector"))
     if $el.length

@@ -41,6 +41,12 @@ form {
     font-family: "tablet-gothic-wide", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   }
 }
+.form-message form {
+  margin-bottom: 5px;
+}
+form.inline-submit {
+  position: relative;
+}
 fieldset {
   margin-bottom: 25px;
 }
@@ -175,9 +181,13 @@ body.account .container form .control-label {
 .control-label.no-check {
   color: #999999;
 }
-.form-group-warning .control-label.with-focus {
+.form-group-warning .control-label.with-focus,
+.form-group-warning .control-label.no-check {
   top: -2em;
   display: none;
+}
+.inline-submit .control-label {
+  padding-bottom: 10px;
 }
 .form-control,
 .list-group-item-value {
@@ -243,6 +253,9 @@ textarea.form-control {
   position: relative;
   padding: 3px 15px 2px 5px;
   margin: 0;
+}
+.inline-submit .warning-block {
+  padding-bottom: 10px;
 }
 .form-group-toggle .control-label {
   width: 100%;
@@ -330,6 +343,15 @@ textarea.form-control {
 .btn-submit:focus {
   background: #0d416e;
   color: #fff;
+}
+.inline-submit .btn-submit {
+  position: absolute;
+  right: 5px;
+  top: 9px;
+  font-size: 12px;
+  padding: 6px;
+  height: 28px;
+  font-weight: 500;
 }
 @media (min-width: 540px) {
   .btn-circle {
