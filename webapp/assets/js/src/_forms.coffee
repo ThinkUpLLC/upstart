@@ -41,6 +41,7 @@ checkEmailAvailability = (email, cb) ->
   else
     cb isGood
 
+checkCouponFormat = (value) -> value.match(/^([0-9a-zA-Z]){12}$/gi)?
 checkPasswordFormat = (value) -> value.match(/^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*).{8,}$/gi)?
 checkEmailFormat    = (value) -> value.match(/^([a-z0-9_\.\+-]+)@([\da-z\.-]+)\.([a-z\.]{2,8})$/)?
 
@@ -101,6 +102,18 @@ checkEmailField = ($el) ->
         wt.inputWarning.create "Please enter a valid email address.", $group
     , 500
     )
+
+checkCouponField = ($el) ->
+  if $el.length
+    val = $el.val().replace /\s/g, ""
+    $group = $el.parents(".form-group")
+    if val isnt "" and checkCouponFormat val
+      wt.inputWarning.destroy $group
+      true
+    else
+      wt.inputWarning.create "That code doesn’t seem right. Check it and try again?", $group
+      false
+
 
 checkTermsField = ($el) ->
   if $el.is ":checked"
@@ -171,3 +184,7 @@ $ ->
 
   $("#form-settings").on "submit", (e) ->
     checkSettingsPasswordField $(@), e
+
+  $(".form-claim-code").on "submit", (e) ->
+    unless checkCouponField $(@).find("#claim_code")
+      e.preventDefault()

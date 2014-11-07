@@ -47,6 +47,14 @@ form {
   @media (min-width: 400px) {
     font-family: "tablet-gothic-wide", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   }
+
+  .form-message & {
+    margin-bottom: 5px;
+  }
+
+  &.inline-submit {
+    position: relative;
+  }
 }
 
 fieldset {
@@ -190,9 +198,13 @@ fieldset {
     color: @gray-light;
   }
 
-  .form-group-warning &.with-focus {
+  .form-group-warning &.with-focus, .form-group-warning &.no-check {
     top: -2em;
     display: none;
+  }
+
+  .inline-submit & {
+    padding-bottom: 10px;
   }
 }
 
@@ -268,6 +280,10 @@ textarea.form-control {
   position: relative;
   padding: 3px 15px 2px 5px;
   margin: 0;
+
+  .inline-submit & {
+    padding-bottom: 10px;
+  }
 }
 
 .form-group-toggle {
@@ -370,6 +386,16 @@ textarea.form-control {
   &:hover, &:focus {
     background: darken(@blue-action, 10%);
     color: #fff;
+  }
+
+  .inline-submit & {
+    position: absolute;
+    right: 5px;
+    top: 9px;
+    font-size: 12px;
+    padding: 6px;
+    height: 28px;
+    font-weight: 500;
   }
 }
 

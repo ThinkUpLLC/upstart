@@ -1,5 +1,5 @@
 (function() {
-  var $lastActiveDateGroup, animateContentShift, animateLabelIn, checkEmailAvailability, checkEmailField, checkEmailFormat, checkPasswordField, checkPasswordFormat, checkSettingsPasswordField, checkTermsField, checkUsername, constants, featureTest, focusField, pinDateMarker, positionUsernameHelper, setActiveDateGroup, setDateGroupData, setFixedPadding, setListOpenData, setNavHeight, timerEmail, timerPassword, timerUsername, wt;
+  var $lastActiveDateGroup, animateContentShift, animateLabelIn, checkCouponField, checkCouponFormat, checkEmailAvailability, checkEmailField, checkEmailFormat, checkPasswordField, checkPasswordFormat, checkSettingsPasswordField, checkTermsField, checkUsername, constants, featureTest, focusField, pinDateMarker, positionUsernameHelper, setActiveDateGroup, setDateGroupData, setFixedPadding, setListOpenData, setNavHeight, timerEmail, timerPassword, timerUsername, wt;
 
   wt = window.tu = {};
 
@@ -322,6 +322,10 @@
     }
   };
 
+  checkCouponFormat = function(value) {
+    return value.match(/^([0-9a-zA-Z]){12}$/gi) != null;
+  };
+
   checkPasswordFormat = function(value) {
     return value.match(/^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*).{8,}$/gi) != null;
   };
@@ -402,6 +406,21 @@
           return wt.inputWarning.create("Please enter a valid email address.", $group);
         }
       }, 500);
+    }
+  };
+
+  checkCouponField = function($el) {
+    var $group, val;
+    if ($el.length) {
+      val = $el.val().replace(/\s/g, "");
+      $group = $el.parents(".form-group");
+      if (val !== "" && checkCouponFormat(val)) {
+        wt.inputWarning.destroy($group);
+        return true;
+      } else {
+        wt.inputWarning.create("That code doesn’t seem right. Check it and try again?", $group);
+        return false;
+      }
     }
   };
 
@@ -507,8 +526,13 @@
         }
       });
     }
-    return $("#form-settings").on("submit", function(e) {
+    $("#form-settings").on("submit", function(e) {
       return checkSettingsPasswordField($(this), e);
+    });
+    return $(".form-claim-code").on("submit", function(e) {
+      if (!checkCouponField($(this).find("#claim_code"))) {
+        return e.preventDefault();
+      }
     });
   });
 
@@ -615,6 +639,11 @@
     $("body").on("click", ".app-message .app-message-close", function(e) {
       e.preventDefault();
       return wt.appMessage.destroy();
+    });
+    $("body").on("click", "#btn-claim-code", function(e) {
+      e.preventDefault();
+      $(".form-claim-code").toggleClass("hidden");
+      return $(this).hide();
     });
     $("body").on("click", ".show-section", function(e) {
       var $el;

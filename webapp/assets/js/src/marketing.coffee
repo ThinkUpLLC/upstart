@@ -51,6 +51,19 @@ stickyHeader = ->
       $(@).remove()
     )
 
+checkCouponFormat = (value) -> value.match(/^([0-9a-zA-Z]){12}$/gi)?
+
+checkCouponField = ($el) ->
+  if $el.length
+    val = $el.val().replace /\s/g, ""
+    $group = $el.parents(".marketing-form")
+    $group.find(".help-block").remove()
+    if val isnt "" and checkCouponFormat val
+      true
+    else
+      $group.append '<div class="help-block">That code doesn’t seem right. Check it and try again?</a>', $group
+      false
+
 $ ->
   if $("body").hasClass("landing")
     $(window).scroll -> stickyHeader()
@@ -86,6 +99,15 @@ $ ->
     body = $form.find("#control-body").val()
 
     window.location.href = "mailto:help@thinkup.com?subject=#{encodeURI subject}&body=#{encodeURI body}"
+
+  $("body").on "click", "#btn-claim-code", (e) ->
+    e.preventDefault()
+    $("#form-claim-code").toggleClass "hidden"
+    $(@).hide()
+
+  $("#form-claim-code").on "submit", (e) ->
+    unless checkCouponField $(@).find("#claim_code")
+      e.preventDefault()
 
   # GOOG event tracking
   $("body").on "click", "#container-signup-top .btn-twitter, #container-signup-top .btn-facebook", ->

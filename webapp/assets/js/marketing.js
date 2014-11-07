@@ -1,5 +1,5 @@
 (function() {
-  var stickyHeader, wt;
+  var checkCouponField, checkCouponFormat, stickyHeader, wt;
 
   wt = window.tu = {};
 
@@ -70,6 +70,25 @@
     }
   };
 
+  checkCouponFormat = function(value) {
+    return value.match(/^([0-9a-zA-Z]){12}$/gi) != null;
+  };
+
+  checkCouponField = function($el) {
+    var $group, val;
+    if ($el.length) {
+      val = $el.val().replace(/\s/g, "");
+      $group = $el.parents(".marketing-form");
+      $group.find(".help-block").remove();
+      if (val !== "" && checkCouponFormat(val)) {
+        return true;
+      } else {
+        $group.append('<div class="help-block">That code doesn’t seem right. Check it and try again?</a>', $group);
+        return false;
+      }
+    }
+  };
+
   $(function() {
     if ($("body").hasClass("landing")) {
       $(window).scroll(function() {
@@ -102,6 +121,16 @@
       }
       body = $form.find("#control-body").val();
       return window.location.href = "mailto:help@thinkup.com?subject=" + (encodeURI(subject)) + "&body=" + (encodeURI(body));
+    });
+    $("body").on("click", "#btn-claim-code", function(e) {
+      e.preventDefault();
+      $("#form-claim-code").toggleClass("hidden");
+      return $(this).hide();
+    });
+    $("#form-claim-code").on("submit", function(e) {
+      if (!checkCouponField($(this).find("#claim_code"))) {
+        return e.preventDefault();
+      }
     });
     $("body").on("click", "#container-signup-top .btn-twitter, #container-signup-top .btn-facebook", function() {
       return ga('send', 'event', 'Signup Button', 'click', 'homepage (top)');
