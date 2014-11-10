@@ -1,15 +1,3 @@
-{if isset($success_msg)}[SUCCESS MSG] {$success_msg} {/if}
-{if isset($error_msg)}[ERROR MSG] {$error_msg} {/if}
-
-{if isset($claim_code)}
-<p>Here's your claim code:</p>
-<h3>{$claim_code_readable}</h3>
-<p>Transaction: {$transaction_id}<br>
-Reference: {$reference_id}</p>
-
-{else}
-
-
 {assign var="tagline" value="The best of the web, half of the price."}
 {assign var="tagline_logo" value="The best of the web, for half the price."}
 {assign var="description" value="Get memberships to 5 of the web's most fun apps and communities, for 50% off."}
@@ -249,6 +237,21 @@ Reference: {$reference_id}</p>
 
 </head>
 
+{if isset($success_msg) || isset($error_msg)}
+<div class="container">
+    {if isset($success_msg)}[SUCCESS MSG] {$success_msg} {/if}
+    {if isset($error_msg)}[ERROR MSG] {$error_msg} {/if}
+
+    {if isset($claim_code)}
+    <p>Here's your claim code:</p>
+    <h3>{$claim_code_readable}</h3>
+    <p>Transaction: {$transaction_id}<br>
+    Reference: {$reference_id}</p>
+    {/if}
+</div>
+{else}
+
+
     <nav class="navbar navbar-fixed-top" role="navigation">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -455,6 +458,7 @@ Reference: {$reference_id}</p>
       </div>
     </div>
 
+{/if}
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -486,4 +490,4 @@ var _sf_async_config={uid:2383,domain:"thinkup.com"};
 
 </html>
 
-{/if}
+
