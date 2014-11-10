@@ -5,7 +5,7 @@ body_classes="marketing marketing-page" body_id="marketing-bundle"}
     <section class="section section-marketing-text" id="section-about-text">
       <h2 class="section-header">Thanks for buying the bundle!</h2>
 
-      <p align="center">Start creating your account by authenticating with Facbeook or Twiiter.<br>
+      <p align="center">Start creating your account by authenticating with Facebook or Twiiter.<br>
       (We’ll ask for your claim code right after you register.)</p>
 
       <div class="signup-buttons">

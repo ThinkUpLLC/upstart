@@ -59,9 +59,13 @@ Reference: {$reference_id}</p>
     <script>window.tu = {};</script>
 
     <!-- styles -->
-    {literal}<script type="text/javascript" src="//use.typekit.net/xzh8ady.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>{/literal}
+    {literal}
+    <script type="text/javascript" src="//use.typekit.net/xzh8ady.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    {/literal}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps' rel='stylesheet' type='text/css'>
 
     {literal}<script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -80,6 +84,61 @@ Reference: {$reference_id}</p>
         padding-top: 50px;
         padding-bottom: 20px;
             */
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        a {
+          color: #FF0142;
+        }
+
+        a:hover {
+          color: black;
+        }
+
+        h2 {
+          font-family: 'Oleo Script Swash Caps', cursive;
+          text-align: center;
+          font-size: xx-large;
+        }
+
+        .container {
+          padding-top: 40px;
+          padding-bottom: 40px;
+        }
+        /* centered columns styles */
+        .row-centered {
+            text-align:center;
+        }
+        .col-centered {
+            display:inline-block;
+            float:none;
+            /* reset the text-align */
+            text-align:left;
+            /* inline-block space fix */
+            margin-right:-4px;
+        }
+        .navbar-fixed-top {
+          text-transform: uppercase;
+          font-size: large;
+          background-color: white;
+        }
+
+        .navbar .navbar-nav {
+          display: inline-block;
+          float: none;
+          vertical-align: top;
+        }
+
+        .navbar .navbar-collapse {
+          text-align: center;
+        }
+
+        button.navbar-toggle {
+          border: 1px solid #FF0142;
+        }
+
+        button.navbar-toggle.collapsed {
+          color: #FF0142;
         }
 
         .jumbotron {
@@ -87,6 +146,100 @@ Reference: {$reference_id}</p>
             background-color: black;
             color: white;
         }
+
+        .jumbotron h1 {
+          width: 212px;
+          height: 230px;
+          background: url({$site_root_path}bundle/assets/img/gwb-logo.png) 50% 0 no-repeat;
+          font-weight: 300;
+          text-transform: uppercase;
+          text-indent: 100%;
+          font-size: 0;
+        }
+
+        .jumbotron h2 {
+          font-size: 63px;
+        }
+
+        h3#price {
+          font-size: 50px;
+          font-weight: 700;
+          color: #FF0142;
+
+        }
+
+        #bigpaybutton {
+          font-family: 'Open Sans', sans-serif;
+          font-size: xx-large;
+          text-transform: uppercase;
+          font-weight: 700;
+          background-color: #FF0142;
+          border-radius: 0;
+          border: none;
+        }
+
+        .jumbotron p.fineprint {
+          font-size: small;
+          font-weight: 300;
+          color: #DFDFDF;
+        }
+
+        .jumbotron #fiftypercent {
+          color: #FF0142;
+          border-radius: 24px;
+          border: 4px solid #FF0142;
+          margin-top: 30px;
+          padding: 26px;
+          border-top: 4px solid black;
+          border-bottom: 4px solid black;
+          font-size: x-large;
+        }
+
+        .jumbotron #giveafriend {
+          width: 264px;
+          height: 194px;
+          background: url({$site_root_path}bundle/assets/img/bundle-gift.png) 50% 0 no-repeat;
+          text-indent: 100%;
+          font-size: 0;
+        }
+
+        #features {
+          background-color: #FF0142;
+        }
+
+        #features h2, #features h4, #features p {
+          color: white;
+        }
+
+        #features h4, #features p {
+          text-align: center;
+          padding-bottom: 20px;
+        }
+
+        #daysleft, #bigsavings, #goodcommunity, #notcreepy, #honest {
+          padding-top: 145px;
+        }
+
+        #daysleft {
+          background: url({$site_root_path}bundle/assets/img/hourglass.png) 50% 0 no-repeat;
+        }
+
+        #bigsavings {
+          background: url({$site_root_path}bundle/assets/img/piggy-bank.png) 50% 0 no-repeat;
+        }
+
+        #goodcommunity {
+          background: url({$site_root_path}bundle/assets/img/handshake.png) 50% 0 no-repeat;
+        }
+
+        #notcreepy {
+          background: url({$site_root_path}bundle/assets/img/trophy.png) 50% 0 no-repeat;
+        }
+
+        #honest {
+          background: url({$site_root_path}bundle/assets/img/ribbon.png) 50% 0 no-repeat;
+        }
+
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -96,8 +249,7 @@ Reference: {$reference_id}</p>
 
 </head>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
+    <nav class="navbar navbar-fixed-top" role="navigation">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -105,11 +257,12 @@ Reference: {$reference_id}</p>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand active" href="https://www.goodwebbundle.com/">Home</a>
+
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class=""><a href="#the-sites">The Sites</a></li>
+            <li class="active"><a class="active" href="#">Home</a></li>
+            <li><a href="#the-sites">The Sites</a></li>
             <li><a href="#features">Bundle Features</a></li>
             <li><a href="#who-we-are">Who We Are</a></li>
             <li><a href="#faq">FAQ</a></li>
@@ -118,169 +271,188 @@ Reference: {$reference_id}</p>
           </ul>
 
         </div><!--/.navbar-collapse -->
-      </div>
     </nav>
 
     <div class="jumbotron">
       <div class="container">
-        <h2>{$title}</h2>
-        <h1>{$tagline}</h1>
+        <h1 class="center-block">{$title}</h1>
+        <h2>{$tagline}</h2>
         <p>Memberships to <strong>five</strong> of the most <strong>fun and entertaining</strong> apps and communities on the web!</p>
         <div class="row">
             <div class="col-md-4">
-                <h1>$96</h1>
-                <h2>{if isset($pay_with_amazon_form)}{$pay_with_amazon_form}{/if}</h2>
-                <p>Pay with Amazon</p>
+                <h3 id="price">$96</h3>
+                <h2>
+                  {if isset($pay_with_amazon_form)}
+                    {$pay_with_amazon_form}
+                  {else}
+                    <button type="button" class="btn btn-primary" id="bigpaybutton">Get It Now</button>
+                  {/if}
+                </h2>
+                <p class="fineprint">Pay with Amazon</p>
             </div>
             <div class="col-md-4">
-                <h4><strong>50% less than you'd pay to sign up individually</strong></h4>
+                <h4 id="fiftypercent"><strong>50% less</strong> than you'd pay to sign up individually.</h4>
             </div>
             <div class="col-md-4">
-                <h5>Give ANY part of the bundle to a friend.</h5>
-                <h5>Or ALL of it to your best friend!</h5>
+                <h5 id="giveafriend">Give ANY part of the bundle to a friend.<br />Or ALL of it to your best friend!</h5>
             </div>
         </div>
       </div>
     </div>
 
 
-    <div class="container">
-      <div class="row">
-        <div class="col-md-2">
-          <h2>MetaFilter</h2>
-          <p>The web's most venerable community blog, with an answer for everything.</p>
-          <h3><strike>$60</strike></h3>
+    <div id="the-sites">
+      <div class="container">
+          <h2 class="center-block">The Sites</h2>
+        <div class="row row-centered">
+          <div class="col-md-2 col-centered">
+            <h3>MetaFilter</h3>
+            <p>The most venerable community blog has an answer for everything.</p>
+            <h3><strike>$60</strike></h3>
+          </div>
+          <div class="col-md-2 col-centered">
+            <h3>MLKSHK</h3>
+            <p>The most fun and delightful image sharing community on the web.</p>
+            <h3><strike>$24</strike></h3>
+         </div>
+          <div class="col-md-2 col-centered">
+            <h3>NewsBlur</h3>
+            <p>A newsreader that actually makes it fun to catch up on the web.</p>
+            <h3><strike>$24</strike></h3>
+          </div>
+          <div class="col-md-2 col-centered">
+            <h3>The Toast</h3>
+            <p>A delightful daily blog you will sincerely love and someday resent.</p>
+            <h3><strike>$24</strike></h3>
+          </div>
+          <div class="col-md-2 col-centered">
+            <h3>ThinkUp</h3>
+            <p>Daily insights that help you get more out of Twitter and Facebook.</p>
+            <h3><strike>$60</strike></h3>
+          </div>
         </div>
-        <div class="col-md-2">
-          <h2>MLKSHK</h2>
-          <p>The most fun and delightful image sharing community on the web.</p>
-          <h3><strike>$24</strike></h3>
-       </div>
-        <div class="col-md-2">
-          <h2>NewsBlur</h2>
-          <p>A newsreader that actually makes it fun to catch up on the web.</p>
-          <h3><strike>$24</strike></h3>
+      </div>
+    </div>
+
+    <div id="features">
+      <div class="container">
+          <h2>Bundle Features</h2>
+          <p class="center-block">The Good Web Bundle gives you a full membership to five of the best sites on the web for half the price. These sites are a ton of fun&mdash;people love us so much they pay to be members. You're gonna be so glad you did this.</p>
+        <div class="row">
+          <div class="col-md-4">
+              <h4 id="daysleft" class="center-block">Only 45 days left</h4>
+              <p class="center-block">This is a one-time-only offer! Don't miss out.</p>
+          </div>
+          <div class="col-md-4">
+              <h4 id="bigsavings" class="center-block">50% Savings</h4>
+              <p class="center-block">Get a $192 value for about as much as you pay for Netflix.</p>
+          </div>
+          <div class="col-md-4">
+              <h4 id="goodcommunity" class="center-block">YES! Read the Comments.</h4>
+              <p class="center-block">The best communities: On our sites, we don't tolerate abuse.</p>
+          </div>
+
         </div>
-        <div class="col-md-2">
-          <h2>The Toast</h2>
-          <p>A delightful daily blog you will sincerely love and someday resent.</p>
-          <h3><strike>$24</strike></h3>
-        </div>
-        <div class="col-md-2">
-          <h2>ThinkUp</h2>
-          <p>Daily insights that help you get more out of Twitter and Facebook.</p>
-          <h3><strike>$60</strike></h3>
+
+        <div class="row">
+          <div class="col-md-2">
+            &nbsp;
+          </div>
+          <div class="col-md-4">
+              <h4 id="notcreepy" class="center-block">We're not creepy</h4>
+              <p class="center-block">These are sites that don't track you or have too many ads.</p>
+          </div>
+          <div class="col-md-4">
+              <h4 id="honest" class="center-block">Honesty</h4>
+              <p class="center-block">You won't feel vaguely unsettled about giving your money to us.</p>
+          </div>
+          <div class="col-md-2">
+            &nbsp;
+          </div>
         </div>
       </div>
     </div>
 
 
-    <div class="container">
-        <h2>Bundle Features</h2>
-        <p>The Good Web Bundle gives you a full membership to five of the best sites on the web for half the price. These are sites that are a ton of fun&mdash;sites people love so much they pay to be members. You're gonna be so glad you did this.</p>
-      <div class="row">
-        <div class="col-md-4">
-            <h4>Only 45 days left</h4>
-            <p>This is a one-time-only offer! Don't miss out.</p>
+    <div id="who-we-are">
+      <div class="container">
+          <h2>Who We Are</h2>
+          <p>Our sites are made by nice, regular, normal people like you, with families and kids and stuff!</p>
+        <div class="row">
+          <div class="col-md-2">
+              <h4>Matt Haughey</h4>
+              <p>MetaFilter</p>
+          </div>
+          <div class="col-md-2">
+              <h4>Amber Costley</h4>
+              <p>MLKSHK</p>
+          </div>
+          <div class="col-md-2">
+              <h4>Andre Torrez</h4>
+              <p>MLKSHK</p>
+          </div>
+          <div class="col-md-2">
+              <h4>Samuel Clay</h4>
+              <p>NewsBlur</p>
+          </div>
+          <div class="col-md-2">
+              <h4>Mallory Ortberg</h4>
+              <p>The Toast</p>
+          </div>
+          <div class="col-md-2">
+              <h4>Nicole Cliffe</h4>
+              <p>The Toast</p>
+          </div>
         </div>
-        <div class="col-md-4">
-            <h4>50% Savings</h4>
-            <p>Get a $192 value for about as much as you pay for Netflix.</p>
-        </div>
-        <div class="col-md-4">
-            <h4>We're not creepy</h4>
-            <p>These are sites that don't track you or have too many ads.</p>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-md-6">
-            <h4>The best communities</h4>
-            <p>On our sites, we don't tolerate abuse. Let's all be cool!</p>
+        <div class="row">
+          <div class="col-md-2">
+              <h4>Roxane Gay</h4>
+              <p>The Toast</p>
+          </div>
+          <div class="col-md-2">
+              <h4>Anil Dash</h4>
+              <p>ThinkUp</p>
+          </div>
+          <div class="col-md-2">
+              <h4>Gina Trapani</h4>
+              <p>ThinkUp</p>
+          </div>
         </div>
-        <div class="col-md-6">
-            <h4>Honesty &amp; transparency</h4>
-            <p>You won't feel vaguely unsettled about giving your money to us.</p>
-        </div>
+
       </div>
     </div>
 
+    <div id="faq">
+      <div class="container">
+          <h2>FAQ</h2>
 
-    <div class="container">
-        <h2>Who We Are</h2>
-        <p>Our sites are made by nice, regular, normal people like you, with families and kids and stuff!</p>
-      <div class="row">
-        <div class="col-md-2">
-            <h4>Matt Haughey</h4>
-            <p>MetaFilter</p>
+
+        <div class="row">
+          <div class="col-md-6">
+              <h4>Why should I pay for this stuff? The web is supposed to be free!</h4>
+              <p>In the past decade, it's become the norm for web sites</p>
+          </div>
+          <div class="col-md-6">
+              <h4>Lorem Ipsum?</h4>
+              <p>Because I said so!</p>
+          </div>
         </div>
-        <div class="col-md-2">
-            <h4>Amber Costley</h4>
-            <p>MLKSHK</p>
-        </div>
-        <div class="col-md-2">
-            <h4>Andre Torrez</h4>
-            <p>MLKSHK</p>
-        </div>
-        <div class="col-md-2">
-            <h4>Samuel Clay</h4>
-            <p>NewsBlur</p>
-        </div>
-        <div class="col-md-2">
-            <h4>Mallory Ortberg</h4>
-            <p>The Toast</p>
-        </div>
-        <div class="col-md-2">
-            <h4>Nicole Cliffe</h4>
-            <p>The Toast</p>
-        </div>
+
+          <h3>Let's break it down. You get:</h3>
+
+          <ul>
+              <li><strong>MetaFilter:</strong> One year paid member account, with lifetime right to post and ask questions.</li>
+
+              <li><strong>MLKSHK:</strong> One year paid member account, with lifetime right to post and ask questions.</li>
+
+              <li><strong>NewsBlur:</strong> One year paid member account, with extra cheese.</li>
+
+              <li><strong>The Toast:</strong> Become a sponsoring member and be recognized on the site.</li>
+
+              <li><strong>MetaFilter:</strong> One year paid member account with insights about Twitter and Facebook.</li>
+          </ul>
       </div>
-
-      <div class="row">
-        <div class="col-md-2">
-            <h4>Roxane Gay</h4>
-            <p>The Toast</p>
-        </div>
-        <div class="col-md-2">
-            <h4>Anil Dash</h4>
-            <p>ThinkUp</p>
-        </div>
-        <div class="col-md-2">
-            <h4>Gina Trapani</h4>
-            <p>ThinkUp</p>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="container">
-        <h2>FAQ</h2>
-
-
-      <div class="row">
-        <div class="col-md-6">
-            <h4>Why should I pay for this stuff? The web is supposed to be free!</h4>
-            <p>In the past decade, it's become the norm for web sites</p>
-        </div>
-        <div class="col-md-6">
-            <h4>Lorem Ipsum?</h4>
-            <p>Because I said so!</p>
-        </div>
-      </div>
-
-        <h3>Let's break it down. You get:</h3>
-
-        <ul>
-            <li><strong>MetaFilter:</strong> One year paid member account, with lifetime right to post and ask questions.</li>
-
-            <li><strong>MLKSHK:</strong> One year paid member account, with lifetime right to post and ask questions.</li>
-
-            <li><strong>NewsBlur:</strong> One year paid member account, with extra cheese.</li>
-
-            <li><strong>The Toast:</strong> Become a sponsoring member and be recognized on the site.</li>
-
-            <li><strong>MetaFilter:</strong> One year paid member account with insights about Twitter and Facebook.</li>
-        </ul>
     </div>
 
 
