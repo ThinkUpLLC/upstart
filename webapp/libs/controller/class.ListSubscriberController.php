@@ -20,6 +20,9 @@ class ListSubscriberController extends Controller {
         } else {
                 $subscribers = $subscriber_dao->getSubscriberList($page, 51);
         }
+        foreach ($subscribers as $subscriber) {
+            $subscriber->paid_through_friendly = date('M j, Y', strtotime($subscriber->paid_through));
+        }
         $this->addToView('subscribers', $subscribers);
         $total_paid_subscribers = $subscriber_dao->getPaidTotal();
         $this->addToView('total_paid_subscribers', $total_paid_subscribers['total_paid_subscribers']);

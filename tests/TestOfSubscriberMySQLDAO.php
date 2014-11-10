@@ -47,7 +47,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual('Paid', $data['subscription_status']);
         $this->assertEqual(0, $data['is_account_closed']);
         $this->assertNotNull($data['paid_through']);
-        $paid_through = date(DATE_ATOM, strtotime('+'.$claim_code->number_days.'days'));
+        $paid_through = date('Y-m-d H:i:s', strtotime('+'.$claim_code->number_days.'days'));
         $this->assertEqual(substr($data['paid_through'], 0, 10), substr($paid_through, 0, 10));
         $this->assertEqual('None', $data['subscription_recurrence']);
         $this->assertEqual('1234567890AB', $data['claim_code']);
@@ -298,7 +298,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         'thinkup_username'=>'unique1', 'subscription_status'=>'About to be archived', 'total_payment_reminders_sent'=>3,
         'payment_reminder_last_sent'=>'2001-01-01 11:55:05', 'claim_code'=>'abcdefghi', 'paid_through'=>null));
         $paid_through_1002 = strtotime('+6 days');
-        $paid_through_1002 = date(DATE_ATOM, $paid_through_1002);
+        $paid_through_1002 = date('Y-m-d H:i:s', $paid_through_1002);
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1002, 'email'=>'lexluther@evilmail.com',
         'network_user_name'=>'lexluther', 'verification_code'=>1234, 'is_email_verified'=>0,
         'thinkup_username'=>'unique2', 'claim_code'=>null, 'paid_through'=>$paid_through_1002));

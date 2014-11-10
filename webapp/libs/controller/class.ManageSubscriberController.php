@@ -151,6 +151,7 @@ class ManageSubscriberController extends Controller {
                 if (!isset($subscriber->thinkup_username)) {
                     $subscriber->subdomainified_username = self::subdomainify($subscriber->network_user_name);
                 }
+                $subscriber->paid_through_friendly = date('M j, Y', strtotime($subscriber->paid_through));
                 $this->addToView('subscriber', $subscriber);
 
                 $payments = $subscriber_payment_dao->getBySubscriber($subscriber_id);

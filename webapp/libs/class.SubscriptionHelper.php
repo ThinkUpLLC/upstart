@@ -59,7 +59,7 @@ class SubscriptionHelper {
             }
         }
         if (isset($paid_through_time)) {
-            $paid_through_time = date(DATE_ATOM, $paid_through_time);
+            $paid_through_time = date('Y-m-d H:i:s', $paid_through_time);
         }
         return array("subscription_status"=>$subscription_status, "paid_through"=>$paid_through_time);
     }

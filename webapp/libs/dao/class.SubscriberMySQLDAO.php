@@ -158,7 +158,7 @@ class SubscriberMySQLDAO extends PDODAO {
      * @return int update count
      */
     public function redeemClaimCode($subscriber_id, ClaimCode $claim_code) {
-        $paid_through = date(DATE_ATOM, strtotime('+'.$claim_code->number_days.'days'));
+        $paid_through = date('Y-m-d H:i:s', strtotime('+'.$claim_code->number_days.'days'));
         $q = "UPDATE subscribers SET subscription_recurrence = 'None', paid_through = :paid_through, ";
         $q .= "claim_code = :claim_code, subscription_status = 'Paid' WHERE id=:id";
         $vars = array(

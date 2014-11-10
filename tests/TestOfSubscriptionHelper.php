@@ -64,7 +64,7 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
         $this->assertEqual($new_values['subscription_status'], 'Paid');
         $this->assertNotNull($new_values['paid_through']);
         $this->assertEqual(substr($new_values['paid_through'], 0, 10),
-            substr(date(DATE_ATOM,  strtotime('+1 month')), 0, 10));
+            substr(date('Y-m-d H:i:s',  strtotime('+1 month')), 0, 10));
 
         //Annual
         //Success
@@ -78,7 +78,7 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
         $this->assertEqual($new_values['subscription_status'], 'Paid');
         $this->assertNotNull($new_values['paid_through']);
         $this->assertEqual(substr($new_values['paid_through'], 0, 10),
-            substr(date(DATE_ATOM,  strtotime('+1 year')), 0, 10));
+            substr(date('Y-m-d H:i:s',  strtotime('+1 year')), 0, 10));
 
         //Failure
         $builders[] = FixtureBuilder::build('subscriber_payments', array('subscriber_id'=>10,
