@@ -542,5 +542,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Whoops! It looks like that code has already been used/', $results);
         $this->assertPattern('/It worked! We&#39;ve applied your coupon code./', $results);
         $this->assertNoPattern('/Oops! There was a problem processing your code. Please try again./', $results);
+        $this->assertNoPattern('/Pay now with Amazon/', $results);
+        $this->assertNoPattern('/Free trial that expires/', $results);
     }
 }

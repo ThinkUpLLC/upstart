@@ -115,6 +115,8 @@ class MembershipController extends AuthController {
                         $subscriber_redemption_update = $subscriber_dao->redeemClaimCode($subscriber->id, $claim_code);
                         if ($subscriber_redemption_update > 0) {
                             $this->addSuccessMessage("It worked! We've applied your coupon code.");
+                            //Refresh subscriber object with new field values
+                            $subscriber = $subscriber_dao->getByEmail($logged_in_user);
                         } else {
                             $this->addErrorMessage("Oops! There was a problem processing your code. Please try again.");
                         }
