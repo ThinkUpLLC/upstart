@@ -34,7 +34,7 @@ class TestOfBundleLandingController extends UpstartUnitTestCase {
             'Success! You\'ve purchased The Good Web Bundle');
 
         $confirmation_email = Mailer::getLastMail();
-        $this->debug($confirmation_email);
+        //$this->debug($confirmation_email);
         $this->assertPattern('/Thanks for purchasing The Good Web Bundle/', $confirmation_email);
     }
 
