@@ -2,7 +2,7 @@
 {assign var="tagline_logo" value="The best of the web, for half the price."}
 {assign var="description" value="Get memberships to 5 of the web's most fun apps and communities, for 50% off."}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="utf-8">
     <title>{if isset($controller_title)}{$controller_title} | {/if}The Good Web Bundle - {$tagline}</title>
@@ -36,7 +36,7 @@
     <meta property="og:image:secure" content="https://www.goodwebbundle.com/join/assets/img/landing/crowd.png" />
     <meta name="twitter:image:src" content="https://www.goodwebbundle.com/join/assets/img/landing/crowd.png">
 
-    <meta name="og:image:type" content="image/png">
+    <meta property="og:image:type" content="image/png">
     <meta name="twitter:image:width" content="160">
     <meta name="twitter:image:height" content="154">
     <meta name="og:image:width" content="160">
@@ -87,6 +87,10 @@
           font-family: 'Oleo Script Swash Caps', cursive;
           text-align: center;
           font-size: xx-large;
+        }
+
+        h3 {
+          text-align: center;
         }
 
         .container {
@@ -176,8 +180,8 @@
           color: #FF0142;
           border-radius: 24px;
           border: 4px solid #FF0142;
-          margin-top: 30px;
-          padding: 26px;
+          margin-top: 60px;
+          padding: 20px;
           border-top: 4px solid black;
           border-bottom: 4px solid black;
           font-size: x-large;
@@ -186,6 +190,7 @@
         .jumbotron #giveafriend {
           width: 264px;
           height: 194px;
+          margin-top: 30px;
           background: url({$site_root_path}bundle/assets/img/bundle-gift.png) 50% 0 no-repeat;
           text-indent: 100%;
           font-size: 0;
@@ -228,6 +233,40 @@
           background: url({$site_root_path}bundle/assets/img/ribbon.png) 50% 0 no-repeat;
         }
 
+        #the-sites p {
+          text-align: center;
+        }
+
+        #the-sites h3 {
+          text-align: center;
+          padding-top: 130px;
+          font-size: medium;
+          font-weight: 700;
+        }
+
+        #the-sites h4 {
+          text-align: center;
+          color: #FF0142;
+          font-weight: 700;
+          font-size: x-large;
+        }
+
+        #metafilter {
+          background: url({$site_root_path}bundle/assets/img/metafilter-logo.png) 50% 0 no-repeat;
+        }
+        #mlkshk {
+          background: url({$site_root_path}bundle/assets/img/mlkshk-logo.png) 50% 25% no-repeat;
+        }
+        #newsblur {
+          background: url({$site_root_path}bundle/assets/img/newsblur-logo.png) 50% 0 no-repeat;
+        }
+        #the-toast {
+          background: url({$site_root_path}bundle/assets/img/the-toast-logo.gif) 50% 25% no-repeat;
+        }
+        #thinkup {
+          background: url({$site_root_path}bundle/assets/img/thinkup-logo.png) 50% 25% no-repeat;
+        }
+
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -236,6 +275,27 @@
     <![endif]-->
 
 </head>
+<body>
+
+{literal}
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : 'your-app-id',
+          xfbml      : true,
+          version    : 'v2.1'
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+{/literal}
 
 {if isset($success_msg) || isset($error_msg)}
 <div class="container">
@@ -285,11 +345,7 @@
             <div class="col-md-4">
                 <h3 id="price">$96</h3>
                 <h2>
-                  {if isset($pay_with_amazon_form)}
-                    {$pay_with_amazon_form}
-                  {else}
-                    <button type="button" class="btn btn-primary" id="bigpaybutton">Get It Now</button>
-                  {/if}
+                 {$pay_with_amazon_form}
                 </h2>
                 <p class="fineprint">Pay with Amazon</p>
             </div>
@@ -309,29 +365,29 @@
           <h2 class="center-block">The Sites</h2>
         <div class="row row-centered">
           <div class="col-md-2 col-centered">
-            <h3>MetaFilter</h3>
+            <h3 id="metafilter">MetaFilter</h3>
             <p>The most venerable community blog has an answer for everything.</p>
-            <h3><strike>$60</strike></h3>
+            <h4><strike>$60</strike></h4>
           </div>
           <div class="col-md-2 col-centered">
-            <h3>MLKSHK</h3>
+            <h3 id="mlkshk">MLKSHK</h3>
             <p>The most fun and delightful image sharing community on the web.</p>
-            <h3><strike>$24</strike></h3>
+            <h4><strike>$24</strike></h4>
          </div>
           <div class="col-md-2 col-centered">
-            <h3>NewsBlur</h3>
+            <h3 id="newsblur">NewsBlur</h3>
             <p>A newsreader that actually makes it fun to catch up on the web.</p>
-            <h3><strike>$24</strike></h3>
+            <h4><strike>$24</strike></h4>
           </div>
           <div class="col-md-2 col-centered">
-            <h3>The Toast</h3>
+            <h3 id="the-toast">The Toast</h3>
             <p>A delightful daily blog you will sincerely love and someday resent.</p>
-            <h3><strike>$24</strike></h3>
+            <h4><strike>$24</strike></h4>
           </div>
           <div class="col-md-2 col-centered">
-            <h3>ThinkUp</h3>
+            <h3 id="thinkup">ThinkUp</h3>
             <p>Daily insights that help you get more out of Twitter and Facebook.</p>
-            <h3><strike>$60</strike></h3>
+            <h4><strike>$60</strike></h4>
           </div>
         </div>
       </div>
@@ -457,7 +513,77 @@
           </ul>
       </div>
     </div>
+<div id="get-it">
+  <div class="container">
 
+    <h2>Get It!</h2>
+
+    <div class="col-md-3">
+      <img src="assets/gwb-logo-black.svg" alt="Good Web Bundle" />
+    </div>
+
+    <div class="col-md-3">
+      <h5>Membership access to:</h5>
+      <ul>
+        <li><a href="#" target="_blank">MetaFilter</a></li>
+        <li><a href="#" target="_blank">MLKSHK</a></li>
+        <li><a href="#" target="_blank">NewsBlur</a></li>
+        <li><a href="#" target="_blank">The Toast</a></li>
+        <li><a href="#" target="_blank">ThinkUp</a></li>
+      </ul>
+    </div>
+
+    <div class="col-md-3">
+      <h4>$96</h4>
+    </div>
+
+    <div class="col-md-3">
+      <h3>50% less than you'd pay to sign up individually.<br />
+        For a limited time.</h3>
+    </div>
+
+  </div>
+</div>
+
+<div id="share">
+  <div class="container">
+
+    <h2>Share</h2>
+
+    <div class="col-md-6">
+      <h3>Keep up with us on social media:</h3>
+        <ul>
+          <li class="follow-twitter">
+            <a href="https://twitter.com/goodwebbundle" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @goodwebbundle</a>
+            {literal}
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            {/literal}
+          </li>
+          <li class="follow-tumblr">
+            goodwebbundle tumblr
+            <iframe class="btn" frameborder="0" border="0" scrolling="no" allowtransparency="true" height="25" width="200" src="http://platform.tumblr.com/v1/follow_button.html?button_type=1&tumblelog=goodwebbundle&color_scheme=dark"></iframe>
+          </li>
+        </ul>
+    </div>
+
+    <div class="col-md-6">
+      <p>
+        <h3>Tell your friends!</h3>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-via="goodwebbundle">Tweet</a>
+        {literal}
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        {/literal}
+
+        <div class="fb-share-button" data-href="http://goodwebbundle.com" data-layout="button_count"></div>
+      </p>
+      <p>
+        <h3>Need help? Got a question? Get in touch!</h3>
+        <a href="mailto:info@goodwebbundle.com">info@goodwebbundle.com</a>
+      </p>
+    </div>
+
+  </div>
+</div>
 {/if}
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>

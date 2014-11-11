@@ -138,7 +138,7 @@ class ButtonGenerator {
         $form .= $endPoint;
         $form .= "\" method=\"";
         $form .= self::$httpMethod . "\">\n";
-        $form .= "<button type=\"submit\" class=\"btn btn-primary btn-lg\">Buy it now</button>\n";
+        $form .= "<button type=\"submit\" class=\"btn btn-primary\" id=\"bigpaybutton\">Get it now</button>\n";
 
         foreach ($formHiddenInputs  as $name => $value) {
             $form .= "<input type=\"hidden\" name=\"$name";
