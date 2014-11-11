@@ -123,4 +123,30 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
         $this->assertEqual($new_values['subscription_status'], 'Payment due');
         $this->assertNull($new_values['paid_through']);
     }
+
+    public function testUpdateSubscriptionStatusAndPaidThrough() {
+        $subscriber = new Subscriber();
+        $subscriber->id = 10;
+        $subscriber->is_membership_complimentary = true;
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>10));
+
+        //Monthly subscription
+        $subscriber->is_membership_complimentary = false;
+
+        $operation = new SubscriptionOperation();
+        $operation->subscriber_id = 10;
+        $operation->recurring_frequency = '1 month';
+        $operation->operation = 'pay';
+        $operation->status_code = 'PS';
+        $operation->transaction_date = '2014-08-25 08:52:08';
+
+        $helper = new SubscriptionHelper();
+        $helper->updateSubscriptionStatusAndPaidThrough($subscriber, $operation);
+
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber = $subscriber_dao->getByID(10);
+        $this->assertEqual($subscriber->subscription_status, 'Paid');
+        $this->assertEqual($subscriber->paid_through, '2014-09-25 08:52:08');
+    }
 }

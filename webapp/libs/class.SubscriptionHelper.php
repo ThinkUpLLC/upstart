@@ -93,12 +93,13 @@ class SubscriptionHelper {
      */
     public function updateSubscriptionStatusAndPaidThrough(Subscriber $subscriber, SubscriptionOperation $operation) {
         $subscriber_dao = new SubscriberMySQLDAO();
-        $subscription_status = $updated_values = self::getSubscriptionStatusBasedOnOperation($operation);
+        $subscription_status = self::getSubscriptionStatusBasedOnOperation($operation);
         $result = $subscriber_dao->setSubscriptionStatus($subscriber->id, $subscription_status);
 
         $paid_through_time = null;
         if ($operation->status_code == 'SS' || $operation->status_code == 'PS') {
             $paid_through_time = strtotime('+1 month', strtotime($operation->transaction_date));
+            $paid_through_time = date('Y-m-d H:i:s', $paid_through_time);
         }
         $result += $subscriber_dao->setPaidThrough($subscriber->id, $paid_through_time);
         return ($result > 0); //return true if a field got updated
