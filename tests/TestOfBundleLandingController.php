@@ -19,7 +19,7 @@ class TestOfBundleLandingController extends UpstartUnitTestCase {
         $this->debug($result);
 
         $this->assertPattern('/Web Bundle/', $result);
-        $this->assertPattern( '/Buy it now/', $result);
+        $this->assertPattern( '/Get it now/', $result);
     }
 
     public function testOfControllerAllParamsValidSig() {
@@ -59,7 +59,7 @@ class TestOfBundleLandingController extends UpstartUnitTestCase {
         $controller = new BundleLandingController(true);
         $results = $controller->go();
         $this->debug($results);
-        $this->assertPattern( '/Buy it now/', $results);
+        $this->assertPattern( '/Get it now/', $results);
 
         $confirmation_email = Mailer::getLastMail();
         $this->assertEqual($confirmation_email, '');
