@@ -85,4 +85,13 @@ class TestOfBundleLandingController extends UpstartUnitTestCase {
         $_GET['buyerEmail'] = 'angelina@example.com';
         return $_GET;
     }
+
+    public function testSendPurchaseConfirmationEmail() {
+        $controller = new BundleLandingController(true);
+        $message = $controller->sendConfirmationEmail('buyer@example.com', 'AAAABBBBCCCCDDDD', 'AAAA BBBB CCCC DDDD');
+        $this->assertPattern('/Thanks for buying the Good Web Bundle!/', $message);
+        $this->assertPattern('/AAAABBBBCCCCDDDD/', $message);
+
+        $this->debug($message);
+    }
 }

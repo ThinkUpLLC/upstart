@@ -86,22 +86,32 @@ class BundleLandingController extends SignUpHelperController {
         return AmazonFPSAPIAccessor::isAmazonSignatureValid($endpoint_url, $endpoint_url_params);
     }
 
-    protected function sendConfirmationEmail($email, $code, $code_readable) {
+    /**
+     * Send bundle purchase confirmation email via Mandrill. If test, return the email HTML.
+     * @param  str $email
+     * @param  str $code
+     * @param  str $code_readable
+     * @return mixed str if test, otherwise bool
+     */
+    public function sendConfirmationEmail($email, $code, $code_readable) {
         $template_name = "Upstart System Messages";
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
-        $subject = $this->name;
+        $subject = "Thanks for buying the Good Web Bundle!";
 
         $cfg = Config::getInstance();
         $api_key = $cfg->getValue('mandrill_api_key');
 
-        $email_view_mgr->assign('site_url', UpstartHelper::getApplicationURL(false, false, false) );
         $email_view_mgr->assign('claim_code', $code );
         $email_view_mgr->assign('claim_code_readable', $code_readable );
+        $email_view_mgr->assign('headline', $subject );
 
-        $email_view_mgr->assign('name', $this->name );
         $message = $email_view_mgr->fetch('_email.bundle-purchase-confirmation.tpl');
-        return Mailer::mailHTMLViaMandrillTemplate($email, $subject, $template_name, array('html_body'=>$message),
-            $api_key);
+        if (UpstartHelper::isTest()) {
+            return $message;
+        } else {
+            return Mailer::mailHTMLViaMandrillTemplate($email, $subject, $template_name, array('html_body'=>$message),
+                $api_key);
+        }
     }
 }
