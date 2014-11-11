@@ -55,18 +55,29 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
         $this->assertEqual($new_values['subscription_status'], 'Complimentary membership');
         $this->assertNull($new_values['paid_through']);
 
-        //Monthly
+        //Monthly subscription
         $subscriber->is_membership_complimentary = false;
         $builders = array();
         $builders[] = FixtureBuilder::build('subscription_operations', array('subscriber_id'=>10,
-            'operation'=>'pay', 'status_code'=>'PS', 'transaction_date'=>'-5h'));
+            'operation'=>'pay', 'status_code'=>'PS', 'transaction_date'=>'-5h', 'recurring_frequency'=>'1 month'));
         $new_values = $helper->getSubscriptionStatusAndPaidThrough($subscriber);
         $this->assertEqual($new_values['subscription_status'], 'Paid');
         $this->assertNotNull($new_values['paid_through']);
         $this->assertEqual(substr($new_values['paid_through'], 0, 10),
             substr(date('Y-m-d H:i:s',  strtotime('+1 month')), 0, 10));
 
-        //Annual
+        //Annual subscription
+        $subscriber->is_membership_complimentary = false;
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscription_operations', array('subscriber_id'=>10,
+            'operation'=>'pay', 'status_code'=>'PS', 'transaction_date'=>'-5h', 'recurring_frequency'=>'12 months'));
+        $new_values = $helper->getSubscriptionStatusAndPaidThrough($subscriber);
+        $this->assertEqual($new_values['subscription_status'], 'Paid');
+        $this->assertNotNull($new_values['paid_through']);
+        $this->assertEqual(substr($new_values['paid_through'], 0, 10),
+            substr(date('Y-m-d H:i:s',  strtotime('+12 months')), 0, 10));
+
+        //Annual FPS auth
         //Success
         $builders = null; //clear fixtures
         $builders = array();

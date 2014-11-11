@@ -29,7 +29,8 @@ class SubscriptionHelper {
                 $subscription_status = self::getSubscriptionStatusBasedOnOperation($latest_operation);
                 if ($latest_operation->operation == 'pay'
                     && ($latest_operation->status_code == 'SS' || $latest_operation->status_code == 'PS')) {
-                    $paid_through_time = strtotime('+1 month', strtotime($latest_operation->transaction_date));
+                    $paid_through_time = strtotime('+'.$latest_operation->recurring_frequency,
+                        strtotime($latest_operation->transaction_date));
                 }
             } else {
                 //Get latest payment
