@@ -98,7 +98,7 @@ class SubscriptionHelper {
 
         $paid_through_time = null;
         if ($operation->status_code == 'SS' || $operation->status_code == 'PS') {
-            $paid_through_time = strtotime('+1 month', strtotime($operation->transaction_date));
+            $paid_through_time = strtotime('+'.$operation->recurring_frequency, strtotime($operation->transaction_date));
             $paid_through_time = date('Y-m-d H:i:s', $paid_through_time);
         }
         $result += $subscriber_dao->setPaidThrough($subscriber->id, $paid_through_time);

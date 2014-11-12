@@ -40,10 +40,15 @@ class APIIPNController extends UpstartController {
                             $op->transaction_date = (isset($_POST['transactionDate']))?
                                 $_POST['transactionDate']:"NOW()";
 
-                            //Check to make sure this isn't a page refresh by catching a DuplicateKey exception
                             $subscription_operation_dao->insert($op);
 
-                            //Set new paid_through date and update status just in case
+                            //Set new paid_through date and update status
+                            //Inefficient workaround alert:
+                            //For inexplicable reasons, we have to retrieve the operation from the database here
+                            //instead of just passing it to SubscriptionHelper
+                            //because once it's inserted into the database, the transaction_date gets formatted
+                            //correctly, in a way that PHP strtotime and date() just won't.
+                            $op = $subscription_operation_dao->getByAmazonSubscriptionID($_POST['subscriptionId']);
                             $subscription_helper = new SubscriptionHelper();
                             $subscription_helper->updateSubscriptionStatusAndPaidThrough($subscriber, $op);
 
