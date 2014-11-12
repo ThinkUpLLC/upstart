@@ -60,7 +60,7 @@ class MembershipController extends AuthController {
                             $days_left = $subscriber->getDaysLeftInFreeTrial();
                             UpstartHelper::postToSlack('#signups',
                                 'Hooray! Someone just subscribed from their membership page with '
-                                .$days_left." days left in their trial."
+                                .$days_left." day".(($days_left != 1)?'s':'')." left in their trial."
                                 .'\nhttps://'. $subscriber->thinkup_username.
                                 '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
                                 $subscriber->id);
