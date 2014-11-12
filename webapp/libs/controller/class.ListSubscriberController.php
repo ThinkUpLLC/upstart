@@ -17,7 +17,7 @@ class ListSubscriberController extends Controller {
         }
         $search_term = (isset($_GET['q']))?$_GET['q']:null;
         $subscriber_dao = new SubscriberMySQLDAO();
-        if (in_array( $search_term, $this->payment_statuses)) {
+        if (isset($search_term)) {
             $this->addToView('search_term', $search_term);
             if (in_array( $search_term, $this->payment_statuses)) {
                 $subscribers = $subscriber_dao->getSubscriberListWithPaymentStatus($search_term, $page, 51);
