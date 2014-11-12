@@ -32,10 +32,6 @@ class TestOfBundleLandingController extends UpstartUnitTestCase {
         $v_mgr = $controller->getViewManager();
         $this->assertEqual($v_mgr->getTemplateDataItem('success_msg'),
             'Success! You\'ve purchased The Good Web Bundle');
-
-        $confirmation_email = Mailer::getLastMail();
-        //$this->debug($confirmation_email);
-        $this->assertPattern('/Thanks for purchasing The Good Web Bundle/', $confirmation_email);
     }
 
     public function testOfControllerAllParamsInvalidSig() {
