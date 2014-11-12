@@ -16,7 +16,7 @@
       </tr>
       {foreach $claim_codes as $claim_code}
       <tr>
-        <td><a href="{$site_root_path}api/bundle/?code={$claim_code->code}">{$claim_code->readable_code}</a></td>
+        <td><a href="https://www.thinkup.com/join/api/bundle/?code={$claim_code->code}">{$claim_code->readable_code}</a></td>
         <td>{$claim_code->email}</td>
         <td>{$claim_code->type}</td>
         <td>{$claim_code->number_days} days</th>
