@@ -1,5 +1,12 @@
 <?php
 class ListSubscriberController extends Controller {
+    /**
+     * Possible values for subscription_status
+     * @var array
+     */
+    var $payment_statuses = array('Free trial', 'Paid', 'Payment failed', 'Refunded', 'Payment pending',
+        'Complimentary membership');
+
     public function control() {
         $this->disableCaching();
         $this->setViewTemplate('admin-index.tpl');
@@ -10,9 +17,9 @@ class ListSubscriberController extends Controller {
         }
         $search_term = (isset($_GET['q']))?$_GET['q']:null;
         $subscriber_dao = new SubscriberMySQLDAO();
-        if ($search_term != null ) {
+        if (in_array( $search_term, $this->payment_statuses)) {
             $this->addToView('search_term', $search_term);
-            if (strpos($search_term, 'Payment') !== false) {
+            if (in_array( $search_term, $this->payment_statuses)) {
                 $subscribers = $subscriber_dao->getSubscriberListWithPaymentStatus($search_term, $page, 51);
             } else {
                 $subscribers = $subscriber_dao->getSearchResults($search_term, $page, 51);
