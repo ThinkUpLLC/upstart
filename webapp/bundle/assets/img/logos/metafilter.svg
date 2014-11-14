@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="135px" height="85px"
+	 viewBox="84.5 103.5 135 85" enable-background="new 84.5 103.5 135 85" xml:space="preserve">
+<title>mefi-color 2</title>
+<desc>Created with Sketch Beta.</desc>
+<g id="Page-1" sketch:type="MSPage">
+	<g id="mefi-color" transform="translate(10.000000, 132.000000)" sketch:type="MSLayerGroup">
+		<g id="Group" transform="translate(0.258300, 0.896500)" sketch:type="MSTextLayer">
+			<g enable-background="new    ">
+				<path d="M92.198,32.928h-6.286V-4.304h9.801l11.239,23.383l11.239-23.383h9.748v37.231h-6.285V3.845l-12.996,25.833h-3.516
+					L92.198,3.845V32.928z"/>
+			</g>
+			<g enable-background="new    ">
+				<path d="M159.495,21.37h-22.21c0.141,2.06,1.082,3.72,2.823,4.98c1.739,1.26,3.728,1.89,5.965,1.89
+					c3.55,0,6.249-1.117,8.096-3.354l3.408,3.729c-3.053,3.16-7.03,4.739-11.931,4.739c-3.978,0-7.359-1.322-10.146-3.968
+					c-2.788-2.644-4.181-6.195-4.181-10.653c0-4.455,1.419-7.998,4.261-10.625c2.84-2.628,6.187-3.942,10.04-3.942
+					s7.128,1.164,9.828,3.489c2.697,2.326,4.047,5.531,4.047,9.614V21.37z M137.284,16.682h16.246c0-2.377-0.746-4.208-2.238-5.486
+					c-1.491-1.278-3.328-1.917-5.512-1.917c-2.185,0-4.146,0.666-5.886,1.997C138.153,12.607,137.284,14.41,137.284,16.682z"/>
+			</g>
+			<g enable-background="new    ">
+				<path d="M170.489,1.556v10.227H187v5.806h-16.512v15.34h-6.285V-4.304h24.821l-0.053,5.859H170.489z"/>
+			</g>
+			<g enable-background="new    ">
+				<path d="M192.128,1.173c-0.697-0.697-1.046-1.525-1.046-2.488c0-0.962,0.349-1.792,1.046-2.489
+					c0.696-0.697,1.525-1.045,2.488-1.045c0.961,0,1.791,0.348,2.488,1.045s1.045,1.527,1.045,2.489
+					c0,0.963-0.348,1.792-1.045,2.488s-1.527,1.045-2.488,1.045C193.654,2.219,192.825,1.87,192.128,1.173z M197.354,32.928h-5.575
+					V6.449h5.575V32.928z"/>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>
