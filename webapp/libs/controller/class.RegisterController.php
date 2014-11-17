@@ -10,6 +10,10 @@ class RegisterController extends SignUpHelperController {
         }
 
         if ($this->hasUserReturnedFromTwitter() || $this->hasUserReturnedFromFacebook()) {
+            //If there's a claim code on the query string, put it in session for payment stage
+            if (isset($_GET['code'])) {
+                SessionCache::put('claim_code', $_GET['code']);
+            }
             if ($this->hasUserReturnedFromTwitter()) {
                 $cfg = Config::getInstance();
                 $oauth_consumer_key = $cfg->getValue('oauth_consumer_key');

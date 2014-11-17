@@ -28,6 +28,7 @@ class PayNowController extends Controller {
             } else {
                 $this->addErrorMessage("That code doesn't seem right. Check it and try again?");
             }
+            SessionCache::unsetKey('claim_code');
         }
         //Get Amazon URL
         $caller_reference = $new_subscriber_id.'_'.time();
@@ -47,6 +48,7 @@ class PayNowController extends Controller {
         $subscriber->installation_url = str_replace ("{user}", $subscriber->thinkup_username, $user_installation_url);
         $this->addToView('new_subscriber', $subscriber);
         $this->addToView('thinkup_url', $subscriber->installation_url);
+        $this->addToView('claim_code',SessionCache::get('claim_code') );
 
         return $this->generateView();
     }

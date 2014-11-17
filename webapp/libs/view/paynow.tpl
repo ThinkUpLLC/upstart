@@ -12,9 +12,9 @@ body_classes="marketing marketing-page" body_id="marketing-welcome"}
       {$pay_with_amazon_form}
       <a class="alt-to-btn-large" id="btn-claim-code" href="#">Got a coupon code?</a></p>
 
-      <form class="marketing-form hidden" id="form-claim-code" method="post" action="paynow.php">
+      <form class="marketing-form{if !isset($claim_code)} hidden{/if}" id="form-claim-code" method="post" action="paynow.php">
         <label for="claim_code">Enter your code:</label>
-        <input type="text" value="" id="claim_code" name="claim_code" class="input" placeholder="1234 5678 90AB">
+        <input type="text" value="{if isset($claim_code)}{$claim_code}{/if}" id="claim_code" name="claim_code" class="input" placeholder="1234 5678 90AB">
         <button type="submit" value="Submit code" name="submit" class="btn-submit"><i class="fa fa-chevron-right"></i></button>
       </form>
 

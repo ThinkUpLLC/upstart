@@ -3,10 +3,10 @@ body_classes="marketing marketing-page" body_id="marketing-bundle"}
 
   <div class="container">
     <section class="section section-marketing-text" id="section-about-text">
-      <h2 class="section-header">Thanks for buying the bundle!</h2>
+      <h2 class="section-header">Thanks for buying the Good Web Bundle!</h2>
 
-      <p align="center">Start creating your account by authenticating with Facebook or Twiiter.<br>
-      (We’ll ask for your claim code right after you register.)</p>
+      <p align="center">Start creating your account by authenticating with Facebook or Twitter.<br>
+      (We’ll ask for your coupon code right after you register.)</p>
 
       <div class="signup-buttons">
         <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
@@ -14,5 +14,3 @@ body_classes="marketing marketing-page" body_id="marketing-bundle"}
       </div>
 
     </section>
-
-{include file="_footer.marketing.tpl"}

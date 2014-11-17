@@ -4,9 +4,10 @@ class BundleRedeemController extends SignUpHelperController {
         $this->setViewTemplate('bundle.redeem.tpl');
         $this->disableCaching();
 
-        $twitter_member_link = $this->getTwitterAuthLink('register.php?n=twitter&level=member');
+        $code_string = (isset($_GET['code']))?('&code='.$_GET['code']):'';
+        $twitter_member_link = $this->getTwitterAuthLink('register.php?n=twitter&level=member'.$code_string);
         $this->addToView('twitter_member_link', $twitter_member_link);
-        $facebook_member_link = $this->getFacebookConnectLink('register.php?n=facebook&level=member');
+        $facebook_member_link = $this->getFacebookConnectLink('register.php?n=facebook&level=member'.$code_string);
         $this->addToView('facebook_member_link', $facebook_member_link);
         return $this->generateView();
     }
