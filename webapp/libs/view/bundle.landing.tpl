@@ -927,11 +927,11 @@
           </div>
           <div class="col-md-3">
               <h4 id="notcreepy" class="center-block">We're not creepy</h4>
-              <p class="center-block">We're building user-supported apps and communities that respect your data.</p>
+              <p class="center-block">We're building user-supported apps and communities that treat you with respect.</p>
           </div>
           <div class="col-md-3">
               <h4 id="honest" class="center-block">Join the movement</h4>
-              <p class="center-block">Supporting these sites with your dollars makes the web a better place.</p>
+              <p class="center-block">Support these sites with your dollars and make the web a better place.</p>
           </div>
           <div class="col-md-3">
             &nbsp;
@@ -943,7 +943,7 @@
     <div id="who-we-are">
       <div class="container">
         <h2><span>Who We Are</span></h2>
-        <p>The nicest proprietors on the web built and run the sites in the Good Web Bundle.<br>We're regular folks with families and bills who love the web as much as you do.</p>
+        <p>The nicest proprietors on the web built and run the sites in the Good Web Bundle.<br>We're not billionaires. We're regular folks with families and bills who love the web as much as you do.</p>
 
         <div class="row">
           <div class="col-md-3">&nbsp;</div>
@@ -1026,7 +1026,7 @@
           <div class="col-md-6">
             <div class="question">
               <h4>Where does the money go when I buy a bundle?</h4>
-              <p>We're splitting it evenly between us, with each of the sites getting 50% of their usual subscription or membership fee in order to make this a good deal for you. (There's a little cut off the top for Amazon, which handles the payment processing.)</p>
+              <p>We're splitting it between us, with each of the sites getting 50% of their usual subscription or membership fee in order to make this a good deal for you. (There's a little cut off the top for Amazon, which handles the payment processing.)</p>
             </div>
             <div class="question">
               <h4>How do I pay?</h4>
