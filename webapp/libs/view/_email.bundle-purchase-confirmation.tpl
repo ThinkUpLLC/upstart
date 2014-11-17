@@ -416,7 +416,7 @@ color: #417505 !important;
     <li><strong style="color: #ff0142;">MLKSHK:</strong> <a href="http://mlkshk.com/account/redeem?key={$claim_code}"  style="color: #999;">http://mlkshk.com/account/redeem?key={$claim_code}</a></li>
     <li><strong style="color: #ff0142;">NewsBlur:</strong> <a href="http://www.newsblur.com/account/redeem_code?code={$claim_code}" style="color: #999;">http://newsblur.com/account/redeem_code?code={$claim_code}</a></li>
     <li><strong style="color: #ff0142;">The Toast:</strong> <a href="http://the-toast.net/donate/?code={$claim_code}" style="color: #999;">http://the-toast.net/donate/?code={$claim_code}</a></li>
-    <li><strong style="color: #ff0142;">ThinkUp:</strong> <a href="https://www.thinkup.com/join/bundle-redeem.php?code={$claim_code}" style="color: #999;">https://thinkup.com/join/bundle/bundle-redeem.php?code={$claim_code}</a></li>
+    <li><strong style="color: #ff0142;">ThinkUp:</strong> <a href="https://www.thinkup.com/join/bundle-redeem.php?code={$claim_code}" style="color: #999;">https://thinkup.com/join/bundle-redeem.php?code={$claim_code}</a></li>
 </ul>
 
 <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">Remember: You can gift this code to a friend, but each code can only be used <strong>once per site</strong>.</p>
