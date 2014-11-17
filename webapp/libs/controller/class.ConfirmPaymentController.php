@@ -86,6 +86,11 @@ class ConfirmPaymentController extends SignUpHelperController {
                         $subscriber_redemption_update = $subscriber_dao->redeemClaimCode($subscriber->id, $claim_code);
                         if ($subscriber_redemption_update > 0) {
                             $this->addSuccessMessage("It worked! We've applied your coupon code.");
+                            UpstartHelper::postToSlack('#signups',
+                                'Oh hello! Someone just redeemed a coupon code during signup.'
+                                .'\nhttps://'. $subscriber->thinkup_username.
+                                '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
+                                $subscriber->id);
                         } else {
                             $this->addErrorMessage("Oops! There was a problem processing your code. Please log in "
                                 ."and try again on your membership page.");

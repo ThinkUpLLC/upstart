@@ -117,6 +117,11 @@ class MembershipController extends AuthController {
                             $this->addSuccessMessage("It worked! We've applied your coupon code.");
                             //Refresh subscriber object with new field values
                             $subscriber = $subscriber_dao->getByEmail($logged_in_user);
+                            UpstartHelper::postToSlack('#signups',
+                                'Yes! Someone just redeemed a coupon code on their membership page.'
+                                .'\nhttps://'. $subscriber->thinkup_username.
+                                '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
+                                $subscriber->id);
                         } else {
                             $this->addErrorMessage("Oops! There was a problem processing your code. Please try again.");
                         }

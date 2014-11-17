@@ -51,6 +51,11 @@ class BundleLandingController extends SignUpHelperController {
                         $this->addToView('buyer_email', $_GET['buyerEmail']);
                         // Send email to Amazon email address
                         self::sendConfirmationEmail($_GET['buyerEmail'], $claim_code, $claim_code_readable);
+                        $exclaims = array("Wahoo", "Heyo", "Yay", "Hot damn", "W00t-w00t", "Hooray",
+                            "Cha-ching", "Yipee");
+                        UpstartHelper::postToSlack('#goodwebbundle', $exclaims[array_rand($exclaims)]
+                            ."! ".$_GET['buyerName']." ".$_GET['buyerEmail']." just bought the Good Web Bundle.",
+                            'bundlebot');
                     } else {
                         $this->addErrorMessage($this->generic_error_msg);
                         $this->logError('No claim code operation inserted or status is not PS '.$_GET['status'],
