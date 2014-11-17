@@ -177,10 +177,10 @@ class UpstartHelper {
      * @param str $text
      * @return str contents
      */
-    public static function postToSlack($channel, $text) {
+    public static function postToSlack($channel, $text, $bot_name = 'upstartbot') {
         $url = 'https://thinkup.slack.com/services/hooks/incoming-webhook?token=mPEOeIpng7h2EIskwtNd9hNF';
 
-        $payload = '{"channel": "'.$channel.'", "username": "upstartbot", "text": "'. $text.
+        $payload = '{"channel": "'.$channel.'", "username": "'.$bot_name.'", "text": "'. $text.
             '", "icon_emoji": ":cubimal_chick:"}';
         //debug
         //echo $payload;
