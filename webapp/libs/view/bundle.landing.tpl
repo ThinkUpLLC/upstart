@@ -1,6 +1,6 @@
 {assign var="tagline" value="The best of the web, half of the price."}
 {assign var="tagline_logo" value="The best of the web, for half the price."}
-{assign var="description" value="Get memberships to 5 of the web's most fun apps and communities, for 50% off."}
+{assign var="description" value="Get memberships to 5 of the web's best apps and communities, for 50% off."}
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
@@ -27,9 +27,9 @@
     <meta name="twitter:title" content="The Good Web Bundle: The best of the web, half of the price.">
     <meta property="og:title" content="The Good Web Bundle: The best of the web, half of the price." />
 
-    <meta name="description" content="Get memberships to 5 of the web's most fun apps and communities, for 50% off.">
-    <meta name="description" content="Get memberships to 5 of the web's most fun apps and communities, for 50% off.">
-    <meta name="twitter:description" content="Get memberships to 5 of the web's most fun apps and communities, for 50% off.">
+    <meta name="description" content="Get memberships to 5 of the web's best apps and communities, for 50% off.">
+    <meta name="description" content="Get memberships to 5 of the web's best apps and communities, for 50% off.">
+    <meta name="twitter:description" content="Get memberships to 5 of the web's best apps and communities, for 50% off.">
 
     <meta property="image" content="{$site_root_path}bundle/assets/img/bundle-black.png" />
     <meta property="og:image" content="{$site_root_path}bundle/assets/img/bundle-black.png" />
@@ -665,23 +665,6 @@
     </script>
   {/literal}
 
-{*
-
-
-{assign var="success_msg" value="<strong>Success!</strong> You've purchased the Good Web Bundle."}
-{assign var="buyer_email" value="test@example.com"}
-{assign var="claim_code" value="AAAABBBB0123"}
-{assign var="claim_code_readable" value="AAAA BBBB 0123"}
-
-
-{assign var="transaction_id" value="196L7DCI752V2FC7KGZ5R1J5HTEF5KKMSVB"}
-{assign var="reference_id" value="36dce043363a262183c2422784edded11415904259"}
-
-{assign var="error_msg" value="There was a problem with your purchase."}
-
-*}
-
-
 {if isset($success_msg) || isset($error_msg)}
 
   {if isset($success_msg)}
@@ -696,7 +679,7 @@
               </div>
               <div class="col-md-4">
                   {if isset($claim_code)}
-                  <h4 id="fiftypercent">Your Bundle Code:<br />
+                  <h4 id="fiftypercent">Your Coupon Code:<br />
                   <strong style="color: white;">{$claim_code_readable}</strong></h4>
                   {/if}
               </div>
@@ -710,7 +693,7 @@
       <div id="faq">
         <div class="container">
 
-            <h5 class="redeem-explain">We've sent your bundle code and these links to <strong>{$buyer_email}</strong>. Or print this page for your records.</h5>
+            <h5 class="redeem-explain">We've sent your coupon code and these links to <strong>{$buyer_email}</strong>. Or print this page for your records.</h5>
 
             <h2><span>Redeem Your Code</span></h2>
 
@@ -856,8 +839,7 @@
       <div class="container">
         <h1 class="center-block">{$title}</h1>
         <h2>{$tagline}</h2>
-        <p>Memberships to <strong>five</strong> of the most <strong>fun and entertaining</strong> sites
-        on the web!</p>
+        <p>Memberships to <strong>five</strong> of the <strong>best apps and communities</strong> on the web!</p>
         <div class="row">
             <div class="col-md-4">
                 <h3 id="price">$96</h3>
@@ -887,7 +869,7 @@
           <div class="col-md-2 col-centered">
             <img src="{$site_root_path}bundle/assets/img/logos/metafilter.svg" alt="MetaFilter" />
             <h3>MetaFilter</h3>
-            <p>The most venerable community blog has an answer for everything.</p>
+            <p>This venerable community blog has an answer for everything.</p>
             <h3 class="strike">$60</h3>
           </div>
           <div class="col-md-2 col-centered">
@@ -899,57 +881,22 @@
           <div class="col-md-2 col-centered">
             <img src="{$site_root_path}bundle/assets/img/logos/newsblur.png" alt="NewsBlur" />
             <h3>NewsBlur</h3>
-            <p>A newsreader that actually makes it fun to catch up on the web.</p>
+            <p>A newsreader that makes it fun to keep up with your favorite sites.</p>
             <h3 class="strike">$24</h3>
           </div>
           <div class="col-md-2 col-centered">
             <img src="{$site_root_path}bundle/assets/img/logos/thetoast.png" alt="The Toast" />
             <h3>The Toast</h3>
-            <p>A delightful daily blog you will sincerely love and someday resent.</p>
+            <p>A smart daily blog you will sincerely love and someday resent.</p>
             <h3 class="strike">$24</h3>
           </div>
           <div class="col-md-2 col-centered">
             <img src="{$site_root_path}bundle/assets/img/logos/thinkup.svg" alt="ThinkUp" />
             <h3>ThinkUp</h3>
-            <p>Daily insights that help you get more out of Twitter and Facebook.</p>
+            <p>Daily insights about you and your friends on Twitter and Facebook.</p>
             <h3 class="strike">$60</h3>
           </div>
         </div>
-
-<!--
-        <div class="row row-centered">
-          <div class="col-md-2 col-centered">
-            <ul>
-              <li>One year as a paid supporter of the site, with no ads</li>
-              <li>Lifetime membership to ask questions, and post links, jobs and projects</li>
-            </ul>
-          </div>
-          <div class="col-md-2 col-centered">
-            <ul>
-              <li>One year as a paid supporter of the site, with no ads</li>
-              <li>Create multiple image shakes</li>
-            </ul>
-         </div>
-          <div class="col-md-2 col-centered">
-            <ul>
-              <li>One year as a paid supporter of the site, read unlimited sites</li>
-              <li>Faster site updates, full search, and tagging</li>
-            </ul>
-          </div>
-          <div class="col-md-2 col-centered">
-            <ul>
-              <li>One year as a paid supporter of the site</li>
-              <li>Access to Toast Chat when it launches</li>
-            </ul>
-          </div>
-          <div class="col-md-2 col-centered">
-            <ul>
-              <li>One year as a paid member of the site</li>
-              <li>Updates delivered by email, web and Twitter notifications</li>
-            </ul>
-          </div>
-        </div>
--->
 
       </div>
     </div>
@@ -957,18 +904,18 @@
     <div id="features">
       <div class="container">
           <h2><span>Bundle Features</span></h2>
-          <p class="center-block">The Good Web Bundle gives you a full membership to five of the best sites on the web for half the price. These sites are a ton of fun&mdash;people love us so much they pay to be members. You're gonna be so glad you did this.</p>
+          <p class="center-block">The Good Web Bundle includes a full year's membership to five of the best apps and communities on the web for half the price.<br>These sites are a ton of fun&mdash;you're gonna be so glad you did this.</p>
         <div class="row row-centered">
           <div class="col-md-3 col-centered">
               <h4 id="daysleft" class="center-block">Only {$days_to_go} days left</h4>
               <p class="center-block">This is a one-time-only offer! Don't miss out.</p>
           </div>
           <div class="col-md-3 col-centered">
-              <h4 id="bigsavings" class="center-block">50% Savings</h4>
+              <h4 id="bigsavings" class="center-block">50% savings</h4>
               <p class="center-block">Get a $192 value for about as much as you pay for Netflix.</p>
           </div>
           <div class="col-md-3 col-centered">
-              <h4 id="goodcommunity" class="center-block">DO Read the Comments.</h4>
+              <h4 id="goodcommunity" class="center-block">DO read the comments</h4>
               <p class="center-block">The best communities: On our sites, we don't tolerate abuse.</p>
           </div>
 
@@ -980,11 +927,11 @@
           </div>
           <div class="col-md-3">
               <h4 id="notcreepy" class="center-block">We're not creepy</h4>
-              <p class="center-block">These are sites that don't track you or have too many ads.</p>
+              <p class="center-block">We're building user-supported apps and communities that respect your data.</p>
           </div>
           <div class="col-md-3">
-              <h4 id="honest" class="center-block">Honesty</h4>
-              <p class="center-block">You won't feel vaguely unsettled about giving your money to us.</p>
+              <h4 id="honest" class="center-block">Join the movement</h4>
+              <p class="center-block">Supporting these sites with your dollars makes the web a better place.</p>
           </div>
           <div class="col-md-3">
             &nbsp;
@@ -996,7 +943,7 @@
     <div id="who-we-are">
       <div class="container">
         <h2><span>Who We Are</span></h2>
-        <p>Our sites are made by nice, regular, normal people like you. We've got families and kids and stuff.</p>
+        <p>The nicest proprietors on the web built and run the sites in the Good Web Bundle.<br>We're regular folks with families and bills who love the web as much as you do.</p>
 
         <div class="row">
           <div class="col-md-3">&nbsp;</div>
@@ -1069,27 +1016,22 @@
           <div class="col-md-6">
             <div class="question">
               <h4>Why should I pay for this stuff? The web is supposed to be free!</h4>
-              <p>Lots of great sites are free! But if you care about keeping good, independent sites around for years to come, a great way to support them is to become a member. Because in order to provide you #content, every site needs to find a way to make money, and this bundle seems like a fair, simple way to do it.</p>
+              <p>Lots of great sites are free! But if you care about keeping quality, independent web sites around for years to come, a good way to support them is to become a paid member. Because in order to provide you #content, every site needs to find a way to make money, and this bundle is one fair, simple way to do it.</p>
             </div>
             <div class="question">
               <h4>Can I split up the perks between me and a friend?</h4>
-              <p>Yep! When you buy the Good Web Bundle, you'll get a code you can use to unlock your benefits on each of
-              the sites. If you share that code with a friend as a gift, they can use it instead. (Each code can only be
-              used once per site.)</p>
+              <p>Yep! When you buy the Good Web Bundle, you'll get a coupon code you can use to unlock your benefits on each of the sites. If you share that code with a friend as a gift, they can use it instead. (Each code can only be used once per site.)</p>
             </div>
           </div>
           <div class="col-md-6">
             <div class="question">
               <h4>Where does the money go when I buy a bundle?</h4>
-              <p>We're splitting it fairly, with each of the sites getting 50% of their usual subscription or membership
-              fee in order to make this a good deal for you. (There's a little cut off the top for Amazon, which handles
-              the payment processing.)</p>
+              <p>We're splitting it evenly between us, with each of the sites getting 50% of their usual subscription or membership fee in order to make this a good deal for you. (There's a little cut off the top for Amazon, which handles the payment processing.)</p>
             </div>
             <div class="question">
               <h4>How do I pay?</h4>
               <p>When you click the <strong>GET IT NOW</strong> button, you'll be sent to Amazon Payments to complete
-              your purchase. This is as easy as any other purchase you might make on Amazon. We don't yet support PayPal
-              or any other purchase methods, sorry.</p>
+              your purchase. This is as easy as any other purchase you might make on Amazon. We don't yet support PayPal or any other purchase methods, sorry.</p>
             </div>
           </div>
         </div>
@@ -1101,11 +1043,11 @@
           <table>
             <tr>
               <td><img src="{$site_root_path}bundle/assets/img/logos/metafilter.svg" alt="MetaFilter" /></td>
-              <td>One year paid member account, with lifetime right to post and ask questions and no ads.</td>
+              <td>One year paid membership, with lifetime right to post and ask questions and no ads.</td>
             </tr>
             <tr>
               <td><img src="{$site_root_path}bundle/assets/img/logos/mlkshk.svg" alt="MLKSHK" /></td>
-              <td>One year paid member account, create multiple image shakes and browse with no ads.</td>
+              <td>One year paid membership, with the ability to create multiple image shakes and browse with no ads.</td>
             </tr>
             <tr>
               <td><img src="{$site_root_path}bundle/assets/img/logos/newsblur.png" alt="NewsBlur" /></td>
@@ -1113,11 +1055,11 @@
             </tr>
             <tr>
               <td><img src="{$site_root_path}bundle/assets/img/logos/thetoast.png" alt="The Toast" /></td>
-              <td>Be recognized as a sponsoring member and get access to chat when it launches.</td>
+              <td>Recognition as a sponsoring member and access to chat when it launches.</td>
             </tr>
             <tr>
               <td><img src="{$site_root_path}bundle/assets/img/logos/thinkup.svg" alt="ThinkUp" /></td>
-              <td>One year paid membership with insights about Twitter and Facebook.</td>
+              <td>One year paid membership, with daily insights about you and your friends on Twitter and Facebook.</td>
             </tr>
           </table>
 
