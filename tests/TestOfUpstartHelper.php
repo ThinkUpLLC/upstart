@@ -45,4 +45,11 @@ class TestOfUpstartHelper extends UpstartUnitTestCase {
         //space
         $this->assertFalse(UpstartHelper::isUsernameValid('aes fa'));
     }
+
+    public function testIsStage() {
+        $_SERVER['SERVER_NAME'] = 'stage.thinkup.com';
+        $this->assertTrue(UpstartHelper::isStage());
+        $_SERVER['SERVER_NAME'] = 'thinkup.com';
+        $this->assertFalse(UpstartHelper::isStage());
+    }
 }

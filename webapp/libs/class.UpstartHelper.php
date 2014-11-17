@@ -104,7 +104,13 @@ class UpstartHelper {
     public static function isTest() {
         return (isset($_SESSION["MODE"]) && $_SESSION["MODE"] == "TESTS") || getenv("MODE")=="TESTS";
     }
-
+    /**
+     * Return whether currently on staging server (stage.thinkup.com).
+     * @return bool Whether on staging
+     */
+    public static function isStage() {
+        return ($_SERVER['SERVER_NAME'] == 'stage.thinkup.com');
+    }
     /**
      * Return whether or not a ThinkUp username is valid - between 3 and 15 chars, alphanumeric, no spaces,
      * allow underscores but not dashes.
@@ -186,7 +192,7 @@ class UpstartHelper {
         //echo $payload;
         $fields = array('payload'=>$payload);
 
-        if (!self::isTest()) {
+        if (!self::isTest() && !self::isStage()) {
             //open connection
             $ch = curl_init();
 
