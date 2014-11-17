@@ -49,6 +49,21 @@ class TestOfBundleLandingController extends UpstartUnitTestCase {
         $this->assertEqual($confirmation_email, '');
     }
 
+    public function testOfControllerAllParamsInvalidEmailAddress() {
+        $_GET = self::setUpPaymentParams();
+        $_GET['buyerEmail'] = 'not an email address';
+
+        $controller = new BundleLandingController(true);
+        $results = $controller->go();
+        $this->debug($results);
+
+        $v_mgr = $controller->getViewManager();
+        $this->assertPattern('/Oops/', $v_mgr->getTemplateDataItem('error_msg'));
+
+        $confirmation_email = Mailer::getLastMail();
+        $this->assertEqual($confirmation_email, '');
+    }
+
     public function testOfControllerMissingParams() {
         $_GET = self::setUpPaymentParams(false);
 

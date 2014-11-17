@@ -33,7 +33,7 @@ class BundleLandingController extends SignUpHelperController {
         $this->addToView('days_to_go', $days_to_go);
 
         if ($this->hasUserReturnedFromAmazon()) {
-            if ($this->isAmazonResponseValid()) {
+            if ($this->isAmazonResponseValid() && UpstartHelper::validateEmail($_GET['buyerEmail'])) {
                 $claim_code_op_dao = new ClaimCodeOperationMySQLDAO();
                 try {
                     $operation_id = $claim_code_op_dao->insert( $_GET['referenceId'],  $_GET['transactionId'],
@@ -49,7 +49,6 @@ class BundleLandingController extends SignUpHelperController {
                         $this->addToView('reference_id', $_GET['referenceId']);
                         $this->addToView('transaction_id', $_GET['transactionId']);
                         $this->addToView('buyer_email', $_GET['buyerEmail']);
-                        // TODO Validate email address
                         // Send email to Amazon email address
                         self::sendConfirmationEmail($_GET['buyerEmail'], $claim_code, $claim_code_readable);
                     } else {
@@ -62,7 +61,12 @@ class BundleLandingController extends SignUpHelperController {
                 }
             } else {
                 $this->addErrorMessage($this->generic_error_msg);
-                $this->logError('Amazon response invalid', __FILE__,__LINE__, __METHOD__);
+                if (UpstartHelper::validateEmail($_GET['buyerEmail'])) {
+                    $this->logError('Amazon response invalid', __FILE__,__LINE__, __METHOD__);
+                } else {
+                    $this->logError('Email address "'.$_GET['buyerEmail'].'" is invalid',
+                        __FILE__,__LINE__, __METHOD__);
+                }
             }
         } else {
             //Get Amazon URL
