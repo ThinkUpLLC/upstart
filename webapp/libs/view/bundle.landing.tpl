@@ -718,7 +718,7 @@
                 </tr>
                 <tr>
                   <td><img src="{$site_root_path}bundle/assets/img/logos/thinkup.svg" alt="ThinkUp" /></td>
-                  <td><a href="https://www.thinkup.com/join/bundle-redeem.php?code={$claim_code}">https://thinkup.com/join/bundle/bundle-redeem.php?code={$claim_code}</a></td>
+                  <td><a href="https://www.thinkup.com/join/bundle-redeem.php?code={$claim_code}">https://thinkup.com/join/bundle-redeem.php?code={$claim_code}</a></td>
                 </tr>
               </table>
             </div>
