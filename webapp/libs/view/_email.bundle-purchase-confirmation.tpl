@@ -412,9 +412,9 @@ color: #417505 !important;
               <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 30px 0 0 0;" align="left">To redeem your code on each of the participating sites, just follow these links:</p>
 
               <ul>
-                  <li><strong style="color: #ff0142;">MetaFilter:</strong> <a href="https://login.metafilter.com/join.mefi?code={$claim_code}" style="color: #999;">https://metafilter.com/join.mefi?code={$claim_code}</a></li>
+                  <li><strong style="color: #ff0142;">MetaFilter:</strong> <a href="https://login.metafilter.com/join.mefi/{$claim_code}" style="color: #999;">https://login.metafilter.com/join.mefi/{$claim_code}</a></li>
                   <li><strong style="color: #ff0142;">MLKSHK:</strong> <a href="https://mlkshk.com/account/redeem?key={$claim_code}"  style="color: #999;">https://mlkshk.com/account/redeem?key={$claim_code}</a></li>
-                  <li><strong style="color: #ff0142;">NewsBlur:</strong> <a href="http://www.newsblur.com/account/redeem_code?code={$claim_code}" style="color: #999;">http://newsblur.com/account/redeem_code?code={$claim_code}</a></li>
+                  <li><strong style="color: #ff0142;">NewsBlur:</strong> <a href="https://www.newsblur.com/account/redeem_code?code={$claim_code}" style="color: #999;">https://newsblur.com/account/redeem_code?code={$claim_code}</a></li>
                   <li><strong style="color: #ff0142;">The Toast:</strong> <a href="http://the-toast.net/donate/?code={$claim_code}" style="color: #999;">http://the-toast.net/donate/?code={$claim_code}</a></li>
                   <li><strong style="color: #ff0142;">ThinkUp:</strong> <a href="https://www.thinkup.com/join/bundle-redeem.php?code={$claim_code}" style="color: #999;">https://thinkup.com/join/bundle-redeem.php?code={$claim_code}</a></li>
               </ul>

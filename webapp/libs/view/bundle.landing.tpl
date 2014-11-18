@@ -707,7 +707,7 @@
               <table class="col-md-offset-2">
                 <tr>
                   <td><img src="{$site_root_path}bundle/assets/img/logos/metafilter.svg" alt="MetaFilter" /></td>
-                  <td><a href="https://login.metafilter.com/join.mefi?code={$claim_code}">https://metafilter.com/join.mefi?code={$claim_code}</a></td>
+                  <td><a href="https://login.metafilter.com/join.mefi/{$claim_code}">https://login.metafilter.com/join.mefi/{$claim_code}</a></td>
                 </tr>
                 <tr>
                   <td><img src="{$site_root_path}bundle/assets/img/logos/mlkshk.svg" alt="MLKSHK" /></td>
@@ -715,7 +715,7 @@
                 </tr>
                 <tr>
                   <td><img src="{$site_root_path}bundle/assets/img/logos/newsblur.png" alt="NewsBlur" /></td>
-                  <td><a href="http://www.newsblur.com/account/redeem_code?code={$claim_code}">http://newsblur.com/account/redeem_code?code={$claim_code}</a></td>
+                  <td><a href="https://www.newsblur.com/account/redeem_code?code={$claim_code}">https://newsblur.com/account/redeem_code?code={$claim_code}</a></td>
                 </tr>
                 <tr>
                   <td><img src="{$site_root_path}bundle/assets/img/logos/thetoast.png" alt="The Toast" /></td>
@@ -886,7 +886,7 @@
           <div class="col-md-2 col-centered">
             <a href="http://newsblur.com/"><img src="{$site_root_path}bundle/assets/img/logos/newsblur.png" alt="NewsBlur" width="85" height="85" /></a>
             <h3><a href="http://newsblur.com/">NewsBlur</a></h3>
-            <p>A newsreader that makes it fun to keep up with your favorite sites.</p>
+            <p>A personal news reader bringing people together to talk about the world.</p>
             <h3 class="strike">$24</h3>
           </div>
           <div class="col-md-2 col-centered">
