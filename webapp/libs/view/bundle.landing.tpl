@@ -954,17 +954,17 @@
           <div class="col-md-3">&nbsp;</div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/matt-haughey.jpg" alt="Matt Haughey" />
-              <h4><a href="https://twitter.com/mathowie">Matt Haughey</a></h4>
+              <h4><a href="https://twitter.com/intent/user?screen_name=mathowie">Matt Haughey</a></h4>
               <p>MetaFilter</p>
           </div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/amber-costley.jpg" alt="Amber Costley" />
-              <h4><a href="https://twitter.com/amberdawn">Amber Costley</a>/h4>
+              <h4><a href="https://twitter.com/intent/user?screen_name=amberdawn">Amber Costley</a></h4>
               <p>MLKSHK</p>
           </div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/andre-torrez.jpg" alt="Andre Torrez" />
-              <h4><a href="https://twitter.com/torrez">Andre Torrez</a></h4>
+              <h4><a href="https://twitter.com/intent/user?screen_name=torrez">Andre Torrez</a></h4>
               <p>MLKSHK</p>
           </div>
           <div class="col-md-3">&nbsp;</div>
@@ -974,17 +974,17 @@
           <div class="col-md-3">&nbsp;</div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/samuel-clay.jpg" alt="Samuel Clay" />
-              <h4><a href="https://twitter.com/samuelclay">Samuel Clay</a></h4>
+              <h4><a href="https://twitter.com/intent/user?screen_name=samuelclay">Samuel Clay</a></h4>
               <p>NewsBlur</p>
           </div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/nicole-cliffe.jpg" alt="Nicole Cliffe" />
-              <h4><a href="https://twitter.com/nicole_cliffe">Nicole Cliffe</a></h4>
+              <h4><a href="https://twitter.com/intent/user?screen_name=nicole_cliffe">Nicole Cliffe</a></h4>
               <p>The Toast</p>
           </div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/mallory-ortberg.jpg" alt="Mallory Ortberg" />
-              <h4><a href="https://twitter.com/mallelis">Mallory Ortberg</a></h4>
+              <h4><a href="https://twitter.com/intent/user?screen_name=mallelis">Mallory Ortberg</a></h4>
               <p>The Toast</p>
           </div>
           <div class="col-md-3">&nbsp;</div>
@@ -994,17 +994,17 @@
           <div class="col-md-3">&nbsp;</div>
           <div class="col-md-2">
             <img src="{$site_root_path}bundle/assets/img/people/nick-pavich.jpg" alt="Nick Pavich" />
-            <h4><a href="https://twitter.com/nick_pavich">Nick Pavich</a></h4>
+            <h4><a href="https://twitter.com/intent/user?screen_name=nick_pavich">Nick Pavich</a></h4>
             <p>The Toast</p>
           </div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/anil-dash.jpg" alt="Anil Dash" />
-              <h4><a href="https://twitter.com/anildash">Anil Dash</a></h4>
+              <h4><a href="https://twitter.com/intent/user?screen_name=anildash">Anil Dash</a></h4>
               <p>ThinkUp</p>
           </div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/gina-trapani.jpg" alt="Gina Trapani" />
-              <h4><a href="https://twitter.com/ginatrapani">Gina Trapani</a></h4>
+              <h4><a href="https://twitter.com/intent/user?screen_name=ginatrapani">Gina Trapani</a></h4>
               <p>ThinkUp</p>
           </div>
           <div class="col-md-3">&nbsp;</div>
