@@ -283,7 +283,11 @@
           font: 105px "DIN Bold";
           font-weight: 700;
           color: #ff0042;
+        }
 
+        h3#price sup {
+          color: #ff0042;
+          font-size: 60%;
         }
 
         #bigpaybutton {
@@ -707,7 +711,7 @@
                 </tr>
                 <tr>
                   <td><img src="{$site_root_path}bundle/assets/img/logos/mlkshk.svg" alt="MLKSHK" /></td>
-                  <td><a href="http://mlkshk.com/account/redeem?key={$claim_code}">http://mlkshk.com/account/redeem?key={$claim_code}</a></td>
+                  <td><a href="https://mlkshk.com/account/redeem?key={$claim_code}">https://mlkshk.com/account/redeem?key={$claim_code}</a></td>
                 </tr>
                 <tr>
                   <td><img src="{$site_root_path}bundle/assets/img/logos/newsblur.png" alt="NewsBlur" /></td>
@@ -843,7 +847,7 @@
         <p>Memberships to <strong>five</strong> of the <strong>best apps and communities</strong> on the web!</p>
         <div class="row">
             <div class="col-md-4">
-                <h3 id="price">$96</h3>
+                <h3 id="price"><sup>$</sup>96</h3>
                 <h2 class="button">
                   {$pay_with_amazon_form}
                 </h2>
@@ -950,17 +954,17 @@
           <div class="col-md-3">&nbsp;</div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/matt-haughey.jpg" alt="Matt Haughey" />
-              <h4>Matt Haughey</h4>
+              <h4><a href="https://twitter.com/mathowie">Matt Haughey</a></h4>
               <p>MetaFilter</p>
           </div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/amber-costley.jpg" alt="Amber Costley" />
-              <h4>Amber Costley</h4>
+              <h4><a href="https://twitter.com/amberdawn">Amber Costley</a>/h4>
               <p>MLKSHK</p>
           </div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/andre-torrez.jpg" alt="Andre Torrez" />
-              <h4>Andre Torrez</h4>
+              <h4><a href="https://twitter.com/torrez">Andre Torrez</a></h4>
               <p>MLKSHK</p>
           </div>
           <div class="col-md-3">&nbsp;</div>
@@ -970,17 +974,17 @@
           <div class="col-md-3">&nbsp;</div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/samuel-clay.jpg" alt="Samuel Clay" />
-              <h4>Samuel Clay</h4>
+              <h4><a href="https://twitter.com/samuelclay">Samuel Clay</a></h4>
               <p>NewsBlur</p>
           </div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/nicole-cliffe.jpg" alt="Nicole Cliffe" />
-              <h4>Nicole Cliffe</h4>
+              <h4><a href="https://twitter.com/nicole_cliffe">Nicole Cliffe</a></h4>
               <p>The Toast</p>
           </div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/mallory-ortberg.jpg" alt="Mallory Ortberg" />
-              <h4>Mallory Ortberg</h4>
+              <h4><a href="https://twitter.com/mallelis">Mallory Ortberg</a></h4>
               <p>The Toast</p>
           </div>
           <div class="col-md-3">&nbsp;</div>
@@ -990,17 +994,17 @@
           <div class="col-md-3">&nbsp;</div>
           <div class="col-md-2">
             <img src="{$site_root_path}bundle/assets/img/people/nick-pavich.jpg" alt="Nick Pavich" />
-            <h4>Nick Pavich</h4>
+            <h4><a href="https://twitter.com/nick_pavich">Nick Pavich</a></h4>
             <p>The Toast</p>
           </div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/anil-dash.jpg" alt="Anil Dash" />
-              <h4>Anil Dash</h4>
+              <h4><a href="https://twitter.com/anildash">Anil Dash</a></h4>
               <p>ThinkUp</p>
           </div>
           <div class="col-md-2">
               <img src="{$site_root_path}bundle/assets/img/people/gina-trapani.jpg" alt="Gina Trapani" />
-              <h4>Gina Trapani</h4>
+              <h4><a href="https://twitter.com/ginatrapani">Gina Trapani</a></h4>
               <p>ThinkUp</p>
           </div>
           <div class="col-md-3">&nbsp;</div>
@@ -1091,7 +1095,7 @@
         </div>
 
         <div class="col-md-3">
-          <h4>$96</h4>
+          <h4><sup style="font-size: 60%;">$</sup>96</h4>
         </div>
 
         <div class="col-md-4">
