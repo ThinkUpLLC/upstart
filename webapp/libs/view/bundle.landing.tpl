@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <title>{if isset($controller_title)}{$controller_title} | {/if}{$tagline}</title>
     <link rel="shortcut icon" type="image/x-icon" href="{$site_root_path}bundle/assets/img/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{$site_root_path}bundle/assets/ico/apple-touch-icon-152-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{$site_root_path}bundle/assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{$site_root_path}bundle/assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{$site_root_path}bundle/assets/ico/apple-touch-icon-72-precomposed.png">
@@ -867,32 +868,32 @@
         <h2 class="center-block"><span>The Sites</span></h2>
         <div class="row row-centered">
           <div class="col-md-2 col-centered">
-            <img src="{$site_root_path}bundle/assets/img/logos/metafilter.svg" alt="MetaFilter" />
-            <h3>MetaFilter</h3>
+            <a href="http://metafilter.com"><img src="{$site_root_path}bundle/assets/img/logos/metafilter.svg" alt="MetaFilter" /></a>
+            <h3><a href="http://metafilter.com">MetaFilter</a></h3>
             <p>This venerable community blog has an answer for everything.</p>
             <h3 class="strike">$60</h3>
           </div>
           <div class="col-md-2 col-centered">
-            <img src="{$site_root_path}bundle/assets/img/logos/mlkshk.svg" alt="MLKSHK" />
-            <h3>MLKSHK</h3>
+            <a href="http://mlkshk.com"><img src="{$site_root_path}bundle/assets/img/logos/mlkshk.svg" alt="MLKSHK" /></a>
+            <h3><a href="http://mlkshk.com">MLKSHK</a></h3>
             <p>The most fun and delightful image sharing community on the web.</p>
             <h3 class="strike">$24</h3>
          </div>
           <div class="col-md-2 col-centered">
-            <img src="{$site_root_path}bundle/assets/img/logos/newsblur.png" alt="NewsBlur" />
-            <h3>NewsBlur</h3>
+            <a href="http://newsblur.com/"><img src="{$site_root_path}bundle/assets/img/logos/newsblur.png" alt="NewsBlur" width="85" height="85" /></a>
+            <h3><a href="http://newsblur.com/">NewsBlur</a></h3>
             <p>A newsreader that makes it fun to keep up with your favorite sites.</p>
             <h3 class="strike">$24</h3>
           </div>
           <div class="col-md-2 col-centered">
-            <img src="{$site_root_path}bundle/assets/img/logos/thetoast.png" alt="The Toast" />
-            <h3>The Toast</h3>
+            <a href="http://the-toast.net/"><img src="{$site_root_path}bundle/assets/img/logos/thetoast.png" alt="The Toast" width="135" height="85" /></a>
+            <h3><a href="http://the-toast.net/">The Toast</a></h3>
             <p>A smart daily blog you will sincerely love and someday resent.</p>
             <h3 class="strike">$24</h3>
           </div>
           <div class="col-md-2 col-centered">
-            <img src="{$site_root_path}bundle/assets/img/logos/thinkup.svg" alt="ThinkUp" />
-            <h3>ThinkUp</h3>
+            <a href="https://thinkup.com/"><img src="{$site_root_path}bundle/assets/img/logos/thinkup.svg" alt="ThinkUp" /></a>
+            <h3><a href="https://thinkup.com/">ThinkUp</a></h3>
             <p>Daily insights about you and your friends on Twitter and Facebook.</p>
             <h3 class="strike">$60</h3>
           </div>
