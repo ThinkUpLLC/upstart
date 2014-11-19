@@ -898,7 +898,7 @@
           <h3 class="strike">$60</h3>
           <span class="tout">Included!</span>
           <ul>
-            <li>One year paid membership, with lifetime right to post and ask questions and no ads.</li>
+            <li>Recognition as a supporting member, with lifetime right to post and ask questions and no ads.</li>
           </ul>
         </div>
         <div class="col-md-2 col-centered">
@@ -1088,7 +1088,7 @@
           <table>
             <tr>
               <td><img src="{$site_root_path}bundle/assets/img/logos/metafilter.svg" alt="MetaFilter" /></td>
-              <td>One year paid membership, with lifetime right to post and ask questions and no ads.</td>
+              <td>Recognition as a supporting member, with lifetime right to post and ask questions and no ads.</td>
             </tr>
             <tr>
               <td><img src="{$site_root_path}bundle/assets/img/logos/mlkshk.svg" alt="MLKSHK" /></td>
