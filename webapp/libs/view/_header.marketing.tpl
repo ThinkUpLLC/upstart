@@ -75,6 +75,7 @@
 <body{if isset($body_classes)} class="{$body_classes}"{/if}{if isset($body_id)} id="{$body_id}"{/if}>
 
 <div class="container" id="container-navbar">
+    {if isset($show_promo)}<div class="promo-bar"><a href="https://goodwebbundle.com"><img src="{$site_root_path}bundle/assets/img/good-web-bundle-logo-white.svg" alt="Good Web Bundle logo"> Join ThinkUp for 50% off, and support 4 other great sites: It's the Good Web Bundle!</a></div>{/if}
     <header class="section navbar navbar-marketing" id="section-navbar">
         <div class="navbar-brand">
             <h1 class="logo"><a href="{$site_root_path}">ThinkUp</a></h1>

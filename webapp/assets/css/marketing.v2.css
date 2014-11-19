@@ -744,6 +744,41 @@ a.btn-pill-large:hover {
     width: 180px;
   }
 }
+.promo-bar {
+  background: #da6070;
+  z-index: 100000;
+  position: relative;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: left;
+  line-height: 1.5em;
+  padding: 8px 1em 8px 2.75em;
+}
+.promo-bar a {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+}
+@media (min-width: 400px) {
+  .promo-bar a {
+    padding: 5px;
+    text-align: center;
+  }
+}
+.promo-bar img {
+  height: 1.8em;
+  position: absolute;
+  top: 50%;
+  margin-top: -1em;
+  left: .6em;
+}
+@media (min-width: 400px) {
+  .promo-bar img {
+    height: 1.5em;
+    position: static;
+    vertical-align: sub;
+    padding-right: .25em;
+  }
+}
 #container-signup-top {
   background-color: #ffffff;
   height: auto;

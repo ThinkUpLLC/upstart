@@ -189,6 +189,41 @@
   }
 }
 
+.promo-bar {
+  background: @color-salmon-dark;
+  z-index: 100000;
+  position: relative;
+  color: rgba(255,255,255,.9);
+  text-align: left;
+  line-height: 1.5em;
+  padding: 8px 1em 8px 2.75em;
+
+  a {
+    display:block;
+    text-decoration:none;
+    color: #fff;
+    @media (min-width: 400px) {
+      padding: 5px;
+      text-align: center;
+    }
+  }
+
+  img {
+    height: 1.8em;
+    position: absolute;
+    top: 50%;
+    margin-top: -1em;
+    left: .6em;
+
+    @media (min-width: 400px) {
+      height: 1.5em;
+      position: static;
+      vertical-align: sub;
+      padding-right: .25em;
+    }
+  }
+}
+
 #container-signup-top {
   .section-colors(#fff, #444, #222);
   height: auto;
