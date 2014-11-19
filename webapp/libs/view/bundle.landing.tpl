@@ -247,10 +247,18 @@
 
         .jumbotron {
           text-align: center;
-          background-color: black;
+          background: black;
           color: white;
           margin-bottom: 0;
           font-family: "DIN";
+        }
+
+        @media (min-width: 768px) {
+          .jumbotron {
+            background: black url('{$site_root_path}bundle/assets/img/headline-bg.jpg') no-repeat;
+            background-size: 100% 100%;
+          }
+
         }
 
         .jumbotron .container { padding-bottom: 0; }
@@ -313,8 +321,8 @@
           border: 6px solid #ff0042;
           margin-top: 77px;
           padding: 26px;
-          border-top: 4px solid black;
-          border-bottom: 4px solid black;
+          border-top: 4px solid transparent;
+          border-bottom: 4px solid transparent;
           font-size: x-large;
         }
 
@@ -352,16 +360,22 @@
           font-weight: lighter;
         }
 
-        #the-sites {
-
+        #the-sites .col-centered {
+          text-align: center;
+          vertical-align: top;
         }
+
+        #the-sites ul {
+          margin-top: 20px;
+          text-align: center;
+          padding-left: 6px;
+          font: italic 0.9em "DIN";
+          list-style-type: none;
+        }
+
+        #the-sites img { height: 85px; }
 
         #the-sites .row { padding-top: 30px; }
-
-        #the-sites img {
-          display: block;
-          margin: 0 auto 20px;
-        }
 
         #the-sites h3 {
           font: 1.2em "Alte Haas Grotesk Bold";
@@ -389,15 +403,21 @@
           transform: rotate(-15deg);
         }
 
-        #the-sites .col-centered { text-align: center; }
-
-        #the-sites ul {
-          height: 200px;
-          text-align: left;
-          padding-left: 6px;
+        #the-sites .tout {
+          display: inline-block;
+          font: 1.2em "Alte Haas Grotesk Bold";
         }
 
-        #features { background-color: #ff0042; }
+        #features {
+          background: #ff0042;
+        }
+
+        @media (min-width: 768px) {
+          #features {
+            background: #ff0042 url('{$site_root_path}bundle/assets/img/features-bg.jpg') no-repeat;
+            background-size: 100% 100%;
+          }
+        }
 
         #features h2, #features h4, #features p {
           color: white;
@@ -719,7 +739,7 @@
                 </tr>
                 <tr>
                   <td><img src="{$site_root_path}bundle/assets/img/logos/thetoast.png" alt="The Toast" /></td>
-                  <td><a href="http://the-toast.net/donate/?code={$claim_code}">http://the-toast.net/donate/?code={$claim_code}</a></td>
+                  <td><a href="http://the-toast.net/bundle?code={$claim_code}">http://the-toast.net/bundle?code={$claim_code}</a></td>
                 </tr>
                 <tr>
                   <td><img src="{$site_root_path}bundle/assets/img/logos/thinkup.svg" alt="ThinkUp" /></td>
@@ -867,44 +887,64 @@
       </div>
     </div>
 
-    <div id="the-sites">
-      <div class="container">
-        <h2 class="center-block"><span>The Sites</span></h2>
-        <div class="row row-centered">
-          <div class="col-md-2 col-centered">
-            <a href="http://metafilter.com"><img src="{$site_root_path}bundle/assets/img/logos/metafilter.svg" alt="MetaFilter" /></a>
-            <h3><a href="http://metafilter.com">MetaFilter</a></h3>
-            <p>This venerable community blog has an answer for everything.</p>
-            <h3 class="strike">$60</h3>
-          </div>
-          <div class="col-md-2 col-centered">
-            <a href="http://mlkshk.com"><img src="{$site_root_path}bundle/assets/img/logos/mlkshk.svg" alt="MLKSHK" /></a>
-            <h3><a href="http://mlkshk.com">MLKSHK</a></h3>
-            <p>The most fun and delightful image sharing community on the web.</p>
-            <h3 class="strike">$24</h3>
-         </div>
-          <div class="col-md-2 col-centered">
-            <a href="http://newsblur.com/"><img src="{$site_root_path}bundle/assets/img/logos/newsblur.png" alt="NewsBlur" width="85" height="85" /></a>
-            <h3><a href="http://newsblur.com/">NewsBlur</a></h3>
-            <p>A personal news reader bringing people together to talk about the world.</p>
-            <h3 class="strike">$24</h3>
-          </div>
-          <div class="col-md-2 col-centered">
-            <a href="http://the-toast.net/"><img src="{$site_root_path}bundle/assets/img/logos/thetoast.png" alt="The Toast" width="135" height="85" /></a>
-            <h3><a href="http://the-toast.net/">The Toast</a></h3>
-            <p>A smart daily blog you will sincerely love and someday resent.</p>
-            <h3 class="strike">$24</h3>
-          </div>
-          <div class="col-md-2 col-centered">
-            <a href="https://thinkup.com/"><img src="{$site_root_path}bundle/assets/img/logos/thinkup.svg" alt="ThinkUp" /></a>
-            <h3><a href="https://thinkup.com/">ThinkUp</a></h3>
-            <p>Daily insights about you and your friends on Twitter and Facebook.</p>
-            <h3 class="strike">$60</h3>
-          </div>
+  <div id="the-sites">
+    <div class="container">
+      <h2 class="center-block"><span>The Sites</span></h2>
+      <div class="row row-centered">
+        <div class="col-md-2 col-centered">
+          <a href="http://metafilter.com"><img src="{$site_root_path}bundle/assets/img/logos/metafilter.svg" alt="MetaFilter" /></a>
+          <h3><a href="http://metafilter.com">MetaFilter</a></h3>
+          <p>This venerable community blog has an answer for everything.</p>
+          <h3 class="strike">$60</h3>
+          <span class="tout">Included!</span>
+          <ul>
+            <li>One year paid membership, with lifetime right to post and ask questions and no ads.</li>
+          </ul>
         </div>
-
+        <div class="col-md-2 col-centered">
+          <a href="http://mlkshk.com"><img src="{$site_root_path}bundle/assets/img/logos/mlkshk.svg" alt="MLKSHK" /></a>
+          <h3><a href="http://mlkshk.com">MLKSHK</a></h3>
+          <p>The most fun and delightful image sharing community on the web.</p>
+          <h3 class="strike">$24</h3>
+          <h4 class="tout">All yours!</h4>
+          <ul>
+            <li>One year paid membership, with the ability to create multiple image shakes and browse with no ads</li>
+          </ul>
+       </div>
+        <div class="col-md-2 col-centered">
+          <a href="http://newsblur.com/"><img src="{$site_root_path}bundle/assets/img/logos/newsblur.png" alt="NewsBlur" width="85" height="85" /></a>
+          <h3><a href="http://newsblur.com/">NewsBlur</a></h3>
+          <p>A personal news reader bringing people together to talk about the world</p>
+          <h3 class="strike">$24</h3>
+          <h4 class="tout">In there!</h4>
+          <ul>
+            <li>One year premium account, with unlimited sites, faster updates and search</li>
+          </ul>
+        </div>
+        <div class="col-md-2 col-centered">
+          <a href="http://the-toast.net/"><img src="{$site_root_path}bundle/assets/img/logos/thetoast.png" alt="The Toast" width="135" height="85" /></a>
+          <h3><a href="http://the-toast.net/">The Toast</a></h3>
+          <p>A smart daily blog you will sincerely love and someday resent.</p>
+          <h3 class="strike">$24</h3>
+          <h4 class="tout">Bundled!</h4>
+          <ul>
+            <li>Recognition as a sponsoring member and access to chat when it launches</li>
+          </ul>
+        </div>
+        <div class="col-md-2 col-centered">
+          <a href="https://thinkup.com/"><img src="{$site_root_path}bundle/assets/img/logos/thinkup.svg" alt="ThinkUp" /></a>
+          <h3><a href="https://thinkup.com/">ThinkUp</a></h3>
+          <p>Daily insights about you and your friends on Twitter and Facebook.</p>
+          <h3 class="strike">$60</h3>
+          <h4 class="tout">Got it!</h4>
+          <ul>
+            <li>One year paid membership, with daily insights about you and your friends on Twitter and Facebook</li>
+          </ul>
+        </div>
       </div>
+
     </div>
+  </div>
 
     <div id="features">
       <div class="container">
@@ -1079,7 +1119,7 @@
 
         <h2>Get It!</h2>
 
-        <div class="col-md-2">
+        <div class="col-md-3">
           <img src="{$site_root_path}bundle/assets/img/good-web-bundle-logo-blk.svg" alt="Good Web Bundle" />
         </div>
 
@@ -1098,7 +1138,7 @@
           <h4><sup style="font-size: 60%;">$</sup>96</h4>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <h3>50% less than you'd pay to sign up individually.<br />
             For a limited time.</h3>
             {$pay_with_amazon_form}

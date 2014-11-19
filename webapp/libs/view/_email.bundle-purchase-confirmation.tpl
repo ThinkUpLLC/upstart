@@ -415,13 +415,13 @@ color: #417505 !important;
                   <li><strong style="color: #ff0142;">MetaFilter:</strong> <a href="https://login.metafilter.com/join.mefi/{$claim_code}" style="color: #999;">https://login.metafilter.com/join.mefi/{$claim_code}</a></li>
                   <li><strong style="color: #ff0142;">MLKSHK:</strong> <a href="https://mlkshk.com/account/redeem?key={$claim_code}"  style="color: #999;">https://mlkshk.com/account/redeem?key={$claim_code}</a></li>
                   <li><strong style="color: #ff0142;">NewsBlur:</strong> <a href="https://www.newsblur.com/account/redeem_code?code={$claim_code}" style="color: #999;">https://newsblur.com/account/redeem_code?code={$claim_code}</a></li>
-                  <li><strong style="color: #ff0142;">The Toast:</strong> <a href="http://the-toast.net/donate/?code={$claim_code}" style="color: #999;">http://the-toast.net/donate/?code={$claim_code}</a></li>
+                  <li><strong style="color: #ff0142;">The Toast:</strong> <a href="http://the-toast.net/bundle?code={$claim_code}" style="color: #999;">http://the-toast.net/bundle?code={$claim_code}</a></li>
                   <li><strong style="color: #ff0142;">ThinkUp:</strong> <a href="https://www.thinkup.com/join/bundle-redeem.php?code={$claim_code}" style="color: #999;">https://thinkup.com/join/bundle-redeem.php?code={$claim_code}</a></li>
               </ul>
 
               <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">Remember: You can gift this code to a friend, but each code can only be used <strong>once per site</strong>.</p>
 
-              <center style="width: 100%; min-width: 580px;"><img class="center" src="https://goodwebbundle.com/join/bundle/assets/img/good-web-bundle-site-logos.png" alt="Good Web Bundle" width="470" height="70" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: none; clear: both; display: block; margin: 0 auto; border: none;" align="none" /></center>
+              <center style="width: 100%; min-width: 580px;"><img class="center" src="https://goodwebbundle.com/join/bundle/assets/img/good-web-bundle-site-logos.png" alt="Good Web Bundle" width="470" height="65" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: none; clear: both; display: block; margin: 0 auto; border: none;" align="none" /></center>
 
               <br>
 
