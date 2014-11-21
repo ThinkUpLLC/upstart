@@ -1,6 +1,6 @@
-{assign var="tagline" value="The best of the web, half of the price."}
-{assign var="tagline_logo" value="The best of the web, for half the price."}
-{assign var="description" value="Get memberships to 5 of the web's best apps and communities, for 50% off."}
+{assign var="tagline" value="The best sites on the web aren't always the biggest."}
+{assign var="tagline_logo" value="The best sites on the web aren't always the biggest."}
+{assign var="description" value="Support great indie sites, and save on your favorite new apps."}
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
@@ -25,12 +25,12 @@
     <meta property="og:url" content="{$site_root_path}" />
 
     <meta property="name" content="The Good Web Bundle">
-    <meta name="twitter:title" content="The Good Web Bundle: The best of the web, half of the price.">
-    <meta property="og:title" content="The Good Web Bundle: The best of the web, half of the price." />
+    <meta name="twitter:title" content="The Good Web Bundle: The best sites on the web aren't always the biggest.">
+    <meta property="og:title" content="The Good Web Bundle: The best sites on the web aren't always the biggest." />
 
-    <meta name="description" content="Get memberships to 5 of the web's best apps and communities, for 50% off.">
-    <meta name="description" content="Get memberships to 5 of the web's best apps and communities, for 50% off.">
-    <meta name="twitter:description" content="Get memberships to 5 of the web's best apps and communities, for 50% off.">
+    <meta name="description" content="Support great indie sites, and save on your favorite new apps.">
+    <meta name="description" content="Support great indie sites, and save on your favorite new apps.">
+    <meta name="twitter:description" content="Support great indie sites, and save on your favorite new apps.">
 
     <meta property="image" content="{$site_root_path}bundle/assets/img/bundle-black.png" />
     <meta property="og:image" content="{$site_root_path}bundle/assets/img/bundle-black.png" />
@@ -274,7 +274,7 @@
         }
 
         .jumbotron h2 {
-          font-size: 8em;
+          font-size: 7em;
           line-height: 0.6em;
           margin: 40px 0 10px;
           border-bottom: 0;
@@ -381,26 +381,35 @@
           font: 1.2em "Alte Haas Grotesk Bold";
           position: relative;
           display: inline-block;
-        }
-
-        #the-sites h3.strike {
           font-size: 1.5em;
           color: #ff0042;
           padding: 0 5px;
+          clear: left;
         }
 
-        #the-sites h3.strike:before {
+        .site-logo {
+          display: block;
+        }
+
+        #the-sites h3:before {
           content: "";
           position: absolute;
           top: 50%;
           left: 0;
           right: 0;
           height: 3px; /* ADJUST HEIGHT TO ADD WEIGHT */
+        }
+
+        #the-sites h3.strike:before {
           background: black; /* CHANGE COLOR TO SUIT */
           margin: 0;
           -ms-transform: rotate(-15deg); /* IE 9 */
           -webkit-transform: rotate(-15deg); /* Chrome, Safari, Opera */
           transform: rotate(-15deg);
+        }
+
+        #the-sites h3.strikeout {
+          width: 0px;
         }
 
         #the-sites .tout {
@@ -864,7 +873,7 @@
       <div class="container">
         <h1 class="center-block">{$title}</h1>
         <h2>{$tagline}</h2>
-        <p>Memberships to <strong>five</strong> of the <strong>best apps and communities</strong> on the web!</p>
+        <p>Support great indie sites, and save on your favorite new apps!</p>
         <div class="row">
             <div class="col-md-4">
                 <h3 id="price"><sup>$</sup>96</h3>
@@ -874,8 +883,8 @@
                 <p class="fineprint">Pay with Amazon</p>
             </div>
             <div class="col-md-4">
-                <h4 id="fiftypercent">That's <strong style="color: white;">50% less</strong> than you'd pay
-                for each site individually.</h4>
+                <h4 id="fiftypercent">Memberships to five of the <span style="color: white;">best apps &amp; 
+                communities</span> on the web</h4>
             </div>
             <div class="col-md-4">
                 <h5 id="giveafriend">
@@ -892,27 +901,27 @@
       <h2 class="center-block"><span>The Sites</span></h2>
       <div class="row row-centered">
         <div class="col-md-2 col-centered">
-          <a href="http://metafilter.com"><img src="{$site_root_path}bundle/assets/img/logos/metafilter.svg" alt="MetaFilter" /></a>
+          <a href="http://metafilter.com" class="site-logo"><img src="{$site_root_path}bundle/assets/img/logos/metafilter.svg" alt="MetaFilter" /></a>
           <h3><a href="http://metafilter.com">MetaFilter</a></h3>
-          <p>This venerable community blog has an answer for everything.</p>
-          <h3 class="strike">$60</h3>
-          <span class="tout">Included!</span>
+          <p>This venerable community blog has an answer for everything</p>
+          <h3 class="strikeout">&nbsp;</h3>
+          <span class="tout">All yours!</span>
           <ul>
-            <li>Recognition as a supporting member, with lifetime right to post and ask questions and no ads.</li>
+            <li>Recognition as a supporting member, with lifetime membership to post and ask questions with no ads</li>
           </ul>
         </div>
         <div class="col-md-2 col-centered">
-          <a href="http://mlkshk.com"><img src="{$site_root_path}bundle/assets/img/logos/mlkshk.svg" alt="MLKSHK" /></a>
+          <a href="http://mlkshk.com" class="site-logo"><img src="{$site_root_path}bundle/assets/img/logos/mlkshk.svg" alt="MLKSHK" /></a>
           <h3><a href="http://mlkshk.com">MLKSHK</a></h3>
-          <p>The most fun and delightful image sharing community on the web.</p>
+          <p>The most fun and delightful image sharing community on the web</p>
           <h3 class="strike">$24</h3>
-          <h4 class="tout">All yours!</h4>
+          <h4 class="tout">Included!</h4>
           <ul>
             <li>One year paid membership, with the ability to create multiple image shakes and browse with no ads</li>
           </ul>
        </div>
         <div class="col-md-2 col-centered">
-          <a href="http://newsblur.com/"><img src="{$site_root_path}bundle/assets/img/logos/newsblur.png" alt="NewsBlur" width="85" height="85" /></a>
+          <a href="http://newsblur.com/" class="site-logo"><img src="{$site_root_path}bundle/assets/img/logos/newsblur.png" alt="NewsBlur" width="85" height="85" /></a>
           <h3><a href="http://newsblur.com/">NewsBlur</a></h3>
           <p>A personal news reader bringing people together to talk about the world</p>
           <h3 class="strike">$24</h3>
@@ -922,21 +931,21 @@
           </ul>
         </div>
         <div class="col-md-2 col-centered">
-          <a href="http://the-toast.net/"><img src="{$site_root_path}bundle/assets/img/logos/thetoast.png" alt="The Toast" width="135" height="85" /></a>
+          <a href="http://the-toast.net/" class="site-logo"><img src="{$site_root_path}bundle/assets/img/logos/thetoast.png" alt="The Toast" width="135" height="85" /></a>
           <h3><a href="http://the-toast.net/">The Toast</a></h3>
-          <p>A smart daily blog you will sincerely love and someday resent.</p>
-          <h3 class="strike">$24</h3>
-          <h4 class="tout">Bundled!</h4>
+          <p>A smart daily blog you will sincerely love and someday resent</p>
+          <h3 class="strikeout">&nbsp;</h3>
+          <h4 class="tout">Got it!</h4>
           <ul>
             <li>Recognition as a sponsoring member and access to chat when it launches</li>
           </ul>
         </div>
         <div class="col-md-2 col-centered">
-          <a href="https://thinkup.com/"><img src="{$site_root_path}bundle/assets/img/logos/thinkup.svg" alt="ThinkUp" /></a>
+          <a href="https://thinkup.com/" class="site-logo"><img src="{$site_root_path}bundle/assets/img/logos/thinkup.svg" alt="ThinkUp" /></a>
           <h3><a href="https://thinkup.com/">ThinkUp</a></h3>
-          <p>Daily insights about you and your friends on Twitter and Facebook.</p>
+          <p>Daily insights about you and your friends on Twitter and Facebook</p>
           <h3 class="strike">$60</h3>
-          <h4 class="tout">Got it!</h4>
+          <h4 class="tout">Bundled!</h4>
           <ul>
             <li>One year paid membership, with daily insights about you and your friends on Twitter and Facebook</li>
           </ul>
@@ -949,15 +958,15 @@
     <div id="features">
       <div class="container">
           <h2><span>Bundle Features</span></h2>
-          <p class="center-block">The Good Web Bundle includes a full year's membership to five of the best apps and communities on the web for half the price.<br>These sites are a ton of fun&mdash;you're gonna be so glad you did this.</p>
+          <p class="center-block">The Good Web Bundle includes a membership to five of the best apps and communities on the web.<br>You save on cool apps while supporting awesome sites&mdash;you're gonna be so glad you did this.</p>
         <div class="row row-centered">
           <div class="col-md-3 col-centered">
               <h4 id="daysleft" class="center-block">Only {$days_to_go} days left</h4>
-              <p class="center-block">This is a one-time-only offer! Don't miss out.</p>
+              <p class="center-block">This is a one-time-only offer! We don't want you to miss out.</p>
           </div>
           <div class="col-md-3 col-centered">
-              <h4 id="bigsavings" class="center-block">50% savings</h4>
-              <p class="center-block">Get a $192 value for about as much as you pay for Netflix.</p>
+              <h4 id="bigsavings" class="center-block">It's a good deal</h4>
+              <p class="center-block">The bundle costs about as much as you'd pay for Netflix for a year.</p>
           </div>
           <div class="col-md-3 col-centered">
               <h4 id="goodcommunity" class="center-block">DO read the comments</h4>
@@ -1071,7 +1080,7 @@
           <div class="col-md-6">
             <div class="question">
               <h4>Where does the money go when I buy a bundle?</h4>
-              <p>We're splitting it between us, with each of the sites getting 50% of their usual subscription or membership fee in order to make this a good deal for you. (There's a little cut off the top for Amazon, which handles the payment processing.)</p>
+              <p>We're splitting it between us: MetaFilter and ThinkUp each get $30, and MLKSHK, NewsBlur and The Toast each get $12&nbsp;based on half off the usual subscription fee or a suggested annual donation. (There's a little cut off the top for Amazon, which handles the payment processing.)</p>
             </div>
             <div class="question">
               <h4>How do I pay?</h4>
@@ -1139,7 +1148,7 @@
         </div>
 
         <div class="col-md-3">
-          <h3>50% less than you'd pay to sign up individually.<br />
+          <h3>A great deal for five great sites.<br />
             For a limited time.</h3>
             {$pay_with_amazon_form}
         </div>
