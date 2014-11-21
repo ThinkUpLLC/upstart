@@ -883,7 +883,7 @@
                 <p class="fineprint">Pay with Amazon</p>
             </div>
             <div class="col-md-4">
-                <h4 id="fiftypercent">Memberships to five of the <span style="color: white;">best apps &amp; 
+                <h4 id="fiftypercent">Memberships to five of the <span style="color: white;">best apps &amp;
                 communities</span> on the web</h4>
             </div>
             <div class="col-md-4">
@@ -904,7 +904,7 @@
           <a href="http://metafilter.com" class="site-logo"><img src="{$site_root_path}bundle/assets/img/logos/metafilter.svg" alt="MetaFilter" /></a>
           <h3><a href="http://metafilter.com">MetaFilter</a></h3>
           <p>This venerable community blog has an answer for everything</p>
-          <h3 class="strikeout">&nbsp;</h3>
+          <h3 class="strike">$5</h3>
           <span class="tout">All yours!</span>
           <ul>
             <li>Recognition as a supporting member, with lifetime membership to post and ask questions with no ads</li>
