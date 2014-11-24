@@ -171,6 +171,12 @@ class TestOfConfirmPaymentController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Oops! There was a problem processing your code/', $results);
         $this->assertPattern('/Whoops! It looks like that code has already been used/', $results);
         $this->assertNoPattern('/It worked! We&#39;ve applied your coupon code./', $results);
+
+        $dao = new ThinkUpTablesMySQLDAO('iamtaken');
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM thinkupstart_iamtaken'
+            . '.tu_owners o WHERE o.email = "paid@example.com"');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual($row['is_free_trial'], 0);
     }
 
     public function testValidClaimCodeWithSpacesLowercase() {
@@ -186,5 +192,11 @@ class TestOfConfirmPaymentController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Oops! There was a problem processing your code/', $results);
         $this->assertNoPattern('/Whoops! It looks like that code has already been used/', $results);
         $this->assertPattern('/It worked! We&#39;ve applied your coupon code/', $results);
+
+        $dao = new ThinkUpTablesMySQLDAO('iamtaken');
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM thinkupstart_iamtaken'
+            . '.tu_owners o WHERE o.email = "paid@example.com"');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual($row['is_free_trial'], 0);
     }
 }

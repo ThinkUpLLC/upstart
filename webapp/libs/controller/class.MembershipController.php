@@ -117,6 +117,14 @@ class MembershipController extends AuthController {
                             $this->addSuccessMessage("It worked! We've applied your coupon code.");
                             //Refresh subscriber object with new field values
                             $subscriber = $subscriber_dao->getByEmail($logged_in_user);
+
+                            //Update is_free_trial field in ThinkUp installation
+                            $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
+                            $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
+                            if (!$trial_ended) {
+                                $this->logError('Unable to end trial in ThinkUp installation',
+                                    __FILE__,__LINE__, __METHOD__);
+                            }
                             UpstartHelper::postToSlack('#signups',
                                 'Yes! Someone just redeemed a coupon code on their membership page.'
                                 .'\nhttps://'. $subscriber->thinkup_username.

@@ -85,6 +85,13 @@ class ConfirmPaymentController extends SignUpHelperController {
                     if ($code_redemption_update > 0) {
                         $subscriber_redemption_update = $subscriber_dao->redeemClaimCode($subscriber->id, $claim_code);
                         if ($subscriber_redemption_update > 0) {
+                            //Update is_free_trial field in ThinkUp installation
+                            $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
+                            $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
+                            if (!$trial_ended) {
+                                $this->logError('Unable to end trial in ThinkUp installation',
+                                    __FILE__,__LINE__, __METHOD__);
+                            }
                             $this->addSuccessMessage("It worked! We've applied your coupon code.");
                             UpstartHelper::postToSlack('#signups',
                                 'Oh hello! Someone just redeemed a coupon code during signup.'
