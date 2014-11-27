@@ -531,6 +531,27 @@ class AppInstaller {
         $links_to_expand_per_crawl = $cfg->getValue('expandurls_links_to_expand_per_crawl');
         $tu_tables_dao->insertOptionValue('plugin_options-5', 'links_to_expand',
         $links_to_expand_per_crawl);
+
+        // Add insightsposter plugin
+        $insights_poster_id = $tu_tables_dao->insertPlugin('Insights Poster', 'insightsposter',
+            'Post ThinkUp insights to Twitter', 'Gina Trapani', 'https://github.com/ginatrapani/insightsposter',
+            '0.01', 1);
+        // Add insightsposter option consumer_key
+        $insights_poster_twitter_consumer_key = $cfg->getValue('insights_poster_twitter_consumer_key');
+        $tu_tables_dao->insertOptionValue('plugin_options-'.$insights_poster_id, 'consumer_key',
+            $insights_poster_twitter_consumer_key);
+        // Add insightsposter option consumer_secret
+        $insights_poster_twitter_consumer_secret = $cfg->getValue('insights_poster_twitter_consumer_secret');
+        $tu_tables_dao->insertOptionValue('plugin_options-'.$insights_poster_id, 'consumer_secret',
+            $insights_poster_twitter_consumer_secret);
+        // Add insightsposter option oauth_access_token_secret
+        $insights_poster_twitter_oauth_token_secret = $cfg->getValue('insights_poster_twitter_oauth_token_secret');
+        $tu_tables_dao->insertOptionValue('plugin_options-'.$insights_poster_id, 'oauth_access_token_secret',
+            $insights_poster_twitter_oauth_token_secret);
+        // Add insightsposter option oauth_access_token
+        $insights_poster_twitter_oauth_token = $cfg->getValue('insights_poster_twitter_oauth_token');
+        $tu_tables_dao->insertOptionValue('plugin_options-'.$insights_poster_id, 'oauth_access_token',
+            $insights_poster_twitter_oauth_token);
     }
 
     protected function dispatchCrawlJob($thinkup_username) {

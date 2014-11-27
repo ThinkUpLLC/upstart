@@ -54,6 +54,24 @@ class ThinkUpTablesMySQLDAO extends ThinkUpPDODAO {
         }
     }
 
+    public function insertPlugin($name, $folder_name, $description, $author, $homepage, $version, $is_active) {
+        $q = "INSERT INTO tu_plugins (name, folder_name, description, author, homepage, version, is_active)
+        VALUES (:name, :folder_name, :description, :author, :homepage, :version, :is_active);";
+
+        $vars = array(
+          ':name' => $name,
+          ':folder_name' => $folder_name,
+          ':description' => $description,
+          ':author' => $author,
+          ':homepage' => $homepage,
+          ':version' => $version,
+          ':is_active' => $is_active
+        );
+        if ($this->profiler_enabled) Profiler::setDAOMethod(__METHOD__);
+        $stmt = $this->execute($q, $vars);
+        return $this->getInsertId($stmt);
+    }
+
     public function createOwner($email, $hashed_pwd, $pwd_salt, $membership_level, $timezone='UTC',
         $is_admin=false, $api_key_private = null, $is_free_trial = true ) {
         $activation_code = rand(1000, 9999);

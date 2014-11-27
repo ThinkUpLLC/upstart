@@ -130,4 +130,18 @@ class TestOfThinkUpTablesMySQLDAO extends UpstartUnitTestCase {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['is_free_trial'], 1);
     }
+
+    public function testInsertPlugin() {
+        $dao = new ThinkUpTablesMySQLDAO($this->thinkup_username);
+        $result = $dao->insertPlugin('Rando plugin', 'rando', 'Post ThinkUp insights to Twitter',
+            'Gina Trapani', 'https://github.com/ginatrapani/insightsposter', '0.01', 1);
+        $this->assertEqual($result, 8); // new insert ID
+
+        // Assert that email is me@example.com
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT p.* FROM '. $this->user_database. '.tu_plugins p WHERE p.id = 8');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual($row['name'], 'Rando plugin');
+        $this->assertEqual($row['folder_name'], 'rando');
+        $this->assertEqual($row['is_active'], 1);
+    }
 }
