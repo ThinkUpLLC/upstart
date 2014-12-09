@@ -47,3 +47,64 @@ GROUP BY YEARWEEK(timestamp) ORDER BY timestamp DESC
 --
 SELECT count(id) as successful_payments, CONCAT('$', FORMAT(SUM(amount), 0)) as revenue, DATE(timestamp) AS date
 FROM payments WHERE transaction_status = "Success" GROUP BY DATE(timestamp) ORDER BY timestamp DESC LIMIT 4;
+
+--
+-- New subscriptions per month
+--
+SELECT YEAR(timestamp) AS year, MONTH(timestamp) AS month, count(*) AS new_subs
+FROM subscription_operations where operation='pay' AND status_code = 'SS'
+GROUP BY MONTH(timestamp), YEAR(timestamp) ORDER BY timestamp DESC
+
+--
+-- Revenue per month
+--
+SELECT SUM(successful_payments), month_of_year AS month, year FROM (
+SELECT *, (transaction_amount * total_subs) as successful_payments FROM (
+SELECT DATE( TIMESTAMP ) AS DATE, MONTH( TIMESTAMP ) AS month_of_year, YEAR( TIMESTAMP) AS year, COUNT( * ) AS total_subs, status_code, replace(transaction_amount, 'USD ','') as transaction_amount
+FROM subscription_operations
+WHERE status_code =  'PS'
+GROUP BY MONTH( TIMESTAMP ) , transaction_amount
+) subtable
+) subtable
+GROUP BY month_of_year, year
+
+--
+-- Refunds per month
+--
+SELECT round(SUM(refund_amount)), month_of_year AS month, year FROM (
+SELECT *, (transaction_amount * total_subs) AS refund_amount FROM (
+SELECT DATE( TIMESTAMP ) AS DATE, MONTH( TIMESTAMP ) AS month_of_year, YEAR( TIMESTAMP) AS year, COUNT( * ) AS total_subs, status_code, replace(transaction_amount, 'USD ','') as transaction_amount
+FROM subscription_operations
+WHERE operation =  'refund'
+GROUP BY MONTH( TIMESTAMP ) , transaction_amount
+) subtable
+) subtable
+GROUP BY month_of_year, year
+
+--
+-- Monthly revenue + refunds by month
+--
+SELECT * FROM
+((SELECT SUM(successful_payments) AS total, 'payments' AS type, month_of_year AS month, year FROM (
+SELECT *, (transaction_amount * total_subs) as successful_payments FROM (
+SELECT DATE( TIMESTAMP ) AS DATE, MONTH( TIMESTAMP ) AS month_of_year, YEAR( TIMESTAMP) AS year, COUNT( * ) AS total_subs, status_code, replace(transaction_amount, 'USD ','') as transaction_amount
+FROM subscription_operations
+WHERE status_code =  'PS'
+GROUP BY MONTH( TIMESTAMP ) , transaction_amount
+) subtable
+) subtable
+GROUP BY month_of_year, year)
+
+UNION
+
+(SELECT round(SUM(refund_amount)) AS total, 'refunds' AS type, month_of_year AS month, year FROM (
+SELECT *, (transaction_amount * total_subs) AS refund_amount FROM (
+SELECT DATE( TIMESTAMP ) AS DATE, MONTH( TIMESTAMP ) AS month_of_year, YEAR( TIMESTAMP) AS year, COUNT( * ) AS total_subs, status_code, replace(transaction_amount, 'USD ','') as transaction_amount
+FROM subscription_operations
+WHERE operation =  'refund'
+GROUP BY MONTH( TIMESTAMP ) , transaction_amount
+) subtable
+) subtable
+GROUP BY month_of_year, year)) subtable
+ORDER BY year DESC, month DESC, type
+
