@@ -102,6 +102,7 @@ class ManageSubscriberController extends Controller {
                     } elseif ($_GET['action'] == 'comp') {
                         $comped = $subscriber_dao->compSubscription($subscriber_id, $username);
                         if ( $comped > 0 ) {
+                            $subscriber->is_membership_complimentary = true;
                             //Update is_free_trial field in ThinkUp installation
                             $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
                             $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
@@ -111,7 +112,6 @@ class ManageSubscriberController extends Controller {
                             $subscriber_dao->setSubscriptionStatus($subscriber->id, $new_values['subscription_status']);
                             $subscriber_dao->setPaidThrough($subscriber->id, $new_values['paid_through']);
                             $this->addSuccessMessage("Comped membership for ".$subscriber->email);
-                            $subscriber->is_membership_complimentary = true;
                         }
                     } elseif ($_GET['action'] == 'decomp') {
                         $decomped = $subscriber_dao->decompSubscription($subscriber_id, $username);
