@@ -108,3 +108,35 @@ GROUP BY MONTH( TIMESTAMP ) , transaction_amount
 GROUP BY month_of_year, year)) subtable
 ORDER BY year DESC, month DESC, type
 
+--
+-- Trial signups by week
+--
+SELECT DATE(creation_time) AS date, COUNT(email) AS signups
+FROM
+( SELECT email, creation_time, thinkup_username FROM subscriber_archive WHERE creation_time > '2014-07-08'
+UNION
+SELECT email, creation_time, thinkup_username FROM subscribers WHERE creation_time > '2014-07-08') all_subscribers
+GROUP BY WEEKOFYEAR(creation_time), YEAR(creation_time) ORDER BY creation_time ASC
+
+--
+-- Conversions by week
+--
+SELECT DATE(timestamp) AS date, count(*) AS subscriptions FROM subscription_operations
+WHERE operation='pay' AND status_code = 'SS'
+GROUP BY WEEKOFYEAR(timestamp), YEAR(timestamp) ORDER BY timestamp ASC
+
+--
+-- Revenue by week
+--
+SELECT SUM(successful_payments) AS revenue, week_of_year FROM (
+SELECT *, (transaction_amount * total_subs) as successful_payments FROM (
+SELECT CONCAT( YEAR(timestamp), '-', WEEKOFYEAR(timestamp)) AS week_of_year, COUNT( * ) AS total_subs, status_code, replace(transaction_amount, 'USD ','') AS transaction_amount
+FROM subscription_operations
+WHERE status_code =  'PS'
+GROUP BY WEEKOFYEAR( timestamp ), YEAR(timestamp), transaction_amount
+ORDER BY timestamp ASC
+) subtable
+) subtable
+GROUP BY week_of_year
+
+
