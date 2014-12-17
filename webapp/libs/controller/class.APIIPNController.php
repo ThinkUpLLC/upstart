@@ -52,9 +52,11 @@ class APIIPNController extends UpstartController {
                             $subscription_helper = new SubscriptionHelper();
                             $subscription_helper->updateSubscriptionStatusAndPaidThrough($subscriber, $op);
 
-                            UpstartHelper::postToSlack('#signups',
-                                'Instant Pay Notification: '.$op->status_code." for ".$subscriber->thinkup_username
-                                .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $subscriber->id);
+                            if ($op->status_code != 'PI') { //Don't notify about payment initiation
+                                UpstartHelper::postToSlack('#signups',
+                                    'Instant Pay Notification: '.$op->status_code." for ".$subscriber->thinkup_username
+                                    .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $subscriber->id);
+                            }
                         } else {
                             $debug .= "No past op found, subscriptionId ".$_POST['subscriptionId'];
                         }
