@@ -906,45 +906,19 @@ class SubscriberMySQLDAO extends PDODAO {
      * Get last three days worth of member signups.
      * @return array
      */
-    public function getDailySignups() {
-        $today = date('Y-m-d');
-        $yesterday = date('Y-m-d', strtotime("-1 days"));
-        $day_before = date('Y-m-d', strtotime("-2 days"));
-        $three_days_earlier = date('Y-m-d', strtotime("-3 days"));
-        $four_days_earlier = date('Y-m-d', strtotime("-4 days"));
-        $results = array(
-            $today => array('new_members'=>0),
-            $yesterday => array('new_members'=>0),
-            $day_before =>  array('new_members'=>0),
-            $three_days_earlier =>  array('new_members'=>0),
-            $four_days_earlier =>  array('new_members'=>0),
-        );
-
-        $q = "SELECT count(id) as new_members, ";
-        $q .= "DATE(creation_time) AS date  FROM subscribers WHERE ";
-        $q .= "( date(creation_time) = '".$today."' ";
-        $q .= "OR date(creation_time) = '".$yesterday."' ";
-        $q .= "OR date(creation_time) = '".$day_before."' ";
-        $q .= "OR date(creation_time) = '".$three_days_earlier."' ";
-        $q .= "OR date(creation_time) = '".$four_days_earlier."') ";
-        $q .= "GROUP BY DATE(creation_time) ORDER BY creation_time DESC;";
+    public function getDailySignups($limit = 14) {
+        $q = "SELECT COUNT(id) as total_subscribers, DATE(creation_time) as signup_date
+            FROM subscribers GROUP BY DATE(subscribers.creation_time)
+            ORDER BY subscribers.creation_time desc LIMIT 0, :limit;";
+        $vars = array(':limit'=>$limit);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q);
-
-        $signup_results = $this->getDataRowsAsArrays($ps);
-        foreach ($signup_results as $signup) {
-            if ($signup['date'] == $today) {
-                $results[$today]['new_members'] = $signup['new_members'];
-            } elseif ($signup['date'] == $yesterday) {
-                $results[$yesterday]['new_members'] = $signup['new_members'];
-            } elseif ($signup['date'] == $day_before) {
-                $results[$day_before]['new_members'] = $signup['new_members'];
-            } elseif ($signup['date'] == $three_days_earlier) {
-                $results[$three_days_earlier]['new_members'] = $signup['new_members'];
-            } elseif ($signup['date'] == $four_days_earlier) {
-                $results[$four_days_earlier]['new_members'] = $signup['new_members'];
-            }
+        $ps = $this->execute($q, $vars);
+        $rows = $this->getDataRowsAsArrays($ps);
+        $results = array();
+        foreach ($rows as $row) {
+            $results[$row['signup_date']] = $row['total_subscribers'];
         }
+        ksort($results);
         return $results;
     }
 
@@ -955,11 +929,13 @@ class SubscriberMySQLDAO extends PDODAO {
     public function getSubscriptionsByWeek() {
         $q = "SELECT date(timestamp) as date, YEARWEEK(timestamp) as week_of_year, count(*) AS total_subs ";
         $q .= "FROM subscription_operations where operation='pay' AND status_code='SS' ";
-        $q .= "GROUP BY YEARWEEK(timestamp) ORDER BY timestamp DESC";
+        $q .= "GROUP BY YEARWEEK(timestamp) ORDER BY timestamp DESC LIMIT 14";
 
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
 
-        return $this->getDataRowsAsArrays($ps);
+        $results = $this->getDataRowsAsArrays($ps);
+        asort($results);
+        return $results;
     }
 }
