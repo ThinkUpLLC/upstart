@@ -217,4 +217,58 @@ class UpstartHelper {
             return $payload;
         }
     }
+
+    public static function buildChartImageURL($first_data_set, $second_data_set = null, $y_axis_divisor = 5,
+        $chart_key = null) {
+        $chart_url = 'https://chart.googleapis.com/chart?cht=lc&chs=1000x300&chd=t:';
+        // First data set
+        end($first_data_set);
+        $last_key = key($first_data_set);
+        foreach ($first_data_set as $date=>$total) {
+            $chart_url .= $total;
+            if ($date !== $last_key) {
+                $chart_url .= ',';
+            }
+        }
+        if (isset($second_data_set)) {
+            // Second data set
+            $chart_url .= '|';
+            end($second_data_set);
+            $last_key = key($second_data_set);
+            foreach ($second_data_set as $date=>$total) {
+                $chart_url .= $total;
+                if ($date !== $last_key) {
+                    $chart_url .= ',';
+                }
+            }
+        }
+        // X-axis
+        $chart_url .= '&chxt=x,y&chxl=0:|';
+        foreach ($first_data_set as $date=>$total) {
+            $chart_url .= $date;
+            $chart_url .= '|';
+        }
+        $chart_url .='1:|';
+        // Y-axis markers
+        asort($first_data_set, SORT_NUMERIC);
+        $max_count = array_pop($first_data_set);
+        $y_axis_max = ((floor($max_count / 2 )) + 1) * 2;
+        $total_y_axis_markers = $y_axis_max / 2;
+        $i = 0;
+        while ($i < $y_axis_max ) {
+            $i = $i+$y_axis_divisor;
+            $chart_url .= '|'.$i;
+        }
+        $chart_url .= '&chds=0,'.$y_axis_max;
+        if (isset($second_data_set)) {
+            $chart_url .= "&chco=0000FF,00FF00";
+        } else {
+            $chart_url .= "&chco=336699";
+        }
+        $chart_url .= "&chg=50,10";
+        if (isset($chart_key)) {
+            $chart_url .= "&chdl=".$chart_key;
+        }
+        return $chart_url;
+    }
 }
