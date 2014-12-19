@@ -46,8 +46,11 @@ class ListSubscriberController extends Controller {
         $stalest_dispatch_time_not_paid = $subscriber_dao->getNotPaidStalestInstallLastDispatchTime();
         $this->addToView('stalest_dispatch_not_paid', $stalest_dispatch_time_not_paid);
 
-        $daily_signups = $subscriber_dao->getDailySignups();
-        $this->addToView('total_daily_signups', $daily_signups[date('Y-m-d')]['new_members']);
+        $daily_signups = $subscriber_dao->getDailySignups(1);
+        $total_daily_signups = (isset($daily_signups[date('Y-m-d')]))?$daily_signups[date('Y-m-d')]:0;
+        $this->addToView('total_daily_signups', $total_daily_signups);
+        $reups_due = $subscriber_dao->getReupsDueToday();
+        $this->addToView('reups_due', $reups_due);
         $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
         $daily_revenue = $subscription_operation_dao->getDailyRevenue();
         $this->addToView('total_daily_refunds', $daily_revenue[date('Y-m-d')]['refunds']);

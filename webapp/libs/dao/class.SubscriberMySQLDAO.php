@@ -923,6 +923,20 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     /**
+     * Get last three days worth of member signups.
+     * @return array
+     */
+    public function getReupsDueToday() {
+        $q = "SELECT COUNT(id) as reups_due
+            FROM subscribers WHERE DATE(paid_through) = DATE(NOW());";
+        $vars = array(':limit'=>$limit);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        $rows = $this->getDataRowAsArray($ps);
+        return $rows['reups_due'];
+    }
+
+    /**
      * Get total subscriptions week over week.
      * @return arr
      */
