@@ -73,9 +73,6 @@ body_classes="settings menu-open" body_id="settings-subscription"}
       {/if}
     {/if}
 
-      <p class="form-note">Need help? <a href="mailto:help@thinkup.com" class="show-section"
-      data-section-selector="#form-membership-contact">Contact us</a></p>
-
     {if !$subscriber->is_account_closed}
     <button class="btn btn-sm btn-close-account" data-toggle="modal" data-target=".modal-close-account">Close your account</button>
 
@@ -96,6 +93,9 @@ body_classes="settings menu-open" body_id="settings-subscription"}
       </div>
     </div>
     {/if}
+
+      <p class="form-note">Need help? <a href="mailto:help@thinkup.com" class="show-section"
+      data-section-selector="#form-membership-contact">Contact us</a></p>
 
       <form role="form" class="form" id="form-membership-contact">
         <fieldset>
