@@ -119,7 +119,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $controller = new MembershipController(true);
         $results = $controller->go();
         $this->debug($results);
-        $this->assertPattern('/Download the <em>Insights<\/em> book/', $results);
+        $this->assertPattern('/Download <em>Insights<\/em> ebook/', $results);
         $this->assertPattern('/book.thinkup.com/', $results);
         $this->assertPattern('/insights.pdf/', $results);
         $this->assertPattern('/insights.mobi/', $results);

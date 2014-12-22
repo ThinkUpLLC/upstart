@@ -1791,30 +1791,6 @@ body.app-message-visible.account .container {
 .body-list.body-list-show-all .list-item {
   display: block;
 }
-.btn-default,
-.btn-big {
-  background: #125c9c;
-  border: 0;
-  color: #fff;
-  font-weight: 300;
-}
-.btn-default:hover,
-.btn-default:focus {
-  background: #1777ca;
-  color: #fff;
-}
-.btn-default small {
-  color: #93c2e9;
-  font-size: .625em;
-}
-.btn-with-note {
-  line-height: 1;
-  padding: 8px 12px;
-}
-.btn-with-note small {
-  color: #93c2e9;
-  font-size: .625em;
-}
 .btn-big {
   font-size: 2rem;
   line-height: 1;
