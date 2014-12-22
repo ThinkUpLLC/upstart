@@ -83,6 +83,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Complimentary membership/', $results);
         //No close account button on annual paid
         $this->assertNoPattern('/You will receive a refund/', $results);
+        $this->assertPattern('/All your data will be deleted./', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j, ');
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);

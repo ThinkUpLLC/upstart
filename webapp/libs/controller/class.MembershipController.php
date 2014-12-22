@@ -225,7 +225,7 @@ class MembershipController extends AuthController {
                             $this->logError($debug, __FILE__, __LINE__, __METHOD__);
                             $this->addErrorMessage($this->generic_error_msg);
                         }
-                    } else { // Free trial, no need to refund
+                    } else { // Free trial, no need to refund or Crowdfunder, no refund support yet
                         // Close account
                         $result = $subscriber_dao->closeAccount($subscriber->id);
 

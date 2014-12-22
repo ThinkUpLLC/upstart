@@ -76,8 +76,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
       <p class="form-note">Need help? <a href="mailto:help@thinkup.com" class="show-section"
       data-section-selector="#form-membership-contact">Contact us</a></p>
 
-    {* Don't let annual members close their account; refunds don't work for them *}
-    {if !$subscriber->is_account_closed && $subscriber->subscription_recurrence neq '12 months'}
+    {if !$subscriber->is_account_closed}
     <button class="btn btn-sm btn-close-account" data-toggle="modal" data-target=".modal-close-account">Close your account</button>
 
     <div class="modal fade modal-close-account" id="modal-close-account" tabindex="-1" role="dialog" aria-labelledby="closeAccount" aria-hidden="true">
@@ -85,7 +84,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
         <div class="modal-content">
           <header class="container-header">
             <h1>Do you really want to close your account?</h1>
-            <h2>{if $membership_status neq 'Free trial'}You will receive a refund and all{else}All{/if} your data will be deleted. This cannot be undone.</h2>
+            <h2>{if $membership_status neq 'Free trial' && $subscriber->subscription_recurrence neq '12 months'}You will receive a refund and all{else}All{/if} your data will be deleted. This cannot be undone.</h2>
           </header>
           <form id="form-membership-close-account" action="membership.php" method="post">
             <input type="hidden" name="close" value="true" />
