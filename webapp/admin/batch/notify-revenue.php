@@ -98,12 +98,28 @@ if (date( "w") == 6) {
     $subs_per_week = $subscriber_dao->getSubscriptionsByWeek();
 
     $weekly_subs = array();
+    $total_subs = 0;
     foreach ($subs_per_week as $sub) {
-        $message = 'Week of '.$sub['date'].": ".$sub["total_subs"]." subscriptions";
         $weekly_subs[$sub['date']] = $sub['total_subs'];
-        $result = UpstartHelper::postToSlack($channel, $message);
+        $total_subs += $sub['total_subs'];
+        //Probably a better way to get this week's subscriptions than assigning it every loop, but this works
+        $this_weeks_subs = $sub['total_subs'];
     }
+    $average_weekly_subs = round(($total_subs/count($weekly_subs)));
+    //Construct takeaway message, for example,
+    //25 conversions this week, (more than/less than/exactly equal to) the 6-week average of 23.
+    if ($this_weeks_subs > $average_weekly_subs) {
+        $comparator = "more than";
+    } elseif ($this_weeks_subs < $average_weekly_subs) {
+        $comparator = "less than";
+    } else {
+        $comparator = "exactly equal to";
+    }
+    $message = $this_weeks_subs." conversions this week, ".$comparator." the ".count($weekly_subs).
+        "-week average of ".$average_weekly_subs.".";
+
     $chart_url = UpstartHelper::buildChartImageURL($weekly_subs, null, 5, 'Conversions');
+    $result = UpstartHelper::postToSlack($channel, $message);
     $result = UpstartHelper::postToSlack($channel, $chart_url);
 }
 // End Saturday night subscribers by week
