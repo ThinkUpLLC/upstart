@@ -34,6 +34,32 @@ body_classes="settings menu-open" body_id="settings-subscription"}
           {/if}
         </li>
 
+        {if $subscriber->subscription_status eq "Paid" and !$subscriber->is_account_closed}
+        <li class="list-group-item" id="list-group-status">
+          <div class="list-group-item-label">Subscription</div>
+          <div class="list-group-item-value">
+          {if $subscriber->subscription_recurrence eq '1 month'}
+            {if $subscriber->membership_level eq 'Member'}
+              $5 per month
+            {elseif $subscriber->membership_level eq 'Pro'}
+              $10 per month
+            {/if}
+             via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon Payments</a>
+          {elseif $subscriber->subscription_recurrence eq '12 months'}
+            {if $subscriber->membership_level eq 'Member'}
+              $60 per year via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon Payments</a>
+            {elseif $subscriber->membership_level eq 'Early Bird' || $subscriber->membership_level eq 'Late Bird'}
+              $50 per year via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon</a><small style="color:green;"> <sup>*</sup> VIP discount: <b>2 months free!</b></small>
+            {elseif $subscriber->membership_level eq 'Pro'}
+              $120 per year via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon Payments</a>
+            {elseif $subscriber->membership_level eq 'Exec'}
+              $996 per year via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon Payments</a>
+            {/if}
+          {/if}
+          </div>
+        </li>
+        {/if}
+
         {if isset($ebook_download_link_pdf)}
         <li class="list-group-item" id="list-group-item-extras">
           <div class="list-group-item-label">Extras</div>
@@ -65,9 +91,6 @@ body_classes="settings menu-open" body_id="settings-subscription"}
           <p><small>{$failed_cc_amazon_text}</small></p>
           {$failed_cc_amazon_form}
         </div>
-      {else}
-        <p class="form-note"><a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">View your payment information
-          at Amazon Payments.</a></p>
       {/if}
     {/if}
 

@@ -67,8 +67,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Complimentary membership/', $results);
     }
 
-    public function testPaidSuccessfullyAnnual() {
-        $this->builders = $this->buildSubscriberPaidAnnual('Success');
+    public function testPaidSuccessfullyAnnualMember() {
+        $this->builders = $this->buildSubscriberPaidAnnual('Success', 'Member');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
         $this->subscriber = $subscriber;
@@ -87,10 +87,103 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j, ');
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
+        $this->assertPattern('/60 per year/', $results);
     }
 
-    public function testPaidSuccessfullyMonthly() {
-        $this->builders = $this->buildSubscriberPaidMonthly('Success');
+    public function testPaidSuccessfullyAnnualEarlyBird() {
+        $this->builders = $this->buildSubscriberPaidAnnual('Success', 'Early Bird');
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('paid@example.com');
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Membership Info/', $results);
+        $this->assertPattern('/This is what our database knows./', $results);
+        $this->assertNoPattern('/Complimentary membership/', $results);
+        //No close account button on annual paid
+        $this->assertNoPattern('/You will receive a refund/', $results);
+        $this->assertPattern('/All your data will be deleted./', $results);
+        $paid_through_year = intval(date('Y')) + 1;
+        $paid_through_date = date('M j, ');
+        $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
+        $this->assertPattern('/50 per year/', $results);
+    }
+
+    public function testPaidSuccessfullyAnnualLateBird() {
+        $this->builders = $this->buildSubscriberPaidAnnual('Success', 'Late Bird');
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('paid@example.com');
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Membership Info/', $results);
+        $this->assertPattern('/This is what our database knows./', $results);
+        $this->assertNoPattern('/Complimentary membership/', $results);
+        //No close account button on annual paid
+        $this->assertNoPattern('/You will receive a refund/', $results);
+        $this->assertPattern('/All your data will be deleted./', $results);
+        $paid_through_year = intval(date('Y')) + 1;
+        $paid_through_date = date('M j, ');
+        $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
+        $this->assertPattern('/50 per year/', $results);
+    }
+
+    public function testPaidSuccessfullyAnnualPro() {
+        $this->builders = $this->buildSubscriberPaidAnnual('Success', 'Pro');
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('paid@example.com');
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Membership Info/', $results);
+        $this->assertPattern('/This is what our database knows./', $results);
+        $this->assertNoPattern('/Complimentary membership/', $results);
+        //No close account button on annual paid
+        $this->assertNoPattern('/You will receive a refund/', $results);
+        $this->assertPattern('/All your data will be deleted./', $results);
+        $paid_through_year = intval(date('Y')) + 1;
+        $paid_through_date = date('M j, ');
+        $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
+        $this->assertPattern('/120 per year/', $results);
+    }
+
+    public function testPaidSuccessfullyAnnualExec() {
+        $this->builders = $this->buildSubscriberPaidAnnual('Success', 'Exec');
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('paid@example.com');
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Membership Info/', $results);
+        $this->assertPattern('/This is what our database knows./', $results);
+        $this->assertNoPattern('/Complimentary membership/', $results);
+        //No close account button on annual paid
+        $this->assertNoPattern('/You will receive a refund/', $results);
+        $this->assertPattern('/All your data will be deleted./', $results);
+        $paid_through_year = intval(date('Y')) + 1;
+        $paid_through_date = date('M j, ');
+        $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
+        $this->assertPattern('/996 per year/', $results);
+    }
+
+    public function testPaidSuccessfullyMonthlyMember() {
+        $this->builders = $this->buildSubscriberPaidMonthly('Success', 'Member');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
         $this->subscriber = $subscriber;
@@ -106,6 +199,27 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         //Show close account button on monthly paid
         $this->assertPattern('/You will receive a refund/', $results);
         $this->assertPattern('/Paid through/', $results);
+        $this->assertPattern('/5 per month/', $results);
+    }
+
+    public function testPaidSuccessfullyMonthlyPro() {
+        $this->builders = $this->buildSubscriberPaidMonthly('Success', 'Pro');
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('paid@example.com');
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Membership Info/', $results);
+        $this->assertPattern('/This is what our database knows./', $results);
+        $this->assertNoPattern('/Complimentary membership/', $results);
+        //Show close account button on monthly paid
+        $this->assertPattern('/You will receive a refund/', $results);
+        $this->assertPattern('/Paid through/', $results);
+        $this->assertPattern('/10 per month/', $results);
     }
 
     public function testEbookDownload() {
@@ -126,11 +240,11 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/insights.epub/', $results);
     }
 
-    private function buildSubscriberPaidAnnual($payment_status) {
+    private function buildSubscriberPaidAnnual($payment_status, $membership_level = 'Member') {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'paid@example.com',
             'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
-            'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>'Member',
+            'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>$membership_level,
             'subscription_recurrence'=>'12 months', 'paid_through'=>null,
             'subscription_status'=>'Free trial'));
 
@@ -142,12 +256,12 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         return $builders;
     }
 
-    private function buildSubscriberPaidMonthly($payment_status) {
+    private function buildSubscriberPaidMonthly($payment_status, $membership_level = "Member") {
         $builders = array();
         $days_in_current_month = date("t");
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'paid@example.com',
             'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
-            'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>'Member',
+            'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>$membership_level,
             'subscription_recurrence'=>'1 month', 'paid_through'=>null,
             'subscription_status'=>'Free trial'));
 
