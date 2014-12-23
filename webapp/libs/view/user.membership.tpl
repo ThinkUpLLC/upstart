@@ -15,7 +15,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
         </li>
         <li class="list-group-item">
           <div class="list-group-item-label">Level</div>
-          <div class="list-group-item-value">{$subscriber->membership_level}</div>
+          <div class="list-group-item-value">{if $subscriber->membership_level eq 'Early Bird' || $subscriber->membership_level eq 'Late Bird'}Member{else}{$subscriber->membership_level}{/if}</div>
         </li>
 {*
   Potential values for $membership_status that the template expects:
@@ -49,7 +49,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
             {if $subscriber->membership_level eq 'Member'}
               $60 per year via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon Payments</a>
             {elseif $subscriber->membership_level eq 'Early Bird' || $subscriber->membership_level eq 'Late Bird'}
-              $50 per year via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon</a><small style="color:green;"> <sup>*</sup> VIP discount: <b>2 months free!</b></small>
+              <strike style="color:red"><span style="color:black;">$60</span></strike> $50 per year via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon Payments</a>
             {elseif $subscriber->membership_level eq 'Pro'}
               $120 per year via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon Payments</a>
             {elseif $subscriber->membership_level eq 'Exec'}
@@ -58,6 +58,14 @@ body_classes="settings menu-open" body_id="settings-subscription"}
           {/if}
           </div>
         </li>
+          {if $subscriber->membership_level eq 'Early Bird' || $subscriber->membership_level eq 'Late Bird'}
+          <li class="list-group-item" id="list-group-status">
+            <div class="list-group-item-label">Discount</div>
+            <div class="list-group-item-value">
+              <p style="color:green;">{$subscriber->membership_level} backer: <b>2 months free!</b></p>
+            </div>
+          </li>
+          {/if}
         {/if}
 
         {if isset($ebook_download_link_pdf)}
