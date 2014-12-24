@@ -222,6 +222,26 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/10 per month/', $results);
     }
 
+    public function testPaidSuccessfullyViaClaimCode() {
+        $this->builders = $this->buildSubscriberRedeemedClaimCode();
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('codeclaimed@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('codeclaimed@example.com');
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Membership Info/', $results);
+        $this->assertPattern('/This is what our database knows./', $results);
+        $this->assertNoPattern('/Complimentary membership/', $results);
+        //Show close account button on monthly paid
+        $this->assertPattern('/You will receive a refund/', $results);
+        $this->assertPattern('/Paid through/', $results);
+        $this->assertPattern('/10 per month/', $results);
+    }
+
     public function testEbookDownload() {
         $this->builders = $this->buildSubscriberPaidAnnual('Success');
         $dao = new SubscriberMySQLDAO();
@@ -330,6 +350,16 @@ class TestOfMembershipController extends UpstartUnitTestCase {
             'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
             'subscription_status'=>'Free trial',  'is_installation_active'=>0, 'date_installed'=>null,
             'membership_level'=>'Member', 'creation_time'=>"-".(($days_ago*24)+3)."h"));
+        return $builders;
+    }
+
+    private function buildSubscriberRedeemedClaimCode($days_ago=2) {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>5, 'email'=>'codeclaimed@example.com',
+            'is_membership_complimentary'=>0, 'thinkup_username'=>'spike',
+            'subscription_status'=>'Paid',  'is_installation_active'=>0, 'date_installed'=>null,
+            'membership_level'=>'Member', 'creation_time'=>"-".(($days_ago*24)+3)."h",
+            'subscription_recurrence'=>'None', 'claim_code'=>'abcdedg', 'paid_through'=>'+300d' ));
         return $builders;
     }
 

@@ -34,7 +34,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
           {/if}
         </li>
 
-        {if $subscriber->subscription_status eq "Paid" and !$subscriber->is_account_closed}
+        {if !$subscriber->is_account_closed and $subscriber->subscription_status eq "Paid" and $subscriber->subscription_recurrence neq 'None'}
         <li class="list-group-item" id="list-group-status">
           <div class="list-group-item-label">Subscription</div>
           <div class="list-group-item-value">
