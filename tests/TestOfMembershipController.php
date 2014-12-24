@@ -236,10 +236,15 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
-        //Show close account button on monthly paid
-        $this->assertPattern('/You will receive a refund/', $results);
+        //Show close account button
+        $this->assertPattern('/This cannot be undone/', $results);
+        $this->assertPattern('/All your data will be deleted./', $results);
+        //Don't promise a refund
+        $this->assertNoPattern('/You will receive a refund/', $results);
+        //Do show when code is good until
         $this->assertPattern('/Paid through/', $results);
-        $this->assertPattern('/10 per month/', $results);
+        //Don't show recurring subscription details
+        $this->assertNoPattern('/10 per month/', $results);
     }
 
     public function testEbookDownload() {

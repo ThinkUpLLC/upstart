@@ -110,7 +110,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
         <div class="modal-content">
           <header class="container-header">
             <h1>Do you really want to close your account?</h1>
-            <h2>{if $membership_status neq 'Free trial' && $subscriber->subscription_recurrence neq '12 months'}You will receive a refund and all{else}All{/if} your data will be deleted. This cannot be undone.</h2>
+            <h2>{if $membership_status neq 'Free trial' && $subscriber->subscription_recurrence eq '1 month'}You will receive a refund and all{else}All{/if} your data will be deleted. This cannot be undone.</h2>
           </header>
           <form id="form-membership-close-account" action="membership.php" method="post">
             <input type="hidden" name="close" value="true" />
