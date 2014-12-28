@@ -2,14 +2,14 @@
 
 <div class="container" id="container-signup-top">
   <div class="section section-screenshot" id="section-signup-top">
-    <h3 class="section-header">There are things Facebook &amp; Twitter don't tell you.</h3>
+    <h3 class="section-header">Resolve to get more out of Twitter and Facebook.</h3>
     <div class="section-copy">
-      <p>ThinkUp gives you daily insights about you and your friends that you can't find anywhere else. Sign up for your 14-day free trial and see what you've been missing.</p>
+      <p>ThinkUp makes your social networks more fun for you and your friends. Start your <strong>14-day free trial</strong> and make 2015 the best year you've ever had on the Internet.</p>
       <div class="signup-buttons">
         <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
         <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign up with</small><br>Facebook</a>
       </div>
-      <p class="section-note">ThinkUp costs 5 bucks a month.<br>
+      <p class="section-note">ThinkUp costs 5 bucks a month after your free trial.<br>
         We don't have ads and we don't sell your data.
       </p>
     </div>
@@ -20,7 +20,7 @@
   <div class="section section-screenshot" id="section-what">
     <h3 class="section-header">What is ThinkUp?</h3>
     <div class="section-copy">
-      <p>ThinkUp is a smart, simple web app that analyzes your activity on Facebook and Twitter. ThinkUp gives you fun and surprising insights about what you and your friends are doing online.</p>
+      <p>ThinkUp is a simple service that analyzes your activity on Facebook and Twitter. Every day, you get fun and surprising insights that you can't find anywhere else.</p>
     </div>
   </div>
 </div>
@@ -30,6 +30,17 @@
     <div class="section-copy">
       <figure class="sample-insight">
         <figcaption>What changes did your friends make to their profiles?</figcaption>
+        <div class="sample-insight-img"></div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<div class="container container-sample-insight" id="container-sample-insight-eoy-total">
+  <div class="section section-screenshot section-sample-insight">
+    <div class="section-copy">
+      <figure class="sample-insight">
+        <figcaption>How much time did you spend posting things online?</figcaption>
         <div class="sample-insight-img"></div>
       </figure>
     </div>

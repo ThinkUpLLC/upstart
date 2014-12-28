@@ -894,6 +894,31 @@ a.btn-pill-large:hover {
     background-size: 540px 297px;
   }
 }
+#container-sample-insight-eoy-total {
+  background-color: #ffbb4e;
+}
+#container-sample-insight-eoy-total .section-header {
+  color: #ffffff;
+}
+#container-sample-insight-eoy-total .section-copy {
+  color: #f36400;
+}
+#container-sample-insight-eoy-total .section-sample-insight figcaption {
+  color: #f36400;
+}
+#container-sample-insight-eoy-total .sample-insight-img {
+  height: 309px;
+  background: url("../img/landing/insight-eoy-total-mobile@2x.png") top left no-repeat;
+  background-size: 310px 309px;
+}
+@media (min-width: 760px) {
+  #container-sample-insight-eoy-total .sample-insight-img {
+    width: 540px;
+    height: 281px;
+    background: url("../img/landing/insight-eoy-total-desktop@2x.png") top left no-repeat;
+    background-size: 540px 281px;
+  }
+}
 #container-sample-insight-gender {
   background-color: #41dab3;
 }
