@@ -560,18 +560,18 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
             'thinkup_username'=>'unique5', 'date_installed'=>null, 'is_membership_complimentary'=>0,
             'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment failed',
             'total_payment_reminders_sent'=>1, 'payment_reminder_last_sent'=>'-3d'));
-        //Should not get returned because not paid and 3 reminders sent, last one more than 12 days ago
+        //Should not get returned because not paid and 4 reminders sent, last one more than 2 days ago
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'ginatrapani+6@example.com',
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra6', 'full_name'=>'gena davis',
             'thinkup_username'=>'unique6', 'date_installed'=>null, 'is_membership_complimentary'=>0,
             'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Free trial',
-            'total_payment_reminders_sent'=>3, 'payment_reminder_last_sent'=>'-14d'));
-        //Should get returned because not paid and 3 reminders sent, last one less than 12 days ago
+            'total_payment_reminders_sent'=>4, 'payment_reminder_last_sent'=>'-3d'));
+        //Should get returned because not paid and 4 reminders sent, last one less than 2 days ago
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>7, 'email'=>'ginatrapani+7@example.com',
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra6', 'full_name'=>'gena davis',
             'thinkup_username'=>'unique7', 'date_installed'=>null, 'is_membership_complimentary'=>0,
             'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Free trial',
-            'total_payment_reminders_sent'=>3, 'payment_reminder_last_sent'=>'-10d'));
+            'total_payment_reminders_sent'=>3, 'payment_reminder_last_sent'=>'-1d'));
         //Should not get returned because account is closed
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>8, 'email'=>'ginatrapani+8@example.com',
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra6', 'full_name'=>'gena davis',

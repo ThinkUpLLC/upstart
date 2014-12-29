@@ -551,21 +551,15 @@ class SubscriberMySQLDAO extends PDODAO {
     /**
      * Get installations to crawl for members who have not paid.
      * This function does not return members who have closed their account.
-     * This function does not return members who have received 3 payment reminders and 12 days have passed since
-     * last reminder was sent. That's so they're not being crawled when they are uninstalled automatically at the
-     * 14-day threshold.
+     * This function does not return members who have received 4 payment reminders, last one within last 2 days.
      * @param int $hours_stale How many hours stale is the install
      * @param int $count How many installs to retrieve; defaults to 25
      * @return arr Array of installation information
      */
     public function getNotYetPaidStaleInstalls($hours_stale, $count=25) {
         $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0 ";
-        $q .= "AND subscription_status != 'Paid' ";
         $q .= "AND ((last_dispatched < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR) OR last_dispatched IS NULL)) ";
-        // Upstart isn't sending payment reminders or isn't finished sending them
-        $q .= "AND (total_payment_reminders_sent < 3  OR ";
-        // Upstart's sent all the payment reminders but the last one was sent within the last 12 days
-        $q .= "(total_payment_reminders_sent = 3 AND payment_reminder_last_sent > DATE_SUB(NOW(), INTERVAL 12 DAY ))) ";
+        $q .= self::getNotYetPaidCriteria();
         $q .= "ORDER BY last_dispatched ASC ";
         $q .= "LIMIT :limit;";
 
@@ -589,16 +583,22 @@ class SubscriberMySQLDAO extends PDODAO {
 
     public function getNotPaidStalestInstallLastDispatchTime() {
         $q  = "SELECT last_dispatched FROM subscribers WHERE is_installation_active=1 AND is_account_closed != 1 ";
-        $q .= "AND subscription_status != 'Paid' ";
-        // Upstart isn't sending payment reminders or isn't finished sending them
-        $q .= "AND (total_payment_reminders_sent < 3  OR ";
-        // Upstart's sent all the payment reminders but the last one was sent within the last 12 days
-        $q .= "(total_payment_reminders_sent = 3 AND payment_reminder_last_sent > DATE_SUB(NOW(), INTERVAL 12 DAY ))) ";
+        $q .= self::getNotYetPaidCriteria();
         $q .= "ORDER BY last_dispatched ASC LIMIT 1";
         //echo self::mergeSQLVars($q, $vars);
         $ps = $this->execute($q);
         $result = $this->getDataRowAsArray($ps);
         return $result['last_dispatched'];
+    }
+
+    private function getNotYetPaidCriteria() {
+        // Note: this returns Payment failed, Payment due, and Complimentary memberships as well as Free trial
+        $q = "AND subscription_status != 'Paid' ";
+        // Upstart hasn't sent all payment reminders
+        $q .= "AND (total_payment_reminders_sent < 4  OR ";
+        // Upstart's sent all the payment reminders but the last one was sent within the last 2 days
+        $q .= "(total_payment_reminders_sent = 4 AND payment_reminder_last_sent > DATE_SUB(NOW(), INTERVAL 2 DAY ))) ";
+        return $q;
     }
 
     public function getTotalActiveInstalls() {
