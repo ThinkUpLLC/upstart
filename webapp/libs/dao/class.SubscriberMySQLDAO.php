@@ -952,4 +952,21 @@ class SubscriberMySQLDAO extends PDODAO {
         asort($results);
         return $results;
     }
+
+    /**
+     * Get total subscriptions month over month.
+     * @return arr
+     */
+    public function getSubscriptionsByMonth() {
+        $q = "SELECT date(timestamp) as date, MONTH(timestamp) as month_of_year, count(*) AS total_subs ";
+        $q .= "FROM subscription_operations where operation='pay' AND status_code='SS' AND timestamp >= '2014-09-01' ";
+        $q .= "GROUP BY MONTH(timestamp) ORDER BY timestamp DESC LIMIT 14";
+
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+
+        $results = $this->getDataRowsAsArrays($ps);
+        asort($results);
+        return $results;
+    }
 }
