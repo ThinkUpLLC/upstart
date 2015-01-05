@@ -24,7 +24,7 @@
           {if preg_match('/Please choose your Insights URL/', $smarty.capture.username_message)}
             {assign var="missing_fields" value="true"}{/if}
           {$smarty.capture.username_message}
-          <label class="control-label{if isset($username)} with-focus{/if}" for="username">Insights URL</label>
+          <label class="control-label with-focus" for="username">Insights URL</label>
           <div class="input-with-domain">
             <input type="text" class="form-control" id="username" autocomplete="off"
             placeholder="yourusername.thinkup.com" {if isset($username)}value="{$username|filter_xss}"{/if} name="username">
