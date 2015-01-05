@@ -64,7 +64,7 @@ class APIIPNController extends UpstartController {
                         $sub_op = $subscription_operation_dao->getByAmazonSubscriptionID($_POST["subscriptionId"]);
                         if (isset($sub_op)) {
                             UpstartHelper::postToSlack('#signups',
-                                'Subscription canceled due to '.$_POST['statusReason']
+                                $sub_op->buyer_name . ' subscription canceled due to '.$_POST['statusReason']
                                 .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $sub_op->subscriber_id);
                         }
                     } else {
