@@ -1,4 +1,4 @@
-{include file="_header.marketing.tpl" body_classes="landing" body_id="landing-home" hide_join="1" show_promo="1"}
+{include file="_header.marketing.tpl" body_classes="landing" body_id="landing-home" hide_join="1"}
 
 <div class="container" id="container-signup-top">
   <div class="section section-screenshot" id="section-signup-top">
