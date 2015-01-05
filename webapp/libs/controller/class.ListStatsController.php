@@ -45,7 +45,7 @@ class ListStatsController extends Controller {
         $message = $this_weeks_subs." conversions so far this week, ".$comparator." the ".count($weekly_subs).
             "-week average of ".$average_weekly_subs.".";
 
-        $chart_url = UpstartHelper::buildChartImageURL($weekly_subs, null, 5, 'Conversions');
+        $chart_url = UpstartHelper::buildChartImageURL($weekly_subs, null, 10, 'Conversions');
         $this->addToView('weekly_conversions_chart_url', $chart_url);
         $this->addToView('weekly_conversions_message', $message);
 
@@ -65,7 +65,7 @@ class ListStatsController extends Controller {
         // 25 conversions this week, (more than/less than/exactly equal to) the 6-week average of 23.
         if ($this_months_subs > $average_monthly_subs) {
             $comparator = "more than";
-        } elseif ($this_weeks_subs < $average_monthly_subs) {
+        } elseif ($this_months_subs < $average_monthly_subs) {
             $comparator = "less than";
         } else {
             $comparator = "exactly equal to";
