@@ -906,7 +906,7 @@ class SubscriberMySQLDAO extends PDODAO {
      * Get last three days worth of member signups.
      * @return array
      */
-    public function getDailySignups($limit = 14) {
+    public function getDailySignups($limit = 90) {
         $q = "SELECT COUNT(id) as total_subscribers, DATE(creation_time) as signup_date
             FROM subscribers GROUP BY DATE(subscribers.creation_time)
             ORDER BY subscribers.creation_time desc LIMIT 0, :limit;";
@@ -959,8 +959,8 @@ class SubscriberMySQLDAO extends PDODAO {
      */
     public function getSubscriptionsByMonth() {
         $q = "SELECT date(timestamp) as date, MONTH(timestamp) as month_of_year, count(*) AS total_subs ";
-        $q .= "FROM subscription_operations where operation='pay' AND status_code='SS' AND timestamp >= '2014-09-01' ";
-        $q .= "GROUP BY MONTH(timestamp) ORDER BY timestamp DESC LIMIT 14";
+        $q .= "FROM subscription_operations where operation='pay' AND status_code='SS' AND timestamp >= '2014-08-01' ";
+        $q .= "GROUP BY MONTH(timestamp) ORDER BY timestamp DESC LIMIT 26";
 
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);

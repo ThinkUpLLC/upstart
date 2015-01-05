@@ -198,7 +198,7 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
      * Get last three days worth of new subscribers.
      * @return array
      */
-    public function getDailySubscribers($limit = 14) {
+    public function getDailySubscribers($limit = 90) {
         $q = "SELECT COUNT(reference_id) as successful_payments, DATE(timestamp) AS payment_date
             FROM subscription_operations so WHERE status_code = 'SS' GROUP BY payment_date
             ORDER BY timestamp DESC LIMIT 0, :limit;";
@@ -218,7 +218,7 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
      * Get last three days worth of successful payments (new subscribers and recharges).
      * @return array
      */
-    public function getDailySuccessfulPayments($limit = 14) {
+    public function getDailySuccessfulPayments($limit = 90) {
         $q = "SELECT COUNT(reference_id) as successful_payments, DATE(timestamp) AS payment_date
             FROM subscription_operations so WHERE status_code = 'PS' GROUP BY payment_date
             ORDER BY timestamp DESC LIMIT 0, :limit;";

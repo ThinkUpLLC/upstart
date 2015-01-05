@@ -15,6 +15,7 @@
 <p {if !$workers_ok} class="alert alert-danger"{/if}>Dispatch status: <b>{$worker_status}</b></p>
 {/if}
 
+<div class="table-responsive">
     <table class="table table-hover" style="background-color:white">
       <tr>
           <th></th>
@@ -24,21 +25,23 @@
           <th style="text-align:right">Followers</th>
           <th>Subscribed</th>
           <th>Level</th>
+          <th>&nbsp;</th>
       </tr>
       {foreach $subscribers as $subscriber}
-      <tr onclick="document.location = 'subscriber.php?id={$subscriber->id}';" class="{if $subscriber->follower_count > 1000}text-primary{/if} {if $subscriber->is_account_closed}text-danger{/if} ">
+      <tr onclick="document.location = 'subscriber.php?id={$subscriber->id}';" class="{if $subscriber->follower_count > 1000}text-primary{/if} {if $subscriber->is_account_closed}text-danger{/if} {if $subscriber->subscription_status eq "Paid"}success{/if} ">
         <td style="cursor:pointer"> {if $subscriber->is_verified}<img src="../assets/img/twitter_verified_icon.png" />{/if}</td>
-        <td style="cursor:pointer">{include file="_admin-network_user.tpl" link_to_network="false"}</td>
-        <td style="cursor:pointer">{$subscriber->email}</th>
-        <td style="cursor:pointer">{$subscriber->subscription_status}{if $subscriber->subscription_status eq "Paid"} through {$subscriber->paid_through_friendly}{/if}</th>
+        <td style="cursor:pointer">{if $subscriber->follower_count > 1000}{include file="_admin-network_user.tpl" link_to_network="true"}{else}{include file="_admin-network_user.tpl" link_to_network="false"}{/if}</td>
+        <td style="cursor:pointer">{$subscriber->email}</td>
+        <td style="cursor:pointer">{$subscriber->subscription_status}{if $subscriber->subscription_status eq "Paid"} through {$subscriber->paid_through_friendly}{/if}</td>
         <td style="cursor:pointer;text-align:right">{if $subscriber->follower_count > 0}{$subscriber->follower_count|number_format}{/if}</td>
         <td style="cursor:pointer">{$subscriber->creation_time|relative_datetime} ago</td>
         <td style="cursor:pointer">{$subscriber->membership_level}</td>
+        <td>{if $subscriber->installation_url neq null} {* show link to installation *}
+<a href="{$subscriber->installation_url}" target="_new">{$subscriber->thinkup_username}</a>  <a href="{$subscriber->installation_url}/api/v1/session/login.php?u={$subscriber->email|urlencode}&k={$subscriber->api_key_private}&success_redir={$subscriber->installation_url|urlencode}&failure_redir=https%3A%2F%2Fwww.thinkup.com%2Fjoin%2F%2Fjoin%2F" class="btn btn-xs btn-warning pull-right">Be &rarr;</a>{/if}</td>
       </tr>
       {/foreach}
     </table>
-
-<div class="span1"></div>
+</div>
 
 <ul class="pager">
   {if $prev_page}<li class="previous"><a href="?p={$prev_page}{if $search_term}&q={$search_term|urlencode}{/if}">&larr; Previous</a></li>{/if}

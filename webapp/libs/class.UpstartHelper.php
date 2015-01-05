@@ -220,7 +220,7 @@ class UpstartHelper {
 
     public static function buildChartImageURL($first_data_set, $second_data_set = null, $y_axis_divisor = 5,
         $chart_key = null) {
-        $chart_url = 'https://chart.googleapis.com/chart?cht=lc&chs=1000x300&chd=t:';
+        $chart_url = 'https://chart.googleapis.com/chart?cht=lc&chs=1000x300&chdlp=t&chd=t:';
         // First data set
         end($first_data_set);
         $last_key = key($first_data_set);
@@ -244,15 +244,27 @@ class UpstartHelper {
         }
         // X-axis
         $chart_url .= '&chxt=x,y&chxl=0:|';
-        foreach ($first_data_set as $date=>$total) {
-            $chart_url .= $date;
-            $chart_url .= '|';
+        if (count ($first_data_set) > 30) { // On big charts, only label every 10 days
+            foreach ($first_data_set as $date=>$total) {
+                if (strpos($date, '0', '9')) {
+                    $chart_url .= $date;
+                }
+                $chart_url .= '|';
+            }
+        } else {
+            foreach ($first_data_set as $date=>$total) {
+                $chart_url .= $date;
+                $chart_url .= '|';
+            }
         }
         $chart_url .='1:|';
         // Y-axis markers
         asort($first_data_set, SORT_NUMERIC);
         $max_count = array_pop($first_data_set);
         $y_axis_max = ((floor($max_count / 2 )) + 1) * 2;
+        if ($y_axis_max < 100) { // Include our goal range in the scale of each chart
+            $y_axis_max = 100;
+        }
         $total_y_axis_markers = $y_axis_max / 2;
         $i = 0;
         while ($i < $y_axis_max ) {
@@ -261,9 +273,9 @@ class UpstartHelper {
         }
         $chart_url .= '&chds=0,'.$y_axis_max;
         if (isset($second_data_set)) {
-            $chart_url .= "&chco=0000FF,00FF00";
+            $chart_url .= "&chco=9dd767,00aeef";
         } else {
-            $chart_url .= "&chco=336699";
+            $chart_url .= "&chco=00aeef";
         }
         $chart_url .= "&chg=50,10";
         if (isset($chart_key)) {

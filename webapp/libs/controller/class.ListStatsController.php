@@ -65,7 +65,7 @@ class ListStatsController extends Controller {
         // 25 conversions this week, (more than/less than/exactly equal to) the 6-week average of 23.
         if ($this_months_subs > $average_monthly_subs) {
             $comparator = "more than";
-        } elseif ($this_weeks_subs < $average_monthly_subs) {
+        } elseif ($this_months_subs < $average_monthly_subs) {
             $comparator = "less than";
         } else {
             $comparator = "exactly equal to";
