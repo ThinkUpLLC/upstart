@@ -1,6 +1,6 @@
-{assign var="tagline" value="The best sites on the web aren't always the biggest."}
+{assign var="tagline" value="Thanks for supporting good independent web sites!"}
 {assign var="tagline_logo" value="The best sites on the web aren't always the biggest."}
-{assign var="description" value="Support great indie sites, and save on your favorite new apps."}
+{assign var="description" value="The Good Web Bundle is no longer available, but please check out our sites."}
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
@@ -846,53 +846,12 @@
 
 {else}
 
-    <nav class="navbar navbar-fixed-top" role="navigation">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="current"><a class="active" href="#home"><span>Home</span></a></li>
-            <li><a href="#the-sites"><span>The Sites</span></a></li>
-            <li><a href="#features"><span>Bundle Features</span></a></li>
-            <li><a href="#who-we-are"><span>Who We Are</span></a></li>
-            <li><a href="#faq"><span>FAQ</span></a></li>
-            <li><a href="#get-it"><span>Get It!</span></a></li>
-            <li><a href="#share"><span>Share</span></a></li>
-          </ul>
-
-        </div><!--/.navbar-collapse -->
-    </nav>
-
     <div id="home" class="jumbotron">
       <div class="container">
         <h1 class="center-block">{$title}</h1>
         <h2>{$tagline}</h2>
-        <p>Support great indie sites, and save on your favorite new apps!</p>
-        <div class="row">
-            <div class="col-md-4">
-                <h3 id="price"><sup>$</sup>96</h3>
-                <h2 class="button">
-                  {$pay_with_amazon_form}
-                </h2>
-                <p class="fineprint">Pay with Amazon</p>
-            </div>
-            <div class="col-md-4">
-                <h4 id="fiftypercent">Memberships to five of the <span style="color: white;">best apps &amp;
-                communities</span> on the web</h4>
-            </div>
-            <div class="col-md-4">
-                <h5 id="giveafriend">
-          <span class="friend">Give ANY part of the bundle to a friend.</span>
-          <span class="bestie">Or ALL of it to your best friend!</span>
-        </h5>
-            </div>
-        </div>
+        <p>The Good Web Bundle is no longer available, but please check out our sites.</p>
+
       </div>
     </div>
 
@@ -904,95 +863,31 @@
           <a href="http://metafilter.com" class="site-logo"><img src="{$site_root_path}bundle/assets/img/logos/metafilter.svg" alt="MetaFilter" /></a>
           <h3><a href="http://metafilter.com">MetaFilter</a></h3>
           <p>This venerable community blog has an answer for everything</p>
-          <h3 class="strike">$5</h3>
-          <span class="tout">All yours!</span>
-          <ul>
-            <li>Recognition as a supporting member, with lifetime membership to post and ask questions with no ads</li>
-          </ul>
         </div>
         <div class="col-md-2 col-centered">
           <a href="http://mlkshk.com" class="site-logo"><img src="{$site_root_path}bundle/assets/img/logos/mlkshk.svg" alt="MLKSHK" /></a>
           <h3><a href="http://mlkshk.com">MLKSHK</a></h3>
           <p>The most fun and delightful image sharing community on the web</p>
-          <h3 class="strike">$24</h3>
-          <h4 class="tout">Included!</h4>
-          <ul>
-            <li>One year paid membership, with the ability to create multiple image shakes and browse with no ads</li>
-          </ul>
        </div>
         <div class="col-md-2 col-centered">
           <a href="http://newsblur.com/" class="site-logo"><img src="{$site_root_path}bundle/assets/img/logos/newsblur.png" alt="NewsBlur" width="85" height="85" /></a>
           <h3><a href="http://newsblur.com/">NewsBlur</a></h3>
           <p>A personal news reader bringing people together to talk about the world</p>
-          <h3 class="strike">$24</h3>
-          <h4 class="tout">In there!</h4>
-          <ul>
-            <li>One year premium account, with unlimited sites, faster updates and search</li>
-          </ul>
         </div>
         <div class="col-md-2 col-centered">
           <a href="http://the-toast.net/" class="site-logo"><img src="{$site_root_path}bundle/assets/img/logos/thetoast.png" alt="The Toast" width="135" height="85" /></a>
           <h3><a href="http://the-toast.net/">The Toast</a></h3>
           <p>A smart daily blog you will sincerely love and someday resent</p>
-          <h3 class="strikeout">&nbsp;</h3>
-          <h4 class="tout">Got it!</h4>
-          <ul>
-            <li>Recognition as a sponsoring member and access to chat when it launches</li>
-          </ul>
         </div>
         <div class="col-md-2 col-centered">
           <a href="https://thinkup.com/" class="site-logo"><img src="{$site_root_path}bundle/assets/img/logos/thinkup.svg" alt="ThinkUp" /></a>
           <h3><a href="https://thinkup.com/">ThinkUp</a></h3>
           <p>Daily insights about you and your friends on Twitter and Facebook</p>
-          <h3 class="strike">$60</h3>
-          <h4 class="tout">Bundled!</h4>
-          <ul>
-            <li>One year paid membership, with daily insights about you and your friends on Twitter and Facebook</li>
-          </ul>
         </div>
       </div>
 
     </div>
   </div>
-
-    <div id="features">
-      <div class="container">
-          <h2><span>Bundle Features</span></h2>
-          <p class="center-block">The Good Web Bundle includes a membership to five of the best apps and communities on the web.<br>You save on cool apps while supporting awesome sites&mdash;you're gonna be so glad you did this.</p>
-        <div class="row row-centered">
-          <div class="col-md-3 col-centered">
-              <h4 id="daysleft" class="center-block">Only {$days_to_go} days left</h4>
-              <p class="center-block">This is a one-time-only offer! We don't want you to miss out.</p>
-          </div>
-          <div class="col-md-3 col-centered">
-              <h4 id="bigsavings" class="center-block">It's a good deal</h4>
-              <p class="center-block">The bundle costs about as much as you'd pay for Netflix for a year.</p>
-          </div>
-          <div class="col-md-3 col-centered">
-              <h4 id="goodcommunity" class="center-block">DO read the comments</h4>
-              <p class="center-block">The best communities: On our sites, we don't tolerate abuse.</p>
-          </div>
-
-        </div>
-
-        <div class="row">
-          <div class="col-md-3">
-            &nbsp;
-          </div>
-          <div class="col-md-3">
-              <h4 id="notcreepy" class="center-block">We're not creepy</h4>
-              <p class="center-block">We're building user-supported apps and communities that treat you with respect.</p>
-          </div>
-          <div class="col-md-3">
-              <h4 id="honest" class="center-block">Join the movement</h4>
-              <p class="center-block">Support these sites with your dollars and make the web a better place.</p>
-          </div>
-          <div class="col-md-3">
-            &nbsp;
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div id="who-we-are">
       <div class="container">
@@ -1069,91 +964,21 @@
         <div class="row">
           <div class="col-md-6">
             <div class="question">
-              <h4>Why should I pay for this stuff? The web is supposed to be free!</h4>
-              <p>Lots of great sites are free! But if you care about keeping quality, independent web sites around for years to come, a good way to support them is to become a paid member. Because in order to provide you #content, every site needs to find a way to make money, and this bundle is one fair, simple way to do it.</p>
-            </div>
-            <div class="question">
-              <h4>Can I split up the perks between me and a friend?</h4>
-              <p>Yep! When you buy the Good Web Bundle, you'll get a coupon code you can use to unlock your benefits on each of the sites. If you share that code with a friend as a gift, they can use it instead. (Each code can only be used once per site.)</p>
+              <h4>I already bought the Good Web Bundle, but I have a question or need help!</h4>
+              <p>Drop us a line at <a href="mailto:help@thinkup.com">help@thinkup.com</a> and we'll take care of you.</p>
             </div>
           </div>
           <div class="col-md-6">
             <div class="question">
-              <h4>Where does the money go when I buy a bundle?</h4>
-              <p>We're splitting it between us: MetaFilter and ThinkUp each get $30, and MLKSHK, NewsBlur and The Toast each get $12&nbsp;based on half off the usual subscription fee or a suggested annual donation. (There's a little cut off the top for Amazon, which handles the payment processing.)</p>
-            </div>
-            <div class="question">
-              <h4>How do I pay?</h4>
-              <p>When you click the <strong>GET IT NOW</strong> button, you'll be sent to Amazon Payments to complete
-              your purchase. This is as easy as any other purchase you might make on Amazon. We don't yet support PayPal or any other purchase methods, sorry.</p>
+              <h4>Is the bundle going to be offered again?</h4>
+              <p>We don't know yet! If you're interested, tweet to us at <a href="https://twitter.com/goodwebbundle">@GoodWebBundle</a> and we'd love to hear your feedback or suggestions.</p>
             </div>
           </div>
         </div>
 
-        <h3>Let's break it down. You get:</h3>
-
-        <div id="you-get">
-
-          <table>
-            <tr>
-              <td><img src="{$site_root_path}bundle/assets/img/logos/metafilter.svg" alt="MetaFilter" /></td>
-              <td>Recognition as a supporting member, with lifetime right to post and ask questions and no ads.</td>
-            </tr>
-            <tr>
-              <td><img src="{$site_root_path}bundle/assets/img/logos/mlkshk.svg" alt="MLKSHK" /></td>
-              <td>One year paid membership, with the ability to create multiple image shakes and browse with no ads.</td>
-            </tr>
-            <tr>
-              <td><img src="{$site_root_path}bundle/assets/img/logos/newsblur.png" alt="NewsBlur" /></td>
-              <td>One year premium account, with unlimited sites, faster updates and search.</td>
-            </tr>
-            <tr>
-              <td><img src="{$site_root_path}bundle/assets/img/logos/thetoast.png" alt="The Toast" /></td>
-              <td>Recognition as a sponsoring member and access to chat when it launches.</td>
-            </tr>
-            <tr>
-              <td><img src="{$site_root_path}bundle/assets/img/logos/thinkup.svg" alt="ThinkUp" /></td>
-              <td>One year paid membership, with daily insights about you and your friends on Twitter and Facebook.</td>
-            </tr>
-          </table>
-
-        </div>
-
       </div>
     </div>
 
-
-    <div id="get-it">
-      <div class="container">
-
-        <h2>Get It!</h2>
-
-        <div class="col-md-3">
-          <img src="{$site_root_path}bundle/assets/img/good-web-bundle-logo-blk.svg" alt="Good Web Bundle" />
-        </div>
-
-        <div class="col-md-3">
-          <h5>Membership access to:</h5>
-          <ul>
-            <li><a href="http://metafilter.com/" target="_blank">MetaFilter</a></li>
-            <li><a href="http://mlkshk.com/" target="_blank">MLKSHK</a></li>
-            <li><a href="http://newsblur.com/" target="_blank">NewsBlur</a></li>
-            <li><a href="http://the-toast.net/" target="_blank">The Toast</a></li>
-            <li><a href="https://thinkup.com/" target="_blank">ThinkUp</a></li>
-          </ul>
-        </div>
-
-        <div class="col-md-3">
-          <h4><sup style="font-size: 60%;">$</sup>96</h4>
-        </div>
-
-        <div class="col-md-3">
-          <h3>A great deal for five great sites.<br />
-            For a limited time.</h3>
-            {$pay_with_amazon_form}
-        </div>
-      </div>
-    </div>
 
 {/if}
 
