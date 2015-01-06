@@ -13,6 +13,7 @@
           <th>Type</th>
           <th>Good for</th>
           <th>Purchased</th>
+          <th>Redeemed</th>
       </tr>
       {foreach $claim_codes as $claim_code}
       <tr>
@@ -21,6 +22,7 @@
         <td>{$claim_code->type}</td>
         <td>{$claim_code->number_days} days</th>
         <td>{$claim_code->timestamp}</th>
+        <td>{$claim_code->redemption_date}</th>
       </tr>
       {/foreach}
     </table>

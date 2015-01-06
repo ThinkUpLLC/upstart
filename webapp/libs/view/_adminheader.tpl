@@ -76,6 +76,7 @@
     </form>
     <ul class="nav navbar-nav navbar-right">
       <li{if $page eq "Stats"} class="active"{/if}><a href="stats.php">Stats</a></li>
+      <li{if $page eq "Coupon Codes"} class="active"{/if}><a href="codes.php">Coupon Codes</a></li>
       <li{if $page eq "Error Log"} class="active"{/if}><a href="errorlog.php">Error Log</a></li>
       <li{if $page eq "Upgrade"} class="active"{/if}><a href="upgrade.php">Upgrade</a></li>
       <li><a href="https://www.thinkup.com/callbax/" target="_new">Callbax</a></li>
