@@ -262,6 +262,9 @@ class UpstartHelper {
         asort($first_data_set, SORT_NUMERIC);
         $max_count = array_pop($first_data_set);
         $y_axis_max = ((floor($max_count / 2 )) + 1) * 2;
+        if ($y_axis_max < 100) { // Include our goal range in the scale of each chart
+            $y_axis_max = 100;
+        }
         $total_y_axis_markers = $y_axis_max / 2;
         $i = 0;
         while ($i < $y_axis_max ) {
