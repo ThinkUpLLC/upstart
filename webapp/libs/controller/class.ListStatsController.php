@@ -22,7 +22,7 @@ class ListStatsController extends Controller {
         $this->addToView('daily_signups_chart_url', $chart_url);
 
         // Subs per week
-        $subs_per_week = $subscriber_dao->getSubscriptionsByWeek();
+        $subs_per_week = $subscriber_dao->getSubscriptionsByWeek(28);
         // Massage array
         $weekly_subs = array();
         $total_subs = 0;

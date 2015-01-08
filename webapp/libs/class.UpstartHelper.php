@@ -244,7 +244,7 @@ class UpstartHelper {
         }
         // X-axis
         $chart_url .= '&chxt=x,y&chxl=0:|';
-        if (count ($first_data_set) > 30) { // On big charts, only label every 10 days
+        if (count ($first_data_set) >= 28) { // On big charts, only label every 10 days
             foreach ($first_data_set as $date=>$total) {
                 if (strpos($date, '0', '9')) {
                     $chart_url .= $date;

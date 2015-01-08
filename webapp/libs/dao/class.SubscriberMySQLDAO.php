@@ -929,9 +929,8 @@ class SubscriberMySQLDAO extends PDODAO {
     public function getReupsDueToday() {
         $q = "SELECT COUNT(id) as reups_due
             FROM subscribers WHERE DATE(paid_through) = DATE(NOW());";
-        $vars = array(':limit'=>$limit);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q, $vars);
+        $ps = $this->execute($q);
         $rows = $this->getDataRowAsArray($ps);
         return $rows['reups_due'];
     }
@@ -940,14 +939,13 @@ class SubscriberMySQLDAO extends PDODAO {
      * Get total subscriptions week over week.
      * @return arr
      */
-    public function getSubscriptionsByWeek() {
+    public function getSubscriptionsByWeek($limit = 14) {
         $q = "SELECT date(timestamp) as date, YEARWEEK(timestamp) as week_of_year, count(*) AS total_subs ";
         $q .= "FROM subscription_operations where operation='pay' AND status_code='SS' ";
-        $q .= "GROUP BY YEARWEEK(timestamp) ORDER BY timestamp DESC LIMIT 14";
-
+        $q .= "GROUP BY YEARWEEK(timestamp) ORDER BY timestamp DESC LIMIT :limit";
+        $vars = array(':limit'=>$limit);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q);
-
+        $ps = $this->execute($q, $vars);
         $results = $this->getDataRowsAsArrays($ps);
         asort($results);
         return $results;
