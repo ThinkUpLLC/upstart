@@ -18,10 +18,15 @@ class AmazonFPSAPIAccessor {
      */
     var $environment;
 
-	public function __construct() {
+	public function __construct($use_deprecated_tokens = false) {
         $cfg = Config::getInstance();
-        $this->AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
-        $this->AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
+        if ($use_deprecated_tokens) {
+            $this->AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID_DEPREC');
+            $this->AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY_DEPREC');
+        } else {
+            $this->AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
+            $this->AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
+        }
         $this->environment = ($cfg->getValue('amazon_sandbox'))?'sandbox':'prod';
     }
 
@@ -150,7 +155,6 @@ class AmazonFPSAPIAccessor {
      */
     public function getTransactionStatus($transaction_id) {
         $service = new Amazon_FPS_Client($this->AWS_ACCESS_KEY_ID, $this->AWS_SECRET_ACCESS_KEY);
-
         $params = array();
         $params['TransactionId'] = $transaction_id;
         $request_object = new Amazon_FPS_Model_GetTransactionStatusRequest($params);
@@ -178,11 +182,8 @@ class AmazonFPSAPIAccessor {
      * @return str URL
      */
     public static function getAmazonFPSURL($caller_reference, $callback_url, $amount) {
-        $cfg = Config::getInstance();
-        $AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
-        $AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
-
-        $pipeline = new Amazon_FPS_CBUIRecurringTokenPipeline($AWS_ACCESS_KEY_ID, $AWS_SECRET_ACCESS_KEY);
+        $pipeline = new Amazon_FPS_CBUIRecurringTokenPipeline($this->AWS_ACCESS_KEY_ID,
+            $this->AWS_SECRET_ACCESS_KEY);
 
         $pipeline->setMandatoryParameters($caller_reference, $callback_url, $amount, "12 Months");
 
@@ -205,11 +206,7 @@ class AmazonFPSAPIAccessor {
      * @return bool
      */
     public static function isAmazonSignatureValid($endpoint_url, $endpoint_url_params = array()) {
-        $cfg = Config::getInstance();
-        $AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
-        $AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
-
-        $service = new Amazon_FPS_Client($AWS_ACCESS_KEY_ID, $AWS_SECRET_ACCESS_KEY);
+        $service = new Amazon_FPS_Client($this->AWS_ACCESS_KEY_ID, $this->AWS_SECRET_ACCESS_KEY);
 
         try {
             $request_params_array = array();

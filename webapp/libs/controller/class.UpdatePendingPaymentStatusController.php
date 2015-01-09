@@ -10,7 +10,7 @@ class UpdatePendingPaymentStatusController extends Controller {
         $processed_payment_ids = array();
 
         try {
-            $api_accessor = new AmazonFPSAPIAccessor();
+            $api_accessor = new AmazonFPSAPIAccessor($use_deprecated_tokens = true);
             // Retrieve pending payments
             $pending_payments = $payment_dao->getPendingPayments();
 

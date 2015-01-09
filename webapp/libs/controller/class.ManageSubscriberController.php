@@ -127,7 +127,7 @@ class ManageSubscriberController extends Controller {
                         }
                     } elseif ($_GET['action'] == 'charge') {
                         if (isset($_GET['token_id']) && isset($_GET['amount'])) {
-                            $fps_api_accessor = new AmazonFPSAPIAccessor();
+                            $fps_api_accessor = new AmazonFPSAPIAccessor($use_deprecated_tokens = true);
                             $ok = $fps_api_accessor->invokeAmazonPayAction($subscriber_id, $_GET['token_id'],
                             $_GET['amount']);
                             if ($ok) {

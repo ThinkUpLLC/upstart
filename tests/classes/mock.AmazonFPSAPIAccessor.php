@@ -1,7 +1,6 @@
 <?php
 
 class AmazonFPSAPIAccessor {
-
    /**
 	* AWS access key
 	* @str
@@ -18,10 +17,15 @@ class AmazonFPSAPIAccessor {
      */
     var $environment;
 
-	public function __construct() {
+	public function __construct($use_deprecated_tokens = false) {
         $cfg = Config::getInstance();
-        $this->AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
-        $this->AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
+        if ($use_deprecated_tokens) {
+            $this->AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID_DEPREC');
+            $this->AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY_DEPREC');
+        } else {
+            $this->AWS_ACCESS_KEY_ID = $cfg->getValue('AWS_ACCESS_KEY_ID');
+            $this->AWS_SECRET_ACCESS_KEY = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
+        }
         $this->environment = ($cfg->getValue('amazon_sandbox'))?'sandbox':'prod';
     }
 

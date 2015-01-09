@@ -13,8 +13,21 @@ class TestOfAmazonFPSAPIAccessor extends UpstartUnitTestCase {
     }
 
     public function testConstructor() {
+        $cfg = Config::getInstance();
+        $current_access_key = $cfg->getValue('AWS_ACCESS_KEY_ID');
+        $current_secret_key = $cfg->getValue('AWS_SECRET_ACCESS_KEY');
+        $deprec_access_key = $cfg->getValue('AWS_ACCESS_KEY_ID_DEPREC');
+        $deprec_secret_key = $cfg->getValue('AWS_SECRET_ACCESS_KEY_DEPREC');
+
         $api_accessor = new AmazonFPSAPIAccessor();
         $this->assertIsA($api_accessor, 'AmazonFPSAPIAccessor');
+        $this->assertEqual($api_accessor->AWS_ACCESS_KEY_ID, $current_access_key);
+        $this->assertEqual($api_accessor->AWS_SECRET_ACCESS_KEY, $current_secret_key);
+
+        $api_accessor = new AmazonFPSAPIAccessor($use_deprecated_tokens = true);
+        $this->assertIsA($api_accessor, 'AmazonFPSAPIAccessor');
+        $this->assertEqual($api_accessor->AWS_ACCESS_KEY_ID, $deprec_access_key);
+        $this->assertEqual($api_accessor->AWS_SECRET_ACCESS_KEY, $deprec_secret_key);
     }
 
     public function testUpdateTransactionStatus() {
