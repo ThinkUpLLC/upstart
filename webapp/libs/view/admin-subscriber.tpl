@@ -183,7 +183,7 @@
       <!-- Show Charge button -->
       <tr>
         <td></td>
-        <td><a href="subscriber.php?id={$subscriber->id}&action=charge&token_id={$authorization->token_id}&amount={$authorization->amount|urlencode}" class="btn btn-success btn-mini">Charge</a></td>
+        <td><a href="subscriber.php?id={$subscriber->id}&action=charge&token_id={$authorization->token_id}&amount={$next_annual_charge_amount|urlencode}" class="btn btn-success btn-mini">Charge</a></td>
       </tr>
       {/if}
       {if $subscriber->error_message}

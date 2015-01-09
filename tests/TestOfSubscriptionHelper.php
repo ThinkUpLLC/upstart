@@ -43,6 +43,16 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
         $this->assertEqual($helper->getSubscriptionStatusBasedOnOperation($operation), 'Refunded');
     }
 
+    public function testGetNextAnnualChargeAmount() {
+        $helper = new SubscriptionHelper();
+        $this->assertEqual($helper->getNextAnnualChargeAmount('Early Bird'), 50);
+        $this->assertEqual($helper->getNextAnnualChargeAmount('Late Bird'), 50);
+        $this->assertEqual($helper->getNextAnnualChargeAmount('Member'), 60);
+        $this->assertEqual($helper->getNextAnnualChargeAmount('Pro'), 120);
+        $this->assertEqual($helper->getNextAnnualChargeAmount('Exec'), 996);
+        $this->assertEqual($helper->getNextAnnualChargeAmount('Huh?'), 0);
+    }
+
     public function testGetSubscriptionStatusAndPaidThrough() {
         $helper = new SubscriptionHelper();
 

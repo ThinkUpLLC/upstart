@@ -106,22 +106,14 @@ class ManageSubscriberController extends Controller {
                             //Update is_free_trial field in ThinkUp installation
                             $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
                             $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
-                            // Update subscriber details
-                            $subscription_helper = new SubscriptionHelper();
-                            $new_values = $subscription_helper->getSubscriptionStatusAndPaidThrough( $subscriber );
-                            $subscriber_dao->setSubscriptionStatus($subscriber->id, $new_values['subscription_status']);
-                            $subscriber_dao->setPaidThrough($subscriber->id, $new_values['paid_through']);
+                            self::updateSubscriberSubscriptionDetails($subscriber);
                             $this->addSuccessMessage("Comped membership for ".$subscriber->email);
+                            $subscriber->is_membership_complimentary = true;
                         }
                     } elseif ($_GET['action'] == 'decomp') {
                         $decomped = $subscriber_dao->decompSubscription($subscriber_id, $username);
                         if ( $decomped > 0 ) {
-                            // Update subscriber details
-                            $subscription_helper = new SubscriptionHelper();
-                            $new_values = $subscription_helper->getSubscriptionStatusAndPaidThrough( $subscriber );
-                            $subscriber_dao->setSubscriptionStatus($subscriber->id, $new_values['subscription_status']);
-                            $subscriber_dao->setPaidThrough($subscriber->id, $new_values['paid_through']);
-
+                            self::updateSubscriberSubscriptionDetails($subscriber);
                             $this->addSuccessMessage("Decomped membership for ".$subscriber->email);
                             $subscriber->is_membership_complimentary = false;
                         }
@@ -135,6 +127,8 @@ class ManageSubscriberController extends Controller {
                             } else {
                                 $this->addErrorMessage("Payment failed!");
                             }
+                            self::updateSubscriberSubscriptionDetails($subscriber);
+                            $subscriber = $subscriber_dao->getByID($subscriber_id);
                         }  else {
                             $this->addErrorMessage("No token and/or amount specified");
                         }
@@ -154,6 +148,7 @@ class ManageSubscriberController extends Controller {
                 $subscriber->paid_through_friendly = date('M j, Y', strtotime($subscriber->paid_through));
                 $this->addToView('subscriber', $subscriber);
 
+                //Set annual payer paid flag
                 $payments = $subscriber_payment_dao->getBySubscriber($subscriber_id);
                 $this->addToView('payments', $payments);
                 $paid = false;
@@ -164,6 +159,14 @@ class ManageSubscriberController extends Controller {
                     }
                 }
                 $this->addToView('paid', $paid);
+
+                //Set next charge amount if this is a manual FPS annual payer
+                if (isset($payments)) {
+                    $subscription_helper = new SubscriptionHelper();
+                    $next_annual_charge_amount =
+                        $subscription_helper->getNextAnnualChargeAmount($subscriber->membership_level);
+                    $this->addToView('next_annual_charge_amount', $next_annual_charge_amount);
+                }
 
                 $install_log_dao = new InstallLogMySQLDAO();
                 $install_log_entries = $install_log_dao->getLogEntriesBySubscriber($subscriber_id);
@@ -179,6 +182,19 @@ class ManageSubscriberController extends Controller {
             $this->addErrorMessage("No subscriber specified.");
         }
         return $this->generateView();
+    }
+
+    /**
+     * Update Subscriber->paid_through and Subscriber->subscription_status in data store.
+     * @param  Subscriber $subscriber
+     * @return void
+     */
+    private function updateSubscriberSubscriptionDetails(Subscriber $subscriber) {
+        $subscription_helper = new SubscriptionHelper();
+        $new_values = $subscription_helper->getSubscriptionStatusAndPaidThrough( $subscriber );
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber_dao->setSubscriptionStatus($subscriber->id, $new_values['subscription_status']);
+        $subscriber_dao->setPaidThrough($subscriber->id, $new_values['paid_through']);
     }
 
     /**

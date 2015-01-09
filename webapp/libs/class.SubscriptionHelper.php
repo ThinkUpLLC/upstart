@@ -105,4 +105,20 @@ class SubscriptionHelper {
         $result += $subscriber_dao->setPaidThrough($subscriber->id, $paid_through_time);
         return ($result > 0); //return true if a field got updated
     }
+
+    public function getNextAnnualChargeAmount($membership_level) {
+        switch ($membership_level) {
+            case "Early Bird":
+                return 50;
+            case "Late Bird":
+                return 50;
+            case "Member":
+                return 60;
+            case "Pro":
+                return 120;
+            case "Exec":
+                return 996;
+        }
+        return 0;
+    }
 }
