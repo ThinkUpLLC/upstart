@@ -1,7 +1,6 @@
 <?php
 
 class AmazonFPSAPIAccessor {
-
    /**
 	* AWS access key
 	* @str
@@ -238,14 +237,12 @@ class AmazonFPSAPIAccessor {
             }
         } catch (Amazon_FPS_Exception $ex) {
             //@TODO Log these error details into error log table
-
-             echo("Caught Exception: " . $ex->getMessage() . "\n");
-             echo("Response Status Code: " . $ex->getStatusCode() . "\n");
-             echo("Error Code: " . $ex->getErrorCode() . "\n");
-             echo("Error Type: " . $ex->getErrorType() . "\n");
-             echo("Request ID: " . $ex->getRequestId() . "\n");
-             echo("XML: " . $ex->getXML() . "\n");
-
+            echo("Caught Exception: " . $ex->getMessage() . "\n");
+            echo("Response Status Code: " . $ex->getStatusCode() . "\n");
+            echo("Error Code: " . $ex->getErrorCode() . "\n");
+            echo("Error Type: " . $ex->getErrorType() . "\n");
+            echo("Request ID: " . $ex->getRequestId() . "\n");
+            echo("XML: " . $ex->getXML() . "\n");
         }
         return false;
     }

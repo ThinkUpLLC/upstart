@@ -129,7 +129,7 @@ class ManageSubscriberController extends Controller {
                         if (isset($_GET['token_id']) && isset($_GET['amount'])) {
                             $fps_api_accessor = new AmazonFPSAPIAccessor($use_deprecated_tokens = true);
                             $ok = $fps_api_accessor->invokeAmazonPayAction($subscriber_id, $_GET['token_id'],
-                            $_GET['amount']);
+                                $_GET['amount']);
                             if ($ok) {
                                 $this->addSuccessMessage("Payment successful!");
                             } else {
