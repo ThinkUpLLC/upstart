@@ -159,7 +159,8 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
         $q .= "( date(timestamp) = '".$today."' ";
         $q .= "OR date(timestamp) = '".$yesterday."' ";
         $q .= "OR date(timestamp) = '".$day_before."') ";
-        $q .= "GROUP BY reference_id ORDER BY timestamp DESC;";
+        $q .= "AND (operation = 'pay' and status_code = 'PS') OR operation = 'refund' ";
+        $q .= "ORDER BY timestamp DESC;";
 
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
