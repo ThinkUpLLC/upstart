@@ -23,60 +23,49 @@ class ListStatsController extends Controller {
 
         // Subs per week
         $subs_per_week = $subscriber_dao->getSubscriptionsByWeek(28);
-        // Massage array
-        $weekly_subs = array();
-        $total_subs = 0;
-        foreach ($subs_per_week as $sub) {
-            $weekly_subs[$sub['date']] = $sub['total_subs'];
-            $total_subs += $sub['total_subs'];
-            //Probably a better way to get this week's subscriptions than assigning it every loop, but this works
-            $this_weeks_subs = $sub['total_subs'];
-        }
-        $average_weekly_subs = round(($total_subs/count($weekly_subs)));
-        // Construct takeaway message, for example,
-        // 25 conversions this week, (more than/less than/exactly equal to) the 6-week average of 23.
-        if ($this_weeks_subs > $average_weekly_subs) {
-            $comparator = "more than";
-        } elseif ($this_weeks_subs < $average_weekly_subs) {
-            $comparator = "less than";
-        } else {
-            $comparator = "exactly equal to";
-        }
-        $message = $this_weeks_subs." conversions so far this week, ".$comparator." the ".count($weekly_subs).
-            "-week average of ".$average_weekly_subs.".";
+        $sub_takeaways = $this->getTakeaways($subs_per_week, 'date', 'total_subs', 'conversions');
+        // Refunds per week
+        $weekly_refunds = $subscription_operation_dao->getWeeklyRefunds();
+        $refund_takeaways = $this->getTakeaways($weekly_refunds, 'date', 'total_refunds', 'refunds');
 
-        $chart_url = UpstartHelper::buildChartImageURL($weekly_subs, null, 10, 'Conversions');
+        $chart_url = UpstartHelper::buildChartImageURL($sub_takeaways['weekly_data'], $refund_takeaways['weekly_data'], 10,
+            'Conversions|Refunds');
         $this->addToView('weekly_conversions_chart_url', $chart_url);
-        $this->addToView('weekly_conversions_message', $message);
+        $this->addToView('weekly_conversions_message', $sub_takeaways['takeaway_message']);
+        $this->addToView('weekly_refunds_message', $refund_takeaways['takeaway_message']);
 
         // Subs per month
         $subs_per_month = $subscriber_dao->getSubscriptionsByMonth();
+        $monthly_sub_takeaways = $this->getTakeaways($subs_per_month, 'date', 'total_subs', 'conversions', 'month');
+        $chart_url = UpstartHelper::buildChartImageURL($monthly_sub_takeaways['weekly_data'], null, 50, 'Conversions');
+        $this->addToView('monthly_conversions_chart_url', $chart_url);
+        $this->addToView('monthly_conversions_message', $monthly_sub_takeaways['takeaway_message']);
+
+        return $this->generateView();
+    }
+
+    private function getTakeaways($date_total_items, $date_label, $total_label, $data_label, $time_period = 'week') {
         // Massage array
-        $monthly_subs = array();
-        $total_subs = 0;
-        foreach ($subs_per_month as $sub) {
-            $monthly_subs[$sub['date']] = $sub['total_subs'];
-            $total_subs += $sub['total_subs'];
-            // Probably a better way to get this month's subscriptions than assigning it every loop, but this works
-            $this_months_subs = $sub['total_subs'];
+        $weekly_data_items = array();
+        $total_items = 0;
+        foreach ($date_total_items as $item) {
+            $weekly_data_items[$item[$date_label]] = $item[$total_label];
+            $total_items += $item[$total_label];
+            //Probably a better way to get this week's subscriptions than assigning it every loop, but this works
+            $this_weeks_data = $item[$total_label];
         }
-        $average_monthly_subs = round(($total_subs/count($monthly_subs)));
+        $average_weekly_data_items = round(($total_items/count($weekly_data_items)));
         // Construct takeaway message, for example,
         // 25 conversions this week, (more than/less than/exactly equal to) the 6-week average of 23.
-        if ($this_months_subs > $average_monthly_subs) {
+        if ($this_weeks_data > $average_weekly_data_items) {
             $comparator = "more than";
-        } elseif ($this_months_subs < $average_monthly_subs) {
+        } elseif ($this_weeks_data < $average_weekly_data_items) {
             $comparator = "less than";
         } else {
             $comparator = "exactly equal to";
         }
-        $message = $this_months_subs." conversions so far this month, ".$comparator." the ".count($monthly_subs).
-            "-month average of ".$average_monthly_subs.".";
-
-        $chart_url = UpstartHelper::buildChartImageURL($monthly_subs, null, 50, 'Conversions');
-        $this->addToView('monthly_conversions_chart_url', $chart_url);
-        $this->addToView('monthly_conversions_message', $message);
-
-        return $this->generateView();
+        $takeaway_message = $this_weeks_data." ".$data_label." so far this ".$time_period.", ".$comparator." the "
+            .count($weekly_data_items). "-".$time_period." average of ".$average_weekly_data_items.".";
+        return array('takeaway_message'=>$takeaway_message, 'weekly_data'=>$weekly_data_items);
     }
 }

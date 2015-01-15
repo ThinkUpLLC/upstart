@@ -9,7 +9,8 @@
         <img src="{$daily_signups_chart_url}" class="img-responsive" />
 
       <h2>Weekly conversions</h2>
-        <p>{$weekly_conversions_message}</p>
+        <p>{$weekly_conversions_message}<br>
+        {$weekly_refunds_message}</p>
         <img src="{$weekly_conversions_chart_url}" class="img-responsive" />
 
       <h2>Monthly conversions</h2>
