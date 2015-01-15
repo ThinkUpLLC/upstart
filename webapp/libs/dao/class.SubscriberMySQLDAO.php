@@ -826,21 +826,54 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     /**
-     * Get subscribers who have have never paid.
-     * @TODO: Make this work for second payments (a year from now)
+     * Get annual subscribers who have a payment due.
      * @param  int $count Default to 10
-     * @return bool  Whether or not it is in use
+     * @return arr
      */
-    public function getSubscribersToCharge($count=10) {
-        $q = "SELECT s.id, s.email, a.token_id, a.amount, p.request_id FROM subscribers s ";
-        $q .= "INNER JOIN subscriber_authorizations sa ON sa.subscriber_id = s.id ";
-        $q .= "INNER JOIN authorizations a ON sa.authorization_id = a.id ";
-        $q .= "LEFT JOIN subscriber_payments sp ON sp.subscriber_id = s.id ";
-        $q .= "LEFT JOIN payments p ON p.id = sp.payment_id ";
-        $q .= "WHERE s.is_membership_complimentary = 0 AND request_id IS NULL ";
+    public function getAnnualSubscribersToCharge($count=10) {
+        $q = "SELECT s.id, s.email, s.membership_level, a.token_id FROM subscribers s
+            INNER JOIN subscriber_authorizations sa ON sa.subscriber_id = s.id
+            INNER JOIN authorizations a ON sa.authorization_id = a.id
+            WHERE s.subscription_recurrence = '12 months' AND date(paid_through) <= :due_date
+            AND s.is_membership_complimentary = 0 AND is_account_closed != 1 LIMIT :count ";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q);
+        $vars = array(
+            ':due_date'=>date('Y-m-d', strtotime('-1 day')),
+            ':count'=>$count
+        );
+        $ps = $this->execute($q, $vars);
         return $this->getDataRowsAsArrays($ps);
+    }
+
+    /**
+     * Get total annual subscribers who have a payment due.
+     * @return int
+     */
+    public function getTotalAnnualSubscribersToCharge($count=10) {
+        $q = "SELECT count(s.id) as total FROM subscribers s
+            INNER JOIN subscriber_authorizations sa ON sa.subscriber_id = s.id
+            INNER JOIN authorizations a ON sa.authorization_id = a.id
+            WHERE s.subscription_recurrence = '12 months' AND date(paid_through) <= :due_date
+            AND s.is_membership_complimentary = 0 AND is_account_closed != 1";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $vars = array(
+            ':due_date'=>date('Y-m-d', strtotime('-1 day'))
+        );
+        $ps = $this->execute($q, $vars);
+        $result = $this->getDataRowAsArray($ps);
+        return $result['total'];
+    }
+
+    /**
+     * Update Subscriber->paid_through and Subscriber->subscription_status in data store.
+     * @param  Subscriber $subscriber
+     * @return void
+     */
+    public function updateSubscriberSubscriptionDetails(Subscriber $subscriber) {
+        $subscription_helper = new SubscriptionHelper();
+        $new_values = $subscription_helper->getSubscriptionStatusAndPaidThrough( $subscriber );
+        $this->setSubscriptionStatus($subscriber->id, $new_values['subscription_status']);
+        $this->setPaidThrough($subscriber->id, $new_values['paid_through']);
     }
 
     public function compSubscription($subscriber_id) {

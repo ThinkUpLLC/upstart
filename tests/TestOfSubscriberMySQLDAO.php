@@ -745,4 +745,37 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($subscribers_to_uninstall[0]->id, 5);
         $this->assertEqual($subscribers_to_uninstall[1]->id, 3);
     }
+
+    public function testGetAnnualSubscribersToCharge() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique1', 'subscription_recurrence'=>'12 months', 'paid_through'=>'-1d',
+            'membership_level'=>'Early Bird'));
+
+        $builders[] = FixtureBuilder::build('authorizations', array('id'=>1));
+
+        $builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>1,
+            'authorization_id'=>1));
+
+        $dao = new SubscriberMySQLDAO();
+        $results = $dao->getAnnualSubscribersToCharge();
+        $this->assertEqual(sizeof($results), 1);
+    }
+
+    public function testGetTotalAnnualSubscribersToCharge() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique1', 'subscription_recurrence'=>'12 months', 'paid_through'=>'-1d'));
+
+        $builders[] = FixtureBuilder::build('authorizations', array('id'=>1));
+
+        $builders[] = FixtureBuilder::build('subscriber_authorizations', array('subscriber_id'=>1,
+            'authorization_id'=>1));
+
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->getTotalAnnualSubscribersToCharge();
+        $this->assertEqual($result, 1);
+    }
 }
