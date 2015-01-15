@@ -244,16 +244,20 @@ class UpstartHelper {
         }
         // X-axis
         $chart_url .= '&chxt=x,y&chxl=0:|';
-        if (count ($first_data_set) >= 28) { // On big charts, only label every 10 days
+        if (sizeof($first_data_set) >= 28) { // On big charts, only label every 5 X-axis items
+            $i = 0;
             foreach ($first_data_set as $date=>$total) {
-                if (strpos($date, '0', '9')) {
-                    $chart_url .= $date;
+                if ($i % 5 == 0) {
+                    $chart_url .= substr($date, 5); //Remove year from date
+                } else {
+                    $chart_url .= '';
                 }
                 $chart_url .= '|';
+                $i++;
             }
         } else {
             foreach ($first_data_set as $date=>$total) {
-                $chart_url .= $date;
+                $chart_url .= substr($date, 5); //Remove year from date
                 $chart_url .= '|';
             }
         }
@@ -268,7 +272,7 @@ class UpstartHelper {
             $i = $i+$y_axis_divisor;
             $chart_url .= '|'.$i;
         }
-        $chart_url .= '&chds=0,'.$y_axis_max;
+        $chart_url .= '&chds=0,'.$i;
         if (isset($second_data_set)) {
             $chart_url .= "&chco=9dd767,00aeef";
         } else {
