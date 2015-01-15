@@ -25,6 +25,9 @@ while (sizeof($subscribers) > 0) {
         if (isset($new_values['paid_through'])) {
             $subscriber_dao->setPaidThrough($subscriber->id, $new_values['paid_through']);
         }
+        if (isset($new_values['subscription_recurrence'])) {
+            $subscriber_dao->setSubscriptionRecurrence($subscriber->id, $new_values['subscription_recurrence']);
+        }
     }
     $page++;
     $subscribers = $subscriber_dao->getSubscriberList($page, $total_subscribers);

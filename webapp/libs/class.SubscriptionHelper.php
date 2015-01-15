@@ -19,6 +19,7 @@ class SubscriptionHelper {
     public function getSubscriptionStatusAndPaidThrough(Subscriber $subscriber) {
         $subscription_status = "";
         $paid_through_time = null;
+        $subscription_recurrence = null;
         if ($subscriber->is_membership_complimentary) {
             $subscription_status = "Complimentary membership";
         } else {
@@ -32,6 +33,7 @@ class SubscriptionHelper {
                     $paid_through_time = strtotime('+'.$latest_operation->recurring_frequency,
                         strtotime($latest_operation->transaction_date));
                 }
+                $subscription_recurrence = '1 month';
             } else {
                 //Get latest payment
                 $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
@@ -52,6 +54,7 @@ class SubscriptionHelper {
                     } else {
                         $subscription_status = "Payment failed";
                     }
+                    $subscription_recurrence = '12 months';
                 } elseif (strtotime($subscriber->creation_time) > strtotime('-16 days') /* give extra 2 days */) {
                     $subscription_status = "Free trial";
                 } else {
@@ -62,7 +65,8 @@ class SubscriptionHelper {
         if (isset($paid_through_time)) {
             $paid_through_time = date('Y-m-d H:i:s', $paid_through_time);
         }
-        return array("subscription_status"=>$subscription_status, "paid_through"=>$paid_through_time);
+        return array("subscription_status"=>$subscription_status, "paid_through"=>$paid_through_time,
+            "subscription_recurrence"=>$subscription_recurrence);
     }
     /**
      * Get subscriber.subscription_status based on the last subscription operation details.
@@ -103,6 +107,10 @@ class SubscriptionHelper {
             $paid_through_time = date('Y-m-d H:i:s', $paid_through_time);
         }
         $result += $subscriber_dao->setPaidThrough($subscriber->id, $paid_through_time);
+        //If a user converts from annual to monthly, update subscription_recurrence
+        if ($subscriber->subscription_recurrence != '1 month') {
+            $result += $subscriber_dao->setSubscriptionRecurrence($subscriber->id, '1 month');
+        }
         return ($result > 0); //return true if a field got updated
     }
 

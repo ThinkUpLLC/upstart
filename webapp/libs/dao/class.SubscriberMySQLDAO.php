@@ -151,6 +151,17 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getUpdateCount($ps);
     }
 
+    public function setSubscriptionRecurrence($subscriber_id, $subscription_recurrence) {
+        $q = "UPDATE subscribers SET subscription_recurrence = :subscription_recurrence WHERE id=:id";
+        $vars = array(
+            ':id'=>$subscriber_id,
+            ':subscription_recurrence'=>$subscription_recurrence
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
     /**
      * Apply a claim code to a subscriber: set subscription_recurrence to None, paid_through date, and claim_code field.
      * @param  int $subscriber_id
