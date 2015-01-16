@@ -45,6 +45,39 @@ class PaymentMySQLDAO extends PDODAO {
         $ps = $this->execute($q, $vars);
         return $this->getDataRowsAsObjects($ps, 'Payment');
     }
+
+    /**
+     * Calculate the refund an annual member should receive if the member cancels their subscription today.
+     * @param  arr $payment
+     * @return int Refund total
+     * @throws Exception if last payment was not a payment with a valid amount
+     */
+    public function calculateProRatedAnnualRefund($payment) {
+        $days_in_year = 365;
+        // How much per day: cost per month / days in the month
+        $cost_per_year = $payment['amount'];
+        if ($cost_per_year > 1) {
+            $cost_per_day = ($cost_per_year / $days_in_year);
+            //debug
+//                 echo "Cost per day ".$cost_per_day."
+// ";
+            // How many days to refund: Month from last pay transaction minus today
+            $next_transaction_date = strtotime('+365 day', strtotime($payment['timestamp']));
+            //debug
+//                 echo "Next transaction date ".date('M-d-Y', $next_transaction_date)."
+// ";
+            $days_to_refund = ($next_transaction_date - time()) / (60*60*24);
+            //debug
+//                 echo "Days to refund ".$days_to_refund."
+// ";
+            // Refund total: How many days to refund * how much per day
+            $refund_total = round( ($days_to_refund * $cost_per_day), 2);
+            return $refund_total;
+        } else {
+            //Invalid cost per month
+            throw new Exception('Invalid cost per year calculated from '. $payment['timestamp']);
+        }
+    }
     /**
      * Get payment by transaction ID and caller reference.
      * @param str $transaction_id

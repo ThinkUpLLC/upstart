@@ -77,4 +77,27 @@ class TestOfPaymentMySQLDAO extends UpstartUnitTestCase {
         $result = $dao->updateStatus(1, 'Updated!', 'Longer Updated! message');
         $this->assertEqual($result, 1);
     }
+
+    public function testCalculateProRatedAnnualRefund() {
+        $payment = array('timestamp'=>date('Y-m-d', strtotime('-5 day')), 'transaction_id'=>'abcd', 'amount'=>50);
+        $dao = new PaymentMySQLDAO();
+        $result = $dao->calculateProRatedAnnualRefund($payment);
+        //refund is different depending what time of day you're running these tests; let's round to estimate
+        $this->assertEqual(round($result), 49);
+
+        $payment = array('timestamp'=>date('Y-m-d', strtotime('-35 day')), 'transaction_id'=>'abcd', 'amount'=>50);
+        $dao = new PaymentMySQLDAO();
+        $result = $dao->calculateProRatedAnnualRefund($payment);
+        $this->assertEqual(round($result), 45);
+
+        $payment = array('timestamp'=>date('Y-m-d', strtotime('-0 day')), 'transaction_id'=>'abcd', 'amount'=>50);
+        $dao = new PaymentMySQLDAO();
+        $result = $dao->calculateProRatedAnnualRefund($payment);
+        $this->assertEqual(round($result), 50);
+
+        $payment = array('timestamp'=>date('Y-m-d', strtotime('-350 day')), 'transaction_id'=>'abcd', 'amount'=>50);
+        $dao = new PaymentMySQLDAO();
+        $result = $dao->calculateProRatedAnnualRefund($payment);
+        $this->assertEqual(round($result), 2);
+    }
 }
