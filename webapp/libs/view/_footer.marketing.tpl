@@ -17,7 +17,7 @@
         <li><a href="{$site_root_path}about/faq.php">FAQ</a></li>
       </ul>
 
-      <div class="copy-tagline">&copy;2014 ThinkUp LLC.<br>
+      <div class="copy-tagline">&copy;2014-2015 ThinkUp LLC.<br>
         It is nice to be nice.</div>
     </div>
   </div>
