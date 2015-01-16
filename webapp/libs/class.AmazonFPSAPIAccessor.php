@@ -180,7 +180,7 @@ class AmazonFPSAPIAccessor {
      * @param  int $amount
      * @return str URL
      */
-    public static function getAmazonFPSURL($caller_reference, $callback_url, $amount) {
+    public function getAmazonFPSURL($caller_reference, $callback_url, $amount) {
         $pipeline = new Amazon_FPS_CBUIRecurringTokenPipeline($this->AWS_ACCESS_KEY_ID,
             $this->AWS_SECRET_ACCESS_KEY);
 
@@ -204,7 +204,7 @@ class AmazonFPSAPIAccessor {
      * @param  arr  $endpoint_url_params Optional endpoint URL parameters
      * @return bool
      */
-    public static function isAmazonSignatureValid($endpoint_url, $endpoint_url_params = array()) {
+    public function isAmazonSignatureValid($endpoint_url, $endpoint_url_params = array()) {
         $service = new Amazon_FPS_Client($this->AWS_ACCESS_KEY_ID, $this->AWS_SECRET_ACCESS_KEY);
 
         try {
