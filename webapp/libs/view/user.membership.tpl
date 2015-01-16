@@ -110,7 +110,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
         <div class="modal-content">
           <header class="container-header">
             <h1>Do you really want to close your account?</h1>
-            <h2>{if $membership_status neq 'Free trial' && $subscriber->subscription_recurrence eq '1 month'}You will receive a refund and all{else}All{/if} your data will be deleted. This cannot be undone.</h2>
+            <h2>{if $membership_status neq 'Free trial' and $subscriber->subscription_recurrence neq 'None'}You will receive a refund and all{else}All{/if} your data will be deleted. This cannot be undone.</h2>
           </header>
           <form id="form-membership-close-account" action="membership.php" method="post">
             <input type="hidden" name="close" value="true" />
@@ -152,5 +152,8 @@ body_classes="settings menu-open" body_id="settings-subscription"}
 
         <input type="submit" value="Send it" class="btn btn-circle btn-submit">
       </form>
+      <div>
+      {* DELETE ME TESTING ONLY *}
+      <!--{if isset($test_fps_sub)}<a href="{$test_fps_sub}">FPS annual</a>{/if}-->
 
 {include file="_appfooter.tpl"}

@@ -81,9 +81,9 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
-        //No close account button on annual paid
-        $this->assertNoPattern('/You will receive a refund/', $results);
-        $this->assertPattern('/All your data will be deleted./', $results);
+        //Close account button on annual paid
+        $this->assertPattern('/You will receive a refund/', $results);
+        $this->assertPattern('/all your data will be deleted./', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j, ');
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
@@ -104,9 +104,9 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
-        //No close account button on annual paid
-        $this->assertNoPattern('/You will receive a refund/', $results);
-        $this->assertPattern('/All your data will be deleted./', $results);
+        //Close account button
+        $this->assertPattern('/You will receive a refund/', $results);
+        $this->assertPattern('/all your data will be deleted./', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j, ');
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
@@ -127,9 +127,9 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
-        //No close account button on annual paid
-        $this->assertNoPattern('/You will receive a refund/', $results);
-        $this->assertPattern('/All your data will be deleted./', $results);
+        //Close account button on annual paid
+        $this->assertPattern('/You will receive a refund/', $results);
+        $this->assertPattern('/all your data will be deleted./', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j, ');
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
@@ -150,9 +150,9 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
-        //No close account button on annual paid
-        $this->assertNoPattern('/You will receive a refund/', $results);
-        $this->assertPattern('/All your data will be deleted./', $results);
+        //Close account button on annual paid
+        $this->assertPattern('/You will receive a refund/', $results);
+        $this->assertPattern('/all your data will be deleted./', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j, ');
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
@@ -173,9 +173,9 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
-        //No close account button on annual paid
-        $this->assertNoPattern('/You will receive a refund/', $results);
-        $this->assertPattern('/All your data will be deleted./', $results);
+        //Close account button on annual paid
+        $this->assertPattern('/You will receive a refund/', $results);
+        $this->assertPattern('/all your data will be deleted./', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j, ');
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
@@ -274,7 +274,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
             'subscription_status'=>'Free trial'));
 
         $builders[] = FixtureBuilder::build('payments', array('id'=>100, 'transaction_status'=>$payment_status,
-            'timestamp'=>'-10s'));
+            'timestamp'=>'-10s', 'refund_amount'=>null, 'refund_caller_reference'=>null, 'refund_date'=>null));
         $builders[] = FixtureBuilder::build('subscriber_payments', array('subscriber_id'=>1, 'payment_id'=>100));
 
         self::updateSubscriptionStatus(1);
@@ -528,7 +528,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertEqual($row['is_free_trial'], 0);
     }
 
-    public function testCloseAccountValidCSRFNoSubscriptionOperation() {
+    public function testCloseAccountValidCSRFFreeTrial() {
         $this->builders = $this->buildSubscriberFreeTrialCreated(2);
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('trial@example.com');
@@ -569,6 +569,31 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->setUpInstall($subscriber);
 
         $this->simulateLogin('trial@example.com', false, true);
+
+        //Set close account URL param
+        $_POST['close'] = 'true';
+        $_POST['csrf_token'] = parent::CSRF_TOKEN;
+
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Your ThinkUp account is closed, and we&#39;ve issued a refund.  '.
+            'Thanks for trying ThinkUp!/', $results);
+
+        $closure_email = Mailer::getLastMail();
+        $this->assertPattern('/Thanks for trying ThinkUp./', $closure_email);
+        $this->assertPattern('/Your ThinkUp account is now closed./', $closure_email);
+        $this->assertPattern('/We will credit your Amazon Payments account/', $closure_email);
+    }
+
+    public function testCloseAccountValidCSRFWithPayment() {
+        $this->builders = $this->buildSubscriberPaidAnnual('Success');
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('paid@example.com', false, true);
 
         //Set close account URL param
         $_POST['close'] = 'true';

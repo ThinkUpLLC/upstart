@@ -33,6 +33,18 @@ class Payment {
      * @var str Caller reference used for charge request.
      */
     var $caller_reference;
+    /**
+     * @var str Refund timestamp (if there was a refund).
+     */
+    var $refund_date;
+    /**
+     * @var str Refund caller reference (if there was one).
+     */
+    var $refund_caller_reference;
+    /**
+     * @var float Refund amount (if there was one).
+     */
+    var $refund_amount;
     public function __construct($row = false) {
         if ($row) {
             $this->id = $row['id'];
@@ -43,6 +55,9 @@ class Payment {
             $this->status_message = $row['status_message'];
             $this->amount = $row['amount'];
             $this->caller_reference = $row['caller_reference'];
+            $this->refund_date = $row['refund_date'];
+            $this->refund_caller_reference = $row['refund_caller_reference'];
+            $this->refund_amount = $row['refund_amount'];
         }
     }
 }

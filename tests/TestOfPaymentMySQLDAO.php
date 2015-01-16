@@ -78,6 +78,21 @@ class TestOfPaymentMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($result, 1);
     }
 
+    public function testSetRefund() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('payments', array('id'=>1, 'transaction_id'=>'asdfsfasdf',
+            'caller_reference'=>'adfasdfasdf', 'status'=>'Not Updated', 'status_message'=>'Longer not updated message',
+            'refund_amount'=>null, 'refund_date'=>null, 'refund_caller_reference'=>null));
+        $dao = new PaymentMySQLDAO();
+        $result = $dao->setRefund(1, 'abcdef', 5.6);
+        $this->assertEqual($result, 1);
+
+        $payment = $dao->getPayment('asdfsfasdf', 'adfasdfasdf');
+        $this->assertEqual($payment->refund_amount, 5.6);
+        $this->assertEqual($payment->refund_caller_reference, 'abcdef');
+        $this->assertNotEqual($payment->refund_date, '0000-00-00 00:00:00');
+    }
+
     public function testCalculateProRatedAnnualRefund() {
         $payment = array('timestamp'=>date('Y-m-d', strtotime('-5 day')), 'transaction_id'=>'abcd', 'amount'=>50);
         $dao = new PaymentMySQLDAO();

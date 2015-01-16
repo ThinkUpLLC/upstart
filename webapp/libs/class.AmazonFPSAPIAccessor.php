@@ -89,6 +89,24 @@ class AmazonFPSAPIAccessor {
     }
 
     /**
+     * Refund FPS transaction.
+     * @param str $caller_reference
+     * @param str $transaction_id
+     * @param str $amount
+     * @return Amazon_FPS_Model_CancelSubscriptionAndRefundResponse
+     */
+    public function refundPayment($caller_reference, $transaction_id, $refund_amount) {
+        $service = new Amazon_FPS_Client($this->AWS_ACCESS_KEY_ID, $this->AWS_SECRET_ACCESS_KEY);
+        $params = array();
+        //REQUIRED PARAMS:
+        $params['TransactionId'] = $transaction_id;
+        $params['RefundAmount'] = array('Value'=>$refund_amount, 'CurrencyCode'=>'USD');
+        $params['CallerReference'] = $caller_reference;
+
+        return $service->refund($params);
+    }
+
+    /**
      * Charge user, record transaction, and report success or error back.
      * @param str $token_id
      * @param int $amount

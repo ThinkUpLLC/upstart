@@ -134,6 +134,9 @@ CREATE TABLE payments (
   status_message varchar(255) DEFAULT NULL COMMENT 'Human readable message that specifies the reason for a request failure (optional).',
   amount int(11) DEFAULT NULL COMMENT 'Amount of payment in USD.',
   caller_reference varchar(24) DEFAULT NULL COMMENT 'Caller reference used for charge request.',
+  refund_date timestamp NULL DEFAULT NULL COMMENT 'Refund timestamp (if there was a refund).',
+  refund_caller_reference varchar(24) DEFAULT NULL COMMENT 'Refund caller reference (if there was one).',
+  refund_amount varchar(100) DEFAULT NULL COMMENT 'Refund amount (if there was one).',
   PRIMARY KEY (id),
   KEY transaction_status (transaction_status)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Amazon FPS payment capture transactions';

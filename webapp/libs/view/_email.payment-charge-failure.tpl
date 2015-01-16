@@ -1,4 +1,4 @@
-<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">Thanks so much for joining ThinkUp! Unfortunately, Amazon Payments had a problem processing your membership payment.
+<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">Thanks so much for renewing your ThinkUp membership! Unfortunately, Amazon Payments had a problem processing your membership payment.
 </p>
 {if $amazon_error_message}
 <p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">

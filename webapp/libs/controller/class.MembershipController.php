@@ -184,30 +184,13 @@ class MembershipController extends AuthController {
 
                                 // Close account
                                 $result = $subscriber_dao->closeAccount($subscriber->id);
-
-                                // Send account closure email
-                                $email_view_mgr = new ViewManager();
-                                $email_view_mgr->caching=false;
-                                $template_name = "Upstart System Messages";
-                                $api_key = Config::getInstance()->getValue('mandrill_api_key_for_payment_reminders');
-
-                                $subject_line = "Your ThinkUp account has been closed";
-                                $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
-                                $email_view_mgr->assign('refund_amount', $refund_amount);
-                                $body_html = $email_view_mgr->fetch('_email.account-closed.tpl');
-                                $headline = "Thanks for trying ThinkUp.";
-                                $message = Mailer::getSystemMessageHTML($body_html, $headline);
-                                try {
-                                    Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line,
-                                        $template_name, array('html_body'=>$message), $api_key);
+                                if ($this->sendAccountClosureEmail($subscriber, $refund_amount)) {
                                     // Log user out with message about closure and refund
                                     $logout_controller = new LogoutController(true);
                                     $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
                                         "and we've issued a refund.  Thanks for trying ThinkUp!");
 
                                     return $logout_controller->control();
-                                } catch (Exception $e) {
-                                    $this->addErrorMessage($e->getMessage());
                                 }
                             } else {
                                 //Show user error, log system error
@@ -225,15 +208,57 @@ class MembershipController extends AuthController {
                             $this->logError($debug, __FILE__, __LINE__, __METHOD__);
                             $this->addErrorMessage($this->generic_error_msg);
                         }
-                    } else { // Free trial, no need to refund or Crowdfunder, no refund support yet
-                        // Close account
-                        $result = $subscriber_dao->closeAccount($subscriber->id);
+                    } else { //Annual subscriber or free trial
+                        //Check for annual subscriber by getting last payment
+                        $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
+                        $latest_payment = $subscriber_payment_dao->getBySubscriber($subscriber->id, 1);
+                        if (sizeof($latest_payment) > 0) {
+                            $latest_payment = $latest_payment[0];
+                        } else {
+                            $latest_payment = null;
+                        }
+                        //If payment exists
+                        if ( $latest_payment !== null ) {
+                            //Calculate refund
+                            $payment_dao = new PaymentMySQLDAO();
+                            $refund_amount = $payment_dao->calculateProRatedAnnualRefund($latest_payment);
+                            //Create a callerReference
+                            $caller_reference = $subscriber->id.'_'.time();
+                            //Issue Refund call to Amazon API
+                            $api_accessor = new AmazonFPSAPIAccessor($use_deprecated_tokens = true);
+                            $response = $api_accessor->refundPayment($caller_reference,
+                                $latest_payment['transaction_id'], $refund_amount);
 
-                        // Log user out with message about closure and refund
-                        $logout_controller = new LogoutController(true);
-                        $logout_controller->addSuccessMessage("Your ThinkUp account is closed. ".
-                            "Thanks for trying ThinkUp!");
-                        return $logout_controller->control();
+                            // Process response
+                            if (isset($response)) {
+                                // Debug
+                                //print_r($response);
+                                // Add refund info to payments table
+                                $payment_dao->setRefund($latest_payment['id'], $caller_reference, $refund_amount);
+                                // Set subscription_status = 'Refunded'
+                                $result = $subscriber_dao->setSubscriptionStatus($subscriber->id, "Refunded");
+                                // Close account
+                                $result = $subscriber_dao->closeAccount($subscriber->id);
+
+                                if ($this->sendAccountClosureEmail($subscriber, $refund_amount)) {
+                                    // Log user out with message about closure and refund
+                                    $logout_controller = new LogoutController(true);
+                                    $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
+                                        "and we've issued a refund.  Thanks for trying ThinkUp!");
+
+                                    return $logout_controller->control();
+                                }
+                            }
+                        } else { //Free trial, no refund
+                            // Close account
+                            $result = $subscriber_dao->closeAccount($subscriber->id);
+
+                            //Log user out with message about closure and refund
+                            $logout_controller = new LogoutController(true);
+                            $logout_controller->addSuccessMessage("Your ThinkUp account is closed. ".
+                                "Thanks for trying ThinkUp!");
+                            return $logout_controller->control();
+                        }
                     }
                 } else {
                     $this->addErrorMessage("This account is already closed. Please log out.");
@@ -329,9 +354,65 @@ class MembershipController extends AuthController {
 
         //Set Amazon payments link to sandbox for testing
         $this->addToView('amazon_sandbox', $config->getValue('amazon_sandbox'));
+
+        //BEGIN DELETEME TESTING ONLY
+        // $fps_api_accessor = new AmazonFPSAPIAccessor($use_deprecated_tokens = true);
+        // $callback_url = UpstartHelper::getApplicationURL().'user/membership.php';
+        // $caller_reference = $subscriber->id.'_'.time();
+        // $amount = 50;
+        // $test_fps_sub = $fps_api_accessor->getAmazonFPSURL($caller_reference, $callback_url, $amount);
+        // $this->addToView('test_fps_sub', $test_fps_sub);
+        // if (UpstartHelper::areGetParamsSet(array('callerReference', 'tokenID', 'signature', 'status'))) {
+        //     if ($fps_api_accessor->isAmazonSignatureValid($callback_url)) {
+        //         //Record authorization
+        //         $authorization_dao = new AuthorizationMySQLDAO();
+        //         $payment_expiry_date = (isset($_GET['expiry']))?$_GET['expiry']:null;
+
+        //         $authorization_id = $authorization_dao->insert($_GET['tokenID'], $amount, $_GET["status"],
+        //             $caller_reference, $error_message, $payment_expiry_date);
+        //         $subscriber_authorization_dao = new SubscriberAuthorizationMySQLDAO();
+        //         $subscriber_authorization_dao->insert($subscriber->id, $authorization_id);
+
+        //         $fps_api_accessor->invokeAmazonPayAction($subscriber->id, $_GET['tokenID'], $amount);
+        //     } else {
+        //         $this->addErrorMessage("Invalid signature");
+        //     }
+        // }
+        //END DELETEME TESTING ONLY
+
         return $this->generateView();
 	}
+    /**
+     * Send account closure email and notify Slack of account closure.
+     * @param  Subscriber $subscriber
+     * @param  int     $refund_amount
+     * @return bool
+     */
+    private function sendAccountClosureEmail(Subscriber $subscriber, $refund_amount) {
+        // Send account closure email
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $template_name = "Upstart System Messages";
+        $api_key = Config::getInstance()->getValue('mandrill_api_key_for_payment_reminders');
 
+        $subject_line = "Your ThinkUp account has been closed";
+        $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
+        $email_view_mgr->assign('refund_amount', $refund_amount);
+        $body_html = $email_view_mgr->fetch('_email.account-closed.tpl');
+        $headline = "Thanks for trying ThinkUp.";
+        $message = Mailer::getSystemMessageHTML($body_html, $headline);
+        try {
+            Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
+                array('html_body'=>$message), $api_key);
+            UpstartHelper::postToSlack('#signups',
+                $subscriber->thinkup_username.' account is closed. Refunded $'.$refund_amount."."
+                .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $subscriber->id);
+        } catch (Exception $e) {
+            $this->addErrorMessage($e->getMessage());
+            return false;
+        }
+        return true;
+    }
     /**
      * Whether or not user has requested account closure.
      * @return bool
@@ -339,7 +420,6 @@ class MembershipController extends AuthController {
     private function hasUserRequestedAccountClosure() {
         return (isset($_POST['close'])  && $_POST['close'] == 'true');
     }
-
     /**
      * Return whether or not user has returned from Amazon with necessary parameters.
      * @return bool
@@ -347,7 +427,6 @@ class MembershipController extends AuthController {
     protected function hasUserReturnedFromAmazon() {
         return UpstartHelper::areGetParamsSet(SignUpHelperController::$amazon_simple_pay_subscription_return_params);
     }
-
     /**
      * Whether or not the response from Amazon has a valid signature.
      * @return bool
@@ -358,7 +437,6 @@ class MembershipController extends AuthController {
         $api_accessor = new AmazonFPSAPIAccessor();
         return $api_accessor->isAmazonSignatureValid($endpoint_url);
     }
-
     /**
      * Get amount a subscription type costs per year in US Dollars.
      * @param  str $membership_level Early Bird, Member, Pro, Exec, Late Bird

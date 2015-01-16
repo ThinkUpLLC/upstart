@@ -102,8 +102,7 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
         $decoded_email = json_decode($email);
         $body = $decoded_email->global_merge_vars[0]->content;
         $this->debug($body);
-        $this->assertPattern('/Thanks for joining ThinkUp!/', $body);
-        $this->assertPattern('/You\'re officially a <strong>ThinkUp Member<\/strong>!/', $body);
+        $this->assertPattern('/Your ThinkUp membership has renewed/', $body);
         $this->assertPattern('/Your membership lasts until <strong>Apr 21, 2015<\/strong>/', $body);
 
         $subscriber_dao = new SubscriberMySQLDAO();
@@ -128,8 +127,7 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
         $decoded_email = json_decode($email);
         $body = $decoded_email->global_merge_vars[0]->content;
         $this->debug($body);
-        $this->assertPattern('/Thanks for joining ThinkUp!/', $body);
-        $this->assertPattern('/You\'re officially a <strong>ThinkUp Pro Member<\/strong>!/', $body);
+        $this->assertPattern('/Your ThinkUp membership has renewed/', $body);
 
         $subscriber_dao = new SubscriberMySQLDAO();
         $subscriber = $subscriber_dao->getByID(1);

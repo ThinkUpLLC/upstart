@@ -121,7 +121,28 @@ class PaymentMySQLDAO extends PDODAO {
         $ps = $this->execute($q, $vars);
         return $this->getUpdateCount($ps);
     }
+    /**
+     * Set refund details for a payment.
+     * @param int $id
+     * @param str $refund_date
+     * @param str $refund_caller_reference
+     * @param int $refund_amount
+     * @return int Number of rows updated
+     */
+    public function setRefund($id, $refund_caller_reference, $refund_amount, $refund_date = 'NOW()') {
+        $q  = "UPDATE payments SET refund_date=:refund_date, refund_caller_reference=:refund_caller_reference, ";
+        $q .= "refund_amount = :refund_amount WHERE id = :id; ";
 
+        $vars = array(
+            ':id'=>$id,
+            ':refund_date'=>(($refund_date=='NOW()')?date('Y-m-d H:m:s'):$refund_date),
+            ':refund_caller_reference'=>$refund_caller_reference,
+            ':refund_amount'=>$refund_amount
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
     /**
      * Get last three days worth of successful payments - total, sum, and date.
      * @return array

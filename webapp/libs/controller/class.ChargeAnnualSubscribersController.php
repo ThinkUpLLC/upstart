@@ -4,7 +4,7 @@
  */
 class ChargeAnnualSubscribersController extends Controller {
 
-    var $charge_limit = 2;
+    var $charge_limit = 10;
 
     public function control() {
         //Number of subscribers to charge per loop

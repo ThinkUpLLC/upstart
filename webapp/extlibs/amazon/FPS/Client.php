@@ -599,10 +599,10 @@ class Amazon_FPS_Client implements Amazon_FPS_Interface
     public function refund($request)
     {
         if (!$request instanceof Amazon_FPS_Model_RefundRequest) {
-            require_once ('Amazon/FPS/Model/RefundRequest.php');
+            //require_once ('Amazon/FPS/Model/RefundRequest.php');
             $request = new Amazon_FPS_Model_RefundRequest($request);
         }
-        require_once ('Amazon/FPS/Model/RefundResponse.php');
+        //require_once ('Amazon/FPS/Model/RefundResponse.php');
         return Amazon_FPS_Model_RefundResponse::fromXML($this->_invoke($this->_convertRefund($request)));
     }
 

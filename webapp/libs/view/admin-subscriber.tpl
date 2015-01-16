@@ -144,7 +144,7 @@
           {if $payment.transaction_status}
             <td>{$payment.transaction_status}</td>
             <td>${$payment.amount}</td>
-            <td> <a href="https://payments{if $is_in_sandbox}-sandbox{/if}.amazon.com/sdui/sdui/txndetail?transactionId={$payment.transaction_id}" target="_new">{$payment.transaction_id}</a><br/>{if $payment.status_message}{$payment.status_message|filter_xss}{/if}</td>
+            <td> <a href="https://payments{if $is_in_sandbox}-sandbox{/if}.amazon.com/sdui/sdui/txndetail?transactionId={$payment.transaction_id}" target="_new">{$payment.transaction_id}</a><br/>{if $payment.status_message}{$payment.status_message|filter_xss}{/if}{if $payment.refund_amount}<p class="text-danger">Refunded ${$payment.refund_amount} on {$payment.refund_date} caller reference {$payment.refund_caller_reference}</p>{/if}</td>
           {else}
             <td class="text-danger">ERROR</td>
             <td>${$payment.amount}</td>

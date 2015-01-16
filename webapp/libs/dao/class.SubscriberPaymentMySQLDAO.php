@@ -37,8 +37,8 @@ class SubscriberPaymentMySQLDAO extends PDODAO {
      * @return arr
      */
     public function getBySubscriber($subscriber_id, $limit=null) {
-        $q = 'SELECT p.timestamp, p.transaction_id, p.request_id, p.transaction_status, p.status_message, p.amount,  ';
-        $q.= 'p.caller_reference ';
+        $q = 'SELECT p.id, p.timestamp, p.transaction_id, p.request_id, p.transaction_status, p.status_message, ';
+        $q.= 'p.amount, p.caller_reference, p.refund_amount, p.refund_date, p.refund_caller_reference ';
         $q.= 'FROM subscriber_payments sp LEFT JOIN payments p ON (p.id = sp.payment_id) ';
         $q.= 'WHERE sp.subscriber_id=:subscriber_id ';
         $q.= 'ORDER BY timestamp DESC ';

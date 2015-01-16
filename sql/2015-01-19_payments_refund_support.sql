@@ -1,0 +1,1 @@
+ALTER TABLE payments ADD refund_date TIMESTAMP NULL DEFAULT NULL COMMENT 'Refund timestamp (if there was a refund).' , ADD refund_caller_reference VARCHAR(24) NULL DEFAULT NULL COMMENT 'Refund caller reference (if there was one).' , ADD refund_amount VARCHAR(100) NULL DEFAULT NULL COMMENT 'Refund amount (if there was one).' ;

@@ -53,7 +53,7 @@ class UpdatePendingPaymentStatusController extends Controller {
                         $api_key = $cfg->getValue('mandrill_api_key_for_payment_reminders');
 
                         if ($status['status'] == 'Success') {
-                            $subject_line = "Thanks for joining ThinkUp!";
+                            $subject_line = "Your ThinkUp membership has renewed";
                             $email_view_mgr->assign('member_level', $subscriber->membership_level);
                             $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
                             $email_view_mgr->assign('amount', $payment->amount);
@@ -69,6 +69,10 @@ class UpdatePendingPaymentStatusController extends Controller {
                             $message = Mailer::getSystemMessageHTML($body_html, $subject_line);
                             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                                 array('html_body'=>$message), $api_key);
+
+                            UpstartHelper::postToSlack('#signups',
+                                $subscriber->thinkup_username.' $'.$payment->amount.' payment succeeded.'
+                                .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $subscriber->id);
                         } elseif ($status['status'] == 'Failure') {
                             $subject_line = "Uh oh! Problem with your ThinkUp payment";
                             $email_view_mgr->assign('amount', $payment->amount);
@@ -84,6 +88,10 @@ class UpdatePendingPaymentStatusController extends Controller {
                             $message = Mailer::getSystemMessageHTML($body_html, $subject_line);
                             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                                 array('html_body'=>$message), $api_key);
+
+                            UpstartHelper::postToSlack('#signups',
+                                $subscriber->thinkup_username.' $'.$payment->amount.' payment FAILED.'
+                                .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $subscriber->id);
                         }
                     }
                 }

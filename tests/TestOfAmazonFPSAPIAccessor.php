@@ -35,4 +35,12 @@ class TestOfAmazonFPSAPIAccessor extends UpstartUnitTestCase {
         //@TODO Mock this call to get API payload from local filesystem
 		//$result = $api_accessor->getTransactionStatus('18EECVOQ637BSI61FLCURNQ9I6T3AMSKUZH');
     }
+
+    public function testRefund() {
+        $api_accessor = new AmazonFPSAPIAccessor($use_deprecated_tokens = true);
+        //@TODO Mock this call to get API payload from local filesystem
+        // $caller_reference = time();
+        // $response = $api_accessor->refundPayment($caller_reference, '19BSAL8CG468LVAIO93ED6RE779DRDGGJNG',
+        //     50);
+    }
 }

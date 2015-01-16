@@ -153,4 +153,8 @@ class AmazonFPSAPIAccessor {
     public function cancelAndRefundSubscription($subscription_id, $refund_amount, $caller_reference) {
         return new Amazon_FPS_Model_CancelSubscriptionAndRefundResponse();
    }
+
+    public function refundPayment($caller_reference, $transaction_id, $refund_amount) {
+        return new Amazon_FPS_Model_RefundRequest();
+    }
 }
