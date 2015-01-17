@@ -137,6 +137,7 @@ class ConfirmPaymentController extends SignUpHelperController {
         //Check inputs match internal rules
         $endpoint_url = UpstartHelper::getApplicationURL().'confirm-payment.php';
         $endpoint_url_params = array('level'=>$_GET['level'], 'recur'=>$_GET['recur'] );
-        return AmazonFPSAPIAccessor::isAmazonSignatureValid($endpoint_url, $endpoint_url_params);
+        $api_accessor = new AmazonFPSAPIAccessor();
+        return $api_accessor->isAmazonSignatureValid($endpoint_url, $endpoint_url_params);
     }
 }

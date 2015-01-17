@@ -142,7 +142,7 @@ class AmazonFPSAPIAccessor {
      * @param  arr  $endpoint_url_params Optional endpoint URL parameters
      * @return bool
      */
-    public static function isAmazonSignatureValid($endpoint_url, $endpoint_url_params = array()) {
+    public function isAmazonSignatureValid($endpoint_url, $endpoint_url_params = array()) {
         if (isset($_GET['signatureValidity'] )) {
             return $_GET['signatureValidity'];
         } else {

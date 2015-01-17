@@ -355,7 +355,8 @@ class MembershipController extends AuthController {
     private function isAmazonResponseValid() {
         //Check inputs match internal rules
         $endpoint_url = UpstartHelper::getApplicationURL().'user/membership.php';
-        return AmazonFPSAPIAccessor::isAmazonSignatureValid($endpoint_url);
+        $api_accessor = new AmazonFPSAPIAccessor();
+        return $api_accessor->isAmazonSignatureValid($endpoint_url);
     }
 
     /**
