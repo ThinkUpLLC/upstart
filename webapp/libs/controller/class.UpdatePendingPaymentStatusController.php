@@ -80,8 +80,10 @@ class UpdatePendingPaymentStatusController extends Controller {
                             if (isset($status['status_message'])
                                 && (strpos($status['status_message'], '<?xml version=') === false)) {
                                 $email_view_mgr->assign('amazon_error_message', $status['status_message'] );
+                                $status_message = $status['status_message'];
                             } else {
                                 $email_view_mgr->assign('amazon_error_message', null );
+                                $status_message = '';
                             }
                             $body_html = $email_view_mgr->fetch('_email.payment-charge-failure.tpl');
 
@@ -90,7 +92,8 @@ class UpdatePendingPaymentStatusController extends Controller {
                                 array('html_body'=>$message), $api_key);
 
                             UpstartHelper::postToSlack('#signups',
-                                $subscriber->thinkup_username.' $'.$payment->amount.' payment FAILED.'
+                                $subscriber->thinkup_username.' $'.$payment->amount.' payment FAILED. '
+                                .$status_message
                                 .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $subscriber->id);
                         }
                     }
