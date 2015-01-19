@@ -10,7 +10,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="what-is"><a href="#what-is">What is ThinkUp?</a></h4>
 
-      <p>ThinkUp is a service that gives you <strong>unique insights</strong> about you and your friends on Twitter and Facebook. We make the time you spend online <strong>more fun</strong>, with clever, plain-English tips and facts about what's happening on your social networks. ThinkUp is also a different kind of tech company, trying each day to live by <a href="http://localhost/join/about/values.php">our values</a>.</p>
+      <p>ThinkUp is a service that gives you <strong>unique insights</strong> about you and your friends on Twitter and Facebook. We make the time you spend online <strong>more fun</strong>, with clever, plain-English tips and facts about what's happening on your social networks. ThinkUp is also a different kind of tech company, trying each day to live by <a href="{$site_root_path}about/values.php">our values</a>.</p>
 
       <p>When you <a href="https://thinkup.com/">join ThinkUp</a>, you get a simple stream showing you those insights about your Twitter and Facebook accounts. And those insights can come to you in a handy daily email, too.</p>
 
