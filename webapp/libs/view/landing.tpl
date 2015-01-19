@@ -2,9 +2,9 @@
 
 <div class="container" id="container-signup-top">
   <div class="section section-screenshot" id="section-signup-top">
-    <h3 class="section-header">We make your Twitter and Facebook a lot more fun.</h3>
+    <h3 class="section-header">Make your Twitter and Facebook a lot more fun.</h3>
     <div class="section-copy">
-      <p>Nobody's ever showed you your social network quite like this. Start your <strong>14-day free trial</strong> and see for yourself.</p>
+      <p>ThinkUp gives you daily insights about you and your friends you can't get anywhere else. Start your <strong>14-day free trial</strong> and see for yourself.</p>
       <div class="signup-buttons">
         <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
         <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign up with</small><br>Facebook</a>

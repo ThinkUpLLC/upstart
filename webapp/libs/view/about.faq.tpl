@@ -10,15 +10,15 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="what-is"><a href="#what-is">What is ThinkUp?</a></h4>
 
-      <p>ThinkUp is a service that gives you <strong>unique insights</strong> about you and your friends on Twitter and Facebook. We make the time you spend online <strong>more fun</strong>, with clever, plain-English tips and facts about what's happening on your social networks. And we're a different kind of tech company, trying to be a little bit more thoughtful and to live by <a href="http://localhost/join/about/values.php">our values</a>.</p>
+      <p>ThinkUp is a service that gives you <strong>unique insights</strong> about you and your friends on Twitter and Facebook. We make the time you spend online <strong>more fun</strong>, with clever, plain-English tips and facts about what's happening on your social networks. ThinkUp is also a different kind of tech company, trying each day to live by <a href="http://localhost/join/about/values.php">our values</a>.</p>
 
       <p>When you <a href="https://thinkup.com/">join ThinkUp</a>, you get a simple stream showing you those insights about your Twitter and Facebook accounts. And those insights can come to you in a handy daily email, too.</p>
 
-      <p>It's easier to understand ThinkUp by letting you try it than by explaining it, so you should probaby sign up for the free trial and see for yourself.</p>
+      <p>It's easier to understand ThinkUp by trying it rather than reading about it, so <a href="https://thinkup.com/">sign up for the free trial</a> and see for yourself.</p>
 
       <h4 id="what-is-beta"><a href="#what-is-beta">What does it mean that ThinkUp is in beta?</a></h4>
 
-      <p>That's our way of saying that some core ThinkUp features are still a work in progress. Because we’re still in beta, we're hard at work making the ThinkUp that you see today even more interesting in the future!</p>
+      <p>That's our way of saying that some core ThinkUp features are still a work in progress. Because we're still in beta, we're hard at work making the ThinkUp that you see today even more interesting in the future.</p>
 
       <h3 class="hc text-header">Membership and Pricing</h3>
 
@@ -32,7 +32,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="why-does-it-cost-money"><a href="#why-does-it-cost-money">Why does ThinkUp cost money?</a></h4>
 
-      <p>ThinkUp costs moeny because we don't have ads and we don't do sketchy things with your data.</p>
+      <p>ThinkUp costs moeny because we don't have ads and we don't sell your data.</p>
 
       <p>We're committed to making sure our company and our product are sustainable and around for the long term. Our members say ThinkUp is worth it, because they like the service and believe in our company.</p>
 
