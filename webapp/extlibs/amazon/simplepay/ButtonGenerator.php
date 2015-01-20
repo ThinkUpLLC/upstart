@@ -107,6 +107,7 @@ class ButtonGenerator {
         $buttonAmount = str_replace('USD ', 'Just ', $formHiddenInputs["amount"]) . " bucks";
         $buttonFreq = $formHiddenInputs["recurringFrequency"];
         $buttonFreq = str_replace("1 month", "month", $buttonFreq);
+        $buttonFreq = str_replace("12 months", "year", $buttonFreq);
 		$form = "";
 		$form .=  "<form action=\"";
 		$form .= $endPoint;
