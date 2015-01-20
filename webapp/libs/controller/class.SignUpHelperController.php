@@ -25,8 +25,8 @@ abstract class SignUpHelperController extends UpstartController {
      */
     public static $subscription_levels = array(
         'earlybird'=>array('12 months'=>50),
-        'member'=>array('1 month'=>5, '12 months'=>50),
-        'pro'=>array('1 month'=>10, '12 months'=>100),
+        'member'=>array('1 month'=>5, '12 months'=>60),
+        'pro'=>array('1 month'=>10, '12 months'=>120),
         'executive'=>array('12 months'=>996)
     );
     /**
