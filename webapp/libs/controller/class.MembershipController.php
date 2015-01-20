@@ -56,14 +56,22 @@ class MembershipController extends AuthController {
                         if ($op->status_code !== 'SF') {
                             $this->addSuccessMessage("Success! Thanks for being a ThinkUp member.");
 
-                            //Figure out how many days left in the trial
-                            $days_left = $subscriber->getDaysLeftInFreeTrial();
-                            UpstartHelper::postToSlack('#signups',
-                                'Hooray! Someone just subscribed from their membership page with '
-                                .$days_left." day".(($days_left != 1)?'s':'')." left in their trial."
-                                .'\nhttps://'. $subscriber->thinkup_username.
-                                '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
-                                $subscriber->id);
+                            if ($op->recurring_frequency == '1 month') {
+                                //Figure out how many days left in the trial
+                                $days_left = $subscriber->getDaysLeftInFreeTrial();
+                                UpstartHelper::postToSlack('#signups',
+                                    'Hooray! Someone just subscribed from their membership page with '
+                                    .$days_left." day".(($days_left != 1)?'s':'')." left in their trial."
+                                    .'\nhttps://'. $subscriber->thinkup_username.
+                                    '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
+                                    $subscriber->id);
+                            } elseif ($op->recurring_frequency == '12 months') {
+                                UpstartHelper::postToSlack('#signups',
+                                    'Yippee! Someone just re-upped for another year from their membership page.'
+                                    .'\nhttps://'. $subscriber->thinkup_username
+                                    .'.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='
+                                    .$subscriber->id);
+                            }
                         } else {
                             $this->addErrorMessage($this->generic_error_msg);
                             $this->logError('Subscription status code is not SF. '. Utils::varDumpToString($op),
