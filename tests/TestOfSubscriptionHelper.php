@@ -72,6 +72,7 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
             'operation'=>'pay', 'status_code'=>'PS', 'transaction_date'=>'-5h', 'recurring_frequency'=>'1 month'));
         $new_values = $helper->getSubscriptionStatusAndPaidThrough($subscriber);
         $this->assertEqual($new_values['subscription_status'], 'Paid');
+        $this->assertEqual($new_values['subscription_recurrence'], '1 month');
         $this->assertNotNull($new_values['paid_through']);
         $this->assertEqual(substr($new_values['paid_through'], 0, 10),
             substr(date('Y-m-d H:i:s',  strtotime('+1 month')), 0, 10));
@@ -84,6 +85,7 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
         $new_values = $helper->getSubscriptionStatusAndPaidThrough($subscriber);
         $this->assertEqual($new_values['subscription_status'], 'Paid');
         $this->assertNotNull($new_values['paid_through']);
+        $this->assertEqual($new_values['subscription_recurrence'], '12 months');
         $this->assertEqual(substr($new_values['paid_through'], 0, 10),
             substr(date('Y-m-d H:i:s',  strtotime('+12 months')), 0, 10));
 
@@ -97,6 +99,7 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
             'transaction_status'=>'Success'));
         $new_values = $helper->getSubscriptionStatusAndPaidThrough($subscriber);
         $this->assertEqual($new_values['subscription_status'], 'Paid');
+        $this->assertEqual($new_values['subscription_recurrence'], '12 months');
         $this->assertNotNull($new_values['paid_through']);
         $this->assertEqual(substr($new_values['paid_through'], 0, 10),
             substr(date('Y-m-d H:i:s',  strtotime('+1 year')), 0, 10));
@@ -109,6 +112,7 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
         $new_values = $helper->getSubscriptionStatusAndPaidThrough($subscriber);
         $this->assertEqual($new_values['subscription_status'], 'Payment failed');
         $this->assertNull($new_values['paid_through']);
+        $this->assertEqual($new_values['subscription_recurrence'], '12 months');
 
         //Pending
         $builders[] = FixtureBuilder::build('subscriber_payments', array('subscriber_id'=>10,
@@ -118,6 +122,7 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
         $new_values = $helper->getSubscriptionStatusAndPaidThrough($subscriber);
         $this->assertEqual($new_values['subscription_status'], 'Payment failed');
         $this->assertNull($new_values['paid_through']);
+        $this->assertEqual($new_values['subscription_recurrence'], '12 months');
 
         //Free trial
         $builders = null; //clear fixtures
@@ -125,6 +130,7 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
         $new_values = $helper->getSubscriptionStatusAndPaidThrough($subscriber);
         $this->assertEqual($new_values['subscription_status'], 'Free trial');
         $this->assertNull($new_values['paid_through']);
+        $this->assertNull($new_values['subscription_recurrence']);
 
         //Payment due, trial expired
         $builders = null; //clear fixtures
@@ -132,9 +138,10 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
         $new_values = $helper->getSubscriptionStatusAndPaidThrough($subscriber);
         $this->assertEqual($new_values['subscription_status'], 'Payment due');
         $this->assertNull($new_values['paid_through']);
+        $this->assertNull($new_values['subscription_recurrence']);
     }
 
-    public function testUpdateSubscriptionStatusAndPaidThrough() {
+    public function testUpdateSubscriptionStatusAndPaidThrough1Month() {
         $subscriber = new Subscriber();
         $subscriber->id = 10;
         $subscriber->is_membership_complimentary = true;
@@ -158,5 +165,33 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
         $subscriber = $subscriber_dao->getByID(10);
         $this->assertEqual($subscriber->subscription_status, 'Paid');
         $this->assertEqual($subscriber->paid_through, '2014-09-25 08:52:08');
+        $this->assertEqual($subscriber->subscription_recurrence, '1 month');
+    }
+
+    public function testUpdateSubscriptionStatusAndPaidThrough12Months() {
+        $subscriber = new Subscriber();
+        $subscriber->id = 10;
+        $subscriber->is_membership_complimentary = true;
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>10));
+
+        //Monthly subscription
+        $subscriber->is_membership_complimentary = false;
+
+        $operation = new SubscriptionOperation();
+        $operation->subscriber_id = 10;
+        $operation->recurring_frequency = '12 months';
+        $operation->operation = 'pay';
+        $operation->status_code = 'PS';
+        $operation->transaction_date = '2014-08-25 08:52:08';
+
+        $helper = new SubscriptionHelper();
+        $helper->updateSubscriptionStatusAndPaidThrough($subscriber, $operation);
+
+        $subscriber_dao = new SubscriberMySQLDAO();
+        $subscriber = $subscriber_dao->getByID(10);
+        $this->assertEqual($subscriber->subscription_status, 'Paid');
+        $this->assertEqual($subscriber->paid_through, '2015-08-25 08:52:08');
+        $this->assertEqual($subscriber->subscription_recurrence, '12 months');
     }
 }

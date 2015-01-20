@@ -33,7 +33,7 @@ class SubscriptionHelper {
                     $paid_through_time = strtotime('+'.$latest_operation->recurring_frequency,
                         strtotime($latest_operation->transaction_date));
                 }
-                $subscription_recurrence = '1 month';
+                $subscription_recurrence = $latest_operation->recurring_frequency;
             } else {
                 //Get latest payment
                 $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
@@ -107,10 +107,7 @@ class SubscriptionHelper {
             $paid_through_time = date('Y-m-d H:i:s', $paid_through_time);
         }
         $result += $subscriber_dao->setPaidThrough($subscriber->id, $paid_through_time);
-        //If a user converts from annual to monthly, update subscription_recurrence
-        if ($subscriber->subscription_recurrence != '1 month') {
-            $result += $subscriber_dao->setSubscriptionRecurrence($subscriber->id, '1 month');
-        }
+        $result += $subscriber_dao->setSubscriptionRecurrence($subscriber->id, $operation->recurring_frequency);
         return ($result > 0); //return true if a field got updated
     }
 
