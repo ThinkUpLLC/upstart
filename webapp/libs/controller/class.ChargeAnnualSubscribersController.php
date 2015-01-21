@@ -4,11 +4,11 @@
  */
 class ChargeAnnualSubscribersController extends Controller {
 
-    var $charge_limit = 20;
+    var $charge_limit = 10;
 
     public function control() {
         //Number of subscribers to charge per loop
-        $sizeof_rowset = 20;
+        $sizeof_rowset = 10;
         $subscriber_dao = new SubscriberMySQLDAO();
         $total_members_to_charge = $subscriber_dao->getTotalAnnualSubscribersToCharge();
         $this->addToView('total_members_to_charge', $total_members_to_charge);
@@ -47,7 +47,7 @@ class ChargeAnnualSubscribersController extends Controller {
                             echo 'Success charging '.$sub['email'];
                         } else {
                             echo 'Failure charging '.$sub['email'];
-                            $this->sendFailureNotification($amount);
+                            $this->sendFailureNotification($subscriber, $amount);
                             UpstartHelper::postToSlack('#signups',
                                 $subscriber->thinkup_username.' $'.$amount.' payment FAILED. '
                                 .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $subscriber->id);
@@ -68,7 +68,7 @@ class ChargeAnnualSubscribersController extends Controller {
         }
     }
 
-    public function sendFailureNotification($amount) {
+    public function sendFailureNotification($subscriber, $amount) {
         // Send an email to the member re: payment status
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
