@@ -9,11 +9,15 @@ require_once 'init.php';
  * s (signature) = a token proving the loader is legit
  *
  * v 1.0
- * Retrieve image from filesystem
- * If it exists, return it
- * If it does not exist, request URL
- * If URL is 200, save to file system and return file
- * If URL is 404, return blank image
+ * If request has a valid signature and is for an avatar:
+ * If request is for a Twitter avatar (ie, from pbs.twimg.com)
+ *     Retrieve image from filesystem
+ *     If it exists, return it
+ *     If it does not exist, request URL
+ *     If URL is 200, save to file system and return file
+ *     If URL is 404, return blank image
+ * else redirect to the url
+ * else redirect to the url
  *
  * Filesystem store: md5($url)
  *
@@ -37,21 +41,30 @@ class ImageProxyCacheController extends UpstartController {
         if ($this->isValidRequest()) {
             $this->url = $_GET['url'];
             $parsed_url = parse_url($this->url);
-            $url_path = $parsed_url['path'];
-            $extension = pathinfo($url_path, PATHINFO_EXTENSION);
-            $this->local_filename = $this->getLocalFilename($this->url, $extension);
 
-            if (file_exists($this->local_filename)) {
-                $type = 'image/'.$extension;
-                header('Content-Type:'.$type);
-                header('Content-Length: ' . filesize($this->local_filename));
-                readfile($this->local_filename);
+            //Only cache Twitter avatars
+            if ($parsed_url['host'] == 'pbs.twimg.com') {
+                //Get the path
+                $url_path = $parsed_url['path'];
+                //Get the file extension
+                $extension = pathinfo($url_path, PATHINFO_EXTENSION);
+                //Construct the local cache filename
+                $this->local_filename = $this->getLocalFilename($this->url, $extension);
+
+                if (file_exists($this->local_filename)) {
+                    $type = 'image/'.$extension;
+                    header('Content-Type:'.$type);
+                    header('Content-Length: ' . filesize($this->local_filename));
+                    readfile($this->local_filename);
+                } else {
+                    $blank_image = (FileDataManager::getDataPath()).'image-cache/avatars/blank.png';
+                    $this->cacheAndDisplayImage($this->url, $this->local_filename, $blank_image, $extension);
+                }
             } else {
-                $blank_image = (FileDataManager::getDataPath()).'image-cache/avatars/blank.png';
-                $this->cacheAndDisplayImage($this->url, $this->local_filename, $blank_image, $extension);
+                $this->redirect($this->url);
             }
         } else {
-            return null;
+            $this->redirect($this->url);
         }
     }
     /**
@@ -59,12 +72,15 @@ class ImageProxyCacheController extends UpstartController {
      * @return bool
      */
     public function isValidRequest() {
+        $cfg = Config::getInstance();
+        $passphrase = $cfg->getValue('image_proxy_passphrase');
+
         return (
             isset($_GET['url'])
             //image type
             && (isset($_GET['t']) && $_GET['t'] == 'avatar')
-            //request signature is a simple MD5 hash of today's date + a passphrase
-            && (isset($_GET['s']) && $_GET['s'] == md5(date('Y-m-D')."n1ce2bn1ce"))
+            //request signature is a simple MD5 hash of a passphrase
+            && (isset($_GET['s']) && $_GET['s'] == md5($passphrase))
         );
     }
     /**
