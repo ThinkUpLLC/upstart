@@ -4,11 +4,11 @@
  */
 class ChargeAnnualSubscribersController extends Controller {
 
-    var $charge_limit = 10;
+    var $charge_limit = 20;
 
     public function control() {
         //Number of subscribers to charge per loop
-        $sizeof_rowset = 50;
+        $sizeof_rowset = 20;
         $subscriber_dao = new SubscriberMySQLDAO();
         $total_members_to_charge = $subscriber_dao->getTotalAnnualSubscribersToCharge();
         $this->addToView('total_members_to_charge', $total_members_to_charge);
@@ -42,13 +42,17 @@ class ChargeAnnualSubscribersController extends Controller {
                         } catch (Exception $e) {
                             echo 'Error: '.$e->getMessage();
                         }
+                        $subscriber = $subscriber_dao->getByID($sub['id']);
                         if ($results) {
                             echo 'Success charging '.$sub['email'];
                         } else {
                             echo 'Failure charging '.$sub['email'];
+                            $this->sendFailureNotification($amount);
+                            UpstartHelper::postToSlack('#signups',
+                                $subscriber->thinkup_username.' $'.$amount.' payment FAILED. '
+                                .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $subscriber->id);
                         }
                         echo "</li>";
-                        $subscriber = $subscriber_dao->getByID($sub['id']);
                         $subscriber_dao->updateSubscriberSubscriptionDetails($subscriber);
                         $results = null;
                     }
@@ -62,5 +66,22 @@ class ChargeAnnualSubscribersController extends Controller {
             }
             echo "<br><br>Charged ".$total_charged." members.";
         }
+    }
+
+    public function sendFailureNotification($amount) {
+        // Send an email to the member re: payment status
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $template_name = "Upstart System Messages";
+        $cfg = Config::getInstance();
+        $api_key = $cfg->getValue('mandrill_api_key_for_payment_reminders');
+
+        $subject_line = "Uh oh! Problem with your ThinkUp payment";
+        $email_view_mgr->assign('amount', $amount);
+        $body_html = $email_view_mgr->fetch('_email.payment-charge-failure.tpl');
+
+        $message = Mailer::getSystemMessageHTML($body_html, $subject_line);
+        Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
+            array('html_body'=>$message), $api_key);
     }
 }
