@@ -239,13 +239,14 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
     }
 
     /**
-     * Get last X days worth of new subscribers.
+     * Get last X days worth of new monthly subscriptions.
      * @param int $limit Defaults to 120
      * @return array
      */
     public function getDailySubscribers($limit = 120) {
         $q = "SELECT COUNT(reference_id) as successful_payments, DATE(timestamp) AS payment_date
-            FROM subscription_operations so WHERE status_code = 'SS' GROUP BY payment_date
+            FROM subscription_operations so WHERE status_code = 'SS' AND recurring_frequency = '1 month'
+            GROUP BY payment_date
             ORDER BY timestamp DESC LIMIT 0, :limit;";
         $vars = array(':limit'=>$limit);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
@@ -260,13 +261,15 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
     }
 
     /**
-     * Get last X days worth of successful payments (new subscribers and recharges).
+     * Get last X days worth of successful payments for monthly subscriptions (new subscribers and recharges).
+     * @param bool $monthly_only Defaults to true
      * @param int $limit Defaults to 120
      * @return array
      */
     public function getDailySuccessfulPayments($limit = 120) {
         $q = "SELECT COUNT(reference_id) as successful_payments, DATE(timestamp) AS payment_date
-            FROM subscription_operations so WHERE status_code = 'PS' GROUP BY payment_date
+            FROM subscription_operations so WHERE status_code = 'PS' AND recurring_frequency = '1 month'
+            GROUP BY payment_date
             ORDER BY timestamp DESC LIMIT 0, :limit;";
         $vars = array(':limit'=>$limit);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }

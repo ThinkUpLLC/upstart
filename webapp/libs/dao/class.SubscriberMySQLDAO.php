@@ -980,13 +980,13 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     /**
-     * Get total subscriptions week over week.
+     * Get total monthly subscriptions week over week.
      * @return arr
      */
     public function getSubscriptionsByWeek($limit = 14) {
         $q = "SELECT date(timestamp) as date, YEARWEEK(timestamp) as week_of_year, count(*) AS total_subs ";
         $q .= "FROM subscription_operations where operation='pay' AND status_code='SS' ";
-        $q .= "GROUP BY YEARWEEK(timestamp) ORDER BY timestamp DESC LIMIT :limit";
+        $q .= "AND recurring_frequency = '1 month' GROUP BY YEARWEEK(timestamp) ORDER BY timestamp DESC LIMIT :limit";
         $vars = array(':limit'=>$limit);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
@@ -996,13 +996,13 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     /**
-     * Get total subscriptions month over month.
+     * Get total monthly subscriptions month over month.
      * @return arr
      */
     public function getSubscriptionsByMonth() {
         $q = "SELECT date(timestamp) as date, MONTH(timestamp) as month_of_year, count(*) AS total_subs ";
         $q .= "FROM subscription_operations where operation='pay' AND status_code='SS' AND timestamp >= '2014-09-01' ";
-        $q .= "GROUP BY MONTH(timestamp) ORDER BY timestamp DESC LIMIT 14";
+        $q .= "AND recurring_frequency = '1 month' GROUP BY MONTH(timestamp) ORDER BY timestamp DESC LIMIT 14";
 
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
