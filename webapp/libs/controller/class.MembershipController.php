@@ -315,7 +315,7 @@ class MembershipController extends AuthController {
 
             $api_accessor = new AmazonFPSAPIAccessor();
             $pay_with_amazon_form = $api_accessor->generateSubscribeForm('USD '.$amount,
-                $subscriber->subscription_recurrence, 'ThinkUp.com monthly membership',
+                $subscriber->subscription_recurrence, 'ThinkUp.com membership',
                 $caller_reference, $callback_url);
 
             $this->addToView('pay_with_amazon_form', $pay_with_amazon_form);

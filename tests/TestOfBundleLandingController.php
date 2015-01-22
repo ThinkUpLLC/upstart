@@ -89,7 +89,7 @@ class TestOfBundleLandingController extends UpstartUnitTestCase {
         $_GET['signatureMethod'] = "SHA";
         $_GET['signature'] = 'signature1';
         if ($include_all_params) {
-            $_GET['paymentReason'] = "ThinkUp.com monthly membership";
+            $_GET['paymentReason'] = "ThinkUp.com membership";
             $_GET['transactionAmount'] = 'USD 100';
             $_GET['operation'] = 'pay';
         }

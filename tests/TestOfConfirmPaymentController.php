@@ -96,7 +96,7 @@ class TestOfConfirmPaymentController extends UpstartUnitTestCase {
         $_GET['signatureMethod'] = "SHA";
         $_GET['signature'] = 'signature1';
         if ($include_all_params) {
-            $_GET['paymentReason'] = "ThinkUp.com monthly membership";
+            $_GET['paymentReason'] = "ThinkUp.com membership";
             $_GET['transactionAmount'] = 'USD 5';
             $_GET['status'] = 'SS';
             $_GET['referenceId'] = '24_34390d';
