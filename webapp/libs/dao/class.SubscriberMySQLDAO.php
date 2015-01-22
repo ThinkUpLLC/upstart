@@ -297,7 +297,7 @@ class SubscriberMySQLDAO extends PDODAO {
 
     public function getPaidTotal() {
         $q  = "SELECT count(*) as total, subscription_recurrence FROM subscribers s ";
-        $q .= "WHERE subscription_status = 'Paid' ";
+        $q .= "WHERE subscription_status = 'Paid' AND is_account_closed != 1 ";
         $q .= "GROUP BY subscription_recurrence";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
