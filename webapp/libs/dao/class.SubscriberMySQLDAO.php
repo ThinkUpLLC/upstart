@@ -934,6 +934,19 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getDataRowsAsObjects($ps, 'Subscriber');
     }
 
+    /**
+     * Get 25 subscribers to uninstall because the account is closed and it's been 30 hours since last dispatch time.
+     * @return arr Array of Subscriber objects
+     */
+    public function getSubscribersToUninstallDueToAccountClosure() {
+        $q = "SELECT * FROM subscribers WHERE is_account_closed = 1 ";
+        $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL 30 HOUR )) ";
+        $q .= "ORDER BY creation_time ASC LIMIT 25";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+        return $this->getDataRowsAsObjects($ps, 'Subscriber');
+    }
+
     public function setTotalPaymentRemindersSent($subscriber_id, $total_payment_reminders_sent) {
         $q = "UPDATE subscribers SET total_payment_reminders_sent = :total_payment_reminders_sent, ";
         $q .="payment_reminder_last_sent =  NOW() WHERE id = :subscriber_id;";
