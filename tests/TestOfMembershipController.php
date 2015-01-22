@@ -521,11 +521,13 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Success! Thanks for being a ThinkUp member./', $results);
         $this->assertNoPattern('/Oops! Something went wrong and our team is looking into it./', $results);
 
-        $dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
         $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $subscriber->thinkup_username
             . '.tu_owners o WHERE o.email = "paid@example.com"');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['is_free_trial'], 0);
+
+        $subscriber = $dao->getByEmail('paid@example.com');
+        $this->assertEqual($subscriber->paid_through, '2014-09-04 17:27:57');
     }
 
     public function testCloseAccountValidCSRFFreeTrial() {
@@ -698,7 +700,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/It worked! We&#39;ve applied your coupon code./', $results);
         $this->assertNoPattern('/Oops! There was a problem processing your code. Please try again./', $results);
 
-        $dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
         $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $subscriber->thinkup_username
             . '.tu_owners o WHERE o.email = "paid@example.com"');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -726,7 +727,6 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Pay now with Amazon/', $results);
         $this->assertNoPattern('/Free trial that expires/', $results);
 
-        $dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
         $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $subscriber->thinkup_username
             . '.tu_owners o WHERE o.email = "paid@example.com"');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);

@@ -49,7 +49,7 @@ class TestOfConfirmPaymentController extends UpstartUnitTestCase {
         $subscriber_dao = new SubscriberMySQLDAO();
         $subscriber = $subscriber_dao->getByEmail('me@example.com');
         $this->assertEqual($subscriber->subscription_status, 'Paid');
-        $this->assertNotNull($subscriber->paid_through);
+        $this->assertEqual($subscriber->paid_through, '2014-09-04 17:27:57');
 
         //Refresh
         $results = $this->confirmPaymentControl(true);
