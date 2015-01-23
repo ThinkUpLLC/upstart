@@ -81,7 +81,14 @@ body_classes="settings menu-open" body_id="settings-subscription"}
       {if $membership_status eq 'Free trial'}
         <div class="form-message">
           {$amazon_form}
+      {elseif isset($failed_cc_amazon_form)}
+        <div class="form-message">
+          <p><small>{$failed_cc_amazon_text}</small></p>
+          {$failed_cc_amazon_form}
+      {/if}
 
+      {* Show coupon code entry if there's a pay button *}
+      {if $membership_status eq 'Free trial' || isset($failed_cc_amazon_form)}
           <p><a class="alt-to-btn-large" id="btn-claim-code" href="#">Got a coupon code?</a></p>
         </div>
 
@@ -94,11 +101,6 @@ body_classes="settings menu-open" body_id="settings-subscription"}
           </fieldset>
           <button type="submit" value="Submit code" name="submit" class="btn-submit">Submit</button>
         </form>
-      {elseif isset($failed_cc_amazon_form)}
-        <div class="form-message">
-          <p><small>{$failed_cc_amazon_text}</small></p>
-          {$failed_cc_amazon_form}
-        </div>
       {/if}
     {/if}
 
@@ -110,7 +112,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
         <div class="modal-content">
           <header class="container-header">
             <h1>Do you really want to close your account?</h1>
-            <h2>{if $membership_status neq 'Free trial' and $subscriber->subscription_recurrence neq 'None'}You will receive a refund and all{else}All{/if} your data will be deleted. This cannot be undone.</h2>
+            <h2>{if $subscriber->subscription_status eq 'Paid' and $subscriber->subscription_recurrence neq 'None'}You will receive a refund and all{else}All{/if} your data will be deleted. This cannot be undone.</h2>
           </header>
           <form id="form-membership-close-account" action="membership.php" method="post">
             <input type="hidden" name="close" value="true" />

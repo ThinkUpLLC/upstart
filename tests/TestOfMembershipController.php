@@ -372,6 +372,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Paid through/', $results);
         //Don't show book links
         $this->assertNoPattern('/Kindle/', $results);
+        //Show coupon code entry
+        $this->assertPattern('/Got a coupon code/', $results);
     }
 
     public function testPaymentDue() {
@@ -397,6 +399,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
         $this->assertNoPattern('/Paid through/', $results);
+        //Show coupon code entry
+        $this->assertPattern('/Got a coupon code/', $results);
     }
 
     private function buildSubscriberFreeTrialCreated($days_ago) {
@@ -441,6 +445,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_date = date('M j ');
         //Don't show book link
         $this->assertNoPattern('/Kindle/', $results);
+        //Show coupon code entry
+        $this->assertPattern('/Got a coupon code/', $results);
     }
 
     public function testFreeTrialExpired() {
@@ -458,13 +464,15 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
         $this->assertPattern('/Pay now/', $results);
-        $this->assertPattern('/Expired!/', $results);
+        $this->assertPattern('/expired!/', $results);
         $this->assertNoPattern('/Payment pending/', $results);
         $this->assertNoPattern('/Paid through/', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
         //Don't show book link
         $this->assertNoPattern('/Kindle/', $results);
+        //Show coupon code entry
+        $this->assertPattern('/Got a coupon code/', $results);
     }
 
     private function buildSubscriberAccountClosed() {
@@ -755,6 +763,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Whoops! It looks like that code has already been used/', $results);
         $this->assertNoPattern('/It worked! We&#39;ve applied your coupon code./', $results);
         $this->assertNoPattern('/Oops! There was a problem processing your code. Please try again./', $results);
+        //Close account button shouldn't promise a refund for coupon codes
+        $this->assertNoPattern('/You will receive a refund/', $results);
 
         $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM thinkupstart_'. $subscriber->thinkup_username
             . '.tu_owners o WHERE o.email = "paid@example.com"');

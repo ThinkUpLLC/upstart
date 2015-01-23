@@ -308,7 +308,7 @@ class MembershipController extends AuthController {
         if ($membership_status == 'Free trial') {
             $days_left_in_trial = $subscriber->getDaysLeftInFreeTrial();
             if ($days_left_in_trial < 1) {
-                $this->addToView('trial_status', 'Expired!');
+                $this->addToView('trial_status', 'expired');
             } else {
                 $this->addToView('trial_status', 'expires in <strong>'.$days_left_in_trial.' day'
                     .(($days_left_in_trial > 1)?'s':'').'</strong>');
