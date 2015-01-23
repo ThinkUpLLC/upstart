@@ -125,8 +125,8 @@ body_classes="marketing marketing-page" body_id="marketing-terms"}
       <blockquote>
       &ldquo;We&#39;ll follow our privacy policy.&rdquo;
       </blockquote>
-      <p>Any information you provide to ThinkUp is subject to ThinkUp&#39;s [Privacy
-      Policy], which governs our collection and use of your information. You
+      <p>Any information you provide to ThinkUp is subject to ThinkUp&#39;s <a href="privacy.php">Privacy
+      Policy</a>, which governs our collection and use of your information. You
       understand that through your use of the Services you consent to the
       collection and use (as set forth in the Privacy Policy) of this information.</p>
       <h3 class="hc">6. Content and Intellectual Property Rights</h3>
