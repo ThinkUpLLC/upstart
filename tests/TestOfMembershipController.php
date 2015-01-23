@@ -51,6 +51,15 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         return $builders;
     }
 
+    private function buildSubscriberWithPaymentDue() {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'due@example.com',
+            'is_membership_complimentary'=>0, 'thinkup_username'=>'xanderharris',
+            'subscription_status'=>'Payment due',
+            'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>'Member'));
+        return $builders;
+    }
+
     public function testComped() {
         $this->builders = $this->buildSubscriberWithComplimentaryMembership();
         $dao = new SubscriberMySQLDAO();
@@ -65,6 +74,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertPattern('/Complimentary membership/', $results);
+        //Show book links
+        $this->assertPattern('/Kindle/', $results);
     }
 
     public function testPaidSuccessfullyAnnualMember() {
@@ -88,6 +99,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_date = date('M j, ');
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
         $this->assertPattern('/60 per year/', $results);
+        //Show book links
+        $this->assertPattern('/Kindle/', $results);
     }
 
     public function testPaidSuccessfullyAnnualEarlyBird() {
@@ -157,6 +170,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_date = date('M j, ');
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
         $this->assertPattern('/120 per year/', $results);
+        //Show book links
+        $this->assertPattern('/Kindle/', $results);
     }
 
     public function testPaidSuccessfullyAnnualExec() {
@@ -180,6 +195,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_date = date('M j, ');
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
         $this->assertPattern('/996 per year/', $results);
+        //Show book links
+        $this->assertPattern('/Kindle/', $results);
     }
 
     public function testPaidSuccessfullyMonthlyMember() {
@@ -200,6 +217,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/You will receive a refund/', $results);
         $this->assertPattern('/Paid through/', $results);
         $this->assertPattern('/5 per month/', $results);
+        //Show book links
+        $this->assertPattern('/Kindle/', $results);
     }
 
     public function testPaidSuccessfullyMonthlyPro() {
@@ -220,6 +239,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/You will receive a refund/', $results);
         $this->assertPattern('/Paid through/', $results);
         $this->assertPattern('/10 per month/', $results);
+        //Show book links
+        $this->assertPattern('/Kindle/', $results);
     }
 
     public function testPaidSuccessfullyViaClaimCode() {
@@ -245,6 +266,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Paid through/', $results);
         //Don't show recurring subscription details
         $this->assertNoPattern('/10 per month/', $results);
+        //Show book links
+        $this->assertPattern('/Kindle/', $results);
     }
 
     public function testEbookDownload() {
@@ -347,6 +370,33 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
         $this->assertNoPattern('/Paid through/', $results);
+        //Don't show book links
+        $this->assertNoPattern('/Kindle/', $results);
+    }
+
+    public function testPaymentDue() {
+        $this->builders = $this->buildSubscriberWithPaymentDue();
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('due@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('due@example.com');
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Membership Info/', $results);
+        $this->assertPattern('/This is what our database knows./', $results);
+        $this->assertPattern('/Payment due/', $results);
+        $this->assertNoPattern('/Complimentary membership/', $results);
+        $this->assertNoPattern('/easy to fix/', $results);
+        //Don't show book link
+        $this->assertNoPattern('/Kindle/', $results);
+        $this->assertPattern('/One last step/', $results);
+        $this->assertNoPattern('/Payment pending/', $results);
+        $paid_through_year = intval(date('Y')) + 1;
+        $paid_through_date = date('M j ');
+        $this->assertNoPattern('/Paid through/', $results);
     }
 
     private function buildSubscriberFreeTrialCreated($days_ago) {
@@ -389,6 +439,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/You will receive a refund/', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
+        //Don't show book link
+        $this->assertNoPattern('/Kindle/', $results);
     }
 
     public function testFreeTrialExpired() {
@@ -411,6 +463,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Paid through/', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
+        //Don't show book link
+        $this->assertNoPattern('/Kindle/', $results);
     }
 
     private function buildSubscriberAccountClosed() {
@@ -441,6 +495,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Paid through/', $results);
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j ');
+        //Don't show book link
+        $this->assertNoPattern('/Kindle/', $results);
     }
 
     public function testInvalidReturnFromAmazonRetriedPayment() {

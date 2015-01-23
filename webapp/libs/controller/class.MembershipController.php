@@ -315,8 +315,10 @@ class MembershipController extends AuthController {
             }
         }
 
-        // If status is "Payment failed" or "Free trial" then send Amazon Payments URL to view and handle charge
-        if ($membership_status == 'Payment failed' || $membership_status == 'Free trial') {
+        // If status is "Payment failed" or "Free trial" or "Payment due"
+        // then send Amazon Payments URL to view and handle charge
+        if ($membership_status == 'Payment failed' || $membership_status == 'Free trial'
+            || $membership_status == 'Payment due') {
             $callback_url = UpstartHelper::getApplicationURL().'user/membership.php';
             $caller_reference = $subscriber->id.'_'.time();
             $amount = self::getSubscriptionAmount($subscriber->membership_level, $subscriber->subscription_recurrence);
@@ -345,7 +347,7 @@ class MembershipController extends AuthController {
         //END populating membership_status
 
         // Add ebook download link for members who have paid successfully or been comped
-        if ( (strpos( $membership_status, 'Paid through') !== false)  || $subscriber->is_membership_complimentary ) {
+        if ( $subscriber->subscription_status == 'Paid' || $subscriber->is_membership_complimentary ) {
             $this->addToView('ebook_download_link_pdf', 'http://book.thinkup.com/insights.pdf');
             $this->addToView('ebook_download_link_kindle', 'http://book.thinkup.com/insights.mobi');
             $this->addToView('ebook_download_link_epub', 'http://book.thinkup.com/insights.epub');
