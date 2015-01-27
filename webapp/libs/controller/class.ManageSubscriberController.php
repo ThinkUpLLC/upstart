@@ -118,6 +118,12 @@ class ManageSubscriberController extends Controller {
                             $this->addSuccessMessage("Decomped membership for ".$subscriber->email);
                             $subscriber->is_membership_complimentary = false;
                         }
+                    } elseif ($_GET['action'] == 'due') {
+                        $is_payment_due = $subscriber_dao->setSubscriptionStatus($subscriber_id, 'Payment due');
+                        if ( $is_payment_due > 0 ) {
+                            $this->addSuccessMessage("Set status to Payment due for ".$subscriber->email);
+                            $subscriber->subscription_status = 'Payment due';
+                        }
                     } elseif ($_GET['action'] == 'charge') {
                         if (isset($_GET['token_id']) && isset($_GET['amount'])) {
                             $fps_api_accessor = new AmazonFPSAPIAccessor($use_deprecated_tokens = true);

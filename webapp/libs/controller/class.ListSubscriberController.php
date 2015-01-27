@@ -5,7 +5,7 @@ class ListSubscriberController extends Controller {
      * @var array
      */
     var $payment_statuses = array('Free trial', 'Paid', 'Payment failed', 'Refunded', 'Payment pending',
-        'Complimentary membership');
+        'Complimentary membership', 'Payment due');
 
     public function control() {
         $this->disableCaching();

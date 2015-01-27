@@ -139,6 +139,14 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
         $this->assertEqual($new_values['subscription_status'], 'Payment due');
         $this->assertNull($new_values['paid_through']);
         $this->assertNull($new_values['subscription_recurrence']);
+
+        //Set to Payment due at some point
+        $subscriber = new Subscriber();
+        $subscriber->id = 11;
+        $subscriber->subscription_status = 'Payment due';
+        $new_values = $helper->getSubscriptionStatusAndPaidThrough($subscriber);
+        $this->assertEqual($new_values['subscription_status'], 'Payment due');
+        $this->assertNull($new_values['paid_through']);
     }
 
     public function testUpdateSubscriptionStatusAndPaidThrough1Month() {

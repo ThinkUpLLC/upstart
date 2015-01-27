@@ -9,7 +9,7 @@ class SubscriptionHelper {
      * - Complimentary membership
      * - Payment pending
      * - Payment failed
-     * - Payment due (For non-recurring and complimentary memberships which have expired)
+     * - Payment due (For expired non-recurring and comp memberships, or manual overrides for up/downgrades)
      * - Authorization pending
      * - Authorization failed
      * - Refunded
@@ -22,6 +22,9 @@ class SubscriptionHelper {
         $subscription_recurrence = null;
         if ($subscriber->is_membership_complimentary) {
             $subscription_status = "Complimentary membership";
+        } elseif ($subscriber->subscription_status == 'Payment due') {
+            //Don't overwrite Payment due statuses; they may have been set manually in Upstart
+            $subscription_status = "Payment due";
         } else {
             //Get latest subscription operation
             $sub_op_dao = new SubscriptionOperationMySQLDAO();

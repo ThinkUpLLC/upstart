@@ -23,7 +23,7 @@
 
           <tr>
             <td>Status</td>
-            <td>{$subscriber->subscription_status}{if $subscriber->subscription_status eq "Paid"} through {$subscriber->paid_through_friendly}, billed {if $subscriber->subscription_recurrence eq '1 month'}monthly{elseif $subscriber->subscription_recurrence eq '12 months'}yearly{elseif $subscriber->subscription_recurrence eq 'None'}one-time{/if}{/if}{if $subscriber->is_account_closed} - <span class="text-danger">Account closed</span>{/if} {include file="_admin-comp.tpl"}
+            <td>{$subscriber->subscription_status}{if $subscriber->subscription_status eq "Paid"} through {$subscriber->paid_through_friendly}, billed {if $subscriber->subscription_recurrence eq '1 month'}monthly{elseif $subscriber->subscription_recurrence eq '12 months'}yearly{elseif $subscriber->subscription_recurrence eq 'None'}one-time{/if}{/if}{if $subscriber->is_account_closed} - <span class="text-danger">Account closed</span>{/if} {include file="_admin-change-status.tpl"}
             </td>
           </tr>
           {if $subscriber->total_payment_reminders_sent > 0}
