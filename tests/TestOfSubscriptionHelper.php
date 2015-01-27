@@ -132,11 +132,11 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
         $this->assertNull($new_values['paid_through']);
         $this->assertNull($new_values['subscription_recurrence']);
 
-        //Payment due, trial expired
+        //Trial, even more than 14 days
         $builders = null; //clear fixtures
         $subscriber->creation_time = date('Y-m-d', strtotime('-16 days'));
         $new_values = $helper->getSubscriptionStatusAndPaidThrough($subscriber);
-        $this->assertEqual($new_values['subscription_status'], 'Payment due');
+        $this->assertEqual($new_values['subscription_status'], 'Free trial');
         $this->assertNull($new_values['paid_through']);
         $this->assertNull($new_values['subscription_recurrence']);
 
@@ -147,6 +147,27 @@ class TestOfSubscriptionHelper extends UpstartUnitTestCase {
         $new_values = $helper->getSubscriptionStatusAndPaidThrough($subscriber);
         $this->assertEqual($new_values['subscription_status'], 'Payment due');
         $this->assertNull($new_values['paid_through']);
+
+        //Redeemed claim code
+        $subscriber = new Subscriber();
+        $subscriber->id = 12;
+        $subscriber->claim_code = 'ABC';
+        $subscriber->paid_through = '2015-12-29 22:58:49';
+        $new_values = $helper->getSubscriptionStatusAndPaidThrough($subscriber);
+        $this->assertEqual($new_values['subscription_status'], 'Paid');
+        $this->assertEqual($new_values['paid_through'], '2015-12-29 22:58:49');
+        $this->assertEqual($new_values['subscription_recurrence'], 'None');
+
+        //Redeemed claim code mistakenly set to Payment due
+        $subscriber = new Subscriber();
+        $subscriber->id = 12;
+        $subscriber->subscription_status = 'Payment due';
+        $subscriber->claim_code = 'ABC';
+        $subscriber->paid_through = '2015-12-29 22:58:49';
+        $new_values = $helper->getSubscriptionStatusAndPaidThrough($subscriber);
+        $this->assertEqual($new_values['subscription_status'], 'Paid');
+        $this->assertEqual($new_values['paid_through'], '2015-12-29 22:58:49');
+        $this->assertEqual($new_values['subscription_recurrence'], 'None');
     }
 
     public function testUpdateSubscriptionStatusAndPaidThrough1Month() {

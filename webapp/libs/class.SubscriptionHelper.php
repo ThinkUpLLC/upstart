@@ -21,7 +21,13 @@ class SubscriptionHelper {
         $paid_through_time = null;
         $subscription_recurrence = null;
         if ($subscriber->is_membership_complimentary) {
+            //Complimentary memberships
             $subscription_status = "Complimentary membership";
+        } elseif (isset($subscriber->claim_code) and isset($subscriber->paid_through)) {
+            //Members with redeemed claim codes
+            $subscription_status = "Paid";
+            $paid_through_time = strtotime($subscriber->paid_through);
+            $subscription_recurrence = "None";
         } elseif ($subscriber->subscription_status == 'Payment due') {
             //Don't overwrite Payment due statuses; they may have been set manually in Upstart
             $subscription_status = "Payment due";
@@ -58,10 +64,10 @@ class SubscriptionHelper {
                         $subscription_status = "Payment failed";
                     }
                     $subscription_recurrence = '12 months';
-                } elseif (strtotime($subscriber->creation_time) > strtotime('-16 days') /* give extra 2 days */) {
-                    $subscription_status = "Free trial";
+                // } elseif (strtotime($subscriber->creation_time) > strtotime('-16 days') /* give extra 2 days */) {
+                //     $subscription_status = "Free trial";
                 } else {
-                    $subscription_status = "Payment due";
+                    $subscription_status = "Free trial";
                 }
             }
         }
