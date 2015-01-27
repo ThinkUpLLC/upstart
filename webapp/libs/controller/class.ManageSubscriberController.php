@@ -14,6 +14,7 @@ class ManageSubscriberController extends Controller {
             $subscriber_dao = new SubscriberMySQLDAO();
             try {
                 $subscriber = $subscriber_dao->getByID($subscriber_id);
+                $subscriber->creation_time_friendly = date('M jS Y', strtotime($subscriber->creation_time));
                 $this->addToView('application_url', UpstartHelper::getApplicationURL());
 
                 $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
@@ -145,7 +146,7 @@ class ManageSubscriberController extends Controller {
                 if (!isset($subscriber->thinkup_username)) {
                     $subscriber->subdomainified_username = self::subdomainify($subscriber->network_user_name);
                 }
-                $subscriber->paid_through_friendly = date('M j, Y', strtotime($subscriber->paid_through));
+                $subscriber->paid_through_friendly = date('M jS Y', strtotime($subscriber->paid_through));
                 $this->addToView('subscriber', $subscriber);
 
                 //Set annual payer paid flag

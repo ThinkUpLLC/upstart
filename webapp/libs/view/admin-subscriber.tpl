@@ -12,7 +12,7 @@
       <div class="panel panel-default panel-primary {if $subscriber->is_account_closed}panel-danger{/if}">
         <div class="panel-heading">
           <h3>{if $subscriber->full_name neq ''}{$subscriber->full_name}{else}[No name]{/if}</h3>
-          <h5>{$subscriber->membership_level} since {$subscriber->creation_time} </h5>
+          <h5>{$subscriber->membership_level} since {$subscriber->creation_time_friendly}, last logged in {$subscriber->last_login|relative_datetime} ago</h5>
         </div>
 
         <table class="table ">
@@ -23,7 +23,7 @@
 
           <tr>
             <td>Status</td>
-            <td>{$subscriber->subscription_status}{if $subscriber->subscription_status eq "Paid"} through {$subscriber->paid_through_friendly}{/if}{if $subscriber->is_account_closed} - <span class="text-danger">Account closed</span>{/if} {include file="_admin-comp.tpl"}
+            <td>{$subscriber->subscription_status}{if $subscriber->subscription_status eq "Paid"} through {$subscriber->paid_through_friendly}, billed {if $subscriber->subscription_recurrence eq '1 month'}monthly{elseif $subscriber->subscription_recurrence eq '12 months'}yearly{elseif $subscriber->subscription_recurrence eq 'None'}one-time{/if}{/if}{if $subscriber->is_account_closed} - <span class="text-danger">Account closed</span>{/if} {include file="_admin-comp.tpl"}
             </td>
           </tr>
           {if $subscriber->total_payment_reminders_sent > 0}
