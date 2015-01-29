@@ -98,3 +98,15 @@ AND s.subscription_recurrence = '12 months'
 AND s.is_account_closed != 1
 AND a.payment_method_expiry like '%2014'
 GROUP BY membership_level
+
+
+--
+-- Early backers (after crowdfunding, before launch) for export to MailChimp
+
+SELECT email, membership_level, thinkup_username, paid_through
+FROM subscribers
+WHERE subscription_recurrence = '12 months'
+AND is_account_closed != 1
+AND subscription_status = 'Paid'
+AND paid_through < '2015-02-08'
+ORDER BY paid_through ASC
