@@ -7,7 +7,7 @@ class ListStatsController extends Controller {
         $subscriber_dao = new SubscriberMySQLDAO();
         $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
         // Get total successful payments (re-ups + new subscriptions)
-        $daily_successful_payments = $subscription_operation_dao->getDailySuccessfulPayments();
+        $daily_successful_payments = $subscription_operation_dao->getDailySuccessfulPayments(365);
         // Get daily conversions
         $daily_subscribers = $subscription_operation_dao->getDailySubscribers();
         // Get daily signups
