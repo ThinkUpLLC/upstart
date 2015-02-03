@@ -522,15 +522,15 @@ class AppInstaller {
         // Add Facebook crawl time cap to options
         $tu_tables_dao->insertOptionValue('plugin_options-2', 'max_crawl_time', $facebook_max_crawl_time);
 
-        // Add Mandrill template name to options
-        $mandrill_notifications_template = $cfg->getValue('mandrill_notifications_template');
-        $tu_tables_dao->insertOptionValue('plugin_options-6', 'mandrill_template',
-        $mandrill_notifications_template);
-
         // Add Expand URLs cap to options
         $links_to_expand_per_crawl = $cfg->getValue('expandurls_links_to_expand_per_crawl');
-        $tu_tables_dao->insertOptionValue('plugin_options-5', 'links_to_expand',
+        $tu_tables_dao->insertOptionValue('plugin_options-3', 'links_to_expand',
         $links_to_expand_per_crawl);
+
+        // Add Mandrill template name to options
+        $mandrill_notifications_template = $cfg->getValue('mandrill_notifications_template');
+        $tu_tables_dao->insertOptionValue('plugin_options-4', 'mandrill_template',
+        $mandrill_notifications_template);
 
         // Add insightsposter plugin
         $insights_poster_id = $tu_tables_dao->insertPlugin('Insights Poster', 'insightsposter',
