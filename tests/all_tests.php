@@ -46,6 +46,7 @@ $all_tests->add(new TestOfClaimCodeOperationMySQLDAO());
 $all_tests->add(new TestOfBundleLandingController());
 $all_tests->add(new TestOfAPIValidClaimCodeController());
 $all_tests->add(new TestOfSubscriptionHelper());
+$all_tests->add(new TestOfAPIMemberStatusController());
 
 //$tr = new TextReporter();
 //$all_tests->run( $tr );
