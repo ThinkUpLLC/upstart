@@ -126,6 +126,22 @@ class ThinkUpTablesMySQLDAO extends ThinkUpPDODAO {
         }
     }
 
+    public function updateOwnerMembershipLevel($email, $membership_level) {
+        $q = "UPDATE tu_owners SET membership_level=:membership_level WHERE email=:email ";
+
+        $vars = array(
+            ':email'=>$email,
+            ':membership_level'=>$membership_level
+        );
+        if ($this->profiler_enabled) Profiler::setDAOMethod(__METHOD__);
+        $ps = $this->execute($q, $vars);
+        if ( $this->getUpdateCount($ps) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Generate a password salt and hash it given an email address and password.
      * @param  str $email ThinkUp member email address

@@ -80,6 +80,24 @@ class ManageSubscriberController extends Controller {
                         } else {
                             $this->addErrorMessage("No email specified");
                         }
+                    } elseif ($_GET['action'] == 'setmembershiplevel') {
+                        if (isset($_GET['level']) && $_GET['level'] != '' &&
+                            ($_GET['level'] == 'Member' || $_GET['level'] == 'Pro')) {
+                            $level = $_GET['level'];
+
+                            $subscriber_dao->setMembershipLevel($subscriber_id, $level);
+                            //Change level in TU installation
+                            $tu_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
+                            if ($tu_dao->updateOwnerMembershipLevel( $subscriber->email, $level)) {
+                                $this->addSuccessMessage("Saved new membership level $level.");
+                            } else {
+                                $this->addErrorMessage("Changed membership level in Upstart but not in ThinkUp. ".
+                                "To resolve, check $subscriber->thinkup_username's database manually.");
+                            }
+                            $subscriber = $subscriber_dao->getByID($subscriber_id);
+                        } else {
+                            $this->addErrorMessage("No email specified");
+                        }
                     } elseif ($_GET['action'] == 'install') {
                         $installer = new AppInstaller();
                         try {

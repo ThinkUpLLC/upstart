@@ -44,7 +44,7 @@ class TestOfThinkUpTablesMySQLDAO extends UpstartUnitTestCase {
 
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'me@example.com', 'pwd'=>$password,
         'pwd_salt'=>$test_salt, 'is_activated'=>1, 'is_admin'=>1, 'thinkup_username'=>$this->thinkup_username,
-        'is_installation_active'=>0, 'is_free_trial'=>1));
+        'is_installation_active'=>0, 'is_free_trial'=>1, 'membership_level'=>'Member'));
 
         $config = Config::getInstance();
         $config->setValue('user_installation_url', 'http://www.example.com/thinkup/{user}/');
@@ -79,6 +79,42 @@ class TestOfThinkUpTablesMySQLDAO extends UpstartUnitTestCase {
         $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database. '.tu_owners o WHERE o.id = 2');
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->assertEqual($row['email'], 'newme@example.com');
+    }
+
+    public function testOfUpdateOwnerMembershipLevelSuccess() {
+        $this->debug(Utils::varDumpToString(ThinkUpPDODAO::$PDO));
+        // Assert that email is me@example.com
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database. '.tu_owners o WHERE o.id = 2');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual($row['membership_level'], 'Member');
+
+        $this->debug('About to update owner membership level');
+        $dao = new ThinkUpTablesMySQLDAO($this->thinkup_username);
+        $result = $dao->updateOwnerMembershipLevel('me@example.com', 'Pro');
+        $this->assertTrue($result);
+
+        // Assert that email is me@example.com
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database. '.tu_owners o WHERE o.id = 2');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual($row['membership_level'], 'Pro');
+    }
+
+    public function testOfUpdateOwnerMembershipLevelFailure() {
+        $this->debug(Utils::varDumpToString(ThinkUpPDODAO::$PDO));
+        // Assert that email is me@example.com
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database. '.tu_owners o WHERE o.id = 2');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual($row['membership_level'], 'Member');
+
+        $this->debug('About to update owner membership level');
+        $dao = new ThinkUpTablesMySQLDAO($this->thinkup_username);
+        $result = $dao->updateOwnerMembershipLevel('me@example.com', 'Member');
+        $this->assertFalse($result);
+
+        // Assert that email is me@example.com
+        $stmt = ThinkUpPDODAO::$PDO->query('SELECT o.* FROM '. $this->user_database. '.tu_owners o WHERE o.id = 2');
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertEqual($row['membership_level'], 'Member');
     }
 
     public function testOfUpdateOwnerEmailFailure() {
