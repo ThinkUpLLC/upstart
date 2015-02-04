@@ -93,6 +93,32 @@ class TestOfMailer extends UpstartBasicUnitTestCase {
         $this->createSystemMessageHTMLPaymentReminderFreeTrial1Through4($membership_level = 'Pro');
     }
 
+    public function testGetSystemMessageHTMLReupReminderOne() {
+        $cfg = Config::getInstance();
+        $headline = "Your first year of ThinkUp";
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $thinkup_username = 'tyrionlannister';
+        $user_installation_url = str_replace('{user}', $thinkup_username, $cfg->getValue('user_installation_url'));
+        $email_view_mgr->assign('thinkup_url', $user_installation_url );
+        $body_html = $email_view_mgr->fetch('_email.annual-reup-notification-1.tpl');
+        $message = Mailer::getSystemMessageHTML($body_html, $subject_line);
+        $this->debug($message);
+    }
+
+    public function testGetSystemMessageHTMLReupReminderTwo() {
+        $cfg = Config::getInstance();
+        $headline = "Your ThinkUp membership is about to renew";
+        $email_view_mgr = new ViewManager();
+        $email_view_mgr->caching=false;
+        $thinkup_username = 'tyrionlannister';
+        $user_installation_url = str_replace('{user}', $thinkup_username, $cfg->getValue('user_installation_url'));
+        $email_view_mgr->assign('thinkup_url', $user_installation_url );
+        $body_html = $email_view_mgr->fetch('_email.annual-reup-notification-2.tpl');
+        $message = Mailer::getSystemMessageHTML($body_html, $subject_line);
+        $this->debug($message);
+    }
+
     public function testGetSystemMessageHTMLPaymentChargeSuccessfulMember() {
         $headline = "Thanks for joining ThinkUp!";
         $email_view_mgr = new ViewManager();

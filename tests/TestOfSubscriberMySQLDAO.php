@@ -649,6 +649,75 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual(sizeof($result), 0);
     }
 
+    public function testGetAnnualSubscribersDueReupPaymentReminder() {
+        $builders = array();
+        //Annual paid through 2 weeks from now
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani+1@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique1', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid',
+            'paid_through'=>'+14d', 'subscription_recurrence'=>'12 months', 'is_account_closed'=>0,
+            'total_reup_reminders_sent'=>0, 'creation_time'=>'-400d'));
+        //Annual paid through 1 week from now
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>2, 'email'=>'ginatrapani+2@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique2', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>null, 'subscription_status'=>'Paid',
+            'paid_through'=>'+7d', 'subscription_recurrence'=>'12 months', 'is_account_closed'=>0,
+            'total_reup_reminders_sent'=>0, 'creation_time'=>'-400d'));
+        //Monthly paid through 2 weeks from now
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>3, 'email'=>'ginatrapani+3@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique3', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>0, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid',
+            'paid_through'=>'+14d', 'subscription_recurrence'=>'1 month', 'is_account_closed'=>0,
+            'total_reup_reminders_sent'=>0, 'creation_time'=>'-400d'));
+        //Monthly paid through 1 week from now
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'email'=>'ginatrapani+4@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique4', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid',
+            'paid_through'=>'+7d', 'subscription_recurrence'=>'1 month', 'is_account_closed'=>0,
+            'total_reup_reminders_sent'=>0, 'creation_time'=>'-400d'));
+        //Annual paid through 2 weeks from now
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>5, 'email'=>'ginatrapani+5@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique5', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid',
+            'paid_through'=>'+14d', 'subscription_recurrence'=>'12 months', 'is_account_closed'=>0,
+            'total_reup_reminders_sent'=>0, 'creation_time'=>'-400d'));
+        //Annual paid through 2 weeks from now, closed account
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>6, 'email'=>'ginatrapani+6@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique6', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>0, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid',
+            'paid_through'=>'+14d', 'subscription_recurrence'=>'12 months', 'is_account_closed'=>1,
+            'total_reup_reminders_sent'=>0, 'creation_time'=>'-400d'));
+        //Annual paid through 2 weeks from now, reminder sent already
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>7, 'email'=>'ginatrapani+7@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique7', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid',
+            'paid_through'=>'+14d', 'subscription_recurrence'=>'12 months', 'is_account_closed'=>0,
+            'total_reup_reminders_sent'=>1, 'creation_time'=>'-400d'));
+
+        $dao = new SubscriberMySQLDAO();
+        //sleep(1000);
+
+        //Get subscribers due a reup reminder in 14 days
+        $result = $dao->getAnnualSubscribersDueReupReminder(14, 1);
+        $this->debug(Utils::varDumpToString($result));
+        $this->assertEqual(sizeof($result), 2);
+        $this->assertEqual($result[0]->thinkup_username, 'unique1');
+        $this->assertEqual($result[1]->thinkup_username, 'unique5');
+
+        //Get subscribers due a reup reminder in 7 days
+        $result = $dao->getAnnualSubscribersDueReupReminder(7, 2);
+        $this->debug(Utils::varDumpToString($result));
+        $this->assertEqual(sizeof($result), 1);
+        $this->assertEqual($result[0]->thinkup_username, 'unique2');
+    }
+
     public function testSetTotalPaymentRemindersSent() {
         //Subscriber doesn't exist
         $dao = new SubscriberMySQLDAO();
@@ -670,6 +739,29 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertTrue($data);
         $this->assertEqual(2, $data['total_payment_reminders_sent']);
         $this->assertNotNull($data['payment_reminder_last_sent']);
+    }
+
+    public function testSetTotalReupRemindersSent() {
+        //Subscriber doesn't exist
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->setTotalReupRemindersSent(1, 2);
+        $this->assertEqual($result, 0);
+
+        //Subscriber exists and has no username
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>101, 'email'=>'willow@buffy.com',
+        'network_user_name'=>'willowr', 'thinkup_username'=>null, 'total_reup_reminders_sent'=>0,
+        'reup_reminder_last_sent'=>null));
+
+        $result = $dao->setTotalReupRemindersSent(101, 2);
+        $this->assertEqual($result, 1);
+
+        $sql = "SELECT * FROM subscribers WHERE id=101";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertTrue($data);
+        $this->assertEqual(2, $data['total_reup_reminders_sent']);
+        $this->assertNotNull($data['reup_reminder_last_sent']);
     }
 
     public function testCloseAndOpenAccount() {

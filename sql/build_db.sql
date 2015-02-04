@@ -183,6 +183,8 @@ CREATE TABLE subscribers (
   subscription_recurrence varchar(10) NOT NULL DEFAULT '1 month' COMMENT 'How often subscription renews, 1 month or 12 months.',
   total_payment_reminders_sent int(11) NOT NULL DEFAULT '0' COMMENT 'The number of payment reminder emails sent to this subscriber.',
   payment_reminder_last_sent timestamp NULL DEFAULT NULL COMMENT 'Last time a payment reminder was sent to this subscriber.',
+  total_reup_reminders_sent int(11) NOT NULL DEFAULT '0' COMMENT 'The number of annual reup reminder emails sent to this subscriber.',
+  reup_reminder_last_sent timestamp NULL DEFAULT NULL COMMENT 'Last time a reup reminder was sent to this subscriber.',
   is_account_closed int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not the member closed their account.',
   claim_code varchar(24) DEFAULT NULL COMMENT 'Redeemed claim code.',
   PRIMARY KEY (id),

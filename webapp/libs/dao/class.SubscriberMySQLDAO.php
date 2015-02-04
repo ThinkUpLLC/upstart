@@ -920,6 +920,27 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     /**
+     * Get 25 annual subscribers who have a payment due in the next X days.
+     * @param int $days_before Number of days before paid through date to send reminder
+     * @param int $total_reup_reminders_sent Only send to members who have less than this total number of reminders
+     * @return arr Array of Subscriber objects
+     */
+    public function getAnnualSubscribersDueReupReminder($days_before, $total_reup_reminders_sent) {
+        $q = <<<EOD
+        SELECT * FROM subscribers WHERE subscription_status = 'Paid' AND is_account_closed = 0
+        AND subscription_recurrence = '12 months'
+        AND date(paid_through) = DATE(DATE_ADD(NOW(), INTERVAL :days_before DAY ))
+        AND total_reup_reminders_sent < :total_reup_reminders_sent
+        ORDER BY creation_time ASC LIMIT 25
+EOD;
+
+        $vars = array(':days_before' => $days_before, ':total_reup_reminders_sent' => $total_reup_reminders_sent);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowsAsObjects($ps, 'Subscriber');
+    }
+
+    /**
      * Get 25 subscribers to uninstall because free trial has expired and it's been 30 hours since last dispatch time.
      * @return arr Array of Subscriber objects
      */
@@ -953,6 +974,18 @@ class SubscriberMySQLDAO extends PDODAO {
         $vars = array(
             ':subscriber_id'=>$subscriber_id,
             ':total_payment_reminders_sent'=>$total_payment_reminders_sent
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
+    public function setTotalReupRemindersSent($subscriber_id, $total_reup_reminders_sent) {
+        $q = "UPDATE subscribers SET total_reup_reminders_sent = :total_reup_reminders_sent, ";
+        $q .="reup_reminder_last_sent =  NOW() WHERE id = :subscriber_id;";
+        $vars = array(
+            ':subscriber_id'=>$subscriber_id,
+            ':total_reup_reminders_sent'=>$total_reup_reminders_sent
         );
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);

@@ -1,0 +1,11 @@
+<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left"><b>Thank you!</b> A year ago, you were one of the first people in the world to join ThinkUp, based on the promise that it would make your time on Twitter and Facebook more fun and rewarding.</p>
+
+<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">We hope you've been loving all the insights into your social networks you've been getting at <a href="{$thinkup_url}" style="color: #46bcff;">{$thinkup_url}</a> since then. Now, we're looking forward to your second year and we wanted to give you an update on where we stand:</p>
+
+<ul>
+<li>We're hard at work on releasing new insights for ThinkUp, so we want to hear from you about what features are on your wishlist. Just reply to this email or tweet at us at <a href="http://twitter.com/thinkup" style="color: #46bcff;">@thinkup</a> to tell us what you're looking for.</li>
+<li>You are currently a ThinkUp subscriber in good standing, and your annual subscription is set to automatically renew in two weeks. This will be charged to the card you have on file with Amazon Payments.</li>
+<li>You can review your ThinkUp membership status, download your copy the free <i>Insights</i> ebook, or close your account if you don't want to renew for the coming year on <a href="https://www.thinkup.com/join/user/membership.php" style="color: #46bcff;">your ThinkUp membership page</a>.</li>
+</ul>
+
+<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">We're very thankful you've been with us right from the start! We're keeping an eye out for your feedback. Thanks for being a ThinkUp member.</p>
