@@ -32,21 +32,21 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
             'amount'=>'60', 'timestamp'=>time()));
         $builders[] = FixtureBuilder::build('subscriber_payments', array('payment_id'=>2, 'subscriber_id'=>2));
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>2, 'thinkup_username'=>'xanderharris',
-            'membership_level'=>'Member'));
+            'membership_level'=>'Member', 'claim_code'=>null));
 
         $builders[] = FixtureBuilder::build('payments', array('payment_id'=>3,
             'transaction_id'=>'123-failure-message-with-xml', 'transaction_status'=>'Pending',
             'caller_reference'=>'12345', 'amount'=>'60', 'timestamp'=>time()));
         $builders[] = FixtureBuilder::build('subscriber_payments', array('payment_id'=>3, 'subscriber_id'=>3));
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>3, 'thinkup_username'=>'buffysummers',
-            'membership_level'=>'Member'));
+            'membership_level'=>'Member', 'claim_code'=>null));
 
         $builders[] = FixtureBuilder::build('payments', array('payment_id'=>4,
             'transaction_id'=>'123-failure-message-human-readable', 'transaction_status'=>'Pending',
             'caller_reference'=>'12345', 'amount'=>'60', 'timestamp'=>time()));
         $builders[] = FixtureBuilder::build('subscriber_payments', array('payment_id'=>4, 'subscriber_id'=>4));
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>4, 'thinkup_username'=>'anya',
-            'membership_level'=>'Member'));
+            'membership_level'=>'Member', 'claim_code'=>null));
 
         $controller = new UpdatePendingPaymentStatusController(true);
         $controller->control();
@@ -160,7 +160,7 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
             'amount'=>'60', 'timestamp'=>time()));
         $builders[] = FixtureBuilder::build('subscriber_payments', array('payment_id'=>1, 'subscriber_id'=>1));
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'thinkup_username'=>'willowrosenberg',
-            'membership_level'=>'Member'));
+            'membership_level'=>'Member', 'claim_code'=>null));
 
         $controller = new UpdatePendingPaymentStatusController(true);
         $controller->control();
@@ -185,7 +185,7 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
             'caller_reference'=>'12345', 'amount'=>'60', 'timestamp'=>'2014-04-21 14:50:12'));
         $builders[] = FixtureBuilder::build('subscriber_payments', array('payment_id'=>1, 'subscriber_id'=>1));
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'thinkup_username'=>'willowrosenberg',
-            'membership_level'=>'Member'));
+            'membership_level'=>'Member', 'claim_code'=>null));
 
         $controller = new UpdatePendingPaymentStatusController(true);
         $controller->control();
@@ -210,7 +210,7 @@ class TestOfUpdatePendingPaymentStatusController extends UpstartUnitTestCase {
             'caller_reference'=>'12345', 'amount'=>'60', 'timestamp'=>time()));
         $builders[] = FixtureBuilder::build('subscriber_payments', array('payment_id'=>1, 'subscriber_id'=>1));
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'thinkup_username'=>'willowrosenberg',
-            'membership_level'=>'Member'));
+            'membership_level'=>'Member', 'claim_code'=>null));
 
         $controller = new UpdatePendingPaymentStatusController(true);
         $controller->control();
