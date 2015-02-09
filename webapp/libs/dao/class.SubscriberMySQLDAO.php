@@ -310,6 +310,8 @@ class SubscriberMySQLDAO extends PDODAO {
                 $breakdown['monthly'] = $row['total'];
             } else if ($row['subscription_recurrence'] == '12 months') {
                 $breakdown['annual'] = $row['total'];
+            } else if ($row['subscription_recurrence'] == 'None') {
+                $breakdown['coupon_codes'] = $row['total'];
             }
         }
         return array('total_paid_subscribers'=>$total_paid_subscribers, 'breakdown'=>$breakdown);
