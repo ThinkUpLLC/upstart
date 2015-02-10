@@ -18,6 +18,9 @@ $day_before = date('Y-m-d', strtotime("-2 days"));
 $subscriber_dao = new SubscriberMySQLDAO();
 $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
 
+// Record paid subscriber count
+$subscriber_dao->captureCurrentPaidCount();
+
 // Begin payments notifications
 // Get total successful payments (re-ups + new subscriptions)
 $daily_successful_payments = $subscription_operation_dao->getDailySuccessfulPayments();

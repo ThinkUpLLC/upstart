@@ -1059,4 +1059,11 @@ EOD;
         asort($results);
         return $results;
     }
+
+    public function captureCurrentPaidCount() {
+        $q = "INSERT INTO subscriber_paid_counts (date, count)  SELECT NOW(), count(*)  FROM subscribers s ";
+        $q .= "WHERE subscription_status = 'Paid' AND is_account_closed != 1";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+    }
 }

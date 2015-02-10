@@ -913,4 +913,29 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $result = $dao->getTotalAnnualSubscribersToCharge();
         $this->assertEqual($result, 1);
     }
+
+    public function testOfCaptureCurrentPaidCount() {
+        $dao = new SubscriberMySQLDAO();
+        $dao->captureCurrentPaidCount();
+
+        $sql = "SELECT * FROM subscriber_paid_counts";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertTrue($data);
+        $this->assertEqual($data['count'], 0);
+
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'ginatrapani@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique1', 'subscription_recurrence'=>'12 months', 'paid_through'=>'+12d',
+            'subscription_status'=>'Paid'));
+
+        $dao->captureCurrentPaidCount();
+         $sql = "SELECT * FROM subscriber_paid_counts";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC); //row 1
+        $data = $stmt->fetch(PDO::FETCH_ASSOC); //row 2
+        $this->assertTrue($data);
+        $this->assertEqual($data['count'], 1);
+    }
 }
