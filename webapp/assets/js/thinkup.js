@@ -642,7 +642,7 @@
     });
     $("body").on("click", "#btn-claim-code", function(e) {
       e.preventDefault();
-      $(".form-claim-code").toggleClass("hidden");
+      $("#form-claim-code").toggleClass("hidden");
       return $(this).hide();
     });
     $("body").on("click", ".show-section", function(e) {

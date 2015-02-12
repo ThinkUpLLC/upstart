@@ -34,8 +34,6 @@ class TestOfPayNowController extends UpstartUnitTestCase {
         $this->debug($results);
         $this->assertNoPattern('/Subscriber ID  does not exist./', $results);
         $this->assertPattern('/Terrific! Your 14-day free trial has begun./', $results);
-        $this->assertPattern('/the book we wrote for you/', $results);
-        $this->assertPattern('/Your Insights/', $results);
         $this->assertPattern('/5 a month/', $results);
     }
 
@@ -48,8 +46,6 @@ class TestOfPayNowController extends UpstartUnitTestCase {
         $this->debug($results);
         $this->assertNoPattern('/Subscriber ID  does not exist./', $results);
         $this->assertPattern('/Terrific! Your 14-day free trial has begun./', $results);
-        $this->assertPattern('/the book we wrote for you/', $results);
-        $this->assertPattern('/Your Insights/', $results);
         $this->assertNoPattern('/5 a month/', $results);
         $this->assertPattern('/10 a month/', $results);
     }

@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
+{include file="_appheader.tpl" body_classes="settings menu-off" body_id="settings-checkout"}
+
     <script src="assets/js/vendor/pay-with-amazon.min.js"></script>
     <script type="text/javascript">
     var payWithAmazon = new PayWithAmazon({
@@ -20,23 +18,30 @@
         }
       }
     </script>
-</head>
 
-<body>
-{include file="_usermessage.tpl"}
+  <div class="container">
+    <header class="container-header">
+      <h1>Complete Your Payment</h1>
+      <h2>It's safe and easy with your Amazon account.</h2>
+    </header>
 
-<div id="pay-with-amazon"></div>
-<div id="wallet"></div>
-<div id="consent"></div>
+    <div id="pay-with-amazon"></div>
+    <div id="wallet"></div>
+    <div id="consent"></div>
 
-<p>Login to Amazon Payments: lpa-test-user1@thinkup.com OR lpa-test-user2@thinkup.com / Password testme</p>
+    {if $show_form}
+    <form method="post" action="checkout.php">
+        <input id="amazon_billing_agreement_id" name="amazon_billing_agreement_id" value="" hidden='true'>
+        <input type="Submit" value="Subscribe" class="btn-submit" />
+    </form>
+    {/if}
 
-{if $show_form}
-<form method="post" action="checkout.php">
-    <input id="amazon_billing_agreement_id" name="amazon_billing_agreement_id" value="" hidden='true'>
-    <input type="Submit" value="Subscribe" />
-</form>
-{/if}
+    <div class="form-notes">
+      <div class="alert">
+        <p>Login to Amazon Payments: lpa-test-user1@thinkup.com OR lpa-test-user2@thinkup.com / Password testme</p>
+      </div>
+    </div>
 
-</body>
-</html>
+  </div>
+
+{include file="_appfooter.tpl"}
