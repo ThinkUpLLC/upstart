@@ -78,7 +78,7 @@
     <button class="btn menu-trigger">
       <i class="fa fa-bars"></i>
     </button>
-    <a class="navbar-brand" href="{$site_root_path}"><strong>Think</strong>Up</span></a>
+    <a class="navbar-brand" href="{if isset($thinkup_url)}{$thinkup_url}{else}{$site_root_path}{/if}"><strong>Think</strong>Up</span></a>
   </div>
 </nav>
 {/if}
