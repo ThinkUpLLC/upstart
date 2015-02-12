@@ -836,13 +836,14 @@ class SubscriberMySQLDAO extends PDODAO {
         $q = "SELECT s.id, s.email, s.membership_level, a.token_id FROM subscribers s
             INNER JOIN subscriber_authorizations sa ON sa.subscriber_id = s.id
             INNER JOIN authorizations a ON sa.authorization_id = a.id
-            WHERE s.subscription_recurrence = '12 months' AND date(paid_through) <= :due_date
+            WHERE s.subscription_recurrence = '12 months' AND paid_through <= :due_date
             AND s.is_membership_complimentary = 0 AND is_account_closed != 1 LIMIT :count ";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $vars = array(
-            ':due_date'=>date('Y-m-d', strtotime('-1 day')),
+            ':due_date'=>date('Y-m-d H:i:s', strtotime('-1 hour')),
             ':count'=>$count
         );
+        //echo self::mergeSQLVars($q, $vars);
         $ps = $this->execute($q, $vars);
         return $this->getDataRowsAsArrays($ps);
     }
@@ -855,11 +856,11 @@ class SubscriberMySQLDAO extends PDODAO {
         $q = "SELECT count(s.id) as total FROM subscribers s
             INNER JOIN subscriber_authorizations sa ON sa.subscriber_id = s.id
             INNER JOIN authorizations a ON sa.authorization_id = a.id
-            WHERE s.subscription_recurrence = '12 months' AND date(paid_through) <= :due_date
+            WHERE s.subscription_recurrence = '12 months' AND paid_through <= :due_date
             AND s.is_membership_complimentary = 0 AND is_account_closed != 1";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $vars = array(
-            ':due_date'=>date('Y-m-d', strtotime('-1 day'))
+            ':due_date'=>date('Y-m-d H:i:s', strtotime('-1 hour'))
         );
         $ps = $this->execute($q, $vars);
         $result = $this->getDataRowAsArray($ps);
