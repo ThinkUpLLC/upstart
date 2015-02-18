@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <title>{if isset($controller_title)}{$controller_title} | {/if}ThinkUp - {$tagline}</title>
-    <link rel="shortcut icon" type="image/x-icon" href="{$site_root_path}assets/img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="{$site_root_path}assets/img/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{$site_root_path}assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{$site_root_path}assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{$site_root_path}assets/ico/apple-touch-icon-72-precomposed.png">
