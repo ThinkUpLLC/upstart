@@ -1,6 +1,8 @@
 {include file="_adminheader.tpl" page="Stats"}
 
     <div class="container">
+      <h3>Total paid subscribers by day</h3>
+        <img src="{$daily_paid_subscribers_chart_url}" class="img-responsive" />
 
       <h3>Monthly subscription payments by day</h3>
         <img src="{$daily_payments_chart_url}" class="img-responsive" />

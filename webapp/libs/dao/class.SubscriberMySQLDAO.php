@@ -1016,6 +1016,26 @@ EOD;
     }
 
     /**
+     * Get paid subscriber counts over time.
+     * @return array
+     */
+    public function getDailyPaidSubscriberCounts($limit = 60) {
+        $q = "SELECT date(date) as date, count
+            FROM subscriber_paid_counts
+            ORDER BY date DESC LIMIT 0, :limit;";
+        $vars = array(':limit'=>$limit);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        $rows = $this->getDataRowsAsArrays($ps);
+        $results = array();
+        foreach ($rows as $row) {
+            $results[$row['date']] = $row['count'];
+        }
+        ksort($results);
+        return $results;
+    }
+
+    /**
      * Get last three days worth of member signups.
      * @return array
      */
