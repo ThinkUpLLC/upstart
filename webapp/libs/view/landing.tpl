@@ -20,7 +20,32 @@
   <div class="section section-screenshot" id="section-what">
     <h3 class="section-header">What is ThinkUp?</h3>
     <div class="section-copy">
-      <p>ThinkUp is a simple service that analyzes your activity on Facebook and Twitter. Every day, you get fun and surprising insights that you can't find anywhere else.</p>
+      <p>ThinkUp is a simple service that analyzes your activity on Facebook and Twitter. Every day, you get fun and surprising insights you can't find anywhere else.</p>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="container-media-blurbs">
+  <div class="section" id="section-media-blurbs">
+      <table class="table">
+
+        <tr>
+          <td><a href="http://www.nytimes.com/2015/01/01/technology/personaltech/thinkup-helps-the-social-network-user-see-the-online-self.html"><img src="{$site_root_path}assets/img/media-logo-nyt.png" class-"img-responsive media-logo"></a></td>
+          <td class="blurb">"an indispensable guide to how I navigate social networks"</td>
+        </tr>
+        <tr>
+          <td><a href="http://www.fastcompany.com/3041664/most-innovative-companies-2015/the-worlds-top-10-most-innovative-companies-in-social-media-n"><img src="{$site_root_path}assets/img/media-logo-fast-company.png" class-"img-responsive media-logo"></a></td>
+          <td class="blurb">One of the World's Most Innovative Companies in Social Media</td>
+        </tr>
+        <tr>
+          <td><a href="http://thenextweb.com/socialmedia/2014/04/13/meet-thinkup-personal-social-media-guru/"><img src="{$site_root_path}assets/img/media-logo-tnw.png" class-"img-responsive media-logo"></a></td>
+          <td class="blurb">"if you’re looking to improve your social media skills it’s well worth the investment"</td>
+        </tr>  
+        <tr>
+          <td><a href="http://lifehacker.com/see-your-years-best-of-on-facebook-and-twitter-with-t-1674624958"><img src="{$site_root_path}assets/img/media-logo-lifehacker.png" class-"img-responsive media-logo"></a></td>
+          <td class="blurb">"Whether you tweet just for fun or you're building a personal brand, ThinkUp can give you insights on how to use social media better, which I didn't expect."</td>
+        </tr>        
+      </table>
     </div>
   </div>
 </div>

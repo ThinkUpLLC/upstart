@@ -719,6 +719,32 @@ a.btn-pill-large:hover {
     padding: 36px 0;
   }
 }
+#container-media-blurbs {
+  height: auto;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+#container-media-blurbs table {
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 760px) {
+  #container-media-blurbs table {
+    width: 100%;
+  }
+}
+#container-media-blurbs table td {
+  padding: 20px;
+  text-align: center;
+  font-size: 1.125rem;
+}
+#container-media-blurbs table td.blurb {
+  font-weight: 200;
+}
+#container-media-blurbs table a img {
+  width: 200px;
+}
 @media (max-width: 760px) {
   .signup-buttons {
     text-align: center;
@@ -868,6 +894,18 @@ a.btn-pill-large:hover {
     width: 75%;
     margin: 0 auto;
   }
+}
+#container-media-blurbs {
+  background-color: #f0f0f0;
+}
+#container-media-blurbs .section-header {
+  color: #ffffff;
+}
+#container-media-blurbs .section-copy {
+  color: #222222;
+}
+#container-media-blurbs .section-sample-insight figcaption {
+  color: #222222;
 }
 #container-sample-insight-profile {
   background-color: #fd8560;
