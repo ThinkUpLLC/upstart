@@ -1,5 +1,5 @@
 <?php
 require_once 'init.php';
 
-$controller = new ConfirmPaymentController();
+$controller = new CheckoutController();
 echo $controller->control();

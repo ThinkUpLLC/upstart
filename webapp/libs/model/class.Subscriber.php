@@ -148,6 +148,10 @@ class Subscriber {
      * @var str Redeemed claim code.
      */
     var $claim_code;
+    /**
+     * @var bool Whether or not subscription created via Recurly.
+     */
+    var $is_via_recurly = false;
     public function __construct($row = false) {
         if ($row) {
             $this->id = $row['id'];
@@ -187,6 +191,7 @@ class Subscriber {
             $this->payment_reminder_last_sent = $row['payment_reminder_last_sent'];
             $this->is_account_closed = PDODAO::convertDBToBool($row['is_account_closed']);
             $this->claim_code = $row['claim_code'];
+            $this->is_via_recurly = PDODAO::convertDBToBool($row['is_via_recurly']);
         }
     }
 

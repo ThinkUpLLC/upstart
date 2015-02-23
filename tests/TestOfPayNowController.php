@@ -36,6 +36,7 @@ class TestOfPayNowController extends UpstartUnitTestCase {
         $this->assertPattern('/the book we wrote for you/', $results);
         $this->assertPattern('/Your Insights/', $results);
         $this->assertPattern('/5 a month/', $results);
+        $this->assertPattern('/Just 5 bucks a month/', $results);
     }
 
     public function testValidSubscriberProLevel() {
@@ -51,6 +52,7 @@ class TestOfPayNowController extends UpstartUnitTestCase {
         $this->assertPattern('/Your Insights/', $results);
         $this->assertNoPattern('/5 a month/', $results);
         $this->assertPattern('/10 a month/', $results);
+        $this->assertPattern('/Just 10 bucks a month/', $results);
     }
 
     public function testClaimCodeInvalid() {

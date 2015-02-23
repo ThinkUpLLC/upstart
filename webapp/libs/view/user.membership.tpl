@@ -80,15 +80,15 @@ body_classes="settings menu-open" body_id="settings-subscription"}
     {if !$subscriber->is_account_closed}
       {if $membership_status eq 'Free trial'}
         <div class="form-message">
-          {$amazon_form}
-      {elseif isset($failed_cc_amazon_form)}
+        {$checkout_button}
+      {elseif isset($failed_cc_amazon_text)}
         <div class="form-message">
           <p><small>{$failed_cc_amazon_text}</small></p>
-          {$failed_cc_amazon_form}
+          {$checkout_button}
       {/if}
 
       {* Show coupon code entry if there's a pay button *}
-      {if $membership_status eq 'Free trial' || isset($failed_cc_amazon_form)}
+      {if $membership_status eq 'Free trial' || isset($failed_cc_amazon_text)}
           <p><a class="alt-to-btn-large" id="btn-claim-code" href="#">Got a coupon code?</a></p>
         </div>
 

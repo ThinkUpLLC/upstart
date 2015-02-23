@@ -2,7 +2,11 @@
 
 <ul>
 	<li>Your membership ends <strong>today</strong>, and all of your data and insights will be deleted within 24 hours. This cannot be undone.</li>
+    {if $refund_amount neq '0.00'}
 	<li>We will credit your Amazon Payments account ${$refund_amount}, a prorated refund for the time remaining in your membership.</li>
+    {else}
+    <li>We will credit your Amazon Payments account a prorated refund for the time remaining in your membership.</li>
+    {/if}
 </ul>
 
 

@@ -29,7 +29,7 @@ class MembershipController extends UpstartAuthController {
                 //@TODO Double-check $_GET[errorMessage] is set if there's an error
                 $error_message = isset($_GET["errorMessage"])?$_GET["errorMessage"]:null;
                 if ($error_message !== null ) {
-                    $this->addErrorMessage(UpstartHelper::GENERIC_ERROR_MSG);
+                    $this->addErrorMessage($this->generic_error_msg);
                     Logger::logError("Amazon returned error: ".$error_message, __FILE__,__LINE__,__METHOD__);
                 } else {
                     //Capture Simple Pay return codes
@@ -73,7 +73,7 @@ class MembershipController extends UpstartAuthController {
                                     .$subscriber->id);
                             }
                         } else {
-                            $this->addErrorMessage(UpstartHelper::GENERIC_ERROR_MSG);
+                            $this->addErrorMessage($this->generic_error_msg);
                             Logger::logError('Subscription status code is not SF. '. Utils::varDumpToString($op),
                                 __FILE__, __LINE__, __METHOD__ );
                         }
@@ -161,119 +161,54 @@ class MembershipController extends UpstartAuthController {
         try {
             if (self::hasUserRequestedAccountClosure() && $this->validateCSRFToken()) {
                 if (!$subscriber->is_account_closed) {
-                    //Get SubscriptionId for logged-in subscriber
-                    $sub_op_dao = new SubscriptionOperationMySQLDAO();
-                    $operation = $sub_op_dao->getLatestOperation($subscriber->id);
-                    if (isset($operation)) { // Member has paid for subscription, we're going to issue a refund
-                        try {
-                            //Issue CancelAndRefund call to Amazon API
-                            $api_accessor = new AmazonFPSAPIAccessor();
-                            //Calculate refund
-                            $refund_amount = $sub_op_dao->calculateProRatedMonthlyRefund($subscriber->id);
-                            //Create a callerReference
-                            $caller_reference = $subscriber->id.'_'.time();
-                            $response = $api_accessor->cancelAndRefundSubscription($operation->amazon_subscription_id,
-                                $refund_amount, $caller_reference);
-
-                            // If request ID is set correctly, add subscription operation and close account
-                            if (isset($response)) {
-                                // Add subscription operation
-                                $op_cancel = new SubscriptionOperation();
-                                $op_cancel->subscriber_id = $subscriber->id;
-                                $op_cancel->payment_reason = "Refund due to cancellation";
-                                $op_cancel->transaction_amount = "USD ".$refund_amount;
-                                $op_cancel->status_code = '';
-                                $op_cancel->buyer_email = $operation->buyer_email;
-                                //@TODO Verify the reference_id starts with the subscriber ID
-                                $op_cancel->reference_id = $caller_reference;
-                                $op_cancel->amazon_subscription_id = $operation->amazon_subscription_id;
-                                $op_cancel->transaction_date = time();
-                                $op_cancel->buyer_name = $operation->buyer_name;
-                                $op_cancel->operation = 'refund';
-                                $op_cancel->recurring_frequency = $operation->recurring_frequency;
-                                $op_cancel->payment_method = $operation->payment_method;
-                                $sub_op_dao->insert($op_cancel);
-
-                                // Update subscription status
-                                $subscription_helper = new SubscriptionHelper();
-                                $subscription_helper->updateSubscriptionStatusAndPaidThrough($subscriber, $op_cancel);
-
-                                // Close account
-                                $result = $subscriber_dao->closeAccount($subscriber->id);
-                                if ($this->sendAccountClosureEmail($subscriber, $refund_amount, 'SimplePay')) {
-                                    // Log user out with message about closure and refund
-                                    $logout_controller = new LogoutController(true);
-                                    $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
-                                        "and we've issued a refund.  Thanks for trying ThinkUp!");
-
-                                    return $logout_controller->control();
-                                }
-                            } else {
-                                //Show user error, log system error
-                                Logger::logError('Amazon refund response was null. Refund operation was '.
-                                    Utils::varDumpToString($op_cancel), __FILE__, __LINE__, __METHOD__);
-                                $this->addErrorMessage(UpstartHelper::GENERIC_ERROR_MSG);
-                            }
-                        } catch (Amazon_FPS_Exception $ex) {
-                            $debug = "Caught Exception: " . $ex->getMessage() . "\n";
-                            $debug .= "Response Status Code: " . $ex->getStatusCode() . "\n";
-                            $debug .= "Error Code: " . $ex->getErrorCode() . "\n";
-                            $debug .= "Error Type: " . $ex->getErrorType() . "\n";
-                            $debug .= "Request ID: " . $ex->getRequestId() . "\n";
-                            $debug .= "XML: " . $ex->getXML() . "\n";
-                            Logger::logError($debug, __FILE__, __LINE__, __METHOD__);
-                            $this->addErrorMessage(UpstartHelper::GENERIC_ERROR_MSG);
-                        }
-                    } else { //Annual subscriber or free trial
-                        //Check for annual subscriber by getting last payment
-                        $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
-                        $latest_payment = $subscriber_payment_dao->getBySubscriber($subscriber->id, 1);
-                        if (sizeof($latest_payment) > 0) {
-                            $latest_payment = $latest_payment[0];
-                        } else {
-                            $latest_payment = null;
-                        }
-                        //If payment exists
-                        if ( $latest_payment !== null ) {
-                            //Calculate refund
-                            $payment_dao = new PaymentMySQLDAO();
-                            $refund_amount = $payment_dao->calculateProRatedAnnualRefund($latest_payment);
-                            //Create a callerReference
-                            $caller_reference = $subscriber->id.'_'.time();
-                            //Issue Refund call to Amazon API
-                            $api_accessor = new AmazonFPSAPIAccessor($use_deprecated_tokens = true);
-                            $response = $api_accessor->refundPayment($caller_reference,
-                                $latest_payment['transaction_id'], $refund_amount);
-
-                            // Process response
-                            if (isset($response)) {
-                                // Debug
-                                //print_r($response);
-                                // Add refund info to payments table
-                                $payment_dao->setRefund($latest_payment['id'], $caller_reference, $refund_amount);
-                                // Set subscription_status = 'Refunded'
-                                $result = $subscriber_dao->setSubscriptionStatus($subscriber->id, "Refunded");
-                                // Close account
-                                $result = $subscriber_dao->closeAccount($subscriber->id);
-
-                                if ($this->sendAccountClosureEmail($subscriber, $refund_amount, 'FPS')) {
-                                    // Log user out with message about closure and refund
-                                    $logout_controller = new LogoutController(true);
-                                    $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
-                                        "and we've issued a refund.  Thanks for trying ThinkUp!");
-
-                                    return $logout_controller->control();
-                                }
-                            }
-                        } else { //Free trial, no refund
-                            // Close account
-                            $result = $subscriber_dao->closeAccount($subscriber->id);
-
-                            //Log user out with message about closure and refund
+                    if ($subscriber->is_via_recurly) {
+                        if ($this->cancelRecurlySubscription($subscriber)) {
+                            // Log user out with message about closure and refund
                             $logout_controller = new LogoutController(true);
-                            $logout_controller->addSuccessMessage("Your ThinkUp account is closed. ".
-                                "Thanks for trying ThinkUp!");
+                            $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
+                                "and we've issued a refund.  Thanks for trying ThinkUp!");
                             return $logout_controller->control();
+                        }
+                    } else {
+                        //Get last operation for logged-in subscriber
+                        $sub_op_dao = new SubscriptionOperationMySQLDAO();
+                        $operation = $sub_op_dao->getLatestOperation($subscriber->id);
+                        if (isset($operation)) { // SimplePay subscription
+                            if ($this->cancelSimplePaySubscription($subscriber, $operation) ) {
+                                // Log user out with message about closure and refund
+                                $logout_controller = new LogoutController(true);
+                                $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
+                                    "and we've issued a refund.  Thanks for trying ThinkUp!");
+                                return $logout_controller->control();
+                            }
+                        } else { //FPS subscriber or free trial
+                            //Check for FPS subscriber by getting last payment
+                            $subscriber_payment_dao = new SubscriberPaymentMySQLDAO();
+                            $latest_payment = $subscriber_payment_dao->getBySubscriber($subscriber->id, 1);
+                            if (sizeof($latest_payment) > 0) {
+                                $latest_payment = $latest_payment[0];
+                            } else {
+                                $latest_payment = null;
+                            }
+                            //If payment exists
+                            if ( $latest_payment !== null ) {
+                                if ($this->cancelFPSSubscription($subscriber, $latest_payment)) {
+                                    // Log user out with message about closure and refund
+                                    $logout_controller = new LogoutController(true);
+                                    $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
+                                        "and we've issued a refund.  Thanks for trying ThinkUp!");
+                                    return $logout_controller->control();
+                                }
+                            } else { //Free trial, no refund
+                                // Close account
+                                $result = $subscriber_dao->closeAccount($subscriber->id);
+
+                                //Log user out with message about closure and refund
+                                $logout_controller = new LogoutController(true);
+                                $logout_controller->addSuccessMessage("Your ThinkUp account is closed. ".
+                                    "Thanks for trying ThinkUp!");
+                                return $logout_controller->control();
+                            }
                         }
                     }
                 } else {
@@ -319,23 +254,8 @@ class MembershipController extends UpstartAuthController {
         // then send Amazon Payments URL to view and handle charge
         if ($membership_status == 'Payment failed' || $membership_status == 'Free trial'
             || $membership_status == 'Payment due') {
-            $callback_url = UpstartHelper::getApplicationURL().'user/membership.php';
-            $caller_reference = $subscriber->id.'_'.time();
-            $amount = self::getSubscriptionAmount($subscriber->membership_level, $subscriber->subscription_recurrence);
 
-            $api_accessor = new AmazonFPSAPIAccessor();
-            $pay_with_amazon_form = $api_accessor->generateSubscribeForm('USD '.$amount,
-                $subscriber->subscription_recurrence, 'ThinkUp.com membership',
-                $caller_reference, $callback_url);
-
-            $this->addToView('pay_with_amazon_form', $pay_with_amazon_form);
-
-            SessionCache::put('caller_reference', $caller_reference);
-            if ($membership_status == 'Free trial') {
-                $this->addToView('amazon_form', $pay_with_amazon_form);
-            } else {
-                $this->addToView('failed_cc_amazon_form', $pay_with_amazon_form);
-            }
+            $this->addToView('show_checkout_button', true);
 
             if ($membership_status == 'Payment failed') {
                 $this->addToView('failed_cc_amazon_text',
@@ -343,6 +263,8 @@ class MembershipController extends UpstartAuthController {
             } else {
                 $this->addToView('failed_cc_amazon_text', "One last step to complete your ThinkUp membership!");
             }
+            $checkout_button = SubscriptionHelper::getCheckoutButton($subscriber);
+            $this->addToView('checkout_button', $checkout_button);
         }
         //END populating membership_status
 
@@ -373,33 +295,8 @@ class MembershipController extends UpstartAuthController {
         //Set Amazon payments link to sandbox for testing
         $this->addToView('amazon_sandbox', $config->getValue('amazon_sandbox'));
 
-        //BEGIN DELETEME TESTING ONLY
-        // $fps_api_accessor = new AmazonFPSAPIAccessor($use_deprecated_tokens = true);
-        // $callback_url = UpstartHelper::getApplicationURL().'user/membership.php';
-        // $caller_reference = $subscriber->id.'_'.time();
-        // $amount = 50;
-        // $test_fps_sub = $fps_api_accessor->getAmazonFPSURL($caller_reference, $callback_url, $amount);
-        // $this->addToView('test_fps_sub', $test_fps_sub);
-        // if (UpstartHelper::areGetParamsSet(array('callerReference', 'tokenID', 'signature', 'status'))) {
-        //     if ($fps_api_accessor->isAmazonSignatureValid($callback_url)) {
-        //         //Record authorization
-        //         $authorization_dao = new AuthorizationMySQLDAO();
-        //         $payment_expiry_date = (isset($_GET['expiry']))?$_GET['expiry']:null;
-
-        //         $authorization_id = $authorization_dao->insert($_GET['tokenID'], $amount, $_GET["status"],
-        //             $caller_reference, $error_message, $payment_expiry_date);
-        //         $subscriber_authorization_dao = new SubscriberAuthorizationMySQLDAO();
-        //         $subscriber_authorization_dao->insert($subscriber->id, $authorization_id);
-
-        //         $fps_api_accessor->invokeAmazonPayAction($subscriber->id, $_GET['tokenID'], $amount);
-        //     } else {
-        //         $this->addErrorMessage("Invalid signature");
-        //     }
-        // }
-        //END DELETEME TESTING ONLY
-
         return $this->generateView();
-	}
+    }
     /**
      * Send account closure email and notify Slack of account closure.
      * @param  Subscriber $subscriber
@@ -482,5 +379,132 @@ class MembershipController extends UpstartAuthController {
                     SignUpHelperController::$subscription_levels[$normalized_membership_level][$recurrence_frequency];
             }
         }
+    }
+    /**
+     * Cancel and issue refund for a subscription paid via Amazon Simple Pay.
+     * @param  Subscriber            $subscriber
+     * @param  SubscriptionOperation $operation
+     * @return bool
+     */
+    private function cancelSimplePaySubscription(Subscriber $subscriber, SubscriptionOperation $operation) {
+        $sub_op_dao = new SubscriptionOperationMySQLDAO();
+        $subscriber_dao = new SubscriberMySQLDAO();
+        try {
+            //Issue CancelAndRefund call to Amazon API
+            $api_accessor = new AmazonFPSAPIAccessor();
+            //Calculate refund
+            $refund_amount = $sub_op_dao->calculateProRatedMonthlyRefund($subscriber->id);
+            //Create a callerReference
+            $caller_reference = $subscriber->id.'_'.time();
+            $response = $api_accessor->cancelAndRefundSubscription($operation->amazon_subscription_id,
+                $refund_amount, $caller_reference);
+
+            // If request ID is set correctly, add subscription operation and close account
+            if (isset($response)) {
+                // Add subscription operation
+                $op_cancel = new SubscriptionOperation();
+                $op_cancel->subscriber_id = $subscriber->id;
+                $op_cancel->payment_reason = "Refund due to cancellation";
+                $op_cancel->transaction_amount = "USD ".$refund_amount;
+                $op_cancel->status_code = '';
+                $op_cancel->buyer_email = $operation->buyer_email;
+                //@TODO Verify the reference_id starts with the subscriber ID
+                $op_cancel->reference_id = $caller_reference;
+                $op_cancel->amazon_subscription_id = $operation->amazon_subscription_id;
+                $op_cancel->transaction_date = time();
+                $op_cancel->buyer_name = $operation->buyer_name;
+                $op_cancel->operation = 'refund';
+                $op_cancel->recurring_frequency = $operation->recurring_frequency;
+                $op_cancel->payment_method = $operation->payment_method;
+                $sub_op_dao->insert($op_cancel);
+
+                // Update subscription status
+                $subscription_helper = new SubscriptionHelper();
+                $subscription_helper->updateSubscriptionStatusAndPaidThrough($subscriber, $op_cancel);
+
+                // Close account
+                $result = $subscriber_dao->closeAccount($subscriber->id);
+                if ($this->sendAccountClosureEmail($subscriber, $refund_amount, 'SimplePay')) {
+                    return true;
+                }
+            } else {
+                //Show user error, log system error
+                Logger::logError('Amazon refund response was null. Refund operation was '.
+                    Utils::varDumpToString($op_cancel), __FILE__, __LINE__, __METHOD__);
+                $this->addErrorMessage($this->generic_error_msg);
+            }
+        } catch (Amazon_FPS_Exception $ex) {
+            $debug = "Caught Exception: " . $ex->getMessage() . "\n";
+            $debug .= "Response Status Code: " . $ex->getStatusCode() . "\n";
+            $debug .= "Error Code: " . $ex->getErrorCode() . "\n";
+            $debug .= "Error Type: " . $ex->getErrorType() . "\n";
+            $debug .= "Request ID: " . $ex->getRequestId() . "\n";
+            $debug .= "XML: " . $ex->getXML() . "\n";
+            Logger::logError($debug, __FILE__, __LINE__, __METHOD__);
+            $this->addErrorMessage($this->generic_error_msg);
+        }
+        return false;
+    }
+    /**
+     * Cancel and issue refund for a subscription paid via Amazon FPS.
+     * @param  Subscriber $subscriber
+     * @param  arr    $latest_payment
+     * @return bool
+     */
+    private function cancelFPSSubscription(Subscriber $subscriber, $latest_payment) {
+        //Calculate refund
+        $payment_dao = new PaymentMySQLDAO();
+        $refund_amount = $payment_dao->calculateProRatedAnnualRefund($latest_payment);
+        //Create a callerReference
+        $caller_reference = $subscriber->id.'_'.time();
+        //Issue Refund call to Amazon API
+        $api_accessor = new AmazonFPSAPIAccessor($use_deprecated_tokens = true);
+        $response = $api_accessor->refundPayment($caller_reference,
+            $latest_payment['transaction_id'], $refund_amount);
+
+        // Process response
+        if (isset($response)) {
+            // Debug
+            //print_r($response);
+            // Add refund info to payments table
+            $payment_dao->setRefund($latest_payment['id'], $caller_reference, $refund_amount);
+            // Set subscription_status = 'Refunded'
+            $subscriber_dao = new SubscriberMySQLDAO();
+            $result = $subscriber_dao->setSubscriptionStatus($subscriber->id, "Refunded");
+            // Close account
+            $result = $subscriber_dao->closeAccount($subscriber->id);
+
+            if ($this->sendAccountClosureEmail($subscriber, $refund_amount, 'FPS')) {
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * Cancel and issue refund for a subscription paid via Recurly.
+     * @param  Subscriber $subscriber
+     * @return bool
+     */
+    private function cancelRecurlySubscription(Subscriber $subscriber) {
+        // Required for the Recurly API
+        $cfg = Config::getInstance();
+        Recurly_Client::$subdomain = $cfg->getValue('recurly_subdomain');
+        Recurly_Client::$apiKey = $cfg->getValue('recurly_api_key');
+        //@TODO catch any Recurly exceptions
+        $subscriptions = Recurly_SubscriptionList::getForAccount($subscriber->id);
+        foreach ($subscriptions as $subscription) {
+            if ($subscription->state == 'active') {
+                $subscription->terminateAndPartialRefund();
+                // Close account
+                $subscriber_dao = new SubscriberMySQLDAO();
+                $result = $subscriber_dao->setSubscriptionStatus($subscriber->id, "Refunded");
+                $result = $subscriber_dao->closeAccount($subscriber->id);
+                // Send account closure email
+                if ($this->sendAccountClosureEmail($subscriber, 0, 'Recurly')) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

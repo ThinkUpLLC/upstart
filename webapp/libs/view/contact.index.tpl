@@ -1,6 +1,10 @@
 {include file="_header.marketing.tpl" marketing_page=true
 body_classes="marketing marketing-page" body_id="marketing-contact"}
 
+{if $smarty.get.type}
+  {assign var="contact_type" value=$smarty.get.type}
+{/if}
+
   <div class="container">
     <section class="section section-marketing-text">
       <h2 class="section-header">Contact</h2>
@@ -16,11 +20,11 @@ body_classes="marketing marketing-page" body_id="marketing-contact"}
             <i class="fa fa-chevron-down icon"></i>
             <select id="control-subject">
               <option value="">Choose&hellip;</option>
-              <option value="level">Change membership level</option>
-              <option value="billing">Billing issue</option>
-              <option value="executive">Executive Memberships</option>
-              <option value="press">Press Inquiry</option>
-              <option value="other">Something else</option>
+              <option value="level" {if $contact_type eq 'level'}selected="true"{/if}>Change membership level</option>
+              <option value="billing" {if $contact_type eq 'billing'}selected="true"{/if}>Billing issue</option>
+              <option value="executive" {if $contact_type eq 'executive'}selected="true"{/if}>Executive Memberships</option>
+              <option value="press" {if $contact_type eq 'press'}selected="true"{/if}>Press Inquiry</option>
+              <option value="other" {if $contact_type eq 'other'}selected="true"{/if}>Something else</option>
             </select>
           </div>
         </div>

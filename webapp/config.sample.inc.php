@@ -44,6 +44,9 @@ $ISOSCELES_CFG['insights_poster_twitter_consumer_secret']     = '';
 $ISOSCELES_CFG['insights_poster_twitter_oauth_token_secret']  = '';
 $ISOSCELES_CFG['insights_poster_twitter_oauth_token']         = '';
 
+//Recurly
+$ISOSCELES_CFG['recurly_subdomain'] = 'thinkup';
+$ISOSCELES_CFG['recurly_api_key']   = '';
 
 /************************************************/
 /***  THINKUP USER INSTALL DATABASE CONFIG    ***/
