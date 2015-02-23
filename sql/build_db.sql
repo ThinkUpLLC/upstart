@@ -187,6 +187,7 @@ CREATE TABLE subscribers (
   reup_reminder_last_sent timestamp NULL DEFAULT NULL COMMENT 'Last time a reup reminder was sent to this subscriber.',
   is_account_closed int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not the member closed their account.',
   claim_code varchar(24) DEFAULT NULL COMMENT 'Redeemed claim code.',
+  is_via_recurly int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not subscription created via Recurly.',
   PRIMARY KEY (id),
   UNIQUE KEY email (email),
   UNIQUE KEY network_user_id (network_user_id,network),

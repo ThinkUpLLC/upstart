@@ -13,7 +13,6 @@ $all_tests->add(new TestOfErrorLogMySQLDAO());
 $all_tests->add(new TestOfInstallLogMySQLDAO());
 $all_tests->add(new TestOfThinkUpTablesMySQLDAO());
 $all_tests->add(new TestOfPricingController());
-$all_tests->add(new TestOfConfirmPaymentController());
 $all_tests->add(new TestOfSubscriberAuthorizationMySQLDAO());
 $all_tests->add(new TestOfAuthorizationMySQLDAO());
 $all_tests->add(new TestOfSubscriberMySQLDAO());

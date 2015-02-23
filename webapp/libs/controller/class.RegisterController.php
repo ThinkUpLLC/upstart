@@ -235,8 +235,33 @@ class RegisterController extends SignUpHelperController {
                     if ($has_user_been_created) {
                         $installer = new AppInstaller();
                         $install_results = $installer->install($new_subscriber_id);
-                        $controller = new PayNowController();
-                        return $controller->control();
+
+                        //Get the subscriber from storage so the API key is populated
+                        $subscriber = $subscriber_dao->getByID($new_subscriber_id);
+
+                        //Log user into ThinkUp and redirect to PayNowController
+                        $config = Config::getInstance();
+                        $success_redir = UpstartHelper::getApplicationURL() .'paynow.php';
+                        $upstart_url = UpstartHelper::getApplicationURL();
+
+                        $params = array("u"=>$subscriber->email, "k"=>$subscriber->api_key_private,
+                            'success_redir'=> $success_redir, 'failure_redir'=> $upstart_url . '');
+
+                        $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
+                            $config->getValue('user_installation_url'));
+                        $url = $user_installation_url.'api/v1/session/login.php?';
+                        end($params);
+                        $last_param = key($params);
+                        foreach ($params as $key=>$value) {
+                            $url .= $key ."=" . urlencode($value);
+                            if ($key != $last_param) {
+                                $url .= "&";
+                            }
+                        }
+                        // Redirect to installation to log in
+                        if (!$this->redirect($url)) {
+                            $this->generateView(); //for testing
+                        }
                     } else {
                         return $this->tryAgain($this->generic_error_msg);
                     }

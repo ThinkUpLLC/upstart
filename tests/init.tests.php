@@ -70,3 +70,5 @@ require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/RefundResponse.php';
 require_once WEBAPP_PATH.'extlibs/amazon/FPS/Model/RefundResult.php';
 
 require_once WEBAPP_PATH.'extlibs/mandrill/Mandrill.php';
+
+require_once WEBAPP_PATH.'extlibs/recurly-client-php-2.4.1/lib/recurly.php';
