@@ -102,8 +102,7 @@ class LoginController extends Controller {
                         return $this->generateView();
                     } else {
                         // user has logged in sucessfully this sets variables in the session
-                        $session = new Session();
-                        $session->completeLogin($subscriber->email);
+                        Session::completeLogin($subscriber->email);
 
                         $subscriber_dao->updateLastLogin($subscriber->email);
                         $subscriber_dao->resetFailedLogins($subscriber->email);

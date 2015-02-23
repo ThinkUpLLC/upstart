@@ -176,6 +176,30 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertFalse($subscriber->is_account_closed);
     }
 
+    public function testSetSubscriptionDetails() {
+        $builder = FixtureBuilder::build('subscribers', array('network_user_id'=>'930061', 'network'=>'twitter',
+            'email'=>'ginatrapani@example.com', 'subscription_status'=>'Free Trial',
+            'subscription_recurrence'=>'1 month', 'is_via_recurly'=>0, 'paid_through'=>null));
+
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('ginatrapani@example.com');
+        $subscriber->subscription_recurrence = '12 months';
+        $subscriber->subscription_status = 'Paid';
+        $paid_through = date('Y-M-d');
+        $subscriber->paid_through = $paid_through;
+        $subscriber->is_via_recurly = true;
+
+        $update_count = $dao->setSubscriptionDetails($subscriber);
+
+        $subscriber1 = $dao->getByEmail('ginatrapani@example.com');
+        $this->assertIsA($subscriber1, 'Subscriber');
+        $this->assertEqual($subscriber->id, 1);
+        $this->assertEqual($subscriber->paid_through, $paid_through);
+        $this->assertEqual($subscriber->subscription_recurrence, '12 months');
+        $this->assertEqual($subscriber->subscription_status, 'Paid');
+        $this->assertTrue($subscriber->is_via_recurly);
+    }
+
     public function testUpdateDuplicateConnection() {
         $dao = new SubscriberMySQLDAO();
         $result1 = $dao->insert('ginatrapani@example.com', 'secr3tpassword');

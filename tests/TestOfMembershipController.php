@@ -54,7 +54,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'due@example.com',
             'is_membership_complimentary'=>0, 'thinkup_username'=>'xanderharris',
-            'subscription_status'=>'Payment due',
+            'subscription_status'=>'Payment due', 'is_via_recurly'=>0,
             'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>'Member'));
         return $builders;
     }
@@ -293,7 +293,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
             'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
             'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>$membership_level,
             'subscription_recurrence'=>'12 months', 'paid_through'=>null,
-            'subscription_status'=>'Free trial'));
+            'subscription_status'=>'Free trial', 'is_via_recurly'=>0));
 
         $builders[] = FixtureBuilder::build('payments', array('id'=>100, 'transaction_status'=>$payment_status,
             'timestamp'=>'-10s', 'refund_amount'=>null, 'refund_caller_reference'=>null, 'refund_date'=>null));
@@ -310,7 +310,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
             'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
             'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>$membership_level,
             'subscription_recurrence'=>'1 month', 'paid_through'=>null,
-            'subscription_status'=>'Free trial'));
+            'subscription_status'=>'Free trial', 'is_via_recurly'=>0));
 
         $this->builders[] = FixtureBuilder::build('subscription_operations', array('subscriber_id'=>1,
             'operation'=>'pay', 'status_code'=>'SS', 'transaction_date'=>'-10s'));
@@ -407,7 +407,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'trial@example.com',
             'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
             'subscription_status'=>'Free trial',  'is_installation_active'=>0, 'date_installed'=>null,
-            'membership_level'=>'Member', 'creation_time'=>"-".(($days_ago*24)+3)."h"));
+            'membership_level'=>'Member', 'creation_time'=>"-".(($days_ago*24)+3)."h", 'is_via_recurly'=>0));
         return $builders;
     }
 
@@ -417,7 +417,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
             'is_membership_complimentary'=>0, 'thinkup_username'=>'spike',
             'subscription_status'=>'Paid',  'is_installation_active'=>0, 'date_installed'=>null,
             'membership_level'=>'Member', 'creation_time'=>"-".(($days_ago*24)+3)."h",
-            'subscription_recurrence'=>'None', 'claim_code'=>'abcdedg', 'paid_through'=>'+300d' ));
+            'subscription_recurrence'=>'None', 'claim_code'=>'abcdedg', 'paid_through'=>'+300d',
+            'is_via_recurly'=>0 ));
         return $builders;
     }
 
@@ -435,7 +436,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertPattern('/Pay now/', $results);
+        $this->assertPattern('/Subscribe Now/', $results);
         $this->assertPattern('/expires in <strong>4 days/', $results);
         $this->assertNoPattern('/Payment pending/', $results);
         $this->assertNoPattern('/Paid through/', $results);
@@ -462,7 +463,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Membership Info/', $results);
         $this->assertPattern('/This is what our database knows./', $results);
         $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertPattern('/Pay now/', $results);
+        $this->assertPattern('/Subscribe Now/', $results);
         $this->assertPattern('/expired!/', $results);
         $this->assertNoPattern('/Payment pending/', $results);
         $this->assertNoPattern('/Paid through/', $results);

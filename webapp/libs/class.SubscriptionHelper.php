@@ -135,4 +135,18 @@ class SubscriptionHelper {
         }
         return 0;
     }
+
+    public static function getCheckoutButton($subscriber) {
+        $amount = SignUpHelperController::$subscription_levels[strtolower($subscriber->membership_level)]
+            [$subscriber->subscription_recurrence];
+        $button_freq_label = $subscriber->subscription_recurrence;
+        $button_freq_label = str_replace("1 month", "month", $button_freq_label);
+        $button_freq_label = str_replace("12 months", "year", $button_freq_label);
+
+        $site_root_path = Config::getInstance()->getValue('site_root_path');
+
+        return '<form method="POST" action="'.$site_root_path.'checkout.php"> <button type="submit" '
+            .'class="btn-pill-large has-note">Subscribe Now<br><small>Just '.$amount
+            .' bucks a '.$button_freq_label.'</small></button><br><br></form>';
+    }
 }
