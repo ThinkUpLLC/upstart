@@ -7,7 +7,7 @@ class CheckoutController extends UpstartAuthController {
         $subscriber = $subscriber_dao->getByEmail($logged_in_user);
 
         //Send already-paid user to their Membership page
-        if ($subscriber->subscription_status == 'Paid') {
+        if ($subscriber->subscription_status == 'Paid' || $subscriber->is_membership_complimentary) {
             $controller = new MembershipController(true);
             return $controller->go();
         }
@@ -19,7 +19,7 @@ class CheckoutController extends UpstartAuthController {
         $amount_monthly = SignUpHelperController::$subscription_levels[strtolower($subscriber->membership_level)]
             ['1 month'];
         $amount_yearly = SignUpHelperController::$subscription_levels[strtolower($subscriber->membership_level)]
-            ['12 months'];
+            ['12 months discount'];
         $this->addToView('amount_monthly', $amount_monthly);
         $this->addToView('amount_yearly', $amount_yearly);
 
@@ -67,20 +67,21 @@ class CheckoutController extends UpstartAuthController {
 
                 //Send paid user to their insights stream
                 if ($subscriber->subscription_status == 'Paid') {
-                    $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
-                        Config::getInstance()->getValue('user_installation_url'));
-
-                    if (!$this->redirect($user_installation_url)) {
-                        $this->generateView(); //for testing
-                    }
+                    $this->addToView('state', 'payment_successful');
                 }
             } catch (Recurly_ValidationError $e) {
                 $this->addErrorMessage('Oops! There was a problem. '.$e->getMessage());
+                $this->addToView('state', 'prompt_for_payment');
             }
         } else {
-            //@TODO Check if subscriber has an active subscription; if so, add 'cancel subscription' button
-            $this->addToView('show_form', true);
+            $this->addToView('state', 'prompt_for_payment');
         }
+        $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
+            Config::getInstance()->getValue('user_installation_url'));
+
+        $error = "That plan does not exist.";
+        $this->addErrorMessage($error);
+        $this->addToView('user_installation_url', $user_installation_url);
         $this->addToView('subscriber', $subscriber);
 
         return $this->generateView();
