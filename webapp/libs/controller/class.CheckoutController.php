@@ -11,7 +11,7 @@ class CheckoutController extends AuthController {
         $subscriber = $subscriber_dao->getByEmail($logged_in_user);
 
         //Send already-paid user to their Membership page
-        if ($subscriber->subscription_status == 'Paid') {
+        if ($subscriber->subscription_status == 'Paid' || $subscriber->is_membership_complimentary) {
             $controller = new MembershipController(true);
             return $controller->go();
         }
@@ -70,19 +70,18 @@ class CheckoutController extends AuthController {
 
                 //Send paid user to their insights stream
                 if ($subscriber->subscription_status == 'Paid') {
-                    $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
-                        Config::getInstance()->getValue('user_installation_url'));
-
-                    if (!$this->redirect($user_installation_url)) {
-                        $this->generateView(); //for testing
-                    }
+                    $this->addToView('state', 'payment_successful');
                 }
             } catch (Recurly_ValidationError $e) {
                 $this->addErrorMessage('Oops! There was a problem. '.$e->getMessage());
+                $this->addToView('state', 'prompt_for_payment');
             }
+            $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
+                Config::getInstance()->getValue('user_installation_url'));
+
+            $this->addToView('user_installation_url', $user_installation_url);
         } else {
-            //@TODO Check if subscriber has an active subscription; if so, add 'cancel subscription' button
-            $this->addToView('show_form', true);
+            $this->addToView('state', 'prompt_for_payment');
         }
         $this->addToView('subscriber', $subscriber);
 

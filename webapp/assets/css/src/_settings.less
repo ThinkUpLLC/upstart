@@ -269,7 +269,6 @@ textarea.form-control {
   }
 }
 
-
 .help-block {
   padding: 4px 5px;
   margin: 0 0 5px;
@@ -371,7 +370,40 @@ textarea.form-control {
   }
 }
 
+#wallet {
 
+  &.disabled {
+    opacity:.5;
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+  }
+}
+
+.pricing {
+  text-align: center;
+
+  input[type=radio] {
+      display:none;
+   }
+
+  input[type=radio] + label {
+      display:inline-block;
+      margin: 12px;
+      padding: 20px;
+      border: 1px solid #46bcff;
+      width: 115px;
+      border-radius: 15px;
+
+      h3 {
+        color: #46bcff;
+      }
+  }
+
+  input[type=radio]:checked + label {
+    background-color: #fff;
+  }
+
+}
 
 .btn-submit {
   z-index: 101;
