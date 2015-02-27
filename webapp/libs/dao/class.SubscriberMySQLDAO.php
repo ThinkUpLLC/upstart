@@ -813,7 +813,7 @@ class SubscriberMySQLDAO extends PDODAO {
      * @return bool  Whether or not it is in use
      */
     public function isUsernameTaken($thinkup_username) {
-        $reserved_names = array('stage', 'demo', 'book', 'shares');
+        $reserved_names = array('www', 'stage', 'demo', 'book', 'shares');
         if (in_array($thinkup_username, $reserved_names) ) {
             return true;
         }

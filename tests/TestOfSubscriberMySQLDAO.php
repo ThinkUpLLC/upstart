@@ -415,6 +415,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
     public function testIsUsernameTaken() {
         $dao = new SubscriberMySQLDAO();
         //Test reserved names
+        $this->assertTrue($dao->isUsernameTaken('www'));
         $this->assertTrue($dao->isUsernameTaken('stage'));
         $this->assertTrue($dao->isUsernameTaken('demo'));
         $this->assertTrue($dao->isUsernameTaken('book'));
