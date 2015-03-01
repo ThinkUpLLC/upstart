@@ -1,10 +1,8 @@
 {include file="_appheader.tpl" body_classes="settings menu-off" body_id="settings-checkout"}
 
 {assign var="context" value=$smarty.get.context} <!-- membership or signup -->
-{assign var="status" value=$smarty.get.status} <!-- trial, expired, due, failed -->
-
+{assign var="membership_status" value=$smarty.get.status} <!-- trial, expired, due, failed -->
 {assign var="frequency" value=$smarty.get.frequency} <!-- monthly or annual -->
-
 {assign var="state" value=$smarty.get.state} <!-- pay or success or error or fullname-->
 
 
@@ -38,21 +36,23 @@
       <h1>Whoops, sorry!</h1>
 
       {if $context eq 'signup'}
-        <h2>We had a problem processing your payment.</h2>
-        <h2>But you can still get started with your free trial.</h2>
+        <h2>We had a problem processing your payment,</h2>
+        <h2>but you can fix it later.</h2>
+        <h2>You can still get started with your free trial now.</h2>
       {/if}
     </header>
 
     <div class="pricing">
 
       {if $context eq 'signup'}
-        <a href="" class="btn btn-pill-large has-note">
-          Okay, let's fix it later.<br />
-          <small>(Your insights are almost ready)</small>
+        <a href="{$user_installation_url}" class="btn btn-pill-large has-note">
+          Go to your ThinkUp<br />
+          <small>Your insights are almost ready</small>
         </a>
       {/if}
 
     </div>
+<br><br><br><br><br><br><br><br><br><br>
 
   {elseif $state eq 'fullname'}
 
@@ -108,30 +108,31 @@
 
 
     <div class="pricing">
-      <a href="" class="btn btn-pill-large has-note">
-        Let's go see my ThinkUp!<br />
-        <small>(Your insights are almost ready)</small>
+      <a href="{$user_installation_url}" class="btn btn-pill-large has-note">
+        Go to your ThinkUp<br />
+        <small>Your insights are almost ready</small>
       </a>
     </div>
+<br><br><br><br><br><br><br><br><br><br>
 
   {elseif $state eq 'pay'}
 
     <header class="container-header">
     {if $context eq 'membership'}
 
-      {if $status eq 'trial'}
+      {if $membership_status eq 'trial'}
 
         <h1>Ready to subscribe to ThinkUp?</h1>
 
-      {elseif $status eq 'expired'}
+      {elseif $membership_status eq 'expired'}
 
         <h1>Your ThinkUp trial is complete. Time to join us!</h1>
 
-      {elseif $status eq 'due'}
+      {elseif $membership_status eq 'due'}
 
         <h1>ThinkUp needs to update your payment info.</h1>
 
-      {elseif $status eq 'failed'}
+      {elseif $membership_status eq 'failed'}
 
         <h1>ThinkUp needs to update your payment info.</h1>
 
@@ -170,8 +171,8 @@
     <input type="Submit" value="Subscribe" id="subscribe-btn" style="visibility:hidden" class="btn-submit" />
     </form>
 
-    {if $status eq 'trial'}
-      <p class="form-note"><a href="#">No thanks, I'll do this later.</a></p>
+    {if $membership_status eq 'trial'}
+      <p class="form-note"><a href="{$user_installation_url}">No thanks, I'll do this later.</a></p>
     {/if}
 <!--
     <p class="form-note">Login to Amazon Payments:<br>lpa-test-user1@thinkup.com<br>lpa-test-user2@thinkup.com <br> Password testme</p>

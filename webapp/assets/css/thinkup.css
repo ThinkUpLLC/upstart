@@ -336,6 +336,9 @@ textarea.form-control {
 .pricing {
   text-align: center;
 }
+.pricing input[type=radio] {
+  display: none;
+}
 .pricing input[type=radio] + label {
   display: inline-block;
   margin: 12px;

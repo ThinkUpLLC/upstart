@@ -23,7 +23,7 @@ class CheckoutController extends AuthController {
         $amount_monthly = SignUpHelperController::$subscription_levels[strtolower($subscriber->membership_level)]
             ['1 month'];
         $amount_yearly = SignUpHelperController::$subscription_levels[strtolower($subscriber->membership_level)]
-            ['12 months'];
+            ['12 months discount'];
         $this->addToView('amount_monthly', $amount_monthly);
         $this->addToView('amount_yearly', $amount_yearly);
 
