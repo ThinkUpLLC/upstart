@@ -36,39 +36,9 @@
 
     {if $state eq 'error'}
 
-      {if $context eq 'signup'}
-
         <h1>Whoops, sorry!</h1>
-        <h2>We had a problem processing your payment.</h2>
 
-        <h2>You can still get started with your free trial now,</h2>
-        <h2>and fix the issue later.</h2>
-
-      {elseif $context eq 'membership'}
-
-        {if $membership_status eq 'trial'}
-
-          <h1>Ready to subscribe to ThinkUp?</h1>
-
-        {elseif $membership_status eq 'expired'}
-
-          <h1>Your ThinkUp trial is complete. Time to join us!</h1>
-          <h2>Please choose a subscription level for your membership.</h2>
-
-        {elseif $membership_status eq 'due'}
-
-          <h1>Your ThinkUp subscription is due.</h1>
-          <h2>Please choose a subscription level for your membership.</h2>
-
-        {elseif $membership_status eq 'failed'}
-
-          <h1>ThinkUp needs to update your payment info.</h1>
-          <h2>Please choose a subscription level for your membership.</h2>
-
-        {/if}
-
-      {/if}
-
+        <h2>There was problem processing your payment. {if $membership_status neq 'trial'}In order to keep your account in good standing, p{else}P{/if}lease try again. If you get stuck, contact us at help@thinkup.com.</h2>
     {elseif $state eq 'fullname'}
 
         <h1>Whoops, sorry!</h1>
@@ -108,20 +78,7 @@
     </header>
 
 
-  {if $state eq 'error'}
-
-    <div class="pricing">
-
-      {if $context eq 'signup'}
-        <a href="{$user_installation_url}" class="btn btn-pill-large has-note">
-          Go to your ThinkUp<br />
-          <small>Your insights are almost ready</small>
-        </a>
-      {/if}
-
-    </div>
-
-  {elseif $state eq 'fullname'}
+  {if $state eq 'fullname'}
 
     {assign var="missing_fields" value="false"}
     <form method="POST" id="form-fullname" action="">
