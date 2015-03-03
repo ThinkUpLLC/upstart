@@ -339,6 +339,7 @@ textarea.form-control {
 }
 .pricing {
   text-align: center;
+  min-height: 250px;
 }
 .pricing input[type=radio] {
   display: none;
