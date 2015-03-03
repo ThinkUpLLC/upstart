@@ -332,6 +332,10 @@ textarea.form-control {
   opacity: .5;
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
+  visibility: hidden;
+}
+#wallet.disabled img {
+  cursor: default !important;
 }
 .pricing {
   text-align: center;
