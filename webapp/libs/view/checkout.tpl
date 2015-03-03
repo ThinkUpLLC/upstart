@@ -1,12 +1,12 @@
 {include file="_appheader.tpl" body_classes="settings menu-off" body_id="settings-checkout"}
 
 {assign var="context" value=$smarty.get.context} <!-- membership or signup -->
-{assign var="membership_status" value=$smarty.get.status} <!-- trial, expired, due, failed -->
+{assign var="membership_status" value=$smarty.get.membership_status} <!-- trial, expired, due, failed -->
 {assign var="frequency" value=$smarty.get.frequency} <!-- monthly or annual -->
 {assign var="state" value=$smarty.get.state} <!-- pay or success or error or fullname-->
 
 
-  {if $state eq 'pay'}
+  {if $state eq 'pay' OR $state eq 'error'}
     <script src="assets/js/vendor/pay-with-amazon.min.js"></script>
     <script type="text/javascript">
     var payWithAmazon = new PayWithAmazon({
@@ -28,38 +28,57 @@
     </script>
   {/if}
 
+
   <div class="container">
 
-  {if $state eq 'error'}
-
     <header class="container-header">
-      <h1>Whoops, sorry!</h1>
 
-      {if $context eq 'signup'}
-        <h2>We had a problem processing your payment,</h2>
-        <h2>but you can fix it later.</h2>
-        <h2>You can still get started with your free trial now.</h2>
-      {/if}
-    </header>
 
-    <div class="pricing">
+    {if $state eq 'error'}
 
-      {if $context eq 'signup'}
-        <a href="{$user_installation_url}" class="btn btn-pill-large has-note">
-          Go to your ThinkUp<br />
-          <small>Your insights are almost ready</small>
-        </a>
-      {/if}
+        <h1>Whoops, sorry!</h1>
 
-    </div>
-<br><br><br><br><br><br><br><br><br><br>
+        <h2>There was problem processing your payment. {if $membership_status neq 'trial'}In order to keep your account in good standing, p{else}P{/if}lease try again. If you get stuck, <a href="{$site_root_path}about/contact.php?type=billing">contact us</a>.</h2>
+    {elseif $state eq 'fullname'}
 
-  {elseif $state eq 'fullname'}
-
-    <header class="container-header">
-      <h1>Whoops, sorry!</h1>
+        <h1>Whoops, sorry!</h1>
         <h2>We'll need your full name to complete the Amazon payment.</h2>
+
+      {if $context eq 'signup'}
+
+      {elseif $context eq 'membership'}
+
+      {/if}
+
+    {elseif $state eq 'success'}
+
+        <h1>Thanks! Your payment is complete.</h1>
+        <h2>You are now <em>officially</em> a ThinkUp subscriber.</h2>
+
+      {if $context eq 'signup'}
+
+      {elseif $context eq 'membership'}
+
+      {/if}
+
+    {elseif $state eq 'pay'}
+
+        <h1>Subscribe to ThinkUp today!</h1>
+        <h2>It's safe and easy with your Amazon account.</h2>
+
+      {if $context eq 'signup'}
+
+      {elseif $context eq 'membership'}
+
+      {/if}
+
+    {/if}
+
+
     </header>
+
+
+  {if $state eq 'fullname'}
 
     {assign var="missing_fields" value="false"}
     <form method="POST" id="form-fullname" action="">
@@ -101,51 +120,19 @@
 
   {elseif $state eq 'success'}
 
-    <header class="container-header">
-      <h1>Thanks! Your payment is complete.</h1>
-      <h2>You are now <em>officially</em> a ThinkUp subscriber.</h2>
-    </header>
-
-
     <div class="pricing">
-      <a href="{$user_installation_url}" class="btn btn-pill-large has-note">
-        Go to your ThinkUp<br />
+      <a href="{$user_installation_url}" class="btn btn-pill-large {if $context eq 'signup'}has-note{/if}">
+        Go to your ThinkUp
+        {if $context eq 'signup'}
+        <br />
         <small>Your insights are almost ready</small>
+        {/if}
       </a>
     </div>
-<br><br><br><br><br><br><br><br><br><br>
 
-  {elseif $state eq 'pay'}
+  {/if}
 
-    <header class="container-header">
-    {if $context eq 'membership'}
-
-      {if $membership_status eq 'trial'}
-
-        <h1>Ready to subscribe to ThinkUp?</h1>
-
-      {elseif $membership_status eq 'expired'}
-
-        <h1>Your ThinkUp trial is complete. Time to join us!</h1>
-
-      {elseif $membership_status eq 'due'}
-
-        <h1>ThinkUp needs to update your payment info.</h1>
-
-      {elseif $membership_status eq 'failed'}
-
-        <h1>ThinkUp needs to update your payment info.</h1>
-
-      {/if}
-
-
-    {elseif $context eq 'signup'}
-      <h1>Subscribe to ThinkUp today!</h1>
-    {/if}
-
-      <h2>It's safe and easy with your Amazon account.</h2>
-
-    </header>
+  {if $state eq 'pay' OR $state eq 'error'}
 
     <form method="post" action="checkout.php">
         <header class="container-header">
@@ -181,7 +168,6 @@
   {/if}
 
   </div>
-
 
 
 {include file="_appfooter.tpl"}

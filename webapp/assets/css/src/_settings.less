@@ -376,11 +376,17 @@ textarea.form-control {
     opacity:.5;
     filter: grayscale(100%);
     -webkit-filter: grayscale(100%);
+    visibility: hidden;
+
+    img {
+      cursor: default !important;
+    }
   }
 }
 
 .pricing {
   text-align: center;
+  min-height: 250px;
 
   input[type=radio] {
       display:none;
