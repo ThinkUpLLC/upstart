@@ -82,6 +82,8 @@ class CheckoutController extends AuthController {
         $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
             Config::getInstance()->getValue('user_installation_url'));
 
+        $error = "That plan does not exist.";
+        $this->addErrorMessage($error);
         $this->addToView('user_installation_url', $user_installation_url);
         $this->addToView('subscriber', $subscriber);
 
