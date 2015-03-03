@@ -38,7 +38,7 @@
 
         <h1>Whoops, sorry!</h1>
 
-        <h2>There was problem processing your payment. {if $membership_status neq 'trial'}In order to keep your account in good standing, p{else}P{/if}lease try again. If you get stuck, contact us at help@thinkup.com.</h2>
+        <h2>There was problem processing your payment. {if $membership_status neq 'trial'}In order to keep your account in good standing, p{else}P{/if}lease try again. If you get stuck, <a href="https://www.thinkup.com/join/about/contact.php">contact us</a>.</h2>
     {elseif $state eq 'fullname'}
 
         <h1>Whoops, sorry!</h1>
