@@ -9,7 +9,7 @@ body_classes="marketing marketing-page" body_id="marketing-welcome"}
 
       <p class="break-word">ThinkUp is analyzing your data now. You’ll get an email when your first insights are ready, and they’ll show up at your personal address: <a href="{$thinkup_url}">{$thinkup_url}</a>.</p>
 
-      {$pay_with_amazon_form}
+      {$checkout_button}
       <a class="alt-to-btn-large" id="btn-claim-code" href="#">Got a coupon code?</a></p>
 
       <form class="marketing-form{if !isset($claim_code)} hidden{/if}" id="form-claim-code" method="post" action="paynow.php">

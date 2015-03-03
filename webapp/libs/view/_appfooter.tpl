@@ -11,8 +11,7 @@
           <ul class="follow-links">
             <li class="twitter"><a href="https://twitter.com/thinkup"><i class="fa fa-twitter"></i></a></li>
             <li class="facebook"><a href="https://facebook.com/thinkupapp"><i class="fa fa-facebook-square"></i></a></li>
-            <li class="google-plus"><a href="https://plus.google.com/109397312975756759279" rel="publisher"><i class="fa fa-google-plus"></i></a></li>
-            <li class="github"><a href="https://github.com/ginatrapani/ThinkUp"><i class="fa fa-github"></i></a></li>
+            <li class="github"><a href="https://github.com/ThinkUpLLC/ThinkUp"><i class="fa fa-github"></i></a></li>
           </ul>
         </div>
       </div>

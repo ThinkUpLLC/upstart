@@ -63,7 +63,7 @@ $ISOSCELES_CFG['AWS_SECRET_ACCESS_KEY']
 $ISOSCELES_CFG['mandrill_api_key']
 $ISOSCELES_CFG['mandrill_notifications_template']			= 'ThinkUp LLC Member Insight Notifications';
 
-//User installations -  - Don't worry about this unless you're working with installation
+//User installations - Don't worry about this unless you're working with installation
 $ISOSCELES_CFG['app_source_path']
 $ISOSCELES_CFG['master_app_source_path']
 $ISOSCELES_CFG['chameleon_app_source_path']
@@ -73,6 +73,17 @@ $ISOSCELES_CFG['admin_password']
 $ISOSCELES_CFG['user_password']
 $ISOSCELES_CFG['user_installation_url']     = "http://{user}.upstart.com/sandbox/";
 $ISOSCELES_CFG['user_installation_db_prefix'] = "thinkupstart_";
+
+
+//User installations database configuration - Needed for user installations and for testing signup checkout
+
+$ISOSCELES_CFG['tu_db_host']
+$ISOSCELES_CFG['tu_db_user']
+$ISOSCELES_CFG['tu_db_password']
+$ISOSCELES_CFG['tu_db_socket']
+$ISOSCELES_CFG['tu_db_port']
+$ISOSCELES_CFG['tu_table_prefix']
+
 
 //Dispatch - Don't worry about this unless you're working with installation
 $ISOSCELES_CFG['dispatch_endpoint'] = 'https://www.thinkup.com/dispatch/';

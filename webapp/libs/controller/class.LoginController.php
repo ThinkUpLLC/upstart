@@ -102,8 +102,7 @@ class LoginController extends UpstartController {
                         return $this->generateView();
                     } else {
                         // user has logged in sucessfully this sets variables in the session
-                        $session = new Session();
-                        $session->completeLogin($subscriber);
+                        Session::completeLogin($subscriber);
 
                         $subscriber_dao->updateLastLogin($subscriber->email);
                         $subscriber_dao->resetFailedLogins($subscriber->email);

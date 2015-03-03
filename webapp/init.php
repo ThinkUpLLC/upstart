@@ -60,3 +60,5 @@ require_once 'extlibs/amazon/FPS/Model/RefundResponse.php';
 require_once 'extlibs/amazon/FPS/Model/RefundResult.php';
 
 require_once 'extlibs/mandrill/Mandrill.php';
+
+require_once 'extlibs/recurly-client-php-2.4.1/lib/recurly.php';

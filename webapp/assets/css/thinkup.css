@@ -27,6 +27,9 @@ body.settings .container .container-header h2 {
   text-align: center;
   margin: 0;
 }
+body.settings .container #wallet {
+  text-align: center;
+}
 .standard-form-element {
   font-size: 14px;
   line-height: 1;
@@ -325,6 +328,35 @@ textarea.form-control {
 .picker select:focus {
   color: #3ea5cf;
 }
+#wallet.disabled {
+  opacity: .5;
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  visibility: hidden;
+}
+#wallet.disabled img {
+  cursor: default !important;
+}
+.pricing {
+  text-align: center;
+}
+.pricing input[type=radio] {
+  display: none;
+}
+.pricing input[type=radio] + label {
+  display: inline-block;
+  margin: 12px;
+  padding: 20px;
+  border: 1px solid #46bcff;
+  width: 115px;
+  border-radius: 15px;
+}
+.pricing input[type=radio] + label h3 {
+  color: #46bcff;
+}
+.pricing input[type=radio]:checked + label {
+  background-color: #fff;
+}
 .btn-submit {
   z-index: 101;
   width: auto;
@@ -392,6 +424,7 @@ textarea.form-control {
 }
 .btn-pill-large:hover {
   background: #2377bd;
+  color: #fff;
 }
 .btn-pill-large small {
   color: #93c2e9;
@@ -1014,7 +1047,6 @@ body.account .app-message {
 }
 .footer .footer-container .privacy {
   display: block;
-  color: #46bcff;
   text-decoration: none;
 }
 .footer .footer-container .motto {
