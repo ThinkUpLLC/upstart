@@ -155,7 +155,7 @@ body_classes="settings menu-open" body_id="settings-subscription"}
         <input type="submit" value="Send it" class="btn btn-circle btn-submit">
       </form>
       <div>
-      {* DELETE ME TESTING ONLY *}
-      <!--{if isset($test_fps_sub)}<a href="{$test_fps_sub}">FPS annual</a>{/if}-->
+
+    </div>
 
 {include file="_appfooter.tpl"}
