@@ -25,7 +25,7 @@ require_once 'init.php';
  * Add support for favicons
  */
 
-class ImageProxyCacheController extends UpstartController {
+class ImageProxyCacheController extends Controller {
     /**
      * URL of image getting cached and displayed
      * @var str
