@@ -23,8 +23,8 @@ class ConfirmPaymentController extends SignUpHelperController {
                 $error_message = isset($_GET["errorMessage"])?$_GET["errorMessage"]:null;
                 if ($error_message !== null ) {
                     //Display error message, log debug info
-                    $this->addErrorMessage($this->generic_error_msg);
-                    $this->logError("Amazon returned error: ".$error_message, __FILE__,__LINE__,__METHOD__);
+                    $this->addErrorMessage(UpstartHelper::GENERIC_ERROR_MSG);
+                    Logger::logError("Amazon returned error: ".$error_message, __FILE__,__LINE__,__METHOD__);
                 } else {
                     //Capture Simple Pay return codes
                     $op = new SubscriptionOperation();
@@ -63,7 +63,7 @@ class ConfirmPaymentController extends SignUpHelperController {
                         $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
                         $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
                         if (!$trial_ended) {
-                            $this->logError('Unable to end trial in ThinkUp installation',
+                            Logger::logError('Unable to end trial in ThinkUp installation',
                                 __FILE__,__LINE__, __METHOD__);
                         }
                         UpstartHelper::postToSlack('#signups',
@@ -78,8 +78,8 @@ class ConfirmPaymentController extends SignUpHelperController {
                 }
             } else {
                 //Display error message, log debug info
-                $this->addErrorMessage($this->generic_error_msg);
-                $this->logError('Amazon response invalid', __FILE__,__LINE__, __METHOD__);
+                $this->addErrorMessage(UpstartHelper::GENERIC_ERROR_MSG);
+                Logger::logError('Amazon response invalid', __FILE__,__LINE__, __METHOD__);
             }
         } else if (isset($_GET['code'])) {
             //Strip spaces and go uppercase
@@ -97,7 +97,7 @@ class ConfirmPaymentController extends SignUpHelperController {
                             $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
                             $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
                             if (!$trial_ended) {
-                                $this->logError('Unable to end trial in ThinkUp installation',
+                                Logger::logError('Unable to end trial in ThinkUp installation',
                                     __FILE__,__LINE__, __METHOD__);
                             }
                             $this->addSuccessMessage("It worked! We've applied your coupon code.");
@@ -122,8 +122,8 @@ class ConfirmPaymentController extends SignUpHelperController {
             }
         } else {
             //Display error message, log debug info
-        	$this->addErrorMessage($this->generic_error_msg);
-            $this->logError('Has not returned from Amazon', __FILE__,__LINE__, __METHOD__);
+        	$this->addErrorMessage(UpstartHelper::GENERIC_ERROR_MSG);
+            Logger::logError('Has not returned from Amazon', __FILE__,__LINE__, __METHOD__);
         }
         return $this->generateView();
     }

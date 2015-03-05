@@ -23,65 +23,15 @@ $ git submodule update
 
 4. Symlink Upstart's webapp directory to a web-accessible folder on your local web server. On ThinkUp.com, that directory is currently ```join```. So if you symlink webapp to join on localhost, you'd load ```http://localhost/join/``` in your browser.
 
-5. Create your config file. This file lives in the Isosceles directory. Copy over the sample using this command:
+5. Create your base Isosceles config file. This file lives in the Isosceles directory. Copy over the sample using this command:
 ```$ cp webapp/extlibs/isosceles/libs/config.sample.inc.php webapp/extlibs/isosceles/libs/config.inc.php```
 
 6. Fill in the config.inc.php file basic values from your setup, particularly site_root_path and db_name, db_user, and db_password. Upstarts datadir_path must be writable by the web server (for caching Smarty output).
 
-7. Add Upstart's custom config values, listed below. Get any API keys from Gina via LastPass.
+7. Create your Upstart custom config file. Copy the sample using this command:
+```$ cp webapp/config.sample.inc.php webapp/config.inc.php```
 
-
-Custom Configuration
---------------------
-Set the following required configuration variables in webapp/extlibs/isosceles/libs/config.inc.php:
-
-```
-// Twitter
-$ISOSCELES_CFG['oauth_consumer_key']
-$ISOSCELES_CFG['oauth_consumer_secret']
-
-//Facebook
-$ISOSCELES_CFG['facebook_app_id']
-$ISOSCELES_CFG['facebook_api_secret']
-$ISOSCELES_CFG['facebook_max_crawl_time']   = 5;
-
-//Mailchimp
-$ISOSCELES_CFG['mailchimp_api']
-$ISOSCELES_CFG['mailchimp_list_id']
-
-//Expand URLS
-$ISOSCELES_CFG['expandurls_links_to_expand_per_crawl']         = 50;
-
-//Amazon Payments
-//This next line ensures you're testing using the Amazon Payments sandbox, which simulates interactions but doesn't actually move money
-$ISOSCELES_CFG['amazon_sandbox']            = true;
-$ISOSCELES_CFG['AWS_ACCESS_KEY_ID']
-$ISOSCELES_CFG['AWS_SECRET_ACCESS_KEY']
-//$ISOSCELES_CFG['amazon_payment_auth_validity_start']     = time();
-
-//Mandrill
-$ISOSCELES_CFG['mandrill_api_key']
-$ISOSCELES_CFG['mandrill_notifications_template']			= 'ThinkUp LLC Member Insight Notifications';
-
-//User installations -  - Don't worry about this unless you're working with installation
-$ISOSCELES_CFG['app_source_path']
-$ISOSCELES_CFG['master_app_source_path']
-$ISOSCELES_CFG['chameleon_app_source_path']
-$ISOSCELES_CFG['data_path']
-$ISOSCELES_CFG['admin_email']
-$ISOSCELES_CFG['admin_password']
-$ISOSCELES_CFG['user_password']
-$ISOSCELES_CFG['user_installation_url']     = "http://{user}.upstart.com/sandbox/";
-$ISOSCELES_CFG['user_installation_db_prefix'] = "thinkupstart_";
-
-//Dispatch - Don't worry about this unless you're working with installation
-$ISOSCELES_CFG['dispatch_endpoint'] = 'https://www.thinkup.com/dispatch/';
-$ISOSCELES_CFG['dispatch_auth_token']
-$ISOSCELES_CFG['dispatch_socket']
-$ISOSCELES_CFG['dispatch_timezone']
-$ISOSCELES_CFG['dispatch_http_username']
-$ISOSCELES_CFG['dispatch_http_passwd']
-```
+8. Fill in the config.inc.php file values from your setup.
 
 
 Using Upstart

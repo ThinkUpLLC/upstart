@@ -1,5 +1,5 @@
 <?php
-class LogoutController extends AuthController {
+class LogoutController extends UpstartAuthController {
     public function authControl() {
         $subscriber_dao = new SubscriberMySQLDAO();
         $logged_in_user = Session::getLoggedInUser();

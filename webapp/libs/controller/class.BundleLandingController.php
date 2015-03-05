@@ -57,19 +57,19 @@ class BundleLandingController extends SignUpHelperController {
                             ."! ".$_GET['buyerName']." ".$_GET['buyerEmail']." just bought the Good Web Bundle.",
                             'bundlebot');
                     } else {
-                        $this->addErrorMessage($this->generic_error_msg);
-                        $this->logError('No claim code operation inserted or status is not PS '.$_GET['status'],
+                        $this->addErrorMessage(UpstartHelper::GENERIC_ERROR_MSG);
+                        Logger::logError('No claim code operation inserted or status is not PS '.$_GET['status'],
                             __FILE__,__LINE__, __METHOD__);
                     }
                 } catch (DuplicateClaimCodeOperationException $e) {
                     $this->addErrorMessage("Looks like you already bought the bundle. Did you reload the page?");
                 }
             } else {
-                $this->addErrorMessage($this->generic_error_msg);
+                $this->addErrorMessage(UpstartHelper::GENERIC_ERROR_MSG);
                 if (UpstartHelper::validateEmail($_GET['buyerEmail'])) {
-                    $this->logError('Amazon response invalid', __FILE__,__LINE__, __METHOD__);
+                    Logger::logError('Amazon response invalid', __FILE__,__LINE__, __METHOD__);
                 } else {
-                    $this->logError('Email address "'.$_GET['buyerEmail'].'" is invalid',
+                    Logger::logError('Email address "'.$_GET['buyerEmail'].'" is invalid',
                         __FILE__,__LINE__, __METHOD__);
                 }
             }

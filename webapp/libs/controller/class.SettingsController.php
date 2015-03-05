@@ -1,5 +1,5 @@
 <?php
-class SettingsController extends AuthController {
+class SettingsController extends UpstartAuthController {
     /*
      * @var array Options for notification frequency
      */

@@ -1,5 +1,5 @@
 <?php
-class LoginController extends UpstartController {
+class LoginController extends Controller {
 
     public function control() {
         $this->setPageTitle('Log in');
@@ -103,7 +103,7 @@ class LoginController extends UpstartController {
                     } else {
                         // user has logged in sucessfully this sets variables in the session
                         $session = new Session();
-                        $session->completeLogin($subscriber);
+                        $session->completeLogin($subscriber->email);
 
                         $subscriber_dao->updateLastLogin($subscriber->email);
                         $subscriber_dao->resetFailedLogins($subscriber->email);

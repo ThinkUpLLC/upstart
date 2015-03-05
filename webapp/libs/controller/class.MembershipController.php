@@ -1,5 +1,5 @@
 <?php
-class MembershipController extends AuthController {
+class MembershipController extends UpstartAuthController {
 
     public function authControl() {
         $this->setPageTitle('Membership Info');
@@ -29,8 +29,8 @@ class MembershipController extends AuthController {
                 //@TODO Double-check $_GET[errorMessage] is set if there's an error
                 $error_message = isset($_GET["errorMessage"])?$_GET["errorMessage"]:null;
                 if ($error_message !== null ) {
-                    $this->addErrorMessage($this->generic_error_msg);
-                    $this->logError("Amazon returned error: ".$error_message, __FILE__,__LINE__,__METHOD__);
+                    $this->addErrorMessage(UpstartHelper::GENERIC_ERROR_MSG);
+                    Logger::logError("Amazon returned error: ".$error_message, __FILE__,__LINE__,__METHOD__);
                 } else {
                     //Capture Simple Pay return codes
                     $op = new SubscriptionOperation();
@@ -73,8 +73,8 @@ class MembershipController extends AuthController {
                                     .$subscriber->id);
                             }
                         } else {
-                            $this->addErrorMessage($this->generic_error_msg);
-                            $this->logError('Subscription status code is not SF. '. Utils::varDumpToString($op),
+                            $this->addErrorMessage(UpstartHelper::GENERIC_ERROR_MSG);
+                            Logger::logError('Subscription status code is not SF. '. Utils::varDumpToString($op),
                                 __FILE__, __LINE__, __METHOD__ );
                         }
 
@@ -100,7 +100,7 @@ class MembershipController extends AuthController {
                         $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
                         $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
                         if (!$trial_ended) {
-                            $this->logError('Unable to end trial in ThinkUp installation',
+                            Logger::logError('Unable to end trial in ThinkUp installation',
                                 __FILE__,__LINE__, __METHOD__);
                         }
                     } catch (DuplicateSubscriptionOperationException $e) {
@@ -110,7 +110,7 @@ class MembershipController extends AuthController {
                 }
             } else {
                 $this->addErrorMessage("Oops! Something went wrong. Please try again or contact us for help.");
-                $this->logError('Amazon response invalid', __FILE__,__LINE__,
+                Logger::logError('Amazon response invalid', __FILE__,__LINE__,
                 __METHOD__);
             }
         }
@@ -138,7 +138,7 @@ class MembershipController extends AuthController {
                             $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
                             $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
                             if (!$trial_ended) {
-                                $this->logError('Unable to end trial in ThinkUp installation',
+                                Logger::logError('Unable to end trial in ThinkUp installation',
                                     __FILE__,__LINE__, __METHOD__);
                             }
                             UpstartHelper::postToSlack('#signups',
@@ -210,9 +210,9 @@ class MembershipController extends AuthController {
                                 }
                             } else {
                                 //Show user error, log system error
-                                $this->logError('Amazon refund response was null. Refund operation was '.
+                                Logger::logError('Amazon refund response was null. Refund operation was '.
                                     Utils::varDumpToString($op_cancel), __FILE__, __LINE__, __METHOD__);
-                                $this->addErrorMessage($this->generic_error_msg);
+                                $this->addErrorMessage(UpstartHelper::GENERIC_ERROR_MSG);
                             }
                         } catch (Amazon_FPS_Exception $ex) {
                             $debug = "Caught Exception: " . $ex->getMessage() . "\n";
@@ -221,8 +221,8 @@ class MembershipController extends AuthController {
                             $debug .= "Error Type: " . $ex->getErrorType() . "\n";
                             $debug .= "Request ID: " . $ex->getRequestId() . "\n";
                             $debug .= "XML: " . $ex->getXML() . "\n";
-                            $this->logError($debug, __FILE__, __LINE__, __METHOD__);
-                            $this->addErrorMessage($this->generic_error_msg);
+                            Logger::logError($debug, __FILE__, __LINE__, __METHOD__);
+                            $this->addErrorMessage(UpstartHelper::GENERIC_ERROR_MSG);
                         }
                     } else { //Annual subscriber or free trial
                         //Check for annual subscriber by getting last payment

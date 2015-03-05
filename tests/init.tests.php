@@ -16,11 +16,12 @@ if ( !defined('TESTS_RUNNING') ) {
 }
 
 //Register our lazy class loader
-require_once ROOT_PATH.'webapp/extlibs/isosceles/libs/model/class.Loader.php';
-
-
+require_once ROOT_PATH.'webapp/extlibs/isosceles/libs/class.Loader.php';
 //echo 'path to DAO: ' . ROOT_PATH . 'webapp/libs/dao/
 //';
+
+//Include test runner
+require_once ROOT_PATH.'tests/simpletest/autorun.php';
 
 Loader::register(array(
 ROOT_PATH . 'tests/',

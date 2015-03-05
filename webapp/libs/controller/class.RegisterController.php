@@ -6,7 +6,7 @@ class RegisterController extends SignUpHelperController {
         //Avoid "unable to write file [really long file]" errors
         $this->disableCaching();
         if ( !self::isLevelValid() ) {
-            return $this->tryAgain($this->generic_error_msg, "Invalid level", __FILE__, __METHOD__, __LINE__);
+            return $this->tryAgain(UpstartHelper::GENERIC_ERROR_MSG, "Invalid level", __FILE__, __METHOD__, __LINE__);
         }
 
         if ($this->hasUserReturnedFromTwitter() || $this->hasUserReturnedFromFacebook()) {
@@ -238,10 +238,10 @@ class RegisterController extends SignUpHelperController {
                         $controller = new PayNowController();
                         return $controller->control();
                     } else {
-                        return $this->tryAgain($this->generic_error_msg);
+                        return $this->tryAgain(UpstartHelper::GENERIC_ERROR_MSG);
                     }
                 } else {
-                    return $this->tryAgain($this->generic_error_msg, "SubscriberDAO insertion failed", __FILE__,
+                    return $this->tryAgain(UpstartHelper::GENERIC_ERROR_MSG, "SubscriberDAO insertion failed", __FILE__,
                         __METHOD__, __LINE__);
                 }
             } else { //Populate form with the submitted values
@@ -303,7 +303,7 @@ class RegisterController extends SignUpHelperController {
      * @return str
      */
     private function tryAgain($user_error_message, $technical_error_message, $file, $method, $line) {
-        $this->logError($technical_error_message, $file, $line, $method);
+        Logger::logError($technical_error_message, $file, $line, $method);
         SessionCache::put('auth_error_message', $user_error_message);
         $controller = new PricingController(true);
         return $controller->go();

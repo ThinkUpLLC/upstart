@@ -3,7 +3,7 @@
  * Return the subscription status of a member by email address; for use by the insights generator plugin for
  * subscription_status-based messages in insight emails.
  */
-class APIMemberStatusController extends UpstartController {
+class APIMemberStatusController extends Controller {
 
     public function control() {
         if (isset($_GET['email'])) {

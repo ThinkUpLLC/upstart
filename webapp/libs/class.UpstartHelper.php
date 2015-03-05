@@ -1,5 +1,7 @@
 <?php
 class UpstartHelper {
+    const GENERIC_ERROR_MSG = 'Oops! Something went wrong and our team is looking into it. Please try again or contact us at help@thinkup.com if you&rsquo;re stuck.';
+
     /**
      * Validate email address
      * This method uses a raw regex instead of filter_var because as of PHP 5.3.3,

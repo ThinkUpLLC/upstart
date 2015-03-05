@@ -20,7 +20,7 @@ if (isset($_GET['code'])) {
 header('Content-Type: application/json', true);
 print_r(json_encode($response));
 */
-class APIValidClaimCodeController extends UpstartController {
+class APIValidClaimCodeController extends Controller {
 
     public function control() {
         if (isset($_GET['code'])) {

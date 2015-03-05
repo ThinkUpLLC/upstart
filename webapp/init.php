@@ -1,10 +1,10 @@
 <?php
-if ( version_compare(PHP_VERSION, '5.2', '<') ) {
-    exit("ERROR: ThinkUp requires PHP 5.2 or greater. The current version of PHP is ".PHP_VERSION.".");
+if ( version_compare(PHP_VERSION, '5.4', '<') ) {
+    exit("ERROR: Upstart requires PHP 5.4 or greater. The current version of PHP is ".PHP_VERSION.".");
 }
 
 //Register our lazy class loader
-require_once 'extlibs/isosceles/libs/model/class.Loader.php';
+require_once 'extlibs/isosceles/libs/class.Loader.php';
 Loader::register(array(
 dirname(__FILE__).'/libs/',
 dirname(__FILE__).'/libs/model/',

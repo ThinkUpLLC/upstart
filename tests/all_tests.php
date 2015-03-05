@@ -1,7 +1,7 @@
 <?php
 
 require_once dirname(__FILE__) . '/init.tests.php';
-require_once ISOSCELES_PATH.'extlibs/simpletest/autorun.php';
+require_once ROOT_PATH.'tests/simpletest/autorun.php';
 //require_once ISOSCELES_PATH.'extlibs/simpletest/web_tester.php';
 //require_once ISOSCELES_PATH.'extlibs/simpletest/mock_objects.php';
 

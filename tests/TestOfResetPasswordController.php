@@ -1,6 +1,5 @@
 <?php
 require_once dirname(__FILE__) . '/init.tests.php';
-require_once ISOSCELES_PATH.'extlibs/simpletest/autorun.php';
 
 class TestOfResetPasswordController extends UpstartUnitTestCase {
     protected $subscriber;
@@ -79,7 +78,7 @@ SQL;
     public function testOfControllerGoodToken() {
         $time = strtotime('-1 hour');
         $q = <<<SQL
-UPDATE subscribers 
+UPDATE subscribers
 SET password_token = '{$this->token}_{$time}'
 WHERE id = 1;
 SQL;
@@ -97,7 +96,7 @@ SQL;
     public function testOfControllerGoodTokenMismatchedPassword() {
         $time = strtotime('-1 hour');
         $q = <<<SQL
-UPDATE subscribers 
+UPDATE subscribers
 SET password_token = '{$this->token}_{$time}'
 WHERE id = 1;
 SQL;
@@ -116,7 +115,7 @@ SQL;
     public function testOfControllerGoodTokenInvalidPassword() {
         $time = strtotime('-1 hour');
         $q = <<<SQL
-UPDATE subscribers 
+UPDATE subscribers
 SET password_token = '{$this->token}_{$time}'
 WHERE id = 1;
 SQL;
@@ -141,7 +140,7 @@ SQL;
 
         $time = strtotime('-1 hour');
         $q = <<<SQL
-UPDATE subscribers 
+UPDATE subscribers
 SET password_token = '{$this->token}_{$time}'
 WHERE id = 1;
 SQL;
@@ -169,7 +168,7 @@ SQL;
 
         $time = strtotime('-1 hour');
         $q = <<<SQL
-UPDATE subscribers 
+UPDATE subscribers
 SET password_token = '{$this->token_salt}_{$time}'
 WHERE id = 2;
 SQL;

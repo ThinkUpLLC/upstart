@@ -1,6 +1,6 @@
 <?php
 
-class APIIPNController extends UpstartController {
+class APIIPNController extends Controller {
     /**
      * Required IPN post values
      * @var array
@@ -87,7 +87,7 @@ class APIIPNController extends UpstartController {
 
         //If there's something to log, log it
         if ($debug !== '') {
-            $this->logError($debug, __FILE__,__LINE__,__METHOD__);
+            Logger::logError($debug, __FILE__,__LINE__,__METHOD__);
         }
     }
     /**

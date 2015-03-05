@@ -1,5 +1,5 @@
 <?php
-require_once ROOT_PATH.'webapp/extlibs/isosceles/libs/model/class.Loader.php';
+require_once ROOT_PATH.'webapp/extlibs/isosceles/libs/class.Loader.php';
 
 class UpstartBasicUnitTestCase extends UnitTestCase {
     /**

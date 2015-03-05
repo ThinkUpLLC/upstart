@@ -1,5 +1,5 @@
 <?php
-class ChooseUsernameController extends AuthController {
+class ChooseUsernameController extends UpstartAuthController {
 
     public function authControl() {
         $this->setPageTitle('Choose your ThinkUp username');

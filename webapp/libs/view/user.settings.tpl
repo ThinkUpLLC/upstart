@@ -5,7 +5,7 @@ body_classes="settings menu-open" body_id="settings-main"}
     <header class="container-header">
       <h1>Settings</h1>
     </header>
-    {include file="_usermessage.tpl" field="timezone"}
+    {include file="_isosceles.usermessage.tpl" field="timezone"}
         <form role="form" id="form-settings" name="form-settings" method="post">
 
           <fieldset class="fieldset-password">

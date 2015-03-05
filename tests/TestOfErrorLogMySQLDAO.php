@@ -1,6 +1,5 @@
 <?php
 require_once dirname(__FILE__) . '/init.tests.php';
-require_once ISOSCELES_PATH.'extlibs/simpletest/autorun.php';
 
 class TestOfErrorLogMySQLDAO extends UpstartUnitTestCase {
 

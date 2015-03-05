@@ -4,7 +4,7 @@
  * @author gina
  *
  */
-abstract class SignUpHelperController extends UpstartController {
+abstract class SignUpHelperController extends Controller {
     /**
      * Simple pay subscription return parameters.
      * @var array
@@ -105,7 +105,7 @@ abstract class SignUpHelperController extends UpstartController {
             $twitter_auth_link = $to->getAuthorizeURL($token);
         } else {
             $this->addErrorMessage($generic_error_msg);
-            $this->logError('Twitter auth link failure, token not set '.htmlentities(Utils::varDumpToString($tok)),
+            Logger::logError('Twitter auth link failure, token not set '.htmlentities(Utils::varDumpToString($tok)),
                 __FILE__,__LINE__,__METHOD__);
         }
         return $twitter_auth_link;
@@ -141,7 +141,7 @@ abstract class SignUpHelperController extends UpstartController {
             $fbconnect_link = $facebook_app->getLoginUrl($params);
         } catch (FacebookApiException $e) {
             $this->addErrorMessage($generic_error_msg);
-            $this->logError(get_class($e).': '.$e->getMessage(), __FILE__,__LINE__,__METHOD__);
+            Logger::logError(get_class($e).': '.$e->getMessage(), __FILE__,__LINE__,__METHOD__);
         }
         return $fbconnect_link;
     }
