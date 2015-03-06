@@ -94,7 +94,7 @@ $ ->
 
   $("body").on "click", "#btn-claim-code", (e) ->
     e.preventDefault()
-    $(".form-claim-code").toggleClass "hidden"
+    $("#form-claim-code").toggleClass "hidden"
     $(@).hide()
 
   $("body").on "click", ".show-section", (e) ->

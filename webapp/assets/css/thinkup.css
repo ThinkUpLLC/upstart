@@ -27,6 +27,9 @@ body.settings .container .container-header h2 {
   text-align: center;
   margin: 0;
 }
+body.settings .container #pay-with-amazon {
+  text-align: center;
+}
 .standard-form-element {
   font-size: 14px;
   line-height: 1;
@@ -546,7 +549,7 @@ textarea.form-control {
 .list-accounts .list-group-item.list-accounts-item-add a:hover .account-action-add {
   color: #595959;
 }
-.form-note {
+.form-notes {
   text-align: center;
   margin: 0 5% 20px;
   color: #999999;
