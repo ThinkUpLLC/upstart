@@ -2,6 +2,7 @@ body.settings .container {
   width: 100%;
   padding: 45px 10px 0;
   margin: 0 auto;
+  min-height: 250px;
 }
 @media (min-width: 400px) {
   body.settings .container {
@@ -339,7 +340,6 @@ textarea.form-control {
 }
 .pricing {
   text-align: center;
-  min-height: 250px;
 }
 .pricing input[type=radio] {
   display: none;
