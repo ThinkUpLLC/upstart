@@ -23,7 +23,8 @@ body#marketing-subscribe {
   }
 
   #section-page-header {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+    padding-bottom: 0;
 
     .section-header {
       font-size: 2em;
@@ -31,46 +32,76 @@ body#marketing-subscribe {
 
     .section-subheader {
       text-align: center;
-      font-size: 1rem;
+      font-size: 1.2rem;
     }
   }
 
-  #section-subscription-member     { .section-sub-color(#B97CC6); }
-  #section-subscription-pro        { .section-sub-color(#6BB93B); }
-  #section-subscription-executive  { .section-sub-color(#B51B2E); }
+  #pricing-table {
+    margin-left : auto;
+    margin-right: auto;
+    border-spacing: 10px;
+    border-collapse: separate;
+    color: #999;
+    border-top: 1px solid #ccc;
 
-  .subscription-levels {
-    .clearfix;
-
-    @media (min-width: 52em) {
-      padding: 0;
-      width: 840px;
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 200;
+      margin: 0;
     }
-  }
-
-  .section-subscription-level {
-    position: relative;
-    height: auto;
-    padding: 20px;
-
-    @media (min-width: 40em) {
-      height: 240px;
-      float: left;
-      width: 50%;
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0;
     }
 
-    @media (min-width: 52em) {
-      border-width: 1px;
-      border-style: solid;
-      border-radius: 15px;
-      width: 400px;
-      margin-bottom: 40px;
+    p {
+      margin: 0;
+    }
 
-      &:first-of-type {
-        margin-right: 40px;
+    td, th {
+      text-align: left;
+      padding: 10px;
+
+      &.table-label {
+        text-align: right;
+        font-size: 1.2rem;
+        padding: 0;
       }
     }
+
+    strong {
+      font-weight: 200;
+      color: #000;
+    }
+
+    .pricing-member {
+      color: #B97CC6;
+    }
+
+    .pricing-pro {
+      color: #6BB93B;
+    }
+
+    .signup-buttons {
+      padding: 30px 0 30px 0;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      border-top: 1px solid #ccc;
+
+      @media (max-width: 767px) {
+        a {
+          width: auto;
+        }  
+      }
+
+    }
+    .media-publisher-tout {
+      text-align: center;
+    }
   }
+
+  #section-subscription-executive  { .section-sub-color(#B51B2E); }
 
   .subsection-header {
     font-size: (24/16em);
@@ -85,51 +116,18 @@ body#marketing-subscribe {
     }
   }
 
-  .level-cost {
-    position: absolute;
-    top: 21px;
-    right: 15px;
-    font-size: (14/16em);
-    line-height: (20/16);
-    text-align: right;
-
-    .annually {
-      font-size: (22/16em);
-      font-weight: 600;
-    }
-  }
-
-  .level-description {
-    padding: 15px 0 75px;
-    margin: 0;
-    text-align: center;
-
-    p {
-      margin: 0;
-      line-height: (20/16);
-
-      &.headline {
-        font-weight: 600;
-        font-size: (18/16em);
-        font-family: @tablet-gothic-condensed;
-      }
-    }
-  }
-
   .action-buttons {
+    /*
     .clearfix;
     position: absolute;
     width: 93%;
     bottom: 30px;
+    */
 
     .action-buttons-label {
       margin-bottom: 5px;
       line-height: 28px;
       float: left;
-    }
-
-    .actual-buttons {
-      float: right;
     }
 
     .btn {

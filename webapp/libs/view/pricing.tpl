@@ -4,65 +4,70 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
   <div class="container">
 
     <section class="section" id="section-page-header">
-      <h2 class="section-header">Start your 14-day free trial.</h2>
-      <h3 class="section-subheader">First, pick the level that’s right for you.</h3>
+      <h2 class="section-header">ThinkUp starts at five bucks a month.</h2>
+      <h3 class="section-subheader">(Our annual plans are even cheaper!)</h3>
     </section>
   </div>
   <div class="container">
 
     <div class="section subscription-levels">
-      <section class="subsection section-subscription-level"
-      id="section-subscription-member">
-        <h3 class="subsection-header">1 account
-          <span class="descriptor">per social network</span></h3>
-        <div class="level-cost">
-          <div class="annually">$5/month</div>
-        </div>
 
-        <div class="level-description">
-          <p class="headline">Connect your Twitter &amp; Facebook accounts</p>
-          <p>&nbsp;</p>
-        </div>
+    <table class="table table-responsive" id="pricing-table">
+      <tr>
+        <th></th>
+        <th class="">
+          <h3 class="subsection-header pricing-member">1 account</h3>
+          <p>per social network</p>
+          <p><i class="fa fa-twitter"></i> <i class="fa fa-facebook"></i></p>
+        </th>
+        <th class="">
+          <h3 class="subsection-header pricing-pro">More than 1 account</h3>
+          <p>per social network</p>
+          <p>
+            <i class="fa fa-twitter"></i> <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i> <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i> <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i> <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i> <i class="fa fa-facebook"></i>
+          </p>
+        </th>
+      </tr>
 
-        <div class="action-buttons">
-          <div class="action-buttons-label">Get started with:</div>
-          <div class="actual-buttons">
-            <a href="{$twitter_member_link}" class="btn btn-pill btn-twitter"><i class="fa fa-twitter icon"></i> Twitter</a>
-            <a href="{$facebook_member_link}" class="btn btn-pill btn-facebook"><i class="fa fa-facebook icon"></i> Facebook</a>
+      <tr>
+        <td class="table-label">
+          <p>per month</p>
+        </td>
+        <td><h2 class="pricing-member">$5</h2></td>
+        <td><h2 class="pricing-pro">$10</h2></td>
+      </tr>
+
+      <tr>
+        <td class="table-label">
+          <p>per year</p>
+          <p>(2 months <strong>FREE</strong>)</p>
+        </td>
+        <td><h2 class="pricing-member">$50</h2></td>
+        <td><h2 class="pricing-pro">$100</h2></td>
+      </tr>
+      <tr>
+        <td colspan="3" >
+          <div class="signup-buttons">
+            <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
+            <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign up with</small><br>Facebook</a>
           </div>
-        </div>
-      </section>
+        </td>
+      </tr>
 
-      <section class="subsection section-subscription-level"
-      id="section-subscription-pro">
-        <h3 class="subsection-header">More than 1 account
-          <span class="descriptor">per social network</span></h3>
-        <div class="level-cost">
-          <div class="annually">$10/month</div>
-        </div>
+      <tr>
+        <td colspan="3" class="media-publisher-tout">
+          <p><strong>Media, Publishers and Brands</strong>: 
+            Need site licenses, invoicing, and other business features?<br />
+            <a href="{$site_root_path}about/contact.php?type=executive">Contact us</a> and we'll take care of you.
+          </p>
+      </tr>
+    </table>
 
-        <div class="level-description">
-          <p class="headline">Perfect for power users or companies</p>
-          <p>Up to 10 accounts total</p>
-        </div>
 
-        <div class="action-buttons">
-          <div class="action-buttons-label">Get started with:</div>
-          <div class="actual-buttons">
-            <a href="{$twitter_pro_link}" class="btn btn-pill btn-twitter"><i class="fa fa-twitter icon"></i> Twitter</a>
-            <a href="{$facebook_pro_link}" class="btn btn-pill btn-facebook"><i class="fa fa-facebook icon"></i> Facebook</a>
-          </div>
-        </div>
-      </section>
     </div>
-  </div>
-  <div class="container">
-    <section class="section" id="section-subscription-executive">
-      <h3 class="subsection-header">For bigger organizations: ThinkUp Executive</h3>
-
-      <div class="level-description">
-        <p>If you’re a company or institution with more advanced needs, <a style="color:#2785d3;" href="mailto:team@thinkup.com?subject=ThinkUp+Executive">email us</a>. We’ve got just the thing.</p>
-      </div>
-    </section>
   </div>
 {include file="_footer.marketing.tpl"}
