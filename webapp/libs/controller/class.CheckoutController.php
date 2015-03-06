@@ -71,6 +71,8 @@ class CheckoutController extends UpstartAuthController {
                 }
             } catch (Recurly_ValidationError $e) {
                 $this->addErrorMessage('Oops! '.$e->getMessage());
+                $debug = "Recurly_Validation_Error: ". $e->getMessage();
+                Logger::logError($debug, __FILE__,__LINE__,__METHOD__);
                 $state = 'error';
             }
         } else {
@@ -94,7 +96,7 @@ class CheckoutController extends UpstartAuthController {
         $this->addToView('context', $context);
 
         //Get Membership status
-        //{assign var="membership_status" value=$smarty.get.membership_status} <!-- trial or other(expired, due, failed) -->
+        //{assign var="membership_status"} <!-- trial or other(expired, due, failed) -->
         if ($subscriber->subscription_status == 'Free trial') {
             $days_left_in_trial = $subscriber->getDaysLeftInFreeTrial();
             if ($days_left_in_trial < 1) {
@@ -108,8 +110,8 @@ class CheckoutController extends UpstartAuthController {
         $this->addToView('membership_status', $membership_status);
 
         //Get state
-        //{assign var="state" value=$smarty.get.state} <!-- pay or success or error or error-fullname-->
-        //@TODO Detect last name error
+        //{assign var="state"} <!-- pay or success or error or error-fullname-->
+        //@TODO Detect single name error
         $this->addToView('state', $state);
 
         return $this->generateView();
