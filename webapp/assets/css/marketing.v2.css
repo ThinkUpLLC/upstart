@@ -2296,50 +2296,71 @@ textarea.form-control {
   }
 }
 body#marketing-subscribe #section-page-header {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
+  padding-bottom: 0;
 }
 body#marketing-subscribe #section-page-header .section-header {
   font-size: 2em;
 }
 body#marketing-subscribe #section-page-header .section-subheader {
   text-align: center;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
-body#marketing-subscribe #section-subscription-member {
-  border-top-color: #b97cc6;
-  background: rgba(185, 124, 198, 0.1);
+body#marketing-subscribe #pricing-table {
+  margin-left: auto;
+  margin-right: auto;
+  border-spacing: 10px;
+  border-collapse: separate;
+  color: #999;
+  border-top: 1px solid #ccc;
 }
-body#marketing-subscribe #section-subscription-member .subsection-header {
-  color: #b97cc6;
+body#marketing-subscribe #pricing-table h2 {
+  font-size: 2.5rem;
+  font-weight: 200;
+  margin: 0;
 }
-body#marketing-subscribe #section-subscription-member .subsection-header .color {
-  color: #b97cc6;
+body#marketing-subscribe #pricing-table h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0;
 }
-body#marketing-subscribe #section-subscription-member .level-cost .annually {
-  color: #b97cc6;
+body#marketing-subscribe #pricing-table p {
+  margin: 0;
 }
-@media (min-width: 52em) {
-  body#marketing-subscribe #section-subscription-member {
-    border-color: #dcbee3;
+body#marketing-subscribe #pricing-table td,
+body#marketing-subscribe #pricing-table th {
+  text-align: left;
+  padding: 10px;
+}
+body#marketing-subscribe #pricing-table td.table-label,
+body#marketing-subscribe #pricing-table th.table-label {
+  text-align: right;
+  font-size: 1.2rem;
+  padding: 0;
+}
+body#marketing-subscribe #pricing-table strong {
+  font-weight: 200;
+  color: #000;
+}
+body#marketing-subscribe #pricing-table .pricing-member {
+  color: #B97CC6;
+}
+body#marketing-subscribe #pricing-table .pricing-pro {
+  color: #6BB93B;
+}
+body#marketing-subscribe #pricing-table .signup-buttons {
+  padding: 30px 0 30px 0;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  border-top: 1px solid #ccc;
+}
+@media (max-width: 767px) {
+  body#marketing-subscribe #pricing-table .signup-buttons a {
+    width: auto;
   }
 }
-body#marketing-subscribe #section-subscription-pro {
-  border-top-color: #6bb93b;
-  background: rgba(107, 185, 59, 0.1);
-}
-body#marketing-subscribe #section-subscription-pro .subsection-header {
-  color: #6bb93b;
-}
-body#marketing-subscribe #section-subscription-pro .subsection-header .color {
-  color: #6bb93b;
-}
-body#marketing-subscribe #section-subscription-pro .level-cost .annually {
-  color: #6bb93b;
-}
-@media (min-width: 52em) {
-  body#marketing-subscribe #section-subscription-pro {
-    border-color: #b5dc9d;
-  }
+body#marketing-subscribe #pricing-table .media-publisher-tout {
+  text-align: center;
 }
 body#marketing-subscribe #section-subscription-executive {
   border-top-color: #b51b2e;
@@ -2359,46 +2380,6 @@ body#marketing-subscribe #section-subscription-executive .level-cost .annually {
     border-color: #da8d97;
   }
 }
-body#marketing-subscribe .subscription-levels:before,
-body#marketing-subscribe .subscription-levels:after {
-  content: " ";
-  /* 1 */
-  display: table;
-  /* 2 */
-}
-body#marketing-subscribe .subscription-levels:after {
-  clear: both;
-}
-@media (min-width: 52em) {
-  body#marketing-subscribe .subscription-levels {
-    padding: 0;
-    width: 840px;
-  }
-}
-body#marketing-subscribe .section-subscription-level {
-  position: relative;
-  height: auto;
-  padding: 20px;
-}
-@media (min-width: 40em) {
-  body#marketing-subscribe .section-subscription-level {
-    height: 240px;
-    float: left;
-    width: 50%;
-  }
-}
-@media (min-width: 52em) {
-  body#marketing-subscribe .section-subscription-level {
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 15px;
-    width: 400px;
-    margin-bottom: 40px;
-  }
-  body#marketing-subscribe .section-subscription-level:first-of-type {
-    margin-right: 40px;
-  }
-}
 body#marketing-subscribe .subsection-header {
   font-size: 1.5em;
   margin: 0 0 15px;
@@ -2410,54 +2391,18 @@ body#marketing-subscribe .subsection-header .descriptor {
   color: #222;
   font-weight: 400;
 }
-body#marketing-subscribe .level-cost {
-  position: absolute;
-  top: 21px;
-  right: 15px;
-  font-size: 0.875em;
-  line-height: 1.25;
-  text-align: right;
-}
-body#marketing-subscribe .level-cost .annually {
-  font-size: 1.375em;
-  font-weight: 600;
-}
-body#marketing-subscribe .level-description {
-  padding: 15px 0 75px;
-  margin: 0;
-  text-align: center;
-}
-body#marketing-subscribe .level-description p {
-  margin: 0;
-  line-height: 1.25;
-}
-body#marketing-subscribe .level-description p.headline {
-  font-weight: 600;
-  font-size: 1.125em;
-  font-family: "tablet-gothic-semi-condensed", helvetica, arial, sans-serif;
-}
 body#marketing-subscribe .action-buttons {
-  position: absolute;
-  width: 93%;
-  bottom: 30px;
-}
-body#marketing-subscribe .action-buttons:before,
-body#marketing-subscribe .action-buttons:after {
-  content: " ";
-  /* 1 */
-  display: table;
-  /* 2 */
-}
-body#marketing-subscribe .action-buttons:after {
-  clear: both;
+  /*
+    .clearfix;
+    position: absolute;
+    width: 93%;
+    bottom: 30px;
+    */
 }
 body#marketing-subscribe .action-buttons .action-buttons-label {
   margin-bottom: 5px;
   line-height: 28px;
   float: left;
-}
-body#marketing-subscribe .action-buttons .actual-buttons {
-  float: right;
 }
 body#marketing-subscribe .action-buttons .btn {
   width: 100px;
