@@ -946,6 +946,7 @@ class SubscriberMySQLDAO extends PDODAO {
     public function getAnnualSubscribersDueReupReminder($days_before, $total_reup_reminders_sent) {
         $q = <<<EOD
         SELECT * FROM subscribers WHERE subscription_status = 'Paid' AND is_account_closed = 0
+        AND is_via_recurly = 0
         AND subscription_recurrence = '12 months'
         AND date(paid_through) = DATE(DATE_ADD(NOW(), INTERVAL :days_before DAY ))
         AND total_reup_reminders_sent < :total_reup_reminders_sent
