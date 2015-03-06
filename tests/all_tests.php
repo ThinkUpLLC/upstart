@@ -46,6 +46,7 @@ $all_tests->add(new TestOfBundleLandingController());
 $all_tests->add(new TestOfAPIValidClaimCodeController());
 $all_tests->add(new TestOfSubscriptionHelper());
 $all_tests->add(new TestOfAPIMemberStatusController());
+$all_tests->add(new TestOfCheckoutController());
 
 //$tr = new TextReporter();
 //$all_tests->run( $tr );

@@ -1,10 +1,13 @@
+{*
+Checkout page.
+
+Parameters:
+$context (required) 'signup' or 'membership'
+$membership_status (required) 'trial' or not (expired, due, failed)
+$state (required) 'pay' or 'success' or 'error' or 'error-fullname'
+*}
+
 {include file="_appheader.tpl" body_classes="settings menu-off" body_id="settings-checkout"}
-
-{assign var="context" value=$smarty.get.context} <!-- membership or signup -->
-{assign var="membership_status" value=$smarty.get.membership_status} <!-- trial, expired, due, failed -->
-{assign var="frequency" value=$smarty.get.frequency} <!-- monthly or annual -->
-{assign var="state" value=$smarty.get.state} <!-- pay or success or error or fullname-->
-
 
   {if $state eq 'pay' OR $state eq 'error'}
     <script src="assets/js/vendor/pay-with-amazon.min.js"></script>
@@ -39,38 +42,20 @@
         <h1>Whoops, sorry!</h1>
 
         <h2>There was problem processing your payment. {if $membership_status neq 'trial'}In order to keep your account in good standing, p{else}P{/if}lease try again. If you get stuck, <a href="{$site_root_path}about/contact.php?type=billing">contact us</a>.</h2>
-    {elseif $state eq 'fullname'}
+    {elseif $state eq 'error-fullname'}
 
         <h1>Whoops, sorry!</h1>
         <h2>We'll need your full name to complete the Amazon payment.</h2>
-
-      {if $context eq 'signup'}
-
-      {elseif $context eq 'membership'}
-
-      {/if}
 
     {elseif $state eq 'success'}
 
         <h1>Thanks! Your payment is complete.</h1>
         <h2>You are now <em>officially</em> a ThinkUp subscriber.</h2>
 
-      {if $context eq 'signup'}
-
-      {elseif $context eq 'membership'}
-
-      {/if}
-
     {elseif $state eq 'pay'}
 
         <h1>Subscribe to ThinkUp today!</h1>
         <h2>It's safe and easy with your Amazon account.</h2>
-
-      {if $context eq 'signup'}
-
-      {elseif $context eq 'membership'}
-
-      {/if}
 
     {/if}
 
@@ -78,7 +63,7 @@
     </header>
 
 
-  {if $state eq 'fullname'}
+  {if $state eq 'error-fullname'}
 
     {assign var="missing_fields" value="false"}
     <form method="POST" id="form-fullname" action="">
@@ -161,9 +146,6 @@
     {if $membership_status eq 'trial'}
       <p class="form-note"><a href="{$user_installation_url}">No thanks, I'll do this later.</a></p>
     {/if}
-<!--
-    <p class="form-note">Login to Amazon Payments:<br>lpa-test-user1@thinkup.com<br>lpa-test-user2@thinkup.com <br> Password testme</p>
--->
 
   {/if}
 

@@ -1,4 +1,5 @@
 <?php
+
 class CheckoutController extends UpstartAuthController {
 
     public function authControl() {
@@ -12,7 +13,6 @@ class CheckoutController extends UpstartAuthController {
             return $controller->go();
         }
         $this->disableCaching();
-        //$this->enableCSRFToken();
         $this->setPageTitle('Checkout');
         $this->setViewTemplate('checkout.tpl');
 
@@ -67,22 +67,50 @@ class CheckoutController extends UpstartAuthController {
 
                 //Send paid user to their insights stream
                 if ($subscriber->subscription_status == 'Paid') {
-                    $this->addToView('state', 'payment_successful');
+                    $state = 'success';
                 }
             } catch (Recurly_ValidationError $e) {
-                $this->addErrorMessage('Oops! There was a problem. '.$e->getMessage());
-                $this->addToView('state', 'prompt_for_payment');
+                $this->addErrorMessage('Oops! '.$e->getMessage());
+                $state = 'error';
             }
         } else {
-            $this->addToView('state', 'prompt_for_payment');
+            $state = 'pay';
         }
         $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
             Config::getInstance()->getValue('user_installation_url'));
-
-        $error = "That plan does not exist.";
-        $this->addErrorMessage($error);
         $this->addToView('user_installation_url', $user_installation_url);
+
         $this->addToView('subscriber', $subscriber);
+
+        //Populate view variables
+        //Get Context
+        //{assign var="context" value=$smarty.get.context} <!-- membership or signup -->
+        $new_subscriber_id = SessionCache::get('new_subscriber_id');
+        if (isset($new_subscriber_id)) {
+            $context = 'signup';
+        } else {
+            $context = 'membership';
+        }
+        $this->addToView('context', $context);
+
+        //Get Membership status
+        //{assign var="membership_status" value=$smarty.get.membership_status} <!-- trial or other(expired, due, failed) -->
+        if ($subscriber->subscription_status == 'Free trial') {
+            $days_left_in_trial = $subscriber->getDaysLeftInFreeTrial();
+            if ($days_left_in_trial < 1) {
+                $membership_status = 'expiring trial';
+            } else {
+                $membership_status = 'trial';
+            }
+        } else {
+            $membership_status = 'due';
+        }
+        $this->addToView('membership_status', $membership_status);
+
+        //Get state
+        //{assign var="state" value=$smarty.get.state} <!-- pay or success or error or error-fullname-->
+        //@TODO Detect last name error
+        $this->addToView('state', $state);
 
         return $this->generateView();
     }
