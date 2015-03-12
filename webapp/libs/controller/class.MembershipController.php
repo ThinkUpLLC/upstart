@@ -415,6 +415,7 @@ class MembershipController extends UpstartAuthController {
 
         $subject_line = "Your ThinkUp account has been closed";
         $email_view_mgr->assign('thinkup_username', $subscriber->thinkup_username );
+        $refund_amount = number_format($refund_amount, 2);
         $email_view_mgr->assign('refund_amount', $refund_amount);
         $body_html = $email_view_mgr->fetch('_email.account-closed.tpl');
         $headline = "Thanks for trying ThinkUp.";
