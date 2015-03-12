@@ -200,7 +200,7 @@ class MembershipController extends UpstartAuthController {
 
                                 // Close account
                                 $result = $subscriber_dao->closeAccount($subscriber->id);
-                                if ($this->sendAccountClosureEmail($subscriber, $refund_amount)) {
+                                if ($this->sendAccountClosureEmail($subscriber, $refund_amount, 'SimplePay')) {
                                     // Log user out with message about closure and refund
                                     $logout_controller = new LogoutController(true);
                                     $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
@@ -256,7 +256,7 @@ class MembershipController extends UpstartAuthController {
                                 // Close account
                                 $result = $subscriber_dao->closeAccount($subscriber->id);
 
-                                if ($this->sendAccountClosureEmail($subscriber, $refund_amount)) {
+                                if ($this->sendAccountClosureEmail($subscriber, $refund_amount, 'FPS')) {
                                     // Log user out with message about closure and refund
                                     $logout_controller = new LogoutController(true);
                                     $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
@@ -403,10 +403,11 @@ class MembershipController extends UpstartAuthController {
     /**
      * Send account closure email and notify Slack of account closure.
      * @param  Subscriber $subscriber
-     * @param  int     $refund_amount
+     * @param  int $refund_amount
+     * @param  str $account_type
      * @return bool
      */
-    private function sendAccountClosureEmail(Subscriber $subscriber, $refund_amount) {
+    private function sendAccountClosureEmail(Subscriber $subscriber, $refund_amount, $account_type = '') {
         // Send account closure email
         $email_view_mgr = new ViewManager();
         $email_view_mgr->caching=false;
@@ -424,7 +425,7 @@ class MembershipController extends UpstartAuthController {
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
             UpstartHelper::postToSlack('#signups',
-                $subscriber->thinkup_username.' account is closed. Refunded $'.$refund_amount."."
+                $subscriber->thinkup_username.' account is closed ('.$account_type.'). Refunded $'.$refund_amount."."
                 .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $subscriber->id);
         } catch (Exception $e) {
             $this->addErrorMessage($e->getMessage());
