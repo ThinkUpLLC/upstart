@@ -45,6 +45,23 @@ class TestOfUpstartHelper extends UpstartUnitTestCase {
         $this->assertFalse(UpstartHelper::isUsernameValid('aes fa'));
     }
 
+    public function testValidateEmail() {
+        //do validate valid public internet addresses
+        $this->assertTrue(UpstartHelper::validateEmail('h@bit.ly'));
+        $this->assertTrue(UpstartHelper::validateEmail('you@example.com'));
+        $this->assertTrue(UpstartHelper::validateEmail('youfirstname.yourlastname@example.co.uk'));
+        //don't validate local addresses
+        $this->assertFalse(UpstartHelper::validateEmail('yaya@yaya'));
+        $this->assertFalse(UpstartHelper::validateEmail('me@localhost'));
+        $this->assertFalse(UpstartHelper::validateEmail('kevin@tedxbuffalo'));
+        //don't validate addresses with invalid chars
+        $this->assertFalse(UpstartHelper::validateEmail('yaya'));
+        $this->assertFalse(UpstartHelper::validateEmail('me@localhost@notavalidaddress'));
+        $this->assertFalse(UpstartHelper::validateEmail('me@local host'));
+        $this->assertFalse(UpstartHelper::validateEmail('me@local#host'));
+
+    }
+
     public function testIsStage() {
         $_SERVER['SERVER_NAME'] = 'stage.thinkup.com';
         $this->assertTrue(UpstartHelper::isStage());
