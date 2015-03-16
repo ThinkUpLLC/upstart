@@ -69,6 +69,20 @@ class CheckoutController extends UpstartAuthController {
                 if ($subscriber->subscription_status == 'Paid') {
                     $state = 'success';
                 }
+
+                //Update is_free_trial field in ThinkUp installation
+                $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
+                $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
+                if (!$trial_ended) {
+                    Logger::logError('Unable to end trial in ThinkUp installation',
+                        __FILE__,__LINE__, __METHOD__);
+                }
+
+                UpstartHelper::postToSlack('#signups',
+                    'Ding-ding! A member just subscribed during signup.\nhttps://'.
+                    $subscriber->thinkup_username.
+                    '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
+                    $subscriber->id);
             } catch (Recurly_ValidationError $e) {
                 $this->addErrorMessage('Oops! '.$e->getMessage());
                 $debug = "Recurly_Validation_Error: ". $e->getMessage();
