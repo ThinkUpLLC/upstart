@@ -1,7 +1,7 @@
 {include file="_header.marketing.tpl" marketing_page=true
 body_classes="marketing marketing-page" body_id="marketing-contact"}
 
-{if $smarty.get.type}
+{if isset($smarty.get.type)}
   {assign var="contact_type" value=$smarty.get.type}
 {/if}
 
