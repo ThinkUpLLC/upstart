@@ -79,7 +79,7 @@ class CheckoutController extends UpstartAuthController {
                 }
 
                 UpstartHelper::postToSlack('#signups',
-                    'Ding-ding! A member just subscribed during signup.\nhttps://'.
+                    'Ding-ding! A member just paid for a '.$_POST['plan'].' subscription via Recurly.\nhttps://'.
                     $subscriber->thinkup_username.
                     '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
                     $subscriber->id);
