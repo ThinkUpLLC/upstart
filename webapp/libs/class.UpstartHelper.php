@@ -243,6 +243,17 @@ class UpstartHelper {
                 $chart_url .= '|';
                 $i++;
             }
+        } elseif (sizeof($first_data_set) >= 100) { // On big charts, only label every 10 X-axis items
+            $i = 0;
+            foreach ($first_data_set as $date=>$total) {
+                if ($i % 10 == 0) {
+                    $chart_url .= substr($date, 5); //Remove year from date
+                } else {
+                    $chart_url .= '';
+                }
+                $chart_url .= '|';
+                $i++;
+            }
         } elseif (sizeof($first_data_set) >= 28) { // On big charts, only label every 5 X-axis items
             $i = 0;
             foreach ($first_data_set as $date=>$total) {
