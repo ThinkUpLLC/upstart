@@ -1013,13 +1013,21 @@ EOD;
 
     /**
      * Get last X days worth of member signups.
-     * @param int $limit how many dayx
+     * @param int $limit how many days
      * @return array
      */
-    public function getDailySignups($limit = 14) {
-        $q = "SELECT COUNT(id) as total_subscribers, DATE(creation_time) as signup_date
-            FROM subscribers GROUP BY DATE(subscribers.creation_time)
-            ORDER BY subscribers.creation_time desc LIMIT 0, :limit;";
+    public function getDailySignups($limit = 150) {
+        $q = "SELECT SUM(total_subscribers) AS total_subscribers, signup_date FROM
+(
+SELECT COUNT(id) as total_subscribers, DATE(creation_time) as signup_date
+FROM subscribers WHERE creation_time >= DATE_SUB(NOW(), INTERVAL :limit DAY)
+GROUP BY DATE(subscribers.creation_time)
+UNION
+SELECT COUNT(id) as total_subscribers, DATE(creation_time) as signup_date
+FROM subscriber_archive WHERE creation_time >= DATE_SUB(NOW(), INTERVAL :limit DAY)
+GROUP BY DATE(subscriber_archive.creation_time)
+) AS signups
+GROUP BY signup_date ORDER BY signup_date DESC LIMIT 0, :limit;";
         $vars = array(':limit'=>$limit);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
