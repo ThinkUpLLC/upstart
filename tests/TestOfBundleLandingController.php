@@ -22,48 +22,6 @@ class TestOfBundleLandingController extends UpstartUnitTestCase {
         $this->assertPattern( '/Thanks for supporting good independent web sites/', $result);
     }
 
-    public function testOfControllerAllParamsValidSig() {
-        $_GET = self::setUpPaymentParams();
-
-        $controller = new BundleLandingController(true);
-        $results = $controller->go();
-        $this->debug($results);
-
-        $v_mgr = $controller->getViewManager();
-        $this->assertEqual($v_mgr->getTemplateDataItem('success_msg'),
-            'Success! You\'ve purchased The Good Web Bundle');
-    }
-
-    public function testOfControllerAllParamsInvalidSig() {
-        $_GET = self::setUpPaymentParams();
-        $_GET['signatureValidity'] = false;
-
-        $controller = new BundleLandingController(true);
-        $results = $controller->go();
-        $this->debug($results);
-
-        $v_mgr = $controller->getViewManager();
-        $this->assertPattern('/Oops/', $v_mgr->getTemplateDataItem('error_msg'));
-
-        $confirmation_email = Mailer::getLastMail();
-        $this->assertEqual($confirmation_email, '');
-    }
-
-    public function testOfControllerAllParamsInvalidEmailAddress() {
-        $_GET = self::setUpPaymentParams();
-        $_GET['buyerEmail'] = 'not an email address';
-
-        $controller = new BundleLandingController(true);
-        $results = $controller->go();
-        $this->debug($results);
-
-        $v_mgr = $controller->getViewManager();
-        $this->assertPattern('/Oops/', $v_mgr->getTemplateDataItem('error_msg'));
-
-        $confirmation_email = Mailer::getLastMail();
-        $this->assertEqual($confirmation_email, '');
-    }
-
     public function testOfControllerMissingParams() {
         $_GET = self::setUpPaymentParams(false);
 

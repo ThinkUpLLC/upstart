@@ -5,21 +5,6 @@
  *
  */
 abstract class SignUpHelperController extends Controller {
-    /**
-     * Simple pay subscription return parameters.
-     * @var array
-     */
-    public static $amazon_simple_pay_subscription_return_params =  array('paymentReason', 'transactionAmount', 'status',
-        'buyerEmail', 'referenceId', 'subscriptionId', 'transactionDate', 'buyerName', 'operation',
-        'recurringFrequency', 'paymentMethod');
-
-    /**
-     * Simple pay standard return parameters.
-     * @var array
-     */
-    public static $amazon_simple_pay_standard_return_params =  array('paymentReason', 'transactionAmount',
-        'transactionId', 'status', 'buyerEmail', 'referenceId', 'transactionDate', 'buyerName', 'operation' );
-
     /*
      * Subscription level amounts
      */

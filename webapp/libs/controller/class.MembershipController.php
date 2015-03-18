@@ -23,98 +23,6 @@ class MembershipController extends UpstartAuthController {
             $config->getValue('user_installation_url'));
         $this->addToView('thinkup_url', $user_installation_url);
 
-        // Process payment if returned from Amazon
-        if (self::hasUserReturnedFromAmazon()) {
-            if ($this->isAmazonResponseValid()) {
-                //@TODO Double-check $_GET[errorMessage] is set if there's an error
-                $error_message = isset($_GET["errorMessage"])?$_GET["errorMessage"]:null;
-                if ($error_message !== null ) {
-                    $this->addErrorMessage($this->generic_error_msg);
-                    Logger::logError("Amazon returned error: ".$error_message, __FILE__,__LINE__,__METHOD__);
-                } else {
-                    //Capture Simple Pay return codes
-                    $op = new SubscriptionOperation();
-                    $op->subscriber_id = $subscriber->id;
-                    $op->payment_reason = $_GET['paymentReason'];
-                    $op->transaction_amount = $_GET['transactionAmount'];
-                    $op->status_code = $_GET['status'];
-                    $op->buyer_email = $_GET['buyerEmail'];
-                    //@TODO Verify the reference_id starts with the subscriber ID
-                    $op->reference_id = $_GET['referenceId'];
-                    $op->amazon_subscription_id = $_GET['subscriptionId'];
-                    $op->transaction_date = $_GET['transactionDate'];
-                    $op->buyer_name = $_GET['buyerName'];
-                    $op->operation = $_GET['operation'];
-                    $op->recurring_frequency = $_GET['recurringFrequency'];
-                    $op->payment_method = $_GET['paymentMethod'];
-
-                    //Check to make sure this isn't a page refresh by catching a DuplicateKey exception
-                    try {
-                        $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
-                        $subscription_operation_dao->insert($op);
-
-                        if ($op->status_code !== 'SF') {
-                            $this->addSuccessMessage("Success! Thanks for being a ThinkUp member.");
-
-                            if ($op->recurring_frequency == '1 month') {
-                                //Figure out how many days left in the trial
-                                $days_left = $subscriber->getDaysLeftInFreeTrial();
-                                UpstartHelper::postToSlack('#signups',
-                                    'Hooray! Someone just subscribed from their membership page with '
-                                    .$days_left." day".(($days_left != 1)?'s':'')." left in their trial."
-                                    .'\nhttps://'. $subscriber->thinkup_username.
-                                    '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
-                                    $subscriber->id);
-                            } elseif ($op->recurring_frequency == '12 months') {
-                                UpstartHelper::postToSlack('#signups',
-                                    'Yippee! Someone just re-upped for another year from their membership page.'
-                                    .'\nhttps://'. $subscriber->thinkup_username
-                                    .'.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='
-                                    .$subscriber->id);
-                            }
-                        } else {
-                            $this->addErrorMessage($this->generic_error_msg);
-                            Logger::logError('Subscription status code is not SF. '. Utils::varDumpToString($op),
-                                __FILE__, __LINE__, __METHOD__ );
-                        }
-
-                        //Set new paid_through date and update status
-                        //Inefficient workaround alert:
-                        //For inexplicable reasons, we have to retrieve the operation from the database here
-                        //instead of just passing it to SubscriptionHelper
-                        //because once it's inserted into the database, the transaction_date gets formatted
-                        //correctly, in a way that PHP strtotime and date() just won't.
-                        $op = $subscription_operation_dao->getByAmazonSubscriptionID($_GET['subscriptionId']);
-
-                        //Now that user has created a subscription, set new paid_through date and update status
-                        $subscription_helper = new SubscriptionHelper();
-                        $subscription_helper->updateSubscriptionStatusAndPaidThrough($subscriber, $op);
-
-                        //Update recurrence_frequency in the data store
-                        $subscriber_dao->updateSubscriptionRecurrence($subscriber->id, $op->recurring_frequency);
-
-                        //Refresh subscriber object with new field values
-                        $subscriber = $subscriber_dao->getByEmail($logged_in_user);
-
-                        //Update is_free_trial field in ThinkUp installation
-                        $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
-                        $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
-                        if (!$trial_ended) {
-                            Logger::logError('Unable to end trial in ThinkUp installation',
-                                __FILE__,__LINE__, __METHOD__);
-                        }
-                    } catch (DuplicateSubscriptionOperationException $e) {
-                        $this->addSuccessMessage("Whoa there! It looks like you already paid for your ThinkUp ".
-                            "subscription. Maybe you refreshed the page in your browser?");
-                    }
-                }
-            } else {
-                $this->addErrorMessage("Oops! Something went wrong. Please try again or contact us for help.");
-                Logger::logError('Amazon response invalid', __FILE__,__LINE__,
-                __METHOD__);
-            }
-        }
-
         //Process claim code
         if (isset($_POST['claim_code'])) {
             //Check if claim code is valid
@@ -336,23 +244,6 @@ class MembershipController extends UpstartAuthController {
      */
     private function hasUserRequestedAccountClosure() {
         return (isset($_POST['close'])  && $_POST['close'] == 'true');
-    }
-    /**
-     * Return whether or not user has returned from Amazon with necessary parameters.
-     * @return bool
-     */
-    protected function hasUserReturnedFromAmazon() {
-        return UpstartHelper::areGetParamsSet(SignUpHelperController::$amazon_simple_pay_subscription_return_params);
-    }
-    /**
-     * Whether or not the response from Amazon has a valid signature.
-     * @return bool
-     */
-    private function isAmazonResponseValid() {
-        //Check inputs match internal rules
-        $endpoint_url = UpstartHelper::getApplicationURL().'user/membership.php';
-        $api_accessor = new AmazonFPSAPIAccessor();
-        return $api_accessor->isAmazonSignatureValid($endpoint_url);
     }
     /**
      * Get amount a subscription type costs per year in US Dollars.
