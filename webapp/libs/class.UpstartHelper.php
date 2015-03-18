@@ -232,7 +232,18 @@ class UpstartHelper {
         }
         // X-axis
         $chart_url .= '&chxt=x,y&chxl=0:|';
-        if (sizeof($first_data_set) >= 28) { // On big charts, only label every 5 X-axis items
+        if (sizeof($first_data_set) >= 360) { // On big charts, only label every 20 X-axis items
+            $i = 0;
+            foreach ($first_data_set as $date=>$total) {
+                if ($i % 20 == 0) {
+                    $chart_url .= substr($date, 5); //Remove year from date
+                } else {
+                    $chart_url .= '';
+                }
+                $chart_url .= '|';
+                $i++;
+            }
+        } elseif (sizeof($first_data_set) >= 28) { // On big charts, only label every 5 X-axis items
             $i = 0;
             foreach ($first_data_set as $date=>$total) {
                 if ($i % 5 == 0) {

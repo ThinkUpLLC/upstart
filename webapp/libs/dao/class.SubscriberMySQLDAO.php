@@ -1016,7 +1016,7 @@ EOD;
      * @param int $limit how many days
      * @return array
      */
-    public function getDailySignups($limit = 150) {
+    public function getDailySignups($limit = 365) {
         $q = "SELECT SUM(total_subscribers) AS total_subscribers, signup_date FROM
 (
 SELECT COUNT(id) as total_subscribers, DATE(creation_time) as signup_date
