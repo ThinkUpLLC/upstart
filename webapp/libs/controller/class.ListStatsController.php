@@ -8,16 +8,13 @@ class ListStatsController extends Controller {
         $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
         // Get total successful payments (re-ups + new subscriptions)
         $daily_successful_payments = $subscription_operation_dao->getDailySuccessfulPayments(365);
-        // Get daily conversions
-        $daily_subscribers = $subscription_operation_dao->getDailySubscribers();
         // Get daily signups
         $daily_signups = $subscriber_dao->getDailySignups();
         // Get daily paid subscribers
         $daily_paid_subscribers = $subscriber_dao->getDailyPaidSubscriberCounts();
 
         // Build charts and add to view
-        $chart_url = UpstartHelper::buildChartImageURL($daily_successful_payments, $daily_subscribers, 5,
-            'Payments|Conversions');
+        $chart_url = UpstartHelper::buildChartImageURL($daily_successful_payments, null, 5, 'Payments');
         $this->addToView('daily_payments_chart_url', $chart_url);
 
         $chart_url = UpstartHelper::buildChartImageURL($daily_signups, null, 50, 'Signups');
@@ -25,26 +22,6 @@ class ListStatsController extends Controller {
 
         $chart_url = UpstartHelper::buildChartImageURL($daily_paid_subscribers, null, 1000, 'Paid subscribers');
         $this->addToView('daily_paid_subscribers_chart_url', $chart_url);
-
-        // Subs per week
-        $subs_per_week = $subscriber_dao->getSubscriptionsByWeek(28);
-        $sub_takeaways = $this->getTakeaways($subs_per_week, 'date', 'total_subs', 'conversions');
-        // Refunds per week
-        $weekly_refunds = $subscription_operation_dao->getWeeklyRefunds();
-        $refund_takeaways = $this->getTakeaways($weekly_refunds, 'date', 'total_refunds', 'refunds');
-
-        $chart_url = UpstartHelper::buildChartImageURL($sub_takeaways['weekly_data'], $refund_takeaways['weekly_data'], 10,
-            'Conversions|Refunds');
-        $this->addToView('weekly_conversions_chart_url', $chart_url);
-        $this->addToView('weekly_conversions_message', $sub_takeaways['takeaway_message']);
-        $this->addToView('weekly_refunds_message', $refund_takeaways['takeaway_message']);
-
-        // Subs per month
-        $subs_per_month = $subscriber_dao->getSubscriptionsByMonth();
-        $monthly_sub_takeaways = $this->getTakeaways($subs_per_month, 'date', 'total_subs', 'conversions', 'month');
-        $chart_url = UpstartHelper::buildChartImageURL($monthly_sub_takeaways['weekly_data'], null, 50, 'Conversions');
-        $this->addToView('monthly_conversions_chart_url', $chart_url);
-        $this->addToView('monthly_conversions_message', $monthly_sub_takeaways['takeaway_message']);
 
         return $this->generateView();
     }

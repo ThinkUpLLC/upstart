@@ -1012,7 +1012,8 @@ EOD;
     }
 
     /**
-     * Get last three days worth of member signups.
+     * Get last X days worth of member signups.
+     * @param int $limit how many dayx
      * @return array
      */
     public function getDailySignups($limit = 14) {
@@ -1053,6 +1054,7 @@ EOD;
 
     /**
      * Get last three days worth of member signups.
+     * @TODO Delete this as of June 1 2015.
      * @return array
      */
     public function getReupsDueToday() {
@@ -1062,39 +1064,6 @@ EOD;
         $ps = $this->execute($q);
         $rows = $this->getDataRowAsArray($ps);
         return $rows['reups_due'];
-    }
-
-    /**
-     * Get total monthly subscriptions week over week.
-     * @return arr
-     */
-    public function getSubscriptionsByWeek($limit = 14) {
-        $q = "SELECT date(timestamp) as date, YEARWEEK(timestamp) as week_of_year, count(*) AS total_subs ";
-        $q .= "FROM subscription_operations where operation='pay' AND status_code='SS' ";
-        $q .= "AND recurring_frequency = '1 month' GROUP BY YEARWEEK(timestamp) ORDER BY timestamp DESC LIMIT :limit";
-        $vars = array(':limit'=>$limit);
-        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q, $vars);
-        $results = $this->getDataRowsAsArrays($ps);
-        asort($results);
-        return $results;
-    }
-
-    /**
-     * Get total monthly subscriptions month over month.
-     * @return arr
-     */
-    public function getSubscriptionsByMonth() {
-        $q = "SELECT date(timestamp) as date, MONTH(timestamp) as month_of_year, count(*) AS total_subs ";
-        $q .= "FROM subscription_operations where operation='pay' AND status_code='SS' AND timestamp >= '2014-09-01' ";
-        $q .= "AND recurring_frequency = '1 month' GROUP BY MONTH(timestamp) ORDER BY timestamp DESC LIMIT 14";
-
-        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q);
-
-        $results = $this->getDataRowsAsArrays($ps);
-        asort($results);
-        return $results;
     }
 
     public function captureCurrentPaidCount() {

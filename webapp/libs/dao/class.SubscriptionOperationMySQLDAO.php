@@ -239,29 +239,8 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
     }
 
     /**
-     * Get last X days worth of new monthly subscriptions.
-     * @param int $limit Defaults to 120
-     * @return array
-     */
-    public function getDailySubscribers($limit = 120) {
-        $q = "SELECT COUNT(reference_id) as successful_payments, DATE(timestamp) AS payment_date
-            FROM subscription_operations so WHERE status_code = 'SS' AND recurring_frequency = '1 month'
-            GROUP BY payment_date
-            ORDER BY timestamp DESC LIMIT 0, :limit;";
-        $vars = array(':limit'=>$limit);
-        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q, $vars);
-        $rows = $this->getDataRowsAsArrays($ps);
-        $results = array();
-        foreach ($rows as $row) {
-            $results[$row['payment_date']] = $row['successful_payments'];
-        }
-        ksort($results);
-        return $results;
-    }
-
-    /**
      * Get last X days worth of successful payments for monthly subscriptions (new subscribers and recharges).
+     * @TODO Delete this as of June 1 2015.
      * @param bool $monthly_only Defaults to true
      * @param int $limit Defaults to 120
      * @return array
@@ -280,24 +259,6 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
             $results[$row['payment_date']] = $row['successful_payments'];
         }
         ksort($results);
-        return $results;
-    }
-
-    /**
-     * Get last X days worth of refunds.
-     * @param int $limit Defaults to 120
-     * @return array
-     */
-    public function getWeeklyRefunds($limit = 120) {
-        //$q = "SELECT date(timestamp) as date, YEARWEEK(timestamp) as week_of_year, count(*) AS total_subs ";
-        $q = "SELECT date(timestamp) as date, YEARWEEK(timestamp) as week_of_year, count(*) AS total_refunds
-            FROM subscription_operations so WHERE operation = 'refund' GROUP BY week_of_year
-            ORDER BY timestamp DESC LIMIT 0, :limit;";
-        $vars = array(':limit'=>$limit);
-        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
-        $ps = $this->execute($q, $vars);
-        $results = $this->getDataRowsAsArrays($ps);
-        asort($results);
         return $results;
     }
 }
