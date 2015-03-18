@@ -9,7 +9,9 @@ class ListStatsController extends Controller {
         // Get total successful payments (re-ups + new subscriptions)
         $daily_successful_payments = $subscription_operation_dao->getDailySuccessfulPayments(365);
         // Get daily signups
-        $daily_signups = $subscriber_dao->getDailySignups();
+        $daily_signups = $subscriber_dao->getDailySignups(90);
+        // Get weekly signups
+        $weekly_signups = $subscriber_dao->getWeeklySignups();
         // Get daily paid subscribers
         $daily_paid_subscribers = $subscriber_dao->getDailyPaidSubscriberCounts();
 
@@ -17,10 +19,13 @@ class ListStatsController extends Controller {
         $chart_url = UpstartHelper::buildChartImageURL($daily_successful_payments, null, 5, 'Payments');
         $this->addToView('daily_payments_chart_url', $chart_url);
 
-        $chart_url = UpstartHelper::buildChartImageURL($daily_signups, null, 50, 'Signups');
+        $chart_url = UpstartHelper::buildChartImageURL($daily_signups, null, 100, 'Signups');
         $this->addToView('daily_signups_chart_url', $chart_url);
 
-        $chart_url = UpstartHelper::buildChartImageURL($daily_paid_subscribers, null, 1000, 'Paid subscribers');
+        $chart_url = UpstartHelper::buildChartImageURL($weekly_signups, null, 200, 'Signups');
+        $this->addToView('weekly_signups_chart_url', $chart_url);
+
+        $chart_url = UpstartHelper::buildChartImageURL($daily_paid_subscribers, null, 300, 'Paid subscribers');
         $this->addToView('daily_paid_subscribers_chart_url', $chart_url);
 
         return $this->generateView();

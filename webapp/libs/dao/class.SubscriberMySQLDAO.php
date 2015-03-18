@@ -1040,6 +1040,26 @@ GROUP BY signup_date ORDER BY signup_date DESC LIMIT 0, :limit;";
         return $results;
     }
 
+    public function getWeeklySignups($limit = 52) {
+        $q = "SELECT DATE(creation_time) AS signup_week, COUNT(email) AS total_signups
+FROM
+( SELECT email, creation_time, thinkup_username FROM subscriber_archive WHERE creation_time > '2014-07-08'
+UNION
+SELECT email, creation_time, thinkup_username FROM subscribers WHERE creation_time > '2014-07-08') all_subscribers
+GROUP BY WEEKOFYEAR(creation_time), YEAR(creation_time) ORDER BY creation_time ASC
+";
+        $vars = array(':limit'=>$limit);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        $rows = $this->getDataRowsAsArrays($ps);
+        $results = array();
+        foreach ($rows as $row) {
+            $results[$row['signup_week']] = $row['total_signups'];
+        }
+        ksort($results);
+        return $results;
+    }
+
     /**
      * Get paid subscriber counts over time.
      * @return array
