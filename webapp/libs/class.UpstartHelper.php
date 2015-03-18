@@ -232,7 +232,7 @@ class UpstartHelper {
         }
         // X-axis
         $chart_url .= '&chxt=x,y&chxl=0:|';
-        if (sizeof($first_data_set) >= 360) { // On big charts, only label every 20 X-axis items
+        if (sizeof($first_data_set) >= 350) { // On big charts, only label every 20 X-axis items
             $i = 0;
             foreach ($first_data_set as $date=>$total) {
                 if ($i % 20 == 0) {
