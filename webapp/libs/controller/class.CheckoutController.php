@@ -16,10 +16,18 @@ class CheckoutController extends UpstartAuthController {
         $this->setPageTitle('Checkout');
         $this->setViewTemplate('checkout.tpl');
 
-        $amount_monthly = SignUpHelperController::$subscription_levels[strtolower($subscriber->membership_level)]
-            ['1 month'];
-        $amount_yearly = SignUpHelperController::$subscription_levels[strtolower($subscriber->membership_level)]
+        $normalized_membership_level = strtolower($subscriber->membership_level);
+        $normalized_membership_level =
+            ($normalized_membership_level == 'late bird')?'member':$normalized_membership_level;
+        $normalized_membership_level =
+            ($normalized_membership_level == 'early bird')?'member':$normalized_membership_level;
+        $normalized_membership_level =
+            ($normalized_membership_level == 'exec')?'executive':$normalized_membership_level;
+
+        $amount_monthly = SignUpHelperController::$subscription_levels[$normalized_membership_level]['1 month'];
+        $amount_yearly = SignUpHelperController::$subscription_levels[$normalized_membership_level]
             ['12 months discount'];
+        $this->addToView('normalized_membership_level', $normalized_membership_level);
         $this->addToView('amount_monthly', $amount_monthly);
         $this->addToView('amount_yearly', $amount_yearly);
 

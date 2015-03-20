@@ -287,6 +287,46 @@ class TestOfCheckoutController extends UpstartUnitTestCase {
         $this->debug($result);
     }
 
+    public function testEarlyBirdMembershipPaymentFailedPay() {
+        $this->builders = $this->buildSubscriberAndLogIn($email='earlybird-failed-payment@example.com',
+            $subscription_status='Payment failed', null, 'Early Bird');
+
+        $controller = new CheckoutController(true);
+        $result = $controller->go();
+        $this->assertNoPattern('/Log in/', $result );
+        $this->assertPattern('/Checkout/', $result );
+        $this->assertPattern('/Subscribe to ThinkUp today!/', $result );
+        $this->assertPattern('/Select your plan:/', $result );
+        $this->assertPattern('/\$5/', $result );
+        $this->assertPattern('/\$50/', $result );
+        $this->assertPattern("/It\'s safe and easy with your Amazon account./", $result );
+
+        //Don't allow user to delay
+        $this->assertNoPattern("/No thanks, I\'ll do this later./", $result );
+
+        $this->debug($result);
+    }
+
+    public function testLateBirdMembershipPaymentFailedPay() {
+        $this->builders = $this->buildSubscriberAndLogIn($email='earlybird-failed-payment@example.com',
+            $subscription_status='Payment failed', null, 'Late Bird');
+
+        $controller = new CheckoutController(true);
+        $result = $controller->go();
+        $this->assertNoPattern('/Log in/', $result );
+        $this->assertPattern('/Checkout/', $result );
+        $this->assertPattern('/Subscribe to ThinkUp today!/', $result );
+        $this->assertPattern('/Select your plan:/', $result );
+        $this->assertPattern('/\$5/', $result );
+        $this->assertPattern('/\$50/', $result );
+        $this->assertPattern("/It\'s safe and easy with your Amazon account./", $result );
+
+        //Don't allow user to delay
+        $this->assertNoPattern("/No thanks, I\'ll do this later./", $result );
+
+        $this->debug($result);
+    }
+
     public function testProMembershipPaymentFailedError() {
         $this->builders = $this->buildSubscriberAndLogIn($email='pro-failed-payment@example.com',
             $subscription_status='Payment failed', null, 'Pro');

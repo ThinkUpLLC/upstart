@@ -124,12 +124,12 @@ $state (required) 'pay' or 'success' or 'error' or 'error-fullname'
         <header class="container-header">
           <h2>Select your plan:</h2>
           <div class="pricing">
-            <input type="radio" name="plan" id="plan-monthly" value="{$subscriber->membership_level|strtolower}-monthly">
+            <input type="radio" name="plan" id="plan-monthly" value="{$normalized_membership_level}-monthly">
             <label for="plan-monthly" onclick='$("#wallet").removeClass("disabled")'>
               <h3>${$amount_monthly}</h3>
               per month
             </label>
-            <input type="radio" name="plan" id="plan-yearly" value="{$subscriber->membership_level|strtolower}-yearly">
+            <input type="radio" name="plan" id="plan-yearly" value="{$normalized_membership_level}-yearly">
             <label for="plan-yearly" onclick='$("#wallet").removeClass("disabled")'>
               <h3>${$amount_yearly}</h3>
               per year
