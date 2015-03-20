@@ -21,7 +21,7 @@ $subscriber_dao = new SubscriberMySQLDAO();
 $subscriber_dao->captureCurrentPaidCount();
 
 // Begin signups notifications
-$daily_signups = $subscriber_dao->getDailySignups();
+$daily_signups = $subscriber_dao->getDailySignups(90);
 
 if ($daily_signups[$today] > $daily_signups[$yesterday]) {
     $comparator = "up from";
