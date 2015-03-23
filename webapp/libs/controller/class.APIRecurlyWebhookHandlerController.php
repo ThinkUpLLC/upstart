@@ -34,6 +34,11 @@ class APIRecurlyWebhookHandlerController extends Controller {
     private function updateSubscriber(Recurly_PushNotification $notification) {
         try {
             if (isset($notification->transaction->subscription_id)) {
+                // Required for the Recurly API
+                $cfg = Config::getInstance();
+                Recurly_Client::$subdomain = $cfg->getValue('recurly_subdomain');
+                Recurly_Client::$apiKey = $cfg->getValue('recurly_api_key');
+
                 $subscription = Recurly_Subscription::get($notification->transaction->subscription_id);
 
                 UpstartHelper::postToSlack('#signups',
