@@ -3,6 +3,8 @@ body_classes="marketing marketing-page" body_id="marketing-contact"}
 
 {if isset($smarty.get.type)}
   {assign var="contact_type" value=$smarty.get.type}
+{else}
+  {assign var="contact_type" value=null}
 {/if}
 
   <div class="container">
