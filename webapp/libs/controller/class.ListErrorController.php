@@ -8,8 +8,13 @@ class ListErrorController extends Controller {
         if ($page < 1) {
             $page =1;
         }
+        $method = (isset($_GET['m']))?$_GET['m']:null;
         $errorlog_dao = new ErrorLogMySQLDAO();
-        $raw_errors = $errorlog_dao->getErrorList($page, 51);
+        if (isset($method)) {
+            $raw_errors = $errorlog_dao->getErrorsByMethod($method, $page, 51);
+        } else {
+            $raw_errors = $errorlog_dao->getErrorList($page, 51);
+        }
         $errors = array();
         foreach ($raw_errors as $error) {
             $path_parts = explode( '/webapp/', $error['filename'] );

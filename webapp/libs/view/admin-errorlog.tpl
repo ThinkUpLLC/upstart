@@ -13,7 +13,8 @@
       </tr>
       {foreach $errors as $error}
       <tr>
-        <td><a href="{$error.github_link}">{$error.method}#L{$error.line_number}</a><br />{$error.timestamp|relative_datetime} ago</td>
+        <td><a href="{$error.github_link}">{$error.method}#L{$error.line_number}</a><br />{$error.timestamp|relative_datetime} ago<br>
+        <a href="?m={$error.method|urlencode}">filter</a></td>
         <td><pre>{$error.debug}</pre></td>
       </tr>
       {/foreach}
