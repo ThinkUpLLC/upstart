@@ -88,6 +88,7 @@
             {if isset($thinkup_url)}<li class="nav-link"><a href="{$thinkup_url}">Your Insights</a></li>
             {else}<li class="nav-link"><a href="{$site_root_path}user/">Login</a></li>{/if}
             <li class="nav-link"><a href="{$site_root_path}pricing.php">Pricing</a></li>
+            <li class="nav-link"><a href="{$site_root_path}media.php">For Media</a></li>
             <li class="nav-link"><a href="{$site_root_path}about/">About</a></li>
             <li class="nav-button{if (isset($hide_join) and $hide_join)} is-hidden{/if}"><a class="btn btn-pill btn-signup" href="{$site_root_path}">Join now</a></li>
         </ul>

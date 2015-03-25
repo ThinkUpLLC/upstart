@@ -17,6 +17,8 @@ class PricingController extends SignUpHelperController {
         $facebook_pro_link = self::getFacebookConnectLink('register.php?n=facebook&level=pro');
         $this->addToView('facebook_pro_link', $facebook_pro_link);
 
+        $this->setPageTitle('Pricing');
+
         if (SessionCache::isKeySet('auth_error_message')) {
             $error_message = SessionCache::get('auth_error_message');
             $this->addErrorMessage($error_message);

@@ -1385,6 +1385,22 @@ a.btn-pill-large:hover {
     margin-bottom: 0;
   }
 }
+#container-vendor {
+  background-color: #fc939e;
+  height: auto;
+}
+#container-vendor .section-header {
+  color: #ffffff;
+}
+#container-vendor .section-copy {
+  color: #ffffff;
+}
+#container-vendor .section-sample-insight figcaption {
+  color: #ffffff;
+}
+#container-vendor .section-marketing-text {
+  color: #fff;
+}
 #container-signup-bottom {
   background-color: #ffffff;
   height: 200px;
@@ -1463,15 +1479,13 @@ body.marketing-page .container {
     border: 0;
   }
 }
-body.marketing-page .section p,
-body.marketing-page .section li {
+body.marketing-page .section p {
   font-family: "tablet-gothic", helvetica, arial, sans-serif;
   font-size: 0.875em;
   line-height: 1.28571429;
 }
 body.marketing-page .section-header {
   color: #222;
-  font-weight: 600;
   padding: 10px 0 0;
 }
 body.marketing-page .section-subheader {
