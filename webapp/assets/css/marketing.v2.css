@@ -315,6 +315,9 @@ body {
   color: #2785d3;
   text-decoration: none;
 }
+.nav .nav-link a.selected {
+  color: black;
+}
 .nav .nav-link a:hover {
   color: #46bcff;
 }
