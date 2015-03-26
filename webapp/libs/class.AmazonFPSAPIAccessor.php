@@ -82,8 +82,11 @@ class AmazonFPSAPIAccessor {
         $params = array();
         //REQUIRED PARAMS:
         $params['SubscriptionId'] = $subscription_id;
-        $params['RefundAmount'] = array('Value'=>$refund_amount, 'CurrencyCode'=>'USD');
-        $params['CallerReference'] = $caller_reference;
+        //Only set refund parameters if it's more than 0, CallerReference only necessary in case of a refund
+        if ($refund_amount > 0) {
+            $params['RefundAmount'] = array('Value'=>$refund_amount, 'CurrencyCode'=>'USD');
+            $params['CallerReference'] = $caller_reference;
+        }
 
         return $service->cancelSubscriptionAndRefund($params);
     }
