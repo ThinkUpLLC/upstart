@@ -57,6 +57,30 @@ class APIIPNController extends Controller {
                                     'Instant Pay Notification: '.$op->status_code." for ".$subscriber->thinkup_username
                                     .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $subscriber->id);
                             }
+
+                            //If payment failed, cancel SimplePay subscription, user can come back and pay via Recurly
+                            if ($op->status_code == 'PF') {
+                                try {
+                                    //Issue CancelAndRefund call to Amazon API
+                                    $api_accessor = new AmazonFPSAPIAccessor();
+                                    //Create a callerReference
+                                    $caller_reference = $subscriber->id.'_'.time();
+                                    $response = $api_accessor->cancelAndRefundSubscription($op->amazon_subscription_id,
+                                        0, $caller_reference);
+                                    UpstartHelper::postToSlack('#signups',
+                                        "Cancelled SimplePay subscription. ".$subscriber->thinkup_username
+                                        ." can return and re-pay via Recurly. "
+                                        .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $subscriber->id);
+                                } catch (Amazon_FPS_Exception $ex) {
+                                    $debug = "Caught Exception: " . $ex->getMessage() . "\n";
+                                    $debug .= "Response Status Code: " . $ex->getStatusCode() . "\n";
+                                    $debug .= "Error Code: " . $ex->getErrorCode() . "\n";
+                                    $debug .= "Error Type: " . $ex->getErrorType() . "\n";
+                                    $debug .= "Request ID: " . $ex->getRequestId() . "\n";
+                                    $debug .= "XML: " . $ex->getXML() . "\n";
+                                    Logger::logError($debug, __FILE__, __LINE__, __METHOD__);
+                                }
+                            }
                         } else {
                             $debug .= "No past op found, subscriptionId ".$_POST['subscriptionId'];
                         }
