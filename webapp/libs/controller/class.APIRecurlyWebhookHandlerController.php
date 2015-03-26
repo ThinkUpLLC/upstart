@@ -13,6 +13,13 @@ class APIRecurlyWebhookHandlerController extends Controller {
         $notification = new Recurly_PushNotification($post_xml);
 
         //Handle various notification types
+        //closed_invoice_notification
+        //new_account_notification
+        //new_subscription_notification
+        //billing_info_updated_notification
+        //new_invoice_notification
+        //canceled_account_notification
+        //successful_refund_notification
         switch ($notification->type) {
             case "successful_payment_notification":
                 $this->updateSubscriber($notification);
@@ -20,13 +27,13 @@ class APIRecurlyWebhookHandlerController extends Controller {
             case "failed_payment_notification":
                 $this->updateSubscriber($notification);
                 break;
-            default:
-                $debug = "Recurly webhook received that was not a payment notification
-";
-                $debug .= Utils::varDumpToString($notification);
-                Logger::logError($debug, __FILE__,__LINE__,__METHOD__);
-                break;
           /* add more notifications to process */
+            default:
+//                 $debug = "Recurly webhook received that was not a payment notification
+// ";
+//                 $debug .= Utils::varDumpToString($notification);
+//                 Logger::logError($debug, __FILE__,__LINE__,__METHOD__);
+                break;
         }
     }
 
