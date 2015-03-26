@@ -137,7 +137,15 @@ class SubscriptionHelper {
     }
 
     public static function getCheckoutButton($subscriber) {
-        $amount = SignUpHelperController::$subscription_levels[strtolower($subscriber->membership_level)]
+        $normalized_membership_level = strtolower($subscriber->membership_level);
+        $normalized_membership_level =
+            ($normalized_membership_level == 'late bird')?'member':$normalized_membership_level;
+        $normalized_membership_level =
+            ($normalized_membership_level == 'early bird')?'member':$normalized_membership_level;
+        $normalized_membership_level =
+            ($normalized_membership_level == 'exec')?'executive':$normalized_membership_level;
+
+        $amount = SignUpHelperController::$subscription_levels[strtolower($normalized_membership_level)]
             [$subscriber->subscription_recurrence];
         $button_freq_label = $subscriber->subscription_recurrence;
         $button_freq_label = str_replace("1 month", "month", $button_freq_label);
