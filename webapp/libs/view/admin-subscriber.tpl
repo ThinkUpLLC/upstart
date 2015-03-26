@@ -110,7 +110,12 @@
 {if $subscription_operations}
 <div class="panel panel-success">
   <div class="panel-heading">
-    <h4>Subscription ID: {$subscription_operations[0]->amazon_subscription_id}<br><br>Amazon email: {$subscription_operations[0]->buyer_email}</h4>
+    {foreach from=$subscription_operations item=operation}
+      {if $operation->status_code eq 'SS'}
+        {assign var="sub_start" value=$operation->date}
+      {/if}
+    {/foreach}
+    <h4><a href="https://payments.amazon.com/subscriptions?start={$sub_start|urlencode}&Type=MERCHANT&till=first" target="_new">Amazon subscription under name: {$subscription_operations[0]->buyer_name}</a></h4>
   </div>
   <table class="table table-hover">
     <tr>

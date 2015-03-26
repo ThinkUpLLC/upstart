@@ -94,8 +94,9 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
     }
 
     public function getBySubscriberID($subscriber_id) {
-        $q  = "SELECT so.*, sc.description as status_description FROM subscription_operations so ";
-        $q .= "LEFT JOIN subscription_status_codes sc ";
+        $q  = "SELECT so.*, sc.description as status_description, ";
+        $q .= "DATE_FORMAT(so.timestamp, '%Y-%m-%dT%H:%i:%s') AS date ";
+        $q .= "FROM subscription_operations so LEFT JOIN subscription_status_codes sc ";
         $q .= "ON sc.code = so.status_code WHERE subscriber_id = :subscriber_id ";
         $q .= "ORDER BY timestamp DESC LIMIT 10; ";
 
