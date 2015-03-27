@@ -72,6 +72,9 @@ class ManageSubscriberController extends Controller {
                                 $subscriber->paid_through =
                                     $subscription->current_period_ends_at->format('Y-m-d H:i:s');
 
+                                //@TODO Handle other subscription states here
+                                $subscriber->subscription_status = 'Paid';
+
                                 $subscriber_dao->setSubscriptionDetails($subscriber);
 
                                 $this->addSuccessMessage("Updated to ".$subscriber->subscription_recurrence
