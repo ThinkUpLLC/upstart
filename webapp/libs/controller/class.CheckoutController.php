@@ -62,14 +62,17 @@ class CheckoutController extends UpstartAuthController {
                 //Update local subscription details
                 $subscriber->subscription_status = 'Paid';
                 $subscriber->is_via_recurly = true;
-                if (strpos($_POST['plan'], 'monthly') !== false) {
+
+                if (strpos($subscription->plan_code, 'monthly') !== false) {
                     $subscriber->subscription_recurrence = '1 month';
-                } elseif (strpos($_POST['plan'], 'yearly') !== false) {
+                } elseif (strpos($subscription->plan_code, 'yearly') !== false) {
                     $subscriber->subscription_recurrence = '12 months';
                 }
                 $paid_through_time = strtotime('+'.$subscriber->subscription_recurrence);
                 $paid_through_time = date('Y-m-d H:i:s', $paid_through_time);
                 $subscriber->paid_through = $paid_through_time;
+
+                $subscriber->recurly_subscription_id = $subscription->uuid;
 
                 $subscriber_dao->setSubscriptionDetails($subscriber);
 

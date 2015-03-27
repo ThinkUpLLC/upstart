@@ -179,7 +179,8 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
     public function testSetSubscriptionDetails() {
         $builder = FixtureBuilder::build('subscribers', array('network_user_id'=>'930061', 'network'=>'twitter',
             'email'=>'ginatrapani@example.com', 'subscription_status'=>'Free Trial',
-            'subscription_recurrence'=>'1 month', 'is_via_recurly'=>0, 'paid_through'=>null));
+            'subscription_recurrence'=>'1 month', 'is_via_recurly'=>0, 'paid_through'=>null,
+            'recurly_subscription_id'=>'blahblah'));
 
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('ginatrapani@example.com');
@@ -188,6 +189,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $paid_through = date('Y-M-d');
         $subscriber->paid_through = $paid_through;
         $subscriber->is_via_recurly = true;
+        $subscriber->recurly_subscription_id = 'qwerty';
 
         $update_count = $dao->setSubscriptionDetails($subscriber);
 
@@ -197,6 +199,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($subscriber->paid_through, $paid_through);
         $this->assertEqual($subscriber->subscription_recurrence, '12 months');
         $this->assertEqual($subscriber->subscription_status, 'Paid');
+        $this->assertEqual($subscriber->recurly_subscription_id, 'qwerty');
         $this->assertTrue($subscriber->is_via_recurly);
     }
 
@@ -433,6 +436,27 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         //test inserting same token twice
         $this->expectException('DuplicateSubscriberEmailException');
         $result = $dao->setEmail(102, 'willowrosenberg@buffy.com');
+    }
+
+    public function testSetRecurlySubscriptionID() {
+        //Subscriber doesn't exist
+        $dao = new SubscriberMySQLDAO();
+        $result = $dao->setRecurlySubscriptionID(1, 'asdf');
+        $this->assertFalse($result);
+
+        //Subscriber exists and has no username
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>101, 'email'=>'willow@buffy.com',
+        'network_user_name'=>'willowr', 'thinkup_username'=>null));
+
+        $result = $dao->setRecurlySubscriptionID(101, 'qwerty');
+        $this->assertTrue($result);
+
+        $sql = "SELECT * FROM subscribers WHERE id=101";
+        $stmt = SubscriberMySQLDAO::$PDO->query($sql);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->assertTrue($data);
+        $this->assertEqual('qwerty', $data['recurly_subscription_id']);
     }
 
     public function testIsUsernameTaken() {

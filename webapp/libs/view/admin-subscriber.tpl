@@ -41,6 +41,17 @@
               <form action="subscriber.php?action=updateemail&id={$subscriber->id}" method="get"><input type="email" width="10" value="" placeholder="" name="email"> <input type="hidden" name="id" value="{$subscriber->id}"> <input type="hidden" name="action" value="setemail"><input type="submit" value="Change" class="btn btn-xs btn-default"></form>
             </td>
           </tr>
+
+          {if $subscriber->is_via_recurly}
+          <tr>
+            <td>Recurly Subscription</td>
+            <td>
+              {if isset($subscriber->recurly_subscription_id)}<a href="https://thinkup.recurly.com/subscriptions/{$subscriber->recurly_subscription_id|urlencode}" class="btn btn-xs btn-primary pull-right" target="_new">See Recurly subscription&rarr;</a>{/if}
+              <form action="subscriber.php?action=setrecurlysubidl&id={$subscriber->id}" method="get"><input type="text" width="40" value="{$subscriber->recurly_subscription_id}" placeholder="" name="recurly_subscription_id"> <input type="hidden" name="id" value="{$subscriber->id}"> <input type="hidden" name="action" value="setrecurlysubid"><input type="submit" value="Change" class="btn btn-xs btn-default"> <a href="subscriber.php?action=syncrecurly&id={$subscriber->id}&recurly_sub_id={$subscriber->recurly_subscription_id}">Sync</a></form>
+            </td>
+          </tr>
+          {/if}
+
           {if isset($subscriber->network) && isset($subscriber->network_user_name)}
           <tr>
             <td>{$subscriber->network|ucfirst}</td>

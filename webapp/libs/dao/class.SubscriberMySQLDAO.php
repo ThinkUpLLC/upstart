@@ -164,13 +164,15 @@ class SubscriberMySQLDAO extends PDODAO {
 
     public function setSubscriptionDetails($subscriber) {
         $q = "UPDATE subscribers SET subscription_status = :subscription_status, paid_through = :paid_through, ";
-        $q .= "subscription_recurrence = :subscription_recurrence, is_via_recurly = :is_via_recurly WHERE id=:id";
+        $q .= "subscription_recurrence = :subscription_recurrence, is_via_recurly = :is_via_recurly, ";
+        $q .= "recurly_subscription_id = :recurly_subscription_id WHERE id=:id";
         $vars = array(
             ':id'=>$subscriber->id,
             ':subscription_status'=>$subscriber->subscription_status,
             ':paid_through'=>$subscriber->paid_through,
             ':subscription_recurrence'=>$subscriber->subscription_recurrence,
-            ':is_via_recurly' => $subscriber->is_via_recurly
+            ':is_via_recurly' => $subscriber->is_via_recurly,
+            ':recurly_subscription_id' => $subscriber->recurly_subscription_id
         );
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
@@ -216,6 +218,21 @@ class SubscriberMySQLDAO extends PDODAO {
             if (strpos($message,'Duplicate entry') !== false && strpos($message,'email') !== false) {
                 throw new DuplicateSubscriberEmailException($message);
             }
+        }
+    }
+
+    public function setRecurlySubscriptionID($subscriber_id, $recurly_subscription_id) {
+        $q = " UPDATE subscribers SET recurly_subscription_id = :recurly_subscription_id WHERE id=:id";
+        $vars = array(
+            ':id'=>$subscriber_id,
+            ':recurly_subscription_id'=>$recurly_subscription_id
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        if ($this->getUpdateCount($ps) == 0) {
+            return false;
+        } else {
+            return true;
         }
     }
 

@@ -47,6 +47,19 @@ class APIRecurlyWebhookHandlerController extends Controller {
                 Recurly_Client::$apiKey = $cfg->getValue('recurly_api_key');
 
                 $subscription = Recurly_Subscription::get($notification->transaction->subscription_id);
+                $account = $subscription->account->get();
+
+                //TODO: Get subscriber based on account email
+                // if (strpos($subscription->plan->plan_code, 'monthly') !== false) {
+                //     $subscriber->subscription_recurrence = '1 month';
+                // } elseif (strpos($subscription->plan->plan_code, 'yearly') !== false) {
+                //     $subscriber->subscription_recurrence = '12 months';
+                // }
+                // $subscriber->paid_through =
+                //     $subscription->current_period_ends_at->format('Y-m-d H:i:s');
+                // $subscriber->recurly_subscription_id = $subscription->uuid;
+
+                // $subscriber_dao->setSubscriptionDetails($subscriber);
 
                 UpstartHelper::postToSlack('#signups',
                     'Recurly webhook received: '.$notification->type." for ".$notification->account->email
@@ -56,8 +69,9 @@ class APIRecurlyWebhookHandlerController extends Controller {
                 $debug = "Received Recurly Webhook, got subscription
 ";
                 $debug .= Utils::varDumpToString($subscription);
+                $debug .= Utils::varDumpToString($account);
             } else {
-                $debug = "No notification->transaction->subscription_id found in notitification
+                $debug = "No notification->transaction->subscription_id found in notification
 ";
                 $debug .= Utils::varDumpToString($notification);
             }

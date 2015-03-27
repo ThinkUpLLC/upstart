@@ -55,6 +55,42 @@ class ManageSubscriberController extends Controller {
                         } else {
                             $this->addErrorMessage("No username specified");
                         }
+                    } elseif ($_GET['action'] == 'syncrecurly') {
+                        if (isset($_GET['recurly_sub_id'])) {
+                            $cfg = Config::getInstance();
+                            Recurly_Client::$subdomain = $cfg->getValue('recurly_subdomain');
+                            Recurly_Client::$apiKey = $cfg->getValue('recurly_api_key');
+
+                            try {
+                                $subscription = Recurly_Subscription::get($_GET['recurly_sub_id']);
+
+                                if (strpos($subscription->plan->plan_code, 'monthly') !== false) {
+                                    $subscriber->subscription_recurrence = '1 month';
+                                } elseif (strpos($subscription->plan->plan_code, 'yearly') !== false) {
+                                    $subscriber->subscription_recurrence = '12 months';
+                                }
+                                $subscriber->paid_through =
+                                    $subscription->current_period_ends_at->format('Y-m-d H:i:s');
+
+                                $subscriber_dao->setSubscriptionDetails($subscriber);
+
+                                $this->addSuccessMessage("Updated to ".$subscriber->subscription_recurrence
+                                    .' recurrence, paid through '. $subscriber->paid_through);
+                            } catch (Exception $e) {
+                                $this->addErrorMessage($e->getMessage());
+                            }
+                        } else {
+                            $this->addErrorMessage("No subscription Id specified");
+                        }
+                    } elseif ($_GET['action'] == 'setrecurlysubid') {
+                        if (isset($_GET['recurly_subscription_id']) && $_GET['recurly_subscription_id'] != '') {
+                            $recurly_sub_id = $_GET['recurly_subscription_id'];
+                            $subscriber_dao->setRecurlySubscriptionID($subscriber_id, $recurly_sub_id);
+                            $this->addSuccessMessage("Saved Recurly subscription.");
+                            $subscriber = $subscriber_dao->getByID($subscriber_id);
+                        } else {
+                            $this->addErrorMessage("No Recurly subscription ID specified");
+                        }
                     } elseif ($_GET['action'] == 'setemail') {
                         if (isset($_GET['email']) && $_GET['email'] != '') {
                             $email = $_GET['email'];

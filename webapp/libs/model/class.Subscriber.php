@@ -152,6 +152,10 @@ class Subscriber {
      * @var bool Whether or not subscription created via Recurly.
      */
     var $is_via_recurly = false;
+    /**
+     * @var str Recurly subscription ID.
+     */
+    var $recurly_subscription_id = false;
     public function __construct($row = false) {
         if ($row) {
             $this->id = $row['id'];
@@ -192,6 +196,7 @@ class Subscriber {
             $this->is_account_closed = PDODAO::convertDBToBool($row['is_account_closed']);
             $this->claim_code = $row['claim_code'];
             $this->is_via_recurly = PDODAO::convertDBToBool($row['is_via_recurly']);
+            $this->recurly_subscription_id = $row['recurly_subscription_id'];
         }
     }
 
