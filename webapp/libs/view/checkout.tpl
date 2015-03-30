@@ -67,7 +67,7 @@ $state (required) 'pay' or 'success' or 'error' or 'error-fullname'
   {if $state eq 'error-fullname'}
 
     {assign var="missing_fields" value="false"}
-    <form method="POST" id="form-fullname" action="">
+    <form method="POST" id="form-fullname" action="checkout.php">
       <fieldset class="fieldset-no-header">
         <div class="form-group has-addon{if isset($error_msgs.firstname)} form-group-warning{/if}
           {if isset($firstname) and $firstname != "" and !isset($error_msgs.firstname)} form-group-ok{/if}">
@@ -77,7 +77,7 @@ $state (required) 'pay' or 'success' or 'error' or 'error-fullname'
           {$smarty.capture.firstname_message}
           <label class="control-label with-focus" for="firstname">First name</label>
           <input type="text" class="form-control" id="firstname" placeholder="First" name="firstname"
-            autofocus="autofocus" autocomplete="firstname" />
+            autofocus="autofocus" autocomplete="firstname" value="{if isset($firstname)}{$firstname}{/if}" />
         </div>
 
         <div class="form-group has-addon{if isset($error_msgs.lastname)} form-group-warning{/if}
@@ -88,7 +88,7 @@ $state (required) 'pay' or 'success' or 'error' or 'error-fullname'
           {$smarty.capture.lastname_message}
           <label class="control-label with-focus" for="lastname">Last name</label>
           <input type="text" class="form-control" id="lastname" placeholder="Last" name="lastname"
-            autofocus="autofocus" autocomplete="lastname" />
+            autofocus="autofocus" autocomplete="lastname" value="{if isset($lastname)}{$lastname}{/if}"/>
         </div>
 
         {if $missing_fields eq "true"}{literal}
@@ -100,7 +100,8 @@ $state (required) 'pay' or 'success' or 'error' or 'error-fullname'
         {/literal}{/if}
 
       </fieldset>
-
+      <input type="hidden" name="amazon_billing_agreement_id" value="{$amazon_billing_agreement_id}" >
+      <input type="hidden" name="plan" value="{$plan}" >
       <input type="Submit" name="Submit" value="Let's try that again!" class="btn btn-pill btn-submit is-static">
     </form>
 

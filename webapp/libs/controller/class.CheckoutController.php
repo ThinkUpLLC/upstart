@@ -48,57 +48,107 @@ class CheckoutController extends UpstartAuthController {
             $account = new Recurly_Account();
             $account->account_code = $subscriber->id;
             $account->email = $subscriber->email;
-            // $account->create(); //Does Recurly do this on $subscription->create() if the account doesn't exist?
 
-            $billing_info = new Recurly_BillingInfo();
-            $billing_info->amazon_billing_agreement_id = $_POST['amazon_billing_agreement_id'];
+            $continue = true;
 
-            $account->billing_info = $billing_info;
-            $subscription->account = $account;
-
-            try {
-                $subscription->create();
-
-                //Update local subscription details
-                $subscriber->subscription_status = 'Paid';
-                $subscriber->is_via_recurly = true;
-
-                if (strpos($subscription->plan_code, 'monthly') !== false) {
-                    $subscriber->subscription_recurrence = '1 month';
-                } elseif (strpos($subscription->plan_code, 'yearly') !== false) {
-                    $subscriber->subscription_recurrence = '12 months';
+            //Handle name madness here
+            if (isset($_POST['firstname']) && isset($_POST['lastname'])) {
+                //User is submitting from name form
+                if ($_POST['firstname'] == '' || $_POST['lastname'] == '') {
+                    $continue = false;
+                    if ($_POST['firstname'] == '') {
+                        //Show error if empty
+                        $this->addErrorMessage('Please enter your first name', 'firstname');
+                        $state = 'error-fullname';
+                        //Populate hidden fields for rePOST
+                        $this->addToView('amazon_billing_agreement_id', $_POST['amazon_billing_agreement_id']);
+                        $this->addToView('plan', $_POST['plan']);
+                        $this->addToView('lastname', $_POST['lastname']);
+                    }
+                    if ($_POST['lastname'] == '') {
+                        //Show error if empty
+                        $this->addErrorMessage('Please enter your last name', 'lastname');
+                        $state = 'error-fullname';
+                        //Populate hidden fields for rePOST
+                        $this->addToView('amazon_billing_agreement_id', $_POST['amazon_billing_agreement_id']);
+                        $this->addToView('plan', $_POST['plan']);
+                        $this->addToView('firstname', $_POST['firstname']);
+                    }
+                } else {
+                    $account->first_name = $_POST['firstname'];
+                    $account->last_name = $_POST['lastname'];
                 }
-                $paid_through_time = strtotime('+'.$subscriber->subscription_recurrence);
-                $paid_through_time = date('Y-m-d H:i:s', $paid_through_time);
-                $subscriber->paid_through = $paid_through_time;
+            }
 
-                $subscriber->recurly_subscription_id = $subscription->uuid;
+            if ($continue) {
+                $billing_info = new Recurly_BillingInfo();
+                $billing_info->amazon_billing_agreement_id = $_POST['amazon_billing_agreement_id'];
 
-                $subscriber_dao->setSubscriptionDetails($subscriber);
+                $account->billing_info = $billing_info;
+                $subscription->account = $account;
 
-                //Send paid user to their insights stream
-                if ($subscriber->subscription_status == 'Paid') {
-                    $state = 'success';
+                try {
+                    $subscription->create();
+
+                    //Begin testing name error
+                    //First, comment out subscription->create() above
+                    // $errors = array();
+                    // $errors[] = "Amazon billing agreement id Billing Agreement "
+                    //     . $billing_info->amazon_billing_agreement_id
+                    //     . " is currently in Draft state.";
+                    // $errors[] = "ValidateBillingAgreement can only be requested in the OPEN state, ".
+                    //     "first name can't be blank.";
+                    // throw new Recurly_ValidationError('This is meaningless', null, $errors);
+                    //End testing name error
+
+                    //Update local subscription details
+                    $subscriber->subscription_status = 'Paid';
+                    $subscriber->is_via_recurly = true;
+
+                    if (strpos($subscription->plan_code, 'monthly') !== false) {
+                        $subscriber->subscription_recurrence = '1 month';
+                    } elseif (strpos($subscription->plan_code, 'yearly') !== false) {
+                        $subscriber->subscription_recurrence = '12 months';
+                    }
+                    $paid_through_time = strtotime('+'.$subscriber->subscription_recurrence);
+                    $paid_through_time = date('Y-m-d H:i:s', $paid_through_time);
+                    $subscriber->paid_through = $paid_through_time;
+
+                    $subscriber->recurly_subscription_id = $subscription->uuid;
+
+                    $subscriber_dao->setSubscriptionDetails($subscriber);
+
+                    //Send paid user to their insights stream
+                    if ($subscriber->subscription_status == 'Paid') {
+                        $state = 'success';
+                    }
+
+                    //Update is_free_trial field in ThinkUp installation
+                    $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
+                    $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
+                    if (!$trial_ended) {
+                        Logger::logError('Unable to end trial in ThinkUp installation',
+                            __FILE__,__LINE__, __METHOD__);
+                    }
+
+                    UpstartHelper::postToSlack('#signups',
+                        'Ding-ding! A member just paid for a '.$_POST['plan'].' subscription via Recurly.\nhttps://'.
+                        $subscriber->thinkup_username.
+                        '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
+                        $subscriber->id);
+                } catch (Recurly_ValidationError $e) {
+                    if ( strpos($e->getMessage(), "name can't be blank") !== false ) {
+                        $state = 'error-fullname';
+                        //Populate hidden fields for rePOST
+                        $this->addToView('amazon_billing_agreement_id', $_POST['amazon_billing_agreement_id']);
+                        $this->addToView('plan', $_POST['plan']);
+                    } else {
+                        $this->addErrorMessage('Oops! '.$e->getMessage());
+                        $debug = "Recurly_ValidationError: ". $e->getMessage();
+                        Logger::logError($debug, __FILE__,__LINE__,__METHOD__);
+                        $state = 'error';
+                    }
                 }
-
-                //Update is_free_trial field in ThinkUp installation
-                $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
-                $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
-                if (!$trial_ended) {
-                    Logger::logError('Unable to end trial in ThinkUp installation',
-                        __FILE__,__LINE__, __METHOD__);
-                }
-
-                UpstartHelper::postToSlack('#signups',
-                    'Ding-ding! A member just paid for a '.$_POST['plan'].' subscription via Recurly.\nhttps://'.
-                    $subscriber->thinkup_username.
-                    '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
-                    $subscriber->id);
-            } catch (Recurly_ValidationError $e) {
-                $this->addErrorMessage('Oops! '.$e->getMessage());
-                $debug = "Recurly_Validation_Error: ". $e->getMessage();
-                Logger::logError($debug, __FILE__,__LINE__,__METHOD__);
-                $state = 'error';
             }
         } else {
             $state = 'pay';
@@ -136,7 +186,6 @@ class CheckoutController extends UpstartAuthController {
 
         //Get state
         //{assign var="state"} <!-- pay or success or error or error-fullname-->
-        //@TODO Detect single name error
         $this->addToView('state', $state);
 
         return $this->generateView();

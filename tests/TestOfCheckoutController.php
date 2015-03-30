@@ -101,6 +101,32 @@ class TestOfCheckoutController extends UpstartUnitTestCase {
         $this->debug($result);
     }
 
+    public function testSignupTrialSuccessWithNames() {
+        $this->builders = $this->buildSubscriberAndLogIn($email='trial@example.com', $subscription_status='Free trial');
+
+        SessionCache::put('new_subscriber_id', 1);
+
+        $_POST['amazon_billing_agreement_id']  = 'billing-id-success';
+        $_POST['plan'] = 'member-monthly';
+        $_POST['firstname'] = 'Madonna';
+        $_POST['lastname'] = 'Ciccone';
+
+        $controller = new CheckoutController(true);
+        $result = $controller->go();
+        $this->assertPattern('/Checkout/', $result );
+        $this->assertPattern('/Thanks! Your payment is complete./', $result );
+        $this->assertPattern('/Go to your ThinkUp/', $result );
+        $this->assertPattern('/Your insights are almost ready/', $result );
+
+        $this->assertNoPattern('/Log in/', $result );
+        $this->assertNoPattern('/Subscribe to ThinkUp today!/', $result );
+        $this->assertNoPattern('/Select your plan:/', $result );
+        $this->assertNoPattern("/It\'s safe and easy with your Amazon account./", $result );
+        $this->assertNoPattern("/No thanks, I\'ll do this later./", $result );
+
+        $this->debug($result);
+    }
+
     public function testSignupTrialError() {
         $this->builders = $this->buildSubscriberAndLogIn($email='trial@example.com', $subscription_status='Free trial');
 
@@ -124,9 +150,94 @@ class TestOfCheckoutController extends UpstartUnitTestCase {
         $this->debug($result);
     }
 
-    //@TODO Waiting on Recurly support ticket - unable to trigger this error just yet
-    // public function testSignupTrialErrorLastName() {
-    // }
+    public function testSignupTrialErrorMissingName() {
+        $this->builders = $this->buildSubscriberAndLogIn($email='trial@example.com', $subscription_status='Free trial');
+
+        $_POST['amazon_billing_agreement_id']  = 'billing-id-fullname-error';
+        $_POST['plan'] = 'member-monthly';
+
+        $controller = new CheckoutController(true);
+        $result = $controller->go();
+        $this->assertPattern('/Checkout/', $result );
+        $this->assertPattern('/Whoops, sorry!/', $result );
+        $this->assertPattern('/We\'ll need your full name to complete the Amazon payment./', $result);
+        $this->assertPattern('/First name/', $result);
+        $this->assertPattern('/Last name/', $result);
+        $this->assertPattern('/Let\'s try that again/', $result);
+
+        $this->assertNoPattern('/There was problem processing your payment. Please try again./', $result );
+        $this->assertNoPattern('/Select your plan:/', $result );
+        $this->assertNoPattern("/No thanks, I\'ll do this later./", $result );
+        $this->assertNoPattern('/Thanks! Your payment is complete./', $result );
+        $this->assertNoPattern('/Go to your ThinkUp/', $result );
+        $this->assertNoPattern('/Log in/', $result );
+        $this->assertNoPattern('/Subscribe to ThinkUp today!/', $result );
+        $this->assertNoPattern("/It\'s safe and easy with your Amazon account./", $result );
+
+        $this->debug($result);
+    }
+
+    public function testMissingNamePostedEmptyFirstName() {
+        $this->builders = $this->buildSubscriberAndLogIn($email='trial@example.com', $subscription_status='Free trial');
+
+        $_POST['amazon_billing_agreement_id']  = 'billing-id-fullname-error';
+        $_POST['plan'] = 'member-monthly';
+        $_POST['firstname'] = '';
+        $_POST['lastname'] = 'Cher';
+
+        $controller = new CheckoutController(true);
+        $result = $controller->go();
+        $this->assertPattern('/Checkout/', $result );
+        $this->assertPattern('/Whoops, sorry!/', $result );
+        $this->assertPattern('/We\'ll need your full name to complete the Amazon payment./', $result);
+        $this->assertPattern('/First name/', $result);
+        $this->assertPattern('/Last name/', $result);
+        $this->assertPattern('/Please enter your first name/', $result);
+        $this->assertNoPattern('/Please enter your last name/', $result);
+        $this->assertPattern('/Let\'s try that again/', $result);
+        $this->assertNoPattern('/There was problem processing your payment. Please try again./', $result );
+        $this->assertNoPattern('/Select your plan:/', $result );
+        $this->assertNoPattern("/No thanks, I\'ll do this later./", $result );
+
+        $this->assertNoPattern('/Thanks! Your payment is complete./', $result );
+        $this->assertNoPattern('/Go to your ThinkUp/', $result );
+        $this->assertNoPattern('/Log in/', $result );
+        $this->assertNoPattern('/Subscribe to ThinkUp today!/', $result );
+        $this->assertNoPattern("/It\'s safe and easy with your Amazon account./", $result );
+
+        $this->debug($result);
+    }
+
+    public function testMissingNamePostedEmptyLastName() {
+        $this->builders = $this->buildSubscriberAndLogIn($email='trial@example.com', $subscription_status='Free trial');
+
+        $_POST['amazon_billing_agreement_id']  = 'billing-id-fullname-error';
+        $_POST['plan'] = 'member-monthly';
+        $_POST['firstname'] = 'Cher';
+        $_POST['lastname'] = '';
+
+        $controller = new CheckoutController(true);
+        $result = $controller->go();
+        $this->assertPattern('/Checkout/', $result );
+        $this->assertPattern('/Whoops, sorry!/', $result );
+        $this->assertPattern('/We\'ll need your full name to complete the Amazon payment./', $result);
+        $this->assertPattern('/First name/', $result);
+        $this->assertPattern('/Last name/', $result);
+        $this->assertPattern('/Please enter your last name/', $result);
+        $this->assertNoPattern('/Please enter your first name/', $result);
+        $this->assertPattern('/Let\'s try that again/', $result);
+        $this->assertNoPattern('/There was problem processing your payment. Please try again./', $result );
+        $this->assertNoPattern('/Select your plan:/', $result );
+        $this->assertNoPattern("/No thanks, I\'ll do this later./", $result );
+
+        $this->assertNoPattern('/Thanks! Your payment is complete./', $result );
+        $this->assertNoPattern('/Go to your ThinkUp/', $result );
+        $this->assertNoPattern('/Log in/', $result );
+        $this->assertNoPattern('/Subscribe to ThinkUp today!/', $result );
+        $this->assertNoPattern("/It\'s safe and easy with your Amazon account./", $result );
+
+        $this->debug($result);
+    }
 
     public function testMembershipTrialPay() {
         $this->builders = $this->buildSubscriberAndLogIn($email='trial@example.com', $subscription_status='Free trial');
@@ -189,10 +300,6 @@ class TestOfCheckoutController extends UpstartUnitTestCase {
 
         $this->debug($result);
     }
-
-    //@TODO Waiting on Recurly support ticket - unable to trigger this error just yet
-    // public function testMembershipTrialErrorLastName() {
-    // }
 
     public function testMembershipExpiredTrialPay() {
         $this->builders = $this->buildSubscriberAndLogIn($email='expired@example.com',
@@ -262,10 +369,6 @@ class TestOfCheckoutController extends UpstartUnitTestCase {
 
         $this->debug($result);
     }
-
-    //@TODO Waiting on Recurly support ticket - unable to trigger this error just yet
-    // public function testMembershipExpiredTrialErrorLastName() {
-    // }
 
     public function testProMembershipPaymentFailedPay() {
         $this->builders = $this->buildSubscriberAndLogIn($email='pro-failed-payment@example.com',
