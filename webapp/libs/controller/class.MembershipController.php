@@ -343,31 +343,34 @@ class MembershipController extends UpstartAuthController {
      * @return bool
      */
     private function cancelFPSSubscription(Subscriber $subscriber, $latest_payment) {
-        //Calculate refund
-        $payment_dao = new PaymentMySQLDAO();
-        $refund_amount = $payment_dao->calculateProRatedAnnualRefund($latest_payment);
-        //Create a callerReference
-        $caller_reference = $subscriber->id.'_'.time();
-        //Issue Refund call to Amazon API
-        $api_accessor = new AmazonFPSAPIAccessor($use_deprecated_tokens = true);
-        $response = $api_accessor->refundPayment($caller_reference,
-            $latest_payment['transaction_id'], $refund_amount);
+        $refund_amount = 0;
+        $subscriber_dao = new SubscriberMySQLDAO();
+        if (isset($latest_payment) && $latest_payment['transaction_status'] == 'Success') {
+            //Calculate and process refund
+            $payment_dao = new PaymentMySQLDAO();
+            $refund_amount = $payment_dao->calculateProRatedAnnualRefund($latest_payment);
+            //Create a callerReference
+            $caller_reference = $subscriber->id.'_'.time();
+            //Issue Refund call to Amazon API
+            $api_accessor = new AmazonFPSAPIAccessor($use_deprecated_tokens = true);
+            $response = $api_accessor->refundPayment($caller_reference,
+                $latest_payment['transaction_id'], $refund_amount);
 
-        // Process response
-        if (isset($response)) {
-            // Debug
-            //print_r($response);
-            // Add refund info to payments table
-            $payment_dao->setRefund($latest_payment['id'], $caller_reference, $refund_amount);
-            // Set subscription_status = 'Refunded'
-            $subscriber_dao = new SubscriberMySQLDAO();
-            $result = $subscriber_dao->setSubscriptionStatus($subscriber->id, "Refunded");
-            // Close account
-            $result = $subscriber_dao->closeAccount($subscriber->id);
-
-            if ($this->sendAccountClosureEmail($subscriber, $refund_amount, 'FPS')) {
-                return true;
+            // Process response
+            if (isset($response)) {
+                // Debug
+                //print_r($response);
+                // Add refund info to payments table
+                $payment_dao->setRefund($latest_payment['id'], $caller_reference, $refund_amount);
+                // Set subscription_status = 'Refunded'
+                $result = $subscriber_dao->setSubscriptionStatus($subscriber->id, "Refunded");
             }
+        }
+        //Close account
+        $result = $subscriber_dao->closeAccount($subscriber->id);
+
+        if ($this->sendAccountClosureEmail($subscriber, $refund_amount, 'FPS')) {
+            return true;
         }
         return false;
     }

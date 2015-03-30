@@ -594,8 +594,33 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/We will credit your Amazon Payments account/', $closure_email);
     }
 
-    public function testCloseAccountValidCSRFWithPayment() {
+    public function testCloseAccountValidCSRFWithPaymentSuccess() {
         $this->builders = $this->buildSubscriberPaidAnnual('Success');
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('paid@example.com', false, true);
+
+        //Set close account URL param
+        $_POST['close'] = 'true';
+        $_POST['csrf_token'] = parent::CSRF_TOKEN;
+
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Your ThinkUp account is closed, and we&#39;ve issued a refund.  '.
+            'Thanks for trying ThinkUp!/', $results);
+
+        $closure_email = Mailer::getLastMail();
+        $this->assertPattern('/Thanks for trying ThinkUp./', $closure_email);
+        $this->assertPattern('/Your ThinkUp account is now closed./', $closure_email);
+        $this->assertPattern('/We will credit your Amazon Payments account/', $closure_email);
+    }
+
+    public function testCloseAccountValidCSRFWithPaymentFailure() {
+        $this->builders = $this->buildSubscriberPaidAnnual('Failure');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
         $this->subscriber = $subscriber;
