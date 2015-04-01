@@ -49,17 +49,31 @@ class APIRecurlyWebhookHandlerController extends Controller {
                 $subscription = Recurly_Subscription::get($notification->transaction->subscription_id);
                 $account = $subscription->account->get();
 
-                //TODO: Get subscriber based on account email
-                // if (strpos($subscription->plan->plan_code, 'monthly') !== false) {
-                //     $subscriber->subscription_recurrence = '1 month';
-                // } elseif (strpos($subscription->plan->plan_code, 'yearly') !== false) {
-                //     $subscriber->subscription_recurrence = '12 months';
-                // }
-                // $subscriber->paid_through =
-                //     $subscription->current_period_ends_at->format('Y-m-d H:i:s');
-                // $subscriber->recurly_subscription_id = $subscription->uuid;
+                //Get subscriber based on account email
+                $subscriber_dao = new SubscriberMySQLDAO();
+                $subscriber = $subscriber_dao->getByEmail($account->email);
 
-                // $subscriber_dao->setSubscriptionDetails($subscriber);
+                //Get recurrence based on subscription plan
+                if (strpos($subscription->plan->plan_code, 'monthly') !== false) {
+                    $subscriber->subscription_recurrence = '1 month';
+                } elseif (strpos($subscription->plan->plan_code, 'yearly') !== false) {
+                    $subscriber->subscription_recurrence = '12 months';
+                }
+
+                if ($notification->type == 'successful_payment_notification') {
+                    $subscriber->subscription_status = 'Paid';
+                    //Get paid through date based on subscription
+                    $subscriber->paid_through =
+                        $subscription->current_period_ends_at->format('Y-m-d H:i:s');
+                } elseif ($notification->type == 'failed_payment_notification'){
+                    $subscriber->subscription_status = 'Payment failed';
+                }
+
+                //Get subscription_id
+                $subscriber->recurly_subscription_id = $subscription->uuid;
+
+                //Update data store
+                $subscriber_dao->setSubscriptionDetails($subscriber);
 
                 UpstartHelper::postToSlack('#signups',
                     'Recurly webhook received: '.$notification->type." for ".$notification->account->email
@@ -76,25 +90,6 @@ class APIRecurlyWebhookHandlerController extends Controller {
                 $debug .= Utils::varDumpToString($notification);
             }
             Logger::logError($debug, __FILE__,__LINE__,__METHOD__);
-
-            //print $subscription->activated_at->format(DateTime::ISO8601);
-
-
-            // $subscriber_dao = new SubscriberMySQLDAO();
-            // if ($notification->type == "failed_payment_notification") {
-            //     $subscription_status = 'Payment failed';
-            //     $result = $subscriber_dao->setSubscriptionStatus($subscriber->id, $subscription_status);
-
-            // } elseif ($notification->type == "successful_payment_notification") {
-            //     $subscription_status = 'Paid';
-            //     $result = $subscriber_dao->setSubscriptionStatus($subscriber->id, $subscription_status);
-
-            //     $paid_through_time = strtotime('+'.$operation->recurring_frequency,
-            //         strtotime($operation->transaction_date));
-            //     $paid_through_time = date('Y-m-d H:i:s', $paid_through_time);
-            //     $result += $subscriber_dao->setPaidThrough($subscriber->id, $paid_through_time);
-            //     $result += $subscriber_dao->setSubscriptionRecurrence($subscriber->id, $operation->recurring_frequency);
-            // }
         } catch (Recurly_NotFoundError $e) {
             $debug = get_class($e) . ': Record could not be found';
             Logger::logError($debug, __FILE__,__LINE__,__METHOD__);

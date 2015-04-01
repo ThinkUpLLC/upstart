@@ -17,7 +17,8 @@ class APIIPNController extends Controller {
                 //IPN is sent as a http POST request and hence we specify POST as the http method.
                 //Signature verification does not require your secret key
                 if ($amazon_ipn_utils->validateRequest($_POST, $ipn_endpoint, "POST")) {
-                    $debug .= "Validated signature. ";
+                    //Only log error states. Succeed quietly.
+                    //$debug .= "Validated signature. ";
                     $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
                     if ($this->isTransaction()) {
                         $past_op = $subscription_operation_dao->getByAmazonSubscriptionID($_POST['subscriptionId']);
