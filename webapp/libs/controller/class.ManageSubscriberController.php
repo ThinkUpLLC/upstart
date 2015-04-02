@@ -196,6 +196,28 @@ class ManageSubscriberController extends Controller {
                         }  else {
                             $this->addErrorMessage("No token and/or amount specified");
                         }
+                    } elseif ($_GET['action'] == 'dispatch') {
+                        $cfg = Config::getInstance();
+                        $jobs_array = array();
+                        // json_encode them
+                        $jobs_array[] = array(
+                            'installation_name'=>$subscriber->thinkup_username,
+                            'timezone'=>$cfg->getValue('dispatch_timezone'),
+                            'db_host'=>$cfg->getValue('tu_db_host'),
+                            'db_name'=>$cfg->getValue('user_installation_db_prefix').$subscriber->thinkup_username,
+                            'db_socket'=>$cfg->getValue('tu_db_socket'),
+                            'db_port'=>$cfg->getValue('tu_db_port')
+                        );
+                        // call Dispatcher
+                        $result_decoded = Dispatcher::dispatch($jobs_array);
+                        if (!isset($result_decoded->success)) {
+                            $this->addErrorMessage("There was a problem with API call ".$api_call.". The result was ".
+                                $result);
+                        } else {
+                            $subscriber_dao->updateLastDispatchedTime($subscriber->id);
+                            $this->addSuccessMessage('Successfully dispatched crawl.');
+                            $subscriber = $subscriber_dao->getByID($subscriber_id);
+                        }
                     }
                 }
 
