@@ -145,8 +145,13 @@ class SubscriptionHelper {
         $normalized_membership_level =
             ($normalized_membership_level == 'exec')?'executive':$normalized_membership_level;
 
+        if ($subscriber->subscription_recurrence == '12 months') {
+            $amount_recurrence = '12 months discount';
+        } else {
+            $amount_recurrence = $subscriber->subscription_recurrence;
+        }
         $amount = SignUpHelperController::$subscription_levels[strtolower($normalized_membership_level)]
-            [$subscriber->subscription_recurrence];
+            [$amount_recurrence];
         $button_freq_label = $subscriber->subscription_recurrence;
         $button_freq_label = str_replace("1 month", "month", $button_freq_label);
         $button_freq_label = str_replace("12 months", "year", $button_freq_label);
