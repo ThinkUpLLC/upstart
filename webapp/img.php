@@ -98,7 +98,7 @@ class ImageProxyCacheController extends Controller {
                     $reason = 'Files match';
                 } else {
                     $show_diff = true;
-                    $reason = 'Files do no match';
+                    $reason = 'Files do not match';
                 }
             } else {
                 $show_diff = false;
@@ -203,26 +203,32 @@ class ImageProxyCacheController extends Controller {
     }
     /**
      * Tell whether or not 2 files are the same.
-     * This is a rudimentary, hit-or-miss file comparison.
+     * This is a rudimentary comparison that only takes filesize into account.
+     * In future versions, we should install php-gd and use stricter criteria to determine differences.
      * @param  str $file_a
      * @param  str $file_b
      * @return bool
      */
     private function doFilesMatch($file_a, $file_b) {
         if (filesize($file_a) == filesize($file_b)) {
-            $fp_a = fopen($file_a, 'rb');
-            $fp_b = fopen($file_b, 'rb');
+            //The following code is commented out because it marks these files as different
+            //when they're clearly the same:
+            //https://images.thinkup.com/?url=https://pbs.twimg.com/profile_images/584359090698199040/y3a_k3-2.jpg&t=avatar&s=a93c67c8de750fe13aee546caa4e8a04
+            //https://images.thinkup.com/?url=https://pbs.twimg.com/profile_images/584934935686991872/xoSr8izN.jpg&t=avatar&s=a93c67c8de750fe13aee546caa4e8a04
+            //
+            // $fp_a = fopen($file_a, 'rb');
+            // $fp_b = fopen($file_b, 'rb');
 
-            while (($b = fread($fp_a, 4096)) !== false) {
-                $b_b = fread($fp_b, 4096);
-                if ($b !== $b_b) {
-                    fclose($fp_a);
-                    fclose($fp_b);
-                    return false;
-                }
-            }
-            fclose($fp_a);
-            fclose($fp_b);
+            // while (($b = fread($fp_a, 4096)) !== false) {
+            //     $b_b = fread($fp_b, 4096);
+            //     if ($b !== $b_b) {
+            //         fclose($fp_a);
+            //         fclose($fp_b);
+            //         return false;
+            //     }
+            // }
+            // fclose($fp_a);
+            // fclose($fp_b);
             return true;
         }
         return false;
