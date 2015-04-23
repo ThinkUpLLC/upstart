@@ -109,7 +109,7 @@ class RegisterController extends SignUpHelperController {
                     if (isset($access_token)) {
                         $facebook_app->setAccessToken($access_token);
                         $fb_user_profile = $facebook_app->api('/me?fields='.
-                            'is_verified,username,id,name,subscribers,email');
+                            'is_verified,username,id,name,email');
 
                         // echo "<pre>";
                         // print_r($fb_user_profile);
