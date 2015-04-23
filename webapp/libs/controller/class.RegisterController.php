@@ -145,7 +145,7 @@ class RegisterController extends SignUpHelperController {
                             $follower_count = 0;
                         }
                         $network_auth_details = array(
-                            'network_user_name'=>$fb_user_profile['username'],
+                            'network_user_name'=>$fb_user_profile['name'],
                             'network_user_id'=>$fb_user_profile['id'],
                             'network'=>'facebook',
                             'full_name'=>$fb_user_profile['name'],
