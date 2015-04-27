@@ -75,24 +75,9 @@ abstract class SignUpHelperController extends Controller {
      * @return str Twitter link
      */
     protected function getTwitterAuthLink($redirect_location) {
-        $twitter_auth_link = null;
-        $cfg = Config::getInstance();
-        $oauth_consumer_key = $cfg->getValue('oauth_consumer_key');
-        $oauth_consumer_secret = $cfg->getValue('oauth_consumer_secret');
-
-        $to = new TwitterOAuth($oauth_consumer_key, $oauth_consumer_secret);
-        $tok = $to->getRequestToken(UpstartHelper::getApplicationURL(false, false).$redirect_location);
-
-        if (isset($tok['oauth_token'])) {
-            $token = $tok['oauth_token'];
-            SessionCache::put('oauth_request_token_secret', $tok['oauth_token_secret']);
-            // Build Twitter authorization URL
-            $twitter_auth_link = $to->getAuthorizeURL($token);
-        } else {
-            $this->addErrorMessage($generic_error_msg);
-            Logger::logError('Twitter auth link failure, token not set '.htmlentities(Utils::varDumpToString($tok)),
-                __FILE__,__LINE__,__METHOD__);
-        }
+        $config = Config::getInstance();
+        $site_root_path = $config->getValue('site_root_path');
+        $twitter_auth_link = $site_root_path."twittersignin/?redir=".urlencode($redirect_location);
         return $twitter_auth_link;
     }
 
