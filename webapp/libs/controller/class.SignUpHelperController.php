@@ -106,27 +106,18 @@ abstract class SignUpHelperController extends Controller {
         $fbconnect_link = null;
         $cfg = Config::getInstance();
         $facebook_app_id = $cfg->getValue('facebook_app_id');
-        $facebook_api_secret = $cfg->getValue('facebook_api_secret');
 
-        // Create Facebook Application instance
-        $facebook_app = new Facebook(array('appId'  => $facebook_app_id, 'secret' => $facebook_api_secret ));
-
-        try {
-            //Plant unique token for CSRF protection during auth
-            //per https://developers.facebook.com/docs/authentication/
-            if (SessionCache::get('facebook_auth_csrf') == null) {
-                SessionCache::put('facebook_auth_csrf', md5(uniqid(rand(), true)));
-            }
-
-            $params = array('scope'=>'user_posts,email',
-                'state'=>SessionCache::get('facebook_auth_csrf'),
-                'redirect_uri'=>UpstartHelper::getApplicationURL(false, false).$redirect_location);
-
-            $fbconnect_link = $facebook_app->getLoginUrl($params);
-        } catch (FacebookApiException $e) {
-            $this->addErrorMessage($generic_error_msg);
-            Logger::logError(get_class($e).': '.$e->getMessage(), __FILE__,__LINE__,__METHOD__);
+        //Plant unique token for CSRF protection during auth
+        //per https://developers.facebook.com/docs/authentication/
+        if (SessionCache::get('facebook_auth_csrf') == null) {
+            SessionCache::put('facebook_auth_csrf', md5(uniqid(rand(), true)));
         }
+
+        $scope = 'user_posts,email';
+        $state = SessionCache::get('facebook_auth_csrf');
+        $redirect_url = UpstartHelper::getApplicationURL(false, false).$redirect_location;
+
+        $fbconnect_link = FacebookGraphAPIAccessor::getLoginURL($facebook_app_id, $scope, $state, $redirect_url);
         return $fbconnect_link;
     }
 
