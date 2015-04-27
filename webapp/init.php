@@ -19,10 +19,6 @@ dirname(__FILE__).'/extlibs/mailchimp/'
 require_once 'extlibs/twitteroauth/twitteroauth.php';
 require_once 'extlibs/twitteroauth/OAuth.php';
 
-require_once 'extlibs/facebook/base_facebook.php';
-require_once 'extlibs/facebook/facebook.php';
-
-
 require_once 'extlibs/amazon/FPS/Interface.php';
 
 $config = Config::getInstance();
