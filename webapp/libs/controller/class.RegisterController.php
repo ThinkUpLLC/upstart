@@ -90,82 +90,86 @@ class RegisterController extends SignUpHelperController {
                 if ($_GET["state"] == SessionCache::get('facebook_auth_csrf')) {
                     //Prepare API request
                     //First, prep redirect URI
-                    $redirect_uri = urlencode(UpstartHelper::getApplicationURL().'register.php?n=facebook&level='
-                        .$_GET['level']);
+                    $redirect_uri = UpstartHelper::getApplicationURL(false, false, false).
+                        'register.php?n=facebook&level='.$_GET['level'];
 
                     $cfg = Config::getInstance();
                     $facebook_app_id = $cfg->getValue('facebook_app_id');
                     $facebook_api_secret = $cfg->getValue('facebook_api_secret');
 
-                    $facebook_app = new Facebook(array('appId'=>$facebook_app_id, 'secret' => $facebook_api_secret ));
-
                     //Build API request URL
-                    $api_req = 'https://graph.facebook.com/oauth/access_token?client_id='. $facebook_app_id.
-                    '&client_secret='. $facebook_api_secret. '&redirect_uri='.$redirect_uri.'&state='.
-                    SessionCache::get('facebook_auth_csrf').'&code='.$_GET["code"];
+                    $api_req = 'oauth/access_token';
+                    $api_req_params = array(
+                        'client_id'=> $facebook_app_id,
+                        'client_secret' => $facebook_api_secret,
+                        'redirect_uri' => $redirect_uri,
+                        'state'=> SessionCache::get('facebook_auth_csrf'),
+                        'code'=>$_GET["code"]
+                    );
 
-                    $access_token_response = FacebookGraphAPIAccessor::rawApiRequest($api_req, false);
-                    parse_str($access_token_response);
+                    $access_token_response = FacebookGraphAPIAccessor::apiRequest($api_req, null, $api_req_params);
+
+                    $access_token = isset($access_token_response->access_token)?
+                        $access_token_response->access_token:null;
+
                     if (isset($access_token)) {
-                        $facebook_app->setAccessToken($access_token);
-                        $fb_user_profile = $facebook_app->api('/me?fields='.
-                            'is_verified,username,id,name,email');
+                        /**
+                         * Swap in short-term token for long-lived token as per
+                         * https://developers.facebook.com/docs/facebook-login/access-tokens/#extending
+                         */
+                        $api_req = 'oauth/access_token';
+                        $api_req_params = array(
+                            'grant_type'=>'fb_exchange_token',
+                            'client_id'=> $facebook_app_id,
+                            'client_secret'=> $facebook_api_secret,
+                            'fb_exchange_token'=>$access_token
+                        );
 
-                        // echo "<pre>";
-                        // print_r($fb_user_profile);
-                        // echo "</pre>";
+                        $access_token_response = FacebookGraphAPIAccessor::apiRequest($api_req, null, $api_req_params);
 
+                        $access_token = $access_token_response->access_token;
+
+                        $fields = 'email,is_verified,name,id';
+                        $fb_user_profile = FacebookGraphAPIAccessor::apiRequest('me', $access_token, null, $fields);
                         //If Facebook user exists in subscribers table, tryAgain with error
+
+                        $fb_username = $fb_user_profile->name;
+                        $fb_user_id = $fb_user_profile->id;
+                        $fb_user_email = $fb_user_profile->email;
+                        $fb_user_is_verified = $fb_user_profile->is_verified;
+
                         if (!isset($subscriber_dao)) {
                             $subscriber_dao = new SubscriberMySQLDAO();
                         }
-                        if ($subscriber_dao->doesSubscriberConnectionExist($fb_user_profile['id'], 'facebook')) {
+                        if ($subscriber_dao->doesSubscriberConnectionExist($fb_user_id, 'facebook')) {
                             $user_error =  "Whoa! We love your enthusiasm, but ".
-                                $fb_user_profile['name'] . " on Facebook has already joined ThinkUp. ".
+                                $fb_user_profile->name . " on Facebook has already joined ThinkUp. ".
                                 "If you have an account, try logging in.";
                             $tech_error = "Facebook user exists ". Utils::varDumpToString($fb_user_profile);
                             return $this->tryAgain($user_error, $tech_error, __FILE__, __METHOD__, __LINE__);
                         }
 
-                        if (!$subscriber_dao->doesSubscriberEmailExist($fb_user_profile['email'])) {
-                            $this->addToView('email', $fb_user_profile['email']);
+                        if (!$subscriber_dao->doesSubscriberEmailExist($fb_user_email)) {
+                            $this->addToView('email', $fb_user_email);
                         }
 
-                        if (isset($fb_user_profile['username'])) {
-                            $potential_username = strtolower($fb_user_profile['username']);
-                            if (UpstartHelper::isUsernameValid($potential_username)
-                                && !$subscriber_dao->isUsernameTaken($potential_username)) {
-                                $this->addToView('username', $potential_username);
-                            }
-                        }
-
-                        if (isset($fb_user_profile['subscribers']['summary']['total_count'])) {
-                            $follower_count = $fb_user_profile['subscribers']['summary']['total_count'];
-                        } else {
-                            $follower_count = 0;
-                        }
                         $network_auth_details = array(
-                            'network_user_name'=>$fb_user_profile['name'],
-                            'network_user_id'=>$fb_user_profile['id'],
+                            'network_user_name'=>$fb_username,
+                            'network_user_id'=>$fb_user_id,
                             'network'=>'facebook',
-                            'full_name'=>$fb_user_profile['name'],
+                            'full_name'=>$fb_username,
                             'oauth_access_token'=>$access_token,
                             'oauth_access_token_secret'=>'',
-                            'is_verified'=>$fb_user_profile['is_verified'],
-                            'follower_count'=>$follower_count
+                            'is_verified'=>$fb_user_is_verified,
+                            'follower_count'=>0
                         );
                         SessionCache::put('network_auth_details', serialize($network_auth_details));
                     } else {
                         $error_msg = "Uh oh, we got a technical error from Facebook when connecting to your account.  ";
-                        $error_object = JSONDecoder::decode($access_token_response);
-                        if (isset($error_object) && isset($error_object->error->type)
-                            && isset($error_object->error->message)) {
-                            $error_msg = $error_msg .$error_object->error->type.": " .$error_object->error->message." ";
-                        } else {
-                            $error_msg = $error_msg . " access token ".$access_token_response. " ";
-                        }
+
+                        $tech_error_msg = Utils::varDumpToString($access_token_response). "  "
+                            .Utils::varDumpToString($api_req_params);
                         $error_msg = $error_msg ."Please try again, or contact us at help@thinkup.com if you're stuck.";
-                        $tech_error_msg = "Access token response parse_str failed: ". $access_token_response;
                         return $this->tryAgain($error_msg, $tech_error_msg, __FILE__, __METHOD__, __LINE__);
                     }
                 } else {

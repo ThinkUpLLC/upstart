@@ -118,7 +118,7 @@ abstract class SignUpHelperController extends Controller {
                 SessionCache::put('facebook_auth_csrf', md5(uniqid(rand(), true)));
             }
 
-            $params = array('scope'=>'read_stream,email',
+            $params = array('scope'=>'user_posts,email',
                 'state'=>SessionCache::get('facebook_auth_csrf'),
                 'redirect_uri'=>UpstartHelper::getApplicationURL(false, false).$redirect_location);
 
