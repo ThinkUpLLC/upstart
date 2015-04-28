@@ -67,7 +67,6 @@ abstract class SignUpHelperController extends Controller {
         }
         return (isset($_POST['password']) && $is_valid_password);
     }
-
     /**
      * Get link to connect your Twitter account to Upstart.
      * @param str $redirect_location What page relative to the application root to redirect on return from Twitter,
@@ -80,7 +79,6 @@ abstract class SignUpHelperController extends Controller {
         $twitter_auth_link = $site_root_path."twittersignin/?redir=".urlencode($redirect_location);
         return $twitter_auth_link;
     }
-
     /**
      * Get link to connect your Facebook account to Upstart.
      * @param str $redirect_location What page relative to the application root to redirect on return from Twitter,
@@ -88,24 +86,11 @@ abstract class SignUpHelperController extends Controller {
      * @return str Facebook Connect link
      */
     protected function getFacebookConnectLink($redirect_location) {
-        $fbconnect_link = null;
-        $cfg = Config::getInstance();
-        $facebook_app_id = $cfg->getValue('facebook_app_id');
-
-        //Plant unique token for CSRF protection during auth
-        //per https://developers.facebook.com/docs/authentication/
-        if (SessionCache::get('facebook_auth_csrf') == null) {
-            SessionCache::put('facebook_auth_csrf', md5(uniqid(rand(), true)));
-        }
-
-        $scope = 'user_posts,email';
-        $state = SessionCache::get('facebook_auth_csrf');
-        $redirect_url = UpstartHelper::getApplicationURL(false, false).$redirect_location;
-
-        $fbconnect_link = FacebookGraphAPIAccessor::getLoginURL($facebook_app_id, $scope, $state, $redirect_url);
-        return $fbconnect_link;
+        $config = Config::getInstance();
+        $site_root_path = $config->getValue('site_root_path');
+        $facebook_auth_link = $site_root_path."facebooksignin/?redir=".urlencode($redirect_location);
+        return $facebook_auth_link;
     }
-
     /**
      * Return whether or not user has returned from Facebook with necessary parameters.
      * @return bool
@@ -113,7 +98,6 @@ abstract class SignUpHelperController extends Controller {
     protected function hasUserReturnedFromFacebook() {
         return (isset($_GET['n']) && isset($_GET['code']) && isset($_GET['state']) && $_GET["n"] == 'facebook');
     }
-
     /**
      * Return whether or not user has returned from Twitter with necessary parameters.
      * @return bool
