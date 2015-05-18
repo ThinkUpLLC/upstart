@@ -75,7 +75,7 @@
 <body{if isset($body_classes)} class="{$body_classes}"{/if}{if isset($body_id)} id="{$body_id}"{/if}>
 
 <div class="container" id="container-navbar">
-    {if isset($show_promo)}<div class="promo-bar"><a href="{$site_root_path}pricing.php"><strong>New!</strong> Subscribe to ThinkUp for a year and get <strong>two months FREE</strong></a></div>{/if}
+    {if isset($show_promo)}<div class="promo-bar"><a href="{$site_root_path}pricing.php">Subscribe to ThinkUp for a year and get <strong>two months FREE</strong></a></div>{/if}
     <header class="section navbar navbar-marketing" id="section-navbar">
         <div class="navbar-brand">
             <h1 class="logo"><a href="{$site_root_path}">ThinkUp</a></h1>

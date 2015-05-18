@@ -2,7 +2,7 @@
 
 <div class="container" id="container-signup-top">
   <div class="section section-screenshot" id="section-signup-top">
-    <h3 class="section-header">Make your Twitter and Facebook a lot more fun.</h3>
+    <h3 class="section-header">Twitter and Facebook just got a lot more fun.</h3>
     <div class="section-copy">
       <p>ThinkUp gives you daily insights about you and your friends you can't get anywhere else. Start your <strong>14-day free trial</strong> and see for yourself.</p>
       <div class="signup-buttons">
@@ -40,11 +40,11 @@
         <tr>
           <td><a href="http://thenextweb.com/socialmedia/2014/04/13/meet-thinkup-personal-social-media-guru/"><img src="{$site_root_path}assets/img/media-logo-tnw.png" class-"img-responsive media-logo"></a></td>
           <td class="blurb">"if you’re looking to improve your social media skills it’s well worth the investment"</td>
-        </tr>  
+        </tr>
         <tr>
           <td><a href="http://lifehacker.com/see-your-years-best-of-on-facebook-and-twitter-with-t-1674624958"><img src="{$site_root_path}assets/img/media-logo-lifehacker.png" class-"img-responsive media-logo"></a></td>
           <td class="blurb">"Whether you tweet just for fun or you're building a personal brand, ThinkUp can give you insights on how to use social media better, which I didn't expect."</td>
-        </tr>        
+        </tr>
       </table>
     </div>
   </div>
