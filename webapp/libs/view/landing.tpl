@@ -72,17 +72,6 @@
   </div>
 </div>
 
-<div class="container container-sample-insight" id="container-sample-insight-gender">
-  <div class="section section-screenshot section-sample-insight">
-    <div class="section-copy">
-      <figure class="sample-insight">
-        <figcaption>Are you getting more responses from men or women?</figcaption>
-        <div class="sample-insight-img"></div>
-      </figure>
-    </div>
-  </div>
-</div>
-
 <div class="container container-sample-insight" id="container-sample-insight-personal">
   <div class="section section-screenshot section-sample-insight">
     <div class="section-copy">
