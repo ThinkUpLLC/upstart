@@ -32,7 +32,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="why-does-it-cost-money"><a href="#why-does-it-cost-money">Why does ThinkUp cost money?</a></h4>
 
-      <p>ThinkUp costs moeny because we don't have ads and we don't sell your data.</p>
+      <p>ThinkUp costs money because we don't have ads and we don't sell your data.</p>
 
       <p>We're committed to making sure our company and our product are sustainable and around for the long term. Our members say ThinkUp is worth it, because they like the service and believe in our company.</p>
 
