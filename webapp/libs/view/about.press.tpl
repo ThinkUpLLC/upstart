@@ -24,9 +24,6 @@ body_classes="marketing marketing-page" body_id="marketing-press"}
         <a href="{$site_root_path}assets/img/press/thinkup-f-bomb-insight.png" class="grid-item"><img src="{$site_root_path}assets/img/press/thinkup-f-bomb-insight.png" alt="F-Bomb insight" class="image-fw" /><br>
         Download</a>
 
-        <a href="{$site_root_path}assets/img/press/thinkup-gender-response-insight.png" class="grid-item"><img src="{$site_root_path}assets/img/press/thinkup-gender-response-insight.png" alt="Gender Response insight" class="image-fw" /><br>
-        Download</a>
-
         <a href="{$site_root_path}assets/img/press/thinkup-profile-change-insight.png" class="grid-item"><img src="{$site_root_path}assets/img/press/thinkup-profile-change-insight.png" alt="Profile Change insight" class="image-fw" /><br>
         Download</a>
 
