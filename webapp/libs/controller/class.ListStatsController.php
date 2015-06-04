@@ -13,7 +13,7 @@ class ListStatsController extends Controller {
         // Get weekly signups
         $weekly_signups = $subscriber_dao->getWeeklySignups();
         // Get daily paid subscribers
-        $daily_paid_subscribers = $subscriber_dao->getDailyPaidSubscriberCounts();
+        $daily_paid_subscribers = $subscriber_dao->getDailyPaidSubscriberCounts(500);
 
         // Build charts and add to view
         $chart_url = UpstartHelper::buildChartImageURL($daily_successful_payments, null, 5, 'Payments');
