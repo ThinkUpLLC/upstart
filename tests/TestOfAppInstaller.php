@@ -239,15 +239,28 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertEqual($rows[6]['option_name'], 'max_crawl_time');
         $this->assertEqual($rows[6]['option_value'], $config->getValue('facebook_max_crawl_time'));
 
-        // Mandrill template option
+        // Instagram options
         $this->assertEqual($rows[7]['namespace'], 'plugin_options-3');
-        $this->assertEqual($rows[7]['option_name'], 'links_to_expand');
-        $this->assertEqual($rows[7]['option_value'], $config->getValue('expandurls_links_to_expand_per_crawl'));
+        $this->assertEqual($rows[7]['option_name'], 'instagram_app_id');
+        $this->assertEqual($rows[7]['option_value'], $config->getValue('instagram_app_id'));
+
+        $this->assertEqual($rows[8]['namespace'], 'plugin_options-3');
+        $this->assertEqual($rows[8]['option_name'], 'instagram_api_secret');
+        $this->assertEqual($rows[8]['option_value'], $config->getValue('instagram_api_secret'));
+
+        $this->assertEqual($rows[9]['namespace'], 'plugin_options-3');
+        $this->assertEqual($rows[9]['option_name'], 'max_api_calls');
+        $this->assertEqual($rows[9]['option_value'], $config->getValue('instagram_max_api_calls'));
+
+        // Mandrill template option
+        $this->assertEqual($rows[10]['namespace'], 'plugin_options-4');
+        $this->assertEqual($rows[10]['option_name'], 'links_to_expand');
+        $this->assertEqual($rows[10]['option_value'], $config->getValue('expandurls_links_to_expand_per_crawl'));
 
         // Expand URLs option is set
-        $this->assertEqual($rows[8]['namespace'], 'plugin_options-4');
-        $this->assertEqual($rows[8]['option_name'], 'mandrill_template');
-        $this->assertEqual($rows[8]['option_value'], $config->getValue('mandrill_notifications_template'));
+        $this->assertEqual($rows[11]['namespace'], 'plugin_options-5');
+        $this->assertEqual($rows[11]['option_name'], 'mandrill_template');
+        $this->assertEqual($rows[11]['option_value'], $config->getValue('mandrill_notifications_template'));
 
         // Assert no owner instances are set because there's no service user connection
         $stmt = PDODAO::$PDO->query('SELECT i.* FROM '. $this->user_database . '.tu_instances i INNER JOIN '.
@@ -337,15 +350,28 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertEqual($rows[6]['option_name'], 'max_crawl_time');
         $this->assertEqual($rows[6]['option_value'], $config->getValue('facebook_max_crawl_time'));
 
-        // Mandrill template option
+        // Instagram options
         $this->assertEqual($rows[7]['namespace'], 'plugin_options-3');
-        $this->assertEqual($rows[7]['option_name'], 'links_to_expand');
-        $this->assertEqual($rows[7]['option_value'], $config->getValue('expandurls_links_to_expand_per_crawl'));
+        $this->assertEqual($rows[7]['option_name'], 'instagram_app_id');
+        $this->assertEqual($rows[7]['option_value'], $config->getValue('instagram_app_id'));
+
+        $this->assertEqual($rows[8]['namespace'], 'plugin_options-3');
+        $this->assertEqual($rows[8]['option_name'], 'instagram_api_secret');
+        $this->assertEqual($rows[8]['option_value'], $config->getValue('instagram_api_secret'));
+
+        $this->assertEqual($rows[9]['namespace'], 'plugin_options-3');
+        $this->assertEqual($rows[9]['option_name'], 'max_api_calls');
+        $this->assertEqual($rows[9]['option_value'], $config->getValue('instagram_max_api_calls'));
+
+        // Mandrill template option
+        $this->assertEqual($rows[10]['namespace'], 'plugin_options-4');
+        $this->assertEqual($rows[10]['option_name'], 'links_to_expand');
+        $this->assertEqual($rows[10]['option_value'], $config->getValue('expandurls_links_to_expand_per_crawl'));
 
         // Expand URLs option is set
-        $this->assertEqual($rows[8]['namespace'], 'plugin_options-4');
-        $this->assertEqual($rows[8]['option_name'], 'mandrill_template');
-        $this->assertEqual($rows[8]['option_value'], $config->getValue('mandrill_notifications_template'));
+        $this->assertEqual($rows[11]['namespace'], 'plugin_options-5');
+        $this->assertEqual($rows[11]['option_name'], 'mandrill_template');
+        $this->assertEqual($rows[11]['option_value'], $config->getValue('mandrill_notifications_template'));
 
         $stmt = PDODAO::$PDO->query('SELECT i.* FROM '. $this->user_database .
             '.tu_instances i INNER JOIN '. $this->user_database .
@@ -463,15 +489,28 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         $this->assertEqual($rows[6]['option_name'], 'max_crawl_time');
         $this->assertEqual($rows[6]['option_value'], $config->getValue('facebook_max_crawl_time'));
 
-        // Mandrill template option
+        // Instagram options
         $this->assertEqual($rows[7]['namespace'], 'plugin_options-3');
-        $this->assertEqual($rows[7]['option_name'], 'links_to_expand');
-        $this->assertEqual($rows[7]['option_value'], $config->getValue('expandurls_links_to_expand_per_crawl'));
+        $this->assertEqual($rows[7]['option_name'], 'instagram_app_id');
+        $this->assertEqual($rows[7]['option_value'], $config->getValue('instagram_app_id'));
+
+        $this->assertEqual($rows[8]['namespace'], 'plugin_options-3');
+        $this->assertEqual($rows[8]['option_name'], 'instagram_api_secret');
+        $this->assertEqual($rows[8]['option_value'], $config->getValue('instagram_api_secret'));
+
+        $this->assertEqual($rows[9]['namespace'], 'plugin_options-3');
+        $this->assertEqual($rows[9]['option_name'], 'max_api_calls');
+        $this->assertEqual($rows[9]['option_value'], $config->getValue('instagram_max_api_calls'));
+
+        // Mandrill template option
+        $this->assertEqual($rows[10]['namespace'], 'plugin_options-4');
+        $this->assertEqual($rows[10]['option_name'], 'links_to_expand');
+        $this->assertEqual($rows[10]['option_value'], $config->getValue('expandurls_links_to_expand_per_crawl'));
 
         // Expand URLs option is set
-        $this->assertEqual($rows[8]['namespace'], 'plugin_options-4');
-        $this->assertEqual($rows[8]['option_name'], 'mandrill_template');
-        $this->assertEqual($rows[8]['option_value'], $config->getValue('mandrill_notifications_template'));
+        $this->assertEqual($rows[11]['namespace'], 'plugin_options-5');
+        $this->assertEqual($rows[11]['option_name'], 'mandrill_template');
+        $this->assertEqual($rows[11]['option_value'], $config->getValue('mandrill_notifications_template'));
 
         $stmt = PDODAO::$PDO->query('SELECT i.* FROM '.$this->user_database .'.tu_instances i INNER JOIN '.
             $this->user_database . '.tu_owner_instances oi ON i.id = oi.instance_id INNER JOIN '.

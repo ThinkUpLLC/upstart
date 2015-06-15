@@ -14,6 +14,11 @@ $ISOSCELES_CFG['facebook_app_id']           = '';
 $ISOSCELES_CFG['facebook_api_secret']       = '';
 $ISOSCELES_CFG['facebook_max_crawl_time']   = 5;
 
+//Instagram
+$ISOSCELES_CFG['instagram_app_id']           = '';
+$ISOSCELES_CFG['instagram_api_secret']       = '';
+$ISOSCELES_CFG['instagram_max_api_calls']    = 2500;
+
 //Expand URLS
 $ISOSCELES_CFG['expandurls_links_to_expand_per_crawl']         = 10;
 

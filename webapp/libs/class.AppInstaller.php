@@ -522,14 +522,23 @@ class AppInstaller {
         // Add Facebook crawl time cap to options
         $tu_tables_dao->insertOptionValue('plugin_options-2', 'max_crawl_time', $facebook_max_crawl_time);
 
+        // Add Instagram API keys to options
+        $instagram_app_id = $cfg->getValue('instagram_app_id');
+        $instagram_api_secret = $cfg->getValue('instagram_api_secret');
+        $instagram_max_api_calls = $cfg->getValue('instagram_max_api_calls');
+        $tu_tables_dao->insertOptionValue('plugin_options-3', 'instagram_app_id', $instagram_app_id);
+        $tu_tables_dao->insertOptionValue('plugin_options-3', 'instagram_api_secret', $instagram_api_secret);
+        // Add Instagram API call cap to options
+        $tu_tables_dao->insertOptionValue('plugin_options-3', 'max_api_calls', $instagram_max_api_calls);
+
         // Add Expand URLs cap to options
         $links_to_expand_per_crawl = $cfg->getValue('expandurls_links_to_expand_per_crawl');
-        $tu_tables_dao->insertOptionValue('plugin_options-3', 'links_to_expand',
+        $tu_tables_dao->insertOptionValue('plugin_options-4', 'links_to_expand',
         $links_to_expand_per_crawl);
 
         // Add Mandrill template name to options
         $mandrill_notifications_template = $cfg->getValue('mandrill_notifications_template');
-        $tu_tables_dao->insertOptionValue('plugin_options-4', 'mandrill_template',
+        $tu_tables_dao->insertOptionValue('plugin_options-5', 'mandrill_template',
         $mandrill_notifications_template);
 
         // Add insightsposter plugin
