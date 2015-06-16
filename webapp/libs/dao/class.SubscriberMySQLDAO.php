@@ -171,7 +171,7 @@ class SubscriberMySQLDAO extends PDODAO {
             ':subscription_status'=>$subscriber->subscription_status,
             ':paid_through'=>$subscriber->paid_through,
             ':subscription_recurrence'=>$subscriber->subscription_recurrence,
-            ':is_via_recurly' => $subscriber->is_via_recurly,
+            ':is_via_recurly' =>  $this->convertBoolToDB($subscriber->is_via_recurly),
             ':recurly_subscription_id' => $subscriber->recurly_subscription_id
         );
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }

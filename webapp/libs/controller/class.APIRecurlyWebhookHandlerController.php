@@ -71,6 +71,7 @@ class APIRecurlyWebhookHandlerController extends Controller {
 
                 //Get subscription_id
                 $subscriber->recurly_subscription_id = $subscription->uuid;
+                $subscriber->is_via_recurly = true;
 
                 //Update data store
                 $subscriber_dao->setSubscriptionDetails($subscriber);
