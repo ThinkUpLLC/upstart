@@ -365,7 +365,7 @@ class TestOfAppInstaller extends UpstartUnitTestCase {
         //All the tables except a few that get created in post-installation migrations should be InnoDB
         //Other tables are less-accessed, so it's okay to keep MyISAM
         $non_innodb_tables = array('tu_completed_migrations', 'tu_instances_facebook', 'tu_cookies', 'tu_sessions',
-            'tu_user_versions');
+            'tu_user_versions', 'tu_instances_instagram');
         $stmt = PDODAO::$PDO->query('SHOW TABLE STATUS FROM '. $this->user_database);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($rows as $row) {
