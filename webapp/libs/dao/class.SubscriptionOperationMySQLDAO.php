@@ -93,6 +93,18 @@ class SubscriptionOperationMySQLDAO extends PDODAO {
         return $this->getDataRowAsObject($ps, 'SubscriptionOperation');
     }
 
+    public function getLatestOperationByBuyerEmail($email) {
+        $q  = "SELECT * FROM subscription_operations WHERE buyer_email = :email ";
+        $q .= "AND operation != 'unspecified' ORDER BY timestamp DESC LIMIT 1; ";
+
+        $vars = array(
+            ':email'=>$email,
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getDataRowAsObject($ps, 'SubscriptionOperation');
+    }
+
     public function getBySubscriberID($subscriber_id) {
         $q  = "SELECT so.*, sc.description as status_description, ";
         $q .= "DATE_FORMAT(so.timestamp, '%Y-%m-%dT%H:%i:%s') AS date ";

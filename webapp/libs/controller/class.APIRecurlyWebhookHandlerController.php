@@ -51,7 +51,16 @@ class APIRecurlyWebhookHandlerController extends Controller {
 
                 //Get subscriber based on account email
                 $subscriber_dao = new SubscriberMySQLDAO();
-                $subscriber = $subscriber_dao->getByEmail($account->email);
+                try {
+                    $subscriber = $subscriber_dao->getByEmail($account->email);
+                } catch (SubscriberDoesNotExistException $e) {
+                    //If this is a new Recurly subscription that was imported from Amazon, the email address
+                    //may not match the ThinkUp registration address.
+                    //Check subscription operations table
+                    $sub_op_dao = new SubscriptionOperationMySQLDAO();
+                    $operation = $sub_op_dao->getLatestOperationByBuyerEmail($account->email);
+                    $subscriber = $subscriber_dao->getByID($operation->subscriber_id);
+                }
 
                 //Get recurrence based on subscription plan
                 if (strpos($subscription->plan->plan_code, 'monthly') !== false) {

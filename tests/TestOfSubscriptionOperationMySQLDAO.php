@@ -61,6 +61,12 @@ class TestOfSubscriptionOperationMySQLDAO extends UpstartUnitTestCase {
         $result = null;
         $result = $dao->getLatest(10);
         $this->assertEqual($result->status_code, 'SS');
+
+        //Get latest by email
+        $result = null;
+        $result = $dao->getLatestOperationByBuyerEmail('ginatrapani@example.com');
+        $this->assertIsA($result, 'SubscriptionOperation');
+        $this->assertEqual($result->status_code, 'SS');
     }
 
     public function testCalculateProRatedMonthlyRefund() {
