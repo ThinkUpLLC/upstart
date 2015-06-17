@@ -57,7 +57,9 @@ class ImageProxyCacheController extends Controller {
             $parsed_url = parse_url($this->url);
 
             //Only cache Twitter avatars
-            if ($parsed_url['host'] == 'pbs.twimg.com') {
+            if ($parsed_url['host'] == 'pbs.twimg.com'
+                || strpos($parsed_url['host'], 'instagram') !== false
+                || strpos($parsed_url['host'], 'igcdn-photos') !== false ) {
                 //Get the path
                 $url_path = $parsed_url['path'];
                 //Get the file extension
