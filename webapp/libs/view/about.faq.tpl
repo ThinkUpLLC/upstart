@@ -10,25 +10,19 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="what-is"><a href="#what-is">What is ThinkUp?</a></h4>
 
-      <p>ThinkUp is a service that gives you <strong>unique insights</strong> about you and your friends on Twitter and Facebook. We make the time you spend online <strong>more fun</strong>, with clever, plain-English tips and facts about what's happening on your social networks. ThinkUp is also a different kind of tech company, trying each day to live by <a href="{$site_root_path}about/values.php">our values</a>.</p>
+      <p>ThinkUp is a service that gives you <strong>unique insights</strong> about you and your friends on Twitter, Instagram and Facebook. We make the time you spend online <strong>more fun</strong>, with clever, plain-English tips and facts about what's happening on your social networks. ThinkUp is also a different kind of tech company, trying each day to live by <a href="{$site_root_path}about/values.php">our values</a>.</p>
 
-      <p>When you <a href="https://thinkup.com/">join ThinkUp</a>, you get a simple stream showing you those insights about your Twitter and Facebook accounts. And those insights can come to you in a handy daily email, too.</p>
+      <p>When you <a href="https://thinkup.com/">join ThinkUp</a>, you get a simple stream showing you those insights about your Twitter, Instagram and Facebook accounts. And those insights can come to you in a handy daily email, too.</p>
 
       <p>It's easier to understand ThinkUp by trying it rather than reading about it, so <a href="https://thinkup.com/">sign up for the free trial</a> and see for yourself.</p>
-
-      <h4 id="what-is-beta"><a href="#what-is-beta">What does it mean that ThinkUp is in beta?</a></h4>
-
-      <p>That's our way of saying that some core ThinkUp features are still a work in progress. Because we're still in beta, we're hard at work making the ThinkUp that you see today even more interesting in the future.</p>
 
       <h3 class="hc text-header">Membership and Pricing</h3>
 
       <h4 id="pricing"><a href="#pricing">How much does ThinkUp cost?</a></h4>
 
-      <p>A ThinkUp Membership costs $5 per month and gathers insights from one Twitter account and one personal Facebook account.</p>
+      <p>A ThinkUp Membership costs $5 per month and gathers insights from one Twitter account, one Instagram account and one personal Facebook account. (We don't support Facebook Pages yet.)</p>
 
-      <p>If you have more than one account on these networks, a Pro ThinkUp Membership costs $10 per month and gathers insights from a total of 10 Twitter and/or Facebook accounts.</p>
-
-      <p>We also have custom Executive Memberships for larger companies or institutions that are more personalized. These start at $100/month and you can <a href="{$site_root_path}about/contact.php">contact us</a> for more information.</p>
+      <p>If you have more than one account on these networks, a Pro ThinkUp Membership costs $10 per month and gathers insights from a total of 10 Twitter, Instagram and/or Facebook accounts.</p>
 
       <h4 id="why-does-it-cost-money"><a href="#why-does-it-cost-money">Why does ThinkUp cost money?</a></h4>
 
@@ -44,7 +38,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="which-networks"><a href="#which-networks">Which social networks will ThinkUp give me insights about?</a></h4>
 
-      <p>ThinkUp works with Twitter and with personal Facebook accounts. In the future, we're considering adding Facebook Pages, Instagram and possibly other networks, based on the feedback we hear from our members. When you join ThinkUp, we'll let you know as we add those new networks in the future.</p>
+      <p>ThinkUp works with Twitter, Instagram and personal Facebook accounts. In the future, we're considering adding Facebook Pages and possibly other networks, based on the feedback we hear from our members. When you join ThinkUp, we'll let you know as we add those new networks in the future.</p>
 
       <h4 id="how-can-thinkup-help"><a href="#how-can-thinkup-help">How can ThinkUp help me?</a></h4>
 
@@ -52,8 +46,10 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <ul>
         <li>Show you which friends updated their bios on Twitter</li>
+        <li>Search for which of your contacts work at a particular company</li>
         <li>Tell you which of your friends was your biggest fan on Facebook last week</li>
         <li>Help you decide whether you’re talking about yourself too much</li>
+        <li>Figure out what kind of photos get the most response from friends</li>
         <li>Give you a reminder about that funny tweet from your friend a year ago, in case you want to laugh with them about it again</li>
         <li>Let you know when someone in your neighborhood follows you on Twitter, in case you want to grab coffee with them</li>
       </ul>
@@ -62,7 +58,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="language-support"><a href="#language-support">What languages does ThinkUp support?</a></h4>
 
-      <p>ThinkUp works best for people who primarily use English on Facebook and Twitter.</p>
+      <p>ThinkUp works best for people who primarily use English.</p>
 
       <h3 class="hc text-header">Current Members</h2>
 
@@ -75,7 +71,7 @@ body_classes="marketing marketing-page" body_id="marketing-faq"}
 
       <h4 id="pro-upgrade"><a href="#pro-upgrade">How can I add more accounts to my Pro membership?</a></h4>
 
-      <p>You can connect up to 10 total Facebook and Twitter accounts to your Pro membership. On Twitter.com or Facebook.com, log into the account you want to add. In ThinkUp, on the Twitter or Facebook settings page click the "Connect a Twitter account" or "Connect a Facebook account" button. Your ThinkUp stream (http://yourusername.thinkup.com) will include insights from all of your connected accounts.</p>
+      <p>You can connect up to 10 total Facebook and Twitter accounts to your Pro membership. On Twitter.com, Instagram.com or Facebook.com, log into the account you want to add. In ThinkUp, click on the "connect account" button for the appropriate service. Your ThinkUp stream (http://yourusername.thinkup.com) will include insights from all of your connected accounts.</p>
 
       <h4 id="self-hosted"><a href="#self-hosted"> Where can I get support for self-hosted installations of ThinkUp?</a></h4>
 

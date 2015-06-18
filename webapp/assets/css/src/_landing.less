@@ -223,10 +223,10 @@
 }
 
 .promo-bar {
-  background: @blue-darker;
+  background: @yellow-info;
   z-index: 100000;
   position: relative;
-  color: rgba(255,255,255,.9);
+  color: @gray;
   text-align: left;
   line-height: 1.5em;
   padding: 8px 1em 8px 2.75em;
@@ -234,7 +234,7 @@
   a {
     display:block;
     text-decoration:none;
-    color: #fff;
+    color: @gray;
     @media (min-width: 400px) {
       padding: 5px;
       text-align: center;
@@ -323,6 +323,12 @@
 
 #container-media-blurbs {
   .section-colors(#f0f0f0, #222);
+  .media-logo {
+    text-align: right;
+  }
+  .blurb {
+    text-align: left;
+  }
 }
 
 
@@ -339,10 +345,17 @@
   }
 }
 
+#container-sample-insight-search {
+  .section-colors(@blue, @blue-darker);
+  .sample-insight-img {
+    .insight-img(334px, 295px, "insight-search");
+  }
+}
+
 #container-sample-insight-profile {
   .section-colors(@color-sandalwood, @color-sandalwood-darker);
   .sample-insight-img {
-    .insight-img(334px, 297px, "insight-profile-update");
+    .insight-img(306px, 297px, "insight-profile-update");
   }
 }
 
