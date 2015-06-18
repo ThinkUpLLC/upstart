@@ -88,7 +88,8 @@ class APIRecurlyWebhookHandlerController extends Controller {
                 UpstartHelper::postToSlack('#signups',
                     'Recurly webhook received: '.$notification->type." for ".$notification->account->email
                     .'\nhttps://thinkup.recurly.com/subscriptions/'.
-                    urlencode($notification->transaction->subscription_id));
+                    urlencode($notification->transaction->subscription_id).'\n'
+                    .'https://thinkup.com/join/admin/subscriber.php?id='.$subscriber->id);
 
                 $debug = "Received Recurly Webhook, got subscription
 ";
