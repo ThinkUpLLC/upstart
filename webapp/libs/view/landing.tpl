@@ -21,18 +21,7 @@
   <div class="section section-screenshot" id="section-what">
     <h3 class="section-header">What is ThinkUp?</h3>
     <div class="section-copy">
-      <p>ThinkUp analyzes your activity on Facebook, Instagram and Twitter to give you fun and surprising insights. We email them to you each morning (or tweet at you if it's super interesting), and that's how ThinkUp makes your day.</p>
-    </div>
-  </div>
-</div>
-
-<div class="container container-sample-insight" id="container-sample-insight-search">
-  <div class="section section-screenshot section-sample-insight">
-    <div class="section-copy">
-      <figure class="sample-insight">
-        <figcaption><strong>New:</strong> Search your followers' bios!</figcaption>
-        <div class="sample-insight-img"></div>
-      </figure>
+      <p>ThinkUp analyzes your Facebook, Instagram and Twitter activity to give you fun and surprising insights. We email them to you daily (or tweet at you if it's super interesting).</p>
     </div>
   </div>
 </div>
@@ -67,6 +56,17 @@
     <div class="section-copy">
       <figure class="sample-insight">
         <figcaption>What changes did your friends make to their profiles?</figcaption>
+        <div class="sample-insight-img"></div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<div class="container container-sample-insight" id="container-sample-insight-search">
+  <div class="section section-screenshot section-sample-insight">
+    <div class="section-copy">
+      <figure class="sample-insight">
+        <figcaption><strong>New:</strong> Search your followers' bios!</figcaption>
         <div class="sample-insight-img"></div>
       </figure>
     </div>

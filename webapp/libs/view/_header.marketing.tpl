@@ -1,6 +1,6 @@
-{assign var="tagline" value="Daily insights about you and your friends"}
-{assign var="tagline_logo" value="Daily insights about you"}
-{assign var="description" value="ThinkUp uncovers fun and fascinating insights about you and your friends on Twitter and Facebook."}
+{assign var="tagline" value="Super powers for your social networks"}
+{assign var="tagline_logo" value="will make your day."}
+{assign var="description" value="ThinkUp uncovers fun and fascinating insights about you and your friends on Twitter, Facebook and Instagram."}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,7 +75,7 @@
 <body{if isset($body_classes)} class="{$body_classes}"{/if}{if isset($body_id)} id="{$body_id}"{/if}>
 
 <div class="container" id="container-navbar">
-    {if isset($show_promo)}<div class="promo-bar"><a href="{$twitter_member_link}"><strong>NEW:</strong> Search your followers! Get Instagram Insights!</a></div>{/if}
+    {if isset($show_promo)}<div class="promo-bar"><a href="{$twitter_member_link}"><strong>NEW:</strong> Search your followers! Get Instagram insights!</a></div>{/if}
     <header class="section navbar navbar-marketing" id="section-navbar">
         <div class="navbar-brand">
             <h1 class="logo"><a href="{$site_root_path}">ThinkUp</a></h1>
