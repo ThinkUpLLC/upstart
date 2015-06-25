@@ -752,7 +752,7 @@ a.btn-pill-large:hover {
   color: #666666;
   text-align: left;
   line-height: 1.5em;
-  padding: 8px 1em 8px 2.75em;
+  padding: 8px .5em 8px 1.5em;
 }
 .promo-bar a {
   display: block;
@@ -795,19 +795,27 @@ a.btn-pill-large:hover {
 }
 @media (min-width: 760px) {
   #container-signup-top {
-    height: 400px;
+    height: 460px;
   }
 }
 #container-signup-top .section-header {
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 600;
   line-height: 1.25;
   padding-top: 0;
 }
+#container-signup-top .section-header small {
+  font-size: 1.25rem;
+  font-weight: 200;
+  color: #999999;
+}
+#container-signup-top .section-header small a {
+  color: #666666;
+}
 @media (min-width: 760px) {
   #container-signup-top .section-header {
     font-size: 2.75rem;
-    padding: 25px 0;
+    padding: 25px 190px;
   }
 }
 #container-signup-top .section-copy {
@@ -884,6 +892,9 @@ a.btn-pill-large:hover {
 }
 #container-media-blurbs .media-logo {
   text-align: right;
+}
+#container-media-blurbs .media-logo img {
+  max-width: 125px;
 }
 #container-media-blurbs .blurb {
   text-align: left;

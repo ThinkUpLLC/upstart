@@ -2,9 +2,10 @@
 
 <div class="container" id="container-signup-top">
   <div class="section section-screenshot" id="section-signup-top">
-    <h3 class="section-header">Twitter, Instagram &amp; Facebook just got a lot more fun.</h3>
+    <h3 class="section-header">&ldquo;An indispensable guide to how I navigate social networks.&rdquo;<br />
+    <small>&mdash; Farhad Manjoo, <a href="http://www.nytimes.com/2015/01/01/technology/personaltech/thinkup-helps-the-social-network-user-see-the-online-self.html"><em>The New York Times</em></a></small></h3>
     <div class="section-copy">
-      <p>Get daily insights about your social networks that will kind of blow your mind. Start your <strong>14-day free trial</strong> and see for yourself.</p>
+      <p>Start your <strong>14-day free trial</strong> and see how ThinkUp gives you super powers on Facebook, Twitter and Instagram.</p>
       <div class="signup-buttons">
         <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
         <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign up with</small><br>Facebook</a>
@@ -25,31 +26,6 @@
   </div>
 </div>
 
-<div class="container" id="container-media-blurbs">
-  <div class="section" id="section-media-blurbs">
-      <table class="table">
-
-        <tr>
-          <td class="media-logo"><a href="http://www.nytimes.com/2015/01/01/technology/personaltech/thinkup-helps-the-social-network-user-see-the-online-self.html"><img src="{$site_root_path}assets/img/media-logo-nyt.png" class-"img-responsive media-logo"></a></td>
-          <td class="blurb">&ldquo;an indispensable guide to how I navigate social networks&rdquo;</td>
-        </tr>
-        <tr>
-          <td class="media-logo"><a href="http://www.fastcompany.com/3041664/most-innovative-companies-2015/the-worlds-top-10-most-innovative-companies-in-social-media-n"><img src="{$site_root_path}assets/img/media-logo-fast-company.png" class-"img-responsive media-logo"></a></td>
-          <td class="blurb">One of the World's Most Innovative Companies in Social Media</td>
-        </tr>
-        <tr>
-          <td class="media-logo"><a href="http://thenextweb.com/socialmedia/2014/04/13/meet-thinkup-personal-social-media-guru/"><img src="{$site_root_path}assets/img/media-logo-tnw.png" class-"img-responsive media-logo"></a></td>
-          <td class="blurb">&ldquo;if you’re looking to improve your social media skills it’s well worth the investment&rdquo;</td>
-        </tr>
-        <tr>
-          <td class="media-logo"><a href="http://lifehacker.com/see-your-years-best-of-on-facebook-and-twitter-with-t-1674624958"><img src="{$site_root_path}assets/img/media-logo-lifehacker.png" class-"img-responsive media-logo"></a></td>
-          <td class="blurb">&ldquo;Whether you tweet just for fun or you're building a personal brand, ThinkUp can give you insights on how to use social media better, which I didn't expect.&rdquo;</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-</div>
-
 <div class="container container-sample-insight" id="container-sample-insight-search">
   <div class="section section-screenshot section-sample-insight">
     <div class="section-copy">
@@ -57,6 +33,31 @@
         <figcaption><strong>New:</strong> Search your followers' bios!</figcaption>
         <div class="sample-insight-img"></div>
       </figure>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="container-media-blurbs">
+  <div class="section" id="section-media-blurbs">
+      <table class="table">
+
+        <tr>
+          <td class="media-logo"><a href="http://daringfireball.net/linked/2014/10/05/thinkup"><img src="{$site_root_path}assets/img/landing/media-logo-daring-fireball.png" class-"img-responsive media-logo"></a></td>
+          <td class="blurb">&ldquo;ThinkUp is different. It’s simple, beautiful, and clear. It’s just a way to make Twitter (and Facebook) more fun.&rdquo;</td>
+        </tr>
+        <tr>
+          <td class="media-logo"><a href="http://www.fastcompany.com/3041664/most-innovative-companies-2015/the-worlds-top-10-most-innovative-companies-in-social-media-n"><img src="{$site_root_path}assets/img/landing/media-logo-fast-company.png" class-"img-responsive media-logo"></a></td>
+          <td class="blurb">One of the World's Most Innovative Companies in Social Media</td>
+        </tr>
+        <tr>
+          <td class="media-logo"><a href="http://thenextweb.com/socialmedia/2014/04/13/meet-thinkup-personal-social-media-guru/"><img src="{$site_root_path}assets/img/landing/media-logo-tnw.png" class-"img-responsive media-logo"></a></td>
+          <td class="blurb">&ldquo;if you’re looking to improve your social media skills it’s well worth the investment&rdquo;</td>
+        </tr>
+        <tr>
+          <td class="media-logo"><a href="http://lifehacker.com/see-your-years-best-of-on-facebook-and-twitter-with-t-1674624958"><img src="{$site_root_path}assets/img/landing/media-logo-lifehacker.png" class-"img-responsive media-logo"></a></td>
+          <td class="blurb">&ldquo;Whether you tweet just for fun or you're building a personal brand, ThinkUp can give you insights on how to use social media better, which I didn't expect.&rdquo;</td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>
@@ -72,33 +73,11 @@
   </div>
 </div>
 
-<div class="container container-sample-insight" id="container-sample-insight-eoy-total">
-  <div class="section section-screenshot section-sample-insight">
-    <div class="section-copy">
-      <figure class="sample-insight">
-        <figcaption>How much time did you spend posting things online?</figcaption>
-        <div class="sample-insight-img"></div>
-      </figure>
-    </div>
-  </div>
-</div>
-
 <div class="container container-sample-insight" id="container-sample-insight-personal">
   <div class="section section-screenshot section-sample-insight">
     <div class="section-copy">
       <figure class="sample-insight">
         <figcaption>Are you talking about yourself too much?</figcaption>
-        <div class="sample-insight-img"></div>
-      </figure>
-    </div>
-  </div>
-</div>
-
-<div class="container container-sample-insight" id="container-sample-insight-link">
-  <div class="section section-screenshot section-sample-insight">
-    <div class="section-copy">
-      <figure class="sample-insight">
-        <figcaption>What sites are you linking to most often?</figcaption>
         <div class="sample-insight-img"></div>
       </figure>
     </div>
@@ -121,17 +100,6 @@
     <div class="section-copy">
       <figure class="sample-insight">
         <figcaption>What special moment happened a year ago?</figcaption>
-        <div class="sample-insight-img"></div>
-      </figure>
-    </div>
-  </div>
-</div>
-
-<div class="container container-sample-insight" id="container-sample-insight-lol">
-  <div class="section section-screenshot section-sample-insight">
-    <div class="section-copy">
-      <figure class="sample-insight">
-        <figcaption>What got a laugh?</figcaption>
         <div class="sample-insight-img"></div>
       </figure>
     </div>

@@ -229,7 +229,7 @@
   color: @gray;
   text-align: left;
   line-height: 1.5em;
-  padding: 8px 1em 8px 2.75em;
+  padding: 8px .5em 8px 1.5em;
 
   a {
     display:block;
@@ -262,18 +262,28 @@
   height: auto;
 
   @media (min-width: 760px) {
-    height: 400px;
+    height: 460px;
   }
 
   .section-header {
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 600;
     line-height: 1.25;
     padding-top: 0;
 
+    small {
+      font-size: 1.25rem;
+      font-weight: 200;
+      color: @gray-light;
+
+      a {
+        color: @gray;
+      }
+    }
+
     @media (min-width: 760px) {
       font-size: 2.75rem;
-      padding: 25px 0;
+      padding: 25px 190px;
     }
   }
 
@@ -325,6 +335,9 @@
   .section-colors(#f0f0f0, #222);
   .media-logo {
     text-align: right;
+    img {
+      max-width: 125px;
+    }
   }
   .blurb {
     text-align: left;
