@@ -92,6 +92,15 @@ class ImageProxyCacheController extends Controller {
             $url_extension_b = pathinfo($url_path_b, PATHINFO_EXTENSION);
             $file_b = $this->getLocalFilename($url_b, $url_extension_b);
 
+            //If either file doesn't exist, attempt to cache it to filesystem first
+            $blank_image = (FileDataManager::getDataPath()).'image-cache/avatars/blank.png';
+            if (!(file_exists($file_a))) {
+                $this->cacheImage($url_a, $file_a, $blank_image, $url_extension_a);
+            }
+            if (!(file_exists($file_b))) {
+                $this->cacheImage($url_b, $file_b, $blank_image, $url_extension_b);
+            }
+
             $reason = '';
             $show_diff = false;
             if (file_exists($file_a) && file_exists($file_b)) {
@@ -169,6 +178,18 @@ class ImageProxyCacheController extends Controller {
      * @return void
      */
     private function cacheAndDisplayImage($url, $local_filename, $blank, $extension){
+        $cached_image = $this->cacheImage($url, $local_filename, $blank, $extension);
+        $this->displayImage($cached_image['file'], $cached_image['type']);
+    }
+    /**
+     * If image does not exist on filesystem, call the URL and save it to filesystem.
+     * @param  str $url
+     * @param  str $local_filename
+     * @param  str $blank
+     * @param  str $extension
+     * @return arr 'file'=>$file, 'type'=>$type
+     */
+    private function cacheImage($url, $local_filename, $blank, $extension){
         $ch = curl_init ($url);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -199,6 +220,15 @@ class ImageProxyCacheController extends Controller {
             $file = $blank;
             $type = 'image/png';
         }
+        return array('file'=>$file, 'type'=>$type);
+    }
+    /**
+     * Display image.
+     * @param  mixed $file
+     * @param  str $type
+     * @return void
+     */
+    private function displayImage($file, $type){
         header('Content-Type:'.$type);
         header('Content-Length: ' . filesize($file));
         readfile($file);
