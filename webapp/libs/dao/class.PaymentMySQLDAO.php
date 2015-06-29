@@ -102,6 +102,27 @@ class PaymentMySQLDAO extends PDODAO {
         return $payment;
     }
     /**
+     * Get the earliest payment a subscriber made.
+     * @param str $subscriber_id
+     * @return Payment $payment
+     */
+    public function getSubscribersEarliestPayment($subscriber_id) {
+        $q  = "SELECT p.* FROM payments p INNER JOIN subscriber_payments sp ON sp.payment_id = p.id ";
+        $q .= "WHERE sp.subscriber_id = :subscriber_id AND transaction_status = 'Success' AND refund_amount IS NULL ";
+        $q .= "ORDER BY p.timestamp ASC LIMIT 1; ";
+
+        $vars = array(
+            ':subscriber_id'=>$subscriber_id
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        $payment = $this->getDataRowAsObject($ps, 'Payment');
+        if (!isset($payment)) {
+            throw new PaymentDoesNotExistException('Payment by subscriber does not exist.');
+        }
+        return $payment;
+    }
+    /**
      * Update payment status.
      * @param int $id Payment ID
      * @param str $transaction_status Short status

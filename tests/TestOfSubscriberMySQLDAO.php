@@ -767,6 +767,25 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $this->assertEqual($result[0]->thinkup_username, 'unique2');
     }
 
+    public function testGetAnnualSubscribersDueReupPaymentReminderForOverduePayment() {
+        $builders = array();
+        //Annual paid through 2 weeks ago, reminder not sent already
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>8, 'email'=>'ginatrapani+8@example.com',
+            'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
+            'thinkup_username'=>'unique8', 'date_installed'=>null, 'is_membership_complimentary'=>0,
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid',
+            'paid_through'=>'-14d', 'subscription_recurrence'=>'12 months', 'is_account_closed'=>0,
+            'total_reup_reminders_sent'=>0, 'creation_time'=>'-400d'));
+
+        $dao = new SubscriberMySQLDAO();
+
+        //Get subscribers due a reup reminder for payment due 14 days ago
+        $result = $dao->getAnnualSubscribersDueReupReminder(-14, 1);
+        $this->debug(Utils::varDumpToString($result));
+        $this->assertEqual(sizeof($result), 1);
+        $this->assertEqual($result[0]->thinkup_username, 'unique8');
+    }
+
     public function testSetTotalPaymentRemindersSent() {
         //Subscriber doesn't exist
         $dao = new SubscriberMySQLDAO();
