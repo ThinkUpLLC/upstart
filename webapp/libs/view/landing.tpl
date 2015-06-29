@@ -5,7 +5,7 @@
     <h3 class="section-header">&ldquo;An indispensable guide to how I navigate social networks.&rdquo;<br />
     <small>&mdash; Farhad Manjoo, <a href="http://www.nytimes.com/2015/01/01/technology/personaltech/thinkup-helps-the-social-network-user-see-the-online-self.html"><em>The New York Times</em></a></small></h3>
     <div class="section-copy">
-      <p>Start your <strong>14-day free trial</strong> and see how ThinkUp gives you super powers on Facebook, Twitter and Instagram.</p>
+      <p>Start your <strong>14-day free trial</strong> and see how ThinkUp gives you super powers on Twitter, Instagram, and Facebook.</p>
       <div class="signup-buttons">
         <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
         <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign up with</small><br>Facebook</a>
@@ -21,7 +21,7 @@
   <div class="section section-screenshot" id="section-what">
     <h3 class="section-header">What is ThinkUp?</h3>
     <div class="section-copy">
-      <p>ThinkUp analyzes your Facebook, Instagram and Twitter activity to give you fun and surprising insights. We email them to you daily (or tweet at you if it's super interesting).</p>
+      <p>ThinkUp analyzes your Twitter, Instagram, and Facebook activity to give you fun and surprising insights. ThinkUp emails them to you (or tweets at you if it's super interesting).</p>
     </div>
   </div>
 </div>
@@ -66,7 +66,7 @@
   <div class="section section-screenshot section-sample-insight">
     <div class="section-copy">
       <figure class="sample-insight">
-        <figcaption><strong>New:</strong> Search your followers' bios!</figcaption>
+        <figcaption><strong>New:</strong> What keywords are in your followers' bios?</figcaption>
         <div class="sample-insight-img"></div>
       </figure>
     </div>

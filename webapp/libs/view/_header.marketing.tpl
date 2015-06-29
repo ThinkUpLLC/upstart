@@ -1,6 +1,6 @@
 {assign var="tagline" value="Super powers for your social networks"}
-{assign var="tagline_logo" value="will make your day."}
-{assign var="description" value="ThinkUp uncovers fun and fascinating insights about you and your friends on Twitter, Facebook and Instagram."}
+{assign var="tagline_logo" value="Daily insights about you"}
+{assign var="description" value="ThinkUp uncovers fun and fascinating insights about you and your friends on Twitter, Instagram, and Facebook."}
 <!DOCTYPE html>
 <html lang="en">
 <head>
