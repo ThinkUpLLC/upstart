@@ -68,6 +68,27 @@ class TestOfPaymentMySQLDAO extends UpstartUnitTestCase {
         $dao->getPayment('asdfsfasdf', 'adfasdfasdf');
     }
 
+    public function testGetSubscribersEarliestPayment() {
+        $valid_transaction_id = '213893Z22ZZ7483S3EVDZDFI95AZ1EOIRN8';
+        $valid_caller_reference = '252cf11bbd71e2';
+        $builders = array();
+        $builders[] = FixtureBuilder::build('payments', array('id'=>1,
+            'transaction_id'=>'213893Z22ZZ7483S3EVDZDFI95AZ1EOIRN8', 'caller_reference'=>'252cf11bbd71e2',
+            'refund_amount'=>null, 'timestamp'=>'-10d', 'transaction_status'=>'Success'));
+        $builders[] = FixtureBuilder::build('payments', array('id'=>2,
+            'transaction_id'=>'213893Z22ZZ7483S3EVDZDFI95AZ1EOIRN6', 'caller_reference'=>'252cf11bbd71e1',
+            'refund_amount'=>'5.60', 'timestamp'=>'-20d', 'transaction_status'=>'Success'));
+        $builders[] = FixtureBuilder::build('subscriber_payments', array('subscriber_id'=>2, 'payment_id'=>1));
+        $builders[] = FixtureBuilder::build('subscriber_payments', array('subscriber_id'=>2, 'payment_id'=>2));
+
+        $dao = new PaymentMySQLDAO();
+        $result = $dao->getSubscribersEarliestPayment(2);
+        $this->assertEqual($result->id, 1);
+
+        $this->expectException('PaymentDoesNotExistException');
+        $result = $dao->getSubscribersEarliestPayment(5);
+    }
+
     public function testUpdateStatus() {
         $builders = array();
         $builders[] = FixtureBuilder::build('payments', array('id'=>1, 'status'=>'Not Updated',

@@ -955,7 +955,8 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     /**
-     * Get 25 annual subscribers who have a payment due in the next X days.
+     * Get 25 annual subscribers who have a payment due in the next X days. If X is a negative number, then payment
+     * was due X days ago.
      * @param int $days_before Number of days before paid through date to send reminder
      * @param int $total_reup_reminders_sent Only send to members who have less than this total number of reminders
      * @return arr Array of Subscriber objects
