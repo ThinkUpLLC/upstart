@@ -36,6 +36,7 @@ class ListSubscriberController extends Controller {
         $this->addToView('total_paid_subscribers_monthly', $total_paid_subscribers['breakdown']['monthly']);
         $this->addToView('total_paid_subscribers_annual', $total_paid_subscribers['breakdown']['annual']);
         $this->addToView('total_paid_subscribers_coupon_codes', $total_paid_subscribers['breakdown']['coupon_codes']);
+        $this->addToView('total_paid_subscribers_via_recurly', $total_paid_subscribers['breakdown']['recurly']);
         $this->addToView('application_url', UpstartHelper::getApplicationURL());
 
         /* Begin installation stats */

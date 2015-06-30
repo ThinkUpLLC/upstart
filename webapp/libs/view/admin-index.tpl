@@ -10,7 +10,7 @@
     <h3>Showing search results for <span style="background-color:yellow">{$search_term}</span>. <a href="?p={$page}" class="btn btn-small btn-primary">Show all</a></h3>
 {else}
 <h2>{$total_daily_signups} signup{if $total_daily_signups neq 1}s{/if} today</h2>
-<p>{$total_paid_subscribers|number_format} paid members: {$total_paid_subscribers_monthly|number_format} monthly, {$total_paid_subscribers_annual|number_format} annual, {$total_paid_subscribers_coupon_codes|number_format} coupon codes. {$total_active_installs|number_format} active installations.</p>
+<p>{$total_paid_subscribers|number_format} paid members: {$total_paid_subscribers_via_recurly|number_format} via Recurly. {$total_paid_subscribers_monthly|number_format} monthly, {$total_paid_subscribers_annual|number_format} annual, {$total_paid_subscribers_coupon_codes|number_format} coupon codes. {$total_active_installs|number_format} active installations.</p>
 <p>Stalest paid installation dispatched {$stalest_dispatch_time_paid|relative_datetime} ago, not paid {$stalest_dispatch_not_paid|relative_datetime} ago.</p>
 <p {if !$workers_ok} class="alert alert-danger"{/if}>Dispatch status: <b>{$worker_status}</b></p>
 {/if}

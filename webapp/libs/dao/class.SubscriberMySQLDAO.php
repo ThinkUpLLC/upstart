@@ -328,22 +328,24 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     public function getPaidTotal() {
-        $q  = "SELECT count(*) as total, subscription_recurrence FROM subscribers s ";
+        $q  = "SELECT id, subscription_recurrence, is_via_recurly FROM subscribers s ";
         $q .= "WHERE subscription_status = 'Paid' AND is_account_closed != 1 ";
-        $q .= "GROUP BY subscription_recurrence";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
         $rows = $this->getDataRowsAsArrays($ps);
         $total_paid_subscribers = 0;
-        $breakdown = array('monthly'=>0, 'annual'=>0);
+        $breakdown = array('monthly'=>0, 'annual'=>0, 'recurly'=>0, 'coupon_codes'=>0);
         foreach ($rows as $row) {
-            $total_paid_subscribers = $total_paid_subscribers + $row['total'];
+            $total_paid_subscribers++;
             if ($row['subscription_recurrence'] == '1 month') {
-                $breakdown['monthly'] = $row['total'];
+                $breakdown['monthly']++;
             } else if ($row['subscription_recurrence'] == '12 months') {
-                $breakdown['annual'] = $row['total'];
+                $breakdown['annual']++;
             } else if ($row['subscription_recurrence'] == 'None') {
-                $breakdown['coupon_codes'] = $row['total'];
+                $breakdown['coupon_codes']++;
+            }
+            if ($row['is_via_recurly']) {
+                $breakdown['recurly']++;
             }
         }
         return array('total_paid_subscribers'=>$total_paid_subscribers, 'breakdown'=>$breakdown);
