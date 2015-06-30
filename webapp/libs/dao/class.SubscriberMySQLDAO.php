@@ -1084,7 +1084,7 @@ GROUP BY WEEKOFYEAR(creation_time), YEAR(creation_time) ORDER BY creation_time A
      */
     public function getDailyPaidSubscriberCounts($limit = 60) {
         $q = "SELECT date(date) as date, count
-            FROM subscriber_paid_counts
+            FROM subscriber_paid_counts WHERE is_via_recurly = 0
             ORDER BY date DESC LIMIT 0, :limit;";
         $vars = array(':limit'=>$limit);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
