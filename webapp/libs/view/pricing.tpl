@@ -18,17 +18,15 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
         <th class="">
           <h3 class="subsection-header pricing-member">1 account</h3>
           <p>per social network</p>
-          <p><i class="fa fa-twitter"></i> <i class="fa fa-facebook"></i></p>
+          <p><i class="fa fa-twitter"></i> <i class="fa fa-instagram"></i> <i class="fa fa-facebook"></i></p>
         </th>
         <th class="">
           <h3 class="subsection-header pricing-pro">More than 1 account</h3>
           <p>per social network</p>
           <p>
-            <i class="fa fa-twitter"></i> <i class="fa fa-facebook"></i>
-            <i class="fa fa-twitter"></i> <i class="fa fa-facebook"></i>
-            <i class="fa fa-twitter"></i> <i class="fa fa-facebook"></i>
-            <i class="fa fa-twitter"></i> <i class="fa fa-facebook"></i>
-            <i class="fa fa-twitter"></i> <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i> <i class="fa fa-instagram"></i> <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i> <i class="fa fa-instagram"></i> <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i> <i class="fa fa-instagram"></i> <i class="fa fa-facebook"></i>
           </p>
         </th>
       </tr>
@@ -57,7 +55,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
           </div>
         </td>
       </tr>
-
+<!--
       <tr>
         <td colspan="3" class="media-publisher-tout">
           <p><strong>Media, Publishers and Brands</strong>: 
@@ -65,6 +63,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
             <a href="{$site_root_path}about/contact.php?type=executive">Contact us</a> and we'll take care of you.
           </p>
       </tr>
+-->
     </table>
 
 

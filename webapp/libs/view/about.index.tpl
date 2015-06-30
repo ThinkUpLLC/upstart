@@ -6,7 +6,7 @@ body_classes="marketing marketing-page" body_id="marketing-about"}
       <h2 class="section-header">About ThinkUp</h2>
       {include file="_about.nav.tpl" active="about"}
 
-      <p>ThinkUp is a simple new app that gives you daily insights about you and your friends on social networks like Twitter and Facebook. ThinkUp uses plain English to explain how you’re doing and to help you achieve your goals, whatever they are. ThinkUp is a fun way to get more out of the time we spend online.</p>
+      <p>ThinkUp is a simple new app that gives you daily insights about you and your friends on social networks like Twitter, Instagram and Facebook. ThinkUp uses plain English to explain how you’re doing and to help you achieve your goals, whatever they are. ThinkUp is a fun way to get more out of the time we spend online.</p>
 
       <h3 class="text-header">Our Company</h3>
 
@@ -15,7 +15,7 @@ body_classes="marketing marketing-page" body_id="marketing-about"}
         <img class="headshot" src="{$site_root_path}assets/img/anil-headshot@2x.jpg" alt="Anil Dash">
       </div>
 
-      <p>ThinkUp is also the name of a small company based in New York City. Gina Trapani and Anil Dash cofounded ThinkUp, and are working to make ThinkUp the company that treats its customers and community better than any other in the technology industry. To that end, we’ve published <a href="{$site_root_path}about/values.php">our values</a>, and we'd love to hear your what you think about them.</p>
+      <p>ThinkUp is a small company based in New York City. Gina Trapani and Anil Dash cofounded ThinkUp, and are working to make ThinkUp the company that treats its customers and community better than any other in the technology industry. To that end, we’ve published <a href="{$site_root_path}about/values.php">our values</a>, and we'd love to hear your what you think about them.</p>
 
 
       <div class="download-our-logo">
