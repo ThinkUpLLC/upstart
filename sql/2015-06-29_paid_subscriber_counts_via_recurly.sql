@@ -1,0 +1,1 @@
+ALTER TABLE subscriber_paid_counts ADD is_via_recurly INT(1) NOT NULL DEFAULT '0' COMMENT 'Whether count is via Recurly or not.' AFTER count;

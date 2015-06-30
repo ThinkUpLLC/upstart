@@ -310,6 +310,7 @@ CREATE TABLE subscriber_paid_counts (
   id int(11) NOT NULL AUTO_INCREMENT,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   count int(11) NOT NULL,
+  is_via_recurly int(1) NOT NULL DEFAULT '0' COMMENT 'Whether count is via Recurly or not.',
   PRIMARY KEY (id),
   KEY `date` (`date`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Paid subscriber totals by date.';

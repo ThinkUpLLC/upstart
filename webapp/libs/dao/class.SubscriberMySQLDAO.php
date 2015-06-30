@@ -1098,6 +1098,26 @@ GROUP BY WEEKOFYEAR(creation_time), YEAR(creation_time) ORDER BY creation_time A
     }
 
     /**
+     * Get paid subscriber counts on Recurly over time.
+     * @return array
+     */
+    public function getDailyPaidRecurlySubscriberCounts($limit = 60) {
+        $q = "SELECT date(date) as date, count
+            FROM subscriber_paid_counts WHERE is_via_recurly = 1
+            ORDER BY date DESC LIMIT 0, :limit;";
+        $vars = array(':limit'=>$limit);
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        $rows = $this->getDataRowsAsArrays($ps);
+        $results = array();
+        foreach ($rows as $row) {
+            $results[$row['date']] = $row['count'];
+        }
+        ksort($results);
+        return $results;
+    }
+
+    /**
      * Get last three days worth of member signups.
      * @TODO Delete this as of June 1 2015.
      * @return array
@@ -1112,8 +1132,17 @@ GROUP BY WEEKOFYEAR(creation_time), YEAR(creation_time) ORDER BY creation_time A
     }
 
     public function captureCurrentPaidCount() {
-        $q = "INSERT INTO subscriber_paid_counts (date, count)  SELECT NOW(), count(*)  FROM subscribers s ";
+        //Total paid subscribers
+        $q = "INSERT INTO subscriber_paid_counts (date, count, is_via_recurly)  ";
+        $q .= "SELECT NOW(), count(*), 0 FROM subscribers s ";
         $q .= "WHERE subscription_status = 'Paid' AND is_account_closed != 1";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+
+        //Paid via Recurly
+        $q = "INSERT INTO subscriber_paid_counts (date, count, is_via_recurly)  ";
+        $q .= "SELECT NOW(), count(*), 1 FROM subscribers s ";
+        $q .= "WHERE subscription_status = 'Paid' AND is_account_closed != 1 AND is_via_recurly = 1";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
     }

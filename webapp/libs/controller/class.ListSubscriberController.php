@@ -50,15 +50,6 @@ class ListSubscriberController extends Controller {
         $daily_signups = $subscriber_dao->getDailySignups(1);
         $total_daily_signups = (isset($daily_signups[date('Y-m-d')]))?$daily_signups[date('Y-m-d')]:0;
         $this->addToView('total_daily_signups', $total_daily_signups);
-        $reups_due = $subscriber_dao->getReupsDueToday();
-        $this->addToView('reups_due', $reups_due);
-        $subscription_operation_dao = new SubscriptionOperationMySQLDAO();
-        $daily_revenue = $subscription_operation_dao->getDailyRevenue();
-        $this->addToView('total_daily_refunds', $daily_revenue[date('Y-m-d')]['refunds']);
-        $this->addToView('total_daily_revenue', $daily_revenue[date('Y-m-d')]['revenue']);
-        $daily_successful_payments = $subscription_operation_dao->getDailySuccessfulPayments();
-        $todays_reups = $daily_successful_payments[date('Y-m-d')] - $daily_subscribers[date('Y-m-d')];
-        $this->addToView('total_reups', $todays_reups);
 
         try {
             $worker_status = Dispatcher::getNagiosCheckStatus();
