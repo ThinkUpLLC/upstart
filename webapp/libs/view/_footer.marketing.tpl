@@ -31,6 +31,3 @@
 <script src="{$site_root_path}assets/js/marketing.js "></script>
 
 {include file="_footer.common.tpl"}
-</body>
-
-</html>

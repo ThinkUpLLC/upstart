@@ -19,3 +19,7 @@ body_classes="marketing marketing-page" body_id="marketing-email-confirmed"}
 
 
 {include file="_footer.marketing.tpl"}
+
+</body>
+
+</html>

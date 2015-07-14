@@ -58,7 +58,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
 <!--
       <tr>
         <td colspan="3" class="media-publisher-tout">
-          <p><strong>Media, Publishers and Brands</strong>: 
+          <p><strong>Media, Publishers and Brands</strong>:
             Need site licenses, invoicing, and other business features?<br />
             <a href="{$site_root_path}about/contact.php?type=executive">Contact us</a> and we'll take care of you.
           </p>
@@ -70,3 +70,7 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
     </div>
   </div>
 {include file="_footer.marketing.tpl"}
+
+</body>
+
+</html>

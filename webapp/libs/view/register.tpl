@@ -83,4 +83,14 @@
 ga('set', 'title', 'Register');
 ga('set', 'page', '/register.php{if isset($network_username)}?n={$network}{/if}{if isset($smarty.get.level)}&level={$smarty.get.level}{/if}');
 </script>
+
+{literal}
+<script src="//platform.twitter.com/oct.js" type="text/javascript"></script>
+<script type="text/javascript">twttr.conversion.trackPid('l6g1c', { tw_sale_amount: 0, tw_order_quantity: 0 });</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://analytics.twitter.com/i/adsct?txn_id=l6g1c&p_id=Twitter&tw_sale_amount=0&tw_order_quantity=0" />
+<img height="1" width="1" style="display:none;" alt="" src="//t.co/i/adsct?txn_id=l6g1c&p_id=Twitter&tw_sale_amount=0&tw_order_quantity=0" />
+</noscript>
+{/literal}
+
 {include file="_appfooter.tpl" include_tz_js=true}

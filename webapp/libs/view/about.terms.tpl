@@ -469,3 +469,7 @@ body_classes="marketing marketing-page" body_id="marketing-terms"}
     </section>
 
 {include file="_footer.marketing.tpl"}
+
+</body>
+
+</html>

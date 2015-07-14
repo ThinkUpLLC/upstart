@@ -25,3 +25,7 @@ body_classes="marketing marketing-page" body_id="marketing-welcome"}
 ga('set', 'title', 'Registration Complete');
 </script>
 {include file="_footer.marketing.tpl" hide_footer=true}
+
+</body>
+
+</html>
