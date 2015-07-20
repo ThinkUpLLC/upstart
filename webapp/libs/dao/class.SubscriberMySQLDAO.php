@@ -1084,11 +1084,11 @@ GROUP BY WEEKOFYEAR(creation_time), YEAR(creation_time) ORDER BY creation_time A
      * Get paid subscriber counts over time.
      * @return array
      */
-    public function getDailyPaidSubscriberCounts($limit = 60) {
+    public function getDailyPaidSubscriberCounts($since = '2015-07-01') {
         $q = "SELECT date(date) as date, count
-            FROM subscriber_paid_counts WHERE is_via_recurly = 0
-            ORDER BY date DESC LIMIT 0, :limit;";
-        $vars = array(':limit'=>$limit);
+            FROM subscriber_paid_counts WHERE is_via_recurly = 0 AND date(date) >= :since
+            ORDER BY date DESC;";
+        $vars = array(':since'=>$since);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
         $rows = $this->getDataRowsAsArrays($ps);
@@ -1104,11 +1104,11 @@ GROUP BY WEEKOFYEAR(creation_time), YEAR(creation_time) ORDER BY creation_time A
      * Get paid subscriber counts on Recurly over time.
      * @return array
      */
-    public function getDailyPaidRecurlySubscriberCounts($limit = 60) {
+    public function getDailyPaidRecurlySubscriberCounts($since = '2015-07-01') {
         $q = "SELECT date(date) as date, count
-            FROM subscriber_paid_counts WHERE is_via_recurly = 1
-            ORDER BY date DESC LIMIT 0, :limit;";
-        $vars = array(':limit'=>$limit);
+            FROM subscriber_paid_counts WHERE is_via_recurly = 1 AND date(date) >= :since
+            ORDER BY date DESC;";
+        $vars = array(':since'=>$since);
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q, $vars);
         $rows = $this->getDataRowsAsArrays($ps);
