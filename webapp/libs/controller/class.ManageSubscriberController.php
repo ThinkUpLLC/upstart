@@ -181,21 +181,6 @@ class ManageSubscriberController extends Controller {
                             $this->addSuccessMessage("Set status to Payment due for ".$subscriber->email);
                             $subscriber->subscription_status = 'Payment due';
                         }
-                    } elseif ($_GET['action'] == 'charge') {
-                        if (isset($_GET['token_id']) && isset($_GET['amount'])) {
-                            $fps_api_accessor = new AmazonFPSAPIAccessor($use_deprecated_tokens = true);
-                            $ok = $fps_api_accessor->invokeAmazonPayAction($subscriber_id, $_GET['token_id'],
-                                $_GET['amount']);
-                            if ($ok) {
-                                $this->addSuccessMessage("Payment successful!");
-                            } else {
-                                $this->addErrorMessage("Payment failed!");
-                            }
-                            $subscriber_dao->updateSubscriberSubscriptionDetails($subscriber);
-                            $subscriber = $subscriber_dao->getByID($subscriber_id);
-                        }  else {
-                            $this->addErrorMessage("No token and/or amount specified");
-                        }
                     } elseif ($_GET['action'] == 'dispatch') {
                         $cfg = Config::getInstance();
                         $jobs_array = array();

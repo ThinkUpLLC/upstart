@@ -195,13 +195,6 @@
         <td>Valid starting</td>
         <td>{$authorization->token_validity_start_date}</td>
       </tr>
-      {if !$paid && $smarty.now > $authorization->token_validity_start_date_ts & !$subscriber->is_membership_complimentary}
-      <!-- Show Charge button -->
-      <tr>
-        <td></td>
-        <td><a href="subscriber.php?id={$subscriber->id}&action=charge&token_id={$authorization->token_id}&amount={$next_annual_charge_amount|urlencode}" class="btn btn-success btn-mini">Charge</a></td>
-      </tr>
-      {/if}
       {if $subscriber->error_message}
       <tr class="danger">
         <td>Amazon error</td>
