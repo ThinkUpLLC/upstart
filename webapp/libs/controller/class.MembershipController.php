@@ -49,7 +49,7 @@ class MembershipController extends UpstartAuthController {
                                 Logger::logError('Unable to end trial in ThinkUp installation',
                                     __FILE__,__LINE__, __METHOD__);
                             }
-                            UpstartHelper::postToSlack('#signups',
+                            UpstartHelper::postToSlack('#thinkup-signups',
                                 'Yes! Someone just redeemed a coupon code on their membership page.'
                                 .'\nhttps://'. $subscriber->thinkup_username.
                                 '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
@@ -229,7 +229,7 @@ class MembershipController extends UpstartAuthController {
         try {
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
                 array('html_body'=>$message), $api_key);
-            UpstartHelper::postToSlack('#signups',
+            UpstartHelper::postToSlack('#thinkup-signups',
                 $subscriber->thinkup_username.' account is closed ('.$account_type.'). Refunded $'.$refund_amount."."
                 .'\nhttps://www.thinkup.com/join/admin/subscriber.php?id='. $subscriber->id);
         } catch (Exception $e) {

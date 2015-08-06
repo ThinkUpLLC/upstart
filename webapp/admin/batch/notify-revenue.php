@@ -4,9 +4,9 @@ chdir('..');
 require_once 'init.php';
 
 /**
- * Post signups and revenue numbers to ThinkUp's Slack #signups room.
+ * Post signups and revenue numbers to ThinkUp's Slack #thinkup-signups room.
  */
-$channel = "#signups";
+$channel = "#thinkup-signups";
 //debug
 //$channel = "#testbot";
 

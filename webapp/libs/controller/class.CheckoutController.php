@@ -132,7 +132,7 @@ class CheckoutController extends UpstartAuthController {
                     }
 
                     $joined_date = date('M jS Y', strtotime($subscriber->creation_time));
-                    UpstartHelper::postToSlack('#signups',
+                    UpstartHelper::postToSlack('#thinkup-signups',
                         'Ding-ding! A member who joined '.$joined_date.
                         ' just paid for a '.$_POST['plan'].' subscription via Recurly.\nhttps://'.
                         $subscriber->thinkup_username.

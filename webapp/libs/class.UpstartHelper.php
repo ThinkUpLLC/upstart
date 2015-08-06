@@ -167,7 +167,7 @@ class UpstartHelper {
 
     /**
      * Post a message to a ThinkUp Slack channel.
-     * @param str $channel like #signups
+     * @param str $channel like #thinkup-signups
      * @param str $text
      * @return str contents
      */
