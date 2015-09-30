@@ -189,6 +189,7 @@ CREATE TABLE subscribers (
   claim_code varchar(24) DEFAULT NULL COMMENT 'Redeemed claim code.',
   is_via_recurly int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not subscription created via Recurly.',
   recurly_subscription_id varchar(200) DEFAULT NULL COMMENT 'Recurly subscription ID.',
+  last_crawl_completed timestamp NULL DEFAULT NULL COMMENT 'Time the last crawl was completed.',
   PRIMARY KEY (id),
   UNIQUE KEY email (email),
   UNIQUE KEY network_user_id (network_user_id,network),

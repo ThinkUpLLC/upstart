@@ -151,6 +151,16 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getUpdateCount($ps);
     }
 
+    public function setLastCrawl($thinkup_username) {
+        $q = "UPDATE subscribers SET last_crawl_completed = NOW() WHERE thinkup_username = :thinkup_username";
+        $vars = array(
+            ':thinkup_username'=>$thinkup_username
+        );
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
     public function setSubscriptionRecurrence($subscriber_id, $subscription_recurrence) {
         $q = "UPDATE subscribers SET subscription_recurrence = :subscription_recurrence WHERE id=:id";
         $vars = array(
