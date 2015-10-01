@@ -655,6 +655,26 @@ EOD;
         return $result['last_crawl_completed'];
     }
 
+    public function getNotPaidStalestInstallLastDispatchTime() {
+        $q  = "SELECT last_dispatched FROM subscribers WHERE is_installation_active=1 AND is_account_closed != 1 ";
+        $q .= self::getNotYetPaidCriteria();
+        $q .= "ORDER BY last_dispatched ASC LIMIT 1";
+        //echo self::mergeSQLVars($q, $vars);
+        $ps = $this->execute($q);
+        $result = $this->getDataRowAsArray($ps);
+        return $result['last_dispatched'];
+    }
+
+   public function getPaidStalestInstallLastDispatchTime() {
+        $q  = "SELECT last_dispatched FROM subscribers WHERE is_installation_active=1 AND is_account_closed != 1 ";
+        $q .= "AND subscription_status = 'Paid' ";
+        $q .= "ORDER BY last_dispatched ASC LIMIT 1";
+        //echo self::mergeSQLVars($q, $vars);
+        $ps = $this->execute($q);
+        $result = $this->getDataRowAsArray($ps);
+        return $result['last_dispatched'];
+    }
+
     private function getNotYetPaidCriteria() {
         // Note: this returns Payment failed, Payment due, and Complimentary memberships as well as Free trial
         $q = "AND subscription_status != 'Paid' ";

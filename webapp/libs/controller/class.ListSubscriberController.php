@@ -48,6 +48,11 @@ class ListSubscriberController extends Controller {
         $stalest_crawl_time_not_paid = $subscriber_dao->getNotPaidStalestInstallLastCrawlCompletedTime();
         $this->addToView('stalest_crawl_not_paid', $stalest_crawl_time_not_paid);
 
+        $stalest_dispatch_time_paid = $subscriber_dao->getPaidStalestInstallLastDispatchTime();
+        $this->addToView('stalest_dispatch_time_paid', $stalest_dispatch_time_paid);
+        $stalest_dispatch_time_not_paid = $subscriber_dao->getNotPaidStalestInstallLastDispatchTime();
+        $this->addToView('stalest_dispatch_not_paid', $stalest_dispatch_time_not_paid);
+
         $daily_signups = $subscriber_dao->getDailySignups(1);
         $total_daily_signups = (isset($daily_signups[date('Y-m-d')]))?$daily_signups[date('Y-m-d')]:0;
         $this->addToView('total_daily_signups', $total_daily_signups);
