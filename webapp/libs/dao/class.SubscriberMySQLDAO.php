@@ -590,11 +590,14 @@ class SubscriberMySQLDAO extends PDODAO {
      * @return arr Array of installation information
      */
     public function getPaidStaleInstalls($hours_stale, $count=25) {
-        $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0 ";
-        $q .= "AND (subscription_status = 'Paid' OR is_membership_complimentary = 1) ";
-        $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR) OR last_dispatched IS NULL) ";
-        $q .= "ORDER BY last_dispatched ASC ";
-        $q .= "LIMIT :limit;";
+        $q  = <<<EOD
+SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0
+AND (subscription_status = 'Paid' OR is_membership_complimentary = 1)
+AND (last_crawl_completed IS NULL OR last_dispatched < last_crawl_completed)
+AND (last_crawl_completed < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR) OR last_crawl_completed IS NULL)
+ORDER BY last_crawl_completed ASC
+LIMIT :limit;
+EOD;
 
         $vars = array(
             ':limit'=>$count,
@@ -614,11 +617,15 @@ class SubscriberMySQLDAO extends PDODAO {
      * @return arr Array of installation information
      */
     public function getNotYetPaidStaleInstalls($hours_stale, $count=25) {
-        $q  = "SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0 ";
-        $q .= "AND ((last_dispatched < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR) OR last_dispatched IS NULL)) ";
-        $q .= self::getNotYetPaidCriteria();
-        $q .= "ORDER BY last_dispatched ASC ";
-        $q .= "LIMIT :limit;";
+        $not_yet_paid_criteria = self::getNotYetPaidCriteria();
+        $q  = <<<EOD
+SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0
+AND (last_crawl_completed IS NULL OR last_dispatched < last_crawl_completed)
+AND ((last_crawl_completed < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR) OR last_crawl_completed IS NULL))
+$not_yet_paid_criteria
+ORDER BY last_crawl_completed ASC
+LIMIT :limit;
+EOD;
 
         $vars = array(
             ':limit'=>$count,
@@ -628,24 +635,24 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getDataRowsAsArrays($ps);
     }
 
-    public function getPaidStalestInstallLastDispatchTime() {
-        $q  = "SELECT last_dispatched FROM subscribers WHERE is_installation_active=1 AND is_account_closed != 1 ";
+    public function getPaidStalestInstallLastCrawlCompletedTime() {
+        $q  = "SELECT last_crawl_completed FROM subscribers WHERE is_installation_active=1 AND is_account_closed != 1 ";
         $q .= "AND subscription_status = 'Paid' ";
-        $q .= "ORDER BY last_dispatched ASC LIMIT 1";
+        $q .= "ORDER BY last_crawl_completed ASC LIMIT 1";
         //echo self::mergeSQLVars($q, $vars);
         $ps = $this->execute($q);
         $result = $this->getDataRowAsArray($ps);
-        return $result['last_dispatched'];
+        return $result['last_crawl_completed'];
     }
 
-    public function getNotPaidStalestInstallLastDispatchTime() {
-        $q  = "SELECT last_dispatched FROM subscribers WHERE is_installation_active=1 AND is_account_closed != 1 ";
+    public function getNotPaidStalestInstallLastCrawlCompletedTime() {
+        $q  = "SELECT last_crawl_completed FROM subscribers WHERE is_installation_active=1 AND is_account_closed != 1 ";
         $q .= self::getNotYetPaidCriteria();
-        $q .= "ORDER BY last_dispatched ASC LIMIT 1";
+        $q .= "ORDER BY last_crawl_completed ASC LIMIT 1";
         //echo self::mergeSQLVars($q, $vars);
         $ps = $this->execute($q);
         $result = $this->getDataRowAsArray($ps);
-        return $result['last_dispatched'];
+        return $result['last_crawl_completed'];
     }
 
     private function getNotYetPaidCriteria() {
@@ -997,7 +1004,7 @@ EOD;
         $q = "SELECT * FROM subscribers WHERE subscription_status = 'Free trial' ";
         //AND trial is more than 15 days old, and last dispatched is over 30 hours ago.
         $q .= "AND (creation_time < DATE_SUB(NOW(), INTERVAL 15 DAY )) ";
-        $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL 30 HOUR )) ";
+        $q .= "AND (last_crawl_completed < DATE_SUB(NOW(), INTERVAL 30 HOUR )) ";
         $q .= "ORDER BY creation_time ASC LIMIT 25";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
@@ -1010,7 +1017,7 @@ EOD;
      */
     public function getSubscribersToUninstallDueToAccountClosure() {
         $q = "SELECT * FROM subscribers WHERE is_account_closed = 1 ";
-        $q .= "AND (last_dispatched < DATE_SUB(NOW(), INTERVAL 30 HOUR )) ";
+        $q .= "AND (last_crawl_completed < DATE_SUB(NOW(), INTERVAL 30 HOUR )) ";
         $q .= "ORDER BY creation_time ASC LIMIT 25";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
