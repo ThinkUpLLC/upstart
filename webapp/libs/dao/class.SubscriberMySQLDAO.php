@@ -594,7 +594,8 @@ class SubscriberMySQLDAO extends PDODAO {
 SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0
 AND (subscription_status = 'Paid' OR is_membership_complimentary = 1)
 AND (last_crawl_completed IS NULL OR last_dispatched < last_crawl_completed)
-AND (last_crawl_completed < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR) OR last_crawl_completed IS NULL)
+AND (last_crawl_completed < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR) OR
+    (last_crawl_completed IS NULL AND last_dispatched < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR)) )
 ORDER BY last_crawl_completed ASC
 LIMIT :limit;
 EOD;
@@ -621,7 +622,8 @@ EOD;
         $q  = <<<EOD
 SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0
 AND (last_crawl_completed IS NULL OR last_dispatched < last_crawl_completed)
-AND ((last_crawl_completed < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR) OR last_crawl_completed IS NULL))
+AND ((last_crawl_completed < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR) OR
+    (last_crawl_completed IS NULL AND last_dispatched < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR)) ))
 $not_yet_paid_criteria
 ORDER BY last_crawl_completed ASC
 LIMIT :limit;
