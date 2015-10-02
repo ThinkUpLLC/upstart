@@ -47,7 +47,11 @@ class Dispatcher {
         $result = self::getURLContents($api_call, $cfg->getValue('dispatch_http_username'),
         $cfg->getValue('dispatch_http_passwd'));
         //print_r($result);
-        $result_decoded = JSONDecoder::decode($result);
+        try {
+            $result_decoded = JSONDecoder::decode($result);
+        } catch (JSONDecoderException $e) {
+            throw new DispatchException("Error getting queue size. Dispatch response: ". $result);
+        }
         //print_r($result_decoded);
         if (isset($result_decoded->gearman_status->operations->crawl->total)) {
             return (int) $result_decoded->gearman_status->operations->crawl->total;

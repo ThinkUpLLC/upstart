@@ -12,8 +12,14 @@ class DispatchCrawlJobsController extends Controller {
         $cfg = Config::getInstance();
         $jobs_to_dispatch = $cfg->getValue('jobs_to_dispatch');
 
-        $queue_size = Dispatcher::getQueueSize();
-        //        echo "QUEUE SIZE ".$queue_size;
+        $dispatch = "";
+        try {
+            $queue_size = Dispatcher::getQueueSize();
+        } catch (DispatchException $e) {
+            $debug .= "DispatchException ". $e->getMessage()." \n";
+        }
+        $debug .= "QUEUE SIZE ". Utils::varDumpToString($queue_size)." \n";
+
         if (is_int($queue_size) && $queue_size < $jobs_to_dispatch) {
             $number_of_calls = $jobs_to_dispatch / $this->jobs_divisor;
             while ($number_of_calls > 0) {
@@ -22,12 +28,16 @@ class DispatchCrawlJobsController extends Controller {
                 if (count($stale_installs) == 0) {
                     $stale_installs = $subscriber_dao->getNotYetPaidStaleInstalls($hours_stale=4,
                         $count=$this->jobs_divisor);
+                    $debug .= "Got ".count($stale_installs)." not yet paid stale installs. \n";
+                } else {
+                    $debug .= "Got ".count($stale_installs)." stale paid installs. \n";
                 }
 
                 //No installs to crawl? Okay, get less stale options
                 if (count($stale_installs) == 0 ) {
                     $stale_installs = $subscriber_dao->getNotYetPaidStaleInstalls($hours_stale=3,
                         $count=$this->jobs_divisor);
+                    $debug .= "Got ".count($stale_installs)." not yet paid less stale installs. \n";
                 }
 
                 if (count($stale_installs) > 0 ) {
@@ -42,12 +52,14 @@ class DispatchCrawlJobsController extends Controller {
                         'db_socket'=>$cfg->getValue('tu_db_socket'),
                         'db_port'=>$cfg->getValue('tu_db_port')
                         );
+                        $debug .= "Install ".$install['thinkup_username']." crawl completed ".
+                            $install['last_crawl_completed']." last dispatched ". $install['last_dispatched']." \n";
                     }
                     // call Dispatcher
                     $result_decoded = Dispatcher::dispatch($jobs_array);
                     if (!isset($result_decoded->success)) {
-                        echo $api_call . '\n';
-                        echo $result;
+                        $debug .= $api_call . '\n';
+                        $debug .= $result;
                     }
 
                     // update last_dispatched_date on stale user routes
@@ -59,10 +71,11 @@ class DispatchCrawlJobsController extends Controller {
             }
         } else {
             if ($queue_size === false) {
-                echo "Problem with Dispatch; Upstart didn't dispatch jobs.";
+                $debug .= "Problem with Dispatch; Upstart didn't dispatch jobs.";
             } else {
-                //echo "Dispatch queue (".$queue_size.") exceeds threshold (".$jobs_to_dispatch.")";
+                $debug .= "Dispatch queue (".$queue_size.") exceeds threshold (".$jobs_to_dispatch.")";
             }
         }
+        Logger::logError($debug, __FILE__,__LINE__,__METHOD__);
     }
 }
