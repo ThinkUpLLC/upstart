@@ -64,9 +64,9 @@
 
           {if $subscriber->last_dispatched}
           <tr>
-            <td>Crawled</td>
+            <td>Crawl times</td>
             <td>
-              {$subscriber->last_dispatched|relative_datetime} ago <a href="subscriber.php?action=dispatch&id={$subscriber->id}">Dispatch</a>
+              {if ($subscriber->last_crawl_completed)}Crawl completed {$subscriber->last_crawl_completed|relative_datetime} ago, {/if} Dispatched {$subscriber->last_dispatched|relative_datetime} ago <a href="subscriber.php?action=dispatch&id={$subscriber->id}">Dispatch now</a>
               {if $subscriber->installation_url neq null}<a href="https://www.thinkup.com/phpyouradmin/index.php?server=2&db=thinkupstart_{$subscriber->thinkup_username}" target="_new" class="btn btn-xs btn-primary pull-right">See database&rarr;</a>{/if}
 
               <!-- https://www.thinkup.com/dispatch/monitor.php?auth_token=itisnicetobenice104&install_name={$subscriber->thinkup_username} -->
