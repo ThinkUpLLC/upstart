@@ -190,13 +190,15 @@ CREATE TABLE subscribers (
   is_via_recurly int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not subscription created via Recurly.',
   recurly_subscription_id varchar(200) DEFAULT NULL COMMENT 'Recurly subscription ID.',
   last_crawl_completed timestamp NULL DEFAULT NULL COMMENT 'Time the last crawl was completed.',
+  is_crawl_in_progress int(1) NOT NULL DEFAULT '0' COMMENT 'Whether or not there is a crawl in progress.',
   PRIMARY KEY (id),
   UNIQUE KEY email (email),
   UNIQUE KEY network_user_id (network_user_id,network),
   UNIQUE KEY thinkup_username (thinkup_username),
   KEY subscription_status (subscription_status),
   KEY payment_reminder_last_sent (payment_reminder_last_sent),
-  KEY is_account_closed (is_account_closed)
+  KEY is_account_closed (is_account_closed),
+  KEY is_crawl_in_progress (is_crawl_in_progress)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Paid subscribers who have authorized their social network ac';
 
 -- --------------------------------------------------------

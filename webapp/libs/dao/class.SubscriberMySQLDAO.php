@@ -152,7 +152,10 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     public function setLastCrawl($thinkup_username) {
-        $q = "UPDATE subscribers SET last_crawl_completed = NOW() WHERE thinkup_username = :thinkup_username";
+        $q = <<<EOD
+UPDATE subscribers SET last_crawl_completed = NOW(), is_crawl_in_progress = 0
+WHERE thinkup_username = :thinkup_username
+EOD;
         $vars = array(
             ':thinkup_username'=>$thinkup_username
         );
@@ -440,7 +443,7 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     public function updateLastDispatchedTime($id) {
-        $q  = "UPDATE subscribers SET last_dispatched = CURRENT_TIMESTAMP() ";
+        $q  = "UPDATE subscribers SET last_dispatched = CURRENT_TIMESTAMP(), is_crawl_in_progress = 1 ";
         $q .= "WHERE id = :id ";
 
         $vars = array(
@@ -452,7 +455,7 @@ class SubscriberMySQLDAO extends PDODAO {
     }
 
     public function resetLastDispatchedTime($id) {
-        $q  = "UPDATE subscribers SET last_dispatched = null ";
+        $q  = "UPDATE subscribers SET last_dispatched = null, is_crawl_in_progress = 0 ";
         $q .= "WHERE id = :id ";
 
         $vars = array(
@@ -593,9 +596,8 @@ class SubscriberMySQLDAO extends PDODAO {
         $q  = <<<EOD
 SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0
 AND (subscription_status = 'Paid' OR is_membership_complimentary = 1)
-AND (last_crawl_completed IS NULL OR last_dispatched < last_crawl_completed)
-AND (last_crawl_completed < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR) OR
-    (last_crawl_completed IS NULL AND last_dispatched < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR)) )
+AND is_crawl_in_progress = 0
+AND (last_crawl_completed IS NULL OR last_crawl_completed < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR))
 ORDER BY last_crawl_completed ASC
 LIMIT :limit;
 EOD;
@@ -621,9 +623,8 @@ EOD;
         $not_yet_paid_criteria = self::getNotYetPaidCriteria();
         $q  = <<<EOD
 SELECT * FROM subscribers WHERE is_installation_active = 1 AND is_account_closed = 0
-AND (last_crawl_completed IS NULL OR last_dispatched < last_crawl_completed)
-AND ((last_crawl_completed < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR) OR
-    (last_crawl_completed IS NULL AND last_dispatched < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR)) ))
+AND is_crawl_in_progress = 0
+AND (last_crawl_completed IS NULL OR last_crawl_completed < DATE_SUB(NOW(), INTERVAL :hours_stale HOUR))
 $not_yet_paid_criteria
 ORDER BY last_crawl_completed ASC
 LIMIT :limit;
