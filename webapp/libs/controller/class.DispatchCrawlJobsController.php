@@ -76,6 +76,7 @@ class DispatchCrawlJobsController extends Controller {
                 $debug .= "Dispatch queue (".$queue_size.") exceeds threshold (".$jobs_to_dispatch.")";
             }
         }
-        Logger::logError($debug, __FILE__,__LINE__,__METHOD__);
+        //DEBUG
+        //Logger::logError($debug, __FILE__,__LINE__,__METHOD__);
     }
 }
