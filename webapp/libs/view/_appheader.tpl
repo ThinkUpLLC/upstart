@@ -54,6 +54,7 @@
         {if isset($thinkup_url)}
         <li class="service {$facebook_connection_status}"><a href="{$thinkup_url}account/?p=facebook" class="{if isset($smarty.get.p) && $smarty.get.p eq 'facebook'} active{/if}">Facebook<i class="fa fa-{if $facebook_connection_status eq 'active'}check-circle{elseif $facebook_connection_status eq 'error'}exclamation-triangle{else}facebook-square{/if} icon"></i></a></li>
         <li class="service {$twitter_connection_status}"><a href="{$thinkup_url}account/?p=twitter" class="service error{if isset($smarty.get.p) && $smarty.get.p eq 'twitter'} active{/if}">Twitter<i class="fa fa-{if $twitter_connection_status eq 'active'}check-circle{elseif $twitter_connection_status eq 'error'}exclamation-triangle{else}twitter{/if} icon"></i></a></li>
+        <li class="service {$instagram_connection_status}"><a href="{$thinkup_url}account/?p=instagram" class="service error{if isset($smarty.get.p) && $smarty.get.p eq 'instagram'} active{/if}">Instagram<i class="fa fa-{if $instagram_connection_status eq 'active'}check-circle{elseif $instagram_connection_status eq 'error'}exclamation-triangle{else}instagram{/if} icon"></i></a></li>
         {/if}
         <li><a href="{$site_root_path}user/settings.php"{if $controller_title eq "Settings"} class="active"{/if}>Settings</a></li>
         <li><a href="{$site_root_path}user/membership.php"{if $controller_title eq "Membership Info"} class="active"{/if}>Membership</a></li>
