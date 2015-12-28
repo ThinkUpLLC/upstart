@@ -158,7 +158,7 @@ class MembershipController extends UpstartAuthController {
         $instances = $tu_tables_dao->getInstancesWithStatus($subscriber->thinkup_username, 2);
 
         //Start off assuming connection doesn't exist
-        $connection_status = array('facebook'=>'inactive', 'twitter'=>'inactive');
+        $connection_status = array('facebook'=>'inactive', 'twitter'=>'inactive', 'instagram'=>'inactive');
         foreach ($instances as $instance) {
             if ($instance['auth_error'] != '') {
                 $connection_status[$instance['network']] = 'error';
@@ -168,6 +168,7 @@ class MembershipController extends UpstartAuthController {
         }
         $this->addToView('facebook_connection_status', $connection_status['facebook']);
         $this->addToView('twitter_connection_status', $connection_status['twitter']);
+        $this->addToView('instagram_connection_status', $connection_status['instagram']);
         //END populating nav bar icons
 
         //Set Amazon payments link to sandbox for testing
