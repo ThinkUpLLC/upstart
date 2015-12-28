@@ -74,7 +74,7 @@ class MembershipController extends UpstartAuthController {
                             // Log user out with message about closure and refund
                             $logout_controller = new LogoutController(true);
                             $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
-                                "and we've issued a refund.  Thanks for trying ThinkUp!");
+                                "and we've issued a refund. Thanks for trying ThinkUp!");
                             return $logout_controller->control();
                         }
                     } else {

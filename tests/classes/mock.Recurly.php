@@ -33,6 +33,10 @@ class Recurly_Subscription {
         }
         $this->uuid = time().rand();
     }
+
+    public function terminateAndPartialRefund() {
+        return true;
+    }
 }
 
 class Recurly_Account {
@@ -45,3 +49,11 @@ class Recurly_BillingInfo {
 }
 
 class Recurly_ValidationError extends Exception {}
+
+class Recurly_SubscriptionList {
+    public static function getForAccount($id) {
+        $sub = new Recurly_Subscription();
+        $sub->state = 'active';
+        return array($sub);
+    }
+}

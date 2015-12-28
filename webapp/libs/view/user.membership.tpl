@@ -47,13 +47,13 @@ body_classes="settings menu-open" body_id="settings-subscription"}
              via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon Payments</a>
           {elseif $subscriber->subscription_recurrence eq '12 months'}
             {if $subscriber->membership_level eq 'Member'}
-              $60 per year via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon Payments</a>
+              ${if $subscriber->is_via_recurly eq 1}5{else}6{/if}0 per year
             {elseif $subscriber->membership_level eq 'Early Bird' || $subscriber->membership_level eq 'Late Bird'}
-              <strike style="color:red"><span style="color:black;">$60</span></strike> $50 per year via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon Payments</a>
+              <strike style="color:red"><span style="color:black;">$60</span></strike> $50 per year
             {elseif $subscriber->membership_level eq 'Pro'}
-              $120 per year via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon Payments</a>
+              $120 per year</a>
             {elseif $subscriber->membership_level eq 'Exec'}
-              $996 per year via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon Payments</a>
+              $996 per year</a>
             {/if}
           {/if}
           </div>

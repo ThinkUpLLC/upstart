@@ -53,7 +53,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $builders = array();
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'due@example.com',
             'is_membership_complimentary'=>0, 'thinkup_username'=>'xanderharris',
-            'subscription_status'=>'Payment due', 'is_via_recurly'=>0,
+            'subscription_status'=>'Payment due', 'is_via_recurly'=>1,
             'subscription_recurrence' => $subscription_recurrence,
             'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>$level));
         return $builders;
@@ -78,7 +78,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
     }
 
     public function testPaidSuccessfullyAnnualMember() {
-        $this->builders = $this->buildSubscriberPaidAnnual('Success', 'Member');
+        $this->builders = $this->buildSubscriberPaidAnnual('Paid', 'Member');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
         $this->subscriber = $subscriber;
@@ -97,13 +97,13 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $paid_through_year = intval(date('Y')) + 1;
         $paid_through_date = date('M j, ');
         $this->assertPattern('/Paid through '.$paid_through_date.$paid_through_year.'/', $results);
-        $this->assertPattern('/60 per year/', $results);
+        $this->assertPattern('/50 per year/', $results);
         //Show book links
         $this->assertPattern('/Kindle/', $results);
     }
 
     public function testPaidSuccessfullyAnnualEarlyBird() {
-        $this->builders = $this->buildSubscriberPaidAnnual('Success', 'Early Bird');
+        $this->builders = $this->buildSubscriberPaidAnnual('Paid', 'Early Bird');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
         $this->subscriber = $subscriber;
@@ -126,7 +126,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
     }
 
     public function testPaidSuccessfullyAnnualLateBird() {
-        $this->builders = $this->buildSubscriberPaidAnnual('Success', 'Late Bird');
+        $this->builders = $this->buildSubscriberPaidAnnual('Paid', 'Late Bird');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
         $this->subscriber = $subscriber;
@@ -149,7 +149,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
     }
 
     public function testPaidSuccessfullyAnnualPro() {
-        $this->builders = $this->buildSubscriberPaidAnnual('Success', 'Pro');
+        $this->builders = $this->buildSubscriberPaidAnnual('Paid', 'Pro');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
         $this->subscriber = $subscriber;
@@ -174,7 +174,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
     }
 
     public function testPaidSuccessfullyAnnualExec() {
-        $this->builders = $this->buildSubscriberPaidAnnual('Success', 'Exec');
+        $this->builders = $this->buildSubscriberPaidAnnual('Paid', 'Exec');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
         $this->subscriber = $subscriber;
@@ -270,7 +270,7 @@ class TestOfMembershipController extends UpstartUnitTestCase {
     }
 
     public function testEbookDownload() {
-        $this->builders = $this->buildSubscriberPaidAnnual('Success');
+        $this->builders = $this->buildSubscriberPaidAnnual('Paid');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
         $this->subscriber = $subscriber;
@@ -292,14 +292,12 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'paid@example.com',
             'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
             'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>$membership_level,
-            'subscription_recurrence'=>'12 months', 'paid_through'=>null,
-            'subscription_status'=>'Free trial', 'is_via_recurly'=>0));
+            'subscription_recurrence'=>'12 months', 'paid_through'=>($payment_status == 'Paid')?'+366d':null,
+            'subscription_status'=>$payment_status, 'is_via_recurly'=>1));
 
-        $builders[] = FixtureBuilder::build('payments', array('id'=>100, 'transaction_status'=>$payment_status,
-            'timestamp'=>'-10s', 'refund_amount'=>null, 'refund_caller_reference'=>null, 'refund_date'=>null));
-        $builders[] = FixtureBuilder::build('subscriber_payments', array('subscriber_id'=>1, 'payment_id'=>100));
-
-        self::updateSubscriptionStatus(1);
+        if ($payment_status == 'Paid') {
+            self::updateSubscriptionStatus(1);
+        }
         return $builders;
     }
 
@@ -309,11 +307,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>1, 'email'=>'paid@example.com',
             'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
             'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>$membership_level,
-            'subscription_recurrence'=>'1 month', 'paid_through'=>null,
-            'subscription_status'=>'Free trial', 'is_via_recurly'=>0));
-
-        $this->builders[] = FixtureBuilder::build('subscription_operations', array('subscriber_id'=>1,
-            'operation'=>'pay', 'status_code'=>'SS', 'transaction_date'=>'-10s'));
+            'subscription_recurrence'=>'1 month', 'paid_through'=>"+".date('t')."d",
+            'subscription_status'=>'Free trial', 'is_via_recurly'=>1));
 
         self::updateSubscriptionStatus(1);
         return $builders;
@@ -329,29 +324,8 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $result = $subscriber_dao->setPaidThrough($subscriber->id, $new_values['paid_through']);
     }
 
-    public function testPaymentPending() {
-        $this->builders = $this->buildSubscriberPaidAnnual('Pending');
-        $dao = new SubscriberMySQLDAO();
-        $subscriber = $dao->getByEmail('paid@example.com');
-        $this->subscriber = $subscriber;
-        $this->setUpInstall($subscriber);
-
-        $this->simulateLogin('paid@example.com');
-        $controller = new MembershipController(true);
-        $results = $controller->go();
-        $this->debug($results);
-        $this->assertPattern('/Membership Info/', $results);
-        $this->assertPattern('/This is what our database knows./', $results);
-        $this->assertNoPattern('/Complimentary membership/', $results);
-        $this->assertNoPattern('/easy to fix/', $results);
-        $this->assertPattern('/Payment pending/', $results);
-        $paid_through_year = intval(date('Y')) + 1;
-        $paid_through_date = date('M j ');
-        $this->assertNoPattern('/Paid through/', $results);
-    }
-
     public function testPaymentFailed() {
-        $this->builders = $this->buildSubscriberPaidAnnual('Failure');
+        $this->builders = $this->buildSubscriberPaidAnnual('Payment failed');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
         $this->subscriber = $subscriber;
@@ -610,15 +584,18 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $controller = new MembershipController(true);
         $results = $controller->go();
         $this->debug($results);
-        $this->assertPattern('/Your ThinkUp account is closed. Thanks for trying ThinkUp!/', $results);
+        $this->assertPattern('/Your ThinkUp account is closed, and we&#39;ve issued a refund. '.
+            'Thanks for trying ThinkUp!/', $results);
 
-        // Don't send account closure email to free trialers or FPS folks, just subscribers
+        // Send account closure email
         $closure_email = Mailer::getLastMail();
-        $this->assertEqual('', $closure_email);
+        $this->assertPattern('/Thanks for trying ThinkUp./', $closure_email);
+        $this->assertPattern('/Your ThinkUp account is now closed./', $closure_email);
+        $this->assertPattern('/We will credit your Amazon Payments account/', $closure_email);
     }
 
     public function testCloseAccountValidCSRFWithPaymentFailure() {
-        $this->builders = $this->buildSubscriberPaidAnnual('Failure');
+        $this->builders = $this->buildSubscriberPaidAnnual('Payment failed');
         $dao = new SubscriberMySQLDAO();
         $subscriber = $dao->getByEmail('paid@example.com');
         $this->subscriber = $subscriber;
@@ -635,9 +612,11 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->debug($results);
         $this->assertPattern('/Your ThinkUp account is closed./', $results);
 
-        // Don't send account closure email to free trialers or FPS folks, just subscribers
+        // Send account closure email
         $closure_email = Mailer::getLastMail();
-        $this->assertEqual('', $closure_email);
+        $this->assertPattern('/Thanks for trying ThinkUp./', $closure_email);
+        $this->assertPattern('/Your ThinkUp account is now closed./', $closure_email);
+        $this->assertPattern('/We will credit your Amazon Payments account/', $closure_email);
     }
 
     public function testCloseAccountInvalidCSRF() {
