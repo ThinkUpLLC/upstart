@@ -1,6 +1,5 @@
 <?php
 require_once dirname(__FILE__) . '/init.tests.php';
-require_once dirname(__FILE__) . '/classes/mock.AmazonFPSAPIAccessor.php';
 
 class TestOfMembershipController extends UpstartUnitTestCase {
     /**
@@ -590,37 +589,9 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertNoPattern('/Your ThinkUp account has been closed. But there\'s still time to change your mind!/',
             $results);
         $this->assertPattern('/Your ThinkUp account is closed. Thanks for trying ThinkUp!/', $results);
-        // Don't send account closure email to free trialers, just subscribers
+        // Don't send account closure email to free trialers or FPS folks, just subscribers
         $closure_email = Mailer::getLastMail();
         $this->assertEqual('', $closure_email);
-    }
-
-    public function testCloseAccountValidCSRFWithSubscriptionOperation() {
-        $this->builders = $this->buildSubscriberFreeTrialCreated(2);
-        $this->builders[] = FixtureBuilder::build('subscription_operations',
-            array('amazon_subscription_id'=>'test-sub-id', 'subscriber_id'=> 1, 'recurring_frequency'=>'1 month',
-            'transaction_amount'=>'USD 5', 'operation'=>'pay' ));
-        $dao = new SubscriberMySQLDAO();
-        $subscriber = $dao->getByEmail('trial@example.com');
-        $this->subscriber = $subscriber;
-        $this->setUpInstall($subscriber);
-
-        $this->simulateLogin('trial@example.com', false, true);
-
-        //Set close account URL param
-        $_POST['close'] = 'true';
-        $_POST['csrf_token'] = parent::CSRF_TOKEN;
-
-        $controller = new MembershipController(true);
-        $results = $controller->go();
-        $this->debug($results);
-        $this->assertPattern('/Your ThinkUp account is closed, and we&#39;ve issued a refund.  '.
-            'Thanks for trying ThinkUp!/', $results);
-
-        $closure_email = Mailer::getLastMail();
-        $this->assertPattern('/Thanks for trying ThinkUp./', $closure_email);
-        $this->assertPattern('/Your ThinkUp account is now closed./', $closure_email);
-        $this->assertPattern('/We will credit your Amazon Payments account/', $closure_email);
     }
 
     public function testCloseAccountValidCSRFWithPaymentSuccess() {
@@ -639,13 +610,11 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $controller = new MembershipController(true);
         $results = $controller->go();
         $this->debug($results);
-        $this->assertPattern('/Your ThinkUp account is closed, and we&#39;ve issued a refund.  '.
-            'Thanks for trying ThinkUp!/', $results);
+        $this->assertPattern('/Your ThinkUp account is closed. Thanks for trying ThinkUp!/', $results);
 
+        // Don't send account closure email to free trialers or FPS folks, just subscribers
         $closure_email = Mailer::getLastMail();
-        $this->assertPattern('/Thanks for trying ThinkUp./', $closure_email);
-        $this->assertPattern('/Your ThinkUp account is now closed./', $closure_email);
-        $this->assertPattern('/We will credit your Amazon Payments account/', $closure_email);
+        $this->assertEqual('', $closure_email);
     }
 
     public function testCloseAccountValidCSRFWithPaymentFailure() {
@@ -664,13 +633,11 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $controller = new MembershipController(true);
         $results = $controller->go();
         $this->debug($results);
-        $this->assertPattern('/Your ThinkUp account is closed, and we&#39;ve issued a refund.  '.
-            'Thanks for trying ThinkUp!/', $results);
+        $this->assertPattern('/Your ThinkUp account is closed./', $results);
 
+        // Don't send account closure email to free trialers or FPS folks, just subscribers
         $closure_email = Mailer::getLastMail();
-        $this->assertPattern('/Thanks for trying ThinkUp./', $closure_email);
-        $this->assertPattern('/Your ThinkUp account is now closed./', $closure_email);
-        $this->assertPattern('/We will credit your Amazon Payments account/', $closure_email);
+        $this->assertEqual('', $closure_email);
     }
 
     public function testCloseAccountInvalidCSRF() {

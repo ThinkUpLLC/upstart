@@ -27,7 +27,6 @@ $all_tests->add(new TestOfMembershipController());
 $all_tests->add(new TestOfSessionCache());
 $all_tests->add(new TestOfUpstartHelper());
 $all_tests->add(new TestOfAppInstaller());
-$all_tests->add(new TestOfAmazonFPSAPIAccessor());
 $all_tests->add(new TestOfPaymentMySQLDAO());
 $all_tests->add(new TestOfSubscriberPaymentMySQLDAO());
 $all_tests->add(new TestOfSubscriber());
