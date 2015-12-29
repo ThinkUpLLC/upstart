@@ -22,6 +22,7 @@ class UninstallExpiredAccountsController extends Controller {
 
         $this->uninstallExpiredFreeTrials();
         $this->uninstallClosedAccounts();
+        $this->uninstallFPSAccounts();
     }
 
     public function uninstallExpiredFreeTrials() {
@@ -44,6 +45,21 @@ class UninstallExpiredAccountsController extends Controller {
             }
             $subscribers_to_uninstall = $this->subscriber_dao->getSubscribersToUninstallDueToAccountClosure();
         }
+    }
+
+    public function uninstallFPSAccounts() {
+        $subscribers_to_uninstall = $this->subscriber_dao->getSubscribersToUninstallDueToFPSDeprecation();
+        if (count($subscribers_to_uninstall) > 0) {
+                    echo "FPS accounts----
+";
+        }
+
+        //while (sizeof($subscribers_to_uninstall) > 0) {
+            foreach ($subscribers_to_uninstall as $subscriber) {
+                $this->uninstallSubscriber($subscriber);
+            }
+            $subscribers_to_uninstall = $this->subscriber_dao->getSubscribersToUninstallDueToFPSDeprecation();
+        //}
     }
 
     public function uninstallSubscriber(Subscriber $subscriber) {
