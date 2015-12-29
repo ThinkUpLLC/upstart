@@ -30,7 +30,7 @@ class UninstallExpiredAccountsController extends Controller {
 
         while (sizeof($subscribers_to_uninstall) > 0) {
             foreach ($subscribers_to_uninstall as $subscriber) {
-                $this->uninstallSubscriber($subscriber);
+                $this->uninstallSubscriber($subscriber, 'Trial expired');
             }
             $subscribers_to_uninstall = $this->subscriber_dao->getSubscribersToUninstallDueToExpiredTrial();
         }
@@ -41,7 +41,7 @@ class UninstallExpiredAccountsController extends Controller {
 
         while (sizeof($subscribers_to_uninstall) > 0) {
             foreach ($subscribers_to_uninstall as $subscriber) {
-                $this->uninstallSubscriber($subscriber);
+                $this->uninstallSubscriber($subscriber, 'Closed');
             }
             $subscribers_to_uninstall = $this->subscriber_dao->getSubscribersToUninstallDueToAccountClosure();
         }
@@ -49,21 +49,17 @@ class UninstallExpiredAccountsController extends Controller {
 
     public function uninstallFPSAccounts() {
         $subscribers_to_uninstall = $this->subscriber_dao->getSubscribersToUninstallDueToFPSDeprecation();
-        if (count($subscribers_to_uninstall) > 0) {
-                    echo "FPS accounts----
-";
-        }
 
-        //while (sizeof($subscribers_to_uninstall) > 0) {
+        while (sizeof($subscribers_to_uninstall) > 0) {
             foreach ($subscribers_to_uninstall as $subscriber) {
-                $this->uninstallSubscriber($subscriber);
+                $this->uninstallSubscriber($subscriber, 'FPS');
             }
             $subscribers_to_uninstall = $this->subscriber_dao->getSubscribersToUninstallDueToFPSDeprecation();
-        //}
+        }
     }
 
-    public function uninstallSubscriber(Subscriber $subscriber) {
-        echo "Uninstalling ".$subscriber->thinkup_username."...
+    public function uninstallSubscriber(Subscriber $subscriber, $reason = '') {
+        echo $reason.": Uninstalling ".$subscriber->thinkup_username."...
 ";
         try {
             $this->app_installer->uninstall($subscriber->id);
