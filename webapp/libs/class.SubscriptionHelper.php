@@ -127,7 +127,7 @@ class SubscriptionHelper {
             case "Late Bird":
                 return 50;
             case "Member":
-                return 60;
+                return 50;
             case "Pro":
                 return 120;
             case "Exec":
@@ -147,12 +147,15 @@ class SubscriptionHelper {
 
         if ($subscriber->subscription_recurrence == '12 months') {
             $amount_recurrence = '12 months discount';
+        } elseif ($subscriber->subscription_recurrence == 'None') {
+            $amount_recurrence = '1 month';
         } else {
             $amount_recurrence = $subscriber->subscription_recurrence;
         }
         $amount = SignUpHelperController::$subscription_levels[strtolower($normalized_membership_level)]
             [$amount_recurrence];
         $button_freq_label = $subscriber->subscription_recurrence;
+        $button_freq_label = str_replace("None", "month", $button_freq_label);
         $button_freq_label = str_replace("1 month", "month", $button_freq_label);
         $button_freq_label = str_replace("12 months", "year", $button_freq_label);
 

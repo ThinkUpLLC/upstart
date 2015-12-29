@@ -377,6 +377,34 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Got a coupon code/', $results);
     }
 
+    public function testPaymentDueMemberCouponCode() {
+        $this->builders = $this->buildSubscriberWithPaymentDue($level = 'Member', 'None');
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('due@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('due@example.com');
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Membership Info/', $results);
+        $this->assertPattern('/This is what our database knows./', $results);
+        $this->assertPattern('/Just 5 bucks a month/', $results);
+        $this->assertPattern('/Payment due/', $results);
+        $this->assertNoPattern('/Complimentary membership/', $results);
+        $this->assertNoPattern('/easy to fix/', $results);
+        //Don't show book link
+        $this->assertNoPattern('/Kindle/', $results);
+        $this->assertPattern('/One last step/', $results);
+        $this->assertNoPattern('/Payment pending/', $results);
+        $paid_through_year = intval(date('Y')) + 1;
+        $paid_through_date = date('M j ');
+        $this->assertNoPattern('/Paid through/', $results);
+        //Show coupon code entry
+        $this->assertPattern('/Got a coupon code/', $results);
+    }
+
     public function testPaymentDueMemberYearly() {
         $this->builders = $this->buildSubscriberWithPaymentDue($level = 'Member', '12 months');
         $dao = new SubscriberMySQLDAO();

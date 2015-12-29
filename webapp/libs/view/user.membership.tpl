@@ -44,7 +44,6 @@ body_classes="settings menu-open" body_id="settings-subscription"}
             {elseif $subscriber->membership_level eq 'Pro'}
               $10 per month
             {/if}
-             via <a href="https://payments{if $amazon_sandbox}-sandbox{/if}.amazon.com">Amazon Payments</a>
           {elseif $subscriber->subscription_recurrence eq '12 months'}
             {if $subscriber->membership_level eq 'Member'}
               ${if $subscriber->is_via_recurly eq 1}5{else}6{/if}0 per year
