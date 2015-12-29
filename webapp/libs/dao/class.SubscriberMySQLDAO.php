@@ -1048,13 +1048,13 @@ EOD;
     }
 
     /**
-     * Get 25 subscribers to uninstall because they're FPS failed or due payments.
+     * Get 25 subscribers to uninstall because of failed payments for over 120 days.
      * @return arr Array of Subscriber objects
      */
-    public function getSubscribersToUninstallDueToFPSDeprecation() {
-        $q = "SELECT * FROM subscribers WHERE is_via_recurly = 0 AND ";
-        $q .= "(subscription_status = 'Payment failed' OR subscription_status = 'Payment due') ";
-        $q .= "ORDER BY id DESC LIMIT 10";
+    public function getSubscribersToUninstallDueToFailedPayment() {
+        $q = "SELECT * FROM subscribers WHERE is_via_recurly = 1 AND ";
+        $q .= "subscription_status = 'Payment failed' AND (DATE(paid_through) < DATE_SUB(NOW(), INTERVAL 120 DAY )) ";
+        $q .= "AND is_crawl_in_progress = 0 LIMIT 25";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
         return $this->getDataRowsAsObjects($ps, 'Subscriber');
