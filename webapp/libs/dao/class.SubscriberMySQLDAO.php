@@ -151,6 +151,17 @@ class SubscriberMySQLDAO extends PDODAO {
         return $this->getUpdateCount($ps);
     }
 
+    public function setPaymentDue() {
+        $q = <<<EOD
+UPDATE subscribers SET subscription_status = 'Payment due'
+WHERE paid_through IS NOT NULL AND DATE(paid_through) < DATE( NOW() )
+AND subscription_status =  'Paid'
+EOD;
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q, $vars);
+        return $this->getUpdateCount($ps);
+    }
+
     public function setLastCrawl($thinkup_username) {
         $q = <<<EOD
 UPDATE subscribers SET last_crawl_completed = NOW(), is_crawl_in_progress = 0

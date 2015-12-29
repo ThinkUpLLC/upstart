@@ -23,6 +23,7 @@ class UninstallExpiredAccountsController extends Controller {
         $this->uninstallExpiredFreeTrials();
         $this->uninstallClosedAccounts();
         $this->uninstallDelinquentAccounts();
+        $this->subscriber_dao->setPaymentDue();
     }
 
     public function uninstallExpiredFreeTrials() {
