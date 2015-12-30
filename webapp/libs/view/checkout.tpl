@@ -22,11 +22,14 @@ $state (required) 'pay' or 'success' or 'error' or 'error-fullname'
       }).on('change', notify);
 
       function notify (status) {
-        console && console.log.apply(console, arguments);
+        //console && console.log.apply(console, arguments);
 
         if (status.id) {
           document.querySelector('#amazon_billing_agreement_id').value = status.id;
           document.querySelector('#subscribe-btn').style.visibility = 'visible';
+        } else {
+          document.querySelector('#amazon_billing_agreement_id').value = '';
+          document.querySelector('#subscribe-btn').style.visibility = 'hidden';
         }
       }
     </script>
