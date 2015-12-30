@@ -102,6 +102,7 @@ class CheckoutController extends UpstartAuthController {
                     //End testing name error
 
                     //Update local subscription details
+                    $prev_sub_status = $subscriber->subscription_status;
                     $subscriber->subscription_status = 'Paid';
                     $subscriber->is_via_recurly = true;
 
@@ -133,8 +134,8 @@ class CheckoutController extends UpstartAuthController {
 
                     $joined_date = date('M jS Y', strtotime($subscriber->creation_time));
                     UpstartHelper::postToSlack('#thinkup-signups',
-                        'Ding-ding! A member who joined '.$joined_date.
-                        ' just paid for a '.$_POST['plan'].' subscription via Recurly.\nhttps://'.
+                        'Ding-ding! A member who joined '.$joined_date.' and was "'.$prev_sub_status.'"'.
+                        ' just paid for a '.$_POST['plan'].' subscription.\nhttps://'.
                         $subscriber->thinkup_username.
                         '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
                         $subscriber->id);
