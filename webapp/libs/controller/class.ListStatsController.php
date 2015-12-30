@@ -23,7 +23,7 @@ class ListStatsController extends Controller {
         $this->addToView('weekly_signups_chart_url', $chart_url);
 
         $chart_url = UpstartHelper::buildChartImageURL($daily_paid_subscribers, $daily_paid_recurly_subscribers,
-            300, 'Paid subscribers|Paid via Recurly');
+            300, 'Paid|Recurly');
         $this->addToView('daily_paid_subscribers_chart_url', $chart_url);
 
         return $this->generateView();
