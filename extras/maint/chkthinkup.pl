@@ -8,21 +8,23 @@ use Getopt::Long;
 
 my $engine = {};
 my $users = {};
-my $options = {'users' => 0,'engine' => 'bad'};
+my $options = {'users' => 0,'engine' => 'ignore','cleanup' => 0};
 my $output = 0;
 
 GetOptions(
  'users'    => \($options->{'users'}),
  'engine=s' => \($options->{'engine'}),
+ 'cleanup'  => \($options->{'cleanup'}),
 );
-if (!$options->{'users'} and !$options->{'engine'}) {
-	print "Usage: $0 [--users] [--engine={dump|fix}]\n";
+if (!$options->{'users'} and !$options->{'engine'} and !$options->{'cleanup'}) {
+	print "Usage: $0 [--users] [--engine={dump|fix|ignore}] [--cleanup]\n";
 	print "\t--users     Checks active users against thinkupstart_* databases\n";
 	print "\t--engine    Checks that InnoDB is used for all thinkupstart_* tables\n";
+	print "\t--cleanup   Removes all thinkupstop_* databases\n";
 	print "\n";
 	exit();
 }
-exit() if ($options->{'engine'} ne 'dump' && $options->{'engine'} ne 'fix');
+exit() if ($options->{'engine'} ne 'dump' && $options->{'engine'} ne 'fix' && $options->{'engine'} ne 'ignore');
 
 
 my $dbh = DBI->connect('DBI:mysql:;host=db.x.thinkup.com','root','uKRUtJ3lxrDUBPeD');
@@ -45,7 +47,7 @@ while (my $db = $sth->fetchrow_array()) {
 }
 $sth->finish();
 
-if ($options->{'engine'}) {
+if ($options->{'engine'} ne 'ignore') {
 	foreach my $db (keys %{$engine}) {
 		$dbh->do(sprintf('USE %s',$db));
 		$sth = $dbh->prepare('SHOW TABLES');
@@ -96,7 +98,7 @@ if ($options->{'users'}) {
 }
 
 my $first = 1;
-if ($options->{'engine'}) {
+if ($options->{'engine'} ne 'ignore') {
 	foreach my $db (keys %{$engine}) {
 
 		my @cmds = ();
@@ -124,5 +126,24 @@ if ($options->{'engine'}) {
 			$output = 1;
 			$first = 0;
 		}
+	}
+}
+
+$first = 1;
+if ($options->{'cleanup'}) {
+	my @cleanup = ();
+
+	$sth = $dbh->prepare("SHOW DATABASES LIKE 'thinkupstop_%'");
+	$sth->execute();
+	while (my $db = $sth->fetchrow_array()) {
+		push @cleanup, $db;
+	}
+	$sth->finish();
+
+	foreach my $db (@cleanup) {
+		print "DROPPING thinkupstop_* DATABASES:\n" if $first;
+		print "\t$db\n";
+		$dbh->do("DROP DATABASE `$db`");
+		$first = 0;
 	}
 }
