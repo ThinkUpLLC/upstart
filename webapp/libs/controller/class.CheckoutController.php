@@ -133,12 +133,20 @@ class CheckoutController extends UpstartAuthController {
                     }
 
                     $joined_date = date('M jS Y', strtotime($subscriber->creation_time));
-                    UpstartHelper::postToSlack('#thinkup-signups',
-                        'Ding-ding! A member who joined '.$joined_date.' and was "'.$prev_sub_status.'"'.
+
+                    $conversion_notification = 'Ding-ding! A member who joined '.$joined_date.' and was "'.
+                        $prev_sub_status.'"'.
                         ' just paid for a '.$_POST['plan'].' subscription.\nhttps://'.
                         $subscriber->thinkup_username.
                         '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
-                        $subscriber->id);
+                        $subscriber->id;
+
+                    Logger::logError($conversion_notification, __FILE__,__LINE__,__METHOD__);
+
+                    $debug = UpstartHelper::postToSlack('#thinkup-signups', $conversion_notification);
+                    if (isset($debug)) {
+                        Logger::logError($debug, __FILE__,__LINE__,__METHOD__);
+                    }
                 } catch (Recurly_ValidationError $e) {
                     if ( strpos($e->getMessage(), "name can't be blank") !== false ) {
                         $state = 'error-fullname';
