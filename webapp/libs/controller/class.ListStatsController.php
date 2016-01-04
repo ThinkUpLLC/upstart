@@ -11,7 +11,7 @@ class ListStatsController extends Controller {
         // Get weekly signups
         $weekly_signups = $subscriber_dao->getWeeklySignups();
         // Get daily paid subscribers
-        $daily_paid_subscribers = $subscriber_dao->getDailyPaidSubscriberCounts($since = '2015-07-01');
+        $daily_paid_subscribers = $subscriber_dao->getDailyPaidSubscriberCounts($since = '2015-08-01');
         // Get paid subscribers on Recurly
         $daily_paid_recurly_subscribers = $subscriber_dao->getDailyPaidRecurlySubscriberCounts($since = '2015-07-01');
 
