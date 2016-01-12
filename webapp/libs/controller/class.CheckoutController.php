@@ -128,14 +128,14 @@ class CheckoutController extends UpstartAuthController {
                     $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
                     $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
                     if (!$trial_ended) {
-                        Logger::logError('Unable to end trial in ThinkUp installation',
+                        Logger::logError('Unable to end trial in ThinkUp installation, member was '.$prev_sub_status,
                             __FILE__,__LINE__, __METHOD__);
                     }
 
                     $joined_date = date('M jS Y', strtotime($subscriber->creation_time));
 
-                    $conversion_notification = 'Ding-ding! A member who joined '.$joined_date.' and was "'.
-                        $prev_sub_status.'"'.
+                    $conversion_notification = 'Ding-ding! A member who joined '.$joined_date.' and was \"'.
+                        $prev_sub_status.'\"'.
                         ' just paid for a '.$_POST['plan'].' subscription.\nhttps://'.
                         $subscriber->thinkup_username.
                         '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
