@@ -2,7 +2,7 @@
 
 <div class="container" id="container-signup-top">
   <div class="section section-screenshot" id="section-signup-top">
-    <h3 class="section-header">Get your personal Best of 2015 for your activity on Instagram, Facebook &amp; Twitter</h3>
+    <h3 class="section-header">We'll help you get <em>so much more</em> from the time you spend on Instagram, Facebook &amp; Twitter</h3>
     <div class="section-copy">
       <p>Start your <strong>14-day free trial</strong> and get social super powers.</p>
       <div class="signup-buttons">
