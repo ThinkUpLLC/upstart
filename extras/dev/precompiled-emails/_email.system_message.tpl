@@ -115,7 +115,7 @@
                               <table>
                                   <tr>
                                       <td class="three sub-columns privacy">
-                                    &copy;2014-2015 ThinkUp LLC<br>
+                                    &copy;2014-2016 ThinkUp LLC<br>
                                         <a class="privacy" href="https://www.thinkup.com/join/about/privacy.php">Privacy</a> and <a href="https://www.thinkup.com/join/about/terms.php">terms</a>
                                       </td>
                                       <td class="six sub-columns links">
