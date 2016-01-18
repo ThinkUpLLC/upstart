@@ -301,6 +301,36 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         return $builders;
     }
 
+    private function buildSubscriberPaidAnnualInvalidRecurlyAccountValidSubscription($payment_status,
+        $membership_level = 'Member') {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>101, 'email'=>'paid@example.com',
+            'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
+            'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>$membership_level,
+            'subscription_recurrence'=>'12 months', 'paid_through'=>($payment_status == 'Paid')?'+366d':null,
+            'subscription_status'=>$payment_status, 'is_via_recurly'=>1, 'recurly_subscription_id'=>'abc-valid'));
+
+        if ($payment_status == 'Paid') {
+            self::updateSubscriptionStatus(1);
+        }
+        return $builders;
+    }
+
+    private function buildSubscriberPaidAnnualInvalidRecurlyAccountInvalidSubscription($payment_status,
+        $membership_level = 'Member') {
+        $builders = array();
+        $builders[] = FixtureBuilder::build('subscribers', array('id'=>101, 'email'=>'paid@example.com',
+            'is_membership_complimentary'=>0, 'thinkup_username'=>'willowrosenberg',
+            'is_installation_active'=>0, 'date_installed'=>null, 'membership_level'=>$membership_level,
+            'subscription_recurrence'=>'12 months', 'paid_through'=>($payment_status == 'Paid')?'+366d':null,
+            'subscription_status'=>$payment_status, 'is_via_recurly'=>1, 'recurly_subscription_id'=>'abc-invalid'));
+
+        if ($payment_status == 'Paid') {
+            self::updateSubscriptionStatus(1);
+        }
+        return $builders;
+    }
+
     private function buildSubscriberPaidMonthly($payment_status, $membership_level = "Member") {
         $builders = array();
         $days_in_current_month = date("t");
@@ -620,6 +650,55 @@ class TestOfMembershipController extends UpstartUnitTestCase {
         $this->assertPattern('/Thanks for trying ThinkUp./', $closure_email);
         $this->assertPattern('/Your ThinkUp account is now closed./', $closure_email);
         $this->assertPattern('/We will credit your Amazon Payments account/', $closure_email);
+    }
+
+    public function testCloseAccountValidCSRFWithPaymentSuccessInvalidRecurlyAccountIdValidSub() {
+        $this->builders = $this->buildSubscriberPaidAnnualInvalidRecurlyAccountValidSubscription('Success');
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('paid@example.com', false, true);
+
+        //Set close account URL param
+        $_POST['close'] = 'true';
+        $_POST['csrf_token'] = parent::CSRF_TOKEN;
+
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/Your ThinkUp account is closed, and we&#39;ve issued a refund. '.
+            'Thanks for trying ThinkUp!/', $results);
+
+        // Send account closure email
+        $closure_email = Mailer::getLastMail();
+        $this->assertPattern('/Thanks for trying ThinkUp./', $closure_email);
+        $this->assertPattern('/Your ThinkUp account is now closed./', $closure_email);
+        $this->assertPattern('/We will credit your Amazon Payments account/', $closure_email);
+    }
+
+    public function testCloseAccountValidCSRFWithPaymentSuccessInvalidRecurlyAccountIdInvalidSub() {
+        $this->builders = $this->buildSubscriberPaidAnnualInvalidRecurlyAccountInvalidSubscription('Success');
+        $dao = new SubscriberMySQLDAO();
+        $subscriber = $dao->getByEmail('paid@example.com');
+        $this->subscriber = $subscriber;
+        $this->setUpInstall($subscriber);
+
+        $this->simulateLogin('paid@example.com', false, true);
+
+        //Set close account URL param
+        $_POST['close'] = 'true';
+        $_POST['csrf_token'] = parent::CSRF_TOKEN;
+
+        $controller = new MembershipController(true);
+        $results = $controller->go();
+        $this->debug($results);
+        $this->assertPattern('/We had a problem cancelling your subscription./', $results);
+
+        // Send account closure email
+        $closure_email = Mailer::getLastMail();
+        $this->assertFalse($closure_email);
     }
 
     public function testCloseAccountValidCSRFWithPaymentFailure() {

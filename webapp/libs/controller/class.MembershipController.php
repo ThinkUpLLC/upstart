@@ -76,6 +76,9 @@ class MembershipController extends UpstartAuthController {
                             $logout_controller->addSuccessMessage("Your ThinkUp account is closed, ".
                                 "and we've issued a refund. Thanks for trying ThinkUp!");
                             return $logout_controller->control();
+                        } else {
+                            $this->addErrorMessage("We had a problem cancelling your subscription. ".
+                                "Contact us at help@thinkup.com.");
                         }
                     } else {
                         // This subscriber is an FPS or free trial user
@@ -252,10 +255,24 @@ class MembershipController extends UpstartAuthController {
         $cfg = Config::getInstance();
         Recurly_Client::$subdomain = $cfg->getValue('recurly_subdomain');
         Recurly_Client::$apiKey = $cfg->getValue('recurly_api_key');
-        //@TODO catch any Recurly exceptions
-        $subscriptions = Recurly_SubscriptionList::getForAccount($subscriber->id);
-        foreach ($subscriptions as $subscription) {
-            if ($subscription->state == 'active') {
+        try {
+            try {
+                $subscriptions = Recurly_SubscriptionList::getForAccount($subscriber->id);
+                foreach ($subscriptions as $subscription) {
+                    if ($subscription->state == 'active') {
+                        $subscription->terminateAndPartialRefund();
+                        // Close account
+                        $subscriber_dao = new SubscriberMySQLDAO();
+                        $result = $subscriber_dao->setSubscriptionStatus($subscriber->id, "Refunded");
+                        $result = $subscriber_dao->closeAccount($subscriber->id);
+                        // Send account closure email
+                        if ($this->sendAccountClosureEmail($subscriber, 0, 'Recurly')) {
+                            return true;
+                        }
+                    }
+                }
+            } catch (Recurly_NotFoundError $e) {
+                $subscription = Recurly_Subscription::get($subscriber->recurly_subscription_id);
                 $subscription->terminateAndPartialRefund();
                 // Close account
                 $subscriber_dao = new SubscriberMySQLDAO();
@@ -266,6 +283,11 @@ class MembershipController extends UpstartAuthController {
                     return true;
                 }
             }
+        } catch (Recurly_NotFoundError $e) {
+            //there's no valid Recurly account or subscription
+            return false;
+        } catch (Exception $e) {
+            return false;
         }
         return false;
     }

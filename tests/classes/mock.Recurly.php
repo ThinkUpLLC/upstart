@@ -37,6 +37,14 @@ class Recurly_Subscription {
     public function terminateAndPartialRefund() {
         return true;
     }
+
+    public static function get($uuid, $client = null) {
+        if ($uuid == 'abc-valid') {
+            return new Recurly_Subscription();
+        } elseif ($uuid == 'abc-invalid') {
+            throw new Recurly_NotFoundError('Subscription not found');
+        }
+    }
 }
 
 class Recurly_Account {
@@ -52,8 +60,16 @@ class Recurly_ValidationError extends Exception {}
 
 class Recurly_SubscriptionList {
     public static function getForAccount($id) {
-        $sub = new Recurly_Subscription();
-        $sub->state = 'active';
-        return array($sub);
+        if ($id == 101) {
+            throw new Recurly_NotFoundError("Couldn't find Account with account_code = ".$id);
+        } else {
+            $sub = new Recurly_Subscription();
+            $sub->state = 'active';
+            return array($sub);
+        }
     }
 }
+
+class Recurly_Error extends Exception {}
+
+class Recurly_NotFoundError extends Recurly_Error {}
