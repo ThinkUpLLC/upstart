@@ -129,12 +129,12 @@ $state (required) 'pay' or 'success' or 'error' or 'error-fullname'
           <h2>Select your plan:</h2>
           <div class="pricing">
             <input type="radio" name="plan" id="plan-monthly" value="{$normalized_membership_level}-monthly">
-            <label for="plan-monthly" onclick='$("#wallet").removeClass("disabled")'>
+            <label for="plan-monthly" onclick="window.location='https://thinkup.recurly.com/subscribe/{$normalized_membership_level}-monthly/{$subscriber->id}/?email={$subscriber->email|urlencode}'">
               <h3>${$amount_monthly}</h3>
               per month
             </label>
             <input type="radio" name="plan" id="plan-yearly" value="{$normalized_membership_level}-yearly">
-            <label for="plan-yearly" onclick='$("#wallet").removeClass("disabled")'>
+            <label for="plan-yearly" onclick="window.location='https://thinkup.recurly.com/subscribe/{$normalized_membership_level}-yearly/{$subscriber->id}/?email={$subscriber->email|urlencode}'">
               <h3>${$amount_yearly}</h3>
               per year
             </label>
