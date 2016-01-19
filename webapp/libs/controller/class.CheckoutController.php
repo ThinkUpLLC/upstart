@@ -32,6 +32,7 @@ class CheckoutController extends UpstartAuthController {
         $this->addToView('amount_yearly', $amount_yearly);
 
         /**
+         * User has submitted Amazon widget form.
          * Create account with billing id
          * Create subscription with account id
          */
@@ -164,6 +165,84 @@ class CheckoutController extends UpstartAuthController {
         } else {
             $state = 'pay';
         }
+
+        /**
+         * User has returned from Recurly hosted payment page
+         * There's a bunch of duplicate code in this block that could/should be consolidated
+         */
+        if (isset($_GET['account_code']) && isset($_GET['plan_code'])) {
+
+            //Make sure account_code matches logged-in subscriber ID
+            if ($_GET['account_code'] == $subscriber->id) {
+                //Request subscription list for Recurly account and get subscription ID
+                $cfg = Config::getInstance();
+                Recurly_Client::$subdomain = $cfg->getValue('recurly_subdomain');
+                Recurly_Client::$apiKey = $cfg->getValue('recurly_api_key');
+                try {
+                    try {
+                        $subscriptions = Recurly_SubscriptionList::getForAccount($subscriber->id);
+                        foreach ($subscriptions as $subscription) {
+                            if ($subscription->state == 'active') {
+                                //Update local subscription details
+                                $prev_sub_status = $subscriber->subscription_status;
+                                $subscriber->subscription_status = 'Paid';
+                                $subscriber->is_via_recurly = true;
+
+                                if (strpos($subscription->plan_code, 'monthly') !== false) {
+                                    $subscriber->subscription_recurrence = '1 month';
+                                } elseif (strpos($subscription->plan_code, 'yearly') !== false) {
+                                    $subscriber->subscription_recurrence = '12 months';
+                                }
+                                $paid_through_time = strtotime('+'.$subscriber->subscription_recurrence);
+                                $paid_through_time = date('Y-m-d H:i:s', $paid_through_time);
+                                $subscriber->paid_through = $paid_through_time;
+
+                                $subscriber->recurly_subscription_id = $subscription->uuid;
+
+                                $subscriber_dao->setSubscriptionDetails($subscriber);
+
+                                //Send paid user to their insights stream
+                                if ($subscriber->subscription_status == 'Paid') {
+                                    $state = 'success';
+                                }
+
+                                //Update is_free_trial field in ThinkUp installation
+                                $tu_tables_dao = new ThinkUpTablesMySQLDAO($subscriber->thinkup_username);
+                                $trial_ended = $tu_tables_dao->endFreeTrial($subscriber->email);
+                                if (!$trial_ended) {
+                                    Logger::logError('Unable to end trial in ThinkUp installation, member was '.
+                                        $prev_sub_status, __FILE__,__LINE__, __METHOD__);
+                                }
+
+                                $joined_date = date('M jS Y', strtotime($subscriber->creation_time));
+
+                                $conversion_notification = 'Ding-ding! A member who joined '.$joined_date.' and was \"'.
+                                    $prev_sub_status.'\"'.
+                                    ' just paid for a '.$_POST['plan'].' subscription.\nhttps://'.
+                                    $subscriber->thinkup_username.
+                                    '.thinkup.com\nhttps://www.thinkup.com/join/admin/subscriber.php?id='.
+                                    $subscriber->id;
+
+                                Logger::logError($conversion_notification, __FILE__,__LINE__,__METHOD__);
+
+                                $debug = UpstartHelper::postToSlack('#thinkup-signups', $conversion_notification);
+                                if (isset($debug)) {
+                                    Logger::logError($debug, __FILE__,__LINE__,__METHOD__);
+                                }
+                                break;
+                            }
+                        }
+                    } catch (Recurly_NotFoundError $e) {
+                        //Account not found, do nothing
+                    }
+                } catch (Recurly_NotFoundError $e) {
+                    //No valid Recurly account or subscription, do nothing
+                } catch (Exception $e) {
+                    //something went wrong, do nothing
+                }
+            }
+        }
+
         $user_installation_url = str_replace('{user}', $subscriber->thinkup_username,
             Config::getInstance()->getValue('user_installation_url'));
         $this->addToView('user_installation_url', $user_installation_url);
