@@ -756,9 +756,10 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         //Get subscribers due a reup reminder in 14 days
         $result = $dao->getAnnualSubscribersDueReupReminder(14, 1);
         $this->debug(Utils::varDumpToString($result));
-        $this->assertEqual(sizeof($result), 2);
+        $this->assertEqual(sizeof($result), 3);
         $this->assertEqual($result[0]->thinkup_username, 'unique1');
-        $this->assertEqual($result[1]->thinkup_username, 'unique5');
+        $this->assertEqual($result[1]->thinkup_username, 'unique2');
+        $this->assertEqual($result[2]->thinkup_username, 'unique5');
 
         //Get subscribers due a reup reminder in 7 days
         $result = $dao->getAnnualSubscribersDueReupReminder(7, 2);
@@ -773,7 +774,7 @@ class TestOfSubscriberMySQLDAO extends UpstartUnitTestCase {
         $builders[] = FixtureBuilder::build('subscribers', array('id'=>8, 'email'=>'ginatrapani+8@example.com',
             'verification_code'=>1234, 'is_email_verified'=>0, 'network_user_name'=>'gtra4', 'full_name'=>'gena davis',
             'thinkup_username'=>'unique8', 'date_installed'=>null, 'is_membership_complimentary'=>0,
-            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Paid',
+            'is_installation_active'=>1, 'last_dispatched'=>'-1d', 'subscription_status'=>'Payment due',
             'paid_through'=>'-14d', 'subscription_recurrence'=>'12 months', 'is_account_closed'=>0,
             'total_reup_reminders_sent'=>0, 'creation_time'=>'-400d'));
 
