@@ -375,6 +375,15 @@ EOD;
         return array('total_paid_subscribers'=>$total_paid_subscribers, 'breakdown'=>$breakdown);
     }
 
+    public function getComplimentaryTotal() {
+        $q  = "SELECT COUNT(*) AS total_complimentary FROM subscribers s ";
+        $q .= "WHERE is_membership_complimentary = 1 ";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+        $row = $this->getDataRowAsArray($ps);
+        return $row["total_complimentary"];
+    }
+
     public function getSearchResults($search_term, $page_number = 1, $count = 50) {
         $start_on_record = ($page_number - 1) * $count;
         $q = "SELECT * FROM subscribers s ";
