@@ -49,6 +49,7 @@ class UninstallExpiredAccountsController extends Controller {
     }
 
     public function uninstallDelinquentAccounts() {
+        //Failed payments
         $subscribers_to_uninstall = $this->subscriber_dao->getSubscribersToUninstallDueToFailedPayment();
 
         while (sizeof($subscribers_to_uninstall) > 0) {
@@ -56,6 +57,16 @@ class UninstallExpiredAccountsController extends Controller {
                 $this->uninstallSubscriber($subscriber, 'Failed payment for over 120 days');
             }
             $subscribers_to_uninstall = $this->subscriber_dao->getSubscribersToUninstallDueToFailedPayment();
+        }
+
+        //Overdue annual reups (from FPS transition)
+        $subscribers_to_uninstall = $this->subscriber_dao->getSubscribersToUninstallDueToOverdueReup();
+
+        while (sizeof($subscribers_to_uninstall) > 0) {
+            foreach ($subscribers_to_uninstall as $subscriber) {
+                $this->uninstallSubscriber($subscriber, 'Last reup reminder over 30 days ago');
+            }
+            $subscribers_to_uninstall = $this->subscriber_dao->getSubscribersToUninstallDueToOverdueReup();
         }
     }
 

@@ -1071,6 +1071,19 @@ EOD;
         return $this->getDataRowsAsObjects($ps, 'Subscriber');
     }
 
+    /**
+     * Get 25 subscribers to uninstall because last annual reup reminder went out 30 days ago.
+     * @return arr Array of Subscriber objects
+     */
+    public function getSubscribersToUninstallDueToOverdueReup() {
+        $q = "SELECT * FROM subscribers WHERE subscription_status = 'Payment due' AND ";
+        $q .= "total_reup_reminders_sent = 3 AND (DATE(reup_reminder_last_sent) < DATE_SUB(NOW(), INTERVAL 30 DAY )) ";
+        $q .= "AND is_crawl_in_progress = 0 AND is_via_recurly = 0 LIMIT 25";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+        return $this->getDataRowsAsObjects($ps, 'Subscriber');
+    }
+
     public function setTotalPaymentRemindersSent($subscriber_id, $total_payment_reminders_sent) {
         $q = "UPDATE subscribers SET total_payment_reminders_sent = :total_payment_reminders_sent, ";
         $q .="payment_reminder_last_sent =  NOW() WHERE id = :subscriber_id;";
