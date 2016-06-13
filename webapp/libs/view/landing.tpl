@@ -2,7 +2,15 @@
 
 <div class="container" id="container-signup-top">
   <div class="section section-screenshot" id="section-signup-top">
-    <h3 class="section-header">Thanks for being part of the ThinkUp community.</h3>
+    <h3 class="section-header">Goodbye, and thanks for being part of the ThinkUp community.</h3>
+    <div class="section-copy">
+      <p>We'll automatically credit you with a pro-rated refund when you end your subscription.</p>
+      <div class="signup-buttons">
+        <a href="https://www.thinkup.com/join/user/membership.php" class="btn btn-pill-medium btn-twitter"><small>Close your</small><br>Account</a>
+      </div>
+      <p class="section-note">Your data will be securely deleted. Thank you for having been a ThinkUp member.
+      </p>
+    </div>
   </div>
 </div>
 
