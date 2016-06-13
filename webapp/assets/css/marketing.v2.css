@@ -793,11 +793,6 @@ a.btn-pill-large:hover {
 #container-signup-top .section-sample-insight figcaption {
   color: #444444;
 }
-@media (min-width: 760px) {
-  #container-signup-top {
-    height: 460px;
-  }
-}
 #container-signup-top .section-header {
   font-size: 1.75rem;
   font-weight: 600;

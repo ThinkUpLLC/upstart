@@ -75,7 +75,7 @@
 <body{if isset($body_classes)} class="{$body_classes}"{/if}{if isset($body_id)} id="{$body_id}"{/if}>
 
 <div class="container" id="container-navbar">
-    {if isset($show_promo)}<div class="promo-bar"><a href="https://makerbase.co/?utm_source=ThinkUp&utm_medium=Web&utm_campaign=Tout&utm_content=landing%20promo%20bar"><strong>NEW from ThinkUp:</strong> Makerbase is a directory of apps, web sites &amp; their makers. Add yourself now!</a></div>{/if}
+    {if isset($show_promo)}<div class="promo-bar"><a href="https://medium.com/p/e600bc46cc56"><strong>ThinkUp is shutting down on July 18.</strong> Find out about your refund &amp; how we're keeping your data safe.</a></div>{/if}
     <header class="section navbar navbar-marketing" id="section-navbar">
         <div class="navbar-brand">
             <h1 class="logo"><a href="{$site_root_path}">ThinkUp</a></h1>
@@ -88,7 +88,6 @@
             {else}<li class="nav-link"><a href="{$site_root_path}user/">Login</a></li>{/if}
             <li class="nav-link"><a href="{$site_root_path}pricing.php">Pricing</a></li>
             <li class="nav-link"><a href="{$site_root_path}about/">About</a></li>
-            <li class="nav-button{if (isset($hide_join) and $hide_join)} is-hidden{/if}"><a class="btn btn-pill btn-signup" href="{$site_root_path}">Join now</a></li>
         </ul>
     </header>
 </div>

@@ -2,17 +2,7 @@
 
 <div class="container" id="container-signup-top">
   <div class="section section-screenshot" id="section-signup-top">
-    <h3 class="section-header">We'll help you get <em>so much more</em> from the time you spend on Instagram, Facebook &amp; Twitter</h3>
-    <div class="section-copy">
-      <p>Start your <strong>14-day free trial</strong> and get social super powers.</p>
-      <div class="signup-buttons">
-        <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
-        <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign up with</small><br>Facebook</a>
-      </div>
-      <p class="section-note">ThinkUp costs 5 bucks a month after your free trial.<br>
-        We don't have ads and we don't sell your data.
-      </p>
-    </div>
+    <h3 class="section-header">Thanks for being part of the ThinkUp community.</h3>
   </div>
 </div>
 
@@ -168,13 +158,6 @@
 
 <div class="container" id="container-signup-bottom">
   <div class="section" id="section-signup-bottom">
-    <h3 class="section-header">Start your <em>100% free</em> trial and get insights immediately</h3>
-    <div class="section-copy">
-      <div class="signup-buttons">
-        <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
-        <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign up with</small><br>Facebook</a>
-      </div>
-    </div>
   </div>
 </div>
 
