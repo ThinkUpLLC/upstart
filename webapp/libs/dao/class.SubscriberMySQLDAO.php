@@ -1059,7 +1059,7 @@ EOD;
         $q = "SELECT * FROM subscribers WHERE subscription_status = 'Free trial' ";
         //AND trial is more than 15 days old, and last dispatched is over 30 hours ago.
         $q .= "AND (creation_time < DATE_SUB(NOW(), INTERVAL 15 DAY )) ";
-        $q .= "AND (last_crawl_completed < DATE_SUB(NOW(), INTERVAL 30 HOUR )) ";
+        $q .= "AND (last_crawl_completed is NULL || last_crawl_completed < DATE_SUB(NOW(), INTERVAL 30 HOUR )) ";
         $q .= "ORDER BY creation_time ASC LIMIT 25";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
