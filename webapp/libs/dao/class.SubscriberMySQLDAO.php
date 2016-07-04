@@ -1080,12 +1080,12 @@ EOD;
     }
 
     /**
-     * Get 25 subscribers to uninstall because of failed payments for over 120 days.
+     * Get 25 subscribers to uninstall because of failed payments.
      * @return arr Array of Subscriber objects
      */
     public function getSubscribersToUninstallDueToFailedPayment() {
         $q = "SELECT * FROM subscribers WHERE is_via_recurly = 1 AND ";
-        $q .= "subscription_status = 'Payment failed' AND (DATE(paid_through) < DATE_SUB(NOW(), INTERVAL 120 DAY )) ";
+        $q .= "subscription_status = 'Payment failed'  ";
         $q .= "AND is_crawl_in_progress = 0 LIMIT 25";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
@@ -1097,8 +1097,7 @@ EOD;
      * @return arr Array of Subscriber objects
      */
     public function getSubscribersToUninstallDueToOverdueReup() {
-        $q = "SELECT * FROM subscribers WHERE subscription_status = 'Payment due' AND ";
-        $q .= "total_reup_reminders_sent = 3 AND (DATE(reup_reminder_last_sent) < DATE_SUB(NOW(), INTERVAL 30 DAY )) ";
+        $q = "SELECT * FROM subscribers WHERE subscription_status = 'Payment due' ";
         $q .= "AND is_crawl_in_progress = 0 AND is_via_recurly = 0 LIMIT 25";
         if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
         $ps = $this->execute($q);
