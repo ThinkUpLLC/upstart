@@ -37,6 +37,17 @@ class UninstallExpiredAccountsController extends Controller {
         }
     }
 
+    public function uninstallExpiredComplimentaryAccounts() {
+        $subscribers_to_uninstall = $this->subscriber_dao->getSubscribersToUninstallDueToComplimentaryAccount();
+
+        while (sizeof($subscribers_to_uninstall) > 0) {
+            foreach ($subscribers_to_uninstall as $subscriber) {
+                $this->uninstallSubscriber($subscriber, 'Complimentary account');
+            }
+            $subscribers_to_uninstall = $this->subscriber_dao->getSubscribersToUninstallDueToComplimentaryAccount();
+        }
+    }
+
     public function uninstallClosedAccounts() {
         $subscribers_to_uninstall = $this->subscriber_dao->getSubscribersToUninstallDueToAccountClosure();
 

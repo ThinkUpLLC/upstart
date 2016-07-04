@@ -1040,6 +1040,18 @@ EOD;
     }
 
     /**
+     * Get 25 subscribers to uninstall because we're no longer supporting complimentary accounts.
+     * @return arr Array of Subscriber objects
+     */
+    public function getSubscribersToUninstallDueToComplimentaryAccount() {
+        $q = "SELECT * FROM subscribers WHERE is_membership_complimentary = 1 ";
+        $q .= "ORDER BY creation_time ASC LIMIT 25";
+        if ($this->profiler_enabled) { Profiler::setDAOMethod(__METHOD__); }
+        $ps = $this->execute($q);
+        return $this->getDataRowsAsObjects($ps, 'Subscriber');
+    }
+
+    /**
      * Get 25 subscribers to uninstall because free trial has expired and it's been 30 hours since last dispatch time.
      * @return arr Array of Subscriber objects
      */
