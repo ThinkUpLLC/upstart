@@ -47,14 +47,6 @@ body_classes="marketing marketing-page hide-social" body_id="marketing-subscribe
         <td><h2 class="pricing-member">$50</h2></td>
         <td><h2 class="pricing-pro">$100</h2></td>
       </tr>
-      <tr>
-        <td colspan="3" >
-          <div class="signup-buttons">
-            <a href="{$twitter_member_link}" class="btn btn-pill-medium btn-twitter"><small>Sign up with</small><br>Twitter</a>
-            <a href="{$facebook_member_link}" class="btn btn-pill-medium btn-facebook"><small>Sign up with</small><br>Facebook</a>
-          </div>
-        </td>
-      </tr>
 <!--
       <tr>
         <td colspan="3" class="media-publisher-tout">
