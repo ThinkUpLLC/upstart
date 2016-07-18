@@ -127,7 +127,7 @@ class RefundAndCloseAccountsController extends Controller {
         $refund_amount = number_format($refund_amount, 2);
         $email_view_mgr->assign('refund_amount', $refund_amount);
         $body_html = $email_view_mgr->fetch('_email.account-closed.tpl');
-        $headline = "Thanks for trying ThinkUp.";
+        $headline = "Thanks for everything.";
         $message = Mailer::getSystemMessageHTML($body_html, $headline);
         try {
             Mailer::mailHTMLViaMandrillTemplate($subscriber->email, $subject_line, $template_name,
