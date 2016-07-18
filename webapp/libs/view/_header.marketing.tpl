@@ -1,5 +1,5 @@
-{assign var="tagline" value="Super powers for your social networks"}
-{assign var="tagline_logo" value="Daily insights about you"}
+{assign var="tagline" value="Goodbye &lt;3"}
+{assign var="tagline_logo" value="Well, that was fun."}
 {assign var="description" value="ThinkUp uncovers fun and fascinating insights about you and your friends on Twitter, Instagram, and Facebook."}
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +75,7 @@
 <body{if isset($body_classes)} class="{$body_classes}"{/if}{if isset($body_id)} id="{$body_id}"{/if}>
 
 <div class="container" id="container-navbar">
-    {if isset($show_promo)}<div class="promo-bar"><a href="https://medium.com/p/e600bc46cc56"><strong>ThinkUp is shutting down on July 18.</strong> Find out about your refund &amp; how we're keeping your data safe.</a></div>{/if}
+    {if isset($show_promo)}<div class="promo-bar"><a href="https://medium.com/p/e600bc46cc56"><strong>ThinkUp shut down on July 18.</strong> Find out about your refund &amp; how we're keeping your data safe.</a></div>{/if}
     <header class="section navbar navbar-marketing" id="section-navbar">
         <div class="navbar-brand">
             <h1 class="logo"><a href="{$site_root_path}">ThinkUp</a></h1>
@@ -84,9 +84,6 @@
 
 
         <ul class="nav navbar-nav">
-            {if isset($thinkup_url)}<li class="nav-link"><a href="{$thinkup_url}">Your Insights</a></li>
-            {else}<li class="nav-link"><a href="{$site_root_path}user/">Login</a></li>{/if}
-            <li class="nav-link"><a href="{$site_root_path}pricing.php">Pricing</a></li>
             <li class="nav-link"><a href="{$site_root_path}about/">About</a></li>
         </ul>
     </header>

@@ -4,11 +4,8 @@
   <div class="section section-screenshot" id="section-signup-top">
     <h3 class="section-header">Goodbye, and thanks for being part of the ThinkUp community.</h3>
     <div class="section-copy">
-      <p>We'll automatically credit you with a pro-rated refund when you end your subscription.</p>
-      <div class="signup-buttons">
-        <a href="https://www.thinkup.com/join/user/membership.php" class="btn btn-pill-medium btn-twitter"><small>Close your</small><br>Account</a>
-      </div>
-      <p class="section-note">Your data will be securely deleted. Thank you for having been a ThinkUp member.
+      <p>ThinkUp has shut down. We're automatically crediting all current members with a pro-rated subscription refund.</p>
+      <p class="section-note">Refunds will be complete by July 21, 2016. Your data will be securely deleted.
       </p>
     </div>
   </div>
@@ -16,9 +13,9 @@
 
 <div class="container" id="container-what">
   <div class="section section-screenshot" id="section-what">
-    <h3 class="section-header">What is ThinkUp?</h3>
+    <h3 class="section-header">What was ThinkUp?</h3>
     <div class="section-copy">
-      <p>ThinkUp analyzes your Twitter, Instagram, and Facebook activity to give you fun and surprising insights, then emails them to you (or tweets at you if it's super interesting).</p>
+      <p>We built ThinkUp to analyze your Twitter, Instagram, and Facebook activity and provide fun and surprising insights. Over the past few years, we've been lucky to be supported by an incredible community of users, contributors and investors. We're grateful.</p>
     </div>
   </div>
 </div>
@@ -27,145 +24,35 @@
   <div class="section" id="section-media-blurbs">
       <table class="table">
         <tr>
-          <td class="media-logo"><a href="http://www.nytimes.com/2015/01/01/technology/personaltech/thinkup-helps-the-social-network-user-see-the-online-self.html"><img src="{$site_root_path}assets/img/landing/media-logo-nyt.png" class-"img-responsive media-logo"></a></td>
-          <td class="blurb">&ldquo;An indispensable guide to how I navigate social networks.&rdquo;</td>
+          <td class="media-logo"><h3>The Start</h3></td>
+          <td class="blurb"><p>The earliest versions of ThinkUp began as an <a href="https://github.com/ThinkUpLLC/ThinkUp">open source project</a> created by Gina Trapani seven years ago. With the help of cofounder Anil Dash and an incredible and inclusive community of contributors, we built ThinkUp into a powerful tool.</p></td>
         </tr>
 
         <tr>
-          <td class="media-logo"><a href="http://daringfireball.net/linked/2014/10/05/thinkup"><img src="{$site_root_path}assets/img/landing/media-logo-daring-fireball.png" class-"img-responsive media-logo"></a></td>
-          <td class="blurb">&ldquo;ThinkUp is different. It’s simple, beautiful, and clear. It’s just a way to make Twitter (and Facebook) more fun.&rdquo;</td>
+          <td class="media-logo"><h3>Down to Business</h3></td>
+          <td class="blurb"><p>In 2013, we decided to turn ThinkUp into a real business. Our community supported an enormously successful crowdfunding campaign, and we enlisted some of the most respected investors to help us make ThinkUp into a viable company. We added seven incredible team members and they built ThinkUp's best features.</p></td>
         </tr>
         <tr>
-          <td class="media-logo"><a href="http://www.fastcompany.com/3041664/most-innovative-companies-2015/the-worlds-top-10-most-innovative-companies-in-social-media-n"><img src="{$site_root_path}assets/img/landing/media-logo-fast-company.png" class-"img-responsive media-logo"></a></td>
-          <td class="blurb">One of the World's Most Innovative Companies in Social Media</td>
+          <td class="media-logo"><h3>The Not-fun Part</h3></td>
+          <td class="blurb"><p>Over time, it became increasingly complicated to add new features, since ThinkUp relies on the data provided by services like Facebook, Twitter and Instagram. In addition to other challenges and mistakes that affected ThinkUp's success (we'll be writing about them in the future), this made it impossible to keep going.</p></td>
         </tr>
 
         <tr>
-          <td class="media-logo"><a href="http://lifehacker.com/see-your-years-best-of-on-facebook-and-twitter-with-t-1674624958"><img src="{$site_root_path}assets/img/landing/media-logo-lifehacker.png" class-"img-responsive media-logo"></a></td>
-          <td class="blurb">&ldquo;Whether you tweet just for fun or you're building a personal brand, ThinkUp can give you insights on how to use social media better, which I didn't expect.&rdquo;</td>
+          <td class="media-logo"><h3>The Future</h3></td>
+          <td class="blurb"><p>We're already seeing ThinkUp's features influencing new apps from companies like Twitter. And we still believe in the core idea behind ThinkUp: We need to pay careful attention to how we spend our time online, and make sure it's worth our while. We're proud to have run our company with respect for our users.</p></td>
         </tr>
       </table>
     </div>
   </div>
 </div>
 
-<div class="container container-sample-insight" id="container-sample-insight-profile">
-  <div class="section section-screenshot section-sample-insight">
-    <div class="section-copy">
-      <figure class="sample-insight">
-        <figcaption>What changes did your friends make to their profiles?</figcaption>
-        <div class="sample-insight-img"></div>
-      </figure>
-    </div>
-  </div>
-</div>
-
-<div class="container container-sample-insight" id="container-sample-insight-search">
-  <div class="section section-screenshot section-sample-insight">
-    <div class="section-copy">
-      <figure class="sample-insight">
-        <figcaption><strong>New:</strong> What keywords are in your followers' bios?</figcaption>
-        <div class="sample-insight-img"></div>
-      </figure>
-    </div>
-  </div>
-</div>
-
-<div class="container container-sample-insight" id="container-sample-insight-personal">
-  <div class="section section-screenshot section-sample-insight">
-    <div class="section-copy">
-      <figure class="sample-insight">
-        <figcaption>Are you talking about yourself too much?</figcaption>
-        <div class="sample-insight-img"></div>
-      </figure>
-    </div>
-  </div>
-</div>
-
-<div class="container container-sample-insight" id="container-sample-insight-gratitude">
-  <div class="section section-screenshot section-sample-insight">
-    <div class="section-copy">
-      <figure class="sample-insight">
-        <figcaption>Did you remember to say thanks?</figcaption>
-        <div class="sample-insight-img"></div>
-      </figure>
-    </div>
-  </div>
-</div>
-
-<div class="container container-sample-insight" id="container-sample-insight-history">
-  <div class="section section-screenshot section-sample-insight">
-    <div class="section-copy">
-      <figure class="sample-insight">
-        <figcaption>What special moment happened a year ago?</figcaption>
-        <div class="sample-insight-img"></div>
-      </figure>
-    </div>
-  </div>
-</div>
-
-<div class="container container-sample-insight" id="container-sample-insight-verified">
-  <div class="section section-screenshot section-sample-insight">
-    <div class="section-copy">
-      <figure class="sample-insight">
-        <figcaption>Make any interesting connections this week?</figcaption>
-        <div class="sample-insight-img"></div>
-      </figure>
-    </div>
-  </div>
-</div>
-
-<div class="container container-sample-insight" id="container-sample-insight-fans">
-  <div class="section section-screenshot section-sample-insight">
-    <div class="section-copy">
-      <figure class="sample-insight">
-        <figcaption>Who were your biggest fans this week?</figcaption>
-        <div class="sample-insight-img"></div>
-      </figure>
-      <p class="and-more">&hellip;and hundreds more!</p>
-    </div>
-  </div>
-</div>
-
 <div class="container" id="container-specs">
   <div class="section section-screenshot" id="section-specs">
-    <h3 class="section-header">ThinkUp works the way that you do.</h3>
+    <h3 class="section-header">Still need help?</h3>
     <div class="section-copy">
-      <p>ThinkUp’s insights come any way you want them. Check them any time on your phone, tablet, or computer at your personal ThinkUp address. Get an email telling you what's up with your friends and followers every day (or less often if you prefer). </p>
+      <p>If you have any remaining questions, want a download of your ThinkUp data, or haven't received your subscription refund by July 21, please contact us at <a href="mailto:help@thinkup.com" style="color: white;">help@thinkup.com</a>. We'll take care of you right away.</p>
       <div class="illustration">An image of three devices</div>
     </div>
-  </div>
-</div>
-
-<div class="container" id="container-not-thinkup">
-  <div class="section section-screenshot" id="section-not-thinkup">
-    <h3 class="section-header">You’ll love what ThinkUp <em>doesn’t</em> do.</h3>
-    <div class="section-copy">
-      <ul>
-        <li>No popularity contests about how many friends you have.</li>
-        <li>No creepy tracking of your behavior.</li>
-        <li>No ugly surprises about how your data is used.</li>
-        <li>No hassle if you want to cancel your subscription.</li>
-      </ul>
-      <div class="illustration">An insight</div>
-    </div>
-  </div>
-</div>
-
-<div class="container" id="container-company">
-  <div class="section section-screenshot" id="section-company">
-    <h3 class="section-header">A tech company that<br>
-      treats you with respect.</h3>
-    <div class="section-copy">
-      <p>ThinkUp is a different kind of company. We make products for regular people, we collaborate with an <a href="https://github.com/ginatrapani/ThinkUp">open source community</a> and we live by <a href="{$site_root_path}about/values.php">our values</a>.</p>
-      <div class="illustration">An insight</div>
-    </div>
-  </div>
-</div>
-
-
-<div class="container" id="container-signup-bottom">
-  <div class="section" id="section-signup-bottom">
   </div>
 </div>
 
